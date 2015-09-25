@@ -10,6 +10,7 @@
 #include "QueueInfo.h"
 #include "GlobalData.h"
 
+
 void splitString(const std::string& strSrc, const std::string& strFind, std::vector<std::string>& arSplit) {
     std::string tmpStr(strSrc.data(),strSrc.length());
     
@@ -56,6 +57,14 @@ int TitanInfo::resetTitanInfo(CCDictionary* dict)//0没有改变 1数值改变(�
                 std::vector<std::string> tmpVec;
                 splitString(temp->valueForKey("feedcdtime")->getCString(), ",", tmpVec);
                 feedMaxNum = tmpVec.size()+1;
+                recoverymanual = temp->valueForKey("recoverymanual")->intValue();
+                costmanual = temp->valueForKey("costmanual")->intValue();
+                recoverInterval = temp->valueForKey("recoverInterval")->intValue();
+                recoverPerInterval = (recoverInterval*1000)/(float)recoverymanual;
+//                lastCalTime(0),
+//                recoverymanual(0),
+//                costmanual(0),
+//                recoverInterval(0)
             }
         }
         
@@ -66,6 +75,7 @@ int TitanInfo::resetTitanInfo(CCDictionary* dict)//0没有改变 1数值改变(�
         if (newData != currentManual) {
             dataStatus |= 1;
             currentManual = newData;
+            
         }
         
     }
@@ -127,6 +137,19 @@ int TitanInfo::resetTitanInfo(CCDictionary* dict)//0没有改变 1数值改变(�
     
     
     return dataStatus;
+}
+
+void TitanInfo::resetLastCalTime(long time)
+{
+    if(time == -1)
+    {
+        lastCalTime = (long)GlobalData::shared()->getWorldTime();
+    }
+    else
+    {
+        lastCalTime = time/1000;
+    }
+    
 }
 
 

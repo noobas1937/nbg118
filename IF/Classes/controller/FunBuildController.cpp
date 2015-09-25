@@ -973,6 +973,11 @@ void FunBuildController::endUpFunBuild(CCDictionary* dict, int type)
             (*curBuildsInfo)[tk].state = FUN_BUILD_UPING_END;
             (*curBuildsInfo)[tk].is_Dirc = false;
             (*curBuildsInfo)[tk].updateTime = GlobalData::shared()->getWorldTime();
+            
+            if(tk == 400000000)
+            {
+                CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_SPEED_UP_COMPLETE,CCString::create("upgrade"));
+            }
         }
         else {
             if(dict->objectForKey("remainGold")) {

@@ -52,7 +52,7 @@ private:
     virtual void onExit();
     virtual bool init();
     
-//    void loadResource();
+    void loadResource();
     void onGetPlayerInfoCallback(CCObject* obj);
 //
     virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(cocos2d::CCObject * pTarget, const char * pSelectorName){return NULL;}

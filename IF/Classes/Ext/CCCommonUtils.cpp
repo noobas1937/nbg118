@@ -70,6 +70,7 @@
 #include "DragonBuildingController.h"
 #include "PhoneDeviceCommand.h"
 #include "AllianceManager.h"
+#include "TitanController.h"
 
 //std::string CCCommonUtils::to_string(int d) {
 //    char buffer[50];
@@ -4027,7 +4028,9 @@ void CCCommonUtils::initTitan(CCDictionary *params)
         return;
     }
      //fusheng 泰坦
-    GlobalData::shared()->titanInfo.resetTitanInfo(titan) ;
+    //GlobalData::shared()->titanInfo.resetTitanInfo(titan) ;
+    TitanController::getInstance()->parse(titan);
+    
 }
 
 void CCCommonUtils::initOperation(int initType, CCDictionary *params){

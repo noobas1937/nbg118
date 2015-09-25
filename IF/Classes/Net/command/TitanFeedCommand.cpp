@@ -46,5 +46,6 @@ bool TitanFeedCommand::handleRecieve(cocos2d::CCDictionary *dict)
     {
         TitanController::getInstance()->handleErrorCode(params->valueForKey("errorCode")->intValue());
     }
+    return true;
     
 }

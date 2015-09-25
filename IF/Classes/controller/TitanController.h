@@ -24,10 +24,10 @@
 USING_NS_CC;
 USING_NS_CC_EXT;
 
-class TitanController : public CCObject{
+class TitanController : public Node{
 public:
     static TitanController* getInstance();
-    void resetFeedCD(CCObject *obj);
+    void TitanComplete(CCObject *obj);
     
     void handleErrorCode(int errorCode);
 
@@ -35,6 +35,10 @@ public:
     ~TitanController();
     
     void parse(CCDictionary* dict);
+    
+    void update(float dt);
+    
+    bool isUpdate;
 };
 
 #endif /* defined(__IF__TitanController__) */

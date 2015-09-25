@@ -25,18 +25,20 @@ USING_NS_CC_EXT;
 
 const char * const MSG_TITAN_INFORMATION_RESET = "MSG_TITAN_INFORMATION_RESET"; //泰坦刷新数据
 const char * const MSG_TITAN_STATUS_CHANGE = "MSG_TITAN_STATUS_CHANGE";//泰坦状态改变
-const char * const MSG_TITAN_FEED_SPEED_UP_COMPLETE = "MSG_TITAN_FEED_SPEED_UP_COMPLETE"; //加速完成
+const char * const MSG_TITAN_SPEED_UP_COMPLETE = "MSG_TITAN_SPEED_UP_COMPLETE"; //加速完成
 
 class TitanInfo:
 public cocos2d::CCObject
 {
 public:
     CREATE_FUNC(TitanInfo);
+    
     TitanInfo(CCDictionary* dict);
+    
     TitanInfo():
     feedNum(0),
     level(0),
-    currentManual(0),
+    currentManual(-1),
     exp(0),
     titanId(""),
     status(0),
@@ -44,8 +46,13 @@ public:
     nextExp(0),
     feedMaxNum(0),
     feedFoodNum(0),
-    uuid("")
-    {};
+    uuid(""),
+    lastCalTime(-1),
+    recoverymanual(0),
+    costmanual(0),
+    recoverInterval(0),
+    recoverPerInterval(-1)
+    {}
     
     int resetTitanInfo(CCDictionary* dict);// 0没有改变 1数值改变(页面需要刷新的数值) 2状态改变
     
@@ -61,6 +68,12 @@ public:
     int feedFoodNum; //每次喂食的粮食个数
     int maxManual;//对应级别的体力上限
     std::string uuid ;
+    long lastCalTime;
+    int recoverymanual;
+    int costmanual;
+    int recoverInterval;
+    float recoverPerInterval;//每点体力回复间隔 毫秒
+    void resetLastCalTime(long time = -1);
 private:
     virtual bool init(){return true;};
     

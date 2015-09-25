@@ -353,9 +353,28 @@ void BattleView::updateLoadInfo(CCObject* obj)
 }
 void BattleView::titanNumChange(CCObject* obj)
 {
-
+    CCInteger *num = dynamic_cast<CCInteger*>(obj);
+    if (num) {
+        
+        if (num->getValue() == 1)
+        {
+            if (GlobalData::shared()->titanInfo.currentManual<GlobalData::shared()->titanInfo.costmanual)
+            {
+                m_marchBtn->setColor(ccRED);
+                
+            }
+            else
+            {
+                m_marchBtn->setColor(ccWHITE);
+            }
+        }
+        else
+        {
+            m_marchBtn->setColor(ccWHITE);
+        }
+//        m_marchBtn->setEnabled(true);
+    }
     
-    m_marchBtn->setEnabled(true);
 }
 
 SEL_CCControlHandler BattleView::onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName)
@@ -574,6 +593,14 @@ void BattleView::onHelpClick(CCObject * pSender, Control::EventType pCCControlEv
 
 void BattleView::onClickMarchBtn(CCObject * pSender, Control::EventType pCCControlEvent)
 {
+    
+    if( m_marchBtn->getColor() == ccRED)
+    {
+        
+        CCCommonUtils::flyHint("", "", "Insufficient Titan manual");
+        return ;
+    }
+    
     bool haveSoldier = false;
     for (auto &troop:TroopsController::getInstance()->m_tmpBattleInfos) {
         if (troop.second > 0) {
@@ -853,6 +880,12 @@ void BattleView::selectAll(){
             }
         }
         TroopsController::getInstance()->updateTmpBattleData(m_soldierId, tmpCntNum, m_soldierId);
+        int sid = CCString::create(m_soldierId)->intValue();
+        if(sid>=107401&&sid<=107430&&GlobalData::shared()->titanInfo.currentManual<GlobalData::shared()->titanInfo.costmanual)
+        {
+            
+            this->m_marchBtn->setColor(ccRED); //fusheng onEnter之后注册通知函数  第一次在这里还没注册
+        }
         if(totalNum + tmpCntNum >= maxForceNum){
             break;
         }
@@ -866,6 +899,9 @@ void BattleView::selectAll(){
 }
 
 void BattleView::unselectAll(){
+
+    this->m_marchBtn->setColor(ccWHITE);//fusheng onEnter之后注册通知函数  第一次在这里还没注册
+
     for (int i = 0; i<m_tmpArray->count(); i++) {
         std::string m_soldierId = dynamic_cast<CCString*>(m_tmpArray->objectAtIndex(i))->getCString();
         TroopsController::getInstance()->updateTmpBattleData(m_soldierId, 0, m_soldierId);
@@ -1185,7 +1221,7 @@ void SoldierCell::valueChange(CCObject * pSender, Control::EventType pCCControlE
         //fusheng 改变泰坦个数
         if (numChange) {
             CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_COUNT_CHANGE
-                                                                                   , NULL);
+                                                                                   , CCInteger::create(retNum));
         }
     }
 }
@@ -1217,7 +1253,7 @@ void SoldierCell::onSubClick(CCObject * pSender, Control::EventType pCCControlEv
     if (soldierId<=107430&&soldierId>=107401) {
         //fusheng 改变泰坦个数
         CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_COUNT_CHANGE
-                                                                               , NULL);
+                                                                               , CCInteger::create(num));
     }
 }
 
@@ -1228,13 +1264,13 @@ void SoldierCell::onAddClick(CCObject * pSender, Control::EventType pCCControlEv
     }
     m_slider->setValue(num * 1.0f / m_cntNum);
     
-//    int soldierId = CCString::create(m_soldierId)->intValue();
-//    
-//    if (soldierId<=107430&&soldierId>=107401) {
-//        //fusheng 改变泰坦个数
-//        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_COUNT_CHANGE
-//                                                                               , NULL);
-//    }
+    int soldierId = CCString::create(m_soldierId)->intValue();
+    
+    if (soldierId<=107430&&soldierId>=107401) {
+        //fusheng 改变泰坦个数
+        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_COUNT_CHANGE
+                                                                               , CCInteger::create(num));
+    }
 }
 
 bool SoldierCell::onAssignCCBMemberVariable(cocos2d::CCObject *pTarget, const char *pMemberVariableName, cocos2d::CCNode *pNode) {

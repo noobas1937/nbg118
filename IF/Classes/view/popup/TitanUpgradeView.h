@@ -49,6 +49,7 @@ private:
     void onGotoSpdView();
     
     void updateInfo(CCObject* obj);
+    void updateTitanInfo(CCObject* obj);//fusheng 更新泰坦属性
     void updateParasInfo();
     
     void onShowNextUnlockItem();

@@ -35,10 +35,6 @@
 
 TitanUpgradeView* TitanUpgradeView::create(int buildId,int titanId, int pos){
     TitanUpgradeView* ret = new TitanUpgradeView();
-    if(ret)
-    {
-        ret->m_titanId = titanId;
-    }
     if(ret && ret->init(buildId, pos)){
         ret->autorelease();
     }else{
@@ -51,6 +47,10 @@ bool TitanUpgradeView::init(int buildId, int pos)
 {
     if (!PopupBaseView::init()) {
         return false;
+    }
+    if(SceneController::getInstance()->currentSceneId == SCENE_ID_WORLD) //fusheng 在世界场景里 加载Imperial_22.plist
+    {
+        CCLoadSprite::doResourceByPathIndex(IMPERIAL_PATH,22, true);
     }
     setIsHDPanel(true);
     m_isReturn = true;
@@ -90,7 +90,8 @@ bool TitanUpgradeView::init(int buildId, int pos)
     m_itemScrollView->setTouchEnabled(false);
     m_iconList->addChild(m_itemScrollView);
     
-    updateInfo(NULL);
+//    updateInfo(NULL);
+    updateTitanInfo(nullptr);
     m_openNum=0;
     
     //    m_mainNode->setPositionY(m_mainNode->getPositionY()-200);
@@ -127,13 +128,19 @@ bool TitanUpgradeView::init(int buildId, int pos)
     onShowNextUnlockItem();
     m_titanPosInView->addChild( TitanInView::create());
     
-    ArmyInfo titanInfo = GlobalData::shared()->armyList[CC_ITOA(m_titanId)]; //fusheng map中通过id获得泰坦属性
-    ArmyInfo nextTitanInfo = GlobalData::shared()->armyList[CC_ITOA(m_titanId+1)];
+
+    return true;
+}
+
+void TitanUpgradeView::updateTitanInfo(CCObject* obj)
+{
+    ArmyInfo titanInfo = GlobalData::shared()->armyList[GlobalData::shared()->titanInfo.titanId]; //fusheng map中通过id获得泰坦属性 泰坦满记属性
+    ArmyInfo nextTitanInfo = GlobalData::shared()->armyList[ CC_ITOA(CCString::create(GlobalData::shared()->titanInfo.titanId)->intValue()+1)];
     m_titanCurrentZDL->setString(CC_ITOA(titanInfo.power));
     m_titanCurrentZDLInNext->setString(CC_ITOA(nextTitanInfo.power));
     m_titanZDLAddValue->setString(CCString::createWithFormat("+%.1f",nextTitanInfo.power-titanInfo.power)->getCString());
+    updateInfo(nullptr);
     
-    return true;
 }
 
 void TitanUpgradeView::updateInfo(CCObject* obj)
@@ -405,7 +412,12 @@ void TitanUpgradeView::onEnter()
     
     m_openNum++;
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(TitanUpgradeView::updateInfo), MSG_REFREASH_BUILD_UPGRADE, NULL);
+    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(TitanUpgradeView::updateTitanInfo), MSG_TITAN_INFORMATION_RESET, NULL);
     setTouchEnabled(true);
+    int sid = SceneController::getInstance()->currentSceneId;
+    
+   
+    
     //CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, Touch_Default, false);
 }
 
@@ -413,7 +425,14 @@ void TitanUpgradeView::onExit()
 {
     UIComponent::getInstance()->showResourceBar(false);
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_REFREASH_BUILD_UPGRADE);
+    CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_TITAN_INFORMATION_RESET);
+    
     setTouchEnabled(false);
+    
+    if(SceneController::getInstance()->currentSceneId == SCENE_ID_WORLD)
+    {
+        CCLoadSprite::doResourceByPathIndex(IMPERIAL_PATH,22, true);
+    }
     CCNode::onExit();
 }
 
@@ -747,7 +766,8 @@ void TitanUpgradeView::onLastUp()
             m_isReturn = false;
             PopupViewController::getInstance()->removeAllPopupView();
             auto layer = dynamic_cast<ImperialScene*>(SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE));
-            layer->showBuildBtns(m_buildId);
+            if(layer)
+                layer->showBuildBtns(m_buildId);
         }
     }
     else {
@@ -755,7 +775,8 @@ void TitanUpgradeView::onLastUp()
         {
             m_isReturn = false;
             auto layer = dynamic_cast<ImperialScene*>(SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE));
-            layer->hideTmpBuild(m_pos);
+            if(layer)
+                layer->hideTmpBuild(m_pos);
             PopupViewController::getInstance()->removeAllPopupView();
         }
     }
