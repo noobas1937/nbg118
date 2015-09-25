@@ -145,8 +145,8 @@
 								<string>ScaleLock</string>
 								<key>value</key>
 								<array>
-									<real>0.30000001192092896</real>
-									<real>0.30000001192092896</real>
+									<real>1</real>
+									<real>1</real>
 									<true/>
 									<integer>0</integer>
 								</array>
@@ -4210,8 +4210,8 @@
 								<string>ScaleLock</string>
 								<key>value</key>
 								<array>
-									<real>0.30000001192092896</real>
-									<real>0.30000001192092896</real>
+									<real>1</real>
+									<real>1</real>
 									<true/>
 									<integer>0</integer>
 								</array>
@@ -4326,7 +4326,7 @@
 								<array>
 									<real>1</real>
 									<real>1</real>
-									<false/>
+									<true/>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -4455,8 +4455,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>234.10000610351562</real>
-									<real>64.900001525878906</real>
+									<real>226.10000610351562</real>
+									<real>67.900001525878906</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -4493,6 +4493,8 @@
 								<false/>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>animatedProperties</key>

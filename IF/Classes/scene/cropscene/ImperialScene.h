@@ -33,7 +33,8 @@
 #define ANNOUCE_TIME "Time"
 #define FIRST_OPEN_AFTER_UPDATE "firstOpenAfterUpdate1"
 #define MSG_TALK_OPEN "msg.talk.open"
-#define BUILD_COUNT 59
+// tao.yu buildCount从59修改为54
+#define BUILD_COUNT 54
 #define MSG_SHOW_EXP_PARTICLE "msg.show.exp.particle"
 #define MSG_SHOW_POWER_PARTICLE "msg.show.power.particle"
 #define ACTIVITY_BOTTLE_TAG 1000

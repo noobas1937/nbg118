@@ -205,8 +205,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>152.12730407714844</real>
-									<real>49.873458862304688</real>
+									<real>160.12730407714844</real>
+									<real>52.873458862304688</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -228,8 +228,8 @@
 								<string>ScaleLock</string>
 								<key>value</key>
 								<array>
-									<real>0.30000001192092896</real>
-									<real>0.30000001192092896</real>
+									<real>1</real>
+									<real>1</real>
 									<true/>
 									<integer>0</integer>
 								</array>
@@ -288,8 +288,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>182</real>
-									<real>62</real>
+									<real>190</real>
+									<real>65</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -311,8 +311,8 @@
 								<string>ScaleLock</string>
 								<key>value</key>
 								<array>
-									<real>0.30000001192092896</real>
-									<real>0.30000001192092896</real>
+									<real>1</real>
+									<real>1</real>
 									<true/>
 									<integer>0</integer>
 								</array>
@@ -432,8 +432,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>165.10000610351562</real>
-									<real>49.900001525878906</real>
+									<real>167.10000610351562</real>
+									<real>56.900001525878906</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -470,6 +470,8 @@
 								<false/>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 				</array>
 				<key>customClass</key>

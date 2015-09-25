@@ -353,8 +353,6 @@
 								</array>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -439,8 +437,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>236.48426818847656</real>
-									<real>67.219444274902344</real>
+									<real>174.48426818847656</real>
+									<real>31.219444274902344</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -477,6 +475,8 @@
 								<false/>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>animatedProperties</key>

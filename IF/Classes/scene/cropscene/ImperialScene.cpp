@@ -437,8 +437,7 @@ void ImperialScene::buildingCallBack(CCObject* params)
     onUpdateInfo();
     checkTileGlow(NULL);
     
-    // tao.yu 第一版本咱不开放feedback，场景巡逻兵，对话人物
-//    initMc2();
+    initMc2();
     
     m_buildingInitState = true;
     onCreateTitan();
@@ -1421,7 +1420,7 @@ void ImperialScene::onUpgradeNewBuild(int buildId)
     build->setNamePos(m_nodeBuildings[pos]->getPositionX()
                       , m_nodeBuildings[pos]->getPositionY(), m_signLayer, m_popLayer, m_arrbatchNode, curBatch, od, curBlentBatch);
     
-    if (buildId == FUN_BUILD_WALL_ID) {
+    if (buildId == FUN_BUILD_WALL_ID  && m_wallBuild) {
         m_wallBuild->onBuildDelete();
         m_wallNode->removeChild(m_wallBuild);
         m_wallBuild = NULL;
@@ -1594,7 +1593,8 @@ void ImperialScene::onMoveToBuildAndPlay(int itemId, bool st)
     int buildPosX = build->getParent()->getPositionX() + build->mainWidth / 2 ;
     int buildPosY = build->getParent()->getPositionY() + build->mainHeight;
     if (itemId == FUN_BUILD_MAIN_CITY_ID) {
-        buildPosY -= build->mainHeight/2;
+        buildPosX = build->getParent()->getPositionX() + build->mainWidth * 0.8;
+        buildPosY -= build->mainHeight/4;
     }
     m_flyArrow->setPosition(ccp(buildPosX, buildPosY));
     m_flyArrow->setVisible(true);
@@ -2371,7 +2371,7 @@ void ImperialScene::onEnterFrame(float dt)
         //每隔80秒执行一次
         if (m_sysTime%160==0) {
             int rIdx = CCMathUtils::getRandomInt(0, 9);
-            if (rIdx < 5) {
+            if (rIdx < 2) {
                 showRain();
             }else {
                 if (m_isDay && !m_isRain) {
@@ -3071,8 +3071,8 @@ void ImperialScene::initMc2()
             }
         }
     }
-    
-    if (flag) {
+    // tao.yu 第一版本不开放人物对话
+    if (false && flag) {
         int zOrder = m_mcNode2->getZOrder();
         auto pArray = CCPointArray::create(20);
         pArray->addControlPoint(ccp(7.0, 0));
@@ -3120,7 +3120,7 @@ void ImperialScene::initMc2()
         person->onSetType(1);
     }
     
-    if (1) {
+    if (0) {
         int zOrder = m_mcNode2->getZOrder();
         m_ptArray = CCPointArray::create(20);
         m_ptArray->addControlPoint(ccp(400, -200));
@@ -3144,7 +3144,7 @@ void ImperialScene::initMc2()
         effSpr0->setZOrder(zOrder*1000);
     }
     
-    if (1) {
+    if (0) {
         int zOrder = m_mcNode5->getZOrder();
         auto effSpr0 = CCSprite::create();
         CCCommonUtils::makeTwoAnimatSpr(effSpr0, "tanhua_%d.png", 7, 1, 0.2 );
@@ -3156,7 +3156,7 @@ void ImperialScene::initMc2()
     }
     
     // tao.yu 暂时不开放feedback功能
-    if (0) {
+    if (1) {
         int zOrder = m_desNode1->getZOrder();
         m_mailBuild = SpeBuild::create(SPE_BUILD_MAIL);
         m_desNode1->addChild(m_mailBuild);
@@ -3228,9 +3228,11 @@ bool ImperialScene::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const
         strncpy(index, pMemberVariableName + 6, strlen(pMemberVariableName) - 6);
         
         int cityIndex = atoi(index);
-        CCAssert(cityIndex < BUILD_COUNT,"Node citys could not more than m_nodeCity!");
-        m_nodeBuildings[cityIndex] = pNode;
-        m_nodeBuildings[cityIndex]->retain();
+//        CCAssert(cityIndex < BUILD_COUNT,"Node citys could not more than m_nodeCity!");
+        if (cityIndex < BUILD_COUNT) {
+            m_nodeBuildings[cityIndex] = pNode;
+            m_nodeBuildings[cityIndex]->retain();
+        }
         return true;
     }
     else if (pTarget == this && strncmp(pMemberVariableName, "m_bigTileNode",13) == 0) {
@@ -3512,8 +3514,8 @@ void ImperialScene::initBigTile()
         int hod = m_goldMineNode->getZOrder();
         m_goldMineBuild->setNamePos(m_goldMineNode->getPositionX(), m_goldMineNode->getPositionY(), m_signLayer, m_arrbatchNode, m_resbatchNode, hod);
     }
-    // tao.yu 第一版不开放转盘 但开放每日签到
-    if(true) {// GlobalData::shared()->playerInfo.gmFlag==1
+    // tao.yu 第一版不开放酒馆
+    if(false) {// GlobalData::shared()->playerInfo.gmFlag==1
         m_goldBoxBuild = SpeBuild::create(SPE_BUILD_GOLD_BOX);
         m_goldBoxNode->addChild(m_goldBoxBuild);
         int hod = m_goldBoxNode->getZOrder();
@@ -3549,7 +3551,8 @@ void ImperialScene::initBigTile()
         int hod = m_newRDNode->getZOrder();
         m_newRDBuild->setNamePos(m_newRDNode->getPositionX(), m_newRDNode->getPositionY(), m_signLayer, m_arrbatchNode, m_resbatchNode, hod);
     }
-    if (PortActController::getInstance()->m_isNewTimeRwd) {
+    // tao.yu 第一版本不开放在线时间奖励
+    if (false && PortActController::getInstance()->m_isNewTimeRwd) {
         m_cargoBuild = SpeBuild::create(SPE_BUILD_CARGO);
         m_cargoNode->addChild(m_cargoBuild);
         int hod = m_cargoNode->getZOrder();
