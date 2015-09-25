@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>libao_1_.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{4,4},{115,136}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{115,136}}</string>
+                <key>sourceSize</key>
+                <string>{115,136}</string>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>2</integer>
+            <key>realTextureFileName</key>
+            <string>build_allianceicon.pvr.ccz</string>
+            <key>size</key>
+            <string>{128,256}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:fc1c14abc659b14f5000c7a0e316451a:399c366d48dbe619e0540aeca9f4e9f9:5bed332855686b0a32c6256734bb07a0$</string>
+            <key>textureFileName</key>
+            <string>build_allianceicon.pvr.ccz</string>
+        </dict>
+    </dict>
+</plist>

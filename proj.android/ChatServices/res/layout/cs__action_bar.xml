@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	            android:id="@+id/actionbar_backLayout"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:background="@drawable/ui_gray_biaotilan"
+	            android:orientation="horizontal"
+                android:focusable="true"
+                android:focusableInTouchMode="true" >
+    <Button
+        android:id="@+id/actionbar_backButton"
+        android:layout_width="51dp"
+        android:layout_height="51dp"
+        android:layout_marginBottom="-4dp"
+        android:layout_marginLeft="-3dp"
+        android:layout_marginTop="-4dp"
+        android:background="@drawable/but_back" />
+
+    <TextView
+        android:id="@+id/actionbar_titleLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="聊天"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/hs__actionBarTextColorPrimary"
+        android:textSize="@dimen/cs__textButtonTitle" />
+    <!-- android:textStyle="bold" -->
+
+    <Button
+        android:id="@+id/actionbar_optionButton"
+        android:layout_width="51dp"
+        android:layout_height="51dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="-4dp"
+        android:layout_marginRight="-3dp"
+        android:layout_marginTop="-4dp"
+        android:background="@drawable/icon_add_mumber2" />
+</RelativeLayout>

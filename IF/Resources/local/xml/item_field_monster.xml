@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<tns:database xmlns:tns="http://www.iw.com/sns/platform/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Group id="field_monster">
+        <ItemSpec id="9400" level="1" name="103768" description="103706,103707,103708,103709,103710,103711,103712,103713,103714,103718,103720,103721,103722,103726" num="1" monster="Kulou" reward="200041,200374,200364" monster_update="kulou_1" usePower="5"/>
+        <ItemSpec id="9401" level="2" name="103768" description="103706,103707,103708,103709,103710,103711,103712,103713,103714,103718,103720,103721,103722,103726" num="1" monster="Kulou" reward="200041,200374,200364" monster_update="kulou_2" usePower="5"/>
+        <ItemSpec id="9402" level="3" name="103734" description="103706,103707,103708,103709,103710,103711,103712,103713,103714,103718,103720,103721,103722,103726" num="1" monster="rm" reward="200041,200374,200364" monster_update="rm_1" usePower="5"/>
+        <ItemSpec id="9403" level="4" name="103734" description="103706,103707,103708,103709,103710,103711,103712,103713,103714,103718,103720,103721,103722,103726" num="1" monster="rm" reward="200041,200027,200364" monster_update="rm_2" usePower="5"/>
+        <ItemSpec id="9404" level="5" name="103734" description="103706,103707,103708,103709,103710,103711,103712,103713,103714,103718,103720,103721,103722,103726" num="1" monster="rm" reward="200041,200027,200364" monster_update="rm_3" usePower="5"/>
+        <ItemSpec id="9405" level="6" name="103770" description="103706,103707,103708,103709,103710,103711,103712,103713,103714,103718,103720,103721,103722,103726" num="1" monster="Yeren" reward="200041,200027,200364" monster_update="yeren_1" usePower="5"/>
+        <ItemSpec id="9406" level="7" name="103770" description="103706,103707,103708,103709,103710,103711,103712,103713,103714,103718,103720,103721,103722,103726" num="1" monster="Yeren" reward="200041,200028,200364" monster_update="yeren_1" usePower="5"/>
+        <ItemSpec id="9407" level="8" name="103770" description="103706,103707,103708,103709,103710,103711,103712,103713,103714,103718,103720,103721,103722,103726" num="1" monster="Yeren" reward="200041,200028,200364" monster_update="yeren_2" usePower="5"/>
+        <ItemSpec id="9408" level="9" name="103770" description="103706,103707,103708,103709,103710,103711,103712,103713,103714,103718,103720,103721,103722,103726" num="1" monster="Yeren" reward="200041,200028,200364" monster_update="yeren_2" usePower="5"/>
+        <ItemSpec id="9409" level="10" name="103770" description="103706,103707,103708,103709,103710,103711,103712,103713,103714,103718,103720,103721,103722,103726" num="1" monster="Yeren" reward="200041,200016,200364" monster_update="yeren_3" usePower="5"/>
+        <ItemSpec id="9410" level="11" name="103770" description="103706,103707,103708,103709,103710,103711,103712,103713,103714,103718,103720,103721,103722,103726" num="1" monster="Yeren" reward="200041,200016,200364" monster_update="yeren_3" usePower="5"/>
+        <ItemSpec id="9411" level="12" name="103733" description="103706,103707,103708,103709,103710,103711,103712,103713,103714,103718,103720,103721,103722,103726" num="1" monster="rock" reward="200041,200016,200364" monster_update="rock" usePower="5"/>
+        <ItemSpec id="9412" level="13" name="103733" description="103706,103707,103708,103709,103710,103711,103712,103713,103714,103718,103720,103721,103722,103726" num="1" monster="rock" reward="200041,200020,200364" monster_update="rock" usePower="5"/>
+        <ItemSpec id="9413" level="14" name="103733" description="103706,103707,103708,103709,103710,103711,103712,103713,103714,103718,103720,103721,103722,103726" num="1" monster="rock" reward="200041,200020,200364" monster_update="rock" usePower="5"/>
+        <ItemSpec id="9414" level="15" name="103733" description="103706,103707,103708,103709,103710,103711,103712,103713,103714,103718,103720,103721,103722,103726" num="1" monster="rock" reward="200041,200020,200364" monster_update="rock" usePower="5"/>
+        <ItemSpec id="9415" level="16" name="103733" description="103706,103707,103708,103709,103710,103711,103712,103713,103714,103718,103720,103721,103722,103726" num="1" monster="rock" reward="200041,200427,200364" monster_update="rock" usePower="5"/>
+        <ItemSpec id="9416" level="17" name="103733" description="103706,103707,103708,103709,103710,103711,103712,103713,103714,103718,103720,103721,103722,103726" num="1" monster="rock" reward="200041,200427,200364" monster_update="rock" usePower="5"/>
+        <ItemSpec id="9417" level="18" name="103732" description="103706,103707,103708,103709,103710,103711,103712,103713,103714,103718,103720,103721,103722,103726" num="1" monster="Griffin" reward="200041,200427,200364" monster_update="griffin_1" usePower="5"/>
+        <ItemSpec id="9418" level="19" name="103732" description="103706,103707,103708,103709,103710,103711,103712,103713,103714,103718,103720,103721,103722,103726" num="1" monster="Griffin" reward="200041,200220,200364" monster_update="griffin_1" usePower="5"/>
+        <ItemSpec id="9419" level="20" name="103732" description="103706,103707,103708,103709,103710,103711,103712,103713,103714,103718,103720,103721,103722,103726" num="1" monster="Griffin" reward="200041,200220,200364" monster_update="griffin_2" usePower="5"/>
+        <ItemSpec id="9420" level="21" name="103732" description="103706,103707,103708,103709,103710,103711,103712,103713,103714,103718,103720,103721,103722,103726" num="1" monster="Griffin" reward="200041,200220,200364" monster_update="griffin_2" usePower="5"/>
+        <ItemSpec id="9421" level="22" name="103732" description="103706,103707,103708,103709,103710,103711,103712,103713,103714,103718,103720,103721,103722,103726" num="1" monster="Griffin" reward="200041,200416,200364" monster_update="griffin_3" usePower="5"/>
+        <ItemSpec id="9422" level="23" name="103732" description="103706,103707,103708,103709,103710,103711,103712,103713,103714,103718,103720,103721,103722,103726" num="1" monster="Griffin" reward="200041,200416,200364" monster_update="griffin_3" usePower="5"/>
+        <ItemSpec id="9423" level="24" name="103769" description="103706,103707,103708,103709,103710,103711,103712,103713,103714,103718,103720,103721,103722,103726" num="1" monster="Shixianggui" reward="200041,200416,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="9424" level="25" name="103769" description="103706,103707,103708,103709,103710,103711,103712,103713,103714,103718,103720,103721,103722,103726" num="1" monster="Shixianggui" reward="200041,200418,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="9425" level="26" name="103769" description="103706,103707,103708,103709,103710,103711,103712,103713,103714,103718,103720,103721,103722,103726" num="1" monster="Shixianggui" reward="200041,200418,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="9426" level="27" name="103769" description="103706,103707,103708,103709,103710,103711,103712,103713,103714,103718,103720,103721,103722,103726" num="1" monster="Shixianggui" reward="200041,200418,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="9427" level="28" name="103769" description="103706,103707,103708,103709,103710,103711,103712,103713,103714,103718,103720,103721,103722,103726" num="1" monster="Shixianggui" reward="200041,200424,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="9428" level="29" name="103769" description="103706,103707,103708,103709,103710,103711,103712,103713,103714,103718,103720,103721,103722,103726" num="1" monster="Shixianggui" reward="200041,200424,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="9429" level="30" name="103769" description="103706,103707,103708,103709,103710,103711,103712,103713,103714,103718,103720,103721,103722,103726" num="1" monster="Shixianggui" reward="200041,200424,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="806110" name="133041" num="1" monster="heiqishi_1" monster_update="heiqishi_1" usePower="5"/>
+        <ItemSpec id="806120" name="133041" num="1" monster="heiqishi_1" monster_update="heiqishi_1" usePower="5"/>
+        <ItemSpec id="806210" name="133041" num="1" monster="heiqishi_1" monster_update="heiqishi_1" usePower="5"/>
+        <ItemSpec id="806220" name="133041" num="1" monster="heiqishi_1" monster_update="heiqishi_1" usePower="5"/>
+        <ItemSpec id="806230" name="133041" num="1" monster="heiqishi_1" monster_update="heiqishi_1" usePower="5"/>
+        <ItemSpec id="806240" name="133041" num="1" monster="heiqishi_1" monster_update="heiqishi_1" usePower="5"/>
+        <ItemSpec id="806310" name="133042" num="1" monster="heiqishi_2" monster_update="heiqishi_2" usePower="5"/>
+        <ItemSpec id="806320" name="133042" num="1" monster="heiqishi_2" monster_update="heiqishi_2" usePower="5"/>
+        <ItemSpec id="803110" name="133041" num="1" monster="heiqishi_1" monster_update="heiqishi_1" usePower="5"/>
+        <ItemSpec id="803120" name="133041" num="1" monster="heiqishi_1" monster_update="heiqishi_1" usePower="5"/>
+        <ItemSpec id="803210" name="133041" num="1" monster="heiqishi_1" monster_update="heiqishi_1" usePower="5"/>
+        <ItemSpec id="803220" name="133041" num="1" monster="heiqishi_1" monster_update="heiqishi_1" usePower="5"/>
+        <ItemSpec id="803230" name="133041" num="1" monster="heiqishi_1" monster_update="heiqishi_1" usePower="5"/>
+        <ItemSpec id="803240" name="133041" num="1" monster="heiqishi_1" monster_update="heiqishi_1" usePower="5"/>
+        <ItemSpec id="803310" name="133042" num="1" monster="heiqishi_2" monster_update="heiqishi_2" usePower="5"/>
+        <ItemSpec id="803320" name="133042" num="1" monster="heiqishi_2" monster_update="heiqishi_2" usePower="5"/>
+        <ItemSpec id="812110" name="133041" num="1" monster="heiqishi_1" monster_update="heiqishi_1" usePower="5"/>
+        <ItemSpec id="812120" name="133041" num="1" monster="heiqishi_1" monster_update="heiqishi_1" usePower="5"/>
+        <ItemSpec id="812210" name="133041" num="1" monster="heiqishi_1" monster_update="heiqishi_1" usePower="5"/>
+        <ItemSpec id="812220" name="133041" num="1" monster="heiqishi_1" monster_update="heiqishi_1" usePower="5"/>
+        <ItemSpec id="812230" name="133041" num="1" monster="heiqishi_1" monster_update="heiqishi_1" usePower="5"/>
+        <ItemSpec id="812240" name="133041" num="1" monster="heiqishi_1" monster_update="heiqishi_1" usePower="5"/>
+        <ItemSpec id="812310" name="133042" num="1" monster="heiqishi_2" monster_update="heiqishi_2" usePower="5"/>
+        <ItemSpec id="812320" name="133042" num="1" monster="heiqishi_2" monster_update="heiqishi_2" usePower="5"/>
+        <ItemSpec id="818110" name="133041" num="1" monster="heiqishi_1" monster_update="heiqishi_1" usePower="5"/>
+        <ItemSpec id="818120" name="133041" num="1" monster="heiqishi_1" monster_update="heiqishi_1" usePower="5"/>
+        <ItemSpec id="818210" name="133041" num="1" monster="heiqishi_1" monster_update="heiqishi_1" usePower="5"/>
+        <ItemSpec id="818220" name="133041" num="1" monster="heiqishi_1" monster_update="heiqishi_1" usePower="5"/>
+        <ItemSpec id="818230" name="133041" num="1" monster="heiqishi_1" monster_update="heiqishi_1" usePower="5"/>
+        <ItemSpec id="818240" name="133041" num="1" monster="heiqishi_1" monster_update="heiqishi_1" usePower="5"/>
+        <ItemSpec id="818310" name="133042" num="1" monster="heiqishi_2" monster_update="heiqishi_2" usePower="5"/>
+        <ItemSpec id="818320" name="133042" num="1" monster="heiqishi_2" monster_update="heiqishi_2" usePower="5"/>
+        <ItemSpec id="806410" name="133043" num="1" monster="heiqishi_3" monster_update="heiqishi_3" usePower="5"/>
+        <ItemSpec id="806420" name="133043" num="1" monster="heiqishi_3" monster_update="heiqishi_3" usePower="5"/>
+        <ItemSpec id="806510" name="133043" num="1" monster="heiqishi_3" monster_update="heiqishi_3" usePower="5"/>
+        <ItemSpec id="806520" name="133043" num="1" monster="heiqishi_3" monster_update="heiqishi_3" usePower="5"/>
+        <ItemSpec id="806610" name="133043" num="1" monster="heiqishi_3" monster_update="heiqishi_3" usePower="5"/>
+        <ItemSpec id="806620" name="133043" num="1" monster="heiqishi_3" monster_update="heiqishi_3" usePower="5"/>
+        <ItemSpec id="803410" name="133043" num="1" monster="heiqishi_3" monster_update="heiqishi_3" usePower="5"/>
+        <ItemSpec id="803420" name="133043" num="1" monster="heiqishi_3" monster_update="heiqishi_3" usePower="5"/>
+        <ItemSpec id="803510" name="133043" num="1" monster="heiqishi_3" monster_update="heiqishi_3" usePower="5"/>
+        <ItemSpec id="803520" name="133043" num="1" monster="heiqishi_3" monster_update="heiqishi_3" usePower="5"/>
+        <ItemSpec id="803610" name="133043" num="1" monster="heiqishi_3" monster_update="heiqishi_3" usePower="5"/>
+        <ItemSpec id="803620" name="133043" num="1" monster="heiqishi_3" monster_update="heiqishi_3" usePower="5"/>
+        <ItemSpec id="812410" name="133043" num="1" monster="heiqishi_3" monster_update="heiqishi_3" usePower="5"/>
+        <ItemSpec id="812420" name="133043" num="1" monster="heiqishi_3" monster_update="heiqishi_3" usePower="5"/>
+        <ItemSpec id="812510" name="133043" num="1" monster="heiqishi_3" monster_update="heiqishi_3" usePower="5"/>
+        <ItemSpec id="812520" name="133043" num="1" monster="heiqishi_3" monster_update="heiqishi_3" usePower="5"/>
+        <ItemSpec id="812610" name="133043" num="1" monster="heiqishi_3" monster_update="heiqishi_3" usePower="5"/>
+        <ItemSpec id="812620" name="133043" num="1" monster="heiqishi_3" monster_update="heiqishi_3" usePower="5"/>
+        <ItemSpec id="818410" name="133043" num="1" monster="heiqishi_3" monster_update="heiqishi_3" usePower="5"/>
+        <ItemSpec id="818420" name="133043" num="1" monster="heiqishi_3" monster_update="heiqishi_3" usePower="5"/>
+        <ItemSpec id="818510" name="133043" num="1" monster="heiqishi_3" monster_update="heiqishi_3" usePower="5"/>
+        <ItemSpec id="818520" name="133043" num="1" monster="heiqishi_3" monster_update="heiqishi_3" usePower="5"/>
+        <ItemSpec id="818610" name="133043" num="1" monster="heiqishi_3" monster_update="heiqishi_3" usePower="5"/>
+        <ItemSpec id="818620" name="133043" num="1" monster="heiqishi_3" monster_update="heiqishi_3" usePower="5"/>
+        <ItemSpec id="900000" level="1" name="103780" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200364,209179" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900001" level="2" name="103780" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200364,209179" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900002" level="3" name="103780" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200364,209179" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900003" level="4" name="103780" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200364,209179" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900004" level="5" name="103780" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200364,209179" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900005" level="6" name="103780" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200364,209179" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900006" level="7" name="103780" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200364,209179" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900007" level="8" name="103780" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200364,209179" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900008" level="9" name="103780" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200364,209179" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900009" level="10" name="103780" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200364,209179" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900010" level="11" name="103780" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200364,209179" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900011" level="12" name="103780" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200364,209179" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900012" level="13" name="103780" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200364,209179" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900013" level="14" name="103780" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200364,209179" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900014" level="15" name="103780" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200364,209179" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900015" level="16" name="103780" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200364,209179" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900016" level="17" name="103780" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200364,209179" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900017" level="18" name="103780" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200364,209179" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900018" level="19" name="103780" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200364,209179" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900019" level="20" name="103780" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200364,209179" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900020" level="21" name="103780" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200364,209179" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900021" level="22" name="103780" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200364,209179" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900022" level="23" name="103780" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200364,209179" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900023" level="24" name="103780" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200364,209179" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900024" level="25" name="103780" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200364,209179" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900025" level="26" name="103780" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200364,209179" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900026" level="27" name="103780" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200364,209179" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900027" level="28" name="103780" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200364,209179" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900028" level="29" name="103780" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200364,209179" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900029" level="30" name="103780" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200364,209179" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900030" level="6" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="scws" reward="200200,200603,200342" monster_update="scws" usePower="20"/>
+        <ItemSpec id="900031" level="7" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="scws" reward="200200,200603,200342" monster_update="scws" usePower="20"/>
+        <ItemSpec id="900032" level="8" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="scws" reward="200200,200603,200342" monster_update="scws" usePower="20"/>
+        <ItemSpec id="900033" level="9" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="scws" reward="200200,200603,200342" monster_update="scws" usePower="20"/>
+        <ItemSpec id="900034" level="10" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="scws" reward="200200,200603,200342" monster_update="scws" usePower="20"/>
+        <ItemSpec id="900035" level="6" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="scws" reward="200200,200603,200342" monster_update="scws" usePower="20"/>
+        <ItemSpec id="900036" level="7" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="scws" reward="200200,200603,200342" monster_update="scws" usePower="20"/>
+        <ItemSpec id="900037" level="8" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="scws" reward="200200,200603,200342" monster_update="scws" usePower="20"/>
+        <ItemSpec id="900038" level="9" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="scws" reward="200200,200603,200342" monster_update="scws" usePower="20"/>
+        <ItemSpec id="900039" level="10" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="scws" reward="200200,200603,200342" monster_update="scws" usePower="20"/>
+        <ItemSpec id="900040" level="6" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="scws" reward="200200,200603,200342" monster_update="scws" usePower="20"/>
+        <ItemSpec id="900041" level="7" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="scws" reward="200200,200603,200342" monster_update="scws" usePower="20"/>
+        <ItemSpec id="900042" level="8" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="scws" reward="200200,200603,200342" monster_update="scws" usePower="20"/>
+        <ItemSpec id="900043" level="9" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="scws" reward="200200,200603,200342" monster_update="scws" usePower="20"/>
+        <ItemSpec id="900044" level="10" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="scws" reward="200200,200603,200342" monster_update="scws" usePower="20"/>
+        <ItemSpec id="900045" level="1" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200374,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900046" level="2" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200374,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900047" level="3" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200374,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900048" level="4" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200374,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900049" level="5" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200374,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900050" level="6" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200374,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900051" level="7" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200374,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900052" level="8" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200374,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900053" level="9" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200374,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900054" level="10" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200374,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900055" level="11" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200374,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900056" level="12" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200374,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900057" level="13" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200374,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900058" level="14" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200374,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900059" level="15" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200374,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900060" level="16" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200374,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900061" level="17" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200374,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900062" level="18" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200374,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900063" level="19" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200374,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900064" level="20" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200374,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900065" level="21" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200374,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900066" level="22" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200374,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900067" level="23" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200374,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900068" level="24" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200374,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900069" level="25" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200374,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900070" level="26" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200374,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900071" level="27" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200374,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900072" level="28" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200374,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900073" level="29" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200374,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900074" level="30" name="111300" description="103789,103790,103791,103792,103793" num="1" monster="Shixianggui" reward="200041,200374,200364" monster_update="Shixianggui" usePower="5"/>
+        <ItemSpec id="900075" level="1" name="103788" description="103789,103790,103791,103792,103793" num="1" monster="Lion" reward="209181,200374,200364" monster_update="Lion" usePower="5"/>
+        <ItemSpec id="900076" level="2" name="103788" description="103789,103790,103791,103792,103793" num="1" monster="Lion" reward="209181,200374,200364" monster_update="Lion" usePower="5"/>
+        <ItemSpec id="900077" level="3" name="103788" description="103789,103790,103791,103792,103793" num="1" monster="Lion" reward="209181,200374,200364" monster_update="Lion" usePower="5"/>
+        <ItemSpec id="900078" level="4" name="103788" description="103789,103790,103791,103792,103793" num="1" monster="Lion" reward="209181,200374,200364" monster_update="Lion" usePower="5"/>
+        <ItemSpec id="900079" level="5" name="103788" description="103789,103790,103791,103792,103793" num="1" monster="Lion" reward="209181,200374,200364" monster_update="Lion" usePower="5"/>
+        <ItemSpec id="900080" level="6" name="103788" description="103789,103790,103791,103792,103793" num="1" monster="Lion" reward="209181,200374,200364" monster_update="Lion" usePower="5"/>
+        <ItemSpec id="900081" level="7" name="103788" description="103789,103790,103791,103792,103793" num="1" monster="Lion" reward="209181,200374,200364" monster_update="Lion" usePower="5"/>
+        <ItemSpec id="900082" level="8" name="103788" description="103789,103790,103791,103792,103793" num="1" monster="Lion" reward="209181,200374,200364" monster_update="Lion" usePower="5"/>
+        <ItemSpec id="900083" level="9" name="103788" description="103789,103790,103791,103792,103793" num="1" monster="Lion" reward="209181,200374,200364" monster_update="Lion" usePower="5"/>
+        <ItemSpec id="900084" level="10" name="103788" description="103789,103790,103791,103792,103793" num="1" monster="Lion" reward="209181,200374,200364" monster_update="Lion" usePower="5"/>
+        <ItemSpec id="900085" level="11" name="103788" description="103789,103790,103791,103792,103793" num="1" monster="Lion" reward="209181,200374,200364" monster_update="Lion" usePower="5"/>
+        <ItemSpec id="900086" level="12" name="103788" description="103789,103790,103791,103792,103793" num="1" monster="Lion" reward="209181,200374,200364" monster_update="Lion" usePower="5"/>
+        <ItemSpec id="900087" level="13" name="103788" description="103789,103790,103791,103792,103793" num="1" monster="Lion" reward="209181,200374,200364" monster_update="Lion" usePower="5"/>
+        <ItemSpec id="900088" level="14" name="103788" description="103789,103790,103791,103792,103793" num="1" monster="Lion" reward="209181,200374,200364" monster_update="Lion" usePower="5"/>
+        <ItemSpec id="900089" level="15" name="103788" description="103789,103790,103791,103792,103793" num="1" monster="Lion" reward="209181,200374,200364" monster_update="Lion" usePower="5"/>
+        <ItemSpec id="900090" level="16" name="103788" description="103789,103790,103791,103792,103793" num="1" monster="Lion" reward="209181,200374,200364" monster_update="Lion" usePower="5"/>
+        <ItemSpec id="900091" level="17" name="103788" description="103789,103790,103791,103792,103793" num="1" monster="Lion" reward="209181,200374,200364" monster_update="Lion" usePower="5"/>
+        <ItemSpec id="900092" level="18" name="103788" description="103789,103790,103791,103792,103793" num="1" monster="Lion" reward="209181,200374,200364" monster_update="Lion" usePower="5"/>
+        <ItemSpec id="900093" level="19" name="103788" description="103789,103790,103791,103792,103793" num="1" monster="Lion" reward="209181,200374,200364" monster_update="Lion" usePower="5"/>
+        <ItemSpec id="900094" level="20" name="103788" description="103789,103790,103791,103792,103793" num="1" monster="Lion" reward="209181,200374,200364" monster_update="Lion" usePower="5"/>
+        <ItemSpec id="900095" level="21" name="103788" description="103789,103790,103791,103792,103793" num="1" monster="Lion" reward="209181,200374,200364" monster_update="Lion" usePower="5"/>
+        <ItemSpec id="900096" level="22" name="103788" description="103789,103790,103791,103792,103793" num="1" monster="Lion" reward="209181,200374,200364" monster_update="Lion" usePower="5"/>
+        <ItemSpec id="900097" level="23" name="103788" description="103789,103790,103791,103792,103793" num="1" monster="Lion" reward="209181,200374,200364" monster_update="Lion" usePower="5"/>
+        <ItemSpec id="900098" level="24" name="103788" description="103789,103790,103791,103792,103793" num="1" monster="Lion" reward="209181,200374,200364" monster_update="Lion" usePower="5"/>
+        <ItemSpec id="900099" level="25" name="103788" description="103789,103790,103791,103792,103793" num="1" monster="Lion" reward="209181,200374,200364" monster_update="Lion" usePower="5"/>
+        <ItemSpec id="900100" level="26" name="103788" description="103789,103790,103791,103792,103793" num="1" monster="Lion" reward="209181,200374,200364" monster_update="Lion" usePower="5"/>
+        <ItemSpec id="900101" level="27" name="103788" description="103789,103790,103791,103792,103793" num="1" monster="Lion" reward="209181,200374,200364" monster_update="Lion" usePower="5"/>
+        <ItemSpec id="900102" level="28" name="103788" description="103789,103790,103791,103792,103793" num="1" monster="Lion" reward="209181,200374,200364" monster_update="Lion" usePower="5"/>
+        <ItemSpec id="900103" level="29" name="103788" description="103789,103790,103791,103792,103793" num="1" monster="Lion" reward="209181,200374,200364" monster_update="Lion" usePower="5"/>
+        <ItemSpec id="900104" level="30" name="103788" description="103789,103790,103791,103792,103793" num="1" monster="Lion" reward="209181,200374,200364" monster_update="Lion" usePower="5"/>
+        <ItemSpec id="900105" level="1" name="103794" description="137481,137482,137483,137484" num="1" monster="meidusha" reward="200679,200374,200364" monster_update="meidusha" usePower="5"/>
+        <ItemSpec id="900106" level="2" name="103794" description="137481,137482,137483,137484" num="1" monster="meidusha" reward="200679,200374,200364" monster_update="meidusha" usePower="5"/>
+        <ItemSpec id="900107" level="3" name="103794" description="137481,137482,137483,137484" num="1" monster="meidusha" reward="200679,200374,200364" monster_update="meidusha" usePower="5"/>
+        <ItemSpec id="900108" level="4" name="103794" description="137481,137482,137483,137484" num="1" monster="meidusha" reward="200679,200374,200364" monster_update="meidusha" usePower="5"/>
+        <ItemSpec id="900109" level="5" name="103794" description="137481,137482,137483,137484" num="1" monster="meidusha" reward="200679,200374,200364" monster_update="meidusha" usePower="5"/>
+        <ItemSpec id="900110" level="6" name="103794" description="137481,137482,137483,137484" num="1" monster="meidusha" reward="200679,200374,200364" monster_update="meidusha" usePower="5"/>
+        <ItemSpec id="900111" level="7" name="103794" description="137481,137482,137483,137484" num="1" monster="meidusha" reward="200679,200374,200364" monster_update="meidusha" usePower="5"/>
+        <ItemSpec id="900112" level="8" name="103794" description="137481,137482,137483,137484" num="1" monster="meidusha" reward="200679,200374,200364" monster_update="meidusha" usePower="5"/>
+        <ItemSpec id="900113" level="9" name="103794" description="137481,137482,137483,137484" num="1" monster="meidusha" reward="200679,200374,200364" monster_update="meidusha" usePower="5"/>
+        <ItemSpec id="900114" level="10" name="103794" description="137481,137482,137483,137484" num="1" monster="meidusha" reward="200679,200374,200364" monster_update="meidusha" usePower="5"/>
+        <ItemSpec id="900115" level="11" name="103794" description="137481,137482,137483,137484" num="1" monster="meidusha" reward="200679,200374,200364" monster_update="meidusha" usePower="5"/>
+        <ItemSpec id="900116" level="12" name="103794" description="137481,137482,137483,137484" num="1" monster="meidusha" reward="200679,200374,200364" monster_update="meidusha" usePower="5"/>
+        <ItemSpec id="900117" level="13" name="103794" description="137481,137482,137483,137484" num="1" monster="meidusha" reward="200679,200374,200364" monster_update="meidusha" usePower="5"/>
+        <ItemSpec id="900118" level="14" name="103794" description="137481,137482,137483,137484" num="1" monster="meidusha" reward="200679,200374,200364" monster_update="meidusha" usePower="5"/>
+        <ItemSpec id="900119" level="15" name="103794" description="137481,137482,137483,137484" num="1" monster="meidusha" reward="200679,200374,200364" monster_update="meidusha" usePower="5"/>
+        <ItemSpec id="900120" level="16" name="103794" description="137481,137482,137483,137484" num="1" monster="meidusha" reward="200679,200374,200364" monster_update="meidusha" usePower="5"/>
+        <ItemSpec id="900121" level="17" name="103794" description="137481,137482,137483,137484" num="1" monster="meidusha" reward="200679,200374,200364" monster_update="meidusha" usePower="5"/>
+        <ItemSpec id="900122" level="18" name="103794" description="137481,137482,137483,137484" num="1" monster="meidusha" reward="200679,200374,200364" monster_update="meidusha" usePower="5"/>
+        <ItemSpec id="900123" level="19" name="103794" description="137481,137482,137483,137484" num="1" monster="meidusha" reward="200679,200374,200364" monster_update="meidusha" usePower="5"/>
+        <ItemSpec id="900124" level="20" name="103794" description="137481,137482,137483,137484" num="1" monster="meidusha" reward="200679,200374,200364" monster_update="meidusha" usePower="5"/>
+    </Group>
+</tns:database>

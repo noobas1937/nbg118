@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:theme="@android:style/Theme.Translucent"
+    android:focusableInTouchMode="true" >
+
+    <RelativeLayout
+        android:id="@+id/cs__chat_input_relativeLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp"
+        android:focusableInTouchMode="true"
+        android:background="@drawable/chuzheng_frame02" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/line_grey02" />
+
+        <EditText
+            android:id="@+id/cs__messageText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginTop="8dp"
+            android:layout_toLeftOf="@+id/hs__sendMessageLayout"
+            android:autoText="true"
+            android:background="@color/hs__actionBarTextColorPrimary"
+            android:hint="@string/hs__chat_hint"
+            android:imeOptions="actionSend"
+            android:inputType="textMultiLine"
+            android:maxLines="@integer/hs__chat_max_lines"
+        	android:textColor="@color/hs__messages_text_color"
+        android:textAppearance="?android:attr/textAppearance" 
+            android:minHeight="36dp" />
+
+        <LinearLayout
+            android:id="@+id/hs__sendMessageLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="2dp"
+            android:orientation="vertical"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp" >
+
+            <Button
+                android:id="@+id/hs__sendMessageBtn"
+                android:layout_width="90dp"
+                android:layout_height="42dp"
+                android:background="@drawable/btn_yellow"
+                android:text="@string/hs__send_msg_btn"
+                android:textColor="@color/hs__actionBarTextColorPrimary"
+                android:textSize="@dimen/cs__textSendButton" />
+
+            <TextView
+                android:id="@+id/wordCountTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="0/500"
+                android:textColor="@color/hs__actionBarTextColorPrimary"
+                android:textSize="@dimen/cs__textSizeSmall" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

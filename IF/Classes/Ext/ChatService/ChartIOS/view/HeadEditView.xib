@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D2134" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="HeadEditView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DsW-JP-gSm" userLabel="rootView" customClass="HeadEditView">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chat_bg_default.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="weI-zG-Ln1">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
+                        </imageView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vi1-w9-m4L" userLabel="LableView">
+                            <rect key="frame" x="5" y="0.0" width="310" height="40"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="E3h-9l-naf">
+                                    <rect key="frame" x="-5" y="5" width="320" height="35"/>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Chat room name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dk6-gP-BIk">
+                                    <rect key="frame" x="10" y="12" width="132" height="22"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                    <color key="textColor" red="0.57647058823529407" green="0.47450980392156861" blue="0.37254901960784315" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="dk6-gP-BIk" firstAttribute="centerY" secondItem="E3h-9l-naf" secondAttribute="centerY" id="8fb-j2-0e8"/>
+                                <constraint firstItem="E3h-9l-naf" firstAttribute="leading" secondItem="vi1-w9-m4L" secondAttribute="leading" constant="-5" id="J0R-yI-ypm"/>
+                                <constraint firstItem="E3h-9l-naf" firstAttribute="top" secondItem="vi1-w9-m4L" secondAttribute="top" constant="5" id="MOv-1l-hGh"/>
+                                <constraint firstAttribute="bottom" secondItem="E3h-9l-naf" secondAttribute="bottom" id="SB5-Aq-Rhf"/>
+                                <constraint firstAttribute="trailing" secondItem="E3h-9l-naf" secondAttribute="trailing" constant="-5" id="WmW-PQ-bcO"/>
+                                <constraint firstItem="dk6-gP-BIk" firstAttribute="leading" secondItem="vi1-w9-m4L" secondAttribute="leading" constant="10" id="ar1-82-tig"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NFS-Ag-vit" userLabel="editView">
+                            <rect key="frame" x="5" y="40" width="310" height="40"/>
+                            <subviews>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="VDe-3j-kln" userLabel="editTextField">
+                                    <rect key="frame" x="0.0" y="5" width="310" height="30"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="-1" id="j1s-YL-Yj8"/>
+                                    </connections>
+                                </textField>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="VDe-3j-kln" secondAttribute="bottom" constant="5" id="0c0-vE-oHO"/>
+                                <constraint firstItem="VDe-3j-kln" firstAttribute="top" secondItem="NFS-Ag-vit" secondAttribute="top" constant="5" id="1SN-Cv-QxH"/>
+                                <constraint firstAttribute="trailing" secondItem="VDe-3j-kln" secondAttribute="trailing" id="Bay-OH-ODm"/>
+                                <constraint firstItem="VDe-3j-kln" firstAttribute="leading" secondItem="NFS-Ag-vit" secondAttribute="leading" id="gop-ft-qMr"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="NFS-Ag-vit" secondAttribute="bottom" id="HaJ-fO-bdD"/>
+                        <constraint firstItem="NFS-Ag-vit" firstAttribute="height" secondItem="DsW-JP-gSm" secondAttribute="height" multiplier="0.5" id="OLN-z4-jZF"/>
+                        <constraint firstItem="vi1-w9-m4L" firstAttribute="height" secondItem="DsW-JP-gSm" secondAttribute="height" multiplier="0.5" id="Qif-Ev-fAW"/>
+                        <constraint firstAttribute="bottom" secondItem="weI-zG-Ln1" secondAttribute="bottom" id="RmW-Xd-BmY"/>
+                        <constraint firstAttribute="trailing" secondItem="weI-zG-Ln1" secondAttribute="trailing" id="YYu-kw-ayy"/>
+                        <constraint firstItem="weI-zG-Ln1" firstAttribute="leading" secondItem="DsW-JP-gSm" secondAttribute="leading" id="cEh-K7-BCG"/>
+                        <constraint firstItem="vi1-w9-m4L" firstAttribute="top" secondItem="DsW-JP-gSm" secondAttribute="top" id="dSi-Em-4R9"/>
+                        <constraint firstItem="weI-zG-Ln1" firstAttribute="top" secondItem="DsW-JP-gSm" secondAttribute="top" id="hkk-PX-rrv"/>
+                        <constraint firstAttribute="trailing" secondItem="vi1-w9-m4L" secondAttribute="trailing" constant="5" id="hm0-Ka-W7D"/>
+                        <constraint firstAttribute="trailing" secondItem="NFS-Ag-vit" secondAttribute="trailing" constant="5" id="mOh-gZ-vW2"/>
+                        <constraint firstItem="NFS-Ag-vit" firstAttribute="leading" secondItem="DsW-JP-gSm" secondAttribute="leading" constant="5" id="uTT-aq-xqz"/>
+                        <constraint firstItem="vi1-w9-m4L" firstAttribute="leading" secondItem="DsW-JP-gSm" secondAttribute="leading" constant="5" id="umh-7X-dWD"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="DsW-JP-gSm" secondAttribute="bottom" id="Dsh-qe-b1w"/>
+                <constraint firstItem="DsW-JP-gSm" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="EES-ZI-vg6"/>
+                <constraint firstItem="DsW-JP-gSm" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="I6Y-Oh-G12"/>
+                <constraint firstAttribute="trailing" secondItem="DsW-JP-gSm" secondAttribute="trailing" id="nTa-Oi-K1Y"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="editView" destination="VDe-3j-kln" id="iS2-iC-USn"/>
+                <outlet property="groupBackImageView" destination="E3h-9l-naf" id="dTB-Bv-o3Q"/>
+                <outlet property="instructionLabel" destination="dk6-gP-BIk" id="lwN-5M-7TG"/>
+            </connections>
+            <point key="canvasLocation" x="-269" y="142"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="chat_bg_default.jpg" width="120" height="110"/>
+    </resources>
+</document>

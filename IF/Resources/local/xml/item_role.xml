@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<tns:database xmlns:tns="http://www.iw.com/sns/platform/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Group id="role">
+        <ItemSpec id="100101" general_exp="20" endowment="3" power="22" resource="0021" storage="50000" content="1000000"/>
+        <ItemSpec id="100102" general_exp="70" endowment="6" power="42" level_reward="230952" level_item="200590|200300|200330|200353|200004|200361" level_num="1|1|1|1|1|1" storage="67000" content="1340000"/>
+        <ItemSpec id="100103" general_exp="130" endowment="9" power="135" level_reward="230953" level_item="200300|200330|200353|200004|200564|200361" level_num="1|1|1|1|1|1" storage="83000" content="1660000"/>
+        <ItemSpec id="100104" general_exp="200" endowment="12" power="333" level_reward="230954" level_item="200300|200330|200020|200004|200564|200361" level_num="1|1|1|1|1|1" storage="99000" content="1980000"/>
+        <ItemSpec id="100105" general_exp="300" endowment="15" power="662" level_reward="230955" level_item="200300|200330|200353|200004|200564|200361" level_num="1|1|1|1|1|1" storage="115000" content="2300000"/>
+        <ItemSpec id="100106" general_exp="440" endowment="18" power="1140" level_reward="230956" level_item="200300|200330|200353|200004|200564|200361" level_num="1|1|1|1|1|1" storage="130000" content="2600000"/>
+        <ItemSpec id="100107" general_exp="620" endowment="21" power="1785" level_reward="230957" level_item="200300|200330|200353|200004|200427|200361" level_num="1|1|1|1|1|1" storage="145000" content="2900000"/>
+        <ItemSpec id="100108" general_exp="840" endowment="24" power="2614" level_reward="230958" level_item="200300|200330|200353|200004|200418|200361" level_num="1|1|1|1|1|1" storage="159000" content="3180000"/>
+        <ItemSpec id="100109" general_exp="1080" endowment="27" power="3642" level_reward="230959" level_item="200309|200339|200320|200565|200370|200362" level_num="1|1|1|1|1|1" storage="174000" content="3480000"/>
+        <ItemSpec id="100110" general_exp="1350" endowment="31" power="4882" level_reward="230960" level_item="200309|200339|200320|200565|200414|200362" level_num="1|1|1|1|1|1" storage="188000" content="3760000"/>
+        <ItemSpec id="100111" general_exp="1600" endowment="35" power="6346" level_reward="230961" level_item="200309|200339|200320|200565|200416|200362" level_num="1|1|1|1|1|1" storage="203000" content="4060000"/>
+        <ItemSpec id="100112" general_exp="1900" endowment="39" power="8048" level_reward="230962" level_item="200309|200339|200320|200565|200410|200362" level_num="1|1|1|1|1|1" storage="217000" content="4340000"/>
+        <ItemSpec id="100113" general_exp="2200" endowment="43" power="9998" level_reward="230963" level_item="200309|200339|200320|200350|200427|200362" level_num="1|1|1|1|1|1" storage="231000" content="4620000"/>
+        <ItemSpec id="100114" general_exp="2510" endowment="47" power="12208" level_reward="230964" level_item="200309|200339|200320|200310|200424|200362" level_num="1|1|1|1|1|1" storage="245000" content="4900000"/>
+        <ItemSpec id="100115" general_exp="3150" endowment="51" power="14689" level_reward="230965" level_item="200309|200339|200320|200310|200418|200362" level_num="1|1|1|1|1|1" storage="258000" content="5160000"/>
+        <ItemSpec id="100116" general_exp="3680" endowment="55" power="17450" level_reward="230966" level_item="200309|200339|200320|200310|200370|200362" level_num="1|1|1|1|1|1" storage="272000" content="5440000"/>
+        <ItemSpec id="100117" general_exp="4560" endowment="59" power="20502" level_reward="230967" level_item="200309|200339|200320|200310|200414|200362" level_num="1|1|1|1|1|1" storage="286000" content="5720000"/>
+        <ItemSpec id="100118" general_exp="5280" endowment="63" power="23853" level_reward="230968" level_item="200309|200339|200320|200310|200416|200362" level_num="1|1|1|1|1|1" storage="299000" content="5980000"/>
+        <ItemSpec id="100119" general_exp="6450" endowment="67" power="27514" level_reward="230969" level_item="200309|200339|200329|200319|200410|200362" level_num="1|1|1|1|1|1" storage="313000" content="6260000"/>
+        <ItemSpec id="100120" general_exp="7390" endowment="72" power="31493" level_reward="230970" level_item="200309|200339|200329|200319|200350|200362" level_num="1|1|1|1|1|1" storage="326000" content="6520000"/>
+        <ItemSpec id="100121" general_exp="10600" endowment="77" power="35799" level_reward="230971" level_item="200309|200339|200329|200319|200350|200362" level_num="1|1|1|1|1|1" storage="339000" content="6780000"/>
+        <ItemSpec id="100122" general_exp="12100" endowment="82" power="40440" level_reward="230972" level_item="200309|200339|200329|200319|200427|200362" level_num="1|1|1|1|1|1" storage="353000" content="7060000"/>
+        <ItemSpec id="100123" general_exp="14300" endowment="87" power="45425" level_reward="230973" level_item="200309|200339|200329|200319|200424|200362" level_num="1|1|1|1|1|1" storage="366000" content="7320000"/>
+        <ItemSpec id="100124" general_exp="16100" endowment="92" power="50761" level_reward="230974" level_item="200309|200339|200329|200319|200418|200362" level_num="1|1|1|1|1|1" storage="379000" content="7580000"/>
+        <ItemSpec id="100125" general_exp="19400" endowment="97" power="56458" level_reward="230975" level_item="200309|200339|200329|200319|200370|200362" level_num="1|1|1|1|1|1" storage="392000" content="7840000"/>
+        <ItemSpec id="100126" general_exp="22400" endowment="102" power="62522" level_reward="230976" level_item="200309|200339|200329|200319|200414|200362" level_num="1|1|1|1|1|1" storage="405000" content="8100000"/>
+        <ItemSpec id="100127" general_exp="26900" endowment="107" power="68960" level_reward="230977" level_item="200309|200339|200329|200319|200416|200362" level_num="1|1|1|1|1|1" storage="418000" content="8360000"/>
+        <ItemSpec id="100128" general_exp="31000" endowment="112" power="75781" level_reward="230978" level_item="200309|200339|200329|200319|200410|200362" level_num="1|1|1|1|1|1" storage="431000" content="8620000"/>
+        <ItemSpec id="100129" general_exp="37100" endowment="117" power="82992" level_reward="230979" level_item="200301|200331|200321|200311|200350|200363" level_num="1|1|1|1|1|1" storage="444000" content="8880000"/>
+        <ItemSpec id="100130" general_exp="41800" endowment="123" power="90600" level_reward="230980" level_item="200301|200331|200321|200311|200350|200363" level_num="1|1|1|1|1|1" storage="457000" content="9140000"/>
+        <ItemSpec id="100131" general_exp="56600" endowment="129" power="98612" level_reward="230981" level_item="200301|200331|200321|200311|200427|200363" level_num="1|1|1|1|1|1"/>
+        <ItemSpec id="100132" general_exp="65100" endowment="135" power="107034" level_reward="230982" level_item="200301|200331|200321|200311|200424|200363" level_num="1|1|1|1|1|1"/>
+        <ItemSpec id="100133" general_exp="77300" endowment="141" power="115874" level_reward="230983" level_item="200301|200331|200321|200311|200418|200363" level_num="1|1|1|1|1|1"/>
+        <ItemSpec id="100134" general_exp="88600" endowment="147" power="125138" level_reward="230984" level_item="200301|200331|200321|200311|200370|200363" level_num="1|1|1|1|1|1"/>
+        <ItemSpec id="100135" general_exp="105000" endowment="153" power="134833" level_reward="230985" level_item="200301|200331|200321|200311|200414|200363" level_num="1|1|1|1|1|1"/>
+        <ItemSpec id="100136" general_exp="119000" endowment="159" power="144965" level_reward="230986" level_item="200301|200331|200321|200311|200416|200363" level_num="1|1|1|1|1|1"/>
+        <ItemSpec id="100137" general_exp="140000" endowment="165" power="155542" level_reward="230987" level_item="200301|200331|200321|200311|200410|200363" level_num="1|1|1|1|1|1"/>
+        <ItemSpec id="100138" general_exp="159000" endowment="171" power="166568" level_reward="230988" level_item="200301|200331|200321|200311|200350|200363" level_num="1|1|1|1|1|1"/>
+        <ItemSpec id="100139" general_exp="186000" endowment="177" power="178050" level_reward="230989" level_item="200301|200331|200321|200311|200350|200363" level_num="1|1|1|1|1|1"/>
+        <ItemSpec id="100140" general_exp="210000" endowment="184" power="189994" level_reward="230990" level_item="200301|200331|200321|200311|200350|200363" level_num="1|1|1|1|1|1"/>
+        <ItemSpec id="100141" general_exp="268000" endowment="191" power="202407" level_reward="230991" level_item="200301|200331|200321|200311|200427|200363" level_num="1|1|1|1|1|1"/>
+        <ItemSpec id="100142" general_exp="301000" endowment="198" power="215295" level_reward="230992" level_item="200301|200331|200321|200311|200424|200363" level_num="1|1|1|1|1|1"/>
+        <ItemSpec id="100143" general_exp="346000" endowment="205" power="228662" level_reward="230993" level_item="200301|200331|200321|200311|200418|200363" level_num="1|1|1|1|1|1"/>
+        <ItemSpec id="100144" general_exp="386000" endowment="212" power="242516" level_reward="230994" level_item="200301|200331|200321|200311|200370|200363" level_num="1|1|1|1|1|1"/>
+        <ItemSpec id="100145" general_exp="440000" endowment="219" power="256861" level_reward="230995" level_item="200301|200331|200321|200311|200414|200363" level_num="1|1|1|1|1|1"/>
+        <ItemSpec id="100146" general_exp="488000" endowment="226" power="271704" level_reward="230996" level_item="200301|200331|200321|200311|200416|200363" level_num="1|1|1|1|1|1"/>
+        <ItemSpec id="100147" general_exp="553000" endowment="233" power="287050" level_reward="230997" level_item="200301|200331|200321|200311|200410|200363" level_num="1|1|1|1|1|1"/>
+        <ItemSpec id="100148" general_exp="610000" endowment="240" power="302904" level_reward="230998" level_item="200301|200331|200321|200311|200350|200363" level_num="1|1|1|1|1|1"/>
+        <ItemSpec id="100149" general_exp="687000" endowment="247" power="319273" level_reward="230999" level_item="200301|200331|200321|200311|200350|200363" level_num="1|1|1|1|1|1"/>
+        <ItemSpec id="100150" general_exp="754000" endowment="257" power="336162"/>
+    </Group>
+</tns:database>

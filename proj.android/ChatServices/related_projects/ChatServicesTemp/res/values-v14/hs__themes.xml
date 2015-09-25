@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <style name="Theme.ChatService"
+         parent="@style/Theme.ChatService.Base">
+
+    <item name="cs__actionBarTabTextStyle">?android:attr/actionBarTabTextStyle</item>
+    <item name="cs__selectableItemBackground">?android:attr/selectableItemBackground</item>
+  </style>
+
+  <style name="Theme.ChatService.Light.DarkActionBar"
+         parent="@android:style/Theme.Holo.Light.DarkActionBar">
+  </style>
+</resources>

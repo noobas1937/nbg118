@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingRight="@dimen/hs__msgPreferredItemPaddingRight"
+    android:paddingTop="@dimen/hs__msgPreferredItemPaddingTop"
+    android:paddingBottom="@dimen/hs__msgPreferredItemPaddingBottom"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+  <View
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="0.20"
+      />
+
+  <LinearLayout
+      android:orientation="vertical"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="0.80"
+      android:gravity="right"
+      >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="horizontal" >
+	
+      <!-- 只有一个控件有layout_weight时，其具体值无意义，作用是wrap_content，不会超出边界被截断 -->
+      <TextView
+          android:id="@android:id/text1"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_weight="0.6"
+          android:autoLink="all"
+          android:paddingBottom="@dimen/hs__msgPreferredItemPaddingBottom"
+          android:paddingLeft="@dimen/hs__msgPreferredItemPaddingLeft"
+          android:paddingRight="20dp"
+          android:paddingTop="@dimen/hs__msgPreferredItemPaddingTop"
+          android:textAppearance="?android:attr/textAppearanceMedium"
+          android:textColor="@color/hs__messages_text_color"
+          android:textColorLink="@color/hs__my_messages_text_color"
+	      style="@style/chat_content_date_style"
+	      android:background="@drawable/chatto_bg" />
+
+      <FrameLayout
+          android:layout_width="50dp"
+          android:layout_height="50dp"
+          android:background="@drawable/icon_kuang" >
+
+          <ImageView
+              android:id="@+id/imageView1"
+              android:layout_width="40dp"
+              android:layout_height="40dp"
+              android:layout_gravity="center_vertical|center_horizontal"
+              android:src="@drawable/g044" />
+
+      </FrameLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        >
+
+      <ImageView
+          android:id="@android:id/icon"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:src="@drawable/hs__warning"
+          />
+
+      <TextView
+          android:id="@android:id/text2"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:paddingRight="@dimen/hs__msg_timestamp_padding"
+          android:textSize="@dimen/hs__textSizeSmall"
+          android:alpha="@dimen/hs__msg_timestamp_alpha"
+          android:paddingTop="3dp"
+          />
+    </LinearLayout>
+  </LinearLayout>
+</LinearLayout>

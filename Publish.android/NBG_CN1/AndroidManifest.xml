@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    android:installLocation="preferExternal"
+    package="com.hcg.cok.cn1"
+    android:versionCode="999"
+    android:versionName="1.0.71" >
+
+    <supports-screens android:smallScreens="true"
+        android:normalScreens="true"
+        android:largeScreens="true"
+        android:xlargeScreens="true"/>
+
+    <uses-sdk android:minSdkVersion="10"
+        android:targetSdkVersion="22"/>
+    
+    <uses-permission android:name="com.android.vending.BILLING" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />-->
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_DEVICE_STATS" />
+    <!-- <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> -->
+    
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    
+    <!-- pingxx -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!-- pingxx -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    
+	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+	<permission android:protectionLevel="signature"
+	    android:name="com.hcg.cok.cn1.permission.C2D_MESSAGE" />
+	<uses-permission android:name="com.hcg.cok.cn1.permission.C2D_MESSAGE" />
+    
+	<!-- GCM需求 START -->
+		<!-- GCM requires a Google account. -->
+		<uses-permission android:name="android.permission.GET_ACCOUNTS" />
+		<!-- Keeps the processor from sleeping when a message is received. -->
+		<uses-permission android:name="android.permission.WAKE_LOCK" />
+	<!-- GCM需求 END -->
+	
+    <application
+        android:name="com.clash.of.kings.COKApplication"
+        android:icon="@drawable/cok_icon"
+        android:debuggable="false"
+        android:label="@string/app_name"
+        android:largeHeap="true">
+        <!-- GOOGLE GameServices -->
+		<meta-data android:name="com.google.android.gms.games.APP_ID"
+                   android:value="@string/app_id" />
+        <!-- GOOGLE PLUS -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <activity
+            android:name="com.clash.of.kings.COK_CN1"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/app_name"
+            android:theme="@style/MyTheme"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" >
+            <meta-data android:name="XINGCLOUD_CHANNEL" android:value="market" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="org.hcg.stac.empire.intent.action.IF" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="cok" />
+            </intent-filter>
+            <meta-data android:name="io.branch.sdk.BranchKey" android:value="key_live_knjHdkLtLaoWWChZ9ZmCIgipAAnT53Wn" />
+            
+            <!-- Add this intent filter below, and change yourapp to your app name -->
+            <intent-filter>
+                <data android:scheme="cokBranch" android:host="open" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+        </activity>
+		  
+        <!-- facebook 相关添加 -->
+         <meta-data android:name="com.facebook.sdk.ApplicationName"
+            android:value="@string/app_name" />
+   		   <activity android:name="com.facebook.FacebookActivity"
+          android:theme="@android:style/Theme.Translucent.NoTitleBar"
+          android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+          android:label="@string/app_name" />
+   		 <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/fb_app_id" />
+   		     
+		<!-- Used for install referrer tracking -->
+		<service android:name="com.google.analytics.tracking.android.CampaignTrackingService"/>
+		<receiver android:name="com.appsflyer.AppsFlyerLib" android:exported="true">
+			<intent-filter>
+				<action android:name="com.android.vending.INSTALL_REFERRER" />
+			</intent-filter>
+		</receiver>
+		<receiver android:name="com.clash.of.kings.COKInstallReceiver" android:exported="true">
+			<intent-filter>
+				<action android:name="com.android.vending.INSTALL_REFERRER" />
+			</intent-filter>
+		</receiver>
+		<service android:name="org.hcg.notifies.LocalNotificationIntentService"/>
+        <receiver android:name="org.hcg.notifies.LocalBroadcastReceiver" />
+        
+		<receiver android:name="org.hcg.stac.empire.common.manager.NotificationReceiver" android:process=":remote" >
+		    <intent-filter>
+                <action android:name="com.hcg.cok.intent.action.NOTIFICATION" />
+                <action android:name="com.hcg.cok.intent.action.FREE_LOTTERY"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+		</receiver>
+		
+		<!-- 行云心跳服务 -->
+        <!-- <service android:name="com.xingcloud.analytic.sender.HeartbeatService" /> -->
+        <!--
+		=
+		= 友盟 统计配置
+		= 
+        -->
+        <!-- AndroidMarket 统计配置 -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+        	android:value="549d3046fd98c532420000b9" >
+        </meta-data>
+        
+        <meta-data
+            android:name="UMENG_CHANNEL"
+        	android:value="android_cn1" >
+        </meta-data>
+        
+        <!-- 设置AppKey -->
+        <meta-data android:name="TESTIN_APPKEY" android:value="904983586924c797e0bd36fee0c4297b"/>
+        <!-- 设置渠道信息 -->
+        <meta-data android:name="TESTIN_CHANNEL" android:value="android_cn1"/>
+        
+        <!-- GCM 需求 START -->
+        <meta-data
+            android:name="com.parse.push.gcm_sender_id"
+            android:value="id:312229299745" />
+        <receiver android:name="com.parse.GcmBroadcastReceiver" android:permission="com.google.android.c2dm.permission.SEND" >
+		  <intent-filter>
+		    <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+		    <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+		    <category android:name="com.hcg.cok.cn1" />
+		  </intent-filter>
+		</receiver>
+        <receiver android:name="com.google.android.gcm.GCMBroadcastReceiver" android:permission="com.google.android.c2dm.permission.SEND" >
+		  <intent-filter>
+		    <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+		    <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+		    <category android:name="com.hcg.cok.cn1" />
+		  </intent-filter>
+		</receiver>
+		<service android:name="org.hcg.stac.empire.common.manager.GCMIntentService" />
+		<!-- GCM 需求 END -->
+		
+		<!-- 友盟：sina微博 -->
+        <activity android:name="com.umeng.api.activity.OauthActivity"
+                  android:screenOrientation="unspecified"
+                  android:windowSoftInputMode="adjustResize"
+                  android:configChanges="orientation|keyboardHidden">
+        </activity>
+        
+        <activity android:name="com.umeng.api.activity.UpdateStatusActivity"
+                   android:theme="@style/Theme.IOSched"
+                   android:windowSoftInputMode="stateVisible|adjustResize"
+                   android:screenOrientation="unspecified"
+                   android:configChanges="orientation|keyboardHidden"/>
+        
+        <!-- Tabjoy begin -->
+		 <activity android:name="com.tapjoy.TJCOffersWebView" android:configChanges="keyboardHidden|orientation"/> 
+		 <activity android:name="com.tapjoy.TapjoyFeaturedAppWebView" android:configChanges="keyboardHidden|orientation"/> 
+		 <activity android:name="com.tapjoy.TapjoyVideoView" android:configChanges="keyboardHidden|orientation"/>
+    	<!-- SponsorPay -->
+    	<activity android:name="com.sponsorpay.sdk.android.publisher.OfferWallActivity" android:configChanges="orientation" />
+    	 <!--  millennialmedia -->
+    	 <!--  activity android:name="com.millennialmedia.android.MMAdvertiserOverlayActivity" 
+         android:configChanges="keyboardHidden|orientation|keyboard"/-->
+        
+        <service android:name="com.parse.PushService" />
+		<receiver android:name="com.parse.ParseBroadcastReceiver">
+			<intent-filter>
+				<action android:name="android.intent.action.BOOT_COMPLETED" />
+				<action android:name="android.intent.action.USER_PRESENT" />
+			</intent-filter>
+        </receiver>
+        <receiver android:name="com.parse.ParsePushBroadcastReceiver"
+		    android:exported="false">
+		  <intent-filter>
+		    <action android:name="com.parse.push.intent.RECEIVE" />
+		    <action android:name="com.parse.push.intent.DELETE" />
+		    <action android:name="com.parse.push.intent.OPEN" />
+		    </intent-filter>
+		</receiver>
+        <receiver android:name="com.clash.of.notifies.HFParseCustomReceiver" 
+            android:exported="false">
+		  <intent-filter>
+		    <action android:name="com.hcg.cok.gp.UPDATE_STATUS" />
+		  </intent-filter>
+		</receiver>
+		<!-- helpshift -->
+        <activity
+            android:name="com.helpshift.HSConversation"
+            android:configChanges="orientation|screenSize|locale|layoutDirection"
+            android:label="@string/hs__conversation_header"
+            android:theme="@style/Helpshift.Theme.Activity" />
+        <activity
+            android:name="com.helpshift.HSQuestionsList"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/Helpshift.Theme.Activity" />
+        <activity
+            android:name="com.helpshift.HSQuestion"
+            android:configChanges="orientation|screenSize"
+            android:hardwareAccelerated="true"
+            android:label="@string/hs__question_header"
+            android:theme="@style/Helpshift.Theme.Activity" />
+        <activity
+            android:name="com.helpshift.HSSection"
+            android:configChanges="orientation|screenSize"
+            android:hardwareAccelerated="true"
+            android:theme="@style/Helpshift.Theme.Activity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name="com.helpshift.HSFaqs"
+            android:configChanges="orientation|screenSize"
+            android:hardwareAccelerated="true"
+            android:label="@string/hs__help_header"
+            android:theme="@style/Helpshift.Theme.Activity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name="com.helpshift.HSReview"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/Helpshift.Theme.Dialog" />
+        <activity
+            android:name="com.helpshift.ScreenshotPreviewActivity"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/Helpshift.Theme.Activity" />
+        <activity
+            android:name="com.helpshift.SearchResultActivity"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/Helpshift.Theme.Activity" />
+
+        <service
+            android:name="com.helpshift.HSService"
+            android:label="Helpshift Service" >
+        </service>
+        <service
+            android:name="com.helpshift.HSRetryService"
+            android:label="Helpshift Service" >
+        </service>
+        
+        
+        <!-- Ping++SDK 注册 -->
+		<activity
+		    android:name="com.pingplusplus.android.PaymentActivity"
+		    android:launchMode="singleTop"
+		    android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+		<!-- 微信支付注册 -->
+		<activity-alias
+		    android:name=".wxapi.WXPayEntryActivity"
+		    android:exported="true"
+		    android:targetActivity="com.pingplusplus.android.PaymentActivity" />
+		<!-- 支付宝注册 -->
+		<activity
+		    android:name="com.alipay.sdk.app.H5PayActivity"
+		    android:configChanges="orientation|keyboardHidden|navigation"
+		    android:exported="false"
+		    android:screenOrientation="behind" />
+		<activity
+		    android:name="com.alipay.sdk.auth.AuthActivity"
+		    android:configChanges="orientation|keyboardHidden|navigation"
+		    android:exported="false"
+		    android:screenOrientation="behind" />
+		<!-- 百度支付注册 -->
+		<activity
+		    android:name="com.baidu.paysdk.login.LoginActivity"
+		    android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+		    android:excludeFromRecents="true"
+		    android:exported="false"
+		    android:theme="@style/EbpayThemeActivityWelcome"
+		    android:windowSoftInputMode="stateHidden" />
+		
+		<activity
+		    android:name="com.baidu.paysdk.ui.WelcomeActivity"
+		    android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+		    android:excludeFromRecents="true"
+		    android:exported="@bool/bd_wallet_switch_global_debug"
+		    android:theme="@style/EbpayThemeActivityWelcome"
+		    android:screenOrientation="portrait"
+		    android:windowSoftInputMode="stateHidden" />
+		<activity
+		    android:name="com.baidu.paysdk.ui.OrderHomeActivity"
+		    android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+		    android:excludeFromRecents="true"
+		    android:exported="@bool/bd_wallet_switch_global_debug"
+		    android:hardwareAccelerated="false"
+		    android:screenOrientation="portrait"
+		    android:theme="@style/EbpayThemeActivit"
+		    android:windowSoftInputMode="stateHidden" />
+		<activity
+		    android:name="com.baidu.paysdk.ui.PayResultActivity"
+		    android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+		    android:excludeFromRecents="true"
+		    android:exported="@bool/bd_wallet_switch_global_debug"
+		    android:screenOrientation="portrait"
+		    android:theme="@style/EbpayThemeActivit"
+		    android:windowSoftInputMode="stateHidden" />
+		<activity
+		    android:name="com.baidu.paysdk.ui.PcPwdCheckActivity"
+		    android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+		    android:excludeFromRecents="true"
+		    android:exported="@bool/bd_wallet_switch_global_debug"
+		    android:theme="@style/EbpayThemeActivit"
+		    android:screenOrientation="portrait"
+		    android:windowSoftInputMode="stateVisible" />
+		<activity
+		    android:name="com.baidu.paysdk.ui.PwdCheckActivity"
+		    android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+		    android:excludeFromRecents="true"
+		    android:exported="@bool/bd_wallet_switch_global_debug"
+		    android:theme="@style/EbpayThemeActivit"
+		    android:screenOrientation="portrait"
+		    android:windowSoftInputMode="stateVisible" />
+		<activity
+		    android:name="com.baidu.paysdk.ui.PwdSetAndConfirmActivity"
+		    android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+		    android:excludeFromRecents="true"
+		    android:exported="@bool/bd_wallet_switch_global_debug"
+		    android:theme="@style/EbpayThemeActivit"
+		    android:windowSoftInputMode="stateVisible" />
+		<activity
+		    android:name="com.baidu.paysdk.ui.PwdPayActivity"
+		    android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+		    android:excludeFromRecents="true"
+		    android:exported="@bool/bd_wallet_switch_global_debug"
+		    android:theme="@style/EbpayThemeActivitTranslucent"
+		    android:screenOrientation="portrait"
+		    android:windowSoftInputMode="stateVisible|adjustResize" />
+		<activity
+		    android:name="com.baidu.paysdk.ui.PwdPaySmsActivity"
+		    android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+		    android:excludeFromRecents="true"
+		    android:exported="@bool/bd_wallet_switch_global_debug"
+		    android:theme="@style/EbpayThemeActivitTranslucent"
+		    android:screenOrientation="portrait"
+		    android:windowSoftInputMode="stateHidden" />
+		<activity
+		    android:name="com.baidu.paysdk.ui.WebViewActivity"
+		    android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+		    android:excludeFromRecents="true"
+		    android:exported="@bool/bd_wallet_switch_global_debug"
+		    android:screenOrientation="portrait"
+		    android:theme="@style/EbpayThemeActivit"
+		    android:windowSoftInputMode="stateHidden" />
+		<activity
+		    android:name="com.baidu.paysdk.ui.BindCardNoActivity"
+		    android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+		    android:excludeFromRecents="true"
+		    android:exported="@bool/bd_wallet_switch_global_debug"
+		    android:theme="@style/EbpayThemeActivit"
+		    android:screenOrientation="portrait"
+		    android:windowSoftInputMode="stateHidden" />
+		<activity
+		    android:name="com.baidu.paysdk.ui.BindCardDetailActivity"
+		    android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+		    android:excludeFromRecents="true"
+		    android:exported="@bool/bd_wallet_switch_global_debug"
+		    android:theme="@style/EbpayThemeActivit"
+		    android:screenOrientation="portrait"
+		    android:windowSoftInputMode="stateVisible|adjustPan" />
+		<activity
+		    android:name="com.baidu.paysdk.ui.BindCardDetailCredit2Activity"
+		    android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+		    android:excludeFromRecents="true"
+		    android:exported="@bool/bd_wallet_switch_global_debug"
+		    android:screenOrientation="portrait"
+		    android:theme="@style/EbpayThemeActivit"
+		    android:windowSoftInputMode="stateVisible|adjustPan" />
+		<activity
+		    android:name="com.baidu.paysdk.ui.BindCardDetailCreditActivity"
+		    android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+		    android:excludeFromRecents="true"
+		    android:exported="@bool/bd_wallet_switch_global_debug"
+		    android:screenOrientation="portrait"
+		    android:windowSoftInputMode="stateVisible|adjustPan"
+		    android:theme="@style/EbpayThemeActivit"/>
+		<activity
+		    android:name="com.baidu.paysdk.ui.BindSmsActivity"
+		    android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+		    android:excludeFromRecents="true"
+		    android:screenOrientation="portrait"
+		    android:exported="@bool/bd_wallet_switch_global_debug"
+		    android:theme="@style/EbpayThemeActivit"
+		    android:windowSoftInputMode="adjustResize" />
+		<activity
+		    android:name="com.baidu.paysdk.ui.SelectBindCardActivity"
+		    android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+		    android:excludeFromRecents="true"
+		    android:exported="@bool/bd_wallet_switch_global_debug"
+		    android:screenOrientation="portrait"
+		    android:theme="@style/EbpayThemeActivit"
+		    android:windowSoftInputMode="stateHidden" />
+		<activity
+		    android:name="com.baidu.paysdk.ui.SecurityCenterActivity"
+		    android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+		    android:excludeFromRecents="true"
+		    android:exported="@bool/bd_wallet_switch_global_debug"
+		    android:screenOrientation="portrait"
+		    android:theme="@style/EbpayThemeActivit"
+		    android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+		<activity
+		    android:name="com.baidu.paysdk.ui.PrivacyProtectionActivity"
+		    android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+		    android:excludeFromRecents="true"
+		    android:exported="@bool/bd_wallet_switch_global_debug"
+		    android:screenOrientation="portrait"
+		    android:theme="@style/EbpayThemeActivit"
+		    android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+		<activity
+		    android:name="com.baidu.paysdk.ui.PhonePwdActivity"
+		    android:configChanges="keyboardHidden|navigation|orientation|screenSize"
+		    android:excludeFromRecents="true"
+		    android:exported="@bool/bd_wallet_switch_global_debug"
+		    android:theme="@style/EbpayThemeActivit"
+		    android:screenOrientation="portrait"
+		    android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+		    
+		<!-- 壹收款注册 -->
+		<activity
+		    android:name="com.pingplusplus.libone.PayActivity"
+		    android:label="@string/title_activity_pay" />
+		<activity
+		    android:name="com.pingplusplus.libone.PaySucessedActivity"
+		    android:label="@string/title_activity_pay_sucessed" />
+        <activity
+            android:name="com.pingplusplus.libone.PayFiledActivity"
+            android:label="@string/title_activity_pay_filed" />
+        
+        <activity
+            android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
+            android:configChanges="keyboardHidden|orientation"
+            android:windowSoftInputMode="adjustResize"
+            android:exported="false" />
+
+        
+        <activity
+            android:name="com.elex.chatservice.view.ChatActivity"
+            android:configChanges="orientation|screenSize|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/Activity.Theme" />
+        <activity
+            android:name="com.elex.chatservice.view.ChannelListActivity"
+            android:configChanges="orientation|screenSize|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/Activity.Theme" />
+        <activity
+            android:name="com.elex.chatservice.view.ForumActivity"
+            android:configChanges="orientation|screenSize|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/Activity.Theme" />
+        <activity
+            android:name="com.elex.chatservice.view.MemberSelectorActivity"
+            android:configChanges="orientation|screenSize|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/Activity.Theme" />
+        <activity
+            android:name="com.elex.chatservice.view.WriteMailActivity"
+            android:configChanges="orientation|screenSize|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/Activity.Theme" />
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="a9561a0f09e88d758810060aea57aac008e89d0c" />
+            <meta-data
+            android:name="io.branch.sdk.BranchKey"
+            android:value="key_live_knjHdkLtLaoWWChZ9ZmCIgipAAnT53Wn" />
+    </application>
+</manifest>

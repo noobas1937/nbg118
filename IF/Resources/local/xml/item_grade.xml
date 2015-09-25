@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<tns:database xmlns:tns="http://www.iw.com/sns/platform/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Group id="grade">
+        <ItemSpec id="24000001" item="1;6" cost="500" g_atk="300" g_def="300" skill="101007|101008|0"/>
+        <ItemSpec id="24000002" item="1;8" cost="1000" g_atk="600" g_def="600" skill="101007|101009|101010"/>
+        <ItemSpec id="24000003" item="1;10" cost="2000" g_atk="900" g_def="900" skill="0"/>
+        <ItemSpec id="24000004" item="1;12" cost="3000" g_atk="1200" g_def="1200" skill="0"/>
+        <ItemSpec id="24000005" item="1;14" cost="4000" g_atk="1500" g_def="1500" skill="0"/>
+        <ItemSpec id="24000006" item="1;16" cost="5000" g_atk="1800" g_def="1800" skill="0"/>
+        <ItemSpec id="24000007" item="1;18" cost="6000" g_atk="2100" g_def="2100" skill="0"/>
+        <ItemSpec id="24000008" item="1;20" cost="7000" g_atk="2400" g_def="2400" skill="0"/>
+        <ItemSpec id="24000009" item="1;22" cost="8000" g_atk="2700" g_def="2700" skill="0"/>
+        <ItemSpec id="24000010" item="1;24" cost="9000" g_atk="3000" g_def="3000" skill="0"/>
+    </Group>
+</tns:database>

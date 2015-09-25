@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<tns:database xmlns:tns="http://www.iw.com/sns/platform/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Group id="territory">
+        <ItemSpec id="6001" condition1="1" condition2="50" towermunber_add="4"/>
+        <ItemSpec id="6002" condition1="1" condition2="50" towermunber_add="3"/>
+        <ItemSpec id="6003" condition1="60" condition2="10000000" condition3="40" towermunber_add="2"/>
+        <ItemSpec id="6004" condition1="70" condition2="20000000" condition3="60" towermunber_add="1"/>
+        <ItemSpec id="6005" condition1="80" condition2="25000000" condition3="80" towermunber_add="1"/>
+    </Group>
+</tns:database>

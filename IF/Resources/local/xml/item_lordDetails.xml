@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<tns:database xmlns:tns="http://www.iw.com/sns/platform/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Group id="lordDetails">
+        <ItemSpec id="46350" where="lord" area="2" type="0" name="105010" icon="science_mil_a_2"/>
+        <ItemSpec id="46351" where="lord" area="2" type="1" effect="war_win" show="1" buff="0" name="105011" icon="science_mil_a_2"/>
+        <ItemSpec id="46352" where="lord" area="2" type="2" effect="war_lose" show="1" buff="0" name="105012" icon="science_mil_a_2"/>
+        <ItemSpec id="46353" where="lord" area="2" type="3" effect="attack_win" show="1" buff="0" name="105013" icon="science_mil_a_2"/>
+        <ItemSpec id="46354" where="lord" area="2" type="4" effect="attack_lose" show="1" buff="0" name="105014" icon="science_mil_a_2"/>
+        <ItemSpec id="46355" where="lord" area="2" type="5" effect="defense_win" show="1" buff="0" name="105015" icon="science_mil_a_2"/>
+        <ItemSpec id="46356" where="lord" area="2" type="6" effect="win_rate" show="0" buff="0" name="105016" icon="science_mil_a_2"/>
+        <ItemSpec id="46357" where="lord" area="2" type="7" effect="scout_num" show="1" buff="0" name="105017" icon="science_mil_a_2"/>
+        <ItemSpec id="46358" where="lord" area="2" type="8" effect="kill_troops" show="1" buff="0" name="105018" icon="science_mil_a_2"/>
+        <ItemSpec id="46359" where="lord" area="2" type="9" effect="loss_troops" show="1" buff="0" name="105019" icon="science_mil_a_2"/>
+        <ItemSpec id="46360" where="lord" area="2" type="10" effect="heal_troops" show="1" buff="0" name="105020" icon="science_mil_a_2"/>
+        <ItemSpec id="46361" where="lord" area="1" type="0" name="105034" icon="science_mil_a_2"/>
+        <ItemSpec id="46362" where="lord" area="1" type="1" effect="power_sum" show="1" buff="0" name="105023" icon="science_mil_a_2"/>
+        <ItemSpec id="46363" where="lord" area="1" type="2" effect="power_lord" show="1" buff="0" name="105022" icon="science_mil_a_2"/>
+        <ItemSpec id="46364" where="lord" area="1" type="3" effect="power_troops" show="1" buff="0" name="105024" icon="science_mil_a_2"/>
+        <ItemSpec id="46365" where="lord" area="1" type="4" effect="power_build" show="1" buff="0" name="105025" icon="science_mil_a_2"/>
+        <ItemSpec id="46366" where="lord" area="1" type="5" effect="power_science" show="1" buff="0" name="105026" icon="science_mil_a_2"/>
+        <ItemSpec id="46367" where="lord" area="1" type="6" effect="power_trap" show="1" buff="0" name="105027" icon="science_mil_a_2"/>
+        <ItemSpec id="46423" where="lord" area="1" type="7" effect="power_equip" show="1" buff="0" name="105104" icon="science_mil_a_2"/>
+        <ItemSpec id="46368" where="lord" area="3" type="0" name="121991" icon="science_mil_a_2"/>
+        <ItemSpec id="46369" area="3" type="1" effect="55" show="1" buff="0" name="113922" icon="science_mil_a_2" description="113913"/>
+        <ItemSpec id="46370" area="3" type="2" effect="56" show="1" buff="0" name="113804" icon="science_mil_a_2" description="113914"/>
+        <ItemSpec id="46371" area="3" type="3" effect="131" show="1" buff="0" name="113805" icon="science_mil_a_2" description="113915"/>
+        <ItemSpec id="46372" area="3" type="4" effect="66" show="0" buff="2" name="113806" icon="science_mil_a_2" description="113917"/>
+        <ItemSpec id="46373" area="3" type="5" effect="60" show="0" buff="2" name="113807" icon="science_mil_a_2" description="113919"/>
+        <ItemSpec id="46374" where="mail" area="3" type="6" effect="1011;1012|1010|6" show="0" buff="2" name="113808" icon="science_mil_a_2" description="113918" mail_order="1" attack_defend="attack|defend"/>
+        <ItemSpec id="46375" where="mail" area="3" type="7" effect="1031;1032|1030|7" show="0" buff="2" name="113809" icon="science_mil_a_2" description="113917" mail_order="2" attack_defend="attack|defend"/>
+        <ItemSpec id="46376" where="mail" area="3" type="8" effect="1041;1042|1050" show="0" buff="2" name="113810" icon="science_mil_a_2" description="113917" mail_order="3" attack_defend="attack|defend"/>
+        <ItemSpec id="46377" where="mail" area="3" type="9" effect="1071;1072" show="0" buff="1" name="113848" icon="science_mil_a_2" description="113915" mail_order="4" attack_defend="attack|defend"/>
+        <ItemSpec id="46378" where="mail" area="3" type="10" effect="1013;1014|1010|6" show="0" buff="2" name="113811" icon="science_mil_a_2" description="113918" mail_order="5" attack_defend="attack|defend"/>
+        <ItemSpec id="46379" where="mail" area="3" type="11" effect="1033;1034|1030|7" show="0" buff="2" name="113812" icon="science_mil_a_2" description="113917" mail_order="6" attack_defend="attack|defend"/>
+        <ItemSpec id="46380" where="mail" area="3" type="12" effect="1043;1044|1050" show="0" buff="2" name="113813" icon="science_mil_a_2" description="113917" mail_order="7" attack_defend="attack|defend"/>
+        <ItemSpec id="46381" where="mail" area="3" type="13" effect="101010;101011" show="0" buff="2" name="113849" icon="science_mil_a_2" description="113915" mail_order="8" attack_defend="attack|defend"/>
+        <ItemSpec id="46382" where="mail" area="3" type="14" effect="1015;1016|1010|6" show="0" buff="2" name="113814" icon="science_mil_a_2" description="113918" mail_order="9" attack_defend="attack|defend"/>
+        <ItemSpec id="46383" where="mail" area="3" type="15" effect="1035;1036|1030|7" show="0" buff="2" name="113815" icon="science_mil_a_2" description="113917" mail_order="10" attack_defend="attack|defend"/>
+        <ItemSpec id="46384" where="mail" area="3" type="16" effect="1045;1046|1050" show="0" buff="2" name="113816" icon="science_mil_a_2" description="113917" mail_order="11" attack_defend="attack|defend"/>
+        <ItemSpec id="46385" where="mail" area="3" type="17" effect="1065;1066" show="0" buff="2" name="113850" icon="science_mil_a_2" description="113915" mail_order="12" attack_defend="attack|defend"/>
+        <ItemSpec id="46386" where="mail" area="3" type="18" effect="1017;1018|1010|6" show="0" buff="2" name="113817" icon="science_mil_a_2" description="113918" mail_order="13" attack_defend="attack|defend"/>
+        <ItemSpec id="46387" where="mail" area="3" type="19" effect="1037;1038|1030|7" show="0" buff="2" name="113818" icon="science_mil_a_2" description="113917" mail_order="14" attack_defend="attack|defend"/>
+        <ItemSpec id="46388" where="mail" area="3" type="20" effect="1047;1048|1050" show="0" buff="2" name="113819" icon="science_mil_a_2" description="113917" mail_order="15" attack_defend="attack|defend"/>
+        <ItemSpec id="46389" where="mail" area="3" type="21" effect="1207;1208" show="0" buff="2" name="113851" icon="science_mil_a_2" description="113915" mail_order="16" attack_defend="attack"/>
+        <ItemSpec id="46390" area="6" type="0" name="121999" icon="science_mil_a_2"/>
+        <ItemSpec id="46391" where="mail" area="6" type="1" effect="125" show="1" buff="0" name="113820" icon="science_mil_a_2" description="113914" mail_order="17" attack_defend="defend"/>
+        <ItemSpec id="46392" where="mail" area="6" type="2" effect="1591;1592;1593;1594;1595;1596;1597;1598" show="0" buff="2" name="113821" icon="science_mil_a_2" description="113918" mail_order="18" attack_defend="defend"/>
+        <ItemSpec id="46393" area="6" type="3" effect="67" show="0" buff="2" name="113822" icon="science_mil_a_2" description="113917"/>
+        <ItemSpec id="46394" area="6" type="4" effect="88" show="1" buff="0" name="113823" icon="science_mil_a_2" description="113914"/>
+        <ItemSpec id="46395" where="mail" area="6" type="5" effect="1591;1592" show="0" buff="2" name="113824" icon="science_mil_a_2" description="113914" mail_order="19" attack_defend="defend"/>
+        <ItemSpec id="46396" where="mail" area="6" type="6" effect="1593;1594" show="0" buff="2" name="113825" icon="science_mil_a_2" description="113914" mail_order="20" attack_defend="defend"/>
+        <ItemSpec id="46397" where="mail" area="6" type="7" effect="1595;1596" show="0" buff="2" name="113826" icon="science_mil_a_2" description="113914" mail_order="21" attack_defend="defend"/>
+        <ItemSpec id="46398" where="mail" area="6" type="8" effect="1220" show="0" buff="2" name="113827" icon="science_mil_a_2" description="113914" mail_order="22" attack_defend="defend"/>
+        <ItemSpec id="46399" where="mail" area="6" type="9" effect="1230" show="0" buff="2" name="113828" icon="science_mil_a_2" description="113914" mail_order="23" attack_defend="defend"/>
+        <ItemSpec id="46402" area="5" type="0" name="121998" icon="science_mil_a_2"/>
+        <ItemSpec id="46403" area="5" type="1" effect="68" show="0" buff="2" name="113829" icon="science_mil_a_2" description="113918"/>
+        <ItemSpec id="46404" area="5" type="2" effect="69" show="0" buff="2" name="113830" icon="science_mil_a_2" description="113920"/>
+        <ItemSpec id="46405" area="5" type="3" effect="64" show="0" buff="1" name="113831" icon="science_mil_a_2" description="113914"/>
+        <ItemSpec id="46406" area="5" type="4" effect="78" show="0" buff="2" name="113832" icon="science_mil_a_2" description="113918"/>
+        <ItemSpec id="46407" area="5" type="5" effect="73|57" show="1" buff="0" name="113833" icon="science_mil_a_2" description="113917"/>
+        <ItemSpec id="46408" area="5" type="6" effect="121" show="0" buff="2" name="113834" icon="science_mil_a_2" description="113918"/>
+        <ItemSpec id="46409" area="5" type="7" effect="108" show="0" buff="1" name="113835" icon="science_mil_a_2" description="113915"/>
+        <ItemSpec id="46410" area="5" type="8" effect="59" show="0" buff="2" name="113836" icon="science_mil_a_2" description="113921"/>
+        <ItemSpec id="46411" area="5" type="9" effect="106" show="0" buff="2" name="113837" icon="science_mil_a_2" description="113921"/>
+        <ItemSpec id="46412" area="4" type="0" name="121997" icon="science_mil_a_2"/>
+        <ItemSpec id="46413" area="4" type="1" effect="50" show="0" buff="2" name="113838" icon="science_mil_a_2" description="113921"/>
+        <ItemSpec id="46414" area="4" type="2" effect="153" show="0" buff="2" name="113839" icon="science_mil_a_2" description="113917"/>
+        <ItemSpec id="46415" area="4" type="3" effect="53" show="0" buff="2" name="113840" icon="science_mil_a_2" description="113919"/>
+        <ItemSpec id="46416" area="4" type="4" effect="154" show="0" buff="2" name="113841" icon="science_mil_a_2" description="113917"/>
+        <ItemSpec id="46417" area="4" type="5" effect="52" show="0" buff="2" name="113842" icon="science_mil_a_2" description="113921"/>
+        <ItemSpec id="46418" area="4" type="6" effect="155" show="0" buff="2" name="113843" icon="science_mil_a_2" description="113917"/>
+        <ItemSpec id="46419" area="4" type="7" effect="51" show="0" buff="2" name="113844" icon="science_mil_a_2" description="113921"/>
+        <ItemSpec id="46420" area="4" type="8" effect="156" show="0" buff="2" name="113845" icon="science_mil_a_2" description="113917"/>
+        <ItemSpec id="46421" area="4" type="9" effect="79" show="0" buff="2" name="113846" icon="science_mil_a_2" description="113917"/>
+        <ItemSpec id="46422" area="4" type="10" effect="72|38" show="1" buff="2" name="113847" icon="science_mil_a_2" description="113917"/>
+    </Group>
+</tns:database>

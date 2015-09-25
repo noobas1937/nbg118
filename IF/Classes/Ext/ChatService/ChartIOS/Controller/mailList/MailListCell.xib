@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8173.3" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8142"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="MailListCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0TK-s7-op8" userLabel="rootView">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="faceImage" translatesAutoresizingMaskIntoConstraints="NO" id="z3Q-zb-d6I" userLabel="headImageView">
+                                <rect key="frame" x="12" y="12" width="35" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="z3Q-zb-d6I" secondAttribute="height" multiplier="1:1" id="YHy-Fg-9Mk"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="系统" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K9H-FP-cOT" userLabel="titleLable">
+                                <rect key="frame" x="57" y="10" width="34" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="内容" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FA9-Ln-Sej" userLabel="contentsLable">
+                                <rect key="frame" x="57" y="29" width="30" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yGK-bN-ynM" userLabel="selectedButton">
+                                <rect key="frame" x="276" y="10" width="39" height="39"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="yGK-bN-ynM" secondAttribute="height" multiplier="1:1" id="8Je-mZ-rV7"/>
+                                </constraints>
+                                <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                                <state key="normal" image="choose_normal"/>
+                                <state key="selected" image="choose_selected"/>
+                                <connections>
+                                    <action selector="selectButtonAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="UrK-mw-Vcg"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="yGK-bN-ynM" secondAttribute="bottom" constant="10" id="BBI-u4-ggs"/>
+                            <constraint firstItem="z3Q-zb-d6I" firstAttribute="leading" secondItem="0TK-s7-op8" secondAttribute="leading" constant="12" id="Bfz-4G-1U8"/>
+                            <constraint firstItem="FA9-Ln-Sej" firstAttribute="top" secondItem="K9H-FP-cOT" secondAttribute="bottom" constant="5" id="Fw8-aH-tnM"/>
+                            <constraint firstItem="FA9-Ln-Sej" firstAttribute="leading" secondItem="z3Q-zb-d6I" secondAttribute="trailing" constant="10" id="GFV-WF-Im5"/>
+                            <constraint firstItem="FA9-Ln-Sej" firstAttribute="width" secondItem="0TK-s7-op8" secondAttribute="width" multiplier="0.6" id="K4W-b5-L4s"/>
+                            <constraint firstItem="K9H-FP-cOT" firstAttribute="top" secondItem="z3Q-zb-d6I" secondAttribute="top" constant="-2" id="KXA-la-Aep"/>
+                            <constraint firstAttribute="bottom" secondItem="z3Q-zb-d6I" secondAttribute="bottom" constant="12" id="KYG-nw-qYs"/>
+                            <constraint firstItem="FA9-Ln-Sej" firstAttribute="bottom" secondItem="z3Q-zb-d6I" secondAttribute="bottom" id="Nfp-ma-D6d"/>
+                            <constraint firstItem="K9H-FP-cOT" firstAttribute="top" secondItem="0TK-s7-op8" secondAttribute="top" constant="8" id="R64-LV-2uq"/>
+                            <constraint firstAttribute="trailing" secondItem="yGK-bN-ynM" secondAttribute="trailing" constant="5" id="RcJ-Hb-Tx5"/>
+                            <constraint firstItem="K9H-FP-cOT" firstAttribute="leading" secondItem="z3Q-zb-d6I" secondAttribute="trailing" constant="10" id="Zrv-R3-4Zj"/>
+                            <constraint firstItem="z3Q-zb-d6I" firstAttribute="top" secondItem="0TK-s7-op8" secondAttribute="top" constant="12" id="Zxd-ha-QcH"/>
+                            <constraint firstItem="yGK-bN-ynM" firstAttribute="centerY" secondItem="0TK-s7-op8" secondAttribute="centerY" id="oL1-js-0od"/>
+                            <constraint firstItem="yGK-bN-ynM" firstAttribute="top" secondItem="0TK-s7-op8" secondAttribute="top" constant="10" id="sFx-Zm-l5G"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="R64-LV-2uq"/>
+                                <exclude reference="Fw8-aH-tnM"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="0TK-s7-op8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="KWW-TV-7Dd"/>
+                    <constraint firstAttribute="trailing" secondItem="0TK-s7-op8" secondAttribute="trailing" id="WJI-rE-scx"/>
+                    <constraint firstAttribute="bottom" secondItem="0TK-s7-op8" secondAttribute="bottom" id="eak-S1-g8R"/>
+                    <constraint firstItem="0TK-s7-op8" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="v6J-8L-s59"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="contentsLabel" destination="FA9-Ln-Sej" id="aIH-ma-t6n"/>
+                <outlet property="headImageView" destination="z3Q-zb-d6I" id="O0c-kV-SPP"/>
+                <outlet property="nameLabel" destination="K9H-FP-cOT" id="qas-s6-NXv"/>
+                <outlet property="selectedButton" destination="yGK-bN-ynM" id="KRR-Ko-2y1"/>
+            </connections>
+            <point key="canvasLocation" x="239" y="243"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="choose_normal" width="41" height="41"/>
+        <image name="choose_selected" width="41" height="41"/>
+        <image name="faceImage" width="110" height="110"/>
+    </resources>
+</document>

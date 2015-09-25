@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<tns:database xmlns:tns="http://www.iw.com/sns/platform/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Group id="science">
+        <ItemSpec id="700100" tab="229990" name="120001" description="121001" icon="science_res_a_2" position="1;2" relation="2;4" show="1"/>
+        <ItemSpec id="700200" tab="229990" name="120002" description="121002" icon="science_res_a_3" position="1;6" relation="2;4" show="1"/>
+        <ItemSpec id="700300" tab="229990" name="120003" description="121003" icon="science_res_a_4" position="2;4" relation="3;2|3;6" show="2"/>
+        <ItemSpec id="700400" tab="229990" name="120004" description="121004" icon="science_res_a_5" position="3;2" relation="4;4" show="1"/>
+        <ItemSpec id="700500" tab="229990" name="120005" description="121005" icon="science_res_a_6" position="3;6" relation="4;4" show="1"/>
+        <ItemSpec id="700600" tab="229990" name="120006" description="121006" icon="science_res_a_7" position="4;4" relation="5;4" show="1"/>
+        <ItemSpec id="700700" tab="229990" name="120007" description="121007" icon="science_res_a_8" position="5;4" relation="6;4" show="1"/>
+        <ItemSpec id="700800" tab="229990" name="120008" description="121008" icon="science_res_a_9" position="6;4" relation="7;2|7;6" show="1"/>
+        <ItemSpec id="700900" tab="229990" name="120009" description="121009" icon="science_res_a_10" position="7;2" relation="8;2|8;6" show="1"/>
+        <ItemSpec id="701000" tab="229990" name="120010" description="121010" icon="science_res_a_11" position="7;6" relation="8;2|8;6" show="1"/>
+        <ItemSpec id="701200" tab="229990" name="120012" description="121012" icon="science_res_a_2" position="8;2" relation="9;4" show="1"/>
+        <ItemSpec id="701300" tab="229990" name="120013" description="121013" icon="science_res_a_3" position="8;6" relation="9;4" show="1"/>
+        <ItemSpec id="701400" tab="229990" name="120014" description="121014" icon="science_res_a_4" position="9;4" relation="10;2|10;6" show="2"/>
+        <ItemSpec id="701500" tab="229990" name="120015" description="121015" icon="science_res_a_5" position="10;2" relation="11;4" show="1"/>
+        <ItemSpec id="701600" tab="229990" name="120016" description="121016" icon="science_res_a_6" position="10;6" relation="11;4" show="1"/>
+        <ItemSpec id="701700" tab="229990" name="120017" description="121017" icon="science_res_a_7" position="11;4" relation="12;4" show="1"/>
+        <ItemSpec id="701800" tab="229990" name="120018" description="121018" icon="science_res_a_8" position="12;4" relation="13;4" show="1"/>
+        <ItemSpec id="701900" tab="229990" name="120019" description="121019" icon="science_res_a_9" position="13;4" relation="14;4|14;6" show="1"/>
+        <ItemSpec id="702000" tab="229990" name="120020" description="121020" icon="science_res_a_10" position="14;4" show="1"/>
+        <ItemSpec id="702100" tab="229990" name="120021" description="121021" icon="science_res_a_11" position="14;6" show="1"/>
+        <ItemSpec id="710000" tab="229991" name="120026" description="121026" icon="science_dev_a_1" position="1;4" relation="2;2|3;4|2;6" show="1"/>
+        <ItemSpec id="711400" tab="229991" name="120149" description="121149" icon="science_dev_a_6" position="2;2" show="1"/>
+        <ItemSpec id="711500" tab="229991" name="120150" description="121150" icon="science_dev_a_7" position="2;6" show="1"/>
+        <ItemSpec id="710300" tab="229991" name="120029" description="121029" icon="science_dev_a_2" position="3;4" relation="4;2|4;6" show="1"/>
+        <ItemSpec id="710500" tab="229991" name="120031" description="121031" icon="science_dev_a_4" position="4;2" relation="5;4" show="2"/>
+        <ItemSpec id="710600" tab="229991" name="120032" description="121032" icon="science_dev_a_5" position="4;6" relation="5;4" show="1"/>
+        <ItemSpec id="710400" tab="229991" name="120030" description="121030" icon="science_dev_a_3" position="5;4" relation="6;2|6;6|7;4" show="1"/>
+        <ItemSpec id="711600" tab="229991" name="120151" description="121151" icon="science_dev_a_6" position="6;2" show="1"/>
+        <ItemSpec id="711700" tab="229991" name="120152" description="121152" icon="science_dev_a_7" position="6;6" show="1"/>
+        <ItemSpec id="710700" tab="229991" name="120033" description="121033" icon="science_dev_a_1" position="7;4" relation="8;4" show="1"/>
+        <ItemSpec id="711000" tab="229991" name="120036" description="121036" icon="science_dev_a_2" position="8;4" relation="9;2|9;6" show="1"/>
+        <ItemSpec id="711200" tab="229991" name="120038" description="121038" icon="science_dev_a_4" position="9;2" relation="10;4" show="2"/>
+        <ItemSpec id="711300" tab="229991" name="120039" description="121039" icon="science_dev_a_5" position="9;6" relation="10;4" show="1"/>
+        <ItemSpec id="711100" tab="229991" name="120037" description="121037" icon="science_dev_a_3" position="10;4" show="1"/>
+        <ItemSpec id="720000" tab="229992" name="120040" description="121040" icon="science_def_a_1" position="1;4" relation="2;2|2;6|4;2|3;4|4;6" show="2"/>
+        <ItemSpec id="720100" tab="229992" name="120041" description="121041" icon="science_def_a_2" position="2;2" relation="3;1" show="1"/>
+        <ItemSpec id="720200" tab="229992" name="120042" description="121042" icon="science_def_a_3" position="2;6" relation="3;7" show="1"/>
+        <ItemSpec id="720300" tab="229992" name="120043" description="121043" icon="science_def_a_4" position="3;1" show="1"/>
+        <ItemSpec id="720400" tab="229992" name="120044" description="121044" icon="science_def_a_5" position="3;7" show="2"/>
+        <ItemSpec id="720500" tab="229992" name="120045" description="121045" icon="science_def_a_6" position="4;2" relation="5;4" show="1"/>
+        <ItemSpec id="720600" tab="229992" name="120046" description="121046" icon="science_def_a_7" position="3;4" relation="5;4" show="1"/>
+        <ItemSpec id="720700" tab="229992" name="120047" description="121047" icon="science_def_a_8" position="4;6" relation="5;4" show="1"/>
+        <ItemSpec id="720800" tab="229992" name="120048" description="121048" icon="science_def_a_9" position="5;4" relation="6;4" show="1"/>
+        <ItemSpec id="720900" tab="229992" name="120049" description="121049" icon="science_def_a_10" position="6;4" relation="7;4" show="1"/>
+        <ItemSpec id="721000" tab="229992" name="120050" description="121050" icon="science_def_a_1" position="7;4" relation="8;2|8;6|10;2|10;4|10;6" show="2"/>
+        <ItemSpec id="721100" tab="229992" name="120051" description="121051" icon="science_def_a_2" position="8;2" show="1"/>
+        <ItemSpec id="721200" tab="229992" name="120052" description="121052" icon="science_def_a_3" position="8;6" relation="9;7" show="1"/>
+        <ItemSpec id="721400" tab="229992" name="120054" description="121054" icon="science_def_a_5" position="9;7" show="2"/>
+        <ItemSpec id="721500" tab="229992" name="120055" description="121055" icon="science_def_a_6" position="10;2" relation="11;4" show="1"/>
+        <ItemSpec id="721600" tab="229992" name="120056" description="121056" icon="science_def_a_7" position="10;4" relation="11;4" show="1"/>
+        <ItemSpec id="721700" tab="229992" name="120057" description="121057" icon="science_def_a_8" position="10;6" relation="11;4" show="1"/>
+        <ItemSpec id="721800" tab="229992" name="120058" description="121058" icon="science_def_a_9" position="11;4" show="1"/>
+        <ItemSpec id="730000" tab="229993" name="120060" description="121060" icon="science_mil_a_1" position="1;4" relation="2;1|3;2|2;7|3;6|4;4" show="1"/>
+        <ItemSpec id="730100" tab="229993" name="120061" description="121061" icon="science_mil_a_2" position="2;1" show="1"/>
+        <ItemSpec id="730200" tab="229993" name="120062" description="121062" icon="science_mil_a_3" position="3;2" show="1"/>
+        <ItemSpec id="730300" tab="229993" name="120063" description="121063" icon="science_mil_a_4" position="2;7" show="1"/>
+        <ItemSpec id="730400" tab="229993" name="120064" description="121064" icon="science_mil_a_5" position="3;6" show="1"/>
+        <ItemSpec id="730500" tab="229993" name="120065" description="121065" icon="science_mil_a_6" position="4;4" relation="5;1|6;2|5;7|6;6|7;4" show="1"/>
+        <ItemSpec id="730600" tab="229993" name="120066" description="121066" icon="science_mil_a_7" position="5;1" show="1"/>
+        <ItemSpec id="730700" tab="229993" name="120067" description="121067" icon="science_mil_a_8" position="6;2" show="1"/>
+        <ItemSpec id="730800" tab="229993" name="120068" description="121068" icon="science_mil_a_9" position="5;7" show="1"/>
+        <ItemSpec id="730900" tab="229993" name="120069" description="121069" icon="science_mil_a_10" position="6;6" show="1"/>
+        <ItemSpec id="731000" tab="229993" name="120070" description="121070" icon="science_mil_a_11" position="7;4" relation="8;1|9;2|8;7|9;6|10;4" show="2"/>
+        <ItemSpec id="731100" tab="229993" name="120071" description="121071" icon="science_mil_a_12" position="8;1" show="1"/>
+        <ItemSpec id="731200" tab="229993" name="120072" description="121072" icon="science_mil_a_13" position="9;2" show="1"/>
+        <ItemSpec id="731300" tab="229993" name="120073" description="121073" icon="science_mil_a_14" position="8;7" show="1"/>
+        <ItemSpec id="731400" tab="229993" name="120074" description="121074" icon="science_mil_a_15" position="9;6" show="1"/>
+        <ItemSpec id="731500" tab="229993" name="120075" description="121075" icon="science_mil_a_16" position="10;4" relation="11;4" show="2"/>
+        <ItemSpec id="731600" tab="229993" name="120076" description="121076" icon="science_mil_a_11" position="11;4" relation="12;1|13;2|12;7|13;6|14;4" show="2"/>
+        <ItemSpec id="731700" tab="229993" name="120077" description="121077" icon="science_mil_a_2" position="12;1" show="1"/>
+        <ItemSpec id="731800" tab="229993" name="120078" description="121078" icon="science_mil_a_3" position="13;2" show="1"/>
+        <ItemSpec id="731900" tab="229993" name="120079" description="121079" icon="science_mil_a_4" position="12;7" show="1"/>
+        <ItemSpec id="732000" tab="229993" name="120080" description="121080" icon="science_mil_a_5" position="13;6" show="1"/>
+        <ItemSpec id="732100" tab="229993" name="120081" description="121081" icon="science_mil_a_1" position="14;4" relation="15;1|16;2|15;7|16;6|17;4" show="1"/>
+        <ItemSpec id="732200" tab="229993" name="120082" description="121082" icon="science_mil_a_7" position="15;1" show="1"/>
+        <ItemSpec id="732300" tab="229993" name="120083" description="121083" icon="science_mil_a_8" position="16;2" show="1"/>
+        <ItemSpec id="732400" tab="229993" name="120084" description="121084" icon="science_mil_a_9" position="15;7" show="1"/>
+        <ItemSpec id="732500" tab="229993" name="120085" description="121085" icon="science_mil_a_10" position="16;6" show="1"/>
+        <ItemSpec id="732600" tab="229993" name="120086" description="121086" icon="science_mil_a_6" position="17;4" relation="18;1|19;2|18;7|19;6|20;4" show="1"/>
+        <ItemSpec id="732700" tab="229993" name="120087" description="121087" icon="science_mil_a_12" position="18;1" show="1"/>
+        <ItemSpec id="732800" tab="229993" name="120088" description="121088" icon="science_mil_a_13" position="19;2" show="1"/>
+        <ItemSpec id="732900" tab="229993" name="120089" description="121089" icon="science_mil_a_14" position="18;7" show="1"/>
+        <ItemSpec id="733000" tab="229993" name="120090" description="121090" icon="science_mil_a_15" position="19;6" show="1"/>
+        <ItemSpec id="733100" tab="229993" name="120091" description="121091" icon="science_mil_a_16" position="20;4" relation="21;4" show="2"/>
+        <ItemSpec id="733200" tab="229993" name="120092" description="121092" icon="science_mil_a_11" position="21;4" relation="22;1|23;2|22;7|23;6|24;4" show="2"/>
+        <ItemSpec id="733300" tab="229993" name="120093" description="121093" icon="science_mil_a_2" position="22;1" show="1"/>
+        <ItemSpec id="733400" tab="229993" name="120094" description="121094" icon="science_mil_a_3" position="23;2" show="1"/>
+        <ItemSpec id="733500" tab="229993" name="120095" description="121095" icon="science_mil_a_4" position="22;7" show="1"/>
+        <ItemSpec id="733600" tab="229993" name="120096" description="121096" icon="science_mil_a_5" position="23;6" show="1"/>
+        <ItemSpec id="733700" tab="229993" name="120097" description="121097" icon="science_mil_a_1" position="24;4" relation="25;1|26;2|25;7|26;6|27;4" show="1"/>
+        <ItemSpec id="733800" tab="229993" name="120098" description="121098" icon="science_mil_a_7" position="25;1" show="1"/>
+        <ItemSpec id="733900" tab="229993" name="120099" description="121099" icon="science_mil_a_8" position="26;2" show="1"/>
+        <ItemSpec id="734000" tab="229993" name="120100" description="121100" icon="science_mil_a_9" position="25;7" show="1"/>
+        <ItemSpec id="734100" tab="229993" name="120101" description="121101" icon="science_mil_a_10" position="26;6" show="1"/>
+        <ItemSpec id="734200" tab="229993" name="120102" description="121102" icon="science_mil_a_6" position="27;4" relation="28;1|29;2|28;7|29;6|30;4" show="1"/>
+        <ItemSpec id="734300" tab="229993" name="120103" description="121103" icon="science_mil_a_12" position="28;1" show="1"/>
+        <ItemSpec id="734400" tab="229993" name="120104" description="121104" icon="science_mil_a_13" position="29;2" show="1"/>
+        <ItemSpec id="734500" tab="229993" name="120105" description="121105" icon="science_mil_a_14" position="28;7" show="1"/>
+        <ItemSpec id="734600" tab="229993" name="120106" description="121106" icon="science_mil_a_15" position="29;6" show="1"/>
+        <ItemSpec id="734700" tab="229993" name="120107" description="121107" icon="science_mil_a_16" position="30;4" show="2"/>
+        <ItemSpec id="740000" tab="229994" name="120109" description="121109" icon="temp_icon" position="1;1" relation="2;1" show="2"/>
+        <ItemSpec id="740100" tab="229994" name="120110" description="121110" icon="temp_icon" position="1;3" relation="2;3" show="2"/>
+        <ItemSpec id="740200" tab="229994" name="120111" description="121111" icon="temp_icon" position="1;5" relation="2;5" show="2"/>
+        <ItemSpec id="740300" tab="229994" name="120112" description="121112" icon="temp_icon" position="1;7" relation="2;7" show="2"/>
+        <ItemSpec id="740400" tab="229994" name="120113" description="121113" icon="temp_icon" position="2;1" relation="3;1" show="2"/>
+        <ItemSpec id="740500" tab="229994" name="120114" description="121114" icon="temp_icon" position="2;3" relation="3;3" show="2"/>
+        <ItemSpec id="740600" tab="229994" name="120115" description="121115" icon="temp_icon" position="2;5" relation="3;5" show="2"/>
+        <ItemSpec id="740700" tab="229994" name="120116" description="121116" icon="temp_icon" position="2;7" relation="3;7" show="2"/>
+        <ItemSpec id="740800" tab="229994" name="120117" description="121117" icon="temp_icon" position="3;1" relation="4;1" show="2"/>
+        <ItemSpec id="740900" tab="229994" name="120118" description="121118" icon="temp_icon" position="3;3" relation="4;3" show="2"/>
+        <ItemSpec id="741000" tab="229994" name="120119" description="121119" icon="temp_icon" position="3;5" relation="4;5" show="2"/>
+        <ItemSpec id="741100" tab="229994" name="120120" description="121120" icon="temp_icon" position="3;7" relation="4;7" show="2"/>
+        <ItemSpec id="741200" tab="229994" name="120121" description="121121" icon="temp_icon" position="4;1" relation="5;1" show="2"/>
+        <ItemSpec id="741300" tab="229994" name="120122" description="121122" icon="temp_icon" position="4;3" relation="5;3" show="2"/>
+        <ItemSpec id="741400" tab="229994" name="120123" description="121123" icon="temp_icon" position="4;5" relation="5;5" show="2"/>
+        <ItemSpec id="741500" tab="229994" name="120124" description="121124" icon="temp_icon" position="4;7" relation="5;7" show="2"/>
+        <ItemSpec id="741600" tab="229994" name="120125" description="121125" icon="temp_icon" position="5;1" relation="6;1" show="2"/>
+        <ItemSpec id="741700" tab="229994" name="120126" description="121126" icon="temp_icon" position="5;3" relation="6;3" show="2"/>
+        <ItemSpec id="741800" tab="229994" name="120127" description="121127" icon="temp_icon" position="5;5" relation="6;5" show="2"/>
+        <ItemSpec id="741900" tab="229994" name="120128" description="121128" icon="temp_icon" position="5;7" relation="6;7" show="2"/>
+        <ItemSpec id="742000" tab="229994" name="120129" description="121129" icon="temp_icon" position="6;1" relation="7;1" show="2"/>
+        <ItemSpec id="742100" tab="229994" name="120130" description="121130" icon="temp_icon" position="6;3" relation="7;3" show="2"/>
+        <ItemSpec id="742200" tab="229994" name="120131" description="121131" icon="temp_icon" position="6;5" relation="7;5" show="2"/>
+        <ItemSpec id="742300" tab="229994" name="120132" description="121132" icon="temp_icon" position="6;7" relation="7;7" show="2"/>
+        <ItemSpec id="742400" tab="229994" name="120133" description="121133" icon="temp_icon" position="7;1" relation="8;1" show="2"/>
+        <ItemSpec id="742500" tab="229994" name="120134" description="121134" icon="temp_icon" position="7;3" relation="8;3" show="2"/>
+        <ItemSpec id="742600" tab="229994" name="120135" description="121135" icon="temp_icon" position="7;5" relation="8;5" show="2"/>
+        <ItemSpec id="742700" tab="229994" name="120136" description="121136" icon="temp_icon" position="7;7" relation="8;7" show="2"/>
+        <ItemSpec id="742800" tab="229994" name="120137" description="121137" icon="temp_icon" position="8;1" relation="9;1" show="2"/>
+        <ItemSpec id="742900" tab="229994" name="120138" description="121138" icon="temp_icon" position="8;3" relation="9;3" show="2"/>
+        <ItemSpec id="743000" tab="229994" name="120139" description="121139" icon="temp_icon" position="8;5" relation="9;5" show="2"/>
+        <ItemSpec id="743100" tab="229994" name="120140" description="121140" icon="temp_icon" position="8;7" relation="9;7" show="2"/>
+        <ItemSpec id="743200" tab="229994" name="120141" description="121141" icon="temp_icon" position="9;1" relation="10;1" show="2"/>
+        <ItemSpec id="743300" tab="229994" name="120142" description="121142" icon="temp_icon" position="9;3" relation="10;3" show="2"/>
+        <ItemSpec id="743400" tab="229994" name="120143" description="121143" icon="temp_icon" position="9;5" relation="10;5" show="2"/>
+        <ItemSpec id="743500" tab="229994" name="120144" description="121144" icon="temp_icon" position="9;7" relation="10;7" show="2"/>
+        <ItemSpec id="743600" tab="229994" name="120145" description="121145" icon="temp_icon" position="10;1" show="2"/>
+        <ItemSpec id="743700" tab="229994" name="120146" description="121146" icon="temp_icon" position="10;3" show="2"/>
+        <ItemSpec id="743800" tab="229994" name="120147" description="121147" icon="temp_icon" position="10;5" show="2"/>
+        <ItemSpec id="743900" tab="229994" name="120148" description="121148" icon="temp_icon" position="10;7" show="2"/>
+        <ItemSpec id="702200" tab="229990" name="120022" description="121022" icon="temp_icon" position="17;2" relation="18;4" show="1"/>
+        <ItemSpec id="702300" tab="229990" name="120023" description="121023" icon="temp_icon" position="17;4" relation="18;4" show="1"/>
+        <ItemSpec id="702400" tab="229990" name="120024" description="121024" icon="temp_icon" position="17;6" relation="18;4" show="1"/>
+        <ItemSpec id="702500" tab="229990" name="120025" description="121025" icon="temp_icon" position="18;4" show="1"/>
+        <ItemSpec id="710100" tab="229991" name="120027" description="121027" icon="temp_icon" position="2;2" show="1"/>
+        <ItemSpec id="710800" tab="229991" name="120034" description="121034" icon="temp_icon" position="7;2" show="1"/>
+        <ItemSpec id="710200" tab="229991" name="120028" description="121028" icon="temp_icon" position="2;6" show="1"/>
+        <ItemSpec id="710900" tab="229991" name="120035" description="121035" icon="temp_icon" position="7;6" show="1"/>
+        <ItemSpec id="700000" tab="229990" name="120000" description="121000" icon="science_res_a_1" position="1;4" relation="2;2|2;6" show="1"/>
+        <ItemSpec id="701100" tab="229990" name="120011" description="121011" icon="science_res_a_1" position="9;4" relation="10;2|10;6" show="1"/>
+        <ItemSpec id="734800" tab="229993" name="120108" description="121108" icon="science_mil_a_11" position="31;4" show="2"/>
+        <ItemSpec id="721300" tab="229992" name="120053" description="121053" icon="science_def_a_4" position="9;2" show="1"/>
+        <ItemSpec id="721900" tab="229992" name="120059" description="121059" icon="science_def_a_10" position="12;4" show="1"/>
+    </Group>
+</tns:database>

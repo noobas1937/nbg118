@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.sample1"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="20" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/cok_icon"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+	    <activity android:name="com.elex.chatservice.ChatActivity"
+	              android:configChanges="orientation|screenSize|locale"
+	              android:theme="@style/Theme.ChatService"/>
+	    <activity android:name="com.elex.chatservice.HSConversation"
+	              android:label="@string/hs__conversation_header"
+	              android:configChanges="orientation|screenSize|locale" 
+	              android:theme="@style/Theme.ChatService"/>
+	    <activity android:name="com.elex.chatservice.HSQuestionsList"
+	              android:theme="@style/Theme.ChatService"
+	              android:configChanges="orientation|screenSize"/>
+	    <activity android:name="com.elex.chatservice.HSQuestion"
+	              android:label="@string/hs__question_header"
+	              android:hardwareAccelerated="true"
+	              android:configChanges="orientation|screenSize"
+	              android:theme="@style/Theme.ChatService" />
+	    <activity android:name="com.elex.chatservice.HSSection"
+	              android:hardwareAccelerated="true"
+	              android:configChanges="orientation|screenSize"
+	              android:windowSoftInputMode="adjustPan"
+	              android:theme="@style/Theme.ChatService" />
+	    <activity android:name="com.elex.chatservice.HSFaqs"
+	              android:label="@string/hs__help_header"
+	              android:hardwareAccelerated="true"
+	              android:configChanges="orientation|screenSize"
+	              android:windowSoftInputMode="adjustPan"
+	              android:theme="@style/Theme.ChatService" />
+	    <activity android:name="com.elex.chatservice.HSReview"
+	              android:configChanges="orientation|screenSize"
+	              android:theme="@style/Theme.ChatService.Translucent" />
+
+        <service
+            android:name="com.elex.chatservice.HSService"
+            android:label="ChatService Service" >
+        </service>
+		
+	    <receiver android:name="com.elex.chatservice.HelpshiftConnReceiver">
+	      <intent-filter>
+	        <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+	      </intent-filter>
+	    </receiver>
+    	
+        <service
+            android:name="com.elex.chatservice.HSRetryService"
+            android:label="ChatService Service" >
+        </service>
+    </application>
+
+</manifest>

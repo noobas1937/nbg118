@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<tns:database xmlns:tns="http://www.iw.com/sns/platform/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Group id="medal">
+        <ItemSpec id="9250" name="137310" icon_main="medal_1" icon_sub="0" icon_base="medal_1" achievement="9202"/>
+        <ItemSpec id="9251" name="137300" icon_main="medal_2" icon_sub="0" icon_base="medal_2" achievement="9215"/>
+        <ItemSpec id="9252" name="137314" icon_main="medal_3" icon_sub="0" icon_base="medal_3" achievement="9221"/>
+        <ItemSpec id="9253" name="137301" icon_main="medal_4" icon_sub="2" icon_base="medal_4" achievement="9226"/>
+        <ItemSpec id="9254" name="137303" icon_main="medal_5" icon_sub="1" icon_base="medal_5" achievement="9231"/>
+        <ItemSpec id="9255" name="137327" icon_main="medal_6" icon_sub="0" icon_base="medal_6" achievement="260002"/>
+        <ItemSpec id="9256" name="137302" icon_main="medal_7" icon_sub="1" icon_base="medal_7" achievement="260012"/>
+        <ItemSpec id="9257" name="137315" icon_main="medal_8" icon_sub="1" icon_base="medal_8" achievement="260022"/>
+        <ItemSpec id="9258" name="137322" icon_main="medal_9" icon_sub="0" icon_base="medal_9" achievement="260032"/>
+        <ItemSpec id="9261" name="137317" icon_main="medal_10" icon_sub="0" icon_base="medal_10" achievement="260062"/>
+        <ItemSpec id="9262" name="137318" icon_main="medal_11" icon_sub="0" icon_base="medal_11" achievement="260072"/>
+        <ItemSpec id="9268" name="137323" icon_main="medal_12" icon_sub="1" icon_base="medal_12" achievement="260132"/>
+        <ItemSpec id="9266" name="137306" icon_main="medal_13" icon_sub="2" icon_base="medal_13" achievement="260112"/>
+        <ItemSpec id="9272" name="137262" icon_main="medal_14" icon_sub="0" icon_base="medal_14" achievement="260138"/>
+        <ItemSpec id="9259" name="137304" icon_main="chenjiu08" icon_sub="chenjiu08" icon_base="chenjiu08" achievement="260042"/>
+        <ItemSpec id="9260" name="137316" icon_main="chenjiu08" icon_sub="chenjiu08" icon_base="chenjiu08" achievement="260052"/>
+        <ItemSpec id="9263" name="137319" icon_main="chenjiu08" icon_sub="chenjiu08" icon_base="chenjiu08" achievement="260082"/>
+        <ItemSpec id="9264" name="137320" icon_main="chenjiu08" icon_sub="chenjiu08" icon_base="chenjiu08" achievement="260092"/>
+        <ItemSpec id="9265" name="137321" icon_main="chenjiu08" icon_sub="chenjiu08" icon_base="chenjiu08" achievement="260102"/>
+        <ItemSpec id="9267" name="137305" icon_main="chenjiu08" icon_sub="chenjiu08" icon_base="chenjiu08" achievement="260122"/>
+        <ItemSpec id="9269" name="137324" icon_main="chenjiu08" icon_sub="chenjiu08" icon_base="chenjiu08" achievement="260142"/>
+        <ItemSpec id="9270" name="137325" icon_main="chenjiu08" icon_sub="chenjiu08" icon_base="chenjiu08" achievement="260152"/>
+        <ItemSpec id="9271" name="137326" icon_main="chenjiu08" icon_sub="chenjiu08" icon_base="chenjiu08" achievement="260162"/>
+    </Group>
+</tns:database>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<tns:database xmlns:tns="http://www.iw.com/sns/platform/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Group id="power">
+        <ItemSpec id="100000" name="100900" background="power1" npc_lock="120403" checkpoint_id="110000|110001|110002|110003|110004" next_id="100001"/>
+        <ItemSpec id="100001" name="100901" background="power2" npc_lock="121206" checkpoint_id="110100|110101|110102|110103|110104|110105|110106|110107|110120" next_id="100002"/>
+        <ItemSpec id="100002" name="100902" background="power3" npc_lock="122006" checkpoint_id="110200|110201|110202|110203|110204|110205|110206|110207|110220" next_id="100003"/>
+        <ItemSpec id="100003" name="100903" background="power4" npc_lock="122809" checkpoint_id="110300|110301|110302|110303|110304|110305|110306|110307|110320" next_id="100004"/>
+        <ItemSpec id="100004" name="100904" background="power5" npc_lock="123609" checkpoint_id="110400|110401|110402|110403|110404|110405|110406|110407|110420" next_id="100005"/>
+        <ItemSpec id="100005" name="100905" background="power6" npc_lock="124109" checkpoint_id="110500|110501|110502|110503|110504|110520" next_id="100006"/>
+    </Group>
+</tns:database>

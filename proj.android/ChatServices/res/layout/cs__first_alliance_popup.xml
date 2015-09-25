@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/firstAllianceLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentTop="true" 
+    
+    android:gravity="center" >
+
+    
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true" >
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.10" >
+        </View>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.80"
+            android:orientation="vertical" >
+            
+            	<View
+            		android:layout_width="fill_parent"
+            		android:layout_height="0dp"
+            		android:layout_weight="0.20" >
+        		</View>
+
+            	<LinearLayout
+            	    android:id="@+id/bg"
+            	    android:layout_width="fill_parent"
+            	    android:layout_height="0dp"
+            	    android:layout_weight="0.50"
+            	    android:orientation="horizontal" >
+
+            	    <ImageView
+            	        android:id="@+id/bg1"
+            	        android:layout_width="0dp"
+            	        android:layout_height="fill_parent"
+            	        android:layout_weight="0.5"
+            	        android:scaleType="fitXY"
+            	        android:src="@drawable/alliance_01" />
+
+            	    <ImageView
+            	        android:id="@+id/bg2"
+            	        android:layout_width="0dp"
+            	        android:layout_height="fill_parent"
+            	        android:layout_weight="0.5"
+            	        android:rotationY="180"
+            	        android:scaleType="fitXY"
+            	        android:src="@drawable/alliance_01" />
+            	</LinearLayout>
+
+            	<FrameLayout
+            	    android:layout_width="fill_parent"
+            	    android:layout_height="0dp"
+            	    android:paddingTop="20dp"
+            	    android:layout_weight="0.30" >
+            	    
+            	    <Button
+            	        android:id="@+id/joinAllianceBtn"
+            	        android:layout_width="wrap_content"
+            	        android:layout_height="wrap_content"
+            	        android:layout_gravity="center_horizontal"
+            	        android:background="@drawable/btn_green3"
+            	        android:gravity="center_vertical|center_horizontal"
+            	        android:text="加入联盟"
+            	        android:textAppearance="?android:attr/textAppearanceSmall"
+            	        android:textColor="#FFFFFF"
+			            android:paddingTop="15dp"
+			            android:paddingBottom="15dp"
+            	        android:textSize="@dimen/cs__textButtonTitle" />
+
+            	</FrameLayout>
+        
+        </LinearLayout>
+        
+        
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.10" >
+        </View>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true" >
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.3" >
+        </View>
+        
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:layout_weight="0.4" >
+
+            <View
+            	android:layout_width="fill_parent"
+            	android:layout_height="0dp"
+            	android:layout_weight="0.3" >
+        	</View>
+            
+            <ImageView
+                android:id="@+id/bg3"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.4"
+                android:scaleType="fitStart"
+                android:src="@drawable/alliance_02" />
+            
+            <View
+            	android:layout_width="fill_parent"
+            	android:layout_height="0dp"
+            	android:layout_weight="0.3" >
+        	</View>
+
+        </LinearLayout>
+        
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.3" >
+        </View>
+        
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+    	android:layout_alignParentLeft="true"
+    	android:layout_alignParentRight="true"
+    	android:layout_alignParentTop="true"  >
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.4" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.55"
+            android:orientation="vertical" >
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.10" />
+
+            <ImageView
+                android:id="@+id/npc"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.4"
+                android:scaleType="fitStart"
+                android:src="@drawable/g044_middle" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.5" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.05" />
+    </LinearLayout>
+    	<LinearLayout 
+        	android:layout_width="match_parent" 
+        	android:layout_height="match_parent" 
+        	android:layout_alignParentBottom="true"
+    		android:layout_alignParentLeft="true"
+    		android:layout_alignParentRight="true"
+    		android:layout_alignParentTop="true" >
+
+        	<View android:layout_width="0dp" 
+        	    android:layout_height="wrap_content" 
+        	    android:layout_weight="0.1" />
+
+        <LinearLayout 
+            android:layout_width="0dp" 
+            android:layout_height="fill_parent" 
+            android:layout_weight="0.55" 
+            android:orientation="vertical">
+
+            <View 
+                android:layout_width="fill_parent" 
+                android:layout_height="0dp" 
+                android:layout_weight="0.4" />
+
+            <ImageView 
+                android:id="@+id/ImageView01" 
+                android:layout_width="fill_parent" 
+                android:layout_height="0dp" 
+                android:layout_weight="0.33" 
+                android:scaleType="fitStart" 
+                android:src="@drawable/alliance_gold2" />
+
+            <View 
+                android:layout_width="fill_parent" 
+                android:layout_height="0dp" 
+                android:layout_weight="0.27" />
+        </LinearLayout>
+
+        <View 
+            android:layout_width="0dp" 
+            android:layout_height="fill_parent" 
+            android:layout_weight="0.55" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical" >
+        
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.2" >
+        </View>
+        
+        <LinearLayout
+            	    android:layout_width="fill_parent"
+            	    android:layout_height="0dp"
+            	    android:layout_weight="0.06" >
+            
+            <View
+            	android:layout_width="0dp"
+            	android:layout_height="fill_parent"
+            	android:layout_weight="0.14" >
+        	</View>
+        	
+        	<ImageView
+                android:id="@+id/gold1"
+                android:layout_width="0dp"
+            	android:layout_height="wrap_content"
+            	android:layout_weight="0.14"
+                android:src="@drawable/alliance_gold1" />
+        	
+        	<View
+            	android:layout_width="0dp"
+            	android:layout_height="fill_parent"
+            	android:layout_weight="0.72" >
+        	</View>
+        </LinearLayout>
+        
+        <LinearLayout
+        	android:layout_width="fill_parent"
+            android:layout_weight="0.14"
+            android:layout_height="0dp">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.15" >
+        </View>
+        
+        <TextView
+            android:id="@+id/joinAllianceTipText"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.35"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="Join the alliance and get the Gold Award now!"
+            android:textColor="#FFF27F"
+            android:textSize="@dimen/cs__textSendButton" />
+        
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.5" >
+        </View>
+        
+    	</LinearLayout>
+        
+        
+        
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.1" >
+        </View>
+        
+        <LinearLayout
+        	android:layout_width="fill_parent"
+            android:layout_weight="0.08"
+            android:layout_height="0dp">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.2" >
+        </View>
+        
+        <TextView
+            android:id="@+id/joinAllianceRewardText"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:layout_weight="0.62"
+            android:gravity="right|center_vertical"
+            android:text="100Gold"
+            android:textColor="#FFF27F"
+            android:textSize="@dimen/cs__textAllianceReward"
+            android:textStyle="bold|italic" />
+        
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.18" >
+        </View>
+        
+    	</LinearLayout>
+        
+        
+        <LinearLayout
+        	android:layout_width="fill_parent"
+            android:layout_weight="0.05"
+            android:layout_height="0dp">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.2" >
+        </View>
+        
+        <TextView
+            android:id="@+id/sendMethodText"
+            android:layout_width="0dp"
+            android:layout_weight="0.65"
+            android:layout_height="fill_parent"
+            android:gravity="right|center_vertical"
+            android:layout_gravity="center"
+            android:text="Send by mail"
+            android:textColor="#FFF27F"
+            android:textSize="@dimen/cs__textSizeMedium" />
+        
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.15" >
+        </View>
+        
+    	</LinearLayout>
+        
+      
+        
+        
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.37" >
+        </View>
+        
+    </LinearLayout>
+
+    
+    
+</RelativeLayout>

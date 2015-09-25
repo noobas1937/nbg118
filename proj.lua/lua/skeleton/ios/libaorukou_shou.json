@@ -1,0 +1,48 @@
+{
+"skeleton": { "hash": "5vTRSfHIeuNjOtjxc8jox2RWSZg", "spine": "2.1.25", "width": 115, "height": 136 },
+"bones": [
+	{ "name": "root" },
+	{ "name": "jinbi_1_", "parent": "root", "x": -14.56, "y": 35.6 },
+	{ "name": "jinbi_2_", "parent": "root", "x": 27.48, "y": 48.45 }
+],
+"slots": [
+	{ "name": "libao_1_", "bone": "root", "attachment": "libao_1_" },
+	{ "name": "bone2", "bone": "jinbi_2_", "attachment": "jinbi_2_" },
+	{ "name": "jinbi_2_", "bone": "root" },
+	{ "name": "jinbi_2_3", "bone": "jinbi_1_", "attachment": "jinbi_1_" },
+	{ "name": "jinbi_1_", "bone": "root" }
+],
+"skins": {
+	"default": {
+		"bone2": {
+			"jinbi_2_": { "x": -0.81, "y": -1.07, "width": 64, "height": 37 }
+		},
+		"jinbi_2_3": {
+			"jinbi_1_": { "x": 1.72, "y": -1.72, "width": 75, "height": 46 }
+		},
+		"libao_1_": {
+			"libao_1_": { "x": 5.16, "y": 60.88, "width": 115, "height": 136 }
+		}
+	}
+},
+"animations": {
+	"animation": {
+		"slots": {
+			"bone2": {
+				"color": [
+					{ "time": 0, "color": "ffffffff" },
+					{ "time": 0.2666, "color": "ffffffc1" },
+					{ "time": 0.5333, "color": "ffffffff" }
+				]
+			},
+			"jinbi_2_3": {
+				"color": [
+					{ "time": 0, "color": "ffffffff" },
+					{ "time": 0.2666, "color": "ffffffcf" },
+					{ "time": 0.5333, "color": "ffffffff" }
+				]
+			}
+		}
+	}
+}
+}

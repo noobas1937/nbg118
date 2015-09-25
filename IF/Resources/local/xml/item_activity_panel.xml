@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<tns:database xmlns:tns="http://www.iw.com/sns/platform/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Group id="activity_panel">
+        <ItemSpec id="57000" type="1" name="105842" desc="105809" desc_info
+="105846" story="137519" Advertise_pic="57000_ad1"/>
+        <ItemSpec id="57001" type="2" activityid="9006" name="101281" sort="1"/>
+        <ItemSpec id="57002" type="3" name="133003" desc="133004" desc_info
+="133075" story="137518" Advertise_pic="57002_ad1"/>
+        <ItemSpec id="57003" type="4" name="111300" desc="137442" desc_info
+="137442" Advertise_pic="57003_ad1"/>
+        <ItemSpec id="57006" type="6" name="137485" desc="137486" desc_info
+="137486" story="137488" Advertise_pic="57006_ad1" exchange="2" num="3"/>
+        <ItemSpec id="57007" type="7" name="138000" desc="138001" desc_info
+="138051" story="138066" Advertise_pic="57007_ad1"/>
+        <ItemSpec id="57010" type="6" name="137511" desc="137512" desc_info
+="137512" story="137513" Advertise_pic="57004_ad1" exchange="0"/>
+        <ItemSpec id="57011" type="6" name="137520" desc="137521" desc_info
+="137521" story="137522" Advertise_pic="57004_ad1" exchange="0"/>
+        <ItemSpec id="57012" type="6" name="137555" desc="137556" desc_info
+="137556" story="137557" Advertise_pic="57005_ad1" exchange="0"/>
+        <ItemSpec id="57013" type="6" name="137547" desc="137548" desc_info
+="137548" story="137549" Advertise_pic="57008_ad1" exchange="0"/>
+    </Group>
+</tns:database>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<tns:database xmlns:tns="http://www.iw.com/sns/platform/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Group id="rank">
+        <ItemSpec id="7101" allmail="1" member="1" trade="1" help="1" rankdetails="1" quit="1"/>
+        <ItemSpec id="7102" allmail="1" member="1" trade="1" help="1" rankdetails="1" quit="1"/>
+        <ItemSpec id="7103" allmail="1" member="1" trade="1" help="1" rankdetails="1" quit="1" rankup="1" rankdown="1"/>
+        <ItemSpec id="7104" allmail="1" member="1" trade="1" help="1" rankdetails="1" quit="1" rankup="1" rankdown="1" slogan="1" recruitment="1" announcement="1" invite="1" kick="1" alliancescience="1" allianceshop="1" alliancelanguage="1" comment="1" allianceactivity="1" quest="1"/>
+        <ItemSpec id="7105" allmail="1" member="1" trade="1" help="1" rankdetails="1" rankup="1" rankdown="1" slogan="1" recruitment="1" announcement="1" invite="1" kick="1" alliancescience="1" allianceshop="1" alliancelanguage="1" comment="1" allianceactivity="1" quest="1" name="1" briefname="1" flag="1" rankname="1" dissolve="1" transfer="1"/>
+    </Group>
+</tns:database>

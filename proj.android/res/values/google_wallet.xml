@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- checkout支付相关 -->
+	<string name="welcome">Welcome to the shop!</string>
+	<string name="billing_not_supported_title">Cannot purchase</string>
+	<string name="billing_not_supported_message">Currently, purchase service is suspended. You can continue to use this application, but you cannot make any purchase.</string>
+	<string name="cannot_connect_title">Cannot connect to application store</string>
+	<string name="cannot_connect_message">The application could not connect to the application store. Current version might be outdated. You can still continue using it, but you will be unable to make any purchases.</string>
+	<string name="restoring_transactions">Resume trading</string>
+	<string name="learn_more">Know more </string>
+	<string name="help_url" formatted="false">http://market.android.com/support/bin/answer.py?answer=1050566&amp;amp;amp;amp;amp;amp;hl=%lang%&amp;amp;amp;amp;amp;amp;dl=%region%</string>
+	<!--<string name="buy">Buy</string>  -->
+	<string name="select_item">Select an item</string>
+	<string name="edit_payload">Edit data</string>
+	<!-- 支付验证失败 -->
+	<string name="purchase_verify_failed">payment validation fails</string>
+</resources>

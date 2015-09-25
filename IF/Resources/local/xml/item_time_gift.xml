@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<tns:database xmlns:tns="http://www.iw.com/sns/platform/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Group id="time_gift">
+        <ItemSpec id="100600"/>
+        <ItemSpec id="100601"/>
+        <ItemSpec id="100602" iscrit="1"/>
+        <ItemSpec id="100603"/>
+        <ItemSpec id="100604"/>
+        <ItemSpec id="100605" iscrit="1"/>
+        <ItemSpec id="100606"/>
+        <ItemSpec id="100607"/>
+        <ItemSpec id="100608" iscrit="1"/>
+        <ItemSpec id="100609"/>
+        <ItemSpec id="100610"/>
+        <ItemSpec id="100611" iscrit="1"/>
+        <ItemSpec id="100612"/>
+        <ItemSpec id="100613"/>
+        <ItemSpec id="100614" iscrit="1"/>
+    </Group>
+</tns:database>

@@ -1,0 +1,269 @@
+{
+"skeleton": { "hash": "ThKWcfS8V1wJBwgcHd2t7jhcYiI", "spine": "2.1.18", "width": 0, "height": 0 },
+"bones": [
+	{ "name": "root" },
+	{ "name": "bone3", "parent": "root", "x": -0.88, "y": 5.47 },
+	{ "name": "bone4", "parent": "root", "length": 0.6, "x": 163.5, "y": 162 },
+	{ "name": "bone6", "parent": "root", "x": 127.94, "y": 176.23 },
+	{ "name": "bone", "parent": "bone6", "x": -126.69, "y": -175.81, "scaleX": 0.698, "scaleY": 0.698 },
+	{ "name": "bone2", "parent": "bone6", "x": -127.35, "y": -175.68, "scaleX": 1.298, "scaleY": 1.298 },
+	{ "name": "bone5", "parent": "bone6", "x": -126.56, "y": -176.71, "scaleX": 1.5, "scaleY": 1.5, "rotation": 88.24, "flipX": true }
+],
+"slots": [
+	{ "name": "ActivitiesCoin_1_s", "bone": "bone" },
+	{ "name": "Food_1_s", "bone": "bone2" },
+	{ "name": "Iron_1_s", "bone": "bone3" },
+	{ "name": "Stone_1_s", "bone": "bone4" },
+	{ "name": "Wood_1_s", "bone": "bone5" }
+],
+"skins": {
+	"default": {
+		"ActivitiesCoin_1_s": {
+			"ActivitiesCoin_1_s": { "y": 37.75, "width": 99, "height": 99 },
+			"ActivitiesCoin_2_s": { "y": 37.75, "scaleX": 0.992, "scaleY": 0.992, "width": 99, "height": 99 },
+			"ActivitiesCoin_3_s": { "y": 37.75, "scaleX": 0.992, "scaleY": 0.992, "width": 99, "height": 99 },
+			"ActivitiesCoin_4_s": { "y": 37.75, "scaleX": 0.992, "scaleY": 0.992, "width": 99, "height": 99 },
+			"ActivitiesCoin_5_s": { "y": 37.75, "scaleX": 0.992, "scaleY": 0.992, "width": 99, "height": 99 },
+			"ActivitiesCoin_6_s": { "y": 37.75, "scaleX": 0.992, "scaleY": 0.992, "width": 99, "height": 99 },
+			"ActivitiesCoin_7_s": { "y": 37.75, "scaleX": 0.992, "scaleY": 0.992, "width": 99, "height": 99 }
+		},
+		"Food_1_s": {
+			"Food_1_s": { "rotation": 126.1, "width": 53, "height": 67 }
+		},
+		"Iron_1_s": {
+			"Iron_1_s": { "width": 32, "height": 27 }
+		},
+		"Stone_1_s": {
+			"Stone_1_s": { "width": 50, "height": 34 }
+		},
+		"Wood_1_s": {
+			"Wood_1_s": { "x": 2.19, "y": 0.44, "rotation": 10.51, "width": 50, "height": 33 }
+		}
+	}
+},
+"animations": {
+	"ActivitiesCoin": {
+		"slots": {
+			"ActivitiesCoin_1_s": {
+				"attachment": [
+					{ "time": 0, "name": "ActivitiesCoin_1_s" },
+					{ "time": 0.5666, "name": "ActivitiesCoin_2_s" },
+					{ "time": 0.6, "name": "ActivitiesCoin_3_s" },
+					{ "time": 0.6333, "name": "ActivitiesCoin_4_s" },
+					{ "time": 0.6666, "name": "ActivitiesCoin_5_s" },
+					{ "time": 0.7, "name": "ActivitiesCoin_6_s" },
+					{ "time": 0.7333, "name": "ActivitiesCoin_7_s" },
+					{ "time": 0.7666, "name": "ActivitiesCoin_1_s" },
+					{ "time": 0.8, "name": "ActivitiesCoin_2_s" },
+					{ "time": 0.8333, "name": "ActivitiesCoin_3_s" },
+					{ "time": 0.8666, "name": "ActivitiesCoin_4_s" },
+					{ "time": 0.9, "name": "ActivitiesCoin_5_s" },
+					{ "time": 0.9333, "name": "ActivitiesCoin_6_s" },
+					{ "time": 0.9666, "name": "ActivitiesCoin_7_s" },
+					{ "time": 1, "name": "ActivitiesCoin_1_s" },
+					{ "time": 1.0333, "name": "ActivitiesCoin_1_s" },
+					{ "time": 1.0666, "name": "ActivitiesCoin_3_s" },
+					{ "time": 1.1, "name": "ActivitiesCoin_4_s" }
+				]
+			},
+			"Food_1_s": {
+				"attachment": [
+					{ "time": 0.4666, "name": null }
+				]
+			},
+			"Iron_1_s": {
+				"attachment": [
+					{ "time": 0.4666, "name": null }
+				]
+			},
+			"Wood_1_s": {
+				"attachment": [
+					{ "time": 0, "name": null }
+				]
+			}
+		},
+		"bones": {
+			"bone": {
+				"rotate": [
+					{ "time": 0, "angle": -0.25 },
+					{ "time": 0.3333, "angle": -0.59, "curve": "stepped" },
+					{ "time": 1.0333, "angle": -0.59 },
+					{ "time": 1.1, "angle": 58.34 },
+					{ "time": 1.1666, "angle": 89.02 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": -0.7 },
+					{ "time": 0.1666, "x": 0, "y": -520.93 },
+					{ "time": 0.2666, "x": 0, "y": -333.58 },
+					{ "time": 0.3333, "x": 0, "y": -518.25 },
+					{ "time": 0.4, "x": 0, "y": -452.2 },
+					{ "time": 0.4666, "x": 0, "y": -514.68 },
+					{ "time": 0.5, "x": 0, "y": -486.12 },
+					{ "time": 0.5333, "x": 0, "y": -521.82 }
+				],
+				"scale": [
+					{ "time": 0, "x": 1, "y": 1 }
+				]
+			}
+		}
+	},
+	"Iron": {
+		"slots": {
+			"ActivitiesCoin_1_s": {
+				"attachment": [
+					{ "time": 0, "name": null }
+				]
+			},
+			"Food_1_s": {
+				"attachment": [
+					{ "time": 0, "name": null }
+				]
+			},
+			"Iron_1_s": {
+				"attachment": [
+					{ "time": 0, "name": "Iron_1_s" }
+				]
+			},
+			"Stone_1_s": {
+				"attachment": [
+					{ "time": 0, "name": null }
+				]
+			},
+			"Wood_1_s": {
+				"attachment": [
+					{ "time": 0, "name": null }
+				]
+			}
+		},
+		"bones": {
+			"bone3": {
+				"rotate": [
+					{ "time": 0, "angle": 0, "curve": "stepped" },
+					{ "time": 0.2333, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": -1.09, "y": 0 },
+					{ "time": 0.2333, "x": -3.27, "y": -609.09 },
+					{ "time": 0.3, "x": -3.27, "y": -598.18 },
+					{ "time": 0.3333, "x": -3.27, "y": -642.34, "curve": "stepped" },
+					{ "time": 1, "x": -3.27, "y": -642.34 }
+				],
+				"scale": [
+					{ "time": 0, "x": 1, "y": 1, "curve": "stepped" },
+					{ "time": 0.2333, "x": 1, "y": 1 }
+				]
+			}
+		}
+	},
+	"Stone": {
+		"slots": {
+			"Stone_1_s": {
+				"attachment": [
+					{ "time": 0, "name": "Stone_1_s" }
+				]
+			}
+		},
+		"bones": {
+			"bone4": {
+				"rotate": [
+					{ "time": 0, "angle": 0, "curve": "stepped" },
+					{ "time": 0.2, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": -162.59, "y": -161.22 },
+					{ "time": 0.2, "x": -162.59, "y": -671.76 },
+					{ "time": 0.2666, "x": -162.59, "y": -647.76 },
+					{ "time": 0.3, "x": -162.59, "y": -684.67, "curve": "stepped" },
+					{ "time": 1.1666, "x": -162.59, "y": -684.67 }
+				],
+				"scale": [
+					{ "time": 0, "x": 1, "y": 1 },
+					{ "time": 0.2, "x": 1.01, "y": 1 }
+				]
+			}
+		}
+	},
+	"food": {
+		"slots": {
+			"ActivitiesCoin_1_s": {
+				"attachment": [
+					{ "time": 0, "name": null }
+				]
+			},
+			"Food_1_s": {
+				"attachment": [
+					{ "time": 0, "name": "Food_1_s" }
+				]
+			},
+			"Wood_1_s": {
+				"attachment": [
+					{ "time": 0, "name": null }
+				]
+			}
+		},
+		"bones": {
+			"bone2": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.3, "angle": -26.39 },
+					{ "time": 0.7, "angle": 26.62 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": -0.76 },
+					{ "time": 0.3666, "x": -106.86, "y": -138.92 },
+					{ "time": 0.8, "x": -6.02, "y": -407.38 },
+					{ "time": 1.1666, "x": 0, "y": -575.78 }
+				],
+				"scale": [
+					{ "time": 0, "x": 1, "y": 1 }
+				]
+			}
+		}
+	},
+	"wood": {
+		"slots": {
+			"ActivitiesCoin_1_s": {
+				"attachment": [
+					{ "time": 0, "name": null }
+				]
+			},
+			"Food_1_s": {
+				"attachment": [
+					{ "time": 0, "name": null }
+				]
+			},
+			"Wood_1_s": {
+				"attachment": [
+					{ "time": 0, "name": "Wood_1_s" }
+				]
+			}
+		},
+		"bones": {
+			"bone5": {
+				"rotate": [
+					{ "time": 0, "angle": -1.52 },
+					{ "time": 0.2666, "angle": 0.84 },
+					{ "time": 0.4333, "angle": 49.98 },
+					{ "time": 0.6, "angle": -3.84 },
+					{ "time": 0.7666, "angle": -45.04 },
+					{ "time": 1, "angle": -112.05 },
+					{ "time": 1.0666, "angle": -86.53 },
+					{ "time": 1.1666, "angle": -93.32 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 30.95 },
+					{ "time": 0.2666, "x": -9.26, "y": -504.5 },
+					{ "time": 0.4333, "x": -3.56, "y": -411 },
+					{ "time": 0.6, "x": -3.56, "y": -525.44 },
+					{ "time": 0.7666, "x": -3.56, "y": -490.5 },
+					{ "time": 0.9, "x": -3.56, "y": -537.59 }
+				],
+				"scale": [
+					{ "time": 0, "x": 1, "y": 1, "curve": "stepped" },
+					{ "time": 0.2666, "x": 1, "y": 1 }
+				]
+			}
+		}
+	}
+}
+}

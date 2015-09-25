@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<tns:database xmlns:tns="http://www.iw.com/sns/platform/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Group id="house">
+        <ItemSpec id="8000" name="111001" description="111002" house="111007;111008|111009;111010" icon="ico8000"/>
+        <ItemSpec id="8001" name="111003" description="111004" house="111011;111012|111013;111014" icon="ico8001"/>
+        <ItemSpec id="8002" name="111005" description="111006" house="111015;111016|111017;111018" icon="ico8002"/>
+    </Group>
+</tns:database>

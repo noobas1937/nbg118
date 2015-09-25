@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>ActivitiesEXP.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{4,4},{116,125}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{116,125}}</string>
+                <key>sourceSize</key>
+                <string>{116,125}</string>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>2</integer>
+            <key>realTextureFileName</key>
+            <string>kingicon.pvr.ccz</string>
+            <key>size</key>
+            <string>{128,256}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:02dcc6c156bd91bb8264fb9041943c3f:42d2f3acd9bf57ed073b1749935415d1:1972c4bf8e706542dee9e36638a7dacc$</string>
+            <key>textureFileName</key>
+            <string>kingicon.pvr.ccz</string>
+        </dict>
+    </dict>
+</plist>

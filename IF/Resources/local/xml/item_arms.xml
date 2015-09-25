@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<tns:database xmlns:tns="http://www.iw.com/sns/platform/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Group id="arms">
+        <ItemSpec id="107000" name="103500" description="103550" arm="1" icon="ico107000" featuredescription="103424;103400|103432;103408|103440;103416" featureicon="ico1070001;ico1070002;ico1070003"/>
+        <ItemSpec id="107001" name="103501" description="103551" arm="1" icon="ico107001" featuredescription="103424;103400|103432;103408|103440;103416" featureicon="ico1070001;ico1070002;ico1070003"/>
+        <ItemSpec id="107002" name="103502" description="103552" arm="2" icon="ico107002" featuredescription="103425;103401|103433;103409|103441;103417" featureicon="ico1070021;ico1070022;ico1070023"/>
+        <ItemSpec id="107003" name="103503" description="103553" arm="1" icon="ico107003" featuredescription="103424;103400|103432;103408|103440;103416" featureicon="ico1070001;ico1070002;ico1070003"/>
+        <ItemSpec id="107004" name="103504" description="103554" arm="2" icon="ico107004" featuredescription="103425;103401|103433;103409|103441;103417" featureicon="ico1070021;ico1070022;ico1070023"/>
+        <ItemSpec id="107005" name="103505" description="103555" arm="1" icon="ico107005" featuredescription="103424;103400|103432;103408|103440;103416" featureicon="ico1070001;ico1070002;ico1070003"/>
+        <ItemSpec id="107006" name="103506" description="103556" arm="1" icon="ico107006" featuredescription="103424;103400|103432;103408|103440;103416" featureicon="ico1070001;ico1070002;ico1070003"/>
+        <ItemSpec id="107007" name="103507" description="103557" arm="2" icon="ico107007" featuredescription="103425;103401|103433;103409|103441;103417" featureicon="ico1070021;ico1070022;ico1070023"/>
+        <ItemSpec id="107008" name="103508" description="103558" arm="2" icon="ico107008" featuredescription="103425;103401|103433;103409|103441;103417" featureicon="ico1070021;ico1070022;ico1070023"/>
+        <ItemSpec id="107009" name="103509" description="103559" arm="1" icon="ico107009" featuredescription="103424;103400|103432;103408|103440;103416" featureicon="ico1070001;ico1070002;ico1070003"/>
+        <ItemSpec id="107100" name="103510" description="103560" arm="3" icon="ico107100" featuredescription="103426;103402|103434;103410|103442;103418" featureicon="ico1071001;ico1071002;ico1071003"/>
+        <ItemSpec id="107101" name="103511" description="103561" arm="3" icon="ico107101" featuredescription="103426;103402|103434;103410|103442;103418" featureicon="ico1071001;ico1071002;ico1071003"/>
+        <ItemSpec id="107102" name="103512" description="103562" arm="3" icon="ico107102" featuredescription="103426;103402|103434;103410|103442;103418" featureicon="ico1071001;ico1071002;ico1071003"/>
+        <ItemSpec id="107103" name="103513" description="103563" arm="4" icon="ico107103" featuredescription="103427;103403|103435;103411|103443;103419" featureicon="ico1071031;ico1071032;ico1071033"/>
+        <ItemSpec id="107104" name="103514" description="103564" arm="4" icon="ico107104" featuredescription="103427;103403|103435;103411|103443;103419" featureicon="ico1071031;ico1071032;ico1071033"/>
+        <ItemSpec id="107105" name="103515" description="103565" arm="3" icon="ico107105" featuredescription="103426;103402|103434;103410|103442;103418" featureicon="ico1071001;ico1071002;ico1071003"/>
+        <ItemSpec id="107106" name="103516" description="103566" arm="4" icon="ico107106" featuredescription="103427;103403|103435;103411|103443;103419" featureicon="ico1071031;ico1071032;ico1071033"/>
+        <ItemSpec id="107107" name="103517" description="103567" arm="3" icon="ico107107" featuredescription="103426;103402|103434;103410|103442;103418" featureicon="ico1071001;ico1071002;ico1071003"/>
+        <ItemSpec id="107108" name="103518" description="103568" arm="4" icon="ico107108" featuredescription="103427;103403|103435;103411|103443;103419" featureicon="ico1071031;ico1071032;ico1071033"/>
+        <ItemSpec id="107109" name="103519" description="103569" arm="3" icon="ico107109" featuredescription="103426;103402|103434;103410|103442;103418" featureicon="ico1071001;ico1071002;ico1071003"/>
+        <ItemSpec id="107200" name="103520" description="103570" arm="5" icon="ico107200" featuredescription="103428;103404|103436;103412|103444;103420" featureicon="ico1072001;ico1072002"/>
+        <ItemSpec id="107201" name="103521" description="103571" arm="5" icon="ico107201" featuredescription="103428;103404|103436;103412|103444;103420" featureicon="ico1072001;ico1072002"/>
+        <ItemSpec id="107202" name="103522" description="103572" arm="6" icon="ico107202" featuredescription="103429;103405|103437;103413|103445;103421" featureicon="ico1072021;ico1072022;ico1072023"/>
+        <ItemSpec id="107203" name="103523" description="103573" arm="6" icon="ico107203" featuredescription="103429;103405|103437;103413|103445;103421" featureicon="ico1072021;ico1072022;ico1072023"/>
+        <ItemSpec id="107204" name="103524" description="103574" arm="5" icon="ico107204" featuredescription="103428;103404|103436;103412|103444;103420" featureicon="ico1072001;ico1072002"/>
+        <ItemSpec id="107205" name="103525" description="103575" arm="5" icon="ico107205" featuredescription="103428;103404|103436;103412|103444;103420" featureicon="ico1072001;ico1072002"/>
+        <ItemSpec id="107206" name="103526" description="103576" arm="6" icon="ico107206" featuredescription="103429;103405|103437;103413|103445;103421" featureicon="ico1072021;ico1072022;ico1072023"/>
+        <ItemSpec id="107207" name="103527" description="103577" arm="5" icon="ico107207" featuredescription="103428;103404|103436;103412|103444;103420" featureicon="ico1072001;ico1072002"/>
+        <ItemSpec id="107208" name="103528" description="103578" arm="6" icon="ico107208" featuredescription="103429;103405|103437;103413|103445;103421" featureicon="ico1072021;ico1072022;ico1072023"/>
+        <ItemSpec id="107209" name="103529" description="103579" arm="5" icon="ico107209" featuredescription="103428;103404|103436;103412|103444;103420" featureicon="ico1072001;ico1072002"/>
+        <ItemSpec id="107300" name="103530" description="103580" arm="7" icon="ico107300" featuredescription="103431;103407|103439;103415|103447;103423" featureicon="ico1073001;ico1073002;ico1073003"/>
+        <ItemSpec id="107301" name="103531" description="103581" arm="8" icon="ico107301" featuredescription="103430;103406|103438;103414|103446;103422" featureicon="ico1073011;ico1073012;ico1073013"/>
+        <ItemSpec id="107302" name="103532" description="103582" arm="7" icon="ico107302" featuredescription="103431;103407|103439;103415|103447;103423" featureicon="ico1073001;ico1073002;ico1073003"/>
+        <ItemSpec id="107303" name="103533" description="103583" arm="8" icon="ico107303" featuredescription="103430;103406|103438;103414|103446;103422" featureicon="ico1073011;ico1073012;ico1073013"/>
+        <ItemSpec id="107304" name="103534" description="103584" arm="7" icon="ico107304" featuredescription="103431;103407|103439;103415|103447;103423" featureicon="ico1073001;ico1073002;ico1073003"/>
+        <ItemSpec id="107305" name="103535" description="103585" arm="8" icon="ico107305" featuredescription="103430;103406|103438;103414|103446;103422" featureicon="ico1073011;ico1073012;ico1073013"/>
+        <ItemSpec id="107306" name="103536" description="103586" arm="7" icon="ico107306" featuredescription="103431;103407|103439;103415|103447;103423" featureicon="ico1073001;ico1073002;ico1073003"/>
+        <ItemSpec id="107307" name="103537" description="103587" arm="7" icon="ico107307" featuredescription="103431;103407|103439;103415|103447;103423" featureicon="ico1073001;ico1073002;ico1073003"/>
+        <ItemSpec id="107308" name="103538" description="103588" arm="8" icon="ico107308" featuredescription="103430;103406|103438;103414|103446;103422" featureicon="ico1073011;ico1073012;ico1073013"/>
+        <ItemSpec id="107309" name="103539" description="103589" arm="7" icon="ico107309" featuredescription="103431;103407|103439;103415|103447;103423" featureicon="ico1073001;ico1073002;ico1073003"/>
+        <ItemSpec id="107700" arm="1"/>
+        <ItemSpec id="107701" arm="1"/>
+        <ItemSpec id="107702" arm="1"/>
+        <ItemSpec id="107703" arm="1"/>
+        <ItemSpec id="107800" name="103532" arm="100"/>
+        <ItemSpec id="107801" name="103532" arm="100"/>
+        <ItemSpec id="107802" name="103532" arm="100"/>
+        <ItemSpec id="107803" name="103532" arm="100"/>
+        <ItemSpec id="107804" name="103532" arm="100"/>
+        <ItemSpec id="107805" name="103532" arm="100"/>
+        <ItemSpec id="107806" name="103532" arm="100"/>
+        <ItemSpec id="107807" name="103532" arm="100"/>
+        <ItemSpec id="107808" name="103532" arm="100"/>
+        <ItemSpec id="107809" name="103532" arm="100"/>
+        <ItemSpec id="107810" name="103532" arm="100"/>
+        <ItemSpec id="107811" name="103532" arm="100"/>
+        <ItemSpec id="107812" name="103532" arm="100"/>
+        <ItemSpec id="107813" name="103532" arm="100"/>
+        <ItemSpec id="107814" name="103532" arm="100"/>
+        <ItemSpec id="107815" name="103532" arm="100"/>
+        <ItemSpec id="107816" name="103532" arm="100"/>
+        <ItemSpec id="107817" name="103532" arm="100"/>
+        <ItemSpec id="107818" name="103532" arm="100"/>
+        <ItemSpec id="107819" name="103532" arm="100"/>
+        <ItemSpec id="107820" name="103532" arm="100"/>
+        <ItemSpec id="107821" name="103532" arm="100"/>
+        <ItemSpec id="107822" name="103532" arm="100"/>
+        <ItemSpec id="107823" name="103532" arm="100"/>
+        <ItemSpec id="107824" name="103532" arm="100"/>
+        <ItemSpec id="107825" name="103532" arm="100"/>
+        <ItemSpec id="107826" name="103532" arm="100"/>
+        <ItemSpec id="107827" name="103532" arm="100"/>
+        <ItemSpec id="107828" name="103532" arm="100"/>
+        <ItemSpec id="107829" name="103532" arm="100"/>
+        <ItemSpec id="107900" name="103620" description="103635" arm="101" icon="ico107910"/>
+        <ItemSpec id="107901" name="103621" description="103635" arm="101" icon="ico107911"/>
+        <ItemSpec id="107902" name="103622" description="103635" arm="101" icon="ico107912"/>
+        <ItemSpec id="107903" name="103623" description="103635" arm="101" icon="ico107913"/>
+        <ItemSpec id="107904" name="103624" description="103635" arm="101" icon="ico107914"/>
+        <ItemSpec id="107920" name="103625" description="103637" arm="101" icon="ico107920"/>
+        <ItemSpec id="107921" name="103626" description="103637" arm="101" icon="ico107921"/>
+        <ItemSpec id="107922" name="103627" description="103637" arm="101" icon="ico107922"/>
+        <ItemSpec id="107923" name="103628" description="103637" arm="101" icon="ico107923"/>
+        <ItemSpec id="107924" name="103629" description="103637" arm="101" icon="ico107924"/>
+        <ItemSpec id="107910" name="103630" description="103636" arm="101" icon="ico107900"/>
+        <ItemSpec id="107911" name="103631" description="103636" arm="101" icon="ico107901"/>
+        <ItemSpec id="107912" name="103632" description="103636" arm="101" icon="ico107902"/>
+        <ItemSpec id="107913" name="103633" description="103636" arm="101" icon="ico107903"/>
+        <ItemSpec id="107914" name="103634" description="103636" arm="101" icon="ico107904"/>
+        <ItemSpec id="107401" name="103500" description="103550" arm="10" icon="ico107000"/>
+        <ItemSpec id="107402" name="103500" description="103550" arm="10" icon="ico107001"/>
+        <ItemSpec id="107403" name="103500" description="103550" arm="10" icon="ico107002"/>
+        <ItemSpec id="107404" name="103500" description="103550" arm="10" icon="ico107003"/>
+        <ItemSpec id="107405" name="103500" description="103550" arm="10" icon="ico107004"/>
+        <ItemSpec id="107406" name="103500" description="103550" arm="10" icon="ico107005"/>
+        <ItemSpec id="107407" name="103500" description="103550" arm="10" icon="ico107006"/>
+        <ItemSpec id="107408" name="103500" description="103550" arm="10" icon="ico107007"/>
+        <ItemSpec id="107409" name="103500" description="103550" arm="10" icon="ico107008"/>
+        <ItemSpec id="107410" name="103500" description="103550" arm="10" icon="ico107009"/>
+        <ItemSpec id="107411" name="103500" description="103550" arm="10" icon="ico107010"/>
+        <ItemSpec id="107412" name="103500" description="103550" arm="10" icon="ico107011"/>
+        <ItemSpec id="107413" name="103500" description="103550" arm="10" icon="ico107012"/>
+        <ItemSpec id="107414" name="103500" description="103550" arm="10" icon="ico107013"/>
+        <ItemSpec id="107415" name="103500" description="103550" arm="10" icon="ico107014"/>
+        <ItemSpec id="107416" name="103500" description="103550" arm="10" icon="ico107015"/>
+        <ItemSpec id="107417" name="103500" description="103550" arm="10" icon="ico107016"/>
+        <ItemSpec id="107418" name="103500" description="103550" arm="10" icon="ico107017"/>
+        <ItemSpec id="107419" name="103500" description="103550" arm="10" icon="ico107018"/>
+        <ItemSpec id="107420" name="103500" description="103550" arm="10" icon="ico107019"/>
+        <ItemSpec id="107421" name="103500" description="103550" arm="10" icon="ico107020"/>
+        <ItemSpec id="107422" name="103500" description="103550" arm="10" icon="ico107021"/>
+        <ItemSpec id="107423" name="103500" description="103550" arm="10" icon="ico107022"/>
+        <ItemSpec id="107424" name="103500" description="103550" arm="10" icon="ico107023"/>
+        <ItemSpec id="107425" name="103500" description="103550" arm="10" icon="ico107024"/>
+        <ItemSpec id="107426" name="103500" description="103550" arm="10" icon="ico107025"/>
+        <ItemSpec id="107427" name="103500" description="103550" arm="10" icon="ico107026"/>
+        <ItemSpec id="107428" name="103500" description="103550" arm="10" icon="ico107027"/>
+        <ItemSpec id="107429" name="103500" description="103550" arm="10" icon="ico107028"/>
+        <ItemSpec id="107430" name="103500" description="103550" arm="10" icon="ico107029"/>
+    </Group>
+</tns:database>

@@ -1,0 +1,19 @@
+
+material stone
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+
+			texture_unit stone.png
+			{
+				texture_alias stone.png
+				texture stone.png
+			}
+		}
+
+	}
+
+}

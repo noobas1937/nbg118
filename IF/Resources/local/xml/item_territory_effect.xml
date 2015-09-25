@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<tns:database xmlns:tns="http://www.iw.com/sns/platform/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Group id="territory_effect">
+        <ItemSpec id="45000" k1="65" k2="15" description="115366" title="115362"/>
+        <ItemSpec id="45001" k1="50;51;52;53" k2="30" description="115367" title="115363"/>
+        <ItemSpec id="45002" k1="38" k2="20" description="115368" title="115364"/>
+        <ItemSpec id="45003" k1="122" k2="300" description="115369" title="115365"/>
+    </Group>
+</tns:database>

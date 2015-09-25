@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<tns:database xmlns:tns="http://www.iw.com/sns/platform/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Group id="vip">
+        <ItemSpec id="7000" point="0" hurt="0" attack="0" defense="0" health="0" troop="0" march="0" monster="0" body="0" speedup="6" wood="4" food="4" iron="4" silver="4" effect="50;4|53;4|52;4|51;4"/>
+        <ItemSpec id="7001" point="500" hurt="0" attack="0" defense="0" health="0" troop="0" march="0" monster="5" body="10" speedup="7" wood="5" food="5" iron="5" silver="5" effect="50;5|53;5|52;5|51;5|106;10|59;5"/>
+        <ItemSpec id="7002" point="1500" hurt="0" attack="0" defense="0" health="0" troop="0" march="0" monster="10" body="12" speedup="9" wood="6" food="6" iron="6" silver="6" effect="50;6|53;6|52;6|51;6|106;12|59;10"/>
+        <ItemSpec id="7003" point="4000" hurt="0" attack="0" defense="0" health="0" troop="0" march="0" monster="15" body="14" speedup="11" wood="7" food="7" iron="7" silver="7" effect="50;7|53;7|52;7|51;7|106;14|59;15"/>
+        <ItemSpec id="7004" point="10000" hurt="0" attack="0" defense="0" health="0" troop="0" march="5" monster="20" body="16" speedup="13" wood="8" food="8" iron="8" silver="8" effect="50;8|53;8|52;8|51;8|106;16|59;20|60;5"/>
+        <ItemSpec id="7005" point="18000" hurt="0" attack="0" defense="0" health="0" troop="0" march="6" monster="25" body="18" speedup="15" wood="9" food="9" iron="9" silver="9" effect="50;9|53;9|52;9|51;9|106;18|59;25|60;6"/>
+        <ItemSpec id="7006" point="30000" hurt="0" attack="0" defense="0" health="0" troop="0" march="7" monster="30" body="20" speedup="17" wood="10" food="10" iron="10" silver="10" effect="50;10|53;10|52;10|51;10|106;20|59;30|60;7"/>
+        <ItemSpec id="7007" point="50000" hurt="0" attack="0" defense="0" health="0" troop="1" march="8" monster="35" body="22" speedup="20" wood="12" food="12" iron="12" silver="12" effect="50;12|53;12|52;12|51;12|106;22|59;35|60;8|55;1"/>
+        <ItemSpec id="7008" point="120000" hurt="0" attack="10" defense="10" health="0" troop="1" march="9" monster="40" body="24" speedup="25" wood="14" food="14" iron="14" silver="14" effect="50;14|53;14|52;14|51;14|106;24|59;40|60;9|55;1|1030;10|1010;10"/>
+        <ItemSpec id="7009" point="240000" hurt="30" attack="15" defense="15" health="15" troop="1" march="10" monster="50" body="26" speedup="30" wood="16" food="16" iron="16" silver="16" effect="50;16|53;16|52;16|51;16|106;26|59;50|60;10|55;1|1050;15|1030;15|1010;15|57;30"/>
+    </Group>
+</tns:database>

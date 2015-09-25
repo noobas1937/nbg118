@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D2134" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="TopButtonView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ukt-Zp-Ryl" userLabel="rootView">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wc2-JP-MNB" userLabel="buttonView">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="55"/>
+                            <subviews>
+                                <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gqp-sr-dYC" userLabel="countryButton">
+                                    <rect key="frame" x="0.0" y="0.0" width="155" height="55"/>
+                                    <state key="normal" title="国家" backgroundImage="btn_qieye_02.png">
+                                        <color key="titleColor" red="0.34509803919999998" green="0.31764705879999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="selected" backgroundImage="btn_qieye_01.png">
+                                        <color key="titleColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="countryButtonAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="e41-7J-aRU"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nRE-Sm-dat" userLabel="allianceButton">
+                                    <rect key="frame" x="165" y="0.0" width="155" height="55"/>
+                                    <state key="normal" title="联盟" backgroundImage="btn_qieye_02.png">
+                                        <color key="titleColor" red="0.34509803919999998" green="0.31764705879999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="selected" backgroundImage="btn_qieye_01.png">
+                                        <color key="titleColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="allianceButtonAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="ZMZ-w5-CZq"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="gqp-sr-dYC" secondAttribute="bottom" id="4CJ-4D-g5W"/>
+                                <constraint firstAttribute="bottom" secondItem="nRE-Sm-dat" secondAttribute="bottom" id="Ccq-fQ-KCZ"/>
+                                <constraint firstItem="nRE-Sm-dat" firstAttribute="top" secondItem="Wc2-JP-MNB" secondAttribute="top" id="Joj-H3-7BG"/>
+                                <constraint firstItem="nRE-Sm-dat" firstAttribute="leading" secondItem="Wc2-JP-MNB" secondAttribute="centerX" constant="5" id="QhK-xN-4tv"/>
+                                <constraint firstAttribute="trailing" secondItem="nRE-Sm-dat" secondAttribute="trailing" id="cFO-Td-xft"/>
+                                <constraint firstItem="gqp-sr-dYC" firstAttribute="trailing" secondItem="Wc2-JP-MNB" secondAttribute="centerX" constant="-5" id="eMp-MR-4bQ"/>
+                                <constraint firstItem="gqp-sr-dYC" firstAttribute="trailing" secondItem="nRE-Sm-dat" secondAttribute="leading" id="jmA-er-bs5"/>
+                                <constraint firstItem="gqp-sr-dYC" firstAttribute="top" secondItem="Wc2-JP-MNB" secondAttribute="top" id="yQ6-qS-0j0"/>
+                                <constraint firstItem="gqp-sr-dYC" firstAttribute="leading" secondItem="Wc2-JP-MNB" secondAttribute="leading" id="zXF-hn-Ofq"/>
+                            </constraints>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="jmA-er-bs5"/>
+                                </mask>
+                            </variation>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aEM-c9-acZ" userLabel="bottomBackView">
+                            <rect key="frame" x="0.0" y="55" width="320" height="5"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ui_huitiao2.png" translatesAutoresizingMaskIntoConstraints="NO" id="d1o-N7-JBB">
+                                    <rect key="frame" x="-5" y="0.0" width="330" height="5"/>
+                                </imageView>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="d1o-N7-JBB" firstAttribute="top" secondItem="aEM-c9-acZ" secondAttribute="top" id="BdP-JR-bil"/>
+                                <constraint firstAttribute="trailing" secondItem="d1o-N7-JBB" secondAttribute="trailing" constant="-5" id="GXJ-VE-tsw"/>
+                                <constraint firstItem="d1o-N7-JBB" firstAttribute="leading" secondItem="aEM-c9-acZ" secondAttribute="leading" constant="-5" id="vHH-zy-iPY"/>
+                                <constraint firstAttribute="bottom" secondItem="d1o-N7-JBB" secondAttribute="bottom" id="vHp-02-zRJ"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="Wc2-JP-MNB" secondAttribute="trailing" id="25M-vq-f7V"/>
+                        <constraint firstItem="aEM-c9-acZ" firstAttribute="leading" secondItem="Ukt-Zp-Ryl" secondAttribute="leading" id="Axb-Y4-wXK"/>
+                        <constraint firstItem="Wc2-JP-MNB" firstAttribute="top" secondItem="Ukt-Zp-Ryl" secondAttribute="top" id="F7C-cS-T6D"/>
+                        <constraint firstAttribute="trailing" secondItem="aEM-c9-acZ" secondAttribute="trailing" id="ROQ-2Z-IrH"/>
+                        <constraint firstItem="aEM-c9-acZ" firstAttribute="top" secondItem="Wc2-JP-MNB" secondAttribute="bottom" id="fUZ-Pu-LA9"/>
+                        <constraint firstItem="Wc2-JP-MNB" firstAttribute="leading" secondItem="Ukt-Zp-Ryl" secondAttribute="leading" id="ney-nC-0UG"/>
+                        <constraint firstAttribute="bottom" secondItem="Wc2-JP-MNB" secondAttribute="bottom" constant="5" id="wpl-EV-fdg"/>
+                        <constraint firstAttribute="bottom" secondItem="aEM-c9-acZ" secondAttribute="bottom" id="yfZ-PS-p1t"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <constraints>
+                <constraint firstItem="Ukt-Zp-Ryl" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Gqj-7J-DNx"/>
+                <constraint firstAttribute="trailing" secondItem="Ukt-Zp-Ryl" secondAttribute="trailing" id="fLr-Ij-BNF"/>
+                <constraint firstItem="Ukt-Zp-Ryl" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="m56-LI-B9G"/>
+                <constraint firstAttribute="bottom" secondItem="Ukt-Zp-Ryl" secondAttribute="bottom" id="tJB-9H-3YL"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="allianceButton" destination="nRE-Sm-dat" id="GS4-4S-Zy2"/>
+                <outlet property="countryButton" destination="gqp-sr-dYC" id="Wte-Yj-nFk"/>
+            </connections>
+            <point key="canvasLocation" x="112" y="3"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="btn_qieye_01.png" width="310" height="75"/>
+        <image name="btn_qieye_02.png" width="310" height="75"/>
+        <image name="ui_huitiao2.png" width="648" height="30"/>
+    </resources>
+</document>

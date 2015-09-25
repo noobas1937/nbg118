@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<tns:database xmlns:tns="http://www.iw.com/sns/platform/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Group id="alliancescience">
+        <ItemSpec id="250000" name="115700" description="115750" icon="science_mil_a_11" max_lv="4" points="0" floor="1" donate="3" destip="102200"/>
+        <ItemSpec id="250100" name="115701" description="115750" icon="science_mil_a_11" max_lv="4" points="77" floor="3" donate="4" destip="102200"/>
+        <ItemSpec id="250200" name="115702" description="115750" icon="science_mil_a_11" max_lv="3" points="173" floor="5" donate="5" destip="102200"/>
+        <ItemSpec id="250300" name="115703" description="115751" icon="science_mil_a_2" max_lv="20" points="8" floor="2" donate="5" destip="102205"/>
+        <ItemSpec id="250400" name="115704" description="115752" icon="science_mil_a_3" max_lv="20" points="8" floor="2" donate="5" destip="102205"/>
+        <ItemSpec id="250500" name="115705" description="115753" icon="science_mil_a_4" max_lv="20" points="8" floor="2" donate="5" destip="102205"/>
+        <ItemSpec id="250600" name="115706" description="115754" icon="science_mil_a_5" max_lv="20" points="8" floor="2" donate="5" destip="102205"/>
+        <ItemSpec id="250700" name="115707" description="115755" icon="science_mil_a_7" max_lv="20" points="8" floor="2" donate="5" destip="102205"/>
+        <ItemSpec id="250800" name="115708" description="115756" icon="science_mil_a_8" max_lv="20" points="8" floor="2" donate="5" destip="102205"/>
+        <ItemSpec id="250900" name="115709" description="115757" icon="science_mil_a_9" max_lv="20" points="8" floor="2" donate="5" destip="102205"/>
+        <ItemSpec id="251000" name="115710" description="115758" icon="science_mil_a_10" max_lv="20" points="8" floor="2" donate="5" destip="102205"/>
+        <ItemSpec id="251100" name="115711" description="115759" icon="science_res_a_3" max_lv="20" points="77" floor="3" donate="4" destip="102205"/>
+        <ItemSpec id="251200" name="115712" description="115760" icon="science_res_a_2" max_lv="20" points="77" floor="3" donate="4" destip="102205"/>
+        <ItemSpec id="251300" name="115713" description="115761" icon="science_res_a_7" max_lv="20" points="77" floor="3" donate="4" destip="102205"/>
+        <ItemSpec id="251400" name="115714" description="115762" icon="science_res_a_9" max_lv="20" points="77" floor="3" donate="4" destip="102205"/>
+        <ItemSpec id="251500" name="115715" description="115763" icon="science_def_a_9" max_lv="10" points="148" floor="4" donate="4" destip="102205"/>
+        <ItemSpec id="251600" name="115716" description="115764" icon="science_dev_a_2" max_lv="10" points="0" floor="1" donate="5" destip="102205"/>
+        <ItemSpec id="251700" name="115716" description="115764" icon="science_dev_a_2" max_lv="10" points="77" floor="3" donate="5" destip="102205"/>
+        <ItemSpec id="251800" name="115717" description="115765" icon="650306" max_lv="10" points="8" floor="2" donate="5" destip="102205"/>
+        <ItemSpec id="251900" name="115717" description="115765" icon="650306" max_lv="10" points="148" floor="4" donate="5" destip="102205"/>
+        <ItemSpec id="252000" name="115719" description="115767" icon="652301" max_lv="10" points="77" floor="3" donate="3" destip="102200"/>
+        <ItemSpec id="252100" name="115720" description="115768" icon="652101" max_lv="10" points="77" floor="3" donate="3" destip="102205"/>
+        <ItemSpec id="252200" name="115721" description="115769" icon="604301" max_lv="10" points="173" floor="5" donate="4" destip="102205"/>
+        <ItemSpec id="252300" name="115722" description="115770" icon="604603" max_lv="10" points="173" floor="5" donate="4" destip="102205"/>
+        <ItemSpec id="252400" name="115723" description="115771" icon="650306" max_lv="20" points="77" floor="3" donate="3" destip="102200"/>
+        <ItemSpec id="252500" name="115724" description="115772" icon="650306" max_lv="1" points="148" floor="4" donate="3" destip="102455"/>
+        <ItemSpec id="252600" name="115725" description="115773" icon="650403" max_lv="10" points="148" floor="4" donate="4" destip="102205"/>
+        <ItemSpec id="252700" name="115726" description="115774" icon="650404" max_lv="1" points="148" floor="4" donate="3" destip="102205"/>
+        <ItemSpec id="252800" name="115727" description="115775" icon="650306" max_lv="1" points="148" floor="4" donate="3" destip="102205"/>
+        <ItemSpec id="252900" name="115728" description="115776" icon="604404" max_lv="10" points="173" floor="5" donate="5" destip="102205"/>
+        <ItemSpec id="253000" name="115729" description="115777" icon="603103" max_lv="5" points="0" floor="1" donate="2" destip="102200"/>
+        <ItemSpec id="253100" name="115730" description="115778" icon="604403" max_lv="10" points="8" floor="2" donate="2" destip="102205"/>
+        <ItemSpec id="253200" name="115731" description="115779" icon="604405" max_lv="20" points="0" floor="1" donate="2" destip="102200"/>
+        <ItemSpec id="253300" name="115715" description="115763" icon="science_def_a_9" max_lv="5" points="0" floor="1" donate="4" destip="102205"/>
+        <ItemSpec id="253400" name="115732" description="115780" icon="604406" max_lv="5" points="0" floor="1" donate="3" destip="102205"/>
+        <ItemSpec id="253500" name="115724" description="115772" icon="650306" max_lv="1" points="0" floor="1" donate="3" destip="102455"/>
+        <ItemSpec id="253600" name="115733" description="115781" icon="604407" max_lv="5" points="77" floor="3" donate="5" destip="102456"/>
+    </Group>
+</tns:database>

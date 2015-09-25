@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<tns:database xmlns:tns="http://www.iw.com/sns/platform/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Group id="position">
+        <ItemSpec id="9900" default="1" position="0" building="400000" unlock="1"/>
+        <ItemSpec id="9901" default="1" position="1" building="419000" unlock="1"/>
+        <ItemSpec id="9902" default="1" position="2" building="418000" unlock="1"/>
+        <ItemSpec id="9903" default="1" position="3" building="418000" unlock="1"/>
+        <ItemSpec id="9904" default="1" position="4" building="408000"/>
+        <ItemSpec id="9905" default="1" position="5" building="417000" unlock="1"/>
+        <ItemSpec id="9906" position="6" building="423000;424000;427000;404000;425000;403000;416000;429000;426000;402000;401000;407000;428000" unlock="1"/>
+        <ItemSpec id="9907" position="7" building="423000;424000;427000;404000;425000;403000;416000;429000;426000;402000;401000;407000;428000" unlock="1"/>
+        <ItemSpec id="9908" position="8" building="423000;424000;427000;404000;425000;403000;416000;429000;426000;402000;401000;407000;428000" unlock="1"/>
+        <ItemSpec id="9909" position="9" building="423000;424000;427000;404000;425000;403000;416000;429000;426000;402000;401000;407000;428000" unlock="1"/>
+        <ItemSpec id="9910" position="10" building="423000;424000;427000;404000;425000;403000;416000;429000;426000;402000;401000;407000;428000" unlock="1"/>
+        <ItemSpec id="9911" position="11" building="423000;424000;427000;404000;425000;403000;416000;429000;426000;402000;401000;407000;428000" unlock="1"/>
+        <ItemSpec id="9912" position="12" building="423000;424000;427000;404000;425000;403000;416000;429000;426000;402000;401000;407000;428000" unlock="1"/>
+        <ItemSpec id="9913" position="13" building="423000;424000;427000;404000;425000;403000;416000;429000;426000;402000;401000;407000;428000" unlock="1"/>
+        <ItemSpec id="9914" position="14" building="423000;424000;427000;404000;425000;403000;416000;429000;426000;402000;401000;407000;428000" unlock="1"/>
+        <ItemSpec id="9915" position="15" building="423000;424000;427000;404000;425000;403000;416000;429000;426000;402000;401000;407000;428000" unlock="1"/>
+        <ItemSpec id="9916" position="16" building="423000;424000;427000;404000;425000;403000;416000;429000;426000;402000;401000;407000;428000" unlock="1"/>
+        <ItemSpec id="9952" position="52" building="423000;424000;427000;404000;425000;403000;416000;429000;426000;402000;401000;407000;428000" unlock="1"/>
+        <ItemSpec id="9953" position="53" building="423000;424000;427000;404000;425000;403000;416000;429000;426000;402000;401000;407000;428000" unlock="1"/>
+        <ItemSpec id="9954" default="1" position="54" building="430000" unlock="1"/>
+        <ItemSpec id="9917" position="17" building="415000;413000;410000;411000;414000;412000" unlock="1"/>
+        <ItemSpec id="9918" position="18" building="415000;413000;410000;411000;414000;412000" unlock="1"/>
+        <ItemSpec id="9919" position="19" building="415000;413000;410000;411000;414000;412000" unlock="1"/>
+        <ItemSpec id="9920" position="20" building="415000;413000;410000;411000;414000;412000" unlock="1"/>
+        <ItemSpec id="9921" position="21" building="415000;413000;410000;411000;414000;412000" unlock="1"/>
+        <ItemSpec id="9922" position="22" building="415000;413000;410000;411000;414000;412000" unlock="1"/>
+        <ItemSpec id="9923" position="23" building="415000;413000;410000;411000;414000;412000" unlock="1"/>
+        <ItemSpec id="9924" position="24" building="415000;413000;410000;411000;414000;412000" unlock="1"/>
+        <ItemSpec id="9925" position="25" building="415000;413000;410000;411000;414000;412000" unlock="1"/>
+        <ItemSpec id="9926" position="26" building="415000;413000;410000;411000;414000;412000" unlock="1"/>
+        <ItemSpec id="9927" position="27" building="415000;413000;410000;411000;414000;412000"/>
+        <ItemSpec id="9928" position="28" building="415000;413000;410000;411000;414000;412000"/>
+        <ItemSpec id="9929" position="29" building="415000;413000;410000;411000;414000;412000"/>
+        <ItemSpec id="9930" position="30" building="415000;413000;410000;411000;414000;412000"/>
+        <ItemSpec id="9931" position="31" building="415000;413000;410000;411000;414000;412000"/>
+        <ItemSpec id="9932" position="32" building="415000;413000;410000;411000;414000;412000"/>
+        <ItemSpec id="9933" position="33" building="415000;413000;410000;411000;414000;412000"/>
+        <ItemSpec id="9934" position="34" building="415000;413000;410000;411000;414000;412000"/>
+        <ItemSpec id="9935" position="35" building="415000;413000;410000;411000;414000;412000"/>
+        <ItemSpec id="9936" position="36" building="415000;413000;410000;411000;414000;412000"/>
+        <ItemSpec id="9937" position="37" building="415000;413000;410000;411000;414000;412000"/>
+        <ItemSpec id="9938" position="38" building="415000;413000;410000;411000;414000;412000"/>
+        <ItemSpec id="9939" position="39" building="415000;413000;410000;411000;414000;412000"/>
+        <ItemSpec id="9940" position="40" building="415000;413000;410000;411000;414000;412000"/>
+        <ItemSpec id="9941" position="41" building="415000;413000;410000;411000;414000;412000"/>
+        <ItemSpec id="9942" position="42" building="415000;413000;410000;411000;414000;412000"/>
+        <ItemSpec id="9943" position="43" building="415000;413000;410000;411000;414000;412000"/>
+        <ItemSpec id="9944" position="44" building="415000;413000;410000;411000;414000;412000"/>
+        <ItemSpec id="9945" position="45" building="415000;413000;410000;411000;414000;412000"/>
+        <ItemSpec id="9946" position="46" building="415000;413000;410000;411000;414000;412000"/>
+        <ItemSpec id="9947" position="47" building="415000;413000;410000;411000;414000;412000"/>
+        <ItemSpec id="9948" position="48" building="415000;413000;410000;411000;414000;412000"/>
+        <ItemSpec id="9949" position="49" building="415000;413000;410000;411000;414000;412000"/>
+        <ItemSpec id="9950" position="50" building="415000;413000;410000;411000;414000;412000"/>
+        <ItemSpec id="9951" position="51" building="415000;413000;410000;411000;414000;412000"/>
+    </Group>
+</tns:database>

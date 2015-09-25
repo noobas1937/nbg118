@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>normal_gifticon_100.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{4,4},{103,74}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{103,74}}</string>
+                <key>sourceSize</key>
+                <string>{103,74}</string>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>2</integer>
+            <key>realTextureFileName</key>
+            <string>normal_gifticon.pvr.ccz</string>
+            <key>size</key>
+            <string>{128,128}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:e403adb886e05f3c715534db9f532e25:8220c71abc32d41d3e5346760e8d46bd:cead87003f6d44dc7327bf756ec9ef80$</string>
+            <key>textureFileName</key>
+            <string>normal_gifticon.pvr.ccz</string>
+        </dict>
+    </dict>
+</plist>

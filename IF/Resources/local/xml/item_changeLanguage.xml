@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<tns:database xmlns:tns="http://www.iw.com/sns/platform/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Group id="changeLanguage">
+        <ItemSpec id="8100" name="102913" type="en"/>
+        <ItemSpec id="8101" name="102914" type="zh-Hans"/>
+        <ItemSpec id="8102" name="102915" type="zh-Hant"/>
+        <ItemSpec id="8103" name="102916" type="es"/>
+        <ItemSpec id="8104" name="102917" type="fr"/>
+        <ItemSpec id="8105" name="102918" type="pt"/>
+        <ItemSpec id="8106" name="102919" type="de"/>
+        <ItemSpec id="8107" name="102920" type="ru"/>
+        <ItemSpec id="8108" name="102921" type="ko"/>
+        <ItemSpec id="8109" name="102922" type="it"/>
+        <ItemSpec id="8110" name="102923" open="1"/>
+        <ItemSpec id="8111" name="102924" type="da"/>
+        <ItemSpec id="8112" name="102925" type="el"/>
+        <ItemSpec id="8113" name="102926" type="fi"/>
+        <ItemSpec id="8114" name="102927" open="1"/>
+        <ItemSpec id="8115" name="102928" type="ja"/>
+        <ItemSpec id="8116" name="102929" open="1"/>
+        <ItemSpec id="8117" name="102930" type="nl"/>
+        <ItemSpec id="8118" name="102931" type="pl"/>
+        <ItemSpec id="8119" name="102932" open="1"/>
+        <ItemSpec id="8120" name="102933" open="1"/>
+        <ItemSpec id="8121" name="102934" type="sv"/>
+        <ItemSpec id="8122" name="102935" type="th"/>
+        <ItemSpec id="8123" name="102936" type="tr"/>
+        <ItemSpec id="8124" name="102937" open="1"/>
+        <ItemSpec id="8125" name="102938" type="vi"/>
+        <ItemSpec id="8126" name="102939" open="1"/>
+        <ItemSpec id="8127" name="102940" open="1"/>
+        <ItemSpec id="8128" name="102941" open="1"/>
+        <ItemSpec id="8129" name="102942" type="ms"/>
+        <ItemSpec id="8130" name="102943" type="ar"/>
+    </Group>
+</tns:database>

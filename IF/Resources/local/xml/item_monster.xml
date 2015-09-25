@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<tns:database xmlns:tns="http://www.iw.com/sns/platform/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Group id="monster">
+        <ItemSpec id="2700" lv="1" name="108900" power="1000" icon_monster="world_monster_wild" icon_reward="ico200510"/>
+        <ItemSpec id="2701" lv="2" name="108901" power="2000" icon_monster="world_monster_wild" icon_reward="ico200511" need="2700"/>
+        <ItemSpec id="2702" lv="3" name="108902" power="3000" icon_monster="world_monster_wild" icon_reward="ico200512" need="2701"/>
+        <ItemSpec id="2703" lv="4" name="108903" power="4000" icon_monster="world_monster_wild" icon_reward="ico200520" need="2702"/>
+        <ItemSpec id="2704" lv="5" name="108904" power="5000" icon_monster="world_monster_wild" icon_reward="ico200521" need="2703"/>
+        <ItemSpec id="2705" lv="6" name="108905" power="6000" icon_monster="world_monster_wild" icon_reward="ico200530" need="2704"/>
+        <ItemSpec id="2706" lv="7" name="108906" power="7000" icon_monster="world_monster_wild" icon_reward="ico200531" need="2705"/>
+        <ItemSpec id="2707" lv="8" name="108907" power="8000" icon_monster="world_monster_wild" icon_reward="ico200540" need="2706"/>
+        <ItemSpec id="2708" lv="9" name="108908" power="9000" icon_monster="world_monster_wild" icon_reward="ico200541" need="2707"/>
+        <ItemSpec id="2709" lv="10" name="108909" power="10000" icon_monster="world_monster_wild" icon_reward="ico200542" need="2708"/>
+    </Group>
+</tns:database>
