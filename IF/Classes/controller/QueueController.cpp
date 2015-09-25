@@ -1087,9 +1087,16 @@ void QueueController::endCCDQueue(CCDictionary* dict)
         if(type == 15)
         {
             
-            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_FEED_SPEED_UP_COMPLETE);
+            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_SPEED_UP_COMPLETE,CCString::create("feed"));
             
         }
+        if(GlobalData::shared()->allQueuesInfo[qid].itemId == 400000)
+        {
+            
+            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_SPEED_UP_COMPLETE,CCString::create("upgrade"));//fusheng 泰坦秒cd 也认为是这个
+        }
+       
+
     }
     
     if(key == ""){
@@ -1336,7 +1343,16 @@ void QueueController::endFinishQueue(CCDictionary* dict)
     if (GlobalData::shared()->allQueuesInfo.find(qid) == GlobalData::shared()->allQueuesInfo.end()) {
         return;
     }
+    if(type == 15)
+    {
+        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_SPEED_UP_COMPLETE,CCString::create("feed"));//fusheng feedCD完成 
+    }
     
+    if(GlobalData::shared()->allQueuesInfo[qid].itemId == 400000)
+    {
+        
+        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_SPEED_UP_COMPLETE,CCString::create("upgrade"));//fusheng 泰坦秒cd 也认为是这个
+    }
     cocos2d::extension::CCDevice::cancelNotice(qid);
     if (type == TYPE_FORGE) {
         auto equipDict = _dict(dict->objectForKey("itemObj"));

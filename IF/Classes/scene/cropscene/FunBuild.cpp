@@ -216,7 +216,7 @@ bool FunBuild::initFunBuild(int itemId, CCLabelBatchNode* nameLayer)
         m_lvLabel = CCLabelBatch::create(CC_ITOA(m_info->level), m_nameLayer);
         m_lvLabel->setScale(0.6);
         m_lvLabel->setAnchorPoint(ccp(0.5,0.5));
-        m_lvLabel->setColor(ccc3(255, 255, 0));
+        m_lvLabel->setColor(ccc3(101, 79, 63));
         m_lvLabel->setSkewY(22.5);
         
         if (m_info->open>0 && m_info->type != FUN_BUILD_MAIN && m_info->open>FunBuildController::getInstance()->getMainCityLv()) {
@@ -559,7 +559,8 @@ void FunBuild::setNamePos(int x, int y, CCLayer* sginLayer, CCLayer* popLayer, C
         drowEffectSpr(zOrder, tmpOrd);
     }
 //    drowEffectSpr(zOrder, tmpOrd);
-    drowPersonSpr(zOrder, tmpOrd);
+    // tao.yu 暂时不显示巡逻兵
+//    drowPersonSpr(zOrder, tmpOrd);
     
     if (isCanRecState()) {
         addFunBuildState();
