@@ -29,6 +29,8 @@
 #include "DragonBuildingController.h"
 #include "DragonScene.h"
 #include "ArmyInfo.h"
+#include "WorldMapView.h"
+
 #define MSG_BUILD_CELL "msg_build_cell"
 
 BuildUpgradeView* BuildUpgradeView::create(int buildId, int pos){
@@ -1677,6 +1679,34 @@ void UpgradeCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEven
                 layer->onMoveToBuildAndPlay(m_gotoBuildId, true);
                 PopupViewController::getInstance()->removeAllPopupView();
             }
+            else
+            {
+                if (m_buildId == 400000000) {
+//                    UIComponent::getInstance()->OnHomeBackBtnClick(NULL, CCControlEvent::TOUCH_DOWN);
+                    if (CCCommonUtils::isIosAndroidPad())
+                    {
+                        CCCommonUtils::setIsHDViewPort(true);
+                    }
+                    //    SoundController::sharedSound()->playEffects(Music_ui_world);
+                    
+                    PopupViewController::getInstance()->removeAllPopupView();
+                    
+                    auto world = WorldMapView::instance();
+                    
+                    if (world) {
+                        
+                        world->leaveWorld();
+                        
+                    }
+                    
+                    CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE
+                                                                                           
+                                                                                           , CCString::createWithFormat("UI_world_back"));
+                    FunBuildController::getInstance()->willMoveToBuildItemID = m_gotoBuildId;
+                }
+            }
+            
+            
         }
         else if (m_type == 6 && m_gotoBuildId>0) {
             auto layer = dynamic_cast<DragonScene*>(SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE));

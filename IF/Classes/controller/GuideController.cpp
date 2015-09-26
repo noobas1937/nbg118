@@ -42,6 +42,8 @@
 #include "GeneralsPopupView.h"
 #include "SettingPopUpView.h"
 #include "SetAccountView.h"
+#include "GeneralTitanPopupView.h"
+#include "TitanUpgradeView.h"
 
 static GuideController* _instance;
 
@@ -177,6 +179,7 @@ bool GuideController::start(){
 
 void GuideController::setGuide(std::string guideId){
 //    guideId = "";
+//    return;
     if (m_currentId == guideId && guideId != "") {
         return;
     }
@@ -876,6 +879,20 @@ CCNode* GuideController::getNode(std::string str){
                 node = curView->getGuideNode(str);
             }
         }
+        
+        if(opers[0] == "Titan" && opers.size()>=2){
+            GeneralTitanPopupView *curView = dynamic_cast<GeneralTitanPopupView*>(PopupViewController::getInstance()->getCurrentPopupView());
+            if(curView && curView->isAniComplete()){
+                node = curView->getGuideNode(str);
+            }
+        }
+        if(str == "TitanUp_End") {
+            TitanUpgradeView *curView = dynamic_cast<TitanUpgradeView*>(PopupViewController::getInstance()->getCurrentPopupView());
+            if(curView && curView->isAniComplete()){
+                node = curView->getGuideNode(str);
+            }
+
+        }
     }
     
     if(node == NULL || node->getParent() == NULL){
@@ -980,6 +997,9 @@ int GuideController::getWillBuildItemId()
 
 std::string GuideController::checkNetStep(std::string guideId)
 {
+    return guideId;
+    //暂时不做校正
+    
     std::string ret = guideId;
     std::string gFake = CCUserDefault::sharedUserDefault()->getStringForKey("Guide_Fake","");
     if (gFake == "end_3" || gFake == "start_4")//建造完3个建筑

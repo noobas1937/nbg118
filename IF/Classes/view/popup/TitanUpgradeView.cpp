@@ -576,8 +576,8 @@ bool TitanUpgradeView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, co
     return false;
 }
 
-CCNode *TitanUpgradeView::getGuideNode(int itemId){
-    if((m_buildId==itemId || m_buildId / 1000 == itemId) && m_upBtn->isEnabled()){
+CCNode *TitanUpgradeView::getGuideNode(string _key){
+    if(_key=="TitanUp_End" && m_upBtn->isEnabled()){
         return m_upBtn;
     }
     return NULL;
@@ -780,6 +780,7 @@ void TitanUpgradeView::onLastUp()
             PopupViewController::getInstance()->removeAllPopupView();
         }
     }
+    CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("TitanUp_End"));
 }
 
 void TitanUpgradeView::onShowNextUnlockItem()

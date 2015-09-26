@@ -561,6 +561,15 @@ void ImperialScene::buildingCallBack(CCObject* params)
         }
     }
     
+    int tmpMoveToBuildItemID = FunBuildController::getInstance()->willMoveToBuildItemID; //fusheng 直接goto一个Item
+    if (tmpMoveToBuildItemID > 0) {
+       
+        onMoveToBuildAndPlay(tmpMoveToBuildItemID);
+         FunBuildController::getInstance()->willMoveToBuildItemID = 0;
+        
+    }
+
+    
     GameController::getInstance()->enableQueryHistoryPurchase();
 }
 
