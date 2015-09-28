@@ -1,0 +1,13 @@
+//
+// Prefix header for all source files of the 'IF' target in the 'IF' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+    #import <UIKit/UIKit.h>
+    #import "Dlog.h"
+    #import"UIViewExt.h"
+    #import "InCommonUsed.h"
+    #import "NSObject+HelpModel.h"
+    #import "DBManager.h"
+#endif
