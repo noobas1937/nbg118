@@ -194,6 +194,22 @@ bool GeneralTitanPopupView::init()
   
     return true;
 }
+
+CCNode* GeneralTitanPopupView::getGuideNode(string _key)
+{
+    if (_key == "Titan_Feed") {
+        if (m_titanFeedBtn->isVisible() || !m_titanFeedBtn->isEnabled()) {
+            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("Titan_Feed"));
+            return NULL;
+        }else {
+            return m_titanFeedBtn;
+        }
+    }else if (_key == "Titan_Up") {
+        return m_titanUngrade;
+    }
+    return NULL;
+}
+
 void GeneralTitanPopupView::resetAttribute(CCObject* obj)
 {
     CCDictionary *params = dynamic_cast<CCDictionary*>(obj);
@@ -656,7 +672,7 @@ void GeneralTitanPopupView::onTitanFeedClick(CCObject * pSender, Control::EventT
 //        }
         TitanFeedCommand *tfCommand = new TitanFeedCommand();
         tfCommand->sendAndRelease();
-        
+        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("Titan_Feed"));
         m_titanFeedBtn->setEnabled(false);
         
     }
@@ -759,6 +775,7 @@ bool GeneralTitanPopupView::onTouchBegan(CCTouch *pTouch, CCEvent *pEvent){
         }
         
         PopupViewController::getInstance()->addPopupInView(TitanUpgradeView::create(400000000,CCString::create(m_titanId)->intValue()));
+        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("Titan_Up"));
         return true;
     }
     

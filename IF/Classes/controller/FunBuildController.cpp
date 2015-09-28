@@ -69,7 +69,7 @@ FunBuildController::FunBuildController()
     
     OpenMoveBuildStat = false;
     willMoveToBuildType = 0;
-    
+    willMoveToBuildItemID = 0;
     //初始化FunBuildController
     curBuildsInfo = &(GlobalData::shared()->imperialInfo);
     curUpBuildsInfo = &(GlobalData::shared()->UpgradeBuildsInfo);

@@ -39,6 +39,7 @@ public:
     static GeneralTitanPopupView* create();
     void resetAttribute(CCObject* obj);
     
+    CCNode* getGuideNode(string _key);
     
 //    void fadeOut();
 //    static void createInfoByUid(const string& uid);

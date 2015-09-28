@@ -24,7 +24,7 @@ public:
         if(m_itemScrollView)
             m_itemScrollView->getContainer()->removeAllChildren();
     };
-    CCNode *getGuideNode(int itemId);
+    CCNode *getGuideNode(string _key);
 private:
     virtual void onEnter();
     virtual void onExit();

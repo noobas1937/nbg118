@@ -283,6 +283,7 @@ public:
     bool OpenMoveBuildStat;
     vector<int> WillMovePos;
     int willMoveToBuildType;
+    int willMoveToBuildItemID;//fusheng 直接跳转的ItemID
 private:
     map<int, string> posToTypeMap;
     

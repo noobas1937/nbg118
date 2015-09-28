@@ -3807,7 +3807,7 @@ void UIComponent::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEven
 //            SoundController::sharedSound()->playEffects(Music_Sfx_click_button);  fusheng
 //            PopupViewController::getInstance()->addPopupView(UseSkillPopUpView::create());
             PopupViewController::getInstance()->addPopupInView(GeneralTitanPopupView::create(),true);
-
+            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("UI_titan"));
             
             break;
         }
@@ -5379,6 +5379,10 @@ CCNode* UIComponent::getNodeByIndex(string _key){
     }else if(_key == "UI_head"){
         
         return m_playerBG;
+        
+    }else if(_key == "UI_titan"){
+        
+        return m_skillBG;
         
     }
     
