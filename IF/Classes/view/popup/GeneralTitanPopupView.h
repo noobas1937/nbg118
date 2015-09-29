@@ -123,7 +123,8 @@ private:
 //    void equipLoopGlowCallBack();
 //    CCSafeObject<CCScrollView> m_scrollView;
 //    
-//    CCSafeObject<CCNode> m_mainNode;
+    CCSafeObject<CCNode> m_mainNode;
+    CCSafeObject<CCNode>  m_titanExtNode;
 //    CCSafeObject<CCNode> m_infoNode;
 //    CCSafeObject<CCNode> m_bgNode;
     CCSafeObject<CCControlButton> m_titanFeedBtn;
