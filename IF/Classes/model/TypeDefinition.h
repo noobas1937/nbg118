@@ -164,25 +164,16 @@
 
 #define MSG_GetHeadImgUrl           "MSG_GetHeadImgUrl"
 
+
+const char * getServerIP_TypeDefinition();
+int getServerPort_TypeDefinition();
+const char * getServerZone_TypeDefinition();
+const char * getServerListIP_TypeDefinition();
 // Server连接信息
-#if COCOS2D_DEBUG == 1
-    // 本地服
-    #define SERVER_IP "10.1.4.106"
-    #define SERVER_PORT 80
-    #define SERVER_ZONE "COK1"
-#else
-    #if COCOS2D_DEBUG == 2
-        // 测试服
-        #define SERVER_IP "10.1.4.121"
-        #define SERVER_PORT 80
-        #define SERVER_ZONE "COK2"
-    #else
-        // 正式服
-        #define SERVER_IP "s1.cok.elexapp.com"
-        #define SERVER_PORT 80
-        #define SERVER_ZONE "COK1"
-    #endif
-#endif
+#define SERVER_IP     getServerIP_TypeDefinition()
+#define SERVER_PORT   getServerPort_TypeDefinition()
+#define SERVER_ZONE   getServerZone_TypeDefinition()
+#define SERVERLIST_IP getServerListIP_TypeDefinition()
 
 //xcpayId首先写死1服，跳服(处理login的错误信息)时或者切服(获取服务器列表选取的时候)时更改payId
 #ifdef Channel_91
@@ -235,16 +226,6 @@
 #define YESNODLG_TAG 5001
 #define TEXT_FONT_SIZE 24
 #define TEXT_FONT_NAME "Helvetica"
-
-#if COCOS2D_DEBUG == 1
-    #define SERVERLIST_IP "10.1.4.106"
-#else
-    #if COCOS2D_DEBUG == 2
-        #define SERVERLIST_IP "10.1.4.121"
-    #else
-        #define SERVERLIST_IP "s1.cok.elexapp.com"
-    #endif
-#endif
 
 #define BG_MUSIC_ON "isBGMusicOn"
 #define EFFECT_MUSIC_ON "isEffectOn"
