@@ -650,7 +650,7 @@ bool TroopTotalTmpInfoCell::init(string msg1, string msg2, int type, string msg3
                 string  msg10 = CCCommonUtils::getNameById(it->second.armyId);
                 string msg20 = CC_CMDITOA(it->second.free);
  
-                std::string icon = it->second.getBodyIcon();
+                std::string icon = it->second.getHeadIcon();
                 auto cell = TroopTmpInfoCell::create(msg10, "",msg20,icon,"","icon-cunhuo.png","",type);
                 m_listNode->addChild(cell);
                 cell->setPositionY(dy);

@@ -16,7 +16,7 @@
 #include "fireandcomman.h"
 #include "YesNoDialog.h"
 #include "TipsView.h"
-
+#include "C3DShowView.hpp"
 SoldierInfoView* SoldierInfoView::create(ArmyInfo* info,int buildingId){
     SoldierInfoView* ret = new SoldierInfoView(info,buildingId);
     if(ret && ret->init()){
@@ -105,17 +105,11 @@ bool SoldierInfoView::init()
     setBtnSp(m_infoBtn1);
     setBtnSp(m_infoBtn2);
     
-    CCPoint pos = ccp(0,0);
-    if(m_buildingId/1000 == FUN_BUILD_FORT){
-        pos = ccp(0,-80);
-    }
 //    CCSprite* pic = CCLoadSprite::createSprite(m_info->getBodyIcon().c_str());
-    m_iconSp->setPosition(pos);
-//    m_icon->addChild(pic);
-    m_iconSp->setDisplayFrame(CCLoadSprite::loadResource(m_info->getBodyIcon().c_str()));
-//    if(m_buildingId/1000==FUN_BUILD_BARRACK4){
-//        pic->setScale(0.85);
-//    }
+    auto pic = C3DShowView::create(m_info->getModelName().c_str(),m_info->getModelTexName().c_str());
+    pic->setScale(4);
+    m_icon->addChild(pic);
+
     if(m_isFort){
         std::string particleName = "WeaponsFire_Wood";
         for (int i=2; i <= 6; i++) {
@@ -497,7 +491,7 @@ bool SoldierInfoView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, con
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bgColorLayer", CCLayerColor*, this->m_bgColorLayer);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bgColorLayerS", CCLayerColor*, this->m_bgColorLayerS);
     
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_iconSp", CCSprite*, this->m_iconSp);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_iconSp", CCSprite*, this->m_iconSp);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_jieguSp", CCSprite*, this->m_jieguSp);
     return false;
 }

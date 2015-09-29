@@ -198,8 +198,11 @@ public:
     FunBuildInfo curHarvestBuildsInfo;
     map<int, FunBuildInfo> *curBuildsInfo;
     map<int, FunBuildInfo> *curUpBuildsInfo;
-    map<int, TileInfo> m_tileMap;
-    map<int, BigTileInfo> m_bigTileMap;
+    map<int, TileInfo> m_tileMap;  //key为position字段， Group id="position"
+    map<int, BigTileInfo> m_bigTileMap; //key为ItemSpec id 字段，Group id="position_unlock"
+    //begin a by ljf
+    map<int, TilePositionUnlockInfo> m_tilePositionUnlockMap; //key为position 字段中的单个position，Group id="position_unlock"
+    //end a by ljf
     void clearUpBuildingInfo(int itemid);
     void initSetUpBuildingInfo(CCDictionary* dict);
     void onCreateOrUpError();

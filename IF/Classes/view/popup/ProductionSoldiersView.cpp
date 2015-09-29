@@ -26,7 +26,7 @@
 #include "QueueController.h"
 #include "LogoutCommand.h"
 #include "GuideController.h"
-#include "C3DShowView.h"
+#include "C3DShowView.hpp"
 
 ProductionSoldiersView::ProductionSoldiersView(int buildingId):m_buildingId(buildingId),m_waitInterface(NULL),m_isWaitingSeverRes(false),m_isShowRefresh(false){
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this,callfuncO_selector(ProductionSoldiersView::immediatelyHarvestFinish),MSG_QUICK_TROOPS_HARVEST, NULL);
@@ -233,7 +233,7 @@ bool ProductionSoldiersView::init()
     }
     if (!CCCommonUtils::isIosAndroidPad()){
         m_arcNode->setPosition(ccp(m_arcNode->getPositionX()-40, m_arcNode->getPositionY()+add/2));
-        m_soldierNode->setPosition(ccp(m_soldierNode->getPositionX(), m_soldierNode->getPositionY()+add/2));
+//        m_soldierNode->setPosition(ccp(m_soldierNode->getPositionX(), m_soldierNode->getPositionY()+add/2));
     }
     if(m_isFort){
         m_btnTitle1->setString(_lang("102128").c_str());
@@ -376,14 +376,13 @@ void ProductionSoldiersView::addSoldierIcon(){
     }
     ArmyInfo* m_info = getCurArmy();
 //    CCSprite* pic = CCLoadSprite::createSprite(m_info->getBodyIcon().c_str());
-    auto pic = C3DShowView::create("3d/titan_1.c3b","3d/titan_1.jpg","");
-//    pic->setTexture("3d/titan_1.jpg");
+    auto pic = C3DShowView::create(m_info->getModelName().c_str(),m_info->getModelTexName().c_str());
 //    pic->setScale(m_isFort?1.5:1);
     pic->setScale(6);
     pic->setPosition(pos);
     m_soldierIconNode->addChild(pic);
     if(m_info!=NULL && m_buildingLevel<m_info->unlockLevel){
-        CCCommonUtils::setSprite3DGray(pic,true);
+        CCCommonUtils::setSprite3DGray(dynamic_cast<Sprite3D*>(pic),true);
     }
     if(btype==FUN_BUILD_BARRACK4){
         pic->setScale(0.85);
@@ -392,6 +391,7 @@ void ProductionSoldiersView::addSoldierIcon(){
          m_soldierBg->setVisible(true);
     }
     m_soldierBg->setVisible(false);
+    
 }
 
 void ProductionSoldiersView::refreshResource(CCObject* p)
@@ -745,7 +745,7 @@ void ProductionSoldiersView::AsyLoadRes2(CCObject* p){
             
             if ( m_isFort ) {
                 auto& aInfo = GlobalData::shared()->fortList[m_armyIds[i]];
-                ArcInfo* info = new ArcInfo(i,CCString::createWithFormat("%s",aInfo.getName().c_str())->getCString(),aInfo.getBodyIcon(),aInfo.unlockLevel>m_buildingLevel,110,m_resIndex);
+                ArcInfo* info = new ArcInfo(i,CCString::createWithFormat("%s",aInfo.getName().c_str())->getCString(),aInfo.getHeadIcon(),aInfo.unlockLevel>m_buildingLevel,110,m_resIndex);
                 m_arcArmys->addObject(info);
                 info->release();
                 
@@ -755,6 +755,7 @@ void ProductionSoldiersView::AsyLoadRes2(CCObject* p){
                 m_arcArmys->addObject(info);
                 info->release();
             }
+            
         }
         
         m_arcScroll = ArcScrollView::create(m_arcArmys,2,m_pos);

@@ -27,7 +27,7 @@ public:
     m_Model(nullptr)
     {};
     virtual ~C3DShowView(){};
-    static C3DShowView* create(const char* modelPath, const char* texPath, const char* shaderTexPath);
+    static C3DShowView* create(const char* modelPath, const char* texPath);
     
     
 private:
@@ -37,7 +37,7 @@ private:
     virtual void onTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
     virtual void onTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
     CCSafeObject<NBSprite3D> m_Model;
-    bool init(const char* modelPath, const char* texPath, const char* shaderTexPath);
+    bool init(const char* modelPath, const char* texPath);
     virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(cocos2d::CCObject * pTarget, const char * pSelectorName){return NULL;}
     virtual SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName){return NULL;}
     virtual bool onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode);

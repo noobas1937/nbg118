@@ -375,7 +375,7 @@ bool NewTroopsCell::init()
     {
         if (GlobalData::shared()->armyList.find(m_id) != GlobalData::shared()->armyList.end()) {
             auto& info = GlobalData::shared()->armyList[m_id];
-            auto icon = CCLoadSprite::createSprite((info.getBodyIcon()).c_str());
+            auto icon = CCLoadSprite::createSprite((info.getHeadIcon()).c_str());
             CCCommonUtils::setSpriteMaxSize(icon, 222, true);
             if (id >= 107300)
             {
@@ -388,7 +388,7 @@ bool NewTroopsCell::init()
     } else {
         if (GlobalData::shared()->fortList.find(m_id) != GlobalData::shared()->fortList.end()) {
             auto& info = GlobalData::shared()->fortList[m_id];
-            auto icon = CCLoadSprite::createSprite((info.getBodyIcon()).c_str());
+            auto icon = CCLoadSprite::createSprite((info.getHeadIcon()).c_str());
             CCCommonUtils::setSpriteMaxSize(icon, 170, true);
             m_iconNode->addChild(icon);
             m_numLabel->setString(CC_CMDITOA(info.free));

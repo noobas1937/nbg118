@@ -12,7 +12,7 @@
 #include "ProductionSoldiersView.h"
 #include "FunBuildController.h"
 #include "ParticleController.h"
-
+#include "C3DShowView.hpp"
 MakingSoldierView* MakingSoldierView::create(std::string armyId,QueueInfo* info,int buildingId){
     MakingSoldierView* ret = new MakingSoldierView(armyId,info,buildingId);
     if(ret && ret->init()){
@@ -71,8 +71,10 @@ bool MakingSoldierView::init()
         m_resIndex = m_buildingId/1000000 - 423 + 200;
         CCLoadSprite::doResourceByCommonIndex(m_resIndex, true);
     }
-    CCSprite* pic = CCLoadSprite::createSprite(armyInfo->getBodyIcon().c_str());
+//    CCSprite* pic = CCLoadSprite::createSprite(armyInfo->getBodyIcon().c_str());
+    auto pic = C3DShowView::create(armyInfo->getModelName().c_str(),armyInfo->getModelTexName().c_str());
     pic->setPosition(pos);
+    pic->setScale(6);
     m_soldierNode->addChild(pic);
     if(m_buildingId/1000==FUN_BUILD_BARRACK4){
          pic->setPosition(ccp(-60,130));

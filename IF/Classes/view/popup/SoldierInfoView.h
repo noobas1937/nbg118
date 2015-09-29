@@ -111,7 +111,6 @@ private:
     CCSafeObject<CCLayerColor> m_bgColorLayer;
     CCSafeObject<CCLayerColor> m_bgColorLayerS;
     
-    CCSafeObject<CCSprite> m_iconSp;
     CCSafeObject<CCSprite> m_jieguSp;
     
     CCSafeObject<CCNode> m_fightNode;

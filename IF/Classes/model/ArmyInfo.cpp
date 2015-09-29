@@ -158,12 +158,14 @@ std::string ArmyInfo::getBodyIcon(){
 
 std::string ArmyInfo::getModelName(){
     std::string itemId = getRealItemId();
-    return "c3d" + itemId+ ".c3b";
+//    return "3d/soldier/c3d" + itemId+ ".c3b";
+    return "3d/titan_1.c3b";
 }
 
 std::string ArmyInfo::getModelTexName(){
     std::string itemId = getRealItemId();
-    return "tex" + itemId+ ".jpg";
+//    return "3d/soldier/tex" + itemId+ ".jpg";
+    return "3d/titan_1.jpg";
 }
 
 std::string ArmyInfo::getHeadIcon(){

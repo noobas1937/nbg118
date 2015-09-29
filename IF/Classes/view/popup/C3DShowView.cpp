@@ -8,10 +8,10 @@
 
 #include "C3DShowView.hpp"
 #include "CCBExtension.h"
-C3DShowView* C3DShowView::create(const char* modelPath, const char* texPath, const char* shaderTexPath)
+C3DShowView* C3DShowView::create(const char* modelPath, const char* texPath)
 {
     auto c3dspr = new (std::nothrow) C3DShowView();
-    if (c3dspr && c3dspr->init(modelPath, texPath, shaderTexPath))
+    if (c3dspr && c3dspr->init(modelPath, texPath))
     {
         c3dspr->autorelease();
         return c3dspr;
@@ -20,7 +20,7 @@ C3DShowView* C3DShowView::create(const char* modelPath, const char* texPath, con
     return nullptr;
 }
 
-bool C3DShowView::init(const char* modelPath, const char* texPath, const char* shaderTexPath)
+bool C3DShowView::init(const char* modelPath, const char* texPath)
 {
     if (!CCIFTouchNode::init()) {
         return false;
@@ -28,7 +28,9 @@ bool C3DShowView::init(const char* modelPath, const char* texPath, const char* s
     auto bg = CCBLoadFile("C3DShowView",this,this);
     m_Model = NBSprite3D::create(modelPath);
     m_Model->setTexture(texPath);
-    m_Model->setScale(0.7);
+    std::string shaderTexPath = texPath;
+    int pos = shaderTexPath.find(".");
+    shaderTexPath.insert(pos, "_shader");
     m_modelPos->addChild(m_Model);
     
     return true;

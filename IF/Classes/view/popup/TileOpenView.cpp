@@ -14,6 +14,8 @@
 #include "YesNoDialog.h"
 #include "UIComponent.h"
 
+//tileId指ItemSpec id="9990"这个字段  //a by ljf
+
 TileOpenView* TileOpenView::create(int tileId){
     TileOpenView* ret = new TileOpenView();
     if(ret && ret->init(tileId)){
@@ -71,6 +73,7 @@ void TileOpenView::updateInfo(CCObject* p)
     
     
     auto m_info = FunBuildController::getInstance()->m_bigTileMap[m_tileId];
+    //auto m_info = FunBuildController::getInstance()->m_tilePositionUnlockMap[m_tileId]; //a by ljf
     
     silver_need = m_info.silver_need;
     wood_need = m_info.wood_need;

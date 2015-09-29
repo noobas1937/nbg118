@@ -39,6 +39,10 @@
 #include "DynamicResourceController.h"
 #include "GeneralTitanPopupView.h"
 
+//begin a by ljf
+#include "TileOpenView.h"
+//end a by ljf
+
 using namespace cocos2d;
 
 const float nameWidth = 456;
@@ -172,7 +176,7 @@ bool FunBuild::initFunBuild(int itemId, CCLabelBatchNode* nameLayer)
         m_blentSprArray = CCArray::create();
     }
     
-    if(itemId > 1000)
+    if(itemId > 1000)  //ljf, 这代表已经创建过的建筑，itemId实际上是ItemSpec id="9990"这个字段
     {
         if (m_buildingKey/1000 == FUN_BUILD_PRISON) {
             return true;
@@ -243,9 +247,10 @@ bool FunBuild::initFunBuild(int itemId, CCLabelBatchNode* nameLayer)
             m_moveFrame->setPosition(ccp(131, 67));
         }
     }
-    else
+    else   //ljf, 这代表没有创建的空块，itemId对应的是position字段
     {
         string tileName = "build_tile.png";
+        
         if(itemId>16) {
             tileName = "res_tile.png";
             if (itemId>=47 && itemId<=51) {
@@ -265,17 +270,39 @@ bool FunBuild::initFunBuild(int itemId, CCLabelBatchNode* nameLayer)
             }
         }
         
+        // begin a by ljf
+        auto& tileInfo = FunBuildController::getInstance()->m_tileMap[itemId];
+        /*
+        int position = tileInfo.tileId;
+        if (FunBuildController::getInstance()->m_tilePositionUnlockMap.find(position) != FunBuildController::getInstance()->m_tilePositionUnlockMap.end()) //在position_unlock中配置过
+        {
+            auto& tilePositionUnlockInfo = FunBuildController::getInstance()->m_tilePositionUnlockMap[position];
+            
+            if (tilePositionUnlockInfo.state == FUN_BUILD_LOCK )
+            {
+                tileName = "res_tile_lock.png";
+            }
+        }*/
+        if (tileInfo.state == FUN_BUILD_LOCK) {
+            tileName = "res_tile_lock.png";
+        }
+        //end a by ljf
+        
         m_tile = CCLoadSprite::createSprite(tileName.c_str());
         m_tile->getTexture()->setAntiAliasTexParameters();
         this->setContentSize(m_tile->getContentSize());
         m_tile->setAnchorPoint(ccp(0,0));
         mainWidth = m_tile->getContentSize().width;
         mainHeight = m_tile->getContentSize().height;
+       
+       
         
-        auto& tileInfo = FunBuildController::getInstance()->m_tileMap[itemId];
-        if (tileInfo.state == FUN_BUILD_LOCK || tileInfo.xmlOpen==1) {
-            m_tile->setVisible(false);
-        }
+        //auto& tileInfo = FunBuildController::getInstance()->m_tileMap[itemId]; //d by ljf
+        //if (FunBuildController::getInstance()->m_tilePositionUnlockMap.find(position) == FunBuildController::getInstance()->m_tilePositionUnlockMap.end()){ // a by ljf， //未在position_unlock中配置过
+            if (tileInfo.state == FUN_BUILD_LOCK || tileInfo.xmlOpen==1) {
+                //m_tile->setVisible(false); // d by ljf
+            }
+        //}// a by ljf
         
         m_moveFrame = CCLoadSprite::createSprite("Tile_frame.png");
         m_moveFrame->setPosition(ccp(93, 56));
@@ -346,8 +373,15 @@ void FunBuild::unLockTile(CCObject* params)
         int itemId = dynamic_cast<CCInteger*>(params)->getValue();
         if (itemId == m_buildingKey && m_tile) {
             m_tile->setOpacity(0);
+            //begin a by ljf
+            CCSpriteFrame* newSp = CCLoadSprite::getSF("build_tile.png");
+            m_tile->stopAllActions();
+            m_tile->setDisplayFrame(newSp);
+            m_tile->getTexture()->setAntiAliasTexParameters();
+            m_tile->setScale(0.75);
+            //end a by ljf
             m_tile->setVisible(true);
-            auto delate = CCDelayTime::create(1.6);
+            auto delate = CCDelayTime::create(0.5); //m by ljf, 1.6 to 0.5
             auto fadeIn = CCFadeIn::create(1.0);
             m_tile->runAction(CCSequence::create(delate,fadeIn,NULL));
         }
@@ -1328,7 +1362,52 @@ void FunBuild::onClickThis(float _time)
                                                                                        , CCString::createWithFormat("MC_%d", m_buildingKey));
             }
         }
+        //begin a by ljf
+        /*
+        int tileId = tileInfo.tileId;
+        if (tileId >= 17 and tileId <= 51 )
+        {
+            if (tileInfo.state == FUN_BUILD_LOCK) {
+                if(tileInfo.level > FunBuildController::getInstance()->getMainCityLv())
+                {
+                    CCCommonUtils::flyHint("res_tile_lock.png", "", _lang_1("102118", CC_ITOA(tileInfo.level)));
+                }
+            }
+        }
+        */
         
+        int position = tileInfo.tileId;
+        if (FunBuildController::getInstance()->m_tilePositionUnlockMap.find(position) != FunBuildController::getInstance()->m_tilePositionUnlockMap.end()) //在position_unlock中配置过
+        {
+            auto& tilePositionUnlockInfo = FunBuildController::getInstance()->m_tilePositionUnlockMap[position];
+            
+            if (tileInfo.state == FUN_BUILD_LOCK)
+            {
+                 if(tilePositionUnlockInfo.level > FunBuildController::getInstance()->getMainCityLv())
+                 {
+                     CCCommonUtils::flyHint("res_tile_lock.png", "", _lang_1("102118", CC_ITOA(tilePositionUnlockInfo.level)));
+                 }
+                 else
+                 {
+                     CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_MAINSCENCE_SAVEPOS);
+                     auto layer = dynamic_cast<ImperialScene*>(SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE));
+                     int tx = parentX ;
+                     int ty = parentY ;
+                     float _scale = 0.8;
+                     if (CCCommonUtils::isIosAndroidPad())
+                     {
+                        _scale = 1.2;
+                     }
+                     layer->onMoveToPos(tx, ty, TYPE_POS_UP, 0.25, _scale);
+                 
+                     //PopupViewController::getInstance()->addPopupInView(TileOpenView::create(m_buildingKey));
+                     PopupViewController::getInstance()->addPopupInView(TileOpenView::create(tilePositionUnlockInfo.tileId));
+                   }
+              }
+
+            }
+        
+        //end a by ljf
     }
     else
     {

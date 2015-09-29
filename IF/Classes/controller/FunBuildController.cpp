@@ -100,6 +100,16 @@ FunBuildController::FunBuildController()
             int id = dictInfo->valueForKey("id")->intValue();
             auto bigTileInfo = BigTileInfo(dictInfo);
             m_bigTileMap[id] = bigTileInfo;
+            
+            //begin a by ljf
+            auto tilePositionUnlockInfo = TilePositionUnlockInfo(dictInfo);
+            vector<string> vecPosIds;
+            CCCommonUtils::splitString(tilePositionUnlockInfo.positions, ";", vecPosIds);
+            for (int i=0; i<vecPosIds.size(); ++i) {
+                int id = atoi(vecPosIds[i].c_str());
+                m_tilePositionUnlockMap[id] = tilePositionUnlockInfo; //以position为key建立map
+            }
+            //end a by ljf
         }
     }
     // tao.yu 暂时不需要talkTips表
@@ -190,7 +200,7 @@ int FunBuildController::getUpRoCrtNum()
     
     return ret;
 }
-
+//ljf, 从服务器中返回的从信息中，更新已经解锁的tile
 void FunBuildController::initOpenTile(string tiles)
 {
     vector<string> openTiles;
@@ -214,6 +224,7 @@ void FunBuildController::initOpenTile(string tiles)
             }
         }
     }
+    
 }
 
 void FunBuildController::refreshResTime(CCDictionary* dict)//城市被攻击后，资源田设置被掠夺后的资源
@@ -466,10 +477,14 @@ void FunBuildController::retSetData(CCDictionary* dict)
     }
     updateAllOutPut();
 }
-
+//begin a by ljf
+//从spebuild的onclickthis传过来的itemId为ItemSpec id="9990"这个字段
+//从funbuild的onclickthis传过来的itemId为ItemSpec id="9990"这个字段
+//end a by ljf
 bool FunBuildController::startOpenTile(int itemId, int gold)
 {
     auto& info = m_bigTileMap[itemId];
+    //auto& info = m_tilePositionUnlockMap[itemId]; //a by ljf
     if (gold<=0) {
         if (GlobalData::shared()->resourceInfo.lWood<info.wood_need
             || GlobalData::shared()->resourceInfo.lFood<info.food_need
@@ -486,7 +501,7 @@ bool FunBuildController::startOpenTile(int itemId, int gold)
             return false;
         }
     }
-    
+   
     GlobalData::shared()->resourceInfo.lWood -= info.wood_need;//*(1-GlobalData::shared()->scienceEffect["207"]*1.0/100);
     GlobalData::shared()->resourceInfo.lFood -= info.food_need;
     GlobalData::shared()->resourceInfo.lStone -= info.stone_need;
@@ -524,12 +539,14 @@ void FunBuildController::endOpenTile(CCDictionary* dict)
 //		(int) iron: 18547
 //		(int) wood: 16592
 //		(int) stone: 16592
+        
+       
         if (dict->objectForKey("gold")) {
             int tmpInt = dict->valueForKey("gold")->intValue();
             UIComponent::getInstance()->updateGold(tmpInt);
         }
         GlobalData::shared()->resourceInfo.setResourceData(dict);
-        
+        int a = curFunBuildId; //a by ljf
         m_bigTileMap[curFunBuildId].state = FUN_BUILD_ULOCK;
         m_bigTileMap[curFunBuildId].unlock = 1;
         vector<string> vecPosIds;
