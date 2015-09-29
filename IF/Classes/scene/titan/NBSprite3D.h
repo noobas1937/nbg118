@@ -1,25 +1,25 @@
 //
-//  Titan3DSprite.h
+//  NBSprite3D.h
 //  IF
 //
 //  Created by guojiang on 8/19/15.
 //
 //
 
-#ifndef __IF__Titan3DSprite__
-#define __IF__Titan3DSprite__
+#ifndef __IF__NBSprite3D__
+#define __IF__NBSprite3D__
 
 #include "cocos2d.h"
 
-class Titan3DSprite
+class NBSprite3D
 : public cocos2d::Sprite3D
 {
 public:
-    Titan3DSprite():
+    NBSprite3D():
     m_shining_texture(nullptr)
     {};
-    virtual ~Titan3DSprite(){releaseTex();};
-    static Titan3DSprite* create(const std::string &modelPath);
+    virtual ~NBSprite3D(){releaseTex();};
+    static NBSprite3D* create(const std::string &modelPath);
     
     // speed : 变化速度
     // min, max : 变化区间 [min, max]
@@ -62,4 +62,4 @@ protected:
     cocos2d::Vec2 m_LightAni;
 };
 
-#endif /* defined(__IF__Titan3DSprite__) */
+#endif /* defined(__IF__NBSprite3D__) */

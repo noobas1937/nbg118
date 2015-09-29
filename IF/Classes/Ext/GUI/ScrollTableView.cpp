@@ -94,9 +94,10 @@ void ScrollTableView::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent){
     {
         if (_touches.size() == 1 && _touchMoved){
             //this->schedule(schedule_selector(CCScrollView::deaccelerateScrolling));
-            gapX =  this->getContentOffset().x - m_touchBeganPoint.x;
-            gapX = MIN(gapX,100);//200
-            gapX = MAX(gapX,-100);//-200
+//            gapX =  (this->getContentOffset().x - m_touchBeganPoint.x);
+            gapX = pTouch->getLocation().x - pTouch->getStartLocation().x;
+            gapX = MIN(gapX,300);
+            gapX = MAX(gapX,-300);
             _dragging = false;
             float newX, newY;
             CCPoint maxInset, minInset;
@@ -134,7 +135,7 @@ void ScrollTableView::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent){
 
 void ScrollTableView::scrollingPos(float dt){
     CCLOG("dt=%f",dt);
-    float subFactor = 0.4;//0.8
+    float subFactor = 0.8;//0.4
     gapX = subFactor*gapX;
     _container->setPosition(ccp(_container->getPositionX()+gapX*0.5, _container->getPositionY()));
     this->scrollFinish();

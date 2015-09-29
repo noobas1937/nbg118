@@ -1,12 +1,12 @@
 //
-//  Titan3DSprite.cpp
+//  NBSprite3D.cpp
 //  IF
 //
 //  Created by guojiang on 8/19/15.
 //
 //
 
-#include "Titan3DSprite.h"
+#include "NBSprite3D.h"
 
 using namespace cocos2d;
 
@@ -16,12 +16,12 @@ static const char * CAUSTICS = "caustics";
 static const char * CAUSTICS_COLOR = "caustics_color";
 
 
-Titan3DSprite* Titan3DSprite::create(const std::string &modelPath)
+NBSprite3D* NBSprite3D::create(const std::string &modelPath)
 {
     if (modelPath.length() < 4)
         CCASSERT(false, "invalid filename for Sprite3D");
     
-    auto sprite = new (std::nothrow) Titan3DSprite();
+    auto sprite = new (std::nothrow) NBSprite3D();
     if (sprite && sprite->initWithFile(modelPath))
     {
         sprite->autorelease();
@@ -31,14 +31,14 @@ Titan3DSprite* Titan3DSprite::create(const std::string &modelPath)
     return nullptr;
 }
 
-void Titan3DSprite::setEmittingShaderDuration(float speed, float min, float max)
+void NBSprite3D::setEmittingShaderDuration(float speed, float min, float max)
 {
     m_shining_duration_step = speed;
     m_min_duration = min;
     m_max_duration = max;
 }
 
-void Titan3DSprite::applyEmittingShader(const Vec3& caustics_color, const std::string& textureLight, const std::string& vShaderFilename, const std::string& fShaderFilename)
+void NBSprite3D::applyEmittingShader(const Vec3& caustics_color, const std::string& textureLight, const std::string& vShaderFilename, const std::string& fShaderFilename)
 {
     //create and set our custom shader
     auto shader = GLProgram::createWithFilenames(vShaderFilename, fShaderFilename);
@@ -78,10 +78,10 @@ void Titan3DSprite::applyEmittingShader(const Vec3& caustics_color, const std::s
     setGLProgramState(glpstate);
     
     m_fade_in = true;
-    schedule(schedule_selector(Titan3DSprite::titanUpdate));
+    schedule(schedule_selector(NBSprite3D::titanUpdate));
 }
 
-void Titan3DSprite::titanUpdate(float dt)
+void NBSprite3D::titanUpdate(float dt)
 {
     auto glprogramstate = getGLProgramState();
     if (!glprogramstate) return;
@@ -111,7 +111,7 @@ void Titan3DSprite::titanUpdate(float dt)
 
 #pragma make * test shader
 
-void Titan3DSprite::applySeaShader(const std::string& texture1, const std::string& textureLight, const std::string& vShaderFilename,
+void NBSprite3D::applySeaShader(const std::string& texture1, const std::string& textureLight, const std::string& vShaderFilename,
                                    const std::string& fShaderFilename)
 {
     auto glprogram = GLProgram::createWithFilenames(vShaderFilename, fShaderFilename);
@@ -150,10 +150,10 @@ void Titan3DSprite::applySeaShader(const std::string& texture1, const std::strin
     
     m_LightAni.x = m_LightAni.y = 0;
     
-    schedule(schedule_selector(Titan3DSprite::updateSeaShader));
+    schedule(schedule_selector(NBSprite3D::updateSeaShader));
 }
 
-void Titan3DSprite::updateSeaShader(float dt)
+void NBSprite3D::updateSeaShader(float dt)
 {
     auto glprogramstate = getGLProgramState();
     if (glprogramstate)

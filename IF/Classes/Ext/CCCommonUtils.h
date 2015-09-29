@@ -144,6 +144,10 @@ namespace CCCommonUtils {
 
     //更改Sprite变灰
     void setSpriteGray(CCSprite *sprite, bool gray);
+    
+    //更改Sprite3D变灰
+    void setSprite3DGray(Sprite3D *pSprite3D, bool gray);
+    
     //检查武将状态
     bool checkGeneralState(int _state);
     //icon字段读取

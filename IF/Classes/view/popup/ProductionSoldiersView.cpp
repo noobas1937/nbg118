@@ -26,6 +26,7 @@
 #include "QueueController.h"
 #include "LogoutCommand.h"
 #include "GuideController.h"
+#include "C3DShowView.h"
 
 ProductionSoldiersView::ProductionSoldiersView(int buildingId):m_buildingId(buildingId),m_waitInterface(NULL),m_isWaitingSeverRes(false),m_isShowRefresh(false){
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this,callfuncO_selector(ProductionSoldiersView::immediatelyHarvestFinish),MSG_QUICK_TROOPS_HARVEST, NULL);
@@ -374,12 +375,15 @@ void ProductionSoldiersView::addSoldierIcon(){
             CCLoadSprite::doResourceByCommonIndex(m_resIndex, true);
     }
     ArmyInfo* m_info = getCurArmy();
-    CCSprite* pic = CCLoadSprite::createSprite(m_info->getBodyIcon().c_str());
-    pic->setScale(m_isFort?1.5:1);
+//    CCSprite* pic = CCLoadSprite::createSprite(m_info->getBodyIcon().c_str());
+    auto pic = C3DShowView::create("3d/titan_1.c3b","3d/titan_1.jpg","");
+//    pic->setTexture("3d/titan_1.jpg");
+//    pic->setScale(m_isFort?1.5:1);
+    pic->setScale(6);
     pic->setPosition(pos);
     m_soldierIconNode->addChild(pic);
     if(m_info!=NULL && m_buildingLevel<m_info->unlockLevel){
-        CCCommonUtils::setSpriteGray(pic,true);
+        CCCommonUtils::setSprite3DGray(pic,true);
     }
     if(btype==FUN_BUILD_BARRACK4){
         pic->setScale(0.85);

@@ -235,6 +235,7 @@
 		3642EC74184DBF8600D49597 /* FBUtilies.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3642EC71184DBF8600D49597 /* FBUtilies.cpp */; };
 		3642EC75184DBF8600D49597 /* FBUtilies.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3642EC73184DBF8600D49597 /* FBUtilies.mm */; };
 		3642EC77184DBFBE00D49597 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3642EC76184DBFBE00D49597 /* MessageUI.framework */; };
+		3646A6751BB945D200248935 /* NBSprite3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3646A6731BB945D200248935 /* NBSprite3D.cpp */; settings = {ASSET_TAGS = (); }; };
 		366A8461180BE37100790261 /* ClippingNodeExt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 366A845F180BE37100790261 /* ClippingNodeExt.cpp */; };
 		366E1C6A17D04FA0006CCCBF /* SoundController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 366E1C6717D04FA0006CCCBF /* SoundController.cpp */; };
 		366E1C6D17D07261006CCCBF /* LocalController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 366E1C6B17D07261006CCCBF /* LocalController.cpp */; };
@@ -257,12 +258,12 @@
 		369BF39318290446006F12B9 /* QuestSubmitCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 369BF39118290446006F12B9 /* QuestSubmitCommand.cpp */; };
 		36A9688617E8468D002129DA /* WaitInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36A9688417E8468D002129DA /* WaitInterface.cpp */; };
 		36A968A817E981DE002129DA /* YesNoDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36A968A617E981DE002129DA /* YesNoDialog.cpp */; };
+		36AA340C1BBA60ED006D7E97 /* C3DShowView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36AA340A1BBA60ED006D7E97 /* C3DShowView.cpp */; settings = {ASSET_TAGS = (); }; };
 		36D7170318D9C6E3002FC987 /* CCGraySprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36D7170118D9C6E3002FC987 /* CCGraySprite.cpp */; };
 		36DE16D91BA188C00020785E /* 3d in Resources */ = {isa = PBXBuildFile; fileRef = 36DE16D71BA188C00020785E /* 3d */; };
 		36DE16DA1BA188C00020785E /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = 36DE16D81BA188C00020785E /* shaders */; };
 		36DE16E61BA188D60020785E /* DrawNode3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36DE16E01BA188D60020785E /* DrawNode3D.cpp */; };
 		36DE16E71BA188D60020785E /* Titan.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36DE16E21BA188D60020785E /* Titan.cpp */; };
-		36DE16E81BA188D60020785E /* Titan3DSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36DE16E41BA188D60020785E /* Titan3DSprite.cpp */; };
 		57014AC318D2EB5A000F8720 /* UseToolView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57014AC218D2EB5A000F8720 /* UseToolView.cpp */; };
 		57016D8218BF2C13003F4060 /* ToolInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57016D8118BF2C13003F4060 /* ToolInfo.cpp */; };
 		57016D8518BF32FB003F4060 /* ToolController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57016D8418BF32FB003F4060 /* ToolController.cpp */; };
@@ -1663,6 +1664,8 @@
 		3642EC72184DBF8600D49597 /* FBUtilies.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBUtilies.h; sourceTree = "<group>"; };
 		3642EC73184DBF8600D49597 /* FBUtilies.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FBUtilies.mm; sourceTree = "<group>"; };
 		3642EC76184DBFBE00D49597 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		3646A6731BB945D200248935 /* NBSprite3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NBSprite3D.cpp; path = ../scene/titan/NBSprite3D.cpp; sourceTree = "<group>"; };
+		3646A6741BB945D200248935 /* NBSprite3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBSprite3D.h; path = ../scene/titan/NBSprite3D.h; sourceTree = "<group>"; };
 		366A845F180BE37100790261 /* ClippingNodeExt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClippingNodeExt.cpp; sourceTree = "<group>"; };
 		366A8460180BE37100790261 /* ClippingNodeExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClippingNodeExt.h; sourceTree = "<group>"; };
 		366E1C6517D04F8E006CCCBF /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = sounds; path = Resources/sounds; sourceTree = "<group>"; };
@@ -1704,16 +1707,16 @@
 		36A9688517E8468D002129DA /* WaitInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitInterface.h; sourceTree = "<group>"; };
 		36A968A617E981DE002129DA /* YesNoDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = YesNoDialog.cpp; sourceTree = "<group>"; };
 		36A968A717E981DE002129DA /* YesNoDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YesNoDialog.h; sourceTree = "<group>"; };
+		36AA340A1BBA60ED006D7E97 /* C3DShowView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = C3DShowView.cpp; sourceTree = "<group>"; };
+		36AA340B1BBA60ED006D7E97 /* C3DShowView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = C3DShowView.hpp; sourceTree = "<group>"; };
 		36D7170118D9C6E3002FC987 /* CCGraySprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGraySprite.cpp; sourceTree = "<group>"; };
 		36D7170218D9C6E3002FC987 /* CCGraySprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGraySprite.h; sourceTree = "<group>"; };
 		36DE16D71BA188C00020785E /* 3d */ = {isa = PBXFileReference; lastKnownFileType = folder; name = 3d; path = Resources/3d; sourceTree = "<group>"; };
 		36DE16D81BA188C00020785E /* shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = shaders; path = Resources/shaders; sourceTree = "<group>"; };
-		36DE16E01BA188D60020785E /* DrawNode3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DrawNode3D.cpp; sourceTree = "<group>"; };
-		36DE16E11BA188D60020785E /* DrawNode3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawNode3D.h; sourceTree = "<group>"; };
+		36DE16E01BA188D60020785E /* DrawNode3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DrawNode3D.cpp; path = ../scene/titan/DrawNode3D.cpp; sourceTree = "<group>"; };
+		36DE16E11BA188D60020785E /* DrawNode3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DrawNode3D.h; path = ../scene/titan/DrawNode3D.h; sourceTree = "<group>"; };
 		36DE16E21BA188D60020785E /* Titan.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Titan.cpp; sourceTree = "<group>"; };
 		36DE16E31BA188D60020785E /* Titan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Titan.h; sourceTree = "<group>"; };
-		36DE16E41BA188D60020785E /* Titan3DSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Titan3DSprite.cpp; sourceTree = "<group>"; };
-		36DE16E51BA188D60020785E /* Titan3DSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Titan3DSprite.h; sourceTree = "<group>"; };
 		57014AC118D2EB4B000F8720 /* UseToolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UseToolView.h; sourceTree = "<group>"; };
 		57014AC218D2EB5A000F8720 /* UseToolView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UseToolView.cpp; sourceTree = "<group>"; };
 		57016D8018BF2C07003F4060 /* ToolInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToolInfo.h; sourceTree = "<group>"; };
@@ -4715,12 +4718,8 @@
 		36DE16DF1BA188D60020785E /* titan */ = {
 			isa = PBXGroup;
 			children = (
-				36DE16E01BA188D60020785E /* DrawNode3D.cpp */,
-				36DE16E11BA188D60020785E /* DrawNode3D.h */,
 				36DE16E21BA188D60020785E /* Titan.cpp */,
 				36DE16E31BA188D60020785E /* Titan.h */,
-				36DE16E41BA188D60020785E /* Titan3DSprite.cpp */,
-				36DE16E51BA188D60020785E /* Titan3DSprite.h */,
 				972666441BAC07D300D59BC2 /* TitanInView.cpp */,
 				972666451BAC07D300D59BC2 /* TitanInView.h */,
 			);
@@ -6493,6 +6492,10 @@
 				96EAE2AB1915D45E0068E3FE /* CCEditText.h */,
 				57720BCA1941B28600BF69F5 /* CCAniNode.h */,
 				57720BCB1941B28F00BF69F5 /* CCAniNode.cpp */,
+				3646A6731BB945D200248935 /* NBSprite3D.cpp */,
+				3646A6741BB945D200248935 /* NBSprite3D.h */,
+				36DE16E01BA188D60020785E /* DrawNode3D.cpp */,
+				36DE16E11BA188D60020785E /* DrawNode3D.h */,
 			);
 			name = Ext;
 			path = Classes/Ext;
@@ -6885,6 +6888,8 @@
 				36A968A717E981DE002129DA /* YesNoDialog.h */,
 				96E0A0A1199B3DED006B3BFB /* YuanJunTipView.cpp */,
 				96E0A0A2199B3DED006B3BFB /* YuanJunTipView.h */,
+				36AA340A1BBA60ED006D7E97 /* C3DShowView.cpp */,
+				36AA340B1BBA60ED006D7E97 /* C3DShowView.hpp */,
 			);
 			path = popup;
 			sourceTree = "<group>";
@@ -7292,7 +7297,6 @@
 				57FAB7FA1A36CD64009E9907 /* EquipmentController.cpp in Sources */,
 				FDEE29A518D003BB0060CE56 /* CityCrashView.cpp in Sources */,
 				96E056011A5A84AF00FF4405 /* PushKingdomRes.cpp in Sources */,
-				36DE16E81BA188D60020785E /* Titan3DSprite.cpp in Sources */,
 				96E055FB1A5A216A00FF4405 /* PushKingdomThronePic.cpp in Sources */,
 				E6CE60361A7630CC002BB495 /* KingsGiftCommand.cpp in Sources */,
 				96E3C2501A3838470085423E /* KingdomAppointView.cpp in Sources */,
@@ -7888,6 +7892,7 @@
 				963959F3182A2C4400BFCCA9 /* PlotInfo.cpp in Sources */,
 				967EBECB1A89EA0200AC1D80 /* ButtonLightEffect.cpp in Sources */,
 				BAB5371218F52CF500AD382B /* AllianceKickMemberCommand.cpp in Sources */,
+				36AA340C1BBA60ED006D7E97 /* C3DShowView.cpp in Sources */,
 				E631A5E51AB6BDDC00299D19 /* IFSkeletonBatchLayer.cpp in Sources */,
 				963959F7182A2C5300BFCCA9 /* GuideView.cpp in Sources */,
 				57E871F1186A87B500BD6EFD /* GCMRewardController.cpp in Sources */,
@@ -7977,6 +7982,7 @@
 				E64E00A218A62419009FC026 /* ChatLockInfoCommand.cpp in Sources */,
 				7C5696EF1986247200490FBA /* MailSystemCell.cpp in Sources */,
 				9638FFC41B941EAB00D0B2CD /* DragonBattlePlayerInfoCommand.cpp in Sources */,
+				3646A6751BB945D200248935 /* NBSprite3D.cpp in Sources */,
 				E64E00A518A6283B009FC026 /* ChatShieldInfo.cpp in Sources */,
 				57526E2D19B08BA80022EB16 /* FreeListView.cpp in Sources */,
 				E64E00A818A63C49009FC026 /* ShieldUnlockPopUpView.cpp in Sources */,
@@ -8410,7 +8416,7 @@
 				);
 				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
 					DEBUG,
-					"COCOS2D_DEBUG=1",
+					"COCOS2D_DEBUG=2",
 					USE_FILE32API,
 					CC_TARGET_OS_IPHONE,
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",

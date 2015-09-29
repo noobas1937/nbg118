@@ -71,7 +71,7 @@ bool Titan::initWithFile(int uid)
     bodyParam.min = 0.4;
     bodyParam.max = 3;
 
-    _model = Titan3DSprite::create(bodyParam.modelName);
+    _model = NBSprite3D::create(bodyParam.modelName);
     
     if (!_model) {
         return false;
@@ -106,7 +106,7 @@ bool Titan::initWithFile(int uid)
     shoulderLeftParam.min = 3;
     shoulderLeftParam.max = 7;
     
-    auto scapulaLeft = Titan3DSprite::create(shoulderLeftParam.modelName);
+    auto scapulaLeft = NBSprite3D::create(shoulderLeftParam.modelName);
     scapulaLeft->setTexture(shoulderLeftParam.textureName);
     // shader
     scapulaLeft->setEmittingShaderDuration(shoulderLeftParam.speed, shoulderLeftParam.min, shoulderLeftParam.max);
@@ -132,7 +132,7 @@ bool Titan::initWithFile(int uid)
     shoulderRightParam.min = 3;
     shoulderRightParam.max = 7;
     
-    auto scapulaRight = Titan3DSprite::create(shoulderRightParam.modelName);
+    auto scapulaRight = NBSprite3D::create(shoulderRightParam.modelName);
     scapulaRight->setTexture(shoulderRightParam.textureName);
     // shader
     scapulaRight->setEmittingShaderDuration(shoulderRightParam.speed, shoulderRightParam.min, shoulderRightParam.max);
@@ -157,7 +157,7 @@ bool Titan::initWithFile(int uid)
     runeParam.min = 0.4;
     runeParam.max = 3;
     
-    auto rune = Titan3DSprite::create(runeParam.modelName);
+    auto rune = NBSprite3D::create(runeParam.modelName);
     rune->setTexture(runeParam.textureName);
     // shader
     rune->setEmittingShaderDuration(runeParam.speed, runeParam.min, runeParam.max);

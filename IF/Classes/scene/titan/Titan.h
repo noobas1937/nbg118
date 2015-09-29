@@ -10,7 +10,7 @@
 #define __IF__Titan__
 
 #include <stdio.h>
-#include "Titan3DSprite.h"
+#include "NBSprite3D.h"
 #include "DrawNode3D.h"
 USING_NS_CC;
 
@@ -38,7 +38,7 @@ public:
     virtual ~Titan();
     static Titan* create(int uid);
 
-    Titan3DSprite* getSprite(){
+    NBSprite3D* getSprite(){
         return _model;
     };
     
@@ -85,10 +85,10 @@ protected:
 
     
 protected:
-    Titan3DSprite* _model;
+    NBSprite3D* _model;
     Vec2 _position;
     Vec3 _rotation;
-    std::map<std::string,Titan3DSprite*> _equipmentMap;
+    std::map<std::string,NBSprite3D*> _equipmentMap;
     eActState _curState;
     eActState _lastState;
     eFaceDir _curFaceDir;

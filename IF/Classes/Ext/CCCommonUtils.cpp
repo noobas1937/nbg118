@@ -1529,6 +1529,20 @@ void CCCommonUtils::setSpriteGray(CCSprite *sprite, bool gray){
     }
 }
 
+void CCCommonUtils::setSprite3DGray(Sprite3D *pSprite3D, bool gray){
+    if (pSprite3D == NULL) {
+        return;
+    }
+    if (gray)
+    {
+        pSprite3D->setGLProgram(GLProgramCache::getInstance()->programForKey(kCCShader_PositionTextureGray));
+    }
+    else
+    {
+        pSprite3D->setGLProgram(GLProgramCache::getInstance()->programForKey(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
+    }
+}
+
 CCSprite* CCCommonUtils::graylightWithCCSprite(CCSprite* oldSprite,bool isLight)
 {
     //CCSprite转成CCimage

@@ -47,9 +47,10 @@ bool FortEndCommand::handleRecieve(cocos2d::CCDictionary *dict){
         GlobalData::shared()->fortList[m_id].finishTime = 0;
         GlobalData::shared()->fortList[m_id].free = params->valueForKey("free")->intValue();
         map<std::string, ArmyInfo>::iterator it = GlobalData::shared()->fortList.find(GlobalData::shared()->fortList[m_id].armyId);
-        std::string icon = it->second.getBodyIcon();
+        // tao.yu 造兵提示不显示兵的图标
+//        std::string icon = it->second.getBodyIcon();
         std::string name = it->second.getName();
-        CCCommonUtils::flyHint(icon, _lang("103675"), _lang_1("103676", name.c_str()));
+        CCCommonUtils::flyHint("", _lang("103675"), _lang_1("103676", name.c_str()));
         ResultParser::parseResult(FORT_END_COMMAND, m_id, params);
         CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(ARMY_NUM_CHANGE);
         CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TROOPS_CHANGE);

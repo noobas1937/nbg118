@@ -156,6 +156,16 @@ std::string ArmyInfo::getBodyIcon(){
     return "ico" + itemId+ ".png";
 }
 
+std::string ArmyInfo::getModelName(){
+    std::string itemId = getRealItemId();
+    return "c3d" + itemId+ ".c3b";
+}
+
+std::string ArmyInfo::getModelTexName(){
+    std::string itemId = getRealItemId();
+    return "tex" + itemId+ ".jpg";
+}
+
 std::string ArmyInfo::getHeadIcon(){
     std::string itemId = getRealItemId();
     return "ico" + itemId+ "_small.png";
@@ -179,11 +189,13 @@ std::string ArmyInfo::getDesc(){
 }
 
 void ArmyInfo::setEndTime(double time, bool isCancel){
+    // tao.yu 这个函数根本进不来
     CCDirector::sharedDirector()->getScheduler()->unscheduleAllForTarget(this);
     if(time == 0){
         if(!isCancel){
             free += train;
-            std::string icon = getBodyIcon();
+//            std::string icon = getBodyIcon();
+            std::string icon = "";
             std::string name = getName();
             if(isArmy){
                 int index = atof(armyId.c_str())/100 - 1070 + 200;

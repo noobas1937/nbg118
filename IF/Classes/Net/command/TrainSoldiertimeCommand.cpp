@@ -36,7 +36,8 @@ bool TrainSoldiertimeCommand::handleRecieve(cocos2d::CCDictionary *dict){
         if(it == GlobalData::shared()->armyList.end() || it->second.armyId == ""){
             return true;
         }
-        std::string icon = it->second.getBodyIcon();
+//        std::string icon = it->second.getBodyIcon();
+        std::string icon = "";
         std::string name = it->second.getName();
         if(!CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(icon.c_str())){
             int index = atof(GlobalData::shared()->armyList[m_id].armyId.c_str())/100 - 1070 + 200;

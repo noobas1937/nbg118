@@ -1132,18 +1132,19 @@ void QueueController::endCCDQueue(CCDictionary* dict)
             int itemId = atoi(key.c_str())/1000;
             CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_QUEUE_REMOVE,CCInteger::create(qid));
         }
-        else if (type == TYPE_FORCE || type == TYPE_RIDE_SOLDIER || type == TYPE_BOW_SOLDIER || type == TYPE_CAR_SOLDIER) {
-            std::string itemId = CC_ITOA(atoi(key.c_str()) / 100);
-            GlobalData::shared()->armyList[itemId].setEndTime(0);
-            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_QUEUE_REMOVE);
-            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_UPDATE_ARMY_DATA);
-        }
-        else if (type == TYPE_FORT) {
-            std::string itemId = CC_ITOA(atoi(key.c_str()) / 100);
-            GlobalData::shared()->fortList[itemId].setEndTime(0);
-            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_QUEUE_REMOVE);
-            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_UPDATE_ARMY_DATA);
-        }
+        // tao.yu 这个判断在上面return了，神奇的代码
+//        else if (type == TYPE_FORCE || type == TYPE_RIDE_SOLDIER || type == TYPE_BOW_SOLDIER || type == TYPE_CAR_SOLDIER) {
+//            std::string itemId = CC_ITOA(atoi(key.c_str()) / 100);
+//            GlobalData::shared()->armyList[itemId].setEndTime(0);
+//            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_QUEUE_REMOVE);
+//            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_UPDATE_ARMY_DATA);
+//        }
+//        else if (type == TYPE_FORT) {
+//            std::string itemId = CC_ITOA(atoi(key.c_str()) / 100);
+//            GlobalData::shared()->fortList[itemId].setEndTime(0);
+//            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_QUEUE_REMOVE);
+//            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_UPDATE_ARMY_DATA);
+//        }
         else if (type == TYPE_HOSPITAL) {
             ArmyController::getInstance()->setTreatEndTime(0);
             CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_QUEUE_REMOVE);
