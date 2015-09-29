@@ -297,7 +297,7 @@ void NewBaseTileInfo::setButtonState(unsigned int order, TileButtonState state) 
     CCCommonUtils::setButtonSprite(btn, "bnt_02.png");
 
     CCScale9Sprite *sprite = CCLoadSprite::createScale9Sprite("bnt_02.png");
-    btn->setPreferredSize(CCSize(122, 124));
+    btn->setPreferredSize(CCSize(98, 111));//fusheng 换图了 大小不是这么大
     sprite->setColor(ccGRAY);
     btn->setBackgroundSpriteForState(sprite,CCControlStateDisabled);
     

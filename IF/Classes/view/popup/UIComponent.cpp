@@ -211,7 +211,7 @@ void UIComponentOldTitle::updateShowUIComponentByType(OldTitleType type)
         this->m_powerAndBgNode->setVisible(false);
         m_otherPartNode->setVisible(false);
     }else{
-        m_popupTitleBg2->setVisible(true);
+        m_popupTitleBg2->setVisible(!true); // guo.jiang
         this->m_UserNode->setVisible(false);
         this->m_powerAndBgNode->setVisible(true);
         m_otherPartNode->setVisible(true);
@@ -1537,7 +1537,7 @@ void UIComponent::hidePopupBG()
         
         this->m_popupTitleBg1->setVisible(true);
         
-        this->m_popupTitleBg2->setVisible(true);
+        this->m_popupTitleBg2->setVisible(!true); // guo.jiang
         
         this->m_popupTitleName->setVisible(true);
         
@@ -1615,7 +1615,7 @@ void UIComponent::showResourceBar(bool _bShow)
 void UIComponent::showPopupView(int type, bool isHD)
 {
     this->m_newuserHelpNode->setVisible(false);
-    m_popupTitleBg2->setVisible(true);
+    m_popupTitleBg2->setVisible(!true); // guo.jiang
     this->m_powerAndBgNode->setVisible(true);
      m_otherPartNode->setVisible(true);
     setTestFBNodeVisible(false);
@@ -1678,7 +1678,7 @@ void UIComponent::showPopupView(int type, bool isHD)
             this->m_powerAndBgNode->setVisible(false);
             m_otherPartNode->setVisible(false);
         }else{
-            m_popupTitleBg2->setVisible(true);
+            m_popupTitleBg2->setVisible(!true); // guo.jiang
             this->m_UserNode->setVisible(false);
             this->m_powerAndBgNode->setVisible(true);
             m_otherPartNode->setVisible(true);

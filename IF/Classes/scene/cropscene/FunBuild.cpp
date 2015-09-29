@@ -1450,13 +1450,13 @@ void FunBuild::onClickThis(float _time)
             return;
         }
         
-        if (m_info->type == FUN_BUILD_MAIN) {
-            // tao.yu 点击主建筑进入泰坦
-//            PopupViewController::getInstance()->addPopupInView(SacrificePopUpView::create());
-            PopupViewController::getInstance()->addPopupInView(GeneralTitanPopupView::create());
-            scheduleOnce(schedule_selector(FunBuild::onCanClick), 0.2f);
-            return;
-        }
+//        if (m_info->type == FUN_BUILD_MAIN) {
+//            // tao.yu 点击主建筑进入泰坦
+////            PopupViewController::getInstance()->addPopupInView(SacrificePopUpView::create());
+//            PopupViewController::getInstance()->addPopupInView(GeneralTitanPopupView::create());
+//            scheduleOnce(schedule_selector(FunBuild::onCanClick), 0.2f);
+//            return;
+//        }
         
         if (true) {
             if (m_buildState && m_buildState->isCanClick()) {
@@ -2977,33 +2977,34 @@ bool FunBuildState::init(int itemId)
             }
             
             string pic = "";
-            if (buildType == FUN_BUILD_BARRACK1) {
-                pic = "icon_bubing.png";
-            }
-            else if (buildType == FUN_BUILD_BARRACK2) {
-                pic = "icon_qibing.png";
-            }
-            else if (buildType == FUN_BUILD_BARRACK3) {
-                pic = "icon_gongbing.png";
-            }
-            else if (buildType == FUN_BUILD_BARRACK4) {
-                pic = "icon_chebing.png";
-            }
-            else if (buildType == FUN_BUILD_FORT) {
-                pic = "icon_xianjing.png";
-            }
-            else if (buildType == FUN_BUILD_SCIENE) {
-                pic = "icon_keji.png";
-            }
-            else if (buildType == FUN_BUILD_FORGE) {
-                pic = "icon_forging02.png";
-            }
-            else if (buildType == FUN_BUILD_HOSPITAL) {
-                pic = "icon_hospital.png";
-            }
-            else if (buildType == FUN_BUILD_WORKSHOP) {
-                pic = "icon_chilun.png";
-            }
+            pic = "icon_zaobing.png";  //fusheng 暂时不确定有什么兵种  先使用icon_zaobing.png代替
+//            if (buildType == FUN_BUILD_BARRACK1) {
+//                pic = "icon_bubing.png";
+//            }
+//            else if (buildType == FUN_BUILD_BARRACK2) {
+//                pic = "icon_qibing.png";
+//            }
+//            else if (buildType == FUN_BUILD_BARRACK3) {
+//                pic = "icon_gongbing.png";
+//            }
+//            else if (buildType == FUN_BUILD_BARRACK4) {
+//                pic = "icon_chebing.png";
+//            }
+//            else if (buildType == FUN_BUILD_FORT) {
+//                pic = "icon_xianjing.png";
+//            }
+//            else if (buildType == FUN_BUILD_SCIENE) {
+//                pic = "icon_keji.png";
+//            }
+//            else if (buildType == FUN_BUILD_FORGE) {
+//                pic = "icon_forging02.png";
+//            }
+//            else if (buildType == FUN_BUILD_HOSPITAL) {
+//                pic = "icon_hospital.png";
+//            }
+//            else if (buildType == FUN_BUILD_WORKSHOP) {
+//                pic = "icon_chilun.png";
+//            }
             auto tIcon = CCLoadSprite::createSprite(pic.c_str());
             m_iconNode->addChild(tIcon);
             

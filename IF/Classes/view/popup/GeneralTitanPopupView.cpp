@@ -8,7 +8,7 @@
 
 #include "GeneralTitanPopupView.h"
 #include "TitanFeedCommand.h"
-
+#include "PropSpeedupView.h"
 #include "TitanInfoCommand.h"
 #include "BuildUpgradeView.h"
 #include "TitanUpgradeView.h"
@@ -24,14 +24,14 @@
 //#include "ChangePicView.h"
 //#include "ShieldUnlockPopUpView.h"
 //#include "SettingPopUpView.h"
-//#include "ToolController.h"
+#include "ToolController.h"
 #include "YesNoDialog.h"
 //#include "ChangePicCommand.h"
 //#include "WorldController.h"
 //#include "RoleInfoView.h"
 //#include "AllRankListPopUpView.h"
 #include "GeneralSkillListPopUpView.h"
-//#include "FunBuildController.h"
+#include "FunBuildController.h"
 //#include "SoundController.h"
 #include "EquipmentController.h"
 //#include "EquipmentInfo.h"
@@ -169,7 +169,11 @@ bool GeneralTitanPopupView::init()
         add =  size.height - 2048;
         extH = size.height - 2048;
     }
-    m_bottomNode->setPositionY(m_bottomNode->getPositionY()-extH);
+//    m_bottomNode->setPositionY(m_bottomNode->getPositionY()-extH);
+    
+    //m_mainNode->setPosition();
+    
+    m_bottomNode->setPosition(0,0);
     this->m_receiveGlow->setVisible(false);
     bool isOpenLongJing = false;
 
@@ -513,7 +517,9 @@ bool GeneralTitanPopupView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarge
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_stamineIcon", CCSprite*, this->m_stamineIcon);
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_touchNode", CCNode*, this->m_touchNode);
 //    
-//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_mainNode", CCNode*, this->m_mainNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_mainNode", CCNode*, this->m_mainNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanExtNode", CCNode*, this->m_titanExtNode);
+    
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_infoNode", CCNode*, this->m_infoNode);
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bgNode", CCNode*, this->m_bgNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_buildBG", CCScale9Sprite*, this->m_buildBG);
@@ -778,10 +784,56 @@ bool GeneralTitanPopupView::onTouchBegan(CCTouch *pTouch, CCEvent *pEvent){
         CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("Titan_Up"));
         return true;
     }
+    if(isTouchInside(this->m_clickNode4, pTouch))
+    {
+        if (m_titanId == "") {
+            return false;
+        }
+        FunBuildInfo& fbiInfo = FunBuildController::getInstance()->getFunbuildById(400000000);
+        
+        if(fbiInfo.state == FUN_BUILD_UPING)
+        {
+            PropSpeedupView::show(ItemSpdMenu_City, 400000000, 1101);
+        }
+        
+        
+        
+//        QueueInfo &qinfo =  GlobalData::shared()->allQueuesInfo[1101];
+//        
+//        if(qinfo.key == "400000000" && qinfo.finishTime > GlobalData::shared()->getWorldTime())
+//        {
+//            CCCommonUtils::flyHint("", "", "Titan is upgrading");
+//            return true;
+//        }
+//        
+//        PopupViewController::getInstance()->addPopupInView(TitanUpgradeView::create(400000000,CCString::create(m_titanId)->intValue()));
+//        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("Titan_Up"));
+        return true;
+    }
+    
     
     if(isTouchInside(this->m_titanSkill, pTouch)){
+        
+        FunBuildInfo& fbiInfo = FunBuildController::getInstance()->getFunbuildById(400000000); //fusheng 泰坦道具加速
+        
+        if(fbiInfo.state == FUN_BUILD_UPING)
+        {
+           int toolID = ToolController::getInstance()->getSPDItem(ItemSpdMenu_City);
+            
+            auto& toolInfo = ToolController::getInstance()->getToolInfoById(toolID);
+            
+            if(toolInfo.getCNT()>0)
+            {
+                PropSpeedupView::show(ItemSpdMenu_City, 400000000, 1101);
+            }
+        }
+        
+        
         CCCommonUtils::flyHint("", "", _lang("E100008"));//fusheng 技能界面先关闭
-//        onSkillClick(NULL, CCControlEvent::TOUCH_DOWN);
+
+        
+        
+        //        onSkillClick(NULL, CCControlEvent::TOUCH_DOWN);
 //        
 //        CCArray* p = CCArray::create();
 //        p->addObject(CCInteger::create(GENERAL_OPEN));

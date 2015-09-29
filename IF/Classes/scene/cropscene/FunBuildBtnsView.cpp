@@ -1,4 +1,4 @@
-//
+  //
 //  FunBuildBtnsView.cpp
 //  IF
 //
@@ -198,7 +198,7 @@ void FunBuildBtnsView::onShow(int buildId)
     if (btnIcons.size() >= 1) {
         m_icon3Node->removeAllChildren();
         auto icon = CCLoadSprite::createSprite(btnIcons[0].c_str());
-        CCCommonUtils::setSpriteMaxSize(icon, 90, true);
+//        CCCommonUtils::setSpriteMaxSize(icon, 90, true); //fusheng 使用图片原大小
         m_icon3Node->addChild(icon);
         m_btn3Node->setVisible(true);
         m_btn3->setEnabled(true);
@@ -233,7 +233,7 @@ void FunBuildBtnsView::onShow(int buildId)
     if (btnIcons.size() >= 2) {
         m_icon4Node->removeAllChildren();
         auto icon = CCLoadSprite::createSprite(btnIcons[1].c_str());
-        CCCommonUtils::setSpriteMaxSize(icon, 90, true);
+//        CCCommonUtils::setSpriteMaxSize(icon, 90, true); //fusheng 使用图片原大小
         m_btn4Node->setVisible(true);
         m_btn4->setEnabled(true);
         cellCnt=4;
@@ -290,7 +290,7 @@ bool FunBuildBtnsView::onShowInfo()
             m_spdNode->setVisible(false);
             m_icon1Node->removeAllChildren();
             auto icon = CCLoadSprite::createSprite("build_up_icon.png");
-            CCCommonUtils::setSpriteMaxSize(icon, 90, true);
+//            CCCommonUtils::setSpriteMaxSize(icon, 90, true); //fusheng 使用原大小
             m_icon1Node->addChild(icon);
             m_name2->setString(_lang("102270"));
             
@@ -504,7 +504,7 @@ void FunBuildBtnsView::onEnterFrame(float dt)
                     iconStr = CCCommonUtils::getResourceIconByType(Stone);
                 }
                 auto icon = CCLoadSprite::createSprite(iconStr.c_str());
-                CCCommonUtils::setSpriteMaxSize(icon, 90, true);
+//                CCCommonUtils::setSpriteMaxSize(icon, 90, true);// fusheng 使用图片原大小
                 m_icon4Node->addChild(icon);
             }
         }
@@ -1114,7 +1114,7 @@ bool FunBuildBtnsView::onUpdateToolBtn(int type)
     m_toolInfoId = toolId;
     m_icon5Node->removeAllChildren();
     auto icon = CCLoadSprite::createSprite(CCCommonUtils::getIcon(CC_ITOA(toolId)).c_str());
-    CCCommonUtils::setSpriteMaxSize(icon, 90, true);
+    //CCCommonUtils::setSpriteMaxSize(icon, 90, true); //fusheng 使用图片原大小
     m_icon5Node->addChild(icon);
     m_btn5Node->setVisible(true);
     m_btn5->setEnabled(true);
