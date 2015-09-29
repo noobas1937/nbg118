@@ -1371,13 +1371,13 @@ void FunBuild::onClickThis(float _time)
             return;
         }
         
-        if (m_info->type == FUN_BUILD_MAIN) {
-            // tao.yu 点击主建筑进入泰坦
-//            PopupViewController::getInstance()->addPopupInView(SacrificePopUpView::create());
-            PopupViewController::getInstance()->addPopupInView(GeneralTitanPopupView::create());
-            scheduleOnce(schedule_selector(FunBuild::onCanClick), 0.2f);
-            return;
-        }
+//        if (m_info->type == FUN_BUILD_MAIN) {
+//            // tao.yu 点击主建筑进入泰坦
+////            PopupViewController::getInstance()->addPopupInView(SacrificePopUpView::create());
+//            PopupViewController::getInstance()->addPopupInView(GeneralTitanPopupView::create());
+//            scheduleOnce(schedule_selector(FunBuild::onCanClick), 0.2f);
+//            return;
+//        }
         
         if (true) {
             if (m_buildState && m_buildState->isCanClick()) {
