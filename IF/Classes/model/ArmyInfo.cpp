@@ -170,7 +170,7 @@ std::string ArmyInfo::getModelTexName(){
 
 std::string ArmyInfo::getModelAniName(){
     std::string itemId = getRealItemId();
-    return "3d/soldier/c3d10000_stand.c3b";
+    return "3d/soldier/Brawler_stand.c3b";
 }
 std::string ArmyInfo::getHeadIcon(){
     std::string itemId = getRealItemId();

@@ -29,6 +29,7 @@ public:
     virtual ~C3DShowView(){};
     static C3DShowView* create(const char* modelPath, const char* texPath);
     
+    CCSafeObject<NBSprite3D>& getModel() { return m_Model; }
     
 private:
     virtual void onEnter();

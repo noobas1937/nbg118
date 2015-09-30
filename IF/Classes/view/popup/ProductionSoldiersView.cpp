@@ -377,16 +377,17 @@ void ProductionSoldiersView::addSoldierIcon(){
     ArmyInfo* m_info = getCurArmy();
 //    CCSprite* pic = CCLoadSprite::createSprite(m_info->getBodyIcon().c_str());
     auto pic = C3DShowView::create(m_info->getModelName().c_str(),m_info->getModelTexName().c_str());
+    pic->getModel().getObject()->setScale(18);
 //    pic->setScale(m_isFort?1.5:1);
-    pic->setScale(6);
+//    pic->setScale(6);
     pic->setPosition(pos);
     auto animation3d = Animation3D::create(m_info->getModelAniName().c_str());
     if (animation3d) {
         auto pAnim = Animate3D::createWithFrames(animation3d, 1, 100);
         if (pAnim) {
             Action* act = RepeatForever::create(pAnim);
-            pic->stopAllActions();
-            pic->runAction(act);
+            pic->getModel().getObject()->stopAllActions();
+            pic->getModel().getObject()->runAction(act);
         }
     }
     m_soldierIconNode->addChild(pic);
