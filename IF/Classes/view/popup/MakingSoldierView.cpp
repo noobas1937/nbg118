@@ -75,6 +75,15 @@ bool MakingSoldierView::init()
     auto pic = C3DShowView::create(armyInfo->getModelName().c_str(),armyInfo->getModelTexName().c_str());
     pic->setPosition(pos);
     pic->setScale(6);
+    auto animation3d = Animation3D::create(armyInfo->getModelAniName().c_str());
+    if (animation3d) {
+        auto pAnim = Animate3D::createWithFrames(animation3d, 1, 100);
+        if (pAnim) {
+            Action* act = RepeatForever::create(pAnim);
+            pic->stopAllActions();
+            pic->runAction(act);
+        }
+    }
     m_soldierNode->addChild(pic);
     if(m_buildingId/1000==FUN_BUILD_BARRACK4){
          pic->setPosition(ccp(-60,130));

@@ -108,6 +108,15 @@ bool SoldierInfoView::init()
 //    CCSprite* pic = CCLoadSprite::createSprite(m_info->getBodyIcon().c_str());
     auto pic = C3DShowView::create(m_info->getModelName().c_str(),m_info->getModelTexName().c_str());
     pic->setScale(4);
+    auto animation3d = Animation3D::create(m_info->getModelAniName().c_str());
+    if (animation3d) {
+        auto pAnim = Animate3D::createWithFrames(animation3d, 1, 100);
+        if (pAnim) {
+            Action* act = RepeatForever::create(pAnim);
+            pic->stopAllActions();
+            pic->runAction(act);
+        }
+    }
     m_icon->addChild(pic);
 
     if(m_isFort){

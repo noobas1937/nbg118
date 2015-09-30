@@ -380,6 +380,15 @@ void ProductionSoldiersView::addSoldierIcon(){
 //    pic->setScale(m_isFort?1.5:1);
     pic->setScale(6);
     pic->setPosition(pos);
+    auto animation3d = Animation3D::create(m_info->getModelAniName().c_str());
+    if (animation3d) {
+        auto pAnim = Animate3D::createWithFrames(animation3d, 1, 100);
+        if (pAnim) {
+            Action* act = RepeatForever::create(pAnim);
+            pic->stopAllActions();
+            pic->runAction(act);
+        }
+    }
     m_soldierIconNode->addChild(pic);
     if(m_info!=NULL && m_buildingLevel<m_info->unlockLevel){
         CCCommonUtils::setSprite3DGray(dynamic_cast<Sprite3D*>(pic),true);
