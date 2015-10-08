@@ -8,14 +8,19 @@
 
 #include "TypeDefinition.h"
 
-#if COCOS2D_DEBUG == 1
+#define CHANGE_SERVER COCOS2D_DEBUG
+//测试使用 不要提交
+//#define CHANGE_SERVER 1
+//#define CHANGE_SERVER 2
+
+#if CHANGE_SERVER == 1
     // 本地服
     #define __SERVER__IP "10.1.4.106"
     #define __SERVER__PORT 80
     #define __SERVER__ZONE "COK1"
     #define __SERVERLIST__IP "10.1.4.106"
 #else
-    #if COCOS2D_DEBUG == 2
+    #if CHANGE_SERVER == 2
         // 测试服
         #define __SERVER__IP "10.1.4.121"
         #define __SERVER__PORT 80
