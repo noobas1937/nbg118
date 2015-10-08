@@ -832,13 +832,7 @@ bool GeneralTitanPopupView::onTouchBegan(CCTouch *pTouch, CCEvent *pEvent){
         if (m_titanId == "") {
             return false;
         }
-        FunBuildInfo& fbiInfo = FunBuildController::getInstance()->getFunbuildById(400000000);
-        
-        if(fbiInfo.state == FUN_BUILD_UPING)
-        {
-            PropSpeedupView::show(ItemSpdMenu_City, 400000000, 1101);
-        }
-        
+
         
         
 //        QueueInfo &qinfo =  GlobalData::shared()->allQueuesInfo[1101];
@@ -856,20 +850,20 @@ bool GeneralTitanPopupView::onTouchBegan(CCTouch *pTouch, CCEvent *pEvent){
     
     
     if(isTouchInside(this->m_titanSkill, pTouch)){
-        
-        FunBuildInfo& fbiInfo = FunBuildController::getInstance()->getFunbuildById(400000000); //fusheng 泰坦道具加速
-        
-        if(fbiInfo.state == FUN_BUILD_UPING)
-        {
-           int toolID = ToolController::getInstance()->getSPDItem(ItemSpdMenu_City);
-            
-            auto& toolInfo = ToolController::getInstance()->getToolInfoById(toolID);
-            
-            if(toolInfo.getCNT()>0)
-            {
-                PropSpeedupView::show(ItemSpdMenu_City, 400000000, 1101);
-            }
-        }
+//        
+//        FunBuildInfo& fbiInfo = FunBuildController::getInstance()->getFunbuildById(400000000); //fusheng 泰坦道具加速
+//        
+//        if(fbiInfo.state == FUN_BUILD_UPING)
+//        {
+//           int toolID = ToolController::getInstance()->getSPDItem(ItemSpdMenu_City);
+//            
+//            auto& toolInfo = ToolController::getInstance()->getToolInfoById(toolID);
+//            
+//            if(toolInfo.getCNT()>0)
+//            {
+//                PropSpeedupView::show(ItemSpdMenu_City, 400000000, 1101);//fusheng 注意 不是只有1101  还有1102
+//            }
+//        }
         
         
         CCCommonUtils::flyHint("", "", _lang("E100008"));//fusheng 技能界面先关闭
