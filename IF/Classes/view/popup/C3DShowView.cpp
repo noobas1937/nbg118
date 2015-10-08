@@ -84,13 +84,20 @@ void C3DShowView::onTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
 
 void C3DShowView::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 {
+//    auto animation3d = Animation3D::create(m_info->getModelAniName().c_str());
+//    if (animation3d) {
+//        auto pAnim = Animate3D::createWithFrames(animation3d, 1, 100);
+//        if (pAnim) {
+//            Action* act = RepeatForever::create(pAnim);
+//            pic->getModel().getObject()->stopAllActions();
+//            pic->getModel().getObject()->runAction(act);
+//        }
+//    }
+
     if (m_TouchMoved) {
         m_TouchMoved = false;
         return;
     }
-    
-    
-    
 }
 
 

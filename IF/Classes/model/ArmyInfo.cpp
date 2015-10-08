@@ -172,6 +172,15 @@ std::string ArmyInfo::getModelAniName(){
     std::string itemId = getRealItemId();
     return "3d/soldier/Brawler_stand.c3b";
 }
+
+std::vector<std::string> ArmyInfo::getModelAniNames(){
+    std::string itemId = getRealItemId();
+    std::vector<std::string> ret;
+    ret.push_back("3d/soldier/Brawler_stand.c3b");
+    ret.push_back("3d/soldier/Brawler_idle.c3b");
+    return ret;
+}
+
 std::string ArmyInfo::getHeadIcon(){
     std::string itemId = getRealItemId();
     return "ico" + itemId+ "_small.png";
