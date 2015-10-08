@@ -1,3 +1,5 @@
+.svn
+
 # Compiled Object files
 *.slo
 *.lo
@@ -37,6 +39,7 @@ userconf.ini
 *.exp
 *.xccheckout
 *.pyc
+cocos2d/plugin/plugins/*
 IF/libs/boost.framework/boost
 IF/libs/boost.framework/Versions/A/boost
 IF/libs/Chartboost.framework/Chartboost
