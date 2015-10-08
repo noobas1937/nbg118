@@ -159,13 +159,26 @@ std::string ArmyInfo::getBodyIcon(){
 std::string ArmyInfo::getModelName(){
     std::string itemId = getRealItemId();
 //    return "3d/soldier/c3d" + itemId+ ".c3b";
-    return "3d/titan_1.c3b";
+    return "3d/soldier/c3d10000.c3b";
 }
 
 std::string ArmyInfo::getModelTexName(){
     std::string itemId = getRealItemId();
 //    return "3d/soldier/tex" + itemId+ ".jpg";
-    return "3d/titan_1.jpg";
+    return "3d/soldier/c3d10000.jpg";
+}
+
+std::string ArmyInfo::getModelAniName(){
+    std::string itemId = getRealItemId();
+    return "3d/soldier/Brawler_stand.c3b";
+}
+
+std::vector<std::string> ArmyInfo::getModelAniNames(){
+    std::string itemId = getRealItemId();
+    std::vector<std::string> ret;
+    ret.push_back("3d/soldier/Brawler_stand.c3b");
+    ret.push_back("3d/soldier/Brawler_idle.c3b");
+    return ret;
 }
 
 std::string ArmyInfo::getHeadIcon(){

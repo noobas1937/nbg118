@@ -6131,7 +6131,7 @@ void UIComponent::playQuestRect()
 {
     if (m_recommandQuest && !GuideController::share()->isInTutorial() && m_questContextBG->getScaleX()==1 && (m_recommandQuest->isShow==1||m_recommandQuest->isShow==2)) {
         m_questContextBG1->stopAllActions();
-        m_questContextBG1->setVisible(true);
+        m_questContextBG1->setVisible(!true); // guo.jiang
         
         if (m_recommandQuest->isShow==2) {
             m_questTipNpcNode->setVisible(true);

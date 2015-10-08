@@ -29,6 +29,9 @@ public:
     virtual ~C3DShowView(){};
     static C3DShowView* create(const char* modelPath, const char* texPath);
     
+    CCSafeObject<NBSprite3D>& getModel() { return m_Model; }
+    void setAnimationNames(std::vector<std::string> name) { m_names = name; }
+//    void 
     
 private:
     virtual void onEnter();
@@ -46,5 +49,6 @@ private:
     CCSafeObject<CCLayerColor> m_touchLayer;
     Vec2 m_TouchPoint;
     bool m_TouchMoved;
+    std::vector<std::string> m_names;
 };
 #endif /* C3DShowView_hpp */

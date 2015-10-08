@@ -27,6 +27,7 @@
 #include "LogoutCommand.h"
 #include "GuideController.h"
 #include "C3DShowView.hpp"
+#include "IFSkeletonAnimation.h"
 
 ProductionSoldiersView::ProductionSoldiersView(int buildingId):m_buildingId(buildingId),m_waitInterface(NULL),m_isWaitingSeverRes(false),m_isShowRefresh(false){
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this,callfuncO_selector(ProductionSoldiersView::immediatelyHarvestFinish),MSG_QUICK_TROOPS_HARVEST, NULL);
@@ -377,10 +378,41 @@ void ProductionSoldiersView::addSoldierIcon(){
     ArmyInfo* m_info = getCurArmy();
 //    CCSprite* pic = CCLoadSprite::createSprite(m_info->getBodyIcon().c_str());
     auto pic = C3DShowView::create(m_info->getModelName().c_str(),m_info->getModelTexName().c_str());
+    pic->getModel().getObject()->setScale(18);
 //    pic->setScale(m_isFort?1.5:1);
-    pic->setScale(6);
+//    pic->setScale(6);
     pic->setPosition(pos);
+    
+    // TODO
+    srand((unsigned int)time(0));
+    int random_variable = rand() % 100;
+    string c3b = "3d/soldier/Brawler_idle.c3b";
+    if (random_variable < 50) c3b = "3d/soldier/Brawler_stand.c3b";
+    auto animation3d = Animation3D::create(c3b);
+    if (animation3d) {
+        auto pAnim = Animate3D::createWithFrames(animation3d, 1, 100);
+        if (pAnim) {
+            Action* act = RepeatForever::create(pAnim);
+            pic->getModel().getObject()->stopAllActions();
+            pic->getModel().getObject()->runAction(act);
+        }
+    }
     m_soldierIconNode->addChild(pic);
+    
+    static const int light_beam_TAG = 60000;
+    m_soldierIconNode->removeChildByTag(light_beam_TAG);
+    auto animationObj = new IFSkeletonAnimation("Spine/nb/light_beam.json", "Spine/nb/light_beam.atlas");
+    animationObj->setTag(light_beam_TAG);
+    if (animationObj) {
+        animationObj->setVisibleStop(false);
+//        animationObj->setPosition(ccp(320, 400));
+        m_soldierIconNode->addChild(animationObj);
+        spTrackEntry* entry = animationObj->setAnimation(0, "animation", true);
+        if (entry) {
+            animationObj->setTimeScale(entry->endTime / 1.0f);
+        }
+    }
+    
     if(m_info!=NULL && m_buildingLevel<m_info->unlockLevel){
         CCCommonUtils::setSprite3DGray(dynamic_cast<Sprite3D*>(pic),true);
     }
