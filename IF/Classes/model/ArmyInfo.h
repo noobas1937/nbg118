@@ -54,7 +54,6 @@ public:
     std::string getBodyIcon();
     std::string getModelName();
     std::string getModelTexName();
-    std::string getModelAniName();
     std::string getHeadIcon();
     std::string getDesc();
     std::string getAttrIcon(int index);
