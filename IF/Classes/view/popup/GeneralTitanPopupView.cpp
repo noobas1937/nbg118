@@ -169,11 +169,20 @@ bool GeneralTitanPopupView::init()
         add =  size.height - 2048;
         extH = size.height - 2048;
     }
-//    m_bottomNode->setPositionY(m_bottomNode->getPositionY()-extH);
+    m_bottomNode->setPositionY(m_bottomNode->getPositionY()-extH);
     
     //m_mainNode->setPosition();
+    if(add>108)
+    {
+        float tempX = (add - 108)/3;
+        
+        m_mainNode->setPositionY(m_mainNode->getPositionY()-108-tempX);
+        
+        m_titanExtNode->setPositionY(m_titanExtNode->getPositionY()-108-tempX*2);
+        
+    }
     
-    m_bottomNode->setPosition(0,0);
+    
     this->m_receiveGlow->setVisible(false);
     bool isOpenLongJing = false;
 
@@ -312,7 +321,7 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         float ratio =((float)m_titanInfo.exp)/m_titanInfo.nextExp;
         
         auto size = this->m_ProTitanExt->getContentSize();
-        size.width = 640.0*ratio;
+        size.width = 248.0*ratio;
         
         this->m_ProTitanExt->setContentSize(size);
     }
@@ -336,7 +345,7 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         float ratio =((float)m_titanInfo.currentManual)/m_titanInfo.maxManual;
         
         auto size = this->m_ProTiTanAP->getContentSize();
-        size.width = 365.0*ratio;
+        size.width = 178.0*ratio;
         this->m_ProTiTanAP->setContentSize(size);
         this->m_titanAPTxt->setString(CCString::createWithFormat("AP:%d/%d",m_titanInfo.currentManual,m_titanInfo.maxManual)->getCString());
 
@@ -890,14 +899,14 @@ void GeneralTitanPopupView::onRefreshEquip()
     m_equipNode8->removeAllChildren();
     m_EquipMap.clear();
     
-//    m_red1Pt->setVisible(false);
-//    m_red2Pt->setVisible(false);
-//    m_red3Pt->setVisible(false);
-//    m_red4Pt->setVisible(false);
-//    m_red5Pt->setVisible(false);
-//    m_red6Pt->setVisible(false);
-//    m_red7Pt->setVisible(false);
-//    m_red8Pt->setVisible(false);
+    m_red1Pt->setVisible(false);
+    m_red2Pt->setVisible(false);
+    m_red3Pt->setVisible(false);
+    m_red4Pt->setVisible(false);
+    m_red5Pt->setVisible(false);
+    m_red6Pt->setVisible(false);
+    m_red7Pt->setVisible(false);
+    m_red8Pt->setVisible(false);
     
     
     m_eLvBg1->setVisible(false);
