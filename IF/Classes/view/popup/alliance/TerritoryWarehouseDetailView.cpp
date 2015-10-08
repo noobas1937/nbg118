@@ -41,7 +41,7 @@ TerritoryWarehouseDetailView *TerritoryWarehouseDetailView::create(WorldCityInfo
 }
 
 void TerritoryWarehouseDetailView::onEnter(){
-    UIComponent::getInstance()->showPopupView(1);
+    UIComponent::getInstance()->showPopupView(UIPopupViewType_ArcPop_TitanUpgrade);
     PopupBaseView::onEnter();
     CCLoadSprite::doResourceByCommonIndex(504, true);
     CCLoadSprite::doResourceByCommonIndex(7, true);

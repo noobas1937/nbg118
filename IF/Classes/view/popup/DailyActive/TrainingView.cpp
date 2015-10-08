@@ -997,7 +997,7 @@ void Training2View::refreshInterface()
 
 void Training2View::onEnter()
 {
-    UIComponent::getInstance()->showPopupView(1);
+    UIComponent::getInstance()->showPopupView(UIPopupViewType_ArcPop_TitanUpgrade);
     m_actionTime = GlobalData::shared()->getTimeStamp();
     CCNode::onEnter();
     setTouchEnabled(true);

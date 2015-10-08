@@ -399,7 +399,7 @@ void AllianceHelpView::removeOneHelp(CCObject* param){
 }
 
 void AllianceHelpView::onEnter(){
-    UIComponent::getInstance()->showPopupView(1);
+    UIComponent::getInstance()->showPopupView(UIPopupViewType_ArcPop_TitanUpgrade);
     CCNode::onEnter();
 //    UIComponent::getInstance()->showCloseBtn(true);
 //    this->setTitleName(_lang("115077"));

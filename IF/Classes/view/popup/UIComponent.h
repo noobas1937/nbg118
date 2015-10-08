@@ -354,7 +354,7 @@ public:
     void UIHide();
     void UIMove(bool _bShow);
     void hidePopupBG();
-    void showPopupView(int type=0, bool isHD=true);
+    void showPopupView(UIPopupViewType type=UIPopupViewType_NONE, bool isHD=true);
     void showResourceBar(bool _bShow);
     void setPopupTitleName(string _name);
     CCNode* getNodeByIndex(string _key);

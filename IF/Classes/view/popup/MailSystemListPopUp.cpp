@@ -44,7 +44,7 @@ void MailSystemListPopUp::onEnter(){
         setTitleName(_lang("105519"));
     }
     
-    UIComponent::getInstance()->showPopupView(3);
+    UIComponent::getInstance()->showPopupView(UIPopupViewType_Mail);
     if(!isInit){
         refreshView(NULL);
     }

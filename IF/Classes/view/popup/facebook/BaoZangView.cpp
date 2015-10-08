@@ -963,7 +963,7 @@ void BaoZangView::showTipHandle(float _time){
 
 void BaoZangView::onEnter(){
     CCNode::onEnter();
-    UIComponent::getInstance()->showPopupView(1);
+    UIComponent::getInstance()->showPopupView(UIPopupViewType_ArcPop_TitanUpgrade);
     this->setTitleName(_lang("107050"));
     setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
     setTouchEnabled(true);

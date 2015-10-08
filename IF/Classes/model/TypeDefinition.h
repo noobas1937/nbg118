@@ -250,6 +250,21 @@ enum PopupViewType
     PVT_more,//更多
 };
 
+enum UIPopupViewType
+{
+    UIPopupViewType_NONE = 0,
+    UIPopupViewType_ArcPop_TitanUpgrade = 1,
+    UIPopupViewType_2 = 2,
+    UIPopupViewType_Mail = 3,
+    UIPopupViewType_Tool_Store = 4,
+    UIPopupViewType_Minimap_ServerList = 5,
+    UIPopupViewType_Sacrifice = 6,
+    UIPopupViewType_Merchant = 7,
+    UIPopupViewType_Repay_Lottery = 8,
+    UIPopupViewType_9 = 9,
+    UIPopupViewType_GeneralTitan = 11,
+};
+
 //错误码
 enum Error{
     Error_OK=0,

@@ -450,7 +450,7 @@ void GeneralsPopupView::onEnter(){
     m_count = CCCommonUtils::getBustIdxByName(pBust);
     CCLoadSprite::doLoadResourceAsync(GENERAL_PATH, CCCallFuncO::create(this, callfuncO_selector(GeneralsPopupView::asyDelayLoad), NULL), m_count);
     
-    UIComponent::getInstance()->showPopupView(1);
+    UIComponent::getInstance()->showPopupView(UIPopupViewType_ArcPop_TitanUpgrade);
     loadResource();
     if (m_playerUid=="" || m_playerUid==GlobalData::shared()->playerInfo.uid) {
         auto &general = GlobalData::shared()->generals.begin()->second;

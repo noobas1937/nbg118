@@ -126,11 +126,11 @@ int PopupViewController::addPopupInViewWithAnim(PopupBaseView *view, bool needLa
     }
     auto ArcPop = dynamic_cast<ArcPopupBaseView*>(view);
     if (ArcPop) {
-        UIComponent::getInstance()->showPopupView(1);
+        UIComponent::getInstance()->showPopupView(UIPopupViewType_ArcPop_TitanUpgrade);
     } else {
         auto mailwrite = dynamic_cast<MailPopUpView*>(view);
         if(mailwrite){
-            UIComponent::getInstance()->showPopupView(3);
+            UIComponent::getInstance()->showPopupView(UIPopupViewType_Mail);
         }else{
             UIComponent::getInstance()->showPopupView();
         }
@@ -241,40 +241,40 @@ int PopupViewController::addPopupInView(PopupBaseView *view, bool needLayout, bo
     }
     auto ArcPop = dynamic_cast<ArcPopupBaseView*>(view);
     if (ArcPop) {
-        UIComponent::getInstance()->showPopupView(1);
+        UIComponent::getInstance()->showPopupView(UIPopupViewType_ArcPop_TitanUpgrade);
     } else {
-        int type = 0;
+        UIPopupViewType type = UIPopupViewType_NONE;
         auto typeview = dynamic_cast<MailPopUpView*>(view);
         if(typeview){
-            type = 3;
+            type = UIPopupViewType_Mail;
         }
         auto storeView = dynamic_cast<StoreView*>(view);
         if(storeView){
-            type = 4;
+            type = UIPopupViewType_Tool_Store;
         }
         auto useCDToolView = dynamic_cast<UseCDToolView*>(view);
         if(useCDToolView){
-            type = 4;
+            type = UIPopupViewType_Tool_Store;
         }
         auto useToolView = dynamic_cast<UseToolView*>(view);
         if(useToolView){
-            type = 4;
+            type = UIPopupViewType_Tool_Store;
         }
         auto useResToolView = dynamic_cast<UseResToolView*>(view);
         if(useResToolView){
-            type = 4;
+            type = UIPopupViewType_Tool_Store;
         }
         auto minimap = dynamic_cast<MinimapView*>(view);
         if(minimap){
-            type = 5;
+            type = UIPopupViewType_Minimap_ServerList;
         }
         auto server = dynamic_cast<ServerListPopUpView*>(view);
         if(server){
-            type = 5;
+            type = UIPopupViewType_Minimap_ServerList;
         }
         auto sacrificePopUpView = dynamic_cast<SacrificePopUpView*>(view);
         if(sacrificePopUpView){
-            type = 6;
+            type = UIPopupViewType_Sacrifice;
         }
 //        auto christmasActView = dynamic_cast<ChristmasAndNewYearView*>(view);
 //        if (christmasActView) {
@@ -282,36 +282,36 @@ int PopupViewController::addPopupInView(PopupBaseView *view, bool needLayout, bo
 //        }
         auto merchantView = dynamic_cast<MerchantView*>(view);
         if(merchantView){
-            type = 7;
+            type = UIPopupViewType_Merchant;
         }
         auto repayView = dynamic_cast<RepayView*>(view);
         if(repayView){
-            type = 8;//0;
+            type = UIPopupViewType_Repay_Lottery;//0;
         }
         auto lotteryView = dynamic_cast<LotteryActView*>(view);
         if (lotteryView)
         {
-            type = 8;
+            type = UIPopupViewType_Repay_Lottery;
         }
         auto lotteryView2 = dynamic_cast<LotteryAct2View*>(view);
         if (lotteryView2)
         {
-            type = 8;
+            type = UIPopupViewType_Repay_Lottery;
         }
-        auto longJingView = dynamic_cast<LongJingStoreView*>(view);
-        if (longJingView)
-        {
-            type = 10;
-        }
+//        auto longJingView = dynamic_cast<LongJingStoreView*>(view);
+//        if (longJingView)
+//        {
+//            type = 10;
+//        }
         auto titanView = dynamic_cast<GeneralTitanPopupView*>(view); //fusheng 添加titanView类型
         if (titanView)
         {
-            type = 11;
+            type = UIPopupViewType_GeneralTitan;
         }
         auto titanUpgradeView = dynamic_cast<TitanUpgradeView*>(view); //fusheng
         if (titanUpgradeView)
         {
-            type = 1;
+            type = UIPopupViewType_ArcPop_TitanUpgrade;
         }
         
         UIComponent::getInstance()->showPopupView(type);
@@ -418,11 +418,11 @@ int PopupViewController::goBackPopupViewWithAnim(PopupBaseView *removeView,Popup
     m_isPlayingInAnim = true;
     auto ArcPop = dynamic_cast<ArcPopupBaseView*>(gobackView);
     if (ArcPop) {
-        UIComponent::getInstance()->showPopupView(1);
+        UIComponent::getInstance()->showPopupView(UIPopupViewType_ArcPop_TitanUpgrade);
     } else {
         auto mailwrite = dynamic_cast<MailPopUpView*>(gobackView);
         if(mailwrite){
-            UIComponent::getInstance()->showPopupView(3);
+            UIComponent::getInstance()->showPopupView(UIPopupViewType_Mail);
         }else{
             UIComponent::getInstance()->showPopupView();
         }
@@ -537,7 +537,7 @@ int PopupViewController::goBackPopupView(PopupBaseView *removeView /*=NULL*/)
         
         auto ArcPop = dynamic_cast<ArcPopupBaseView*>(gobackView);
         if (ArcPop) {
-            UIComponent::getInstance()->showPopupView(1);
+            UIComponent::getInstance()->showPopupView(UIPopupViewType_ArcPop_TitanUpgrade);
         } else {
             auto mailwrite = dynamic_cast<MailPopUpView*>(gobackView);
             auto sacrificePopUpView = dynamic_cast<SacrificePopUpView*>(gobackView);
@@ -548,17 +548,17 @@ int PopupViewController::goBackPopupView(PopupBaseView *removeView /*=NULL*/)
 
 //            JoinAllianceView
             if(mailwrite){
-                UIComponent::getInstance()->showPopupView(3);
+                UIComponent::getInstance()->showPopupView(UIPopupViewType_Mail);
             }else if(sacrificePopUpView){
-                UIComponent::getInstance()->showPopupView(6);
+                UIComponent::getInstance()->showPopupView(UIPopupViewType_Sacrifice);
             }else if(merchantView){
-                UIComponent::getInstance()->showPopupView(7);
+                UIComponent::getInstance()->showPopupView(UIPopupViewType_Merchant);
             }else if (serverListPopupView){
-                UIComponent::getInstance()->showPopupView(5);
+                UIComponent::getInstance()->showPopupView(UIPopupViewType_Minimap_ServerList);
             }else if (TitanPopupView){ //fusheng 泰坦type 11
-                UIComponent::getInstance()->showPopupView(11);
+                UIComponent::getInstance()->showPopupView(UIPopupViewType_GeneralTitan);
             }else if (titanUpgradeView){ //fusheng 泰坦升级界面 1
-                UIComponent::getInstance()->showPopupView(1);
+                UIComponent::getInstance()->showPopupView(UIPopupViewType_ArcPop_TitanUpgrade);
             }else{
                 
                 UIComponent::getInstance()->showPopupView();
@@ -583,7 +583,7 @@ int PopupViewController::goBackPopupView(PopupBaseView *removeView /*=NULL*/)
         PopupBaseView* popUp = getPopupView(m_currentId);
         auto longJingStore = dynamic_cast<LongJingStoreView*>(popUp);
         if(longJingStore){
-            UIComponent::getInstance()->showPopupView(0);
+            UIComponent::getInstance()->showPopupView(UIPopupViewType_NONE);
         }
         
         if(popUp && popUp->getIsSystemMail() && MailController::getInstance()->getIsNewMailListEnable())
@@ -810,40 +810,40 @@ int PopupViewController::addPopupFromAndroidInView(PopupBaseView *view, bool nee
     }
     auto ArcPop = dynamic_cast<ArcPopupBaseView*>(view);
     if (ArcPop) {
-        UIComponent::getInstance()->showPopupView(1);
+        UIComponent::getInstance()->showPopupView(UIPopupViewType_ArcPop_TitanUpgrade);
     } else {
-        int type = 0;
+        UIPopupViewType type = UIPopupViewType_NONE;
         auto typeview = dynamic_cast<MailPopUpView*>(view);
         if(typeview){
-            type = 3;
+            type = UIPopupViewType_Mail;
         }
         auto storeView = dynamic_cast<StoreView*>(view);
         if(storeView){
-            type = 4;
+            type = UIPopupViewType_Tool_Store;
         }
         auto useCDToolView = dynamic_cast<UseCDToolView*>(view);
         if(useCDToolView){
-            type = 4;
+            type = UIPopupViewType_Tool_Store;
         }
         auto useToolView = dynamic_cast<UseToolView*>(view);
         if(useToolView){
-            type = 4;
+            type = UIPopupViewType_Tool_Store;
         }
         auto useResToolView = dynamic_cast<UseResToolView*>(view);
         if(useResToolView){
-            type = 4;
+            type = UIPopupViewType_Tool_Store;
         }
         auto minimap = dynamic_cast<MinimapView*>(view);
         if(minimap){
-            type = 5;
+            type = UIPopupViewType_Minimap_ServerList;
         }
         auto server = dynamic_cast<ServerListPopUpView*>(view);
         if(server){
-            type = 5;
+            type = UIPopupViewType_Minimap_ServerList;
         }
         auto sacrificePopUpView = dynamic_cast<SacrificePopUpView*>(view);
         if(sacrificePopUpView){
-            type = 6;
+            type = UIPopupViewType_Sacrifice;
         }
         //        auto christmasActView = dynamic_cast<ChristmasAndNewYearView*>(view);
         //        if (christmasActView) {
@@ -851,21 +851,21 @@ int PopupViewController::addPopupFromAndroidInView(PopupBaseView *view, bool nee
         //        }
         auto merchantView = dynamic_cast<MerchantView*>(view);
         if(merchantView){
-            type = 7;
+            type = UIPopupViewType_Merchant;
         }
         auto repayView = dynamic_cast<RepayView*>(view);
         if(repayView){
-            type = 8;//0;
+            type = UIPopupViewType_Repay_Lottery;//0;
         }
         auto lotteryView = dynamic_cast<LotteryActView*>(view);
         if (lotteryView)
         {
-            type = 8;
+            type = UIPopupViewType_Repay_Lottery;
         }
         auto lotteryView2 = dynamic_cast<LotteryAct2View*>(view);
         if (lotteryView2)
         {
-            type = 8;
+            type = UIPopupViewType_Repay_Lottery;
         }
         
         UIComponent::getInstance()->showPopupView(type, false);
