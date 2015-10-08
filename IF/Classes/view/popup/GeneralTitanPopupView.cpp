@@ -247,23 +247,54 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         m_Txt2->setString(CC_ITOA(armTitanInfo.attack));
     }
     
-    if (GlobalData::shared()->allQueuesInfo.find(1101) != GlobalData::shared()->allQueuesInfo.end()) {
-       
-        string key = GlobalData::shared()->allQueuesInfo[1101].key;
-        
-        //CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_SPEED_UP_COMPLETE,CCString::create("upgrade"));//fusheng 泰坦秒cd 也认为是这个
-        if (GlobalData::shared()->allQueuesInfo[1101].itemId == 400000) {
-            if (GlobalData::shared()->allQueuesInfo[1101].finishTime>GlobalData::shared()->getWorldTime()) {
-                m_titanUngrade->setColor(ccGRAY);
-            }
-            else
-            {
-                m_titanUngrade->setColor(ccWHITE);
-            }
-        }
-        
-
+//    if (GlobalData::shared()->allQueuesInfo.find(1101) != GlobalData::shared()->allQueuesInfo.end()) {
+//       
+//        string key = GlobalData::shared()->allQueuesInfo[1101].key;
+//        
+//        //CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_SPEED_UP_COMPLETE,CCString::create("upgrade"));//fusheng 泰坦秒cd 也认为是这个
+//        if (GlobalData::shared()->allQueuesInfo[1101].itemId == 400000) {
+//            if (GlobalData::shared()->allQueuesInfo[1101].finishTime>GlobalData::shared()->getWorldTime()) {
+//                m_titanUngrade->setColor(ccGRAY);
+//            }
+//            else
+//            {
+//                m_titanUngrade->setColor(ccWHITE);
+//            }
+//        }
+//        
+//
+//    }
+//    
+//    if (GlobalData::shared()->allQueuesInfo.find(1102) != GlobalData::shared()->allQueuesInfo.end()) {
+//        
+//        string key = GlobalData::shared()->allQueuesInfo[1102].key;
+//        
+//        //CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_SPEED_UP_COMPLETE,CCString::create("upgrade"));//fusheng 泰坦秒cd 也认为是这个
+//        if (GlobalData::shared()->allQueuesInfo[1102].itemId == 400000) {
+//            if (GlobalData::shared()->allQueuesInfo[1102].finishTime>GlobalData::shared()->getWorldTime()) {
+//                m_titanUngrade->setColor(ccGRAY);
+//            }
+//            else
+//            {
+//                m_titanUngrade->setColor(ccWHITE);
+//            }
+//        }
+//       
+//        
+//    }
+    
+    FunBuildInfo& fbiInfo = FunBuildController::getInstance()->getFunbuildById(400000000);
+    
+    if(fbiInfo.state == FUN_BUILD_UPING)
+    {
+        m_titanUngrade->setColor(ccGRAY);
     }
+    else
+    {
+        m_titanUngrade->setColor(ccWHITE);
+    }
+    
+    
     
 
     
@@ -781,10 +812,13 @@ bool GeneralTitanPopupView::onTouchBegan(CCTouch *pTouch, CCEvent *pEvent){
             return false;
         }
         
-        QueueInfo &qinfo =  GlobalData::shared()->allQueuesInfo[1101];
+
         
-        if(qinfo.key == "400000000" && qinfo.finishTime > GlobalData::shared()->getWorldTime())
+        FunBuildInfo& fbiInfo = FunBuildController::getInstance()->getFunbuildById(400000000);//fusheng 使用建筑物状态
+        
+        if(fbiInfo.state == FUN_BUILD_UPING)
         {
+        
             CCCommonUtils::flyHint("", "", "Titan is upgrading");
             return true;
         }
