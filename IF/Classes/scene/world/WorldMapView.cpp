@@ -5602,6 +5602,7 @@ void WorldMapView::addUnderNode(unsigned int index) {
                 auto house = CCLoadSprite::createSprite(picStr.c_str());
                 house->setAnchorPoint(Vec2(0, 0));
                 under->addChild(house);
+                under->setContentSize(house->getContentSize());
             }
             
             if (info.parentCityIndex == info.cityIndex) {
