@@ -110,7 +110,7 @@ bool GeneralSkillListPopUpView::init(){
 
 void GeneralSkillListPopUpView::onEnter(){
     PopupBaseView::onEnter();
-    UIComponent::getInstance()->showPopupView(1);
+    UIComponent::getInstance()->showPopupView(UIPopupViewType_ArcPop_TitanUpgrade);
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GeneralSkillListPopUpView::generalSkillChange), GENERAL_SKILL_UPDATE, NULL);
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GeneralSkillListPopUpView::unLockSkill), GENERAL_UNLOCK_SKILL_UPDATE, NULL);
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GeneralSkillListPopUpView::refreshPoint), SAVE_SKILL_SUCCESS, NULL);

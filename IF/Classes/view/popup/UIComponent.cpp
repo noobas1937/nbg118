@@ -1539,7 +1539,7 @@ void UIComponent::hidePopupBG()
         
         this->m_popupTitleBg2->setVisible(!true); // guo.jiang
         
-        this->m_popupTitleName->setVisible(true);
+        this->m_popupTitleName->setVisible(!true); // guo.jiang
         
         //        this->m_line1->setVisible(true);
         
@@ -1612,7 +1612,7 @@ void UIComponent::showResourceBar(bool _bShow)
 
 
 
-void UIComponent::showPopupView(int type, bool isHD)
+void UIComponent::showPopupView(UIPopupViewType type, bool isHD)
 {
     this->m_newuserHelpNode->setVisible(false);
     m_popupTitleBg2->setVisible(!true); // guo.jiang
@@ -1621,7 +1621,7 @@ void UIComponent::showPopupView(int type, bool isHD)
     setTestFBNodeVisible(false);
     setLotteryNodeVisible(false);
     setCrossServiceNodeVisible(false);
-    if(type == 5){
+    if(type == UIPopupViewType_Minimap_ServerList){
         this->m_uiTitle->setVisible(false);
         if (CCCommonUtils::isIosAndroidPad() && m_titleOldTitle)
         {
@@ -1644,7 +1644,7 @@ void UIComponent::showPopupView(int type, bool isHD)
         m_homeBack->setVisible(false);
         this->m_world->setVisible(false);
         m_worldUINode->setVisible(false);
-    }else if (type==0||type==3||type==4||type==6||type==7||type==8||type==9||type==10||type==11) {
+    }else if (type==UIPopupViewType_NONE||type==UIPopupViewType_Mail||type==UIPopupViewType_Tool_Store||type==UIPopupViewType_Sacrifice||type==UIPopupViewType_Merchant||type==UIPopupViewType_Repay_Lottery||type==9||type==10||type==UIPopupViewType_GeneralTitan) {
         if (CCCommonUtils::isIosAndroidPad() && !CCCommonUtils::getIsHDViewPort())
         {
             if (!m_titleOldTitle)
@@ -1667,12 +1667,13 @@ void UIComponent::showPopupView(int type, bool isHD)
             }
             this->m_uiTitle->setVisible(true);
             this->m_popupReturnBtn->setVisible(true);
-            this->m_popupTitleName->setVisible(type==7?false:true);
+//            this->m_popupTitleName->setVisible(type==7?false:true);
+            this->m_popupTitleName->setVisible(false); // guo.jiang
         }
 
         
         
-        if(type==6||type==7){
+        if(type==UIPopupViewType_Sacrifice||type==UIPopupViewType_Merchant){
             m_popupTitleBg2->setVisible(false);
             this->m_UserNode->setVisible(true);
             this->m_powerAndBgNode->setVisible(false);
@@ -1685,7 +1686,7 @@ void UIComponent::showPopupView(int type, bool isHD)
 
         }
         
-        if (type == 11)
+        if (type == UIPopupViewType_GeneralTitan)
         {
             this->m_popupTitleBg2->setVisible(false);
             this->m_popupTitleName->setVisible(false);
@@ -1737,7 +1738,7 @@ void UIComponent::showPopupView(int type, bool isHD)
         
     }
     
-    else if (type == 1){
+    else if (type == UIPopupViewType_ArcPop_TitanUpgrade){
         
         this->m_popupReturnBtn->setVisible(true);
         
@@ -1846,9 +1847,19 @@ void UIComponent::showPopupView(int type, bool isHD)
     }
     
     this->m_googlePlayNode->setVisible(false);
-    if(type==4||type==6||type==7||type==8){
+    if(type==UIPopupViewType_Tool_Store||type==UIPopupViewType_Sacrifice||type==UIPopupViewType_Merchant||type==UIPopupViewType_Repay_Lottery){
         this->m_goldNewNode->setVisible(true);
-    }else if(type==3){
+        m_UserNode->setVisible(true);
+        m_woodBarNode->setVisible(true);
+        m_foodBarNode->setVisible(true);
+        m_ironBarNode->setVisible(true);
+        m_stoneBarNode->setVisible(true);
+        m_topModelLayer->setVisible(false);
+        m_UserResBg->setVisible(false);
+        m_otherPartNode->setVisible(false);
+        
+        showResBar();
+    }else if(type==UIPopupViewType_Mail){
         
         
         
@@ -1871,7 +1882,7 @@ void UIComponent::showPopupView(int type, bool isHD)
         
         
         
-    }else if(type == 9)
+    }else if(type == UIPopupViewType_9)
     {
         m_googlePlayNode->setVisible((GlobalData::shared()->analyticID == "market_global"));
     }else{

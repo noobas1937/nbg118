@@ -662,7 +662,7 @@ void AllianceTerritoryView::tableCellWillRecycle(CCTableView* table, CCTableView
 
 void AllianceTerritoryView::onEnter()
 {
-    UIComponent::getInstance()->showPopupView(1);
+    UIComponent::getInstance()->showPopupView(UIPopupViewType_ArcPop_TitanUpgrade);
     CCNode::onEnter();
     if(m_showData->count()<=0 && GlobalData::shared()->playerInfo.isInAlliance()){
         AllianceTerritoryShowCommand* cmd = new AllianceTerritoryShowCommand();

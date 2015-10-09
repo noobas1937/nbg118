@@ -444,7 +444,7 @@ void AllianceInfoView::delayShowAnnounce(float t){
 void AllianceInfoView::onEnter()
 {
     CCNode::onEnter();
-    UIComponent::getInstance()->showPopupView(1);
+    UIComponent::getInstance()->showPopupView(UIPopupViewType_ArcPop_TitanUpgrade);
     setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
     setTouchEnabled(true);
     //CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, Touch_Popup, false);

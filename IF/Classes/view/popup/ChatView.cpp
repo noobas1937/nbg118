@@ -160,7 +160,7 @@ bool ChatView::init(int _type,string allianceId,int countryType)
     //    m_tabView->setTableViewDelegate(this);
     m_tabView->setDelegate(this);
     m_tabView->setTouchPriority(Touch_Default);
-    m_infoList->addChild(m_tabView);
+    m_infoList->addChild(m_tabView, -1);
     
     CCCommonUtils::setButtonTitle(m_countryBtn, _lang("105300").c_str());
     CCCommonUtils::setButtonTitle(m_unionBtn, _lang("105602").c_str());

@@ -23,7 +23,7 @@ AchieveFinishView *AchieveFinishView::create(std::string id){
 
 void AchieveFinishView::onEnter(){
     PopupBaseView::onEnter();
-    UIComponent::getInstance()->showPopupView(2);
+    UIComponent::getInstance()->showPopupView(UIPopupViewType_2);
     UIComponent::getInstance()->hideReturnBtn();
 //    SceneController::getInstance()->addGUI();
 }

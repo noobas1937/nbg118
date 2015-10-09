@@ -131,7 +131,7 @@ void AllianceScienceView::updateInfo(CCObject* obj)
 
 void AllianceScienceView::onEnter()
 {
-    UIComponent::getInstance()->showPopupView(1);
+    UIComponent::getInstance()->showPopupView(UIPopupViewType_ArcPop_TitanUpgrade);
     CCNode::onEnter();
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(AllianceScienceView::updatePoint), MSG_AL_SCIENCE_POINT, NULL);
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(AllianceScienceView::updateInfo), MSG_UPDATE_ALL_SC_DA, NULL);

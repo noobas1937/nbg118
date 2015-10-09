@@ -271,7 +271,7 @@ void KingsGiftView::refreshView(){
 
 void KingsGiftView::onEnter(){
     if (CCCommonUtils::isIosAndroidPad()) {
-        UIComponent::getInstance()->showPopupView(1);
+        UIComponent::getInstance()->showPopupView(UIPopupViewType_ArcPop_TitanUpgrade);
     }
     m_tabView->setTouchEnabled(true);
     PopupBaseView::onEnter();

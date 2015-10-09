@@ -38,7 +38,7 @@ AllianceInviteView *AllianceInviteView::create(int officeId, int panelType, std:
 
 void AllianceInviteView::onEnter(){
     PopupBaseView::onEnter();
-    UIComponent::getInstance()->showPopupView(1);
+    UIComponent::getInstance()->showPopupView(UIPopupViewType_ArcPop_TitanUpgrade);
     if(m_panelType == KINGSGIFT){
         std::string titleStr = _lang_1("110130", _lang(m_dialogId).c_str());
         this->setTitleName(titleStr);

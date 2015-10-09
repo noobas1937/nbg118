@@ -121,7 +121,7 @@ void AchievementNewView::onSelectBtnClick(cocos2d::CCObject *pObj, CCControlEven
 void AchievementNewView::onEnter()
 {
     CCNode::onEnter();
-    UIComponent::getInstance()->showPopupView(9);
+    UIComponent::getInstance()->showPopupView(UIPopupViewType_9);
     setTitleName(_lang("137400"));
 }
 

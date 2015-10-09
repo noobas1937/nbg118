@@ -796,7 +796,7 @@ void AllianceInfoMembersView::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CC
     
 }
 void AllianceInfoMembersView::onEnter(){
-    UIComponent::getInstance()->showPopupView(1);
+    UIComponent::getInstance()->showPopupView(UIPopupViewType_ArcPop_TitanUpgrade);
     PopupBaseView::onEnter();
     this->setTitleName(_lang("115027"));
     CCLoadSprite::doResourceByCommonIndex(7, true);

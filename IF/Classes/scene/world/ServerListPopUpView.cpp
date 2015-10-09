@@ -63,7 +63,7 @@ void ServerListPopUpView::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent){
     if(isTouchInside(m_returnBtn, pTouch)){
         SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
         PopupViewController::getInstance()->goBackPopupView();
-        UIComponent::getInstance()->showPopupView(5);
+        UIComponent::getInstance()->showPopupView(UIPopupViewType_Minimap_ServerList);
     }
 //    else if(isTouchInside(m_bannerStaticsBtn, pTouch))
 //    {

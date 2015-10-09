@@ -64,7 +64,7 @@ private:
     CCSafeObject<CCControlButton> m_upBtn;
     CCSafeObject<CCNode> m_infoList;
     CCSafeObject<CCNode> m_btnNode;
-    CCSafeObject<CCLabelIF> m_demandLabel;
+ 
     
     CCSafeObject<CCNode> m_inBtnNode;
     CCSafeObject<CCLabelIF> m_timeLabel;
@@ -73,34 +73,16 @@ private:
     CCSafeObject<CCLabelIF> m_titanCurrentZDL;
     CCSafeObject<CCLabelIF> m_titanCurrentZDLInNext;
     CCSafeObject<CCLabelIF> m_titanZDLAddValue;
-    CCSafeObject<CCScale9Sprite> m_buildBG;
+
     
     CCSafeObject<CCLabelIF> m_lvLabel;
     CCSafeObject<CCLabelIF> m_nameLabel;
-    CCSafeObject<CCLabelIF> m_nextLabel;
+
     CCSafeObject<CCLabelIF> m_nextLvLabel;
-    CCSafeObject<CCLabelIF> m_nextMsgLabel;
+
     CCSafeObject<CCLabelIF> m_upBtnMsgLabel;
     
-    CCSafeObject<CCNode> m_para1Node;
-    CCSafeObject<CCLabelIF> m_para1Name;
-    CCSafeObject<CCLabelIF> m_para1Num;
-    CCSafeObject<CCLabelIF> m_next1Num;
-    
-    CCSafeObject<CCNode> m_para2Node;
-    CCSafeObject<CCLabelIF> m_para2Name;
-    CCSafeObject<CCLabelIF> m_para2Num;
-    CCSafeObject<CCLabelIF> m_next2Num;
-    
-    CCSafeObject<CCNode> m_para3Node;
-    CCSafeObject<CCLabelIF> m_para3Name;
-    CCSafeObject<CCLabelIF> m_para3Num;
-    CCSafeObject<CCLabelIF> m_next3Num;
-    
-    CCSafeObject<CCNode> m_para4Node;
-    CCSafeObject<CCLabelIF> m_para4Name;
-    CCSafeObject<CCLabelIF> m_para4Num;
-    CCSafeObject<CCLabelIF> m_next4Num;
+
     
     CCSafeObject<CCNode> m_iconList;
     CCSafeObject<CCLabelIF> m_unlockLable;

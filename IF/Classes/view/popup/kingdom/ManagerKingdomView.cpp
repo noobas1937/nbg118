@@ -43,7 +43,7 @@ ManagerKingdomView::~ManagerKingdomView(){
 void ManagerKingdomView::onEnter(){
     PopupBaseView::onEnter();
     //setTitleName(_lang("110021"));
-    UIComponent::getInstance()->showPopupView(1);
+    UIComponent::getInstance()->showPopupView(UIPopupViewType_ArcPop_TitanUpgrade);
     setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
     setTouchEnabled(true);
 

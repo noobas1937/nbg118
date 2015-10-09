@@ -316,7 +316,7 @@ void AllianceShopView::tableCellWillRecycle(CCTableView* table, CCTableViewCell*
 
 void AllianceShopView::onEnter()
 {
-    UIComponent::getInstance()->showPopupView(1);
+    UIComponent::getInstance()->showPopupView(UIPopupViewType_ArcPop_TitanUpgrade);
     CCNode::onEnter();
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(AllianceShopView::updateInfo), ALLIANCE_SHOP_SHOW, NULL);
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(AllianceShopView::refreshPoint), ALLIANCE_SHOP_BUY_LEADER, NULL);

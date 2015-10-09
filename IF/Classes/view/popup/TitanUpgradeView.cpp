@@ -61,10 +61,9 @@ bool TitanUpgradeView::init(int buildId, int pos)
     auto winSize = CCDirector::sharedDirector()->getWinSize();
     this->m_BackGroud->setContentSize(winSize);
     //    int addHeight = getExtendHeight();
-    //    int oldBgWidth = m_buildBG->getContentSize().width;
-    //    int oldBgHeight = m_buildBG->getContentSize().height;
+ 
     //    int newBgHeight = addHeight/2+oldBgHeight;
-    //    m_buildBG->setContentSize(CCSizeMake(oldBgWidth, newBgHeight));
+
     //    int oldWidth = m_infoList->getContentSize().width;
     //    int oldHeight = m_infoList->getContentSize().height;
     //    m_infoList->setPositionY(m_infoList->getPositionY()-addHeight/2);
@@ -74,7 +73,7 @@ bool TitanUpgradeView::init(int buildId, int pos)
     m_upBtnMsgLabel->setString(_lang("102104").c_str());
     m_btnMsgLabel->setString(_lang("102127").c_str());
     m_inBtnGoldNum->setString("1");
-    m_demandLabel->setString(_lang("102130"));
+
     
     if(m_pos>0) {
         m_upBtnMsgLabel->setString(_lang("102126").c_str());
@@ -197,13 +196,12 @@ void TitanUpgradeView::updateInfo(CCObject* obj)
     m_lvLabel->setString(title);
     string nextLv = _lang_1("102272", CC_ITOA(level+1));
     m_nextLvLabel->setString(nextLv);
-    m_nextLabel->setString(_lang("102176"));
-    m_nextLabel->setMaxScaleXByWidth(CCCommonUtils::isIosAndroidPad()? 290.0 : 140.0);
+
     
     if (m_pos>0) {
         m_lvLabel->setString("");
         m_nextLvLabel->setString("");
-        m_nextLabel->setString("");
+
         if (CCCommonUtils::isIosAndroidPad()) {
             m_nameLabel->setPositionY(m_nameLabel->getPositionY() + 19.4);
         } else {
@@ -217,9 +215,7 @@ void TitanUpgradeView::updateInfo(CCObject* obj)
     
     string timeInfo = CC_SECTOA(_tmpTime);
     m_timeLabel->setString(timeInfo.c_str());
-    if (m_openNum==0) {
-        m_nextMsgLabel->setString(_lang(destip));
-    }
+
     
     int _itemH = 46;
     int curY = 25;
@@ -535,36 +531,17 @@ bool TitanUpgradeView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, co
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_btnMsgLabel", CCLabelIF*, this->m_btnMsgLabel);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_inBtnGoldNum", CCLabelIF*, this->m_inBtnGoldNum);
     
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_buildBG", CCScale9Sprite*, this->m_buildBG);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_lvLabel", CCLabelIF*, this->m_lvLabel);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nameLabel", CCLabelIF*, this->m_nameLabel);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nextLabel", CCLabelIF*, this->m_nextLabel);
+
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nextLvLabel", CCLabelIF*, this->m_nextLvLabel);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nextMsgLabel", CCLabelIF*, this->m_nextMsgLabel);
+   
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_upBtnMsgLabel", CCLabelIF*, this->m_upBtnMsgLabel);
     
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_demandLabel", CCLabelIF*, this->m_demandLabel);
+
     
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_para1Node", CCNode*, this->m_para1Node);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_para1Name", CCLabelIF*, this->m_para1Name);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_para1Num", CCLabelIF*, this->m_para1Num);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_next1Num", CCLabelIF*, this->m_next1Num);
-    
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_para2Node", CCNode*, this->m_para2Node);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_para2Name", CCLabelIF*, this->m_para2Name);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_para2Num", CCLabelIF*, this->m_para2Num);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_next2Num", CCLabelIF*, this->m_next2Num);
-    
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_para3Node", CCNode*, this->m_para3Node);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_para3Name", CCLabelIF*, this->m_para3Name);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_para3Num", CCLabelIF*, this->m_para3Num);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_next3Num", CCLabelIF*, this->m_next3Num);
-    
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_para4Node", CCNode*, this->m_para4Node);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_para4Name", CCLabelIF*, this->m_para4Name);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_para4Num", CCLabelIF*, this->m_para4Num);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_next4Num", CCLabelIF*, this->m_next4Num);
+
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_iconList", CCNode*, this->m_iconList);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_unlockLable", CCLabelIF*, this->m_unlockLable);
@@ -889,11 +866,8 @@ void TitanUpgradeView::onShowNextUnlockItem()
         });
     }
     
-    m_para1Node->setVisible(false);
-    m_para2Node->setVisible(false);
-    m_para3Node->setVisible(false);
-    m_para4Node->setVisible(false);
-    m_nextMsgLabel->setVisible(false);
+
+   
     
     m_itemScrollView->getContainer()->removeAllChildren();
     
@@ -931,326 +905,4 @@ void TitanUpgradeView::onShowNextUnlockItem()
 
 void TitanUpgradeView::updateParasInfo()
 {
-    auto getAddStr = [](string curPara, string nextPara, bool isPersent, bool isAdd){
-        string ret = "";
-        if (isAdd) {
-            ret = "+";
-        }
-        float add1 = atoi(nextPara.c_str()) - atoi(curPara.c_str());
-        ret = ret+CC_ITOA(add1);
-        if (isPersent) {
-            ret = ret+"%";
-        }
-        return ret;
-    };
-    
-    m_para1Node->setVisible(false);
-    m_para2Node->setVisible(false);
-    m_para3Node->setVisible(false);
-    m_para4Node->setVisible(false);
-    
-    int tmpCnt = 0;
-    auto& m_info = FunBuildController::getInstance()->getFunbuildById(m_buildId);
-    if (m_info.type == FUN_BUILD_WOOD || m_info.type == FUN_BUILD_FOOD || m_info.type == FUN_BUILD_IRON || m_info.type == FUN_BUILD_STONE) {
-        string nextParas = m_info.nextLevelParas;
-        vector<string> nextVec;
-        CCCommonUtils::splitString(nextParas, ",", nextVec);
-        if (nextVec.size()>=2 && m_info.para.size()>=2) {
-            m_para1Node->setVisible(true);
-            m_para1Name->setString(_lang("102122"));
-            m_para1Num->setString(m_info.para[1]);
-            string next1Msg = getAddStr(m_info.para[1], nextVec[0], false, true);
-            m_next1Num->setString(next1Msg);
-            
-            m_para2Node->setVisible(true);
-            m_para2Name->setString(_lang_1("102123",""));
-            m_para2Num->setString(m_info.para[2]);
-            string next2Msg = getAddStr(m_info.para[2], nextVec[1], false, true);
-            m_next2Num->setString(next2Msg);
-            m_nextMsgLabel->setString("");
-            tmpCnt = 2;
-        }
-    }
-    else if (m_info.type == FUN_BUILD_MAIN) {
-        //        string nextParas = m_info.nextLevelParas;
-        //        vector<string> nextVec;
-        //        CCCommonUtils::splitString(nextParas, ",", nextVec);
-        //        if (nextVec.size()>=1 && m_info.para.size()>=1) {
-        //            m_para1Node->setVisible(true);
-        //            m_para1Name->setString(_lang("102206"));
-        //            m_para1Num->setString(m_info.para[1]);
-        //            string next1Msg = getAddStr(m_info.para[1], nextVec[0], false, true);
-        //            m_next1Num->setString(next1Msg);
-        //            m_nextMsgLabel->setString("");
-        //            tmpCnt = 1;
-        //        }
-    }
-    else if (m_info.type == FUN_BUILD_BARRACK) {
-        string nextParas = m_info.nextLevelParas;
-        vector<string> nextVec;
-        CCCommonUtils::splitString(nextParas, ",", nextVec);
-        if (nextVec.size()>=2 && m_info.para.size()>=2) {
-            m_para1Node->setVisible(true);
-            m_para1Name->setString(_lang("102213"));
-            m_para1Num->setString(m_info.para[1]);
-            string next1Msg = getAddStr(m_info.para[1], nextVec[0], false, true);
-            m_next1Num->setString(next1Msg);
-            
-            m_para2Node->setVisible(true);
-            m_para2Name->setString(_lang("102264"));
-            m_para2Num->setString(m_info.para[2]+"%");
-            string next2Msg = getAddStr(m_info.para[2], nextVec[1], true, true);
-            m_next2Num->setString(next2Msg);
-            m_nextMsgLabel->setString("");
-            tmpCnt = 2;
-        }
-    }
-    else if (m_info.type == FUN_BUILD_HOSPITAL) {
-        string nextParas = m_info.nextLevelParas;
-        vector<string> nextVec;
-        CCCommonUtils::splitString(nextParas, ",", nextVec);
-        if (nextVec.size()>=1 && m_info.para.size()>=1) {
-            m_para1Node->setVisible(true);
-            m_para1Name->setString(_lang("102186"));
-            m_para1Num->setString(m_info.para[1]);
-            string next1Msg = getAddStr(m_info.para[1], nextVec[0], false, true);
-            m_next1Num->setString(next1Msg);
-            m_nextMsgLabel->setString("");
-            tmpCnt = 1;
-        }
-    }
-    else if (m_info.type == FUN_BUILD_WALL) {
-        string nextParas = m_info.nextLevelParas;
-        vector<string> nextVec;
-        CCCommonUtils::splitString(nextParas, ",", nextVec);
-        if (nextVec.size()>=2 && m_info.para.size()>=2) {
-            m_para1Node->setVisible(true);
-            m_para1Name->setString(_lang("102185"));
-            m_para1Num->setString(m_info.para[1]);
-            string next1Msg = getAddStr(m_info.para[1], nextVec[0], false, true);
-            m_next1Num->setString(next1Msg);
-            
-            m_para2Node->setVisible(true);
-            m_para2Name->setString(_lang("102206"));
-            m_para2Num->setString(m_info.para[2]);
-            string next2Msg = getAddStr(m_info.para[2], nextVec[1], false, true);
-            m_next2Num->setString(next2Msg);
-            
-            m_nextMsgLabel->setString("");
-            tmpCnt = 2;
-        }
-    }
-    else if (m_info.type == FUN_BUILD_TRAINFIELD) {
-        string nextParas = m_info.nextLevelParas;
-        vector<string> nextVec;
-        CCCommonUtils::splitString(nextParas, ",", nextVec);
-        if (nextVec.size()>=1 && m_info.para.size()>=1) {
-            m_para1Node->setVisible(true);
-            m_para1Name->setString(_lang("102228"));
-            m_para1Num->setString(m_info.para[1]);
-            string next1Msg = getAddStr(m_info.para[1], nextVec[0], false, true);
-            m_next1Num->setString(next1Msg);
-            m_nextMsgLabel->setString("");
-            tmpCnt = 1;
-        }
-    }
-    else if (m_info.type == FUN_BUILD_SMITHY) {
-        string nextParas = m_info.nextLevelParas;
-        vector<string> nextVec;
-        CCCommonUtils::splitString(nextParas, ",", nextVec);
-        if (nextVec.size()>=1 && m_info.para.size()>=1) {
-            m_para1Node->setVisible(true);
-            m_para1Name->setString(_lang("102311"));
-            m_para1Num->setString(m_info.para[1]);
-            string next1Msg = getAddStr(m_info.para[1], nextVec[0], false, true);
-            m_next1Num->setString(next1Msg);
-            m_nextMsgLabel->setString("");
-            tmpCnt = 1;
-        }
-    }
-    else if (m_info.type == FUN_BUILD_STABLE) {
-        string nextParas = m_info.nextLevelParas;
-        vector<string> nextVec;
-        CCCommonUtils::splitString(nextParas, ",", nextVec);
-        if (nextVec.size()>=3 && m_info.para.size()>=3) {
-            m_para1Node->setVisible(true);
-            m_para1Name->setString(_lang("102218"));
-            m_para1Num->setString(m_info.para[1]);
-            string next1Msg = getAddStr(m_info.para[1], nextVec[0], false, true);
-            m_next1Num->setString(next1Msg);
-            
-            m_para2Node->setVisible(true);
-            m_para2Name->setString(_lang("102221"));
-            m_para2Num->setString(m_info.para[2]);
-            string next2Msg = getAddStr(m_info.para[2], nextVec[1], false, true);
-            m_next2Num->setString(next2Msg);
-            
-            m_para3Node->setVisible(true);
-            m_para3Name->setString(_lang("102258"));
-            m_para3Num->setString(m_info.para[3]);
-            string next3Msg = getAddStr(m_info.para[3], nextVec[2], false, true);
-            m_next3Num->setString(next3Msg);
-            
-            m_nextMsgLabel->setString("");
-            tmpCnt = 3;
-        }
-    }
-    else if (m_info.type == FUN_BUILD_TAVERN) {
-        string nextParas = m_info.nextLevelParas;
-        vector<string> nextVec;
-        CCCommonUtils::splitString(nextParas, ",", nextVec);
-        if (nextVec.size()>=2 && m_info.para.size()>=2) {
-            m_para1Node->setVisible(true);
-            m_para1Name->setString(_lang("102219"));
-            m_para1Num->setString(m_info.para[1]);
-            string next1Msg = getAddStr(m_info.para[1], nextVec[0], false, true);
-            m_next1Num->setString(next1Msg);
-            
-            m_para2Node->setVisible(true);
-            m_para2Name->setString(_lang("102220"));
-            m_para2Num->setString(m_info.para[2]);
-            string next2Msg = getAddStr(m_info.para[2], nextVec[1], false, false);
-            m_next2Num->setString(next2Msg);
-            m_nextMsgLabel->setString("");
-            tmpCnt = 2;
-        }
-    }
-    else if (m_info.type == FUN_BUILD_FORGE) {
-        string nextParas = m_info.nextLevelParas;
-        vector<string> nextVec;
-        CCCommonUtils::splitString(nextParas, ",", nextVec);
-        if (nextVec.size()>=2 && m_info.para.size()>=2) {
-            m_para1Node->setVisible(true);
-            m_para1Name->setString(_lang("102362"));
-            m_para1Num->setString(m_info.para[1]);
-            string next1Msg = getAddStr(m_info.para[1], nextVec[0], true, true);
-            m_next1Num->setString(next1Msg);
-            
-            m_para2Node->setVisible(true);
-            m_para2Name->setString(_lang("102363"));
-            m_para2Num->setString(m_info.para[2]);
-            string next2Msg = getAddStr(m_info.para[2], nextVec[1], true, true);
-            m_next2Num->setString(next2Msg);
-            m_nextMsgLabel->setString("");
-            tmpCnt = 2;
-        }
-    }
-    else if (m_info.type == FUN_BUILD_CELLAR) {
-        string nextParas = m_info.nextLevelParas;
-        vector<string> nextVec;
-        CCCommonUtils::splitString(nextParas, ",", nextVec);
-        if (nextVec.size()>=4 && m_info.para.size()>=4) {
-            m_para1Node->setVisible(true);//wood
-            m_para1Name->setString(CCCommonUtils::getResourceNameByType(Wood));
-            m_para1Num->setString(m_info.para[1]);
-            string next1Msg = getAddStr(m_info.para[1], nextVec[0], false, true);
-            m_next1Num->setString(next1Msg);
-            
-            m_para2Node->setVisible(true);//food
-            m_para2Name->setString(CCCommonUtils::getResourceNameByType(Food));
-            m_para2Num->setString(m_info.para[4]);
-            string next2Msg = getAddStr(m_info.para[4], nextVec[3], false, true);
-            m_next2Num->setString(next2Msg);
-            tmpCnt = 2;
-            
-            int mlv = FunBuildController::getInstance()->getMainCityLv();
-            if (mlv>=FunBuildController::getInstance()->building_base_k3) {
-                m_para3Node->setVisible(true);//iron
-                m_para3Name->setString(CCCommonUtils::getResourceNameByType(Iron));
-                m_para3Num->setString(m_info.para[3]);
-                string next3Msg = getAddStr(m_info.para[3], nextVec[2], false, true);
-                m_next3Num->setString(next3Msg);
-                tmpCnt++;
-            }
-            
-            if (mlv>=FunBuildController::getInstance()->building_base_k4) {
-                m_para4Node->setVisible(true);
-                m_para4Name->setString(CCCommonUtils::getResourceNameByType(Stone));
-                m_para4Num->setString(m_info.para[2]);
-                string next4Msg = getAddStr(m_info.para[2], nextVec[1], false, true);
-                m_next4Num->setString(next4Msg);
-                tmpCnt++;
-            }
-            m_nextMsgLabel->setString("");
-        }
-    }
-    else if (m_info.type == FUN_BUILD_ARROW_TOWER) {
-        vector<string> vecItems;
-        CCCommonUtils::splitString(m_info.information, "|", vecItems);
-        string curAtk = "";
-        string nextAtk = "";
-        string curSpd = "";
-        string nextSpd = "";
-        
-        if (m_info.level < vecItems.size()) {
-            string curMsg = vecItems[m_info.level];
-            string nextMsg = vecItems[m_info.level+1];
-            vector<string> cellItems;
-            vector<string> cellNextItems;
-            CCCommonUtils::splitString(curMsg, ";", cellItems);
-            CCCommonUtils::splitString(nextMsg, ";", cellNextItems);
-            if (cellItems.size()>=3 && cellNextItems.size()>=3) {
-                string atkStr = cellItems[1];
-                string spdStr = cellItems[2];
-                string nextAtkStr = cellNextItems[1];
-                string nextSpdStr = cellNextItems[2];
-                
-                vector<string> tinyItem1;
-                CCCommonUtils::splitString(atkStr, ",", tinyItem1);
-                curAtk = tinyItem1[1];
-                vector<string> nexttinyItem1;
-                CCCommonUtils::splitString(nextAtkStr, ",", nexttinyItem1);
-                nextAtk = nexttinyItem1[1];
-                
-                vector<string> tinyItem2;
-                CCCommonUtils::splitString(spdStr, ",", tinyItem2);
-                curSpd = tinyItem2[1];
-                vector<string> nexttinyItem2;
-                CCCommonUtils::splitString(nextSpdStr, ",", nexttinyItem2);
-                nextSpd = nexttinyItem2[1];
-            }
-        }
-        
-        m_para1Node->setVisible(true);
-        m_para1Name->setString(_lang("102259"));
-        m_para1Num->setString(curAtk);
-        string next1Msg = getAddStr(curAtk, nextAtk, false, true);
-        m_next1Num->setString(next1Msg);
-        
-        m_para2Node->setVisible(true);
-        m_para2Name->setString(_lang("102260"));
-        m_para2Num->setString(curSpd);
-        string next2Msg = getAddStr(curSpd, nextSpd, true, true);
-        m_next2Num->setString(next2Msg);
-        m_nextMsgLabel->setString("");
-        tmpCnt = 2;
-    }
-    
-    if (tmpCnt==1) {
-        m_para1Node->setPositionY(23);
-        if (CCCommonUtils::isIosAndroidPad())
-        {
-            m_para1Node->setPositionY(70);
-        }
-    }
-    else if (tmpCnt==2) {
-        m_para1Node->setPositionY(45);
-        m_para2Node->setPositionY(0);
-        if (CCCommonUtils::isIosAndroidPad()) {
-            m_para1Node->setPositionY(120);
-            m_para2Node->setPositionY(0);
-        }
-    }
-    else if (tmpCnt==3) {
-        m_para1Node->setPositionY(68);
-        m_para2Node->setPositionY(23);
-        m_para3Node->setPositionY(-22);
-        m_para4Node->setPositionY(-22);
-        if (CCCommonUtils::isIosAndroidPad()) {
-            m_para1Node->setPositionY(176);
-            m_para2Node->setPositionY(42);
-            m_para3Node->setPositionY(-92);
-            m_para4Node->setPositionY(-92);
-        }
-    }
 }
