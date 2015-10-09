@@ -20,7 +20,7 @@
             <key>Loading_bar_glow.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{14,4},{97,42}}</string>
+                <string>{{523,23},{97,42}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -33,7 +33,7 @@
             <key>cloud_ani.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{117,4},{913,427}}</string>
+                <string>{{4,464},{913,427}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -46,7 +46,7 @@
             <key>loading.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1036,4},{747,1136}}</string>
+                <string>{{4,897},{747,1136}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -59,7 +59,7 @@
             <key>loading_bar.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,1146},{459,13}}</string>
+                <string>{{479,4},{459,13}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -72,7 +72,7 @@
             <key>loading_bar_BG.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{469,1146},{513,19}}</string>
+                <string>{{4,23},{513,19}}</string>
                 <key>offset</key>
                 <string>{0,-2}</string>
                 <key>rotated</key>
@@ -85,7 +85,7 @@
             <key>loading_progress.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{988,1146},{459,13}}</string>
+                <string>{{14,4},{459,13}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -98,7 +98,7 @@
             <key>loading_tips_bg.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1453,1146},{551,81}}</string>
+                <string>{{4,71},{551,81}}</string>
                 <key>offset</key>
                 <string>{16,0}</string>
                 <key>rotated</key>
@@ -111,7 +111,7 @@
             <key>logo.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,1233},{574,245}}</string>
+                <string>{{4,213},{574,245}}</string>
                 <key>offset</key>
                 <string>{-1,1}</string>
                 <key>rotated</key>
@@ -124,7 +124,7 @@
             <key>logo_only.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{584,1233},{584,136}}</string>
+                <string>{{561,71},{584,136}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -142,9 +142,9 @@
             <key>realTextureFileName</key>
             <string>Loading_2.pvr.ccz</string>
             <key>size</key>
-            <string>{2048,2048}</string>
+            <string>{1149,2037}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:e5df8969c231d9f23e13ed9d1ff52c43:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:1cb9ef7e2f67221ee04574d71b448f2d:1/1$</string>
             <key>textureFileName</key>
             <string>Loading_2.pvr.ccz</string>
         </dict>

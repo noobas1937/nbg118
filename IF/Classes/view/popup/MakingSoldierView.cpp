@@ -74,7 +74,7 @@ bool MakingSoldierView::init()
 //    CCSprite* pic = CCLoadSprite::createSprite(armyInfo->getBodyIcon().c_str());
     auto pic = C3DShowView::create(armyInfo->getModelName().c_str(),armyInfo->getModelTexName().c_str());
     pic->setPosition(pos);
-    pic->setScale(6);
+    pic->getModel().getObject()->setScale(18);
     m_soldierNode->addChild(pic);
     if(m_buildingId/1000==FUN_BUILD_BARRACK4){
          pic->setPosition(ccp(-60,130));

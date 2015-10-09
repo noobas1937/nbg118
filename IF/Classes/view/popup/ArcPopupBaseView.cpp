@@ -26,7 +26,11 @@ void ArcPopupBaseView::showArcModel(int type)
     m_selfModelLayer = CCRenderTexture::create(size.width, size.height);
     m_selfModelLayer->setPosition(ccp(size.width/2, size.height/2));
     this->addChild(m_selfModelLayer);
-    
+//    if (type == TYPE_POS_NONE) {
+//        _modelLayer->setColor(Color3B(59, 65, 104));
+//        _modelLayer->setOpacity(255);
+//        return;
+//    }
     float _wf = 0.31;
     float _hf = 0.55;
     if (type == TYPE_POS_UP || type == TYPE_POS_TO_UP) {

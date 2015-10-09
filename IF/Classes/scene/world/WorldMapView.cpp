@@ -4601,6 +4601,7 @@ IFHeiqishiNode* WorldMapView::createHeiqishiSoldier(MarchInfo& info){//default i
     /*lb*/
     return spinNode;
 }
+
 CCSprite* WorldMapView::createMarchSprite(MarchInfo& info) {
     float fix = info.rotate < 0 ? -180.0 - info.rotate : 180.0 - info.rotate;
     auto fabFix = fabsf(fix);

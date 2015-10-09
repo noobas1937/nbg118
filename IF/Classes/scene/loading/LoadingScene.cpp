@@ -108,113 +108,32 @@ bool LoadingScene::init()
             colorLayer->setAnchorPoint(ccp(0, 0));
             addChild(colorLayer);
         }else{
-            if(isJP()){
-            auto spine1 = IFLoadingSceneArmyNode::create("Loading/Loading_1.atlas", "Spine/Loading/loading3.json", "loading3");
-            this->addChild(spine1);
-            if (CCCommonUtils::isIosAndroidPad())
+            auto loadingBG = CCLoadSprite::createSprite("loading.png");
+            loadingBG->setAnchorPoint(ccp(0, 1));
+            loadingBG->setScale(640.0 / loadingBG->getContentSize().width);
+            loadingBG->setPositionY(size.height);
+            if(CCCommonUtils::isIosAndroidPad())
             {
-                spine1->setScale(2.25);
-                spine1->setAnchorPoint(ccp(0, 0));
-                spine1->setPosition(ccp(70, -200));
-            }
-           
-            
-            auto fireParticle1 = CCNode::create();
-            this->addChild(fireParticle1);
-            
-            auto spine2 = IFLoadingSceneArmyNode::create("Loading/Loading_1.atlas", "Spine/Loading/loading2.json", "loading2");
-            this->addChild(spine2);
-
-            if (CCCommonUtils::isIosAndroidPad())
-            {
-                spine2->setScale(2.25);
-                spine2->setAnchorPoint(ccp(0, 0));
-                spine2->setPosition(ccp(100, -250));
+                loadingBG->setScale(1536/653.0);
             }
             
-            auto fireParticle2 = CCNode::create();
-            this->addChild(fireParticle2);
+            this->addChild(loadingBG);
 
-            auto spine3 = IFLoadingSceneArmyNode::create("Loading/Loading_1.atlas", "Spine/Loading/sj.json", "animation");
-            this->addChild(spine3);
-
-            if (CCCommonUtils::isIosAndroidPad())
-            {
-                spine3->setScale(2.25);
-                spine3->setAnchorPoint(ccp(0, 0));
-                spine3->setPosition(ccp(100, -250));
-            }
+            m_rollingCloud = RollingSprite::create("cloud_ani.png", 30.0);
+            this->addChild(m_rollingCloud);
+            m_rollingCloud->setPosition(loadingBG->getPosition());
             
-            auto fireParticle3 = CCNode::create();
-            this->addChild(fireParticle3);
-            
-            addFireParticle(fireParticle1, "LoadingFireNew_1", ccp(size.width / 2, 570));
-            addFireParticle(fireParticle2, "LoadingFireNew_2", ccp(size.width / 2, 280));
-            addFireParticle(fireParticle3, "LoadingFireNew_3", ccp(size.width / 2, 0));
-            if (CCCommonUtils::isIosAndroidPad())
-            {
-                fireParticle1->setScale(2.f);
-                fireParticle2->setScale(2.f);
-                fireParticle3->setScale(2.f);
-            }
-            addFireParticle(fireParticle3, "LoadingFireNew_4", ccp(size.width / 2, 570));
-            if (CCCommonUtils::isIosAndroidPad())
-            {
-                fireParticle3->setScale(2.f);
-            }
-            addFireParticle(fireParticle3, "LoadingFireNew_5", ccp(size.width * 3, 570));
-            if (CCCommonUtils::isIosAndroidPad())
-            {
-                fireParticle3->setScale(2.f);
-            }
-            addFireParticle(fireParticle3, "LoadingFireNew_6", ccp(size.width / 2, 0));
-            if (CCCommonUtils::isIosAndroidPad())
-            {
-                fireParticle3->setScale(2.f);
-            }
-            addFireParticle(fireParticle3, "LoadingFireNew_7", ccp(size.width / 2, 0));
-            if (CCCommonUtils::isIosAndroidPad())
-            {
-                fireParticle3->setScale(2.f);
-            }
-            addFireParticle(fireParticle3, "LoadingFireNew_8", ccp(size.width / 2, 0));
-            if (CCCommonUtils::isIosAndroidPad())
-            {
-                fireParticle3->setScale(2.f);
-            }
-            addFireParticle(fireParticle3, "LoadingFireNew_9", ccp(size.width / 2, 0));
-            if (CCCommonUtils::isIosAndroidPad())
-            {
-                fireParticle3->setScale(2.f);
-            }
-            }else{
-                auto loadingBG = CCLoadSprite::createSprite("loading.png");
-                loadingBG->setAnchorPoint(ccp(0, 1));
-                loadingBG->setScale(640.0 / loadingBG->getContentSize().width);
-                loadingBG->setPositionY(size.height);
-                if(CCCommonUtils::isIosAndroidPad())
-                {
-                    loadingBG->setScale(1536/653.0);
-                }
-                
-                this->addChild(loadingBG);
+            auto fireParticle = CCNode::create();
+            this->addChild(fireParticle);
+            addFireParticle(fireParticle, "LoadingMan_cloud", ccp(size.width / 2, size.height - 130));
 
-                m_rollingCloud = RollingSprite::create("cloud_ani.png", 30.0);
-                this->addChild(m_rollingCloud);
-                m_rollingCloud->setPosition(loadingBG->getPosition());
-                
-                auto fireParticle = CCNode::create();
-                this->addChild(fireParticle);
-                addFireParticle(fireParticle, "LoadingMan_cloud", ccp(size.width / 2, size.height - 130));
-
-                auto kingSpine = IFLoadingSceneArmyNode::create("Loading/Loading_3.atlas", "Spine/Loading/loading.json", "loading", 0.5);
-                this->addChild(kingSpine);
-                kingSpine->setPositionY(1050);
-                if(CCCommonUtils::isIosAndroidPad())
-                {
-                    kingSpine->setScale(2.18);
-                    kingSpine->setPosition(ccp(10,2050));
-                }
+            auto kingSpine = IFLoadingSceneArmyNode::create("Loading/Loading_3.atlas", "Spine/Loading/loading.json", "loading", 0.5);
+            this->addChild(kingSpine);
+            kingSpine->setPositionY(1050);
+            if(CCCommonUtils::isIosAndroidPad())
+            {
+                kingSpine->setScale(2.18);
+                kingSpine->setPosition(ccp(10,2050));
             }
         }
 		addChild(label);
@@ -484,21 +403,6 @@ void LoadingScene::onGoToHelpShift(CCObject* p)
 
 void LoadingScene::addParticle(){
     ParticleController::initParticle();
-//    CCSize winsize = CCDirector::sharedDirector()->getWinSize();
-    
-//    auto newBatch = ParticleController::createParticleBatch();
-//    auto particle1 = ParticleController::createParticle("LoadFire_1");
-//    particle1->setPosition(ccp(winsize.width / 2, 0));
-//    newBatch->addChild(particle1);
-//    auto particle2 = ParticleController::createParticle("LoadFire_2");
-//    particle2->setPosition(ccp(winsize.width / 2, 0));
-//    newBatch->addChild(particle2);
-//    this->addChild(newBatch);
-//    auto newBatch1 = ParticleController::createParticleBatch();
-//    auto particle3 = ParticleController::createParticle("LoadFire_3");
-//    particle3->setPosition(ccp(winsize.width / 2, 0));
-//    newBatch1->addChild(particle3);
-//    this->addChild(newBatch1);
 }
 
 void LoadingScene::onEnter(){

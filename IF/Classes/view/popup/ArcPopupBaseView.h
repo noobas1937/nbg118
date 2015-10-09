@@ -13,6 +13,7 @@
 #include "CCBExtension.h"
 #include "PopupBaseView.h"
 
+//#define TYPE_POS_NONE 9999
 #define TYPE_POS_DEF 0
 #define TYPE_POS_UP  1
 #define TYPE_POS_MID  2

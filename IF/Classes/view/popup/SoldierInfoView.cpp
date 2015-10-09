@@ -107,7 +107,7 @@ bool SoldierInfoView::init()
     
 //    CCSprite* pic = CCLoadSprite::createSprite(m_info->getBodyIcon().c_str());
     auto pic = C3DShowView::create(m_info->getModelName().c_str(),m_info->getModelTexName().c_str());
-    pic->setScale(4);
+    pic->getModel().getObject()->setScale(18);
     m_icon->addChild(pic);
 
     if(m_isFort){

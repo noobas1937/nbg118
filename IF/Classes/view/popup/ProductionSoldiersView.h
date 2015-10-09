@@ -12,12 +12,12 @@
 #include "CommonInclude.h"
 #include "CCBExtension.h"
 #include "CCLabelIF.h"
-#include "ArcPopupBaseView.h"
+#include "PopupBaseView.h"
 #include "ArcScrollView.h"
 #include "CCSliderBar.h"
 #include "CCClipNode.h"
 
-class ProductionSoldiersView: public ArcPopupBaseView
+class ProductionSoldiersView: public PopupBaseView
 ,public CCBSelectorResolver
 ,public CCBMemberVariableAssigner
 ,public CCEditBoxDelegate
@@ -121,6 +121,7 @@ private:
     vector<string> m_armyIds;
     
     
+    CCSafeObject<CCScale9Sprite> m_colorBg;
     CCSafeObject<CCNode> m_soldierNode;
     CCSafeObject<CCLabelIF> m_lockTxt;
     CCSafeObject<CCNode> m_makeResNode;

@@ -54,19 +54,25 @@ ProductionSoldiersView* ProductionSoldiersView::create(int buildingId){
 
 bool ProductionSoldiersView::init()
 {
-    if (!ArcPopupBaseView::init(TYPE_POS_MID_UP)) {
+    if (!PopupBaseView::init()) {
         return false;
     }
+//    _modelLayer->setVisible(false);
     setIsHDPanel(true);
     m_isFort = m_buildingId/1000 == FUN_BUILD_FORT;
 
     CCLoadSprite::doResourceByCommonIndex(4, true);
     CCBLoadFile("productionSoldierView",this,this);
-    setContentSize(CCDirector::sharedDirector()->getWinSize());
-    CCLoadSprite::doLoadResourceAsync(COMMON_PATH, CCCallFuncO::create(this, callfuncO_selector(ProductionSoldiersView::AsyLoadRes), NULL), 4);
-    setCleanFunction([](){
-        CCLoadSprite::doResourceByCommonIndex(4, false);
-    });
+    Size winSize = CCDirector::sharedDirector()->getWinSize();
+    setContentSize(winSize);
+    // tao.yu 关闭动态下载资源
+//    CCLoadSprite::doLoadResourceAsync(COMMON_PATH, CCCallFuncO::create(this, callfuncO_selector(ProductionSoldiersView::AsyLoadRes), NULL), 4);
+//    setCleanFunction([](){
+//        CCLoadSprite::doResourceByCommonIndex(4, false);
+//    });
+    m_colorBg->setContentSize(winSize);
+    m_colorBg->setOpacity(180);
+
     int sliderW = 300;
     auto m_sliderBg = CCLoadSprite::createScale9Sprite("nb_bar_bg.png");//huadongtiao3.png
     m_sliderBg->setInsetBottom(5);
@@ -148,61 +154,6 @@ bool ProductionSoldiersView::init()
     m_pos=0;
     int maxOpenLevel = 0;
     m_armyIds = ArmyController::getInstance()->getCreateSoldierIds(open_arms, m_isFort);
-    
-//    m_armys = CCArray::create();
-//    std::vector<std::string> armys;
-//    CCCommonUtils::splitString(open_arms,"|",armys);
-//    int size = armys.size();
-//    std::vector<std::string> armyVector;
-//    if(m_isFort){
-//        for (int i=0; i<size; i++) {
-//            armyVector.clear();
-//            CCCommonUtils::splitString(armys[i],";",armyVector);
-//            int level = atoi(armyVector[0].c_str());
-//            map<std::string, ArmyInfo>::iterator it = GlobalData::shared()->fortList.find(armyVector[1]);
-//            if(it!=GlobalData::shared()->fortList.end()){
-//                it->second.unlockLevel = level;
-//                m_armyIds.push_back(it->first);
-//                m_armys->addObject(&it->second);
-//                if(m_buildingLevel>=it->second.unlockLevel && it->second.unlockLevel >= maxOpenLevel){
-//                    m_pos = i;
-//                    maxOpenLevel = it->second.unlockLevel;
-//                }
-//            }
-//        }
-//    }else{
-//        for (int i=0; i<size; i++) {
-//            armyVector.clear();
-//            CCCommonUtils::splitString(armys[i],";",armyVector);
-//            int level = atoi(armyVector[0].c_str());
-//            map<std::string, ArmyInfo>::iterator it = GlobalData::shared()->armyList.find(armyVector[1]);
-//            if(it!=GlobalData::shared()->armyList.end()){
-//                it->second.unlockLevel = level;
-//                m_armyIds.push_back(it->first);
-//                m_armys->addObject(&it->second);
-//            }
-//        }
-//    }
-//    
-//    int num = m_armys->count()-1;
-//    for(int j=0;j<num;j++){
-//        for(int i=0;i<num-j;i++)
-//        {
-//            ArmyInfo* army1 = (ArmyInfo*)m_armys->objectAtIndex(i);
-//            ArmyInfo* army2 = (ArmyInfo*)m_armys->objectAtIndex(i+1);
-//            if(army1->unlockLevel > army2->unlockLevel)
-//            {
-//                m_armys->swap(i, i+1);
-//            }
-//        }
-//    }
-//    for(int i=0;i<num;i++){
-//         ArmyInfo* army1 = (ArmyInfo*)m_armys->objectAtIndex(i);
-//        if(m_buildingLevel>=army1->unlockLevel && army1->unlockLevel >= maxOpenLevel){
-//            m_pos = i;
-//            maxOpenLevel = army1->unlockLevel;
-//        }
-//    }
     
     for(int i=(m_armyIds.size()-1);i>=0;i--){
         string curIds = m_armyIds[i];
@@ -379,38 +330,37 @@ void ProductionSoldiersView::addSoldierIcon(){
 //    CCSprite* pic = CCLoadSprite::createSprite(m_info->getBodyIcon().c_str());
     auto pic = C3DShowView::create(m_info->getModelName().c_str(),m_info->getModelTexName().c_str());
     pic->getModel().getObject()->setScale(18);
-//    pic->setScale(m_isFort?1.5:1);
-//    pic->setScale(6);
     pic->setPosition(pos);
     
-    // TODO
-    srand((unsigned int)time(0));
-    int random_variable = rand() % 100;
-    string c3b = "3d/soldier/Brawler_idle.c3b";
-    if (random_variable < 50) c3b = "3d/soldier/Brawler_stand.c3b";
-    auto animation3d = Animation3D::create(c3b);
-    if (animation3d) {
-        auto pAnim = Animate3D::createWithFrames(animation3d, 1, 100);
-        if (pAnim) {
-            Action* act = RepeatForever::create(pAnim);
-            pic->getModel().getObject()->stopAllActions();
-            pic->getModel().getObject()->runAction(act);
-        }
-    }
-    m_soldierIconNode->addChild(pic);
-    
+//    // TODO
+//    srand((unsigned int)time(0));
+//    int random_variable = rand() % 100;
+//    string c3b = "3d/soldier/Brawler_idle.c3b";
+//    if (random_variable < 50) c3b = "3d/soldier/Brawler_stand.c3b";
+//    auto animation3d = Animation3D::create(c3b);
+//    if (animation3d) {
+//        auto pAnim = Animate3D::createWithFrames(animation3d, 1, 100);
+//        if (pAnim) {
+//            Action* act = RepeatForever::create(pAnim);
+//            pic->getModel().getObject()->stopAllActions();
+//            pic->getModel().getObject()->runAction(act);
+//        }
+//    }
+//    m_soldierIconNode->addChild(pic);
+//
     static const int light_beam_TAG = 60000;
     m_soldierIconNode->removeChildByTag(light_beam_TAG);
-    auto animationObj = new IFSkeletonAnimation("Spine/nb/light_beam.json", "Spine/nb/light_beam.atlas");
+//    auto animationObj = new IFSkeletonAnimation("Spine/nb/light_beam.json", "Spine/nb/light_beam.atlas");
+    auto animationObj = Node::create();
+//    animationObj->setBlendFunc(BlendFunc::ADDITIVE);
     animationObj->setTag(light_beam_TAG);
     if (animationObj) {
-        animationObj->setVisibleStop(false);
-//        animationObj->setPosition(ccp(320, 400));
+//        animationObj->setVisibleStop(false);
         m_soldierIconNode->addChild(animationObj);
-        spTrackEntry* entry = animationObj->setAnimation(0, "animation", true);
-        if (entry) {
-            animationObj->setTimeScale(entry->endTime / 1.0f);
-        }
+//        spTrackEntry* entry = animationObj->setAnimation(0, "animation", true);
+//        if (entry) {
+//            animationObj->setTimeScale(entry->endTime / 1.0f);
+//        }
     }
     
     if(m_info!=NULL && m_buildingLevel<m_info->unlockLevel){
@@ -1293,7 +1243,7 @@ SEL_CCControlHandler ProductionSoldiersView::onResolveCCBCCControlSelector(cocos
 
 bool ProductionSoldiersView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode)
 {
-    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_colorBg", CCScale9Sprite*, this->m_colorBg);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_immediateBtn", CCControlButton*, this->m_immediateBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_infoBtn", CCControlButton*, this->m_infoBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_trainBtn", CCControlButton*, this->m_trainBtn);
