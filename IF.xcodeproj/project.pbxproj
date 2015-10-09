@@ -990,6 +990,8 @@
 		B80D4B291BAFA1D800422225 /* nb_world_bottom.tmx in Resources */ = {isa = PBXBuildFile; fileRef = B80D4B271BAFA1D800422225 /* nb_world_bottom.tmx */; settings = {ASSET_TAGS = (); }; };
 		B80D4B2A1BAFA1D800422225 /* nb_world.tmx in Resources */ = {isa = PBXBuildFile; fileRef = B80D4B281BAFA1D800422225 /* nb_world.tmx */; settings = {ASSET_TAGS = (); }; };
 		B80D4B2F1BAFCA6B00422225 /* nb_world_link_area.tmx in Resources */ = {isa = PBXBuildFile; fileRef = B80D4B2E1BAFCA6B00422225 /* nb_world_link_area.tmx */; settings = {ASSET_TAGS = (); }; };
+		B80E14461BC75C420042B725 /* nb_ocean in Resources */ = {isa = PBXBuildFile; fileRef = B80E14441BC75C420042B725 /* nb_ocean */; settings = {ASSET_TAGS = (); }; };
+		B80E14471BC75C420042B725 /* nb_ocean.tmx in Resources */ = {isa = PBXBuildFile; fileRef = B80E14451BC75C420042B725 /* nb_ocean.tmx */; settings = {ASSET_TAGS = (); }; };
 		B8581EA01BBA34E70027F733 /* TypeDefinition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8581E9F1BBA34E70027F733 /* TypeDefinition.cpp */; settings = {ASSET_TAGS = (); }; };
 		BA19245118C87ED7009C1CEA /* CCLabelIFBMFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA19244D18C87ED7009C1CEA /* CCLabelIFBMFont.cpp */; };
 		BA19245218C87ED7009C1CEA /* CCLabelIFTTF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA19244F18C87ED7009C1CEA /* CCLabelIFTTF.cpp */; };
@@ -3128,6 +3130,8 @@
 		B80D4B271BAFA1D800422225 /* nb_world_bottom.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = nb_world_bottom.tmx; path = Resources/nb_world_bottom.tmx; sourceTree = "<group>"; };
 		B80D4B281BAFA1D800422225 /* nb_world.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = nb_world.tmx; path = Resources/nb_world.tmx; sourceTree = "<group>"; };
 		B80D4B2E1BAFCA6B00422225 /* nb_world_link_area.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = nb_world_link_area.tmx; path = Resources/nb_world_link_area.tmx; sourceTree = "<group>"; };
+		B80E14441BC75C420042B725 /* nb_ocean */ = {isa = PBXFileReference; lastKnownFileType = folder; name = nb_ocean; path = Resources/nb_ocean; sourceTree = "<group>"; };
+		B80E14451BC75C420042B725 /* nb_ocean.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = nb_ocean.tmx; path = Resources/nb_ocean.tmx; sourceTree = "<group>"; };
 		B8581E9F1BBA34E70027F733 /* TypeDefinition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TypeDefinition.cpp; sourceTree = "<group>"; };
 		BA19244D18C87ED7009C1CEA /* CCLabelIFBMFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelIFBMFont.cpp; sourceTree = "<group>"; };
 		BA19244E18C87ED7009C1CEA /* CCLabelIFBMFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelIFBMFont.h; sourceTree = "<group>"; };
@@ -5840,6 +5844,8 @@
 		DB9F590717CD9A520037F7E5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B80E14441BC75C420042B725 /* nb_ocean */,
+				B80E14451BC75C420042B725 /* nb_ocean.tmx */,
 				B80D4B2E1BAFCA6B00422225 /* nb_world_link_area.tmx */,
 				B80D4B271BAFA1D800422225 /* nb_world_bottom.tmx */,
 				B80D4B281BAFA1D800422225 /* nb_world.tmx */,
@@ -7130,6 +7136,7 @@
 				6C0AB99E1B32ABBD00CAF8F0 /* ZYTAlertView.xib in Resources */,
 				272AB6471B15C7BC0052E896 /* g024.png in Resources */,
 				272AB63F1B15C7BC0052E896 /* forum_back.png in Resources */,
+				B80E14471BC75C420042B725 /* nb_ocean.tmx in Resources */,
 				B15628B218FEB62000902628 /* pve_fnt_boss.png in Resources */,
 				272AB6501B15C7BC0052E896 /* guide_player_icon.png in Resources */,
 				272AB6681B15C7BC0052E896 /* ui_gray_biaotilan.png in Resources */,
@@ -7177,6 +7184,7 @@
 				272AB6281B15C7BC0052E896 /* bottom_bg.png in Resources */,
 				272AB65A1B15C7BC0052E896 /* icon_chat_translate3.png in Resources */,
 				272AB6311B15C7BC0052E896 /* chat_bottom_keyboard_press.png in Resources */,
+				B80E14461BC75C420042B725 /* nb_ocean in Resources */,
 				272AB6531B15C7BC0052E896 /* horn_checked.png in Resources */,
 				272AB6341B15C7BC0052E896 /* chat_bottom_textfield.png in Resources */,
 				5736A1AD18225C9D007C431C /* Imperial in Resources */,

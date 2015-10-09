@@ -628,9 +628,10 @@ bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType) {
         m_map->addChild(m_layers[WM_BG], -10);
         m_layers[WM_BG]->setTag(WM_BG_TAG);
         
-        auto map = DynamicTiledMap::create("nb_world_bottom.tmx", gotoPoint, 1207);
+//        auto map = DynamicTiledMap::create("nb_world_bottom.tmx", gotoPoint, 1207);
+        auto map = DynamicTiledMap::create("nb_ocean.tmx", gotoPoint, 1201);
         map->setTag(WM_BG_TAG);
-        map->setPosition(-ccp(256 * (1207 - _tile_count_x) / 2, 128 * (1207 - _tile_count_y)));
+//        map->setPosition(-ccp(256 * (1207 - _tile_count_x) / 2, 128 * (1207 - _tile_count_y)));
         m_layers[WM_BG]->addChild(map);
     }
 
