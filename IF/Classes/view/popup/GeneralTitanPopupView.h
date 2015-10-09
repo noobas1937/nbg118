@@ -89,6 +89,8 @@ private:
     void onTitanFeedClick(CCObject * pSender, Control::EventType pCCControlEvent);
     
     void onSpeedUpClick(CCObject * pSender, Control::EventType pCCControlEvent);
+    
+    void onToolSpeedUpClick(CCObject * pSender, Control::EventType pCCControlEvent);
 
     void speedUpCallBack();
 //    void onChangeName(CCObject * pSender, Control::EventType pCCControlEvent);
@@ -125,10 +127,12 @@ private:
 //    
     CCSafeObject<CCNode> m_mainNode;
     CCSafeObject<CCNode>  m_titanExtNode;
-//    CCSafeObject<CCNode> m_infoNode;
-//    CCSafeObject<CCNode> m_bgNode;
+    CCSafeObject<CCNode> titanFeedNode;
+    CCSafeObject<CCNode> titanUpingNode;
+    CCSafeObject<CCNode> m_titanFeedCDNode;
     CCSafeObject<CCControlButton> m_titanFeedBtn;
     CCSafeObject<CCControlButton> m_speedUpBtn;
+    CCSafeObject<CCControlButton> m_toolSpeedUpBtn;
 
     CCSafeObject<CCScale9Sprite> m_buildBG;
     CCSafeObject<CCNode>m_titanPosInView;
@@ -143,6 +147,7 @@ private:
     CCSafeObject<CCLabelIF> m_currentFoodNum;
     
     CCSafeObject<CCLabelIF> m_feedCDTxt;
+    CCSafeObject<CCLabelIF> m_titanStatusDesc;
     
 
     CCSafeObject<CCSprite> m_foodStatus;

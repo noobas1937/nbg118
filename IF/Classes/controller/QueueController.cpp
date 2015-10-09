@@ -245,8 +245,12 @@ void QueueController::initQueueData(CCDictionary* dict)
         QueueInfo info = QueueInfo(item);
         if(info.type == 15)//fusheng 泰坦喂食cd  更新titanInfo
         {
-            GlobalData::shared()->titanInfo.feedcd = info.finishTime;
-            GlobalData::shared()->titanInfo.uuid = info.uuid;
+            
+            if(info.finishTime > GlobalData::shared()->titanInfo.feedcd)//fusheng 因为可能会有好几个type为15的queue 选择时间大的
+            {
+                GlobalData::shared()->titanInfo.feedcd = info.finishTime;
+                GlobalData::shared()->titanInfo.uuid = info.uuid;
+            }
         }
         GlobalData::shared()->allQueuesInfo[info.qid] = info;
     }

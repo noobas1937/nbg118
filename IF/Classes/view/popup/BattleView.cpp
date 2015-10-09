@@ -1146,8 +1146,17 @@ void SoldierCell::setData(string itemId, int num, int type, int rally)
     pic->setPositionY(-10);
     this->m_levelNode->removeAllChildren();
     string num1 = m_soldierId.substr(m_soldierId.size()-2);
-    auto pic1= CCCommonUtils::getRomanSprite(atoi(num1.c_str())+1);
-    m_levelNode->addChild(pic1);
+    int id = atoi(itemId.c_str());
+    if (id>= 107401 && id<= 107430) {//fusheng 泰坦 计算罗马数字时不加一
+        auto pic1= CCCommonUtils::getRomanSprite(atoi(num1.c_str()));
+        m_levelNode->addChild(pic1);
+    }
+    else
+    {
+        auto pic1= CCCommonUtils::getRomanSprite(atoi(num1.c_str())+1);
+        m_levelNode->addChild(pic1);
+    }
+    
     
     float pro = 0;
     if (m_cntNum>0) {
