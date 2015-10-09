@@ -66,6 +66,38 @@ int TitanInfo::resetTitanInfo(CCDictionary* dict)//0没有改变 1数值改变(�
 //                costmanual(0),
 //                recoverInterval(0)
             }
+            if(newLevel != 1)
+            {
+                
+                string oldID =CCString::createWithFormat("1074%02d",newLevel-1)->getCString();
+                
+                if( GlobalData::shared()->armyList.find(oldID)!= GlobalData::shared()->armyList.end())
+                {
+                    GlobalData::shared()->armyList[CCString::createWithFormat("1074%02d",newLevel-1)->getCString()].free = 0; //fusheng 刷新泰坦士兵数据
+                }
+                
+                string newID =CCString::createWithFormat("1074%02d",newLevel)->getCString();
+                
+                if( GlobalData::shared()->armyList.find(oldID) == GlobalData::shared()->armyList.end())
+                {
+                    
+                   
+                    ArmyInfo ai ;
+                    ai.free = 1;
+                    ai.finishTime = 0;
+                    ai.food = 0;
+                    GlobalData::shared()->armyList.insert(make_pair(newID, ai));
+                    
+                }
+                else
+                {
+                    GlobalData::shared()->armyList[CCString::createWithFormat("1074%02d",newLevel)->getCString()].free = 1;
+                    GlobalData::shared()->armyList[CCString::createWithFormat("1074%02d",newLevel)->getCString()].finishTime = 0;
+
+                }
+                
+            }
+
         }
         
         
