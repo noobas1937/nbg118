@@ -13,6 +13,8 @@
 #include "FunBuildController.h"
 #include "ParticleController.h"
 #include "C3DShowView.hpp"
+
+// tao.yu 无人调用，此类废弃
 MakingSoldierView* MakingSoldierView::create(std::string armyId,QueueInfo* info,int buildingId){
     MakingSoldierView* ret = new MakingSoldierView(armyId,info,buildingId);
     if(ret && ret->init()){
@@ -72,13 +74,13 @@ bool MakingSoldierView::init()
         CCLoadSprite::doResourceByCommonIndex(m_resIndex, true);
     }
 //    CCSprite* pic = CCLoadSprite::createSprite(armyInfo->getBodyIcon().c_str());
-    auto pic = C3DShowView::create(armyInfo->getModelName().c_str(),armyInfo->getModelTexName().c_str());
-    pic->setPosition(pos);
-    pic->getModel().getObject()->setScale(18);
-    m_soldierNode->addChild(pic);
-    if(m_buildingId/1000==FUN_BUILD_BARRACK4){
-         pic->setPosition(ccp(-60,130));
-    }
+//    auto pic = C3DShowView::create(armyInfo->getModelName().c_str(),armyInfo->getModelTexName().c_str());
+//    pic->setPosition(pos);
+//    pic->getModel().getObject()->setScale(18);
+//    m_soldierNode->addChild(pic);
+//    if(m_buildingId/1000==FUN_BUILD_BARRACK4){
+//         pic->setPosition(ccp(-60,130));
+//    }
     m_soldierBg->setVisible(m_buildingId/1000!=FUN_BUILD_BARRACK4);
     if(m_resIndex!=-1){
         CCLoadSprite::doResourceByCommonIndex(m_resIndex, false);

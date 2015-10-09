@@ -71,7 +71,7 @@ bool ProductionSoldiersView::init()
 //        CCLoadSprite::doResourceByCommonIndex(4, false);
 //    });
     m_colorBg->setContentSize(winSize);
-    m_colorBg->setOpacity(180);
+//    m_colorBg->setOpacity(180);
 
     int sliderW = 300;
     auto m_sliderBg = CCLoadSprite::createScale9Sprite("nb_bar_bg.png");//huadongtiao3.png
@@ -232,6 +232,15 @@ bool ProductionSoldiersView::init()
         }
     }
     
+    m_soldierLight->setPositionZ(400);
+//    float extH = getExtendHeight();
+    int nAdd =  winSize.height - 852;
+    if (CCCommonUtils::isIosAndroidPad())
+    {
+        nAdd =  winSize.height - 2048;
+//        extH = winSize.height - 2048;
+    }
+    m_soldierLight->setPosition(0, 852/2 + nAdd + 10);
     update(1.0f);
     return true;
 }
@@ -307,61 +316,49 @@ void ProductionSoldiersView::addSoldierIcon(){
     }
     
     if(!m_isFort){
-//        if (CCCommonUtils::isIosAndroidPad() && m_resIndex==200 && CCFileUtils::sharedFileUtils()->isFileExist(COMMON_PATH_200_HD))
-//        {
-//            CCLoadSprite::doResourceByPathIndex(COMMON_PATH_HD, m_resIndex, true);
-//        }
-//        else if (CCCommonUtils::isIosAndroidPad() && m_resIndex==201 && CCFileUtils::sharedFileUtils()->isFileExist(COMMON_PATH_201_HD))
-//        {
-//            CCLoadSprite::doResourceByPathIndex(COMMON_PATH_HD, m_resIndex, true);
-//        }
-//        else if (CCCommonUtils::isIosAndroidPad() && m_resIndex==202 && CCFileUtils::sharedFileUtils()->isFileExist(COMMON_PATH_202_HD))
-//        {
-//            CCLoadSprite::doResourceByPathIndex(COMMON_PATH_HD, m_resIndex, true);
-//        }
-//        else if (CCCommonUtils::isIosAndroidPad() && m_resIndex==203 && CCFileUtils::sharedFileUtils()->isFileExist(COMMON_PATH_203_HD))
-//        {
-//            CCLoadSprite::doResourceByPathIndex(COMMON_PATH_HD, m_resIndex, true);
-//        }
-//        else
-            CCLoadSprite::doResourceByCommonIndex(m_resIndex, true);
+        CCLoadSprite::doResourceByCommonIndex(m_resIndex, true);
     }
     ArmyInfo* m_info = getCurArmy();
 //    CCSprite* pic = CCLoadSprite::createSprite(m_info->getBodyIcon().c_str());
     auto pic = C3DShowView::create(m_info->getModelName().c_str(),m_info->getModelTexName().c_str());
     pic->getModel().getObject()->setScale(18);
-    pic->setPosition(pos);
+    pic->setPosition3D(Vec3(pos.x,pos.y,200));
     
 //    // TODO
-//    srand((unsigned int)time(0));
-//    int random_variable = rand() % 100;
-//    string c3b = "3d/soldier/Brawler_idle.c3b";
-//    if (random_variable < 50) c3b = "3d/soldier/Brawler_stand.c3b";
-//    auto animation3d = Animation3D::create(c3b);
-//    if (animation3d) {
-//        auto pAnim = Animate3D::createWithFrames(animation3d, 1, 100);
-//        if (pAnim) {
-//            Action* act = RepeatForever::create(pAnim);
-//            pic->getModel().getObject()->stopAllActions();
-//            pic->getModel().getObject()->runAction(act);
-//        }
-//    }
-//    m_soldierIconNode->addChild(pic);
-//
-    static const int light_beam_TAG = 60000;
-    m_soldierIconNode->removeChildByTag(light_beam_TAG);
-//    auto animationObj = new IFSkeletonAnimation("Spine/nb/light_beam.json", "Spine/nb/light_beam.atlas");
-    auto animationObj = Node::create();
-//    animationObj->setBlendFunc(BlendFunc::ADDITIVE);
-    animationObj->setTag(light_beam_TAG);
-    if (animationObj) {
-//        animationObj->setVisibleStop(false);
-        m_soldierIconNode->addChild(animationObj);
-//        spTrackEntry* entry = animationObj->setAnimation(0, "animation", true);
-//        if (entry) {
-//            animationObj->setTimeScale(entry->endTime / 1.0f);
-//        }
+    srand((unsigned int)time(0));
+    int random_variable = rand() % 100;
+    string c3b = "3d/soldier/c3d10000_idle.c3b";
+    int startFrame = 10;
+    int endFrame = 85;
+    if (random_variable < 50)
+    {
+        c3b = "3d/soldier/c3d10000_stand.c3b";
+        startFrame = 10;
+        endFrame = 100;
     }
+    auto animation3d = Animation3D::create(c3b);
+    if (animation3d) {
+        auto pAnim = Animate3D::createWithFrames(animation3d, startFrame, endFrame);
+        if (pAnim) {
+            Action* act = RepeatForever::create(pAnim);
+            pic->getModel().getObject()->stopAllActions();
+            pic->getModel().getObject()->runAction(act);
+        }
+    }
+    m_soldierIconNode->addChild(pic);
+
+//    static const int light_beam_TAG = 60000;
+//    m_soldierIconNode->removeChildByTag(light_beam_TAG);
+//    auto animationObj = new IFSkeletonAnimation("Spine/nb/light_beam.json", "Spine/nb/light_beam.atlas");
+//    if (animationObj) {
+//        animationObj->setVisibleStop(false);
+//        animationObj->setTag(light_beam_TAG);
+//        animationObj->setPositionZ(300);
+//        m_soldierIconNode->addChild(animationObj);
+//        animationObj->setAnimation(0, "animation", true);
+//        animationObj->setTimeScale(1);
+//    }
+//    CCBLoadFile("ProductionSoldierViewLight");
     
     if(m_info!=NULL && m_buildingLevel<m_info->unlockLevel){
         CCCommonUtils::setSprite3DGray(dynamic_cast<Sprite3D*>(pic),true);
@@ -1290,6 +1287,8 @@ bool ProductionSoldiersView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarg
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_cdGoldTxt", CCLabelIF*, this->m_cdGoldTxt);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_newIcon", CCSprite*, this->m_newIcon);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_soldierLight", CCNode*, this->m_soldierLight);
+    
     return false;
 }
 

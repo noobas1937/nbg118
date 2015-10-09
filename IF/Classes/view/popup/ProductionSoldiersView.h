@@ -147,7 +147,7 @@ private:
     CCSafeObject<CCLabelIF> m_cdGoldTxt;
     
     CCSafeObject<CCSprite> m_newIcon;
-    
+    CCSafeObject<CCNode> m_soldierLight;
     int m_pos;
     int m_resIndex;
     int m_buildingId;
