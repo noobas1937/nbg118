@@ -5579,31 +5579,43 @@ void WorldMapView::addUnderNode(unsigned int index) {
         case CityTile:{
             auto &player = WorldController::getInstance()->m_playerInfo[info.playerName];
             CCArray *arr = getCityPicArr(info, player.cityLv);
+            int count = arr->count();
             int i = 0;
-            while (i < arr->count()) {
+            while (i < count) {
                 auto pics = _dict(arr->objectAtIndex(i));
                 std::string picStr = pics->valueForKey("pic")->getCString();
                 int x = pics->valueForKey("x")->intValue();
                 int y = pics->valueForKey("y")->intValue();
                 
-                auto under = CCLoadSprite::createSprite(picStr.c_str());
+                Node* under = Node::create();
                 under->setAnchorPoint(ccp(0, 0));
                 under->setTag(index);
-                under->setPosition(ccp(pos.x-_halfTileSize.width,pos.y-_halfTileSize.height) + ccp(x, y)); // left-bottom corner
+                under->setPosition(ccp(pos.x - _halfTileSize.width, pos.y - _halfTileSize.height) + ccp(x, y)); // left-bottom corner
                 m_cityItem[index].push_back(under);
                 m_cityBatchNode->addChild(under, index + i);
                 i++;
+
+                std::string island_picStr = pics->valueForKey("island")->getCString();
+                auto island = CCLoadSprite::createSprite(island_picStr.c_str());
+                island->setAnchorPoint(Vec2(0, 0));
+                under->addChild(island);
+                
+                auto house = CCLoadSprite::createSprite(picStr.c_str());
+                house->setAnchorPoint(Vec2(0, 0));
+                under->addChild(house);
+                under->setContentSize(house->getContentSize());
             }
-            if(info.parentCityIndex == info.cityIndex){
+            
+            if (info.parentCityIndex == info.cityIndex) {
                 
                 auto &player = WorldController::getInstance()->m_playerInfo[info.playerName];
                 auto now = WorldController::getInstance()->getTime();
                 
                 addBatchItem(LevelTag, index);
                 
-                auto lv = CCLabelBatch::create(CC_ITOA((int)player.cityLv),m_labelNode);
-                lv->setScale(0.6*MapGlobalScale);
-                lv->setPosition(ccp(30, 10)+pos);
+                auto lv = CCLabelBatch::create(CC_ITOA((int)player.cityLv), m_labelNode);
+                lv->setScale(0.6 * MapGlobalScale);
+                lv->setPosition(ccp(30, 10) + pos);
                 m_cityItem[index].push_back(lv);
                 string fullName = info.playerName;
                 
@@ -7766,6 +7778,18 @@ void WorldMapView::showAndHideFieldMonster(){return;
     }
 }
 
+void addIsland4City(int addIndex, CCDictionary& dict) {
+    if (addIndex == 0) {
+        dict.setObject(CCString::create("Island_001.png"), "island");
+    } else if (addIndex == 1) {
+        dict.setObject(CCString::create("Island_002.png"), "island");
+    } else if (addIndex == 2) {
+        dict.setObject(CCString::create("Island_003.png"), "island");
+    } else { // 3
+        dict.setObject(CCString::create("Island_004.png"), "island");
+    }
+}
+
 CCArray *WorldMapView::getCityPicArr(int addIndex, int level, bool isKing ,int nSpecialId){
     int id = 44100 - 1 + level;
     if(isKing){
@@ -7787,6 +7811,7 @@ CCArray *WorldMapView::getCityPicArr(int addIndex, int level, bool isKing ,int n
         dict->setObject(CCString::createWithFormat("%d.png", startIndex + addIndex), "pic");
         dict->setObject(CCString::create("0"), "x");
         dict->setObject(CCString::create("0"), "y");
+        addIsland4City(addIndex, *dict);
         if (isNewStyle == "0" || (isNewStyle == "" && nSpecialId == -1)) {
             arr->addObject(dict);
         }
@@ -7813,6 +7838,7 @@ CCArray *WorldMapView::getCityPicArr(int addIndex, int level, bool isKing ,int n
                 addDict->setObject(CCString::createWithFormat("%d.png", indexPic), "pic");
                 addDict->setObject(CCString::create(CC_ITOA(x)), "x");
                 addDict->setObject(CCString::create(CC_ITOA(y)), "y");
+                addIsland4City(addIndex, *dict);
                 arr->addObject(addDict);
                 addIndex++;
                 
@@ -7825,8 +7851,10 @@ CCArray *WorldMapView::getCityPicArr(int addIndex, int level, bool isKing ,int n
         dict->setObject(CCString::createWithFormat("%d.png", defaultStartBaseIndex + addIndex), "pic");
         dict->setObject(CCString::create("0"), "x");
         dict->setObject(CCString::create("0"), "y");
+        addIsland4City(addIndex, *dict);
         arr->addObject(dict);
     }
+    
     return arr;
 }
 
