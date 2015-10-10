@@ -70,7 +70,7 @@ void TitanController::parse(CCDictionary *dict)
     
     
     
-    if (status&1) {
+    if (status&TITANVALUECHANGE) {//fusheng 泰坦数值改变
         CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_INFORMATION_RESET,dict );
         
 
@@ -100,7 +100,7 @@ void TitanController::parse(CCDictionary *dict)
 
     }
     
-    if (status&2) {
+    if (status&TITANSTATUECHANGE) { //fusheng 泰坦状态改变
         CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_STATUS_CHANGE,dict );
     }
     

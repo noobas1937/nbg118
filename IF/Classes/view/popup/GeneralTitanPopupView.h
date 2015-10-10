@@ -80,6 +80,10 @@ private:
 //    int feedNum = 0;
 //    int feedMaxNum = 0;
 //    int currentManual=0;
+    float m_ProTitanExtMaxWidth;
+    float m_ProTiTanAPMaxWidth;
+    
+    
     float feedCD ;
     TitanInfo m_titanInfo;
 
