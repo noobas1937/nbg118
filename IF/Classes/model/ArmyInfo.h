@@ -55,7 +55,7 @@ public:
     std::string getModelName();
     std::string getModelTexName();
     std::string getModelAniName();
-    std::vector<std::string> getModelAniNames();
+    void getModelAniByName(std::string name, std::vector<std::string>& ret);
     std::string getHeadIcon();
     std::string getDesc();
     std::string getAttrIcon(int index);

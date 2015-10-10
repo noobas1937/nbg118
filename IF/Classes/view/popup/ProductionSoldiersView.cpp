@@ -325,26 +325,46 @@ void ProductionSoldiersView::addSoldierIcon(){
     pic->setPosition3D(Vec3(pos.x,pos.y,200));
     
 //    // TODO
-    srand((unsigned int)time(0));
-    int random_variable = rand() % 100;
-    string c3b = "3d/soldier/c3d10000_idle.c3b";
-    int startFrame = 10;
-    int endFrame = 85;
-    if (random_variable < 50)
-    {
-        c3b = "3d/soldier/c3d10000_stand.c3b";
-        startFrame = 10;
-        endFrame = 100;
-    }
-    auto animation3d = Animation3D::create(c3b);
-    if (animation3d) {
-        auto pAnim = Animate3D::createWithFrames(animation3d, startFrame, endFrame);
+//    srand((unsigned int)time(0));
+//    int random_variable = rand() % 100;
+//    string c3b = "3d/soldier/c3d10000_idle.c3b";
+//    int startFrame = 10;
+//    int endFrame = 85;
+//    if (random_variable < 50)
+//    {
+//        c3b = "3d/soldier/c3d10000_stand.c3b";
+//        startFrame = 10;
+//        endFrame = 100;
+//    }
+//    Sequence* pSeq = nullptr;
+    Repeat* act1 = nullptr;
+    Repeat* act2 = nullptr;
+
+    std::vector<std::string> stand;
+    m_info->getModelAniByName("stand",stand);
+    auto anim_stand = Animation3D::create(stand[0]);
+    if (anim_stand) {
+        auto pAnim = Animate3D::createWithFrames(anim_stand, atoi(stand[1].c_str()), atoi(stand[2].c_str()));
         if (pAnim) {
-            Action* act = RepeatForever::create(pAnim);
-            pic->getModel().getObject()->stopAllActions();
-            pic->getModel().getObject()->runAction(act);
+            act1 = Repeat::create(pAnim,rand()%2+4);
         }
     }
+    
+    std::vector<std::string> idle;
+    m_info->getModelAniByName("idle",idle);
+    
+    auto anim_idle = Animation3D::create(idle[0]);
+    if (anim_idle) {
+        auto pAnim = Animate3D::createWithFrames(anim_idle, atoi(idle[1].c_str()), atoi(idle[2].c_str()));
+        if (pAnim) {
+            act2 = Repeat::create(pAnim,1);
+        }
+    }
+    
+    Sequence* pSeq = Sequence::createWithTwoActions(act1, act2);
+    auto act = RepeatForever::create(pSeq);
+    pic->getModel().getObject()->stopAllActions();
+    pic->getModel().getObject()->runAction(act);
     m_soldierIconNode->addChild(pic);
 
 //    static const int light_beam_TAG = 60000;

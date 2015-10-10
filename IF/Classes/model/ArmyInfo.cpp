@@ -158,27 +158,41 @@ std::string ArmyInfo::getBodyIcon(){
 
 std::string ArmyInfo::getModelName(){
     std::string itemId = getRealItemId();
-//    return "3d/soldier/c3d" + itemId+ ".c3b";
-    return "3d/soldier/c3d10000.c3b";
+    return "3d/soldier/" + CCCommonUtils::getPropById(itemId, "icon") + ".c3b";
+//    return "3d/soldier/c3d10000.c3b";
 }
 
 std::string ArmyInfo::getModelTexName(){
     std::string itemId = getRealItemId();
-//    return "3d/soldier/tex" + itemId+ ".jpg";
-    return "3d/soldier/c3d10000.jpg";
+    return "3d/soldier/" + CCCommonUtils::getPropById(itemId, "image") + ".jpg";
+//    return "3d/soldier/c3d10000.jpg";
 }
 
-std::string ArmyInfo::getModelAniName(){
-    std::string itemId = getRealItemId();
-    return "3d/soldier/c3d10000_stand.c3b";
-}
 
-std::vector<std::string> ArmyInfo::getModelAniNames(){
+void ArmyInfo::getModelAniByName(std::string name, std::vector<std::string>& ret){
+    // tao.yu  ret的三个string分别是 动作名 起始帧数 结束帧数
     std::string itemId = getRealItemId();
-    std::vector<std::string> ret;
-    ret.push_back("3d/soldier/c3d10000_stand.c3b");
-    ret.push_back("3d/soldier/c3d10000_idle.c3b");
-    return ret;
+    std::string anims = CCCommonUtils::getPropById(itemId, "animations");
+    vector<string> strArr;
+    CCCommonUtils::splitString(anims, "|", strArr);
+    
+    for (int i = 0; i < strArr.size(); ++i) {
+        vector<string> strArr1;
+        CCCommonUtils::splitString(strArr.at(i), ";", strArr1);
+        if (strArr1.at(0) == name) {
+            string ico = getModelName();
+            int pos = ico.find(".c3b");
+            ico.insert(pos, "_"+strArr1.at(0));
+            ret.push_back(ico);
+            ret.push_back(strArr1.at(1));
+            ret.push_back(strArr1.at(2));
+            return;
+        }
+        
+    }
+    ret.push_back("");
+    ret.push_back("");
+    ret.push_back("");
 }
 
 std::string ArmyInfo::getHeadIcon(){

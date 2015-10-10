@@ -21,7 +21,7 @@
         <ItemSpec id="3071800" next="3071900" arrow="5" area="Titan_Feed" enforce="1"/>
         <ItemSpec id="3071900" next="3072000" plot="3071410" area="plot_continue" enforce="1"/>
         <ItemSpec id="3072000" next="3072100" arrow="2" area="Titan_Up" enforce="1"/>
-        <ItemSpec id="3072100" next="3072200" arrow="2" area="TitanUpEnd" enforce="1" mark="1"/>
+        <ItemSpec id="3072100" next="3072200" arrow="2" area="TitanUp_End" enforce="1" mark="1"/>
         <ItemSpec id="3072200" next="3072300" plot="3071510" area="plot_continue" enforce="1"/>
         <ItemSpec id="3072300" next="3072400" plot="3071610" arrow="0" area="plot_continue" enforce="1" mark="1"/>
         <ItemSpec id="3072400" next="3072500" arrow="2" area="MC_17" enforce="1"/>
