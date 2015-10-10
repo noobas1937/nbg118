@@ -29,6 +29,10 @@ bool FlyCell::initFlyCell(CCPoint spt, CCPoint ept, int type, string picPath, in
 {
     m_batchNode = batchNode;
     m_type = type;
+    
+    
+    spt = m_batchNode->convertToNodeSpace(spt);
+    ept = m_batchNode->convertToNodeSpace(ept);
     m_Spr = CCSprite::create();
     if(m_type==Gold){
         m_Spr->initWithSpriteFrame(CCLoadSprite::loadResource(picPath.c_str()));

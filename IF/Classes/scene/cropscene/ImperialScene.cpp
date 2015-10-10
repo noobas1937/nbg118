@@ -2454,47 +2454,51 @@ void ImperialScene::onFlyOutPut(int itemId, int output, int forceResType)
         int startPosx = build->getParent()->getPositionX() + build->mainWidth/2 ;
         int startPosy = build->getParent()->getPositionY() + build->mainHeight/2;
         auto pt = onGetSceenPt(startPosx, startPosy);
-        pt.y = pt.y-winSize.height;
+//        pt.y = pt.y-winSize.height; //fusheng 为什么减去height
         
         string picStr = "Food";
         auto endPt = ccp(0,0);
         int resType = Wood;
         if (itemId/1000 == FUN_BUILD_FOOD || forceResType==Food) {
             SoundController::sharedSound()->playEffects(Music_Sfx_city_harvest_farm);
-            endPt = ccp(200,-60);//winSize.height
-            if(CCCommonUtils::isIosAndroidPad())
-            {
-                endPt = ccpMult(endPt, 2.4);
-            }
+//            endPt = ccp(200,-60);//winSize.height
+//            if(CCCommonUtils::isIosAndroidPad())
+//            {
+//                endPt = ccpMult(endPt, 2.4);
+//            }
+            endPt = UIComponent::getInstance()->m_foodIcon->convertToWorldSpace(Point::ZERO);
             picStr = "Food";
             resType = Food;
         }else if (itemId/1000 == FUN_BUILD_WOOD || forceResType==Wood) {
             SoundController::sharedSound()->playEffects(Music_Sfx_city_harvest_wood);
-            endPt = ccp(90,-40);
-            if(CCCommonUtils::isIosAndroidPad())
-            {
-                endPt = ccpMult(endPt, 2.4);
-            }
+//            endPt = ccp(90,-40);
+//            if(CCCommonUtils::isIosAndroidPad())
+//            {
+//                endPt = ccpMult(endPt, 2.4);
+//            }
+            endPt = UIComponent::getInstance()->m_woodIcon->convertToWorldSpace(Point::ZERO);
             picStr = "Wood";
             resType = Wood;
         }
         else if (itemId/1000 == FUN_BUILD_IRON || forceResType==Iron) {
             SoundController::sharedSound()->playEffects(Music_Sfx_city_harvest_iron);
-            endPt = ccp(320,-40);
-            if(CCCommonUtils::isIosAndroidPad())
-            {
-                endPt = ccpMult(endPt, 2.4);
-            }
+//            endPt = ccp(320,-40);
+//            if(CCCommonUtils::isIosAndroidPad())
+//            {
+//                endPt = ccpMult(endPt, 2.4);
+//            }
+            endPt = UIComponent::getInstance()->m_ironIcon->convertToWorldSpace(Point::ZERO);
             picStr = "Iron";
             resType = Iron;
         }
         else if (itemId/1000 == FUN_BUILD_STONE || forceResType==Stone) {
             SoundController::sharedSound()->playEffects(Music_Sfx_city_harvest_mithril);
-            endPt = ccp(430,-40);
-            if(CCCommonUtils::isIosAndroidPad())
-            {
-                endPt = ccpMult(endPt, 2.4);
-            }
+//            endPt = ccp(430,-40);
+//            if(CCCommonUtils::isIosAndroidPad())
+//            {
+//                endPt = ccpMult(endPt, 2.4);
+//            }
+            endPt = UIComponent::getInstance()->m_stoneIcon->convertToWorldSpace(Point::ZERO);
             picStr = "Stone";
             resType = Stone;
         }
@@ -2510,7 +2514,7 @@ void ImperialScene::onFlyOutPut(int itemId, int output, int forceResType)
 //            auto flyCell = FlyCell::create(pt, endPt, picStr, 5, m_collectBatch, idx*0.2);
 //            m_collectNode->addChild(flyCell);
             
-            auto flyCell = FlyCell::create(pt, endPt,resType, picStr, 5, UIComponent::getInstance()->m_collectBatch, idx*0.2);
+            auto flyCell = FlyCell::create(pt, endPt,resType, picStr, 5, UIComponent::getInstance()->m_collectBatch, idx*0.2);//fusheng 创建一个资源采集动画  加入到UIComponent::getInstance()->m_collectBatch中
             UIComponent::getInstance()->m_collectNode->addChild(flyCell);
             
 //            flyOutPut(itemId, m_flyNodes[tmp-1], idx);
