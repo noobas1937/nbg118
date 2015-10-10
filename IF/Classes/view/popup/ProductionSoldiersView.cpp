@@ -346,7 +346,7 @@ void ProductionSoldiersView::addSoldierIcon(){
     if (anim_stand) {
         auto pAnim = Animate3D::createWithFrames(anim_stand, atoi(stand[1].c_str()), atoi(stand[2].c_str()));
         if (pAnim) {
-            act1 = Repeat::create(pAnim,rand()%2+4);
+            act1 = Repeat::create(pAnim,rand()%2+2);
         }
     }
     
@@ -361,7 +361,7 @@ void ProductionSoldiersView::addSoldierIcon(){
         }
     }
     
-    Sequence* pSeq = Sequence::createWithTwoActions(act1, act2);
+    Sequence* pSeq = Sequence::createWithTwoActions(act2, act1);
     auto act = RepeatForever::create(pSeq);
     pic->getModel().getObject()->stopAllActions();
     pic->getModel().getObject()->runAction(act);
