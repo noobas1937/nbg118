@@ -1195,7 +1195,7 @@ void UIComponent::onQuestStateUpdate(CCObject* p){
                 break;
             }
         }
-        
+        isGold = false ; // fusheng 不显示金币动画
         if (isGold) {
             auto goldAni = AllianceAni::create();
             goldAni->m_alliance->setVisible(false);
