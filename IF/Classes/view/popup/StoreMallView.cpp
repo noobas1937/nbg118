@@ -77,12 +77,12 @@ bool StoreMallView::init()
     m_startPoint4 = m_othBtn->getTitleLabel()->getPosition();
     m_startPoint5 = m_hotBtn->getTitleLabel()->getPosition();
     m_btnPartNode->setPositionY(m_btnPartNode->getPositionY()+20);
-    int count = (size.height-170)/44+1;
-    for (int i=0; i<count; i++) {
-        auto spr = CCLoadSprite::createSprite("Items_bg_big.png");
-        this->m_bgNode->addChild(spr);
-        spr->setPositionY(-i*44);
-    }
+//    int count = (size.height-170)/44+1;
+//    for (int i=0; i<count; i++) {
+//        auto spr = CCLoadSprite::createSprite("Items_bg_big.png");
+//        this->m_bgNode->addChild(spr);
+//        spr->setPositionY(-i*44);
+//    }
     m_isInit = false;
     m_page = 5;
     refreshView(NULL);
@@ -564,8 +564,8 @@ void StoreMallCell::setData(int itemId, int itemId1)
     m_itemId = itemId;
     m_itemId1 = itemId1;
     m_desNode->setVisible(false);
-    m_priceLabel1->setColor({255,255,0});
-    m_priceLabel2->setColor({255,255,0});
+    m_priceLabel1->setColor({130,92,17});
+    m_priceLabel2->setColor({130,92,17});
     m_goldSpr1->setColor({255,255,255});
     m_goldSpr2->setColor({255,255,255});
     m_buyBtngraySpr2->setVisible(false);
@@ -981,7 +981,7 @@ void StoreMallCell::setLeftHot(bool ishot,int num){
             m_hotNumSpr1->setVisible(true);
             m_hotNumgraySpr1->setVisible(false);
             m_nameLabel1->setColor({194,158,116});
-            m_priceLabel1->setColor({255,255,0});
+            m_priceLabel1->setColor({130,92,17});
             m_hotpriceLabel1->setColor({221,172,33});
         }else{
             m_buyBtngraySpr1->setVisible(true);
@@ -1024,7 +1024,7 @@ void StoreMallCell::setRightHot(bool ishot,int num){
             m_hotgraySpr2->setVisible(false);
             m_hotSpr2->setVisible(true);
             m_nameLabel2->setColor({194,158,116});
-            m_priceLabel2->setColor({255,255,0});
+            m_priceLabel2->setColor({130,92,17});
             m_hotpriceLabel2->setColor({221,172,33});
         }else{
             m_saleoutSpr2->setVisible(true);
