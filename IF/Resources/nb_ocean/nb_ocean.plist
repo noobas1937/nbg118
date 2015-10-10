@@ -4,7 +4,7 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>Island_001.png</key>
+            <key>island_001.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{0,0},{256,128}}</string>
@@ -17,7 +17,7 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>Island_002.png</key>
+            <key>island_002.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{256,0},{256,128}}</string>
@@ -30,7 +30,33 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>Island_003.png</key>
+            <key>island_003.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{512,0},{256,128}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{256,128}}</string>
+                <key>sourceSize</key>
+                <string>{256,128}</string>
+            </dict>
+            <key>island_004.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{768,0},{256,128}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{256,128}}</string>
+                <key>sourceSize</key>
+                <string>{256,128}</string>
+            </dict>
+            <key>island_005.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{0,128},{256,128}}</string>
@@ -43,7 +69,7 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>Island_004.png</key>
+            <key>island_006.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{256,128},{256,128}}</string>
@@ -56,10 +82,140 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>sea.png</key>
+            <key>island_007.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{512,128},{256,128}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{256,128}}</string>
+                <key>sourceSize</key>
+                <string>{256,128}</string>
+            </dict>
+            <key>island_008.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{768,128},{256,128}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{256,128}}</string>
+                <key>sourceSize</key>
+                <string>{256,128}</string>
+            </dict>
+            <key>island_009.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{0,256},{256,128}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{256,128}}</string>
+                <key>sourceSize</key>
+                <string>{256,128}</string>
+            </dict>
+            <key>island_010.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{256,256},{256,128}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{256,128}}</string>
+                <key>sourceSize</key>
+                <string>{256,128}</string>
+            </dict>
+            <key>island_011.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{512,256},{256,128}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{256,128}}</string>
+                <key>sourceSize</key>
+                <string>{256,128}</string>
+            </dict>
+            <key>island_012.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{768,256},{256,128}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{256,128}}</string>
+                <key>sourceSize</key>
+                <string>{256,128}</string>
+            </dict>
+            <key>island_013.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{0,384},{256,128}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{256,128}}</string>
+                <key>sourceSize</key>
+                <string>{256,128}</string>
+            </dict>
+            <key>island_014.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{256,384},{256,128}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{256,128}}</string>
+                <key>sourceSize</key>
+                <string>{256,128}</string>
+            </dict>
+            <key>island_015.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{512,384},{256,128}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{256,128}}</string>
+                <key>sourceSize</key>
+                <string>{256,128}</string>
+            </dict>
+            <key>island_016.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{768,384},{256,128}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{256,128}}</string>
+                <key>sourceSize</key>
+                <string>{256,128}</string>
+            </dict>
+            <key>sea.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{0,512},{256,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -77,9 +233,9 @@
             <key>realTextureFileName</key>
             <string>nb_ocean.png</string>
             <key>size</key>
-            <string>{512,512}</string>
+            <string>{1024,1024}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:3ebcbc68d1d3e099711b76036663c2a6:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:e117cb393cfb5b1650d16136ff1b4f47:1/1$</string>
             <key>textureFileName</key>
             <string>nb_ocean.png</string>
         </dict>

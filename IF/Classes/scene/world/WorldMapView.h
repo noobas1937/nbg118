@@ -431,8 +431,12 @@ public:
     std::map<int, unsigned int> getCurrentTile(CCPoint &pt, int rowNum, int colNum, int tileX);
     CCPoint getMarchPoint(MarchInfo &info);
     bool needClearAll;
-    static CCArray *getCityPicArr(int addIndex, int level, bool isKing ,int nSpecialId = -1);
-    static CCArray *getCityPicArr(WorldCityInfo &info, int level,int nSpecialId = -1);
+    
+    // pos : 根据坐标和城市开始索引计算岛的外观，不用存储数据到服务器
+    static CCArray *getCityPicArr(int addIndex, int level, bool isKing ,int nSpecialId = -1, const Vec2& pos = Vec2::ZERO);
+    // pos : 根据坐标和城市开始索引计算岛的外观，不用存储数据到服务器
+    static CCArray *getCityPicArr(WorldCityInfo &info, int level,int nSpecialId = -1, const Vec2& pos = Vec2::ZERO);
+    
     bool isCrossServer;
     void addAllianceArea(int cityIndex,bool isMyAlliance);
     bool isDownloadingMinimap;

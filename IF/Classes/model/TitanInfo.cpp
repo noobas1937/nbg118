@@ -32,20 +32,21 @@ void splitString(const std::string& strSrc, const std::string& strFind, std::vec
 
 TitanInfo::TitanInfo(CCDictionary* dict)
 {
-   
+    
     resetTitanInfo(dict);
 }
 
 int TitanInfo::resetTitanInfo(CCDictionary* dict)//0没有改变 1数值改变(页面需要刷新的数值) 2状态改变
 {
-    int dataStatus = 0;
+    
+    int dataStatus = TITANSTATUSNONE;
     if (dict->objectForKey("feednum")) {
         feedNum = dict->valueForKey("feednum")->intValue();
     }
     if (dict->objectForKey("level")) {
         int newLevel = dict->valueForKey("level")->intValue();
         if (newLevel != level) {
-            dataStatus |= 1;
+            dataStatus |= TITANVALUECHANGE;
             level = newLevel;
             
             auto temp = dynamic_cast<CCDictionary*>(LocalController::shared()->DBXMLManager()->getGroupByKey("titan")->objectForKey(CCString::createWithFormat("%d", level)->getCString()));
@@ -66,6 +67,38 @@ int TitanInfo::resetTitanInfo(CCDictionary* dict)//0没有改变 1数值改变(�
 //                costmanual(0),
 //                recoverInterval(0)
             }
+            if(newLevel != 1)
+            {
+                
+                string oldID =CCString::createWithFormat("1074%02d",newLevel-1)->getCString();
+                
+                if( GlobalData::shared()->armyList.find(oldID)!= GlobalData::shared()->armyList.end())
+                {
+                    GlobalData::shared()->armyList[CCString::createWithFormat("1074%02d",newLevel-1)->getCString()].free = 0; //fusheng 刷新泰坦士兵数据
+                }
+                
+                string newID =CCString::createWithFormat("1074%02d",newLevel)->getCString();
+                
+                if( GlobalData::shared()->armyList.find(oldID) == GlobalData::shared()->armyList.end())
+                {
+                    
+                   
+                    ArmyInfo ai ;
+                    ai.free = 1;
+                    ai.finishTime = 0;
+                    ai.food = 0;
+                    GlobalData::shared()->armyList.insert(make_pair(newID, ai));
+                    
+                }
+                else
+                {
+                    GlobalData::shared()->armyList[CCString::createWithFormat("1074%02d",newLevel)->getCString()].free = 1;
+                    GlobalData::shared()->armyList[CCString::createWithFormat("1074%02d",newLevel)->getCString()].finishTime = 0;
+
+                }
+                
+            }
+
         }
         
         
@@ -73,7 +106,7 @@ int TitanInfo::resetTitanInfo(CCDictionary* dict)//0没有改变 1数值改变(�
     if (dict->objectForKey("maxmanual")) {
         int newData =  dict->valueForKey("maxmanual")->intValue();
         if (newData != currentManual) {
-            dataStatus |= 1;
+            dataStatus |= TITANVALUECHANGE;
             currentManual = newData;
             
         }
@@ -82,7 +115,7 @@ int TitanInfo::resetTitanInfo(CCDictionary* dict)//0没有改变 1数值改变(�
     if (dict->objectForKey("exp")) {
         int newData =  dict->valueForKey("exp")->intValue();
         if (newData != exp) {
-            dataStatus |= 1;
+            dataStatus |= TITANVALUECHANGE;
             exp = newData;
         }
         
@@ -91,7 +124,7 @@ int TitanInfo::resetTitanInfo(CCDictionary* dict)//0没有改变 1数值改变(�
         
         std::string newData =  dict->valueForKey("titanid")->getCString();
         if (newData != titanId) {
-            dataStatus |= 1;
+            dataStatus |= TITANVALUECHANGE;
             titanId = newData;
         }
         
@@ -99,7 +132,7 @@ int TitanInfo::resetTitanInfo(CCDictionary* dict)//0没有改变 1数值改变(�
     if (dict->objectForKey("status")) {
         int newData =  dict->valueForKey("status")->intValue();
         if (newData != status) {
-            dataStatus |= 2;
+            dataStatus |= TITANSTATUECHANGE;
             status = newData;
         }
         
@@ -111,7 +144,7 @@ int TitanInfo::resetTitanInfo(CCDictionary* dict)//0没有改变 1数值改变(�
         if (temp222->objectForKey("updateTime")) {
             long newData =  temp222->valueForKey("updateTime")->longValue();
             if (newData/1000 != feedcd) {
-                dataStatus |= 1;
+                dataStatus |= TITANVALUECHANGE;
                 feedcd = newData/1000;
             }
             

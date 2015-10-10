@@ -5578,7 +5578,7 @@ void WorldMapView::addUnderNode(unsigned int index) {
             break;
         case CityTile:{
             auto &player = WorldController::getInstance()->m_playerInfo[info.playerName];
-            CCArray *arr = getCityPicArr(info, player.cityLv);
+            CCArray *arr = getCityPicArr(info, player.cityLv, -1, pos);
             int count = arr->count();
             int i = 0;
             while (i < count) {
@@ -7778,19 +7778,26 @@ void WorldMapView::showAndHideFieldMonster(){return;
     }
 }
 
-void addIsland4City(int addIndex, CCDictionary& dict) {
-    if (addIndex == 0) {
-        dict.setObject(CCString::create("Island_001.png"), "island");
-    } else if (addIndex == 1) {
-        dict.setObject(CCString::create("Island_002.png"), "island");
-    } else if (addIndex == 2) {
-        dict.setObject(CCString::create("Island_003.png"), "island");
-    } else { // 3
-        dict.setObject(CCString::create("Island_004.png"), "island");
+void addIsland4City(int x, int y, int startIndex, int addIndex, CCDictionary& dict) {
+    static const char* ISLANDS_0[] = {"island_001.png", "island_002.png", "island_003.png", "island_004.png",};
+    static const char* ISLANDS_1[] = {"island_005.png", "island_006.png", "island_007.png", "island_008.png",};
+    static const char* ISLANDS_2[] = {"island_009.png", "island_010.png", "island_011.png", "island_012.png",};
+    static const char* ISLANDS_3[] = {"island_013.png", "island_014.png", "island_015.png", "island_016.png",};
+    
+    if (addIndex >= 0 && addIndex < 4) {
+        // 根据坐标和城市开始索引计算岛的外观，不用存储数据到服务器
+        startIndex = startIndex ? startIndex : 1;
+        int random_variable = (x + y) / startIndex % 4;
+        
+        const char** ISLANDS = ISLANDS_0;
+        if (random_variable == 1) ISLANDS = ISLANDS_1;
+        else if (random_variable == 2) ISLANDS = ISLANDS_2;
+        else if (random_variable == 3) ISLANDS = ISLANDS_3;
+        dict.setObject(CCString::create(ISLANDS[addIndex]), "island");
     }
 }
 
-CCArray *WorldMapView::getCityPicArr(int addIndex, int level, bool isKing ,int nSpecialId){
+CCArray *WorldMapView::getCityPicArr(int addIndex, int level, bool isKing ,int nSpecialId, const Vec2& pos){
     int id = 44100 - 1 + level;
     if(isKing){
         id = 44999;
@@ -7811,7 +7818,7 @@ CCArray *WorldMapView::getCityPicArr(int addIndex, int level, bool isKing ,int n
         dict->setObject(CCString::createWithFormat("%d.png", startIndex + addIndex), "pic");
         dict->setObject(CCString::create("0"), "x");
         dict->setObject(CCString::create("0"), "y");
-        addIsland4City(addIndex, *dict);
+        addIsland4City(pos.x, pos.y, startIndex, addIndex, *dict);
         if (isNewStyle == "0" || (isNewStyle == "" && nSpecialId == -1)) {
             arr->addObject(dict);
         }
@@ -7838,7 +7845,7 @@ CCArray *WorldMapView::getCityPicArr(int addIndex, int level, bool isKing ,int n
                 addDict->setObject(CCString::createWithFormat("%d.png", indexPic), "pic");
                 addDict->setObject(CCString::create(CC_ITOA(x)), "x");
                 addDict->setObject(CCString::create(CC_ITOA(y)), "y");
-                addIsland4City(addIndex, *dict);
+                addIsland4City(pos.x, pos.y, indexPic, addIndex, *dict);
                 arr->addObject(addDict);
                 addIndex++;
                 
@@ -7851,14 +7858,14 @@ CCArray *WorldMapView::getCityPicArr(int addIndex, int level, bool isKing ,int n
         dict->setObject(CCString::createWithFormat("%d.png", defaultStartBaseIndex + addIndex), "pic");
         dict->setObject(CCString::create("0"), "x");
         dict->setObject(CCString::create("0"), "y");
-        addIsland4City(addIndex, *dict);
+        addIsland4City(pos.x, pos.y, 0, addIndex, *dict);
         arr->addObject(dict);
     }
     
     return arr;
 }
 
-CCArray *WorldMapView::getCityPicArr(WorldCityInfo &info, int level,int nSpecialId){
+CCArray *WorldMapView::getCityPicArr(WorldCityInfo &info, int level,int nSpecialId, const Vec2& pos){
     int addIndex = 0;
     if(info.cityIndex == info.parentCityIndex - 1){
         addIndex = 1;
@@ -7872,7 +7879,7 @@ CCArray *WorldMapView::getCityPicArr(WorldCityInfo &info, int level,int nSpecial
     if(playerInfo != WorldController::getInstance()->m_playerInfo.end() && playerInfo->second.officer == KINGDOM_KING_ID){
         isKing = true;
     }
-    return getCityPicArr(addIndex, level, isKing ,nSpecialId);
+    return getCityPicArr(addIndex, level, isKing ,nSpecialId, pos);
 }
 void WorldMapView::changeServer(int serverId){
     GlobalData::shared()->playerInfo.currentServerId = serverId;

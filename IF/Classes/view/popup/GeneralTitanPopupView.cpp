@@ -193,7 +193,9 @@ bool GeneralTitanPopupView::init()
 //    auto sdsds = cocos2d::Label::createWithBMFont("Arial_Bold.fnt", "222221122");
 //        this->m_titanPos->addChild(sdsds);
     
-
+    m_ProTitanExtMaxWidth = m_ProTitanExt->getContentSize().width;
+    
+    m_ProTiTanAPMaxWidth = m_ProTiTanAP->getContentSize().width;
  
     m_ProTitanExt->setVisible(true);
     
@@ -345,9 +347,24 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         float ratio =((float)m_titanInfo.exp)/m_titanInfo.nextExp;
         
         auto size = this->m_ProTitanExt->getContentSize();
-        size.width = 248.0*ratio;
         
-        this->m_ProTitanExt->setContentSize(size);
+        size.width = m_ProTitanExtMaxWidth*ratio;
+        
+        m_ProTitanExt->setVisible(ratio != 0);
+        
+        auto oriSize = m_ProTitanExt->getOriginalSize();
+        
+        if (size.width<oriSize.width) {
+            
+            this->m_ProTitanExt->setContentSize(oriSize);
+
+        }
+        else
+        {
+            this->m_ProTitanExt->setContentSize(size);
+
+        }
+        
     }
     else
     {
@@ -369,8 +386,28 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         float ratio =((float)m_titanInfo.currentManual)/m_titanInfo.maxManual;
         
         auto size = this->m_ProTiTanAP->getContentSize();
-        size.width = 178.0*ratio;
-        this->m_ProTiTanAP->setContentSize(size);
+        
+        size.width = m_ProTiTanAPMaxWidth * ratio;
+        
+        
+        m_ProTiTanAP->setVisible(ratio != 0);
+       
+        auto oriSize = m_ProTiTanAP->getOriginalSize();
+        
+        if (size.width<oriSize.width) {
+            
+            this->m_ProTiTanAP->setContentSize(oriSize);
+            
+        }
+        else
+        {
+            this->m_ProTiTanAP->setContentSize(size);
+            
+        }
+        
+        
+        
+        
         this->m_titanAPTxt->setString(CCString::createWithFormat("AP:%d/%d",m_titanInfo.currentManual,m_titanInfo.maxManual)->getCString());
 
     }
