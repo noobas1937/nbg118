@@ -2104,8 +2104,8 @@ void UIComponent::onSceneChanged(CCObject* params){
             int isFirstPop = CCUserDefault::sharedUserDefault()->getIntegerForKey(isFirstPopKey.c_str(),0);
                 
             if (isFirstPop==0) {
-                SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
-                PopupViewController::getInstance()->addPopupView(WorldPopupOnceView::create());
+//                SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
+               // PopupViewController::getInstance()->addPopupView(WorldPopupOnceView::create());//fusheng 不弹出提示界面
                     
                 isFirstPop = 1;
                 CCUserDefault::sharedUserDefault()->setIntegerForKey(isFirstPopKey.c_str(), isFirstPop);

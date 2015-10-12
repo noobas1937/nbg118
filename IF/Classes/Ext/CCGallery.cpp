@@ -1,14 +1,13 @@
 //
 //  CCGallery.cpp
 //  CrazyBirdTD
-//
-//  Created by lian jin on 12-3-7.
+
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 
 #include "CCGallery.h"
 
-#include "CCLuaEngine.h"
+//#include "CCLuaEngine.h"
 
 #include <math.h>
 
@@ -71,7 +70,7 @@ void CCGallery::onEnter()
 	CCLayer::onEnter();
 	
 	scheduleUpdate();
-//    setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
+    setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
     setTouchEnabled(true);
 //	Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, 0, false);
 }
@@ -180,8 +179,8 @@ void CCGallery::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t 
 	glEnable(GL_SCISSOR_TEST);
 	Director::getInstance()->getOpenGLView()->setScissorInPoints(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
 	
-	CCLayer::visit();
-	
+	Layer::visit(renderer,parentTransform,parentFlags);
+
 	glDisable(GL_SCISSOR_TEST);
 }
 

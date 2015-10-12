@@ -169,30 +169,41 @@ std::string ArmyInfo::getModelTexName(){
 }
 
 
-void ArmyInfo::getModelAniByName(std::string name, std::vector<std::string>& ret){
+void ArmyInfo::getModelAniByName(int actIndex, std::vector<std::string>& ret){
     // tao.yu  ret的三个string分别是 动作名 起始帧数 结束帧数
     std::string itemId = getRealItemId();
     std::string anims = CCCommonUtils::getPropById(itemId, "animations");
     vector<string> strArr;
     CCCommonUtils::splitString(anims, "|", strArr);
     
-    for (int i = 0; i < strArr.size(); ++i) {
-        vector<string> strArr1;
-        CCCommonUtils::splitString(strArr.at(i), ";", strArr1);
-        if (strArr1.at(0) == name) {
-            string ico = getModelName();
-            int pos = ico.find(".c3b");
-            ico.insert(pos, "_"+strArr1.at(0));
-            ret.push_back(ico);
-            ret.push_back(strArr1.at(1));
-            ret.push_back(strArr1.at(2));
-            return;
-        }
-        
+    if (actIndex >= strArr.size())
+    {
+        ret.push_back("");
+        ret.push_back("");
+        ret.push_back("");
+        return;
     }
-    ret.push_back("");
-    ret.push_back("");
-    ret.push_back("");
+    
+    vector<string> strArr1;
+    CCCommonUtils::splitString(strArr.at(actIndex), ";", strArr1);
+    ret.push_back("3d/soldier/"+strArr1.at(0)+".c3b");
+    ret.push_back(strArr1.at(1));
+    ret.push_back(strArr1.at(2));
+
+//    for (int i = 0; i < strArr.size(); ++i) {
+//        vector<string> strArr1;
+//        CCCommonUtils::splitString(strArr.at(i), ";", strArr1);
+//        if (strArr1.at(0) == name) {
+//            string ico = getModelName();
+//            int pos = ico.find(".c3b");
+//            ico.insert(pos, "_"+strArr1.at(0));
+//            ret.push_back(ico);
+//            ret.push_back(strArr1.at(1));
+//            ret.push_back(strArr1.at(2));
+//            return;
+//        }
+//        
+//    }
 }
 
 std::string ArmyInfo::getHeadIcon(){

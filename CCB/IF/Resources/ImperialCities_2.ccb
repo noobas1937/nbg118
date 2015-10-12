@@ -44,6 +44,24 @@
 			<key>position</key>
 			<real>3061</real>
 		</dict>
+		<dict>
+			<key>orientation</key>
+			<integer>1</integer>
+			<key>position</key>
+			<real>1868</real>
+		</dict>
+		<dict>
+			<key>orientation</key>
+			<integer>0</integer>
+			<key>position</key>
+			<real>2093</real>
+		</dict>
+		<dict>
+			<key>orientation</key>
+			<integer>0</integer>
+			<key>position</key>
+			<real>2108</real>
+		</dict>
 	</array>
 	<key>jsControlled</key>
 	<false/>
@@ -2364,8 +2382,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>1419.14501953125</real>
-							<real>2592.50537109375</real>
+							<real>1308.14501953125</real>
+							<real>2698.50537109375</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -2716,9 +2734,9 @@
 				<key>customClass</key>
 				<string></string>
 				<key>displayName</key>
-				<string>m_node11</string>
+				<string>m_node12</string>
 				<key>memberVarAssignmentName</key>
-				<string>m_node11</string>
+				<string>m_node12</string>
 				<key>memberVarAssignmentType</key>
 				<integer>2</integer>
 				<key>properties</key>
@@ -2730,8 +2748,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>2006.2581787109375</real>
-							<real>2254.894775390625</real>
+							<real>1995.89013671875</real>
+							<real>2273.90283203125</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -2777,9 +2795,9 @@
 				<key>customClass</key>
 				<string></string>
 				<key>displayName</key>
-				<string>m_node12</string>
+				<string>m_node11</string>
 				<key>memberVarAssignmentName</key>
-				<string>m_node12</string>
+				<string>m_node11</string>
 				<key>memberVarAssignmentType</key>
 				<integer>2</integer>
 				<key>properties</key>
@@ -2791,8 +2809,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>1804.3529052734375</real>
-							<real>2120.50341796875</real>
+							<real>1870.0169677734375</real>
+							<real>2106.679443359375</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -2829,6 +2847,8 @@
 						<false/>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>

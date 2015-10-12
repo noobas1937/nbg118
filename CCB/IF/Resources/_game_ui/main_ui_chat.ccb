@@ -506,7 +506,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>-535</real>
+									<real>-549</real>
 									<real>-11</real>
 									<integer>0</integer>
 								</array>
@@ -569,7 +569,7 @@
 								<string>Size</string>
 								<key>value</key>
 								<array>
-									<real>500</real>
+									<real>350</real>
 									<real>30</real>
 									<integer>0</integer>
 								</array>
@@ -622,7 +622,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>-534</real>
+									<real>-548</real>
 									<real>-12</real>
 									<integer>0</integer>
 								</array>
@@ -715,6 +715,8 @@
 								<string>Sample Text </string>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 				</array>
 				<key>customClass</key>
@@ -772,8 +774,6 @@
 						<false/>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>
