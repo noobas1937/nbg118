@@ -498,6 +498,7 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
             titanFeedNode->setVisible(true);
             titanUpingNode->setVisible(false);
             m_titanFeedCDNode->setPosition(490,-39);
+            m_titanFeedCDNode->setVisible(false);
             
         }
         else
@@ -509,6 +510,7 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
             titanFeedNode->setVisible(false);
             titanUpingNode->setVisible(true);
             m_titanFeedCDNode->setPosition(259,-75);
+            m_titanFeedCDNode->setVisible(true);
         }
         string timeInfo = CC_SECTOA((int)this->feedCD);
         this->m_feedCDTxt->setString(timeInfo);
@@ -530,8 +532,14 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         titanFeedNode->setVisible(true);
         titanUpingNode->setVisible(false);
         m_titanFeedCDNode->setPosition(490,-39);
+         m_titanFeedCDNode->setVisible(false);
     }
     
+    if(m_titanInfo.feedNum>=m_titanInfo.feedMaxNum)
+    {
+        isCanFeed = false;
+    }
+
     
 
     this->m_titanFeedBtn->setEnabled(isCanFeed);
