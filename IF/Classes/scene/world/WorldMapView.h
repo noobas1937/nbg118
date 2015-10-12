@@ -153,54 +153,7 @@ public:
     virtual void visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags);
 };
 
-class DynamicTiledMap : public TMXTiledMap {
-public:
-    
-    static DynamicTiledMap* create(const char *tmxFile,const CCPoint& pos, int loopSize) {
-        
-        DynamicTiledMap *pRet = new DynamicTiledMap();
-        pRet->isChangingServer = false;
-        pRet->currentTilePoint = pos;
-        pRet->lastDisplayTilePoint = pos;
-        pRet->centerTilePoint = ccp((int)(WorldController::getInstance()->_current_tile_count_x/2),(int)(WorldController::getInstance()->_current_tile_count_y/2));
-        pRet->centerViewPoint = ccp(WorldController::getInstance()->_current_map_width/2, WorldController::getInstance()->_current_map_height/2);
-        CCPoint serverViewPoint =  WorldController::getInstance()->getServerViewPosByPos(WorldController::getInstance()->getServerPosById(GlobalData::shared()->playerInfo.currentServerId));
-        if(WorldController::getInstance()->currentMapType == SERVERFIGHT_MAP){
-            serverViewPoint = ccp(0, 0);
-        }
-        //todo liudi
-//        pRet->initWithTMXFile(tmxFile,pos,serverViewPoint, loopSize)
-        if (pRet->initWithTMXFile(tmxFile,pos,serverViewPoint, loopSize))
-        {
-            pRet->autorelease();
-            return pRet;
-        }
-        CC_SAFE_DELETE(pRet);
-        return NULL;
-    }
-    
-    virtual void setPosition(const CCPoint &position);
-    bool isNeedUpdate();
-    void updateDynamicMap(CCPoint point = ccp(-1, -1));
-    void updataBoderMap(CCPoint point,int serverId);
-    CCPoint getViewPointByTilePoint(const CCPoint &tilePoint,int forceServerId = -1);
-    CCPoint getTilePointByViewPoint(const CCPoint &viewPoint);
-    
-    CCPoint getTileMapPointByViewPoint(const CCPoint &viewPoint);
-    
-    int getServerIdByViewPoint(const CCPoint &viewPoint);
-    void onShowMapMask();
-    CCPoint lastDisplayTilePoint;
-    CCPoint currentTilePoint;
-    CCPoint centerTilePoint;
-    CCPoint centerViewPoint;
-    bool isSendCmd;
-    bool isChangingServer;
-    
-//    static Vector<DynamicTiledMap*> mZombieCaches;
-//    static void saveToCache(const std::string& key, DynamicTiledMap* );
-//    static DynamicTiledMap* loadFromCache(const std::string& key);
-};
+class DynamicTiledMap;
 
 class WorldMapView : public CCLayer,public ITouchDelegate
 {

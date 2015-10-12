@@ -9,6 +9,7 @@
 #include "WorldActivityPush.h"
 #include "WorldController.h"
 #include "WorldMapView.h"
+#include "DynamicTiledMap.h"
 
 void WorldActivityPush::handleResponse(CCDictionary *dict)
 {

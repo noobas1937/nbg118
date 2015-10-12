@@ -9,6 +9,7 @@
 #include "WorldRefresh.h"
 #include "SceneController.h"
 #include "WorldMapView.h"
+#include "DynamicTiledMap.h"
 
 void WorldAllianceRefreshPush::handleResponse(CCDictionary *dict)
 {

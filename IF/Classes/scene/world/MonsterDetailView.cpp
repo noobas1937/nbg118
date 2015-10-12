@@ -14,6 +14,7 @@
 #include "UIComponent.h"
 #include "BattleManager.h"
 #include "MazeController.h"
+#include "DynamicTiledMap.h"
 
 bool MonsterDetailView::init(unsigned int index) {
     PopupBaseView::init();

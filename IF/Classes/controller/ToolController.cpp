@@ -29,6 +29,7 @@
 #include "DynamicResourceController.h"
 #include "ShowStatusItemCommand.h"
 #include "ImperialScene.h"
+#include "DynamicTiledMap.h"
 
 static ToolController *_instance = NULL;
 

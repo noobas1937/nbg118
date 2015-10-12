@@ -993,6 +993,7 @@
 		B80E14461BC75C420042B725 /* nb_ocean in Resources */ = {isa = PBXBuildFile; fileRef = B80E14441BC75C420042B725 /* nb_ocean */; settings = {ASSET_TAGS = (); }; };
 		B80E14471BC75C420042B725 /* nb_ocean.tmx in Resources */ = {isa = PBXBuildFile; fileRef = B80E14451BC75C420042B725 /* nb_ocean.tmx */; settings = {ASSET_TAGS = (); }; };
 		B8581EA01BBA34E70027F733 /* TypeDefinition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8581E9F1BBA34E70027F733 /* TypeDefinition.cpp */; settings = {ASSET_TAGS = (); }; };
+		B864A3BD1BCB43EA001BD875 /* DynamicTiledMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B864A3BB1BCB43EA001BD875 /* DynamicTiledMap.cpp */; settings = {ASSET_TAGS = (); }; };
 		BA19245118C87ED7009C1CEA /* CCLabelIFBMFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA19244D18C87ED7009C1CEA /* CCLabelIFBMFont.cpp */; };
 		BA19245218C87ED7009C1CEA /* CCLabelIFTTF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA19244F18C87ED7009C1CEA /* CCLabelIFTTF.cpp */; };
 		BA2EB25818E2A0DA00DB3D83 /* DefaultTableViewDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA2EB25618E2A0DA00DB3D83 /* DefaultTableViewDelegate.cpp */; };
@@ -3133,6 +3134,8 @@
 		B80E14441BC75C420042B725 /* nb_ocean */ = {isa = PBXFileReference; lastKnownFileType = folder; name = nb_ocean; path = Resources/nb_ocean; sourceTree = "<group>"; };
 		B80E14451BC75C420042B725 /* nb_ocean.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = nb_ocean.tmx; path = Resources/nb_ocean.tmx; sourceTree = "<group>"; };
 		B8581E9F1BBA34E70027F733 /* TypeDefinition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TypeDefinition.cpp; sourceTree = "<group>"; };
+		B864A3BB1BCB43EA001BD875 /* DynamicTiledMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DynamicTiledMap.cpp; sourceTree = "<group>"; };
+		B864A3BC1BCB43EA001BD875 /* DynamicTiledMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamicTiledMap.h; sourceTree = "<group>"; };
 		BA19244D18C87ED7009C1CEA /* CCLabelIFBMFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelIFBMFont.cpp; sourceTree = "<group>"; };
 		BA19244E18C87ED7009C1CEA /* CCLabelIFBMFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelIFBMFont.h; sourceTree = "<group>"; };
 		BA19244F18C87ED7009C1CEA /* CCLabelIFTTF.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelIFTTF.cpp; sourceTree = "<group>"; };
@@ -6431,6 +6434,8 @@
 				943208B01B84A7B600AB9658 /* TerritoryBannerTile.h */,
 				943208B21B84A9ED00AB9658 /* TerritoryBannerPopupView.cpp */,
 				943208B31B84A9ED00AB9658 /* TerritoryBannerPopupView.h */,
+				B864A3BB1BCB43EA001BD875 /* DynamicTiledMap.cpp */,
+				B864A3BC1BCB43EA001BD875 /* DynamicTiledMap.h */,
 			);
 			path = world;
 			sourceTree = "<group>";
@@ -7462,6 +7467,7 @@
 				1C430B1C1A83341200D1E3C1 /* IFSkeletonNode.cpp in Sources */,
 				96DA89D1195AA89F000D62BF /* AchieveFinishView.cpp in Sources */,
 				7C279879196D0D6500856889 /* AchievementDetailPopUpView.cpp in Sources */,
+				B864A3BD1BCB43EA001BD875 /* DynamicTiledMap.cpp in Sources */,
 				272AB6121B15C7BC0052E896 /* BanPopUpController.mm in Sources */,
 				E6C5BD4F1B78D5B1008136DB /* PhoneDeviceCommand.cpp in Sources */,
 				96A558B71A3F199400E3D84E /* PushKingdomKing.cpp in Sources */,

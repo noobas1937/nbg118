@@ -11,6 +11,7 @@
 #include "WorldMapView.h"
 #include "SceneController.h"
 #include "ParticleController.h"
+#include "DynamicTiledMap.h"
 
 class RockAni *RockAni::create(CCNode *parent){
     RockAni *ret = new RockAni();

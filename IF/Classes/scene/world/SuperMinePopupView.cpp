@@ -11,6 +11,8 @@
 #include "YesNoDialog.h"
 #include "WorldCommand.h"
 #include "FunBuildController.h"
+#include "DynamicTiledMap.h"
+
 SuperMinePopupView* SuperMinePopupView::create(WorldResourceType resType,int tileIndex){
     SuperMinePopupView* pRet = new SuperMinePopupView(resType ,tileIndex);
     if (pRet && pRet->init()) {

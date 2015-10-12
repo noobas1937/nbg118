@@ -10,6 +10,8 @@
 #include "IFHeiqishiNode.h"
 #include "WorldMapView.h"
 #include "DynamicResourceController.h"
+#include "DynamicTiledMap.h"
+
 #define tag_touchSp 110
 
 bool IFHeiqishiNode::init()

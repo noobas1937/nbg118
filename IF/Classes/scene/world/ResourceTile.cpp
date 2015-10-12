@@ -19,6 +19,8 @@
 #include "SoundController.h"
 #include "EnemyInfoController.h"
 #include "TipsWithPicView.h"
+#include "DynamicTiledMap.h"
+
 bool ResourceTile::init() {
     NewBaseTileInfo::init();
     std::string resName = "";

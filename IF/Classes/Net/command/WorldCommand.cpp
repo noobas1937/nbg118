@@ -24,6 +24,8 @@
 #include "YesNoDialog.h"
 #include "TitanController.h"
 #include "PopupViewController.h"
+#include "DynamicTiledMap.h"
+
 bool WorldResourceUpdateCommand::handleRecieve(cocos2d::CCDictionary *dict)
 {
     if (dict->valueForKey("cmd")->compare(WORLD_RESOURCE_UPDATE_COMMAND) != 0)

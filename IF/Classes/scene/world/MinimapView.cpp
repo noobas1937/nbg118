@@ -18,6 +18,7 @@
 #include "YesNoDialog.h"
 #include "DynamicResourceController.h"
 #include "FunBuildController.h"
+#include "DynamicTiledMap.h"
 
 #define Legend_Node_Tag 10000
 #define Title_Node_Tag 9999

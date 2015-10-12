@@ -11,6 +11,8 @@
 #include "YesNoDialog.h"
 #include "WorldCommand.h"
 #include "FunBuildController.h"
+#include "DynamicTiledMap.h"
+
 IFAddTowerPopup* IFAddTowerPopup::create(string uid,int tileIndex){
     IFAddTowerPopup* pRet = new IFAddTowerPopup(uid ,tileIndex);
     if (pRet && pRet->init()) {
