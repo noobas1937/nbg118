@@ -16,6 +16,7 @@
 #include "ArcScrollView.h"
 #include "CCSliderBar.h"
 #include "CCClipNode.h"
+#include "CCGallery.h"
 
 class ProductionSoldiersView: public PopupBaseView
 ,public CCBSelectorResolver
@@ -90,6 +91,7 @@ private:
     
     CCSafeObject<CCSliderBar> m_slider;
     CCSafeObject<ArcScrollView> m_arcScroll;
+    CCSafeObject<CCGallery> m_arcGallery;
     CCSafeObject<CCControlButton> m_immediateBtn;
     CCSafeObject<CCControlButton> m_trainBtn;
     CCSafeObject<CCControlButton> m_infoBtn;

@@ -341,7 +341,9 @@ void ProductionSoldiersView::addSoldierIcon(){
     Repeat* act2 = nullptr;
 
     std::vector<std::string> stand;
-    m_info->getModelAniByName("stand",stand);
+    int standActIndex = 0;
+    int idleActIndex = 1;
+    m_info->getModelAniByName(standActIndex,stand);
     auto anim_stand = Animation3D::create(stand[0]);
     if (anim_stand) {
         auto pAnim = Animate3D::createWithFrames(anim_stand, atoi(stand[1].c_str()), atoi(stand[2].c_str()));
@@ -351,7 +353,7 @@ void ProductionSoldiersView::addSoldierIcon(){
     }
     
     std::vector<std::string> idle;
-    m_info->getModelAniByName("idle",idle);
+    m_info->getModelAniByName(idleActIndex,idle);
     
     auto anim_idle = Animation3D::create(idle[0]);
     if (anim_idle) {
@@ -756,6 +758,18 @@ void ProductionSoldiersView::AsyLoadRes2(CCObject* p){
             }
             
         }
+        
+        auto gallery = CCGallery::create(Size(100,300),Size(640,300));
+        gallery->setBackScale(0.5);
+        gallery->setDirection(kCCGalleryDirectionHorizontal);
+        for (int i = 0; i < 5; ++i) {
+            auto sp = CCLoadSprite::createSprite("zb_bp_xuanzhong.png");
+            gallery->addChild(sp);
+        }
+        gallery->addChildFinish();
+        gallery->setTouchEnabled(true);
+
+        m_arcNode->addChild(gallery);
         
         m_arcScroll = ArcScrollView::create(m_arcArmys,2,m_pos);
         m_arcScroll->setCallback(this, callfunc_selector(ProductionSoldiersView::arcButtonClick));
