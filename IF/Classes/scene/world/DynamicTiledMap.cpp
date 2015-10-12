@@ -37,6 +37,61 @@ DynamicTiledMap* DynamicTiledMap::create(const char *tmxFile,const CCPoint& pos,
     return NULL;
 }
 
+DynamicTiledMap::~DynamicTiledMap()
+{
+    CC_SAFE_RELEASE(m_glpstate);
+}
+
+void DynamicTiledMap::applySeaShader(const std::string& texture1, const std::string& textureLight, const std::string& vShaderFilename,
+                                const std::string& fShaderFilename)
+{
+    auto glprogram = GLProgram::createWithFilenames(vShaderFilename, fShaderFilename);
+    m_glpstate = GLProgramState::create(glprogram);
+    CC_SAFE_RETAIN(m_glpstate);
+    
+    auto textrue1 = Director::getInstance()->getTextureCache()->addImage(texture1);
+    m_glpstate->setUniformTexture("u_texture1", textrue1);
+    
+    auto textrue2 = Director::getInstance()->getTextureCache()->addImage(textureLight);
+    m_glpstate->setUniformTexture("u_lightTexture", textrue2);
+    
+    Texture2D::TexParams tRepeatParams;
+    tRepeatParams.magFilter = GL_LINEAR_MIPMAP_LINEAR;
+    tRepeatParams.minFilter = GL_LINEAR;
+    tRepeatParams.wrapS = GL_REPEAT;
+    tRepeatParams.wrapT = GL_REPEAT;
+    textrue2->setTexParameters(tRepeatParams);
+    
+    Vec4 tLightColor(1.0, 1.0, 1.0, 1.0);
+    m_glpstate->setUniformVec4("v_LightColor", tLightColor);
+    
+    m_LightAni.x = m_LightAni.y = 0;
+    
+    for(auto iter = _children.begin(); iter != _children.end(); ++iter)
+    {
+        auto layer = dynamic_cast<TMXLayer*>(*iter);
+        if (!layer) continue;
+        layer->setTileGLProgramState(m_glpstate);
+    }
+    
+    auto shader_update = [this](float dt){
+        if (!m_glpstate) return;
+
+        m_LightAni.x += 0.01;
+        if (m_LightAni.x > 1.0)
+        {
+            m_LightAni.x -= 1.0;
+        }
+        m_LightAni.y += 0.01;
+        if (m_LightAni.y > 1.0)
+        {
+            m_LightAni.y -= 1.0;
+        }
+        m_glpstate->setUniformVec2("v_animLight", m_LightAni);
+    };
+    schedule(shader_update, "shader_update");
+}
+
 void DynamicTiledMap::setPosition(const cocos2d::CCPoint &position) {
     CCNode::setPosition(position);
     if(WorldMapView::instance()->m_touchDelegateView){
@@ -285,6 +340,7 @@ int DynamicTiledMap::getServerIdByViewPoint(const CCPoint &viewPoint){
     int serverId = WorldController::getInstance()->getServerIdByServerPoint(serverTilePoint);
     return serverId;
 }
+
 CCPoint DynamicTiledMap::getTileMapPointByViewPoint(const CCPoint &viewPoint){
     auto newViewPoint = viewPoint;
     auto disPoint = ccpSub(newViewPoint,centerViewPoint);
@@ -346,6 +402,7 @@ CCPoint DynamicTiledMap::getViewPointByTilePoint(const cocos2d::CCPoint &tilePoi
     CCPoint serverViewPoint =  WorldController::getInstance()->getServerViewPosByPos(WorldController::getServerPosById(serverId));
     return serverViewPoint + childMapPoint;
 }
+
 void DynamicTiledMap::updataBoderMap(CCPoint point,int forceServerId){
     if (!WorldMapView::instance()) {
         return;
@@ -393,6 +450,7 @@ void DynamicTiledMap::updataBoderMap(CCPoint point,int forceServerId){
     }
     
 }
+
 void DynamicTiledMap::updateDynamicMap(CCPoint point) {
     if (!WorldMapView::instance()) {
         return;

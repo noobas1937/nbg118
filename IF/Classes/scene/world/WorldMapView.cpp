@@ -197,6 +197,7 @@ bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType) {
 //        auto map = DynamicTiledMap::create("nb_world_bottom.tmx", gotoPoint, 1207);
         auto map = DynamicTiledMap::create("nb_ocean.tmx", gotoPoint, 1201);
         map->setTag(WM_BG_TAG);
+        map->applySeaShader();
 //        map->setPosition(-ccp(256 * (1207 - _tile_count_x) / 2, 128 * (1207 - _tile_count_y)));
         m_layers[WM_BG]->addChild(map);
     }
@@ -7431,6 +7432,7 @@ CCArray *WorldMapView::getCityPicArr(int addIndex, int level, bool isKing ,int n
     return arr;
 }
 
+// item_worldcastle.xml
 CCArray *WorldMapView::getCityPicArr(WorldCityInfo &info, int level,int nSpecialId, const Vec2& pos){
     int addIndex = 0;
     if(info.cityIndex == info.parentCityIndex - 1){

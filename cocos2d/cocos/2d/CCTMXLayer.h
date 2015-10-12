@@ -30,6 +30,8 @@ THE SOFTWARE.
 #include "2d/CCSpriteBatchNode.h"
 #include "2d/CCTMXXMLParser.h"
 #include "base/ccCArray.h"
+#include "2d/CCTMXTiledSprite.hpp"
+
 NS_CC_BEGIN
 
 class TMXMapInfo;
@@ -112,11 +114,11 @@ public:
      * @param tileCoordinate A tile coordinate.
      * @return Returns the tile (Sprite) at a given a tile coordinate.
      */
-    Sprite* getTileAt(const Vec2& tileCoordinate);
+    TMXTiledSprite* getTileAt(const Vec2& tileCoordinate);
     /**
      * @js NA
      */
-    CC_DEPRECATED_ATTRIBUTE Sprite* tileAt(const Vec2& tileCoordinate) { return getTileAt(tileCoordinate); };
+    CC_DEPRECATED_ATTRIBUTE TMXTiledSprite* tileAt(const Vec2& tileCoordinate) { return getTileAt(tileCoordinate); };
     
     /** Returns the tile gid at a given tile coordinate. It also returns the tile flags.
      * This method requires the the tile map has not been previously released (eg. don't call [layer releaseMap]).
@@ -305,6 +307,8 @@ public:
     * @js NA
     */
     virtual std::string getDescription() const override;
+    
+    void setTileGLProgramState(GLProgramState* state); // guo.jiang
 
 //    void revertTileGID(const Vec2& PointileCoordinate);
 protected:
@@ -315,14 +319,14 @@ protected:
     Vec2 calculateLayerOffset(const Vec2& offset);
 
     /* optimization methods */
-    Sprite* appendTileForGID(uint32_t gid, const Vec2& pos);
-    Sprite* insertTileForGID(uint32_t gid, const Vec2& pos);
-    Sprite* updateTileForGID(uint32_t gid, const Vec2& pos);
+    TMXTiledSprite* appendTileForGID(uint32_t gid, const Vec2& pos);
+    TMXTiledSprite* insertTileForGID(uint32_t gid, const Vec2& pos);
+    TMXTiledSprite* updateTileForGID(uint32_t gid, const Vec2& pos);
 
     /* The layer recognizes some special properties, like cc_vertez */
     void parseInternalProperties();
-    void setupTileSprite(Sprite* sprite, Vec2 pos, int gid);
-    Sprite* reusedTileWithRect(Rect rect);
+    void setupTileSprite(TMXTiledSprite* sprite, Vec2 pos, int gid);
+    TMXTiledSprite* reusedTileWithRect(Rect rect);
     int getVertexZForPos(const Vec2& pos);
 
     // index
@@ -340,7 +344,7 @@ protected:
     bool _useAutomaticVertexZ;
 
     //! used for optimization
-    Sprite *_reusedTile;
+    TMXTiledSprite *_reusedTile;
     ccCArray *_atlasIndexArray;
     
     // used for retina display
@@ -365,10 +369,12 @@ protected:
     int m_nDynamicDisplayheight;
     Point m_currentCenter;
     int m_loopSize;
+    
+    GLProgramState* m_glpstate; // guo.jiang
+    
 public:
     std::map<int, unsigned int> m_indexForDynamic;
     std::map<unsigned int, unsigned int> m_originTilesGID;
-    
 };
 
 // end of tilemap_parallax_nodes group

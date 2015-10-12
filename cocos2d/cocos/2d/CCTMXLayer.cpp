@@ -130,6 +130,7 @@ TMXLayer::TMXLayer()
 ,_layerOrientation(TMXOrientationOrtho)
 // Added by ChenFei 2014-12-26 V3.2 support
 ,m_isDynamicAdd(false)
+,m_glpstate(nullptr)
 {}
 
 TMXLayer::~TMXLayer()
@@ -144,6 +145,8 @@ TMXLayer::~TMXLayer()
     }
 
     CC_SAFE_DELETE_ARRAY(_tiles);
+    
+    CC_SAFE_RELEASE(m_glpstate);
 }
 
 void TMXLayer::releaseMap()
@@ -289,12 +292,16 @@ void TMXLayer::setupTilesByCoordinate(const cocos2d::Point &tileCoordinate, cons
         
         Rect rect = _tileSet->getRectForGID(gid);
         rect = CC_RECT_PIXELS_TO_POINTS(rect);
-        Sprite *tile = reusedTileWithRect(rect);
+        TMXTiledSprite *tile = reusedTileWithRect(rect);
         setupTileSprite(tile, pos, gid);
        // CCLOG("    Dump tile:gid:%d [%f,%f](%d) => [%f,%f]", gid, tileCoordinate.x, tileCoordinate.y, indexForZ, tile->getPosition().x, tile->getPosition().y);
          tile->setPosition(mapStartPt + tile->getPosition());
         // Optimization: add the quad without adding a child
         this->insertQuadFromSprite(tile, indexForZ);
+        
+        // guo.jiang
+        if (m_glpstate)
+            tile->setGLProgramState(m_glpstate);
     };
     
     if (_layerOrientation == TMXOrientationIso)
@@ -381,7 +388,7 @@ void TMXLayer::parseInternalProperties()
     }
 }
 
-void TMXLayer::setupTileSprite(Sprite* sprite, Vec2 pos, int gid)
+void TMXLayer::setupTileSprite(TMXTiledSprite* sprite, Vec2 pos, int gid)
 {
     sprite->setPosition(getPositionAt(pos));
     sprite->setPositionZ((float)getVertexZForPos(pos));
@@ -438,11 +445,11 @@ void TMXLayer::setupTileSprite(Sprite* sprite, Vec2 pos, int gid)
     }
 }
 
-Sprite* TMXLayer::reusedTileWithRect(Rect rect)
+TMXTiledSprite* TMXLayer::reusedTileWithRect(Rect rect)
 {
     if (! _reusedTile) 
     {
-        _reusedTile = Sprite::createWithTexture(_textureAtlas->getTexture(), rect);
+        _reusedTile = TMXTiledSprite::createWithTexture(_textureAtlas->getTexture(), rect);
         _reusedTile->setBatchNode(this);
         _reusedTile->retain();
     }
@@ -469,7 +476,7 @@ Sprite* TMXLayer::reusedTileWithRect(Rect rect)
 }
 
 // TMXLayer - obtaining tiles/gids
-Sprite * TMXLayer::getTileAt(const Vec2& pos)
+TMXTiledSprite * TMXLayer::getTileAt(const Vec2& pos)
 {
     CCASSERT(pos.x < _layerSize.width && pos.y < _layerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
     CCASSERT(_tiles && _atlasIndexArray, "TMXLayer: the tiles map has been released");
@@ -480,7 +487,7 @@ Sprite * TMXLayer::getTileAt(const Vec2& pos)
         CCAssert(_tiles && _atlasIndexArray, "TMXLayer: the tiles map has been released");
     }
     
-    Sprite *tile = nullptr;
+    TMXTiledSprite *tile = nullptr;
     
     // Added by ChenFei 2014-12-26 V3.2 support
     if (pos.x >= _layerSize.width || pos.y >= _layerSize.height || pos.x < 0 || pos.y < 0) {
@@ -494,7 +501,7 @@ Sprite * TMXLayer::getTileAt(const Vec2& pos)
     if (gid) 
     {
         int z = (int)(pos.x + pos.y * _layerSize.width);
-        tile = static_cast<Sprite*>(this->getChildByTag(z));
+        tile = static_cast<TMXTiledSprite*>(this->getChildByTag(z));
 
         // tile not created yet. create it
         if (! tile) 
@@ -502,7 +509,7 @@ Sprite * TMXLayer::getTileAt(const Vec2& pos)
             Rect rect = _tileSet->getRectForGID(gid);
             rect = CC_RECT_PIXELS_TO_POINTS(rect);
 
-            tile = Sprite::createWithTexture(this->getTexture(), rect);
+            tile = TMXTiledSprite::createWithTexture(this->getTexture(), rect);
             tile->setBatchNode(this);
             tile->setPosition(getPositionAt(pos));
             tile->setPositionZ((float)getVertexZForPos(pos));
@@ -542,7 +549,7 @@ uint32_t TMXLayer::getTileGIDAt(const Vec2& pos, TMXTileFlags* flags/* = nullptr
 }
 
 // TMXLayer - adding helper methods
-Sprite * TMXLayer::insertTileForGID(uint32_t gid, const Vec2& pos)
+TMXTiledSprite * TMXLayer::insertTileForGID(uint32_t gid, const Vec2& pos)
 {
     if (gid != 0 && (static_cast<int>((gid & kTMXFlippedMask)) - _tileSet->_firstGid) >= 0)
     {
@@ -551,7 +558,7 @@ Sprite * TMXLayer::insertTileForGID(uint32_t gid, const Vec2& pos)
         
         intptr_t z = (intptr_t)(pos.x + pos.y * _layerSize.width);
         
-        Sprite *tile = reusedTileWithRect(rect);
+        TMXTiledSprite *tile = reusedTileWithRect(rect);
         
         setupTileSprite(tile, pos, gid);
         
@@ -582,13 +589,13 @@ Sprite * TMXLayer::insertTileForGID(uint32_t gid, const Vec2& pos)
     return nullptr;
 }
 
-Sprite * TMXLayer::updateTileForGID(uint32_t gid, const Vec2& pos)
+TMXTiledSprite * TMXLayer::updateTileForGID(uint32_t gid, const Vec2& pos)
 {
     Rect rect = _tileSet->getRectForGID(gid);
     rect = Rect(rect.origin.x / _contentScaleFactor, rect.origin.y / _contentScaleFactor, rect.size.width/ _contentScaleFactor, rect.size.height/ _contentScaleFactor);
     int z = (int)(pos.x + pos.y * _layerSize.width);
 
-    Sprite *tile = reusedTileWithRect(rect);
+    TMXTiledSprite *tile = reusedTileWithRect(rect);
 
     setupTileSprite(tile ,pos ,gid);
 
@@ -619,7 +626,7 @@ Sprite * TMXLayer::updateTileForGID(uint32_t gid, const Vec2& pos)
 
 // used only when parsing the map. useless after the map was parsed
 // since lot's of assumptions are no longer true
-Sprite * TMXLayer::appendTileForGID(uint32_t gid, const Vec2& pos)
+TMXTiledSprite * TMXLayer::appendTileForGID(uint32_t gid, const Vec2& pos)
 {
     if (gid != 0 && (static_cast<int>((gid & kTMXFlippedMask)) - _tileSet->_firstGid) >= 0)
     {
@@ -628,7 +635,7 @@ Sprite * TMXLayer::appendTileForGID(uint32_t gid, const Vec2& pos)
         
         intptr_t z = (intptr_t)(pos.x + pos.y * _layerSize.width);
         
-        Sprite *tile = reusedTileWithRect(rect);
+        TMXTiledSprite *tile = reusedTileWithRect(rect);
         
         setupTileSprite(tile ,pos ,gid);
         
@@ -737,7 +744,7 @@ void TMXLayer::setTileGID(uint32_t gid, const Vec2& pos, TMXTileFlags flags)
         else 
         {
             int z = pos.x + pos.y * _layerSize.width;
-            Sprite *sprite = static_cast<Sprite*>(getChildByTag(z));
+            TMXTiledSprite *sprite = static_cast<TMXTiledSprite*>(getChildByTag(z));
             if (sprite)
             {
                 Rect rect = _tileSet->getRectForGID(gid);
@@ -983,6 +990,12 @@ int TMXLayer::getVertexZForPos(const Vec2& pos)
 std::string TMXLayer::getDescription() const
 {
     return StringUtils::format("<TMXLayer | tag = %d, size = %d,%d>", _tag, (int)_mapTileSize.width, (int)_mapTileSize.height);
+}
+
+void TMXLayer::setTileGLProgramState(GLProgramState* state) {
+    CC_SAFE_RELEASE(m_glpstate);
+    m_glpstate = state;
+    CC_SAFE_RETAIN(m_glpstate);
 }
 
 //void TMXLayer::revertTileGID(const Vec2& PointileCoordinate)

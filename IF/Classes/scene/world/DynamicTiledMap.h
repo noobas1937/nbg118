@@ -18,6 +18,13 @@ public:
     
     static DynamicTiledMap* create(const char *tmxFile,const CCPoint& pos, int loopSize);
     
+    ~DynamicTiledMap();
+    
+    void applySeaShader(const std::string& texture1 = "nb_ocean/sea.png",
+                        const std::string& textureLight = "shaders/caustics.png",
+                        const std::string& vShaderFilename = "shaders/water.vsh",
+                        const std::string& fShaderFilename = "shaders/water.fsh");
+    
     virtual void setPosition(const CCPoint &position);
     bool isNeedUpdate();
     void updateDynamicMap(CCPoint point = ccp(-1, -1));
@@ -39,6 +46,10 @@ public:
     //    static Vector<DynamicTiledMap*> mZombieCaches;
     //    static void saveToCache(const std::string& key, DynamicTiledMap* );
     //    static DynamicTiledMap* loadFromCache(const std::string& key);
+    
+protected:
+    GLProgramState* m_glpstate;
+    Vec2 m_LightAni;
 };
 
 #endif /* DynamicTiledMap_h */
