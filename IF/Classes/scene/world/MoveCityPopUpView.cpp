@@ -16,6 +16,8 @@
 #include "DynamicResourceController.h"
 #include "WinPointsUseCommand.h"
 #include "ShakeController.h"
+#include "DynamicTiledMap.h"
+
 MoveCityPopUpView *MoveCityPopUpView::create(MoveCityType cttype,int itemid){
     MoveCityPopUpView *ret = new MoveCityPopUpView();
     if(ret && ret->init(cttype,itemid)){

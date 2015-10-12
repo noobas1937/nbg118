@@ -8,6 +8,7 @@
 
 #include "StaminaRollbackPush.h"
 #include "WorldController.h"
+#include "TitanController.h"
 
 void StaminaRollbackPush::handleResponse(CCDictionary *dict)
 {
@@ -20,5 +21,7 @@ void StaminaRollbackPush::handleResponse(CCDictionary *dict)
         WorldController::getInstance()->currentStamine = params->valueForKey("stamina")->intValue();
         WorldController::getInstance()->lastStamineTime = params->valueForKey("lastStaminaTime")->doubleValue();
         CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_CURRENT_STAMINE);
+        TitanController::getInstance()->parse(params);//fusheng 泰坦体力回滚
+        
     }
 }

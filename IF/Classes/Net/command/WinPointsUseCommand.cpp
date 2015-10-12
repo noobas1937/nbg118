@@ -9,6 +9,7 @@
 #include "WinPointsUseCommand.h"
 #include "SceneController.h"
 #include "WorldMapView.h"
+#include "DynamicTiledMap.h"
 
 bool WinPointsUseCommand::handleRecieve(cocos2d::CCDictionary *dict)
 {

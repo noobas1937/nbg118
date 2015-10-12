@@ -12,6 +12,8 @@
 #include "WorldCommand.h"
 #include "FunBuildController.h"
 #include "CCFlagWaveSprite.h"
+#include "DynamicTiledMap.h"
+
 TerritoryBannerPopupView* TerritoryBannerPopupView::create(int tileIndex, std::string banner){
     TerritoryBannerPopupView* pRet = new TerritoryBannerPopupView(tileIndex,banner);
     if (pRet && pRet->init()) {

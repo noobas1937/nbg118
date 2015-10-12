@@ -1195,7 +1195,7 @@ void UIComponent::onQuestStateUpdate(CCObject* p){
                 break;
             }
         }
-        
+        isGold = false ; // fusheng 不显示金币动画
         if (isGold) {
             auto goldAni = AllianceAni::create();
             goldAni->m_alliance->setVisible(false);
@@ -3095,15 +3095,17 @@ void UIComponent::onMailClick(CCObject *pSender, CCControlEvent pCCControlEvent)
         CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("UI_mail"));
     }
 #else
-    if (ChatServiceCocos2dx::Mail_OC_Native_Enable){
-       //原生邮件打开
-        ChatServiceCocos2dx::creatingMailListWith_OC_Native();
-    }else{
-        PopupViewController::getInstance()->addPopupInView(MailPopUpView::create());
-        
-        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("UI_mail"));
-    }
- 
+//    if (ChatServiceCocos2dx::Mail_OC_Native_Enable){//fusheng 不使用原生邮件
+//       //原生邮件打开
+//        ChatServiceCocos2dx::creatingMailListWith_OC_Native();
+//    }else{
+//        PopupViewController::getInstance()->addPopupInView(MailPopUpView::create());
+//        
+//        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("UI_mail"));
+//    }
+    PopupViewController::getInstance()->addPopupInView(MailPopUpView::create());
+    
+    CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("UI_mail"));
     
 #endif
    

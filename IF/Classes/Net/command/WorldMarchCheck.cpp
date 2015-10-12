@@ -10,6 +10,7 @@
 #include "SceneController.h"
 #include "WorldController.h"
 #include "WorldMapView.h"
+#include "DynamicTiledMap.h"
 
 bool WorldMarchCheck::handleRecieve(cocos2d::CCDictionary *dict)
 {

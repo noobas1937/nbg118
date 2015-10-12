@@ -11,6 +11,8 @@
 #include "YesNoDialog.h"
 #include "WorldCommand.h"
 #include "FunBuildController.h"
+#include "DynamicTiledMap.h"
+
 WareHousePopupView* WareHousePopupView::create(int tileIndex){
     WareHousePopupView* pRet = new WareHousePopupView(tileIndex);
     if (pRet && pRet->init()) {

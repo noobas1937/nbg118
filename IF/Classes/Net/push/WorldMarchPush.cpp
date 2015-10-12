@@ -19,6 +19,7 @@
 #include "SoundController.h"
 #include "WorldMapView.h"
 #include "ChatServiceCocos2dx.h"
+#include "DynamicTiledMap.h"
 
 void WorldMarchPush::handleResponse(cocos2d::CCDictionary *dict)
 {

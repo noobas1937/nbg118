@@ -30,6 +30,8 @@
 #include "CCMathUtils.h"
 #include "CCSafeNotificationCenter.h"
 #include "TitanInfoCommand.h"
+#include "DynamicTiledMap.h"
+
 bool MarchInfo::isDelay() {
     string delayId = "501010";
     return isStatus(delayId);

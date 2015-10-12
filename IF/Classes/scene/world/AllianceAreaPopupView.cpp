@@ -12,6 +12,8 @@
 #include "WorldCommand.h"
 #include "FunBuildController.h"
 #include "CCFlagWaveSprite.h"
+#include "DynamicTiledMap.h"
+
 AllianceAreaPopupView* AllianceAreaPopupView::create(string aareaId,int tileIndex){
     AllianceAreaPopupView* pRet = new AllianceAreaPopupView(aareaId ,tileIndex);
     if (pRet && pRet->init()) {

@@ -21,6 +21,7 @@
 #include "EnemyInfoController.h"
 #include "TerritoryTile.h"
 #include "WinPointsUseCommand.h"
+#include "DynamicTiledMap.h"
 
 BuildQueueView* BuildQueueView::create(string itemId, int qid, int type, bool allView,int cType)
 {

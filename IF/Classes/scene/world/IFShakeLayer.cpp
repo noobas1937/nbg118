@@ -8,6 +8,8 @@
 
 #include "IFShakeLayer.h"
 #include "WorldMapView.h"
+#include "DynamicTiledMap.h"
+
 //214 255 214 358
 void IFShakeLayer::onGotoPoint(CCObject* pSender,CCControlEvent event){
     WorldController::getInstance()->openMarchDeploy(m_tileIndex,0);

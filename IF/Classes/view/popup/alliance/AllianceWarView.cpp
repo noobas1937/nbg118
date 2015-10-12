@@ -20,6 +20,7 @@
 #include "WorldMapView.h"
 #include "ActivityController.h"
 #include "ActivityEventObj.h"
+#include "DynamicTiledMap.h"
 
 #define  MSG_UPDATE_ALLIANCE_WAR_CELL_DATA       "msg_update_alliance_war_cell_data"
 
