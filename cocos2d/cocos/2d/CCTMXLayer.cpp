@@ -130,7 +130,7 @@ TMXLayer::TMXLayer()
 ,_layerOrientation(TMXOrientationOrtho)
 // Added by ChenFei 2014-12-26 V3.2 support
 ,m_isDynamicAdd(false)
-,m_glpstate(nullptr)
+,m_isShaderForTileSprite(false)
 {}
 
 TMXLayer::~TMXLayer()
@@ -145,8 +145,6 @@ TMXLayer::~TMXLayer()
     }
 
     CC_SAFE_DELETE_ARRAY(_tiles);
-    
-    CC_SAFE_RELEASE(m_glpstate);
 }
 
 void TMXLayer::releaseMap()
@@ -300,8 +298,8 @@ void TMXLayer::setupTilesByCoordinate(const cocos2d::Point &tileCoordinate, cons
         this->insertQuadFromSprite(tile, indexForZ);
         
         // guo.jiang
-        if (m_glpstate)
-            tile->setGLProgramState(m_glpstate);
+        if (m_isShaderForTileSprite)
+            tile->applySeaShader();
     };
     
     if (_layerOrientation == TMXOrientationIso)
@@ -990,12 +988,6 @@ int TMXLayer::getVertexZForPos(const Vec2& pos)
 std::string TMXLayer::getDescription() const
 {
     return StringUtils::format("<TMXLayer | tag = %d, size = %d,%d>", _tag, (int)_mapTileSize.width, (int)_mapTileSize.height);
-}
-
-void TMXLayer::setTileGLProgramState(GLProgramState* state) {
-    CC_SAFE_RELEASE(m_glpstate);
-    m_glpstate = state;
-    CC_SAFE_RETAIN(m_glpstate);
 }
 
 //void TMXLayer::revertTileGID(const Vec2& PointileCoordinate)

@@ -197,7 +197,13 @@ bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType) {
 //        auto map = DynamicTiledMap::create("nb_world_bottom.tmx", gotoPoint, 1207);
         auto map = DynamicTiledMap::create("nb_ocean.tmx", gotoPoint, 1201);
         map->setTag(WM_BG_TAG);
-        map->applySeaShader();
+        for (auto iter = map->getChildren().begin(); iter != map->getChildren().end(); ++iter)
+        {
+            auto layer = dynamic_cast<TMXLayer*>(*iter);
+            if (!layer) continue;
+            layer->setIsShaderForTileSprite(true);
+        }
+
 //        map->setPosition(-ccp(256 * (1207 - _tile_count_x) / 2, 128 * (1207 - _tile_count_y)));
         m_layers[WM_BG]->addChild(map);
     }

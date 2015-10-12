@@ -14,25 +14,6 @@
 
 NS_CC_BEGIN
 
-class TMXTiledSprite;
-
-class Effect : public cocos2d::Ref
-{
-public:
-    cocos2d::GLProgramState* getGLProgramState() const { return _glprogramstate; }
-    virtual void setTarget(TMXTiledSprite *sprite){}
-    
-protected:
-    bool initGLProgramState(const std::string &fragmentFilename);
-    Effect();
-    virtual ~Effect();
-    cocos2d::GLProgramState* _glprogramstate;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    std::string _fragSource;
-    cocos2d::EventListenerCustom* _backgroundListener;
-#endif
-};
-
 class TMXTiledSprite
 : public Sprite {
     
@@ -116,11 +97,22 @@ public:
     TMXTiledSprite();
     ~TMXTiledSprite();
     
+    void applySeaShader(const std::string& textureLight = "shaders/caustics.png",
+                        const std::string& fShaderFilename = "shaders/water.fsh");
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    virtual void update(float dt) override;
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    void onDraw(const Mat4 &transform, uint32_t flags);
     
 protected:
-    std::vector<std::tuple<ssize_t, Effect*, QuadCommand>> _effects;
-    Effect* _defaultEffect;
+    bool _AutoScrollU = true;
+    float _AutoScrollSpeedU = 0;
+    bool _AutoScrollV = false;
+    float _AutoScrollSpeedV = 0;
+    float _AutoScrollCountU = 0;
+    float _AutoScrollCountV = 0;
+    CustomCommand _customCommand;
 };
 
 NS_CC_END

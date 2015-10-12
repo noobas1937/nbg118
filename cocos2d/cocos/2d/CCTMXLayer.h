@@ -308,7 +308,7 @@ public:
     */
     virtual std::string getDescription() const override;
     
-    void setTileGLProgramState(GLProgramState* state); // guo.jiang
+    void setIsShaderForTileSprite(bool isShaderForTileSprite) { m_isShaderForTileSprite = isShaderForTileSprite; } // guo.jiang
 
 //    void revertTileGID(const Vec2& PointileCoordinate);
 protected:
@@ -370,7 +370,7 @@ protected:
     Point m_currentCenter;
     int m_loopSize;
     
-    GLProgramState* m_glpstate; // guo.jiang
+    bool m_isShaderForTileSprite; // guo.jiang
     
 public:
     std::map<int, unsigned int> m_indexForDynamic;
