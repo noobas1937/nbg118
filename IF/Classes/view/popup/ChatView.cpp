@@ -795,6 +795,9 @@ void ChatView::reNameFunc(){
 
 void ChatView::onUnionClick(CCObject * pSender, Control::EventType pCCControlEvent)
 {
+    
+    CCCommonUtils::flyText(_lang("E100008"));//fusheng 提示 Clans are coming soon!
+    return;
     if (type == CHAT_COUNTRY) {
         type = CHAT_ALLIANCE;
         if (!GlobalData::shared()->playerInfo.isInAlliance()) {
