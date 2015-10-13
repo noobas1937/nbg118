@@ -135,7 +135,7 @@ void DropRdCCB::onDropOneCell(CCObject* obj)
         {
             skAni->setPosition(m_ptArray[idx]+ccp(0, 800));
         }
-        this->addChild(skAni);
+      //  this->addChild(skAni);//fusheng spine展示有问题  先不加入
         skAni->setAnimation(0, cellName.c_str(), false);
         
     }

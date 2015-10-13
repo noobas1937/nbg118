@@ -631,7 +631,7 @@
             <key>Recharge_hongdai3.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{539,2029},{13,22}}</string>
+                <string>{{609,2029},{13,22}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -1408,6 +1408,19 @@
                 <key>sourceSize</key>
                 <string>{218,96}</string>
             </dict>
+            <key>nb_qieye_frame.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{539,2029},{64,9}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{64,9}}</string>
+                <key>sourceSize</key>
+                <string>{64,9}</string>
+            </dict>
             <key>pay_di10.png</key>
             <dict>
                 <key>frame</key>
@@ -1678,7 +1691,7 @@
             <key>size</key>
             <string>{2048,2048}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:bb9cc7a5e3a2b87e6edc1f0725b746f7:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:da23e87d16f56eca8d889df7338a6657:1/1$</string>
             <key>textureFileName</key>
             <string>Common_8.pvr.ccz</string>
         </dict>
