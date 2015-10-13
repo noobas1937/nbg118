@@ -52,7 +52,7 @@ struct sModelPram{
 
 bool Titan::initWithFile(int uid)
 {
-    const int nModelScale = 8;
+    const int nModelScale = 1;
     // 设置当前node的contentSize 用于点击事件
     setContentSize(Size(50*nModelScale,55*nModelScale));
     setAnchorPoint(Vec2(0.5,0));
@@ -61,8 +61,9 @@ bool Titan::initWithFile(int uid)
 //    addChild(layer);
     
     sModelPram bodyParam;
-    bodyParam.modelName = "3d/titan_1.c3b";
-    bodyParam.textureName = "3d/titan_1.jpg";
+//    bodyParam.modelName = "3d/titan_1.c3b";
+    bodyParam.modelName = "3d/dragon.obj";
+    bodyParam.textureName = "3d/dragon.jpg";
     bodyParam.textureShaderName = "3d/titan_1_shader.jpg";
     bodyParam.vShaderFileName = "shaders/titan.vsh";
     bodyParam.fShaderFileName = "shaders/titan.fsh";
@@ -79,9 +80,8 @@ bool Titan::initWithFile(int uid)
     addChild(_model);
     _model->setTexture(bodyParam.textureName);
     // shader
-    _model->setEmittingShaderDuration(bodyParam.speed, bodyParam.min, bodyParam.max);
-    _model->applyEmittingShader(bodyParam.color,
-                           bodyParam.textureShaderName);
+//    _model->setEmittingShaderDuration(bodyParam.speed, bodyParam.min, bodyParam.max);
+//    _model->applyEmittingShader(bodyParam.color,bodyParam.textureShaderName);
     _model->setScale(nModelScale);
     _model->setPosition3D(Vec3(getContentSize().width*0.5,0,200));
     
@@ -90,9 +90,9 @@ bool Titan::initWithFile(int uid)
 //    _obbt = OBB(_model->getAABB());
     
     
-//    if (有装备) {
-//        创建装备，加到模型上
-//    }
+    if (true) {
+        return true;
+    }
     
     // left shoulder
     sModelPram shoulderLeftParam;
@@ -181,7 +181,7 @@ bool Titan::initWithFile(int uid)
 //    auto handrightNode = _model->getAttachNode("hand_r");
 //    handrightNode->addChild(rootps2);
 
-    changeTitanState(eActState::Idle);
+//    changeTitanState(eActState::Idle);
 
 //    Director::getInstance()->getScheduler()->schedule(schedule_selector(Titan::update), this, 0, false);
     return true;
@@ -479,8 +479,11 @@ void Titan::turnFront()
 
     if (_curFaceDir != eFaceDir::Front) {
         _curFaceDir = eFaceDir::Front;
+        //begin a by ljf
+        //_model->setRotation3D(Vec3(0,180,0));
+        //end a by ljf
         // 面朝正方向
-        _model->setRotation3D(Vec3(32, 39, -24));
+        //_model->setRotation3D(Vec3(32, 39, -24));
         // 面朝左90度
 //        _model->setRotation3D(Vec3(32, -51, 24));
         // 面朝左90度

@@ -767,9 +767,8 @@ void ProductionSoldiersView::AsyLoadRes2(CCObject* p){
             gallery->addChild(sp);
         }
         gallery->addChildFinish();
-        gallery->setTouchEnabled(true);
 
-        m_arcNode->addChild(gallery);
+//        m_arcNode->addChild(gallery);
         
         m_arcScroll = ArcScrollView::create(m_arcArmys,2,m_pos);
         m_arcScroll->setCallback(this, callfunc_selector(ProductionSoldiersView::arcButtonClick));

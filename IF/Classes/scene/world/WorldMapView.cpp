@@ -8305,20 +8305,20 @@ void WorldMapView::testCastle(int level){
 
 void WorldMapView::update_water_shader()
 {
-    NBWaterShaderLayer* water = dynamic_cast<NBWaterShaderLayer*>(m_layers[WM_BG]->getChildByTag(WM_BG_TAG + 1));
-    if (water == nullptr) {
-        water = NBWaterShaderLayer::create();
-        water->setTag(WM_BG_TAG + 1);
-        m_layers[WM_BG]->addChild(water, -9);
-        water->schedule([water](float dt){water->tick(dt);}, "sh");
-    }
-    if (water) {
-        auto nb_ocean = m_layers[WM_BG]->getChildByTag(WM_BG_TAG);
-        if (nb_ocean) {
-            water->setGlobalZOrder(nb_ocean->getGlobalZOrder());
-            water->getMapSprite()->setGlobalZOrder(nb_ocean->getGlobalZOrder());
-        }
-        auto fPos = m_map->getViewPointByTilePoint(m_map->currentTilePoint);
-        water->setPosition(fPos);
-    }
+//    NBWaterShaderLayer* water = dynamic_cast<NBWaterShaderLayer*>(m_layers[WM_BG]->getChildByTag(WM_BG_TAG + 1));
+//    if (water == nullptr) {
+//        water = NBWaterShaderLayer::create();
+//        water->setTag(WM_BG_TAG + 1);
+//        m_layers[WM_BG]->addChild(water, -9);
+//        water->schedule([water](float dt){water->tick(dt);}, "sh");
+//    }
+//    if (water) {
+//        auto nb_ocean = m_layers[WM_BG]->getChildByTag(WM_BG_TAG);
+//        if (nb_ocean) {
+//            water->setGlobalZOrder(nb_ocean->getGlobalZOrder());
+//            water->getMapSprite()->setGlobalZOrder(nb_ocean->getGlobalZOrder());
+//        }
+//        auto fPos = m_map->getViewPointByTilePoint(m_map->currentTilePoint);
+//        water->setPosition(fPos);
+//    }
 }

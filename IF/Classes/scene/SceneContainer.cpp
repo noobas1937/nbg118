@@ -18,18 +18,69 @@
 bool SceneContainer::init() {
     bool ret = false;
     if (CCScene::init()) {
+        //begin a by ljf
+        
+        //场景层，在3d物体下面，通过自定义相机实现，设置depth值控制显示层级关系
+        auto s = Director::getInstance()->getWinSize();
+        
+        auto under3DCamera = Camera::createOrthographic(s.width, s.height, -1024000, 1024000);
+        under3DCamera->setPosition3D(Vec3(0.0f, 0.0f, 0.0f));
+        under3DCamera->setRotation3D(Vec3(0.f, 0.f, 0.f));
+        under3DCamera->setCameraFlag(CameraFlag::USER4);
+        
+        under3DCamera->setDepth(-10);
+        //under3DCamera->setVisible(false);
+        this->addChild(under3DCamera);
+        
+        //3d物体层，通过自定义相机显示，设置depth值控制显示层级关系
+        
+        //auto just3DCamera = Camera::createPerspective(30, (GLfloat)s.width/s.height, 10, 2000);
+        //auto just3DCamera = Camera::create();
+        
+        float zeye = Director::getInstance()->getZEye();
+        auto just3DCamera = Camera::createOrthographic(s.width, s.height, -1024000, 1024000);
+        //auto just3DCamera = Camera::createPerspective(60, (GLfloat)s.width / s.height, 10, zeye + s.height / 2.0f);
+        
+        //Vec3 eye(s.width/2.0f , s.height/2.0f , zeye), center(s.width/2 , s.height/2 , 0.0f), up(0.0f, 1.0f, 0.0f);
+        //Vec3 eye(zeye * cos(138 / 180.0f * 3.14159265) , 400.0f , zeye * sin(138 / 180.0f * 3.14159265));
+        //Vec3 eye(0.0f, 0.0f , 657);
+        Vec3 eye(0.0f, 0.0f, zeye);
+        Vec3 center(0.0f , 0.0f , 0.0f);
+        Vec3 up(0.0f, 1.0f, 0.0f);
+        just3DCamera->setPosition3D(eye);
+        just3DCamera->lookAt(center, up);
+        float eyex = eye.x;
+        float eyey = eye.y;
+        float eyez = eye.z;
+        //just3DCamera->setRotation3D(Vec3(32, 39, -24));
+        
+        /*
+        auto just3DCamera = Camera::createOrthographic(s.width, s.height, -1024000, 1024000);
+        just3DCamera->setPosition3D(Vec3(0.0f, 0.0f, 0.0f));
+        just3DCamera->setRotation3D(Vec3(0.f, 0.f, 0.f));
+        */
+        just3DCamera->setCameraFlag(CameraFlag::USER2);
+        just3DCamera->setDepth(-9);
+        this->addChild(just3DCamera);
+        //just3DCamera->setPosition3D(Vec3(0,100,100));
+        //just3DCamera->lookAt(Vec3(0,0,0));
+        
+        //UI层，通过默认相机显示
+        //end a by ljf
+        
         for (int i=0;i < LEVEL_MAX; i++) {
-            Sprite3D *node = Sprite3D::create();
+            auto node = Node::create();
             node->setAnchorPoint(Vec2(0,0));
 //            Layer *node = Layer::create();
             node->setContentSize(this->getContentSize());
             node->setTag(i);
             this->addChild(node,i*500);
-            node->setPositionZ(i*500);
-//            node->setGlobalZOrder(i);
+            //node->setPositionZ(i*500);
+            //node->setGlobalZOrder(i);
             SceneController::getInstance()->m_sceneContainer = this;
             _keyboardListener = nullptr;
             _keyboardEnabled = false;
+            
         }
         
         bool isdown=true;

@@ -42,7 +42,7 @@ void IFSkeletonBatchLayer::draw(Renderer *renderer, const kmMat4& transform, uin
 //    return;
     _drawCommand.init(_globalZOrder);
     _drawCommand.func = CC_CALLBACK_0(IFSkeletonBatchLayer::drawSkeleton, this, transform, transformFlags);
-    _drawCommand.set3D(true);
+//    _drawCommand.set3D(true);
     renderer->addCommand(&_drawCommand);
     return;
     

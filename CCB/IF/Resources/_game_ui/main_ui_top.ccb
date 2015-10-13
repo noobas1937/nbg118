@@ -13,7 +13,20 @@
 	<key>fileVersion</key>
 	<integer>4</integer>
 	<key>guides</key>
-	<array/>
+	<array>
+		<dict>
+			<key>orientation</key>
+			<integer>1</integer>
+			<key>position</key>
+			<real>10</real>
+		</dict>
+		<dict>
+			<key>orientation</key>
+			<integer>1</integer>
+			<key>position</key>
+			<real>104</real>
+		</dict>
+	</array>
 	<key>jsControlled</key>
 	<false/>
 	<key>nodeGraph</key>
@@ -3327,8 +3340,8 @@
 														<string>Position</string>
 														<key>value</key>
 														<array>
-															<real>2.3055553436279297</real>
-															<real>17</real>
+															<real>9</real>
+															<real>-8</real>
 															<integer>0</integer>
 														</array>
 													</dict>
@@ -3365,6 +3378,8 @@
 														<false/>
 													</dict>
 												</array>
+												<key>selected</key>
+												<true/>
 											</dict>
 											<dict>
 												<key>baseClass</key>
@@ -5180,6 +5195,41 @@
 										<key>children</key>
 										<array>
 											<dict>
+												<key>animatedProperties</key>
+												<dict>
+													<key>0</key>
+													<dict>
+														<key>color</key>
+														<dict>
+															<key>keyframes</key>
+															<array>
+																<dict>
+																	<key>easing</key>
+																	<dict>
+																		<key>type</key>
+																		<integer>1</integer>
+																	</dict>
+																	<key>name</key>
+																	<string>color</string>
+																	<key>time</key>
+																	<real>1.5</real>
+																	<key>type</key>
+																	<integer>6</integer>
+																	<key>value</key>
+																	<array>
+																		<integer>255</integer>
+																		<integer>255</integer>
+																		<integer>255</integer>
+																	</array>
+																</dict>
+															</array>
+															<key>name</key>
+															<string>color</string>
+															<key>type</key>
+															<integer>6</integer>
+														</dict>
+													</dict>
+												</dict>
 												<key>baseClass</key>
 												<string>CCSprite</string>
 												<key>children</key>
@@ -5250,6 +5300,24 @@
 														</array>
 													</dict>
 													<dict>
+														<key>baseValue</key>
+														<array>
+															<integer>255</integer>
+															<integer>255</integer>
+															<integer>255</integer>
+														</array>
+														<key>name</key>
+														<string>color</string>
+														<key>type</key>
+														<string>Color3</string>
+														<key>value</key>
+														<array>
+															<integer>255</integer>
+															<integer>255</integer>
+															<integer>255</integer>
+														</array>
+													</dict>
+													<dict>
 														<key>name</key>
 														<string>blendFunc</string>
 														<key>type</key>
@@ -5261,6 +5329,8 @@
 														</array>
 													</dict>
 												</array>
+												<key>seqExpanded</key>
+												<true/>
 											</dict>
 										</array>
 										<key>customClass</key>
@@ -6688,8 +6758,6 @@
 										</array>
 									</dict>
 								</array>
-								<key>selected</key>
-								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>
