@@ -203,11 +203,26 @@ bool GeneralTitanPopupView::init()
     
     this->scheduleUpdate();
     
-//    CCCommonUtils::setButtonTitle(this->m_speedUpBtn,_lang("104903").c_str());
+    CCCommonUtils::setButtonTitle(this->m_CleanFeedCDBtn,_lang("104903").c_str());
     
-    this->m_titanStatusDesc->setString("Titan Feed CD......");
+//    CCCommonUtils::setButtonTitle(this->m_titanFeedBtn,"喂食");
     
-    m_toolSpeedUpBtn->setColor(ccGRAY);
+    this->m_titanStatusDesc->setString("Titan Upgrage CD......");//fusheng 需要文本
+    
+
+    
+    m_titanFeedBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::DISABLED)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
+    
+    m_toolSpeedUpBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::DISABLED)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
+    
+    m_CleanFeedCDBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::DISABLED)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
+    
+
+    
+    
+
+
+    
   
     return true;
 }
@@ -251,55 +266,85 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         m_Txt2->setString(CC_ITOA(armTitanInfo.attack));
     }
     
-//    if (GlobalData::shared()->allQueuesInfo.find(1101) != GlobalData::shared()->allQueuesInfo.end()) {
-//       
-//        string key = GlobalData::shared()->allQueuesInfo[1101].key;
-//        
-//        //CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_SPEED_UP_COMPLETE,CCString::create("upgrade"));//fusheng 泰坦秒cd 也认为是这个
-//        if (GlobalData::shared()->allQueuesInfo[1101].itemId == 400000) {
-//            if (GlobalData::shared()->allQueuesInfo[1101].finishTime>GlobalData::shared()->getWorldTime()) {
-//                m_titanUngrade->setColor(ccGRAY);
-//            }
-//            else
-//            {
-//                m_titanUngrade->setColor(ccWHITE);
-//            }
-//        }
-//        
-//
-//    }
-//    
-//    if (GlobalData::shared()->allQueuesInfo.find(1102) != GlobalData::shared()->allQueuesInfo.end()) {
-//        
-//        string key = GlobalData::shared()->allQueuesInfo[1102].key;
-//        
-//        //CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_SPEED_UP_COMPLETE,CCString::create("upgrade"));//fusheng 泰坦秒cd 也认为是这个
-//        if (GlobalData::shared()->allQueuesInfo[1102].itemId == 400000) {
-//            if (GlobalData::shared()->allQueuesInfo[1102].finishTime>GlobalData::shared()->getWorldTime()) {
-//                m_titanUngrade->setColor(ccGRAY);
-//            }
-//            else
-//            {
-//                m_titanUngrade->setColor(ccWHITE);
-//            }
-//        }
-//       
-//        
-//    }
+
     bool isCanFeed = true;//fusheng 标记可以喂食
     
     FunBuildInfo& fbiInfo = FunBuildController::getInstance()->getFunbuildById(400000000);
     
     if(fbiInfo.state == FUN_BUILD_UPING)
     {
-        m_titanUngrade->setColor(ccGRAY);
+        CCCommonUtils::setSpriteGray(m_titanUngrade, true);
+        this->m_titanFeedBtn->setEnabled(false);//fusheng 泰坦升级时
+        
+        titanFeedNode->setVisible(false);
+        titanUpingNode->setVisible(true);
+        this->upgradeCD =(float)(fbiInfo.updateTime - GlobalData::shared()->getWorldTime());
+        
+        isUpgrading = true;
+        
+        isUpdating = true;
+        
+       
+        
+        if (GlobalData::shared()->allQueuesInfo.find(1102) != GlobalData::shared()->allQueuesInfo.end()) {
+            
+            string key = GlobalData::shared()->allQueuesInfo[1102].key;
+            
+
+            if (GlobalData::shared()->allQueuesInfo[1102].itemId == 400000) {
+                queue_id = 1102;
+            }
+            
+            
+        }
+        
+        if (GlobalData::shared()->allQueuesInfo.find(1101) != GlobalData::shared()->allQueuesInfo.end()) {
+            
+            string key = GlobalData::shared()->allQueuesInfo[1101].key;
+            
+            
+            if (GlobalData::shared()->allQueuesInfo[1101].itemId == 400000) {
+                queue_id = 1101;
+            }
+            
+            
+        }
+        
+        
+        int toolID = ToolController::getInstance()->getSPDItem(ItemSpdMenu_City);
+        
+        auto& toolInfo = ToolController::getInstance()->getToolInfoById(toolID);
+        
+        
+//        auto sp = m_toolSpeedUpBtn->getBackgroundSpriteForState(Control::State::DISABLED);
+        
+        
+        
+        if(toolInfo.getCNT()>0)//fusheng 判断加速道具个数
+        {
+
+            
+            
+            m_toolSpeedUpBtn->setEnabled(true);
+        }
+        else
+        {
+          
+            
+            m_toolSpeedUpBtn->setEnabled(false);
+        }
+
     }
     else
     {
-        m_titanUngrade->setColor(ccWHITE);
+        CCCommonUtils::setSpriteGray(m_titanUngrade, false);
+        titanFeedNode->setVisible(true);
+        titanUpingNode->setVisible(false);
+
+        
+        isUpgrading = false;
+
     }
-    
-    
     
 
     
@@ -313,33 +358,7 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
     }
     
    
-//        if(titaiInfo.level!=0)
-//        {
-//            
-//            
-//            int tempTitanLevel = titaiInfo.level;
-//            
-//            if(tempTitanLevel != this->titanLevel)
-//            {
-//                titanLevel = tempTitanLevel;
-//                auto dict = _dict(LocalController::shared()->DBXMLManager()->getGroupByKey("titan")->objectForKey(CCString::createWithFormat("%ld",titanLevel)->getCString()));
-//                this->needfood = dict->valueForKey("needfood")->intValue();
-//                this->needexp = dict->valueForKey("needexp")->intValue();
-//                this->maxManual= dict->valueForKey("maxmanual")->intValue();
-//                this->m_needFood->setString(CCString::createWithFormat("%d",this->needfood)->getCString());
-//                
-//                
-//                std::vector<std::string> tmpVec;
-//                CCCommonUtils::splitString(dict->valueForKey("feedcdtime")->getCString(), ",", tmpVec);
-//                this->feedMaxNum = tmpVec.size()+1;
-//            }
-//            
-//        }
-    
-  
-    
-    
-//        auto exp = params->valueForKey("exp");
+
     if(m_titanInfo.nextExp!=0)
     {
         this->m_titanExtTxt->setString(CCString::createWithFormat("%d/%d",m_titanInfo.exp,m_titanInfo.nextExp)->getCString());
@@ -488,27 +507,32 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         this->feedCD =(float)(m_titanInfo.feedcd - GlobalData::shared()->getWorldTime());
         if (this->feedCD<0) {
             this->feedCD=0;
-            isUpdating = false;
-            this->m_speedUpBtn->setEnabled(false);
+            isUpdating |= false;
+            
             if(m_titanInfo.exp>=m_titanInfo.nextExp)
             {
                 isCanFeed = false;
             }
+            this->m_CleanFeedCDBtn->setEnabled(false);
+            this->m_CleanFeedCDBtnNode->setVisible(false);
             
-            titanFeedNode->setVisible(true);
-            titanUpingNode->setVisible(false);
-            m_titanFeedCDNode->setPosition(490,-39);
+            this->m_titanFeedBtn->setEnabled(true);
+            this->m_titanFeedBtnNode->setVisible(true);
+//            titanFeedNode->setVisible(true);
+//            titanUpingNode->setVisible(false);
+
             
         }
         else
         {
             isUpdating = true;
-            this->m_speedUpBtn->setEnabled(true);
-            this->m_titanFeedBtn->setEnabled(false);
+            this->m_CleanFeedCDBtn->setEnabled(true);
+            m_CleanFeedCDBtnNode->setVisible(true);
             
-            titanFeedNode->setVisible(false);
-            titanUpingNode->setVisible(true);
-            m_titanFeedCDNode->setPosition(259,-75);
+            this->m_titanFeedBtn->setEnabled(false);
+            m_titanFeedBtnNode->setVisible(false);
+            
+
         }
         string timeInfo = CC_SECTOA((int)this->feedCD);
         this->m_feedCDTxt->setString(timeInfo);
@@ -518,8 +542,11 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
     else
     {
         this->feedCD=0;
-        isUpdating = false;
-        this->m_speedUpBtn->setEnabled(false);
+        isUpdating |= false;
+        this->m_CleanFeedCDBtn->setEnabled(false);
+        m_CleanFeedCDBtnNode->setVisible(false);
+        
+        m_titanFeedBtnNode->setVisible(true);
         if(m_titanInfo.exp>=m_titanInfo.nextExp)
         {
             isCanFeed = false;
@@ -527,16 +554,21 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         string timeInfo = CC_SECTOA((int)this->feedCD);
         this->m_feedCDTxt->setString(timeInfo);
         
-        titanFeedNode->setVisible(true);
-        titanUpingNode->setVisible(false);
-        m_titanFeedCDNode->setPosition(490,-39);
+//        titanFeedNode->setVisible(true);
+//        titanUpingNode->setVisible(false);
+
     }
     
+    if(m_titanInfo.feedNum>=m_titanInfo.feedMaxNum)
+    {
+        isCanFeed = false;
+    }
+
     
 
     this->m_titanFeedBtn->setEnabled(isCanFeed);
     
-
+    CCCommonUtils::setSpriteGray(m_titanFeedBtnSprite, !isCanFeed);
 }
 
 
@@ -560,6 +592,15 @@ void GeneralTitanPopupView::onEnter(){
 
 //    
     onRefreshEquip();
+    
+//    auto dropCCB = DropRdCCB::create(5);
+//    
+//    this->addChild(dropCCB);
+//    dropCCB->setPositionZ(1000);
+    
+    
+    
+    
 
 }
 
@@ -577,6 +618,7 @@ SEL_CCControlHandler GeneralTitanPopupView::onResolveCCBCCControlSelector(cocos2
 //    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onSkillBtnClick", GeneralsPopupView::onSkillBtnClick);
 //    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onAllianceClick", GeneralsPopupView::onAllianceClick);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onTitanFeedClick", GeneralTitanPopupView::onTitanFeedClick);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onCleanFeedCDClick", GeneralTitanPopupView::onCleanFeedCDClick);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onSpeedUpClick", GeneralTitanPopupView::onSpeedUpClick);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onToolSpeedUpClick", GeneralTitanPopupView::onToolSpeedUpClick);
 
@@ -590,19 +632,26 @@ bool GeneralTitanPopupView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarge
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_Txt2", CCLabelIF*, this->m_Txt2);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanExtTxt", CCLabelIF*, this->m_titanExtTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_feedCDTxt", CCLabelIF*, this->m_feedCDTxt);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_upgradeCDTxt", CCLabelIF*, this->m_upgradeCDTxt);
+    
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_needFood", CCLabelIF*, this->m_needFood);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_currentFoodNum", CCLabelIF*, this->m_currentFoodNum);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanFeedBtn", CCControlButton*, this->m_titanFeedBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_speedUpBtn", CCControlButton*, this->m_speedUpBtn);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_CleanFeedCDBtn", CCControlButton*, this->m_CleanFeedCDBtn);
+    
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_toolSpeedUpBtn", CCControlButton*, this->m_toolSpeedUpBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_foodStatus", CCSprite*, this->m_foodStatus);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanDetail", CCSprite*, this->m_titanDetail);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanSkill", CCSprite*, this->m_titanSkill);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanUngrade", CCSprite*, this->m_titanUngrade);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanFeedBtnSprite", CCSprite*, this->m_titanFeedBtnSprite);
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bustPic", CCNode*, this->m_bustPic);
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_icon", CCNode*, this->m_icon);
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_touchLayer", CCNode*, this->m_touchLayer);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bottomNode", CCNode*, this->m_bottomNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanFeedBtnNode", CCNode*, this->m_titanFeedBtnNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_CleanFeedCDBtnNode", CCNode*, this->m_CleanFeedCDBtnNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "titanFeedNode", CCNode*, this->titanFeedNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "titanUpingNode", CCNode*, this->titanUpingNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanFeedCDNode", CCNode*, this->m_titanFeedCDNode);
@@ -748,33 +797,36 @@ void GeneralTitanPopupView::update(float time){
         return;
     }
     
-    if (this->feedCD>0) {
-        this->feedCD -= time;
-        string timeInfo = CC_SECTOA((int)this->feedCD);
-        this->m_feedCDTxt->setString(timeInfo);
-        
+    if (isUpgrading)
+    {
+        if (this->upgradeCD>0) {
+            this->upgradeCD -= time;
+            string timeInfo = CC_SECTOA((int)this->upgradeCD);
+            this->m_upgradeCDTxt->setString(timeInfo);
+            
+        }
+        else
+        {
+            
+            resetAttribute(nullptr);
+        }
     }
     else
     {
-//        if(m_titanInfo.exp<m_titanInfo.nextExp && m_titanInfo.feedFoodNum < GlobalData::shared()->resourceInfo.lFood)
-//        {
-//            this->m_titanFeedBtn->setEnabled(true);
-//        }
-//        else
-//        {
-//            this->m_titanFeedBtn->setEnabled(false);
-//        }
-//        
-//        this->m_feedCDTxt->setString("00:00:00");
-//        
-//       
-//        this->m_speedUpBtn->setEnabled(false);
-//        
-//        titanFeedNode->setVisible(true);
-//        titanUpingNode->setVisible(false);
-//        m_titanFeedCDNode->setPosition(490,-39);
-        resetAttribute(nullptr);
+        if (this->feedCD>0) {
+            this->feedCD -= time;
+            string timeInfo = CC_SECTOA((int)this->feedCD);
+            this->m_feedCDTxt->setString(timeInfo);
+            
+        }
+        else
+        {
+            
+            resetAttribute(nullptr);
+        }
     }
+    
+    
     
     return;
 }
@@ -794,43 +846,95 @@ void GeneralTitanPopupView::onSkillClick(CCObject * pSender, Control::EventType 
 //    m_pic->runAction(CCFadeOut::create(0.2f));
 }
 void GeneralTitanPopupView::onTitanFeedClick(CCObject * pSender, Control::EventType pCCControlEvent){
-    if(m_titanInfo.exp>=m_titanInfo.nextExp)
+    if(this->feedCD<=0)
     {
-        CCCommonUtils::flyText("please ungrade titan!");
-        return;
-    }
-    if(m_titanInfo.feedNum<m_titanInfo.feedMaxNum)
-    {
-//        if (this->feedCD<=0) {
-//            TitanFeedCommand *tfCommand = new TitanFeedCommand();
-//            tfCommand->sendAndRelease();
-//        }
-        TitanFeedCommand *tfCommand = new TitanFeedCommand();
-        tfCommand->sendAndRelease();
-        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("Titan_Feed"));
-        m_titanFeedBtn->setEnabled(false);
-        
+        if(m_titanInfo.exp>=m_titanInfo.nextExp)
+        {
+            CCCommonUtils::flyHint("", "", "please ungrade titan!");
+            return;
+        }
+        if(m_titanInfo.feedNum<m_titanInfo.feedMaxNum)
+        {
+            //        if (this->feedCD<=0) {
+            //            TitanFeedCommand *tfCommand = new TitanFeedCommand();
+            //            tfCommand->sendAndRelease();
+            //        }
+            TitanFeedCommand *tfCommand = new TitanFeedCommand();
+            tfCommand->sendAndRelease();
+            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("Titan_Feed"));
+            m_titanFeedBtn->setEnabled(false);
+            
+        }
+        else
+        {
+            
+        }
+
     }
     else
     {
-        
+        YesNoDialog::showTime( _lang("102120").c_str() , CCCallFunc::create(this, callfunc_selector(GeneralTitanPopupView::speedUpCallBack)), (int)this->feedCD, _lang("104903").c_str());
     }
-
+    
+    
 }
 
 void GeneralTitanPopupView::onSpeedUpClick(CCObject * pSender, Control::EventType pCCControlEvent){
 
-
     
-//    int tmpTime = GlobalData::shared()->allQueuesInfo[qid].finishTime - GlobalData::shared()->getWorldTime();
+    int tmpTime = GlobalData::shared()->allQueuesInfo[queue_id].finishTime - GlobalData::shared()->getWorldTime();
+    
+    YesNoDialog::showTime( _lang("102120").c_str() , CCCallFunc::create(this, callfunc_selector(GeneralTitanPopupView::spdCallBack)), tmpTime, _lang("104903").c_str());
+    
+   
+
+
+//
+////    int tmpTime = GlobalData::shared()->allQueuesInfo[qid].finishTime - GlobalData::shared()->getWorldTime();
+//    YesNoDialog::showTime( _lang("102120").c_str() , CCCallFunc::create(this, callfunc_selector(GeneralTitanPopupView::speedUpCallBack)), (int)this->feedCD, _lang("104903").c_str());
+//    
+    
+}
+
+void GeneralTitanPopupView::spdCallBack()
+{
+    int tmpTime = GlobalData::shared()->allQueuesInfo[queue_id].finishTime - GlobalData::shared()->getWorldTime();
+    int gold = CCCommonUtils::getGoldByTime(tmpTime);
+    if (tmpTime<=GlobalData::shared()->freeSpdT) {
+        gold = 0;
+    }
+    FunBuildController::getInstance()->costCD(400000000, "", gold);
+    
+};
+
+void GeneralTitanPopupView::onCleanFeedCDClick(CCObject * pSender, Control::EventType pCCControlEvent){
+    
+    
     YesNoDialog::showTime( _lang("102120").c_str() , CCCallFunc::create(this, callfunc_selector(GeneralTitanPopupView::speedUpCallBack)), (int)this->feedCD, _lang("104903").c_str());
     
     
 }
 
 void GeneralTitanPopupView::onToolSpeedUpClick(CCObject * pSender, Control::EventType pCCControlEvent){
+    //
+            FunBuildInfo& fbiInfo = FunBuildController::getInstance()->getFunbuildById(400000000); //fusheng 泰坦道具加速
     
-    CCCommonUtils::flyHint("", "", _lang("E100008"));//fusheng 道具加速 后续在做
+            if(fbiInfo.state == FUN_BUILD_UPING)
+            {
+               int toolID = ToolController::getInstance()->getSPDItem(ItemSpdMenu_City);
+    
+                auto& toolInfo = ToolController::getInstance()->getToolInfoById(toolID);
+    
+                if(toolInfo.getCNT()>0)
+                {
+                    if (queue_id != -1) {
+                        PropSpeedupView::show(ItemSpdMenu_City, 400000000, queue_id);//fusheng 注意 不是只有1101  还有1102
+                    }
+                    
+                }
+            }
+    
+
 //    YesNoDialog::showTime( _lang("102120").c_str() , CCCallFunc::create(this, callfunc_selector(GeneralTitanPopupView::speedUpCallBack)), (int)this->feedCD, _lang("104903").c_str());
     
     
@@ -897,7 +1001,23 @@ bool GeneralTitanPopupView::onTouchBegan(CCTouch *pTouch, CCEvent *pEvent){
 //    m_x = 1000;
 //    m_startY = pTouch->getLocation().y;
 //    return true;
-    
+            if(isTouchInside(m_eBgSpr1, pTouch)){
+                CCCommonUtils::flyHint("", "", _lang("E100008"));
+            }else if(isTouchInside(m_eBgSpr2, pTouch)){
+                CCCommonUtils::flyHint("", "", _lang("E100008"));
+            }else if(isTouchInside(m_eBgSpr3, pTouch)){
+                CCCommonUtils::flyHint("", "", _lang("E100008"));
+            }else if(isTouchInside(m_eBgSpr4, pTouch)){
+                CCCommonUtils::flyHint("", "", _lang("E100008"));
+            }else if(isTouchInside(m_eBgSpr5, pTouch)){
+                CCCommonUtils::flyHint("", "", _lang("E100008"));
+            }else if(isTouchInside(m_eBgSpr6, pTouch)){
+                CCCommonUtils::flyHint("", "", _lang("E100008"));
+            }else if(isTouchInside(m_eBgSpr7, pTouch)){
+                CCCommonUtils::flyHint("", "", _lang("E100008"));
+            }else if(isTouchInside(m_eBgSpr8, pTouch)){
+                CCCommonUtils::flyHint("", "", _lang("E100008"));
+            }
     
 //    if(isTouchInside(m_titanFeed, pTouch))
 //    {
@@ -947,20 +1067,7 @@ bool GeneralTitanPopupView::onTouchBegan(CCTouch *pTouch, CCEvent *pEvent){
     
     
     if(isTouchInside(this->m_titanSkill, pTouch)){
-//        
-//        FunBuildInfo& fbiInfo = FunBuildController::getInstance()->getFunbuildById(400000000); //fusheng 泰坦道具加速
-//        
-//        if(fbiInfo.state == FUN_BUILD_UPING)
-//        {
-//           int toolID = ToolController::getInstance()->getSPDItem(ItemSpdMenu_City);
-//            
-//            auto& toolInfo = ToolController::getInstance()->getToolInfoById(toolID);
-//            
-//            if(toolInfo.getCNT()>0)
-//            {
-//                PropSpeedupView::show(ItemSpdMenu_City, 400000000, 1101);//fusheng 注意 不是只有1101  还有1102
-//            }
-//        }
+
         
         
         CCCommonUtils::flyHint("", "", _lang("E100008"));//fusheng 技能界面先关闭

@@ -48,7 +48,7 @@ public:
 protected:
 
 private:
-    GeneralTitanPopupView():m_titanId(""),feedCD(0),isUpdating(false){}
+    GeneralTitanPopupView():m_titanId(""),feedCD(0),isUpdating(false),upgradeCD(0),isUpgrading(false),queue_id(-1){}
     virtual void onEnter();
     virtual void onExit();
     virtual bool init();
@@ -83,8 +83,16 @@ private:
     float m_ProTitanExtMaxWidth;
     float m_ProTiTanAPMaxWidth;
     
+    int queue_id ;
+    
     
     float feedCD ;
+    float upgradeCD ;
+    
+    
+    bool isUpgrading ;
+    
+    
     TitanInfo m_titanInfo;
 
 //
@@ -94,9 +102,13 @@ private:
     
     void onSpeedUpClick(CCObject * pSender, Control::EventType pCCControlEvent);
     
+    void onCleanFeedCDClick(CCObject * pSender, Control::EventType pCCControlEvent);
+    
     void onToolSpeedUpClick(CCObject * pSender, Control::EventType pCCControlEvent);
 
     void speedUpCallBack();
+    
+    void spdCallBack();
 //    void onChangeName(CCObject * pSender, Control::EventType pCCControlEvent);
 //    void onPicClick(CCObject * pSender, Control::EventType pCCControlEvent);
 //    void onResetPicClick(CCObject * pSender, Control::EventType pCCControlEvent);
@@ -134,9 +146,12 @@ private:
     CCSafeObject<CCNode> titanFeedNode;
     CCSafeObject<CCNode> titanUpingNode;
     CCSafeObject<CCNode> m_titanFeedCDNode;
+    CCSafeObject<CCNode> m_titanFeedBtnNode;
+    CCSafeObject<CCNode> m_CleanFeedCDBtnNode;
     CCSafeObject<CCControlButton> m_titanFeedBtn;
     CCSafeObject<CCControlButton> m_speedUpBtn;
     CCSafeObject<CCControlButton> m_toolSpeedUpBtn;
+    CCSafeObject<CCControlButton> m_CleanFeedCDBtn;
 
     CCSafeObject<CCScale9Sprite> m_buildBG;
     CCSafeObject<CCNode>m_titanPosInView;
@@ -151,6 +166,7 @@ private:
     CCSafeObject<CCLabelIF> m_currentFoodNum;
     
     CCSafeObject<CCLabelIF> m_feedCDTxt;
+    CCSafeObject<CCLabelIF> m_upgradeCDTxt;
     CCSafeObject<CCLabelIF> m_titanStatusDesc;
     
 
@@ -158,6 +174,7 @@ private:
     CCSafeObject<CCSprite> m_titanDetail;
     CCSafeObject<CCSprite> m_titanSkill;
     CCSafeObject<CCSprite> m_titanUngrade;
+    CCSafeObject<CCSprite> m_titanFeedBtnSprite;
 
     
     CCSafeObject<CCScale9Sprite> m_ProTitanExt;

@@ -37,6 +37,10 @@ DynamicTiledMap* DynamicTiledMap::create(const char *tmxFile,const CCPoint& pos,
     return NULL;
 }
 
+DynamicTiledMap::~DynamicTiledMap()
+{
+}
+
 void DynamicTiledMap::setPosition(const cocos2d::CCPoint &position) {
     CCNode::setPosition(position);
     if(WorldMapView::instance()->m_touchDelegateView){
@@ -285,6 +289,7 @@ int DynamicTiledMap::getServerIdByViewPoint(const CCPoint &viewPoint){
     int serverId = WorldController::getInstance()->getServerIdByServerPoint(serverTilePoint);
     return serverId;
 }
+
 CCPoint DynamicTiledMap::getTileMapPointByViewPoint(const CCPoint &viewPoint){
     auto newViewPoint = viewPoint;
     auto disPoint = ccpSub(newViewPoint,centerViewPoint);
@@ -346,6 +351,7 @@ CCPoint DynamicTiledMap::getViewPointByTilePoint(const cocos2d::CCPoint &tilePoi
     CCPoint serverViewPoint =  WorldController::getInstance()->getServerViewPosByPos(WorldController::getServerPosById(serverId));
     return serverViewPoint + childMapPoint;
 }
+
 void DynamicTiledMap::updataBoderMap(CCPoint point,int forceServerId){
     if (!WorldMapView::instance()) {
         return;
@@ -393,6 +399,7 @@ void DynamicTiledMap::updataBoderMap(CCPoint point,int forceServerId){
     }
     
 }
+
 void DynamicTiledMap::updateDynamicMap(CCPoint point) {
     if (!WorldMapView::instance()) {
         return;

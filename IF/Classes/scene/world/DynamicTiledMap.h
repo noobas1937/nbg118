@@ -18,6 +18,8 @@ public:
     
     static DynamicTiledMap* create(const char *tmxFile,const CCPoint& pos, int loopSize);
     
+    ~DynamicTiledMap();
+    
     virtual void setPosition(const CCPoint &position);
     bool isNeedUpdate();
     void updateDynamicMap(CCPoint point = ccp(-1, -1));
@@ -39,6 +41,9 @@ public:
     //    static Vector<DynamicTiledMap*> mZombieCaches;
     //    static void saveToCache(const std::string& key, DynamicTiledMap* );
     //    static DynamicTiledMap* loadFromCache(const std::string& key);
+    
+protected:
+
 };
 
 #endif /* DynamicTiledMap_h */

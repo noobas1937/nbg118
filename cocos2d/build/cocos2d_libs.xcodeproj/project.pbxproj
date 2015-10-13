@@ -3574,6 +3574,10 @@
 		B6DD2FF61B04825B00E47F5F /* fastlz.c in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2FA51B04825B00E47F5F /* fastlz.c */; };
 		B6DD2FF71B04825B00E47F5F /* fastlz.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2FA61B04825B00E47F5F /* fastlz.h */; };
 		B6DD2FF81B04825B00E47F5F /* fastlz.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2FA61B04825B00E47F5F /* fastlz.h */; };
+		B8EF95691BCB64A40059A0FD /* CCTMXTiledSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8EF95671BCB64A40059A0FD /* CCTMXTiledSprite.cpp */; settings = {ASSET_TAGS = (); }; };
+		B8EF956A1BCB64A40059A0FD /* CCTMXTiledSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8EF95671BCB64A40059A0FD /* CCTMXTiledSprite.cpp */; settings = {ASSET_TAGS = (); }; };
+		B8EF956B1BCB64A40059A0FD /* CCTMXTiledSprite.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B8EF95681BCB64A40059A0FD /* CCTMXTiledSprite.hpp */; settings = {ASSET_TAGS = (); }; };
+		B8EF956C1BCB64A40059A0FD /* CCTMXTiledSprite.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B8EF95681BCB64A40059A0FD /* CCTMXTiledSprite.hpp */; settings = {ASSET_TAGS = (); }; };
 		C50306691B60B583001E6D43 /* CCBoneNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C50306631B60B583001E6D43 /* CCBoneNode.cpp */; };
 		C503066A1B60B583001E6D43 /* CCBoneNode.h in Headers */ = {isa = PBXBuildFile; fileRef = C50306641B60B583001E6D43 /* CCBoneNode.h */; };
 		C503066B1B60B583001E6D43 /* CCSkeletonNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C50306651B60B583001E6D43 /* CCSkeletonNode.cpp */; };
@@ -5503,6 +5507,8 @@
 		B6DD2FA31B04825B00E47F5F /* DetourTileCacheBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetourTileCacheBuilder.h; sourceTree = "<group>"; };
 		B6DD2FA51B04825B00E47F5F /* fastlz.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fastlz.c; sourceTree = "<group>"; };
 		B6DD2FA61B04825B00E47F5F /* fastlz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fastlz.h; sourceTree = "<group>"; };
+		B8EF95671BCB64A40059A0FD /* CCTMXTiledSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTMXTiledSprite.cpp; sourceTree = "<group>"; };
+		B8EF95681BCB64A40059A0FD /* CCTMXTiledSprite.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CCTMXTiledSprite.hpp; sourceTree = "<group>"; };
 		C50306631B60B583001E6D43 /* CCBoneNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBoneNode.cpp; sourceTree = "<group>"; };
 		C50306641B60B583001E6D43 /* CCBoneNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBoneNode.h; sourceTree = "<group>"; };
 		C50306651B60B583001E6D43 /* CCSkeletonNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSkeletonNode.cpp; sourceTree = "<group>"; };
@@ -6112,6 +6118,8 @@
 				1A5702E7180BCE750088DEC7 /* CCTMXTiledMap.h */,
 				1A5702E8180BCE750088DEC7 /* CCTMXXMLParser.cpp */,
 				1A5702E9180BCE750088DEC7 /* CCTMXXMLParser.h */,
+				B8EF95671BCB64A40059A0FD /* CCTMXTiledSprite.cpp */,
+				B8EF95681BCB64A40059A0FD /* CCTMXTiledSprite.hpp */,
 			);
 			name = "tilemap-parallax-nodes";
 			sourceTree = "<group>";
@@ -9204,6 +9212,7 @@
 				1A5701BB180BCB5A0088DEC7 /* CCLabel.h in Headers */,
 				B6CAB3231AF9AA1A00B9B856 /* btGeometryOperations.h in Headers */,
 				D0FD035D1A3B51AA00825BB5 /* CCAllocatorStrategyGlobalSmallBlock.h in Headers */,
+				B8EF956B1BCB64A40059A0FD /* CCTMXTiledSprite.hpp in Headers */,
 				B6CAB41B1AF9AA1A00B9B856 /* btDantzigLCP.h in Headers */,
 				15AE182619AAD2F700C27E9E /* CCMesh.h in Headers */,
 				15AE192019AAD35000C27E9E /* CCUtilMath.h in Headers */,
@@ -10752,6 +10761,7 @@
 				1A01C6A718F58F7500EFE3A6 /* CCNotificationCenter.h in Headers */,
 				50ABBEDA1925AB6F00A911A9 /* ZipUtils.h in Headers */,
 				50ABBDC01925AB4100A911A9 /* CCTextureCache.h in Headers */,
+				B8EF956C1BCB64A40059A0FD /* CCTMXTiledSprite.hpp in Headers */,
 				B276EF641988D1D500CD400F /* CCVertexIndexBuffer.h in Headers */,
 				B665E2F11AA80A6500DDB1C5 /* CCPULineEmitter.h in Headers */,
 				ED9C6A9718599AD8000A5232 /* CCNodeGrid.h in Headers */,
@@ -10923,6 +10933,7 @@
 				B29A7E0B19EE1B7700872B35 /* Atlas.c in Sources */,
 				15AE199419AAD39600C27E9E /* LayoutReader.cpp in Sources */,
 				1A01C68A18F57BE800EFE3A6 /* CCDeprecated.cpp in Sources */,
+				B8EF95691BCB64A40059A0FD /* CCTMXTiledSprite.cpp in Sources */,
 				B6CAB2F51AF9AA1A00B9B856 /* btTriangleBuffer.cpp in Sources */,
 				1A1645B0191B726C008C7C7F /* ConvertUTF.c in Sources */,
 				15AE1BE219AAE01E00C27E9E /* CCScrollView.cpp in Sources */,
@@ -12357,6 +12368,7 @@
 				B6CAB3861AF9AA1A00B9B856 /* btPersistentManifold.cpp in Sources */,
 				50ABBEA81925AB6F00A911A9 /* CCTouch.cpp in Sources */,
 				B29A7DEE19EE1B7700872B35 /* IkConstraint.c in Sources */,
+				B8EF956A1BCB64A40059A0FD /* CCTMXTiledSprite.cpp in Sources */,
 				B6CAB3781AF9AA1A00B9B856 /* btGjkEpaPenetrationDepthSolver.cpp in Sources */,
 				B665E37F1AA80A6500DDB1C5 /* CCPUParticleSystem3DTranslator.cpp in Sources */,
 				15AE1A9619AAD40300C27E9E /* b2Draw.cpp in Sources */,
