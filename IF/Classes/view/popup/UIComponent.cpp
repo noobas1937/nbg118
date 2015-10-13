@@ -971,7 +971,7 @@ void UIComponent::onEnter()
     CCSprite* head = CCLoadSprite::createSprite(GlobalData::shared()->playerInfo.getPic().c_str());
     m_pic->addChild(head);
     
-    CCCommonUtils::setSpriteMaxSize(head, 77,true);
+//    CCCommonUtils::setSpriteMaxSize(head, 77,true);
     if (m_headImgNode == NULL)
     {
         m_headImgNode = HFHeadImgNode::create();
@@ -2896,7 +2896,7 @@ bool UIComponent::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const c
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_mailBtnTitle", CCLabelIF*, this->m_mailBtnTitle);
     
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_mailBtnTimesBG", CCSprite*, this->m_mailBtnTimesBG);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_mailBtnTimesBG", CCSprite*, this->m_mailBtnTimesBG);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_mailBG", CCSprite*, m_mailBG);
     
@@ -3184,7 +3184,7 @@ void UIComponent::updateMailNum(CCObject* p){
         
     }else{
         
-        this->m_mailBtnTimesBG->setVisible(false);
+//        this->m_mailBtnTimesBG->setVisible(false);
         
         this->m_mailBGFlag2->setVisible(false);
         
@@ -5656,7 +5656,7 @@ void UIComponent::onChangePic(CCObject* params){
     
     m_pic->addChild(head);
     
-    CCCommonUtils::setSpriteMaxSize(head, 77,true);
+//    CCCommonUtils::setSpriteMaxSize(head, 77,true);
     
     if (GlobalData::shared()->playerInfo.isUseCustomPic())
     {

@@ -621,6 +621,7 @@ void FunBuild::setSpineLayer(CCLayer* spineLayer)
     m_spineLayer = spineLayer;
     m_spineLayer->setPosition(ccp(parentX, parentY));
     
+    
     if (CCFileUtils::sharedFileUtils()->isFileExist("Spine/Imperial/lianjingongfang.json") &&
         CCFileUtils::sharedFileUtils()->isFileExist("Imperial/Imperial_30.atlas"))
     {

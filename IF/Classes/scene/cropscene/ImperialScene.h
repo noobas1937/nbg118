@@ -347,6 +347,9 @@ private:
     // tao.yu titan node
     CCSafeObject<CCNode> m_titanNode;
     // tao.yu titan move path
+    //begin a by ljf
+    CCSafeObject<CCNode> m_Node0;
+    //end a by ljf
     CCSafeObject<CCNode> m_tpath_1;
     CCSafeObject<CCNode> m_tpath_2;
     CCSafeObject<CCNode> m_tpath_3;

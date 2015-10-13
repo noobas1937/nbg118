@@ -102,6 +102,8 @@ bool ImperialScene::init()
     int extH = 0;
     int sumHight = (1020+1020+300)*1.5+extH;
     
+   
+    
     m_touchLayer = CCLayer::create();
     m_bgParticleLayer = CCLayer::create();
     m_nightLayer = CCLayer::create();
@@ -311,6 +313,8 @@ bool ImperialScene::init()
     if(WorldController::getInstance()->selfPoint.x < 0 && ActivityController::getInstance()->ckfNeedLeave!=1 ){
         CCDirector::sharedDirector()->getRunningScene()->addChild(CityCrashView::create());
     }
+    
+   
     return true;
 }
 void ImperialScene::downloadXML(float _time)
@@ -335,6 +339,7 @@ void ImperialScene::buildingCallBack(CCObject* params)
     auto resSp = CCLoadSprite::loadResource("pic400000_2.png");//dsg_house_1
     resSp->getTexture()->setAntiAliasTexParameters();
     m_resbatchNode = CCSpriteBatchNode::createWithTexture(resSp->getTexture());
+    
     m_touchLayer->addChild(m_resbatchNode,199);
     
     m_soldierFlagNode = CCNode::create();
@@ -578,7 +583,43 @@ void ImperialScene::onCreateTitan()
     m_Titan = Titan::create(0);
     m_Titan->turnFront();
 //    m_Titan->setPosition(Vec2(0,0));
-    m_titanNode->addChild(m_Titan);
+    //m_titanNode->addChild(m_Titan); //d by ljf
+    //begin a by ljf
+    
+    
+    
+    auto titanNode = CCNode::create();
+    titanNode->setRotation3D(Vec3(32, 39, -24));
+    titanNode->addChild(m_Titan);
+    titanNode->setPosition(m_touchLayer->convertToNodeSpace(m_titanNode->convertToWorldSpace(Point(0, 0))));
+    //SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE)->addChild(titanNode);
+    m_touchLayer->addChild(titanNode);
+ 
+    m_touchLayer->setCameraMask((unsigned short)CameraFlag::USER4, true);
+    
+    titanNode->setCameraMask((unsigned short) CameraFlag::USER2, true);
+    //m_Node0->setCameraMask((unsigned short) CameraFlag::DEFAULT);
+    
+    auto resSp = CCLoadSprite::createSprite("pic400000_2.png");
+    //m_titanNode->addChild(resSp);
+    resSp->setCameraMask((unsigned short) CameraFlag::USER2, true);
+    
+    CCSpriteBatchNode* batchNode = CCSpriteBatchNode::createWithTexture(resSp->getTexture());
+    
+    //batchNode->setCameraMask((unsigned short)CameraFlag::USER4, true);
+    CCSprite* sprite = CCSprite::createWithTexture( batchNode->getTexture());
+    
+    batchNode->addChild(sprite);
+    //m_titanNode->addChild(batchNode);
+    cocos2d::MoveBy*  _moveAction1 = MoveBy::create(4.f, Vec2(200, 0));
+    cocos2d::MoveBy*  _moveAction2 = MoveBy::create(4.f, Vec2(-200, 0));
+    
+    auto seq = Sequence::createWithTwoActions(_moveAction1, _moveAction2);
+    auto repeat = RepeatForever::create(seq);
+    //m_titanNode->runAction(repeat);
+    
+   
+    //end a by ljf
     std::vector<Vec2> movePoint;
     movePoint.push_back(m_tpath_1->getPosition());
     movePoint.push_back(m_tpath_2->getPosition());
@@ -2604,7 +2645,7 @@ void ImperialScene::onUpdateInfo()
             if(it->second.level==0) {
                 it->second.level=1;
             }
-            FunBuild* build = FunBuild::create( it->first , m_nameLayer);
+            FunBuild* build = FunBuild::create( it->first , m_nameLayer); //ljf, 此时funbuild的itemId为ItemSpec id="9990"字段
             build->setTag((it->second).pos);
             m_nodeBuildings[(it->second).pos]->addChild(build);
             m_nodeBuildings[(it->second).pos]->setContentSize(CCSizeMake(build->mainWidth, build->mainHeight));
@@ -2620,7 +2661,7 @@ void ImperialScene::onUpdateInfo()
             build->setNamePos(m_nodeBuildings[(it->second).pos]->getPositionX()
                               , m_nodeBuildings[(it->second).pos]->getPositionY(), m_signLayer, m_popLayer, m_arrbatchNode, curBatch, od, curBlentBatch);
             if (m_buildSpineMap.find((it->second).pos) != m_buildSpineMap.end()) {
-//                build->setSpineLayer( m_buildSpineMap[(it->second).pos] );
+                build->setSpineLayer( m_buildSpineMap[(it->second).pos] );
             }
             
             m_buildItems[it->first] = build;
@@ -2632,14 +2673,19 @@ void ImperialScene::onUpdateInfo()
         int cnt = m_nodeBuildings[i]->getChildrenCount();
         if (cnt<=0) {
             //加入地块
-            FunBuild* build = FunBuild::create( i , m_nameLayer);
+            FunBuild* build = FunBuild::create( i , m_nameLayer);  //ljf, 此时funbuild的itemId为position字段
+            
             build->setTag(i);
             m_nodeBuildings[i]->addChild(build);
+            
             m_nodeBuildings[i]->setContentSize(CCSizeMake(build->mainWidth, build->mainHeight));
             int od = m_nodeBuildings[i]->getZOrder();
             m_nodeBuildings[i]->setZOrder(od);
+            
             build->setTileBatch(m_nodeBuildings[i]->getPositionX(), m_nodeBuildings[i]->getPositionY(), m_resbatchNode, od);
             build->m_key = 1000-od;
+            
+            
         }
     }
 }
@@ -3305,6 +3351,7 @@ bool ImperialScene::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_wallZOrder_3", CCNode*, this->m_wallZOrder_3);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_wallZOrder_4", CCNode*, this->m_wallZOrder_4);
     
+    
     return false;
 }
 
@@ -3488,26 +3535,29 @@ void ImperialScene::initBigTile()
     if (m_exit) {
         return;
     }
-//    map<int, BigTileInfo>::iterator it=FunBuildController::getInstance()->m_bigTileMap.begin();
-//    for (; it!=FunBuildController::getInstance()->m_bigTileMap.end(); it++) {
-//        if(it->second.state == FUN_BUILD_LOCK) {
-//            int pos = it->second.pos;
-//            if (m_bigTileNodes.find(pos) != m_bigTileNodes.end()) {
-//                if(m_bigTileNodes[pos]) {
-//                    SpeBuild* build = SpeBuild::create(it->first);
-//                    if (build) {
-//                        m_bigTileNodes[pos]->addChild(build);
-//                        
-//                        int od = m_bigTileNodes[pos]->getZOrder();
-//                        build->setNamePos(m_bigTileNodes[pos]->getPositionX()
-//                                          , m_bigTileNodes[pos]->getPositionY(), m_signLayer, m_arrbatchNode, m_tilebatchNode, od);
-//                        m_bigTiles[it->first] = build;
-//                        build->m_key = 1000-od;
-//                    }
-//                }
-//            }
-//        }
-//    }
+    
+    /*
+    map<int, BigTileInfo>::iterator it=FunBuildController::getInstance()->m_bigTileMap.begin();
+    for (; it!=FunBuildController::getInstance()->m_bigTileMap.end(); it++) {
+        if(it->second.state == FUN_BUILD_LOCK) {
+            int pos = it->second.pos;
+            if (m_bigTileNodes.find(pos) != m_bigTileNodes.end()) {
+                if(m_bigTileNodes[pos]) {
+                    SpeBuild* build = SpeBuild::create(it->first);
+                    if (build) {
+                        m_bigTileNodes[pos]->addChild(build);
+                        
+                        int od = m_bigTileNodes[pos]->getZOrder();
+                        build->setNamePos(m_bigTileNodes[pos]->getPositionX()
+                                          , m_bigTileNodes[pos]->getPositionY(), m_signLayer, m_arrbatchNode, m_tilebatchNode, od);
+                        m_bigTiles[it->first] = build;
+                        build->m_key = 1000-od;
+                    }
+                }
+            }
+       }
+    }
+    */
     
     m_flagBuild = SpeBuild::create(SPE_BUILD_FLAG);
     m_flagNode->addChild(m_flagBuild);

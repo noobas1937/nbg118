@@ -234,7 +234,7 @@ public:
     CCSafeObject<CCNode> m_kingsGiftNode;
     CCSafeObject<CCLabelIF> m_mailBtnTimes;
     CCSafeObject<CCLabelIF> m_mailBtnTitle;
-    CCSafeObject<CCSprite> m_mailBtnTimesBG;
+//    CCSafeObject<CCSprite> m_mailBtnTimesBG;
     CCSafeObject<CCSprite> m_mailBG;
     CCSafeObject<CCNode> m_mailBtnsNode;
     CCSafeObject<CCControlButton> m_cancelDelMailBtn;
@@ -718,7 +718,7 @@ private:
     CCSafeObject<CCNode> m_kingsGiftNode;
     CCSafeObject<CCLabelIF> m_mailBtnTimes;
     CCSafeObject<CCLabelIF> m_mailBtnTitle;
-    CCSafeObject<CCSprite> m_mailBtnTimesBG;
+//    CCSafeObject<CCSprite> m_mailBtnTimesBG;
     CCSafeObject<CCSprite> m_mailBG;
     CCSafeObject<CCNode> m_mailBtnsNode;
     CCSafeObject<CCControlButton> m_cancelDelMailBtn;
