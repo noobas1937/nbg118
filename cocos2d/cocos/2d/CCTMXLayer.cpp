@@ -298,8 +298,10 @@ void TMXLayer::setupTilesByCoordinate(const cocos2d::Point &tileCoordinate, cons
         this->insertQuadFromSprite(tile, indexForZ);
         
         // guo.jiang
-        if (m_isShaderForTileSprite)
-            tile->applySeaShader();
+//        if (m_isShaderForTileSprite) {
+//            tile->applySeaShader();
+//            setGLProgramState(tile->getGLProgramState());
+//        }
     };
     
     if (_layerOrientation == TMXOrientationIso)
