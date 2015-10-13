@@ -5979,9 +5979,9 @@ void  UIComponent::showFlygold(){
         
         m_allianceAni->setVisible(true);
         
-        m_allianceAni1 = AllianceAni::create();
-        
-        m_allianceAni->addChild(m_allianceAni1);
+//        m_allianceAni1 = AllianceAni::create();//fusheng 暂时不显示金币动画
+//        
+//        m_allianceAni->addChild(m_allianceAni1);
         
     }
     
