@@ -230,10 +230,11 @@ bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType) {
 //        glprogramstate->setUniformFloat("u_radius", radius);
 //        glprogramstate->setUniformFloat("u_threshold", threshold);
 //        
-//        for (auto iter = map->getChildren().begin(); iter != map->getChildren().end(); ++iter)
-//        {
-//            auto layer = dynamic_cast<TMXLayer*>(*iter);
-//            if (!layer) continue;
+        for (auto iter = map->getChildren().begin(); iter != map->getChildren().end(); ++iter)
+        {
+            auto layer = dynamic_cast<TMXLayer*>(*iter);
+            if (!layer) continue;
+            layer->setGlobalZOrder(-2);
 //
 //            layer->setGLProgramState(glprogramstate);
 //            
@@ -286,7 +287,7 @@ bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType) {
 ////                    _AutoScrollCountV = 0;
 ////                }
 //            }, "shader_update");
-//        }
+        }
     }
 
     if(m_mapType == NORMAL_MAP){
@@ -8305,20 +8306,26 @@ void WorldMapView::testCastle(int level){
 
 void WorldMapView::update_water_shader()
 {
-//    NBWaterShaderLayer* water = dynamic_cast<NBWaterShaderLayer*>(m_layers[WM_BG]->getChildByTag(WM_BG_TAG + 1));
-//    if (water == nullptr) {
-//        water = NBWaterShaderLayer::create();
-//        water->setTag(WM_BG_TAG + 1);
-//        m_layers[WM_BG]->addChild(water, -9);
-//        water->schedule([water](float dt){water->tick(dt);}, "sh");
-//    }
-//    if (water) {
+    NBWaterShaderLayer* water = dynamic_cast<NBWaterShaderLayer*>(m_layers[WM_BG]->getChildByTag(WM_BG_TAG + 1));
+    if (water == nullptr) {
+        water = NBWaterShaderLayer::create();
+        water->setTag(WM_BG_TAG + 1);
+        m_layers[WM_BG]->addChild(water, -9);
+        water->schedule([water](float dt){water->tick(dt);}, "sh");
+    }
+    if (water) {
 //        auto nb_ocean = m_layers[WM_BG]->getChildByTag(WM_BG_TAG);
 //        if (nb_ocean) {
-//            water->setGlobalZOrder(nb_ocean->getGlobalZOrder());
-//            water->getMapSprite()->setGlobalZOrder(nb_ocean->getGlobalZOrder());
+//            nb_ocean->setGlobalZOrder(0);
+//            water->setGlobalZOrder(0);
+            water->getMapSprite()->setGlobalZOrder(-1);
 //        }
-//        auto fPos = m_map->getViewPointByTilePoint(m_map->currentTilePoint);
-//        water->setPosition(fPos);
-//    }
+//        for (int i = WM_BG; i <= WM_COVER; i ++) {
+//            if (m_layers[i]) {
+//                m_layers[i]->setGlobalZOrder(i);
+//            }
+//        }
+        auto fPos = m_map->getViewPointByTilePoint(m_map->currentTilePoint);
+        water->setPosition(fPos);
+    }
 }

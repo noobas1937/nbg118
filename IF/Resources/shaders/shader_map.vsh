@@ -48,8 +48,8 @@ void main()
 	v_result = c4;
 	
 	v_normalCoord = v_texcoord0 * 25.0;
-	v_normalCoord.x -= 0.01 * u_time * 0.5;
-	v_normalCoord.y += 0.02 * u_time * 0.5;
+//	v_normalCoord.x -= 0.01 * u_time * 0.5;
+//	v_normalCoord.y += 0.02 * u_time * 0.5;
 
 	v_normalCoord = vec2(v_normalCoord.x + c1 * 0.01, (v_normalCoord.y + c1 * 0.01) * uvFactor) * 1.5;
 	
