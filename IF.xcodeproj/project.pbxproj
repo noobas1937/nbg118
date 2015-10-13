@@ -994,6 +994,8 @@
 		B80E14471BC75C420042B725 /* nb_ocean.tmx in Resources */ = {isa = PBXBuildFile; fileRef = B80E14451BC75C420042B725 /* nb_ocean.tmx */; settings = {ASSET_TAGS = (); }; };
 		B8581EA01BBA34E70027F733 /* TypeDefinition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8581E9F1BBA34E70027F733 /* TypeDefinition.cpp */; settings = {ASSET_TAGS = (); }; };
 		B864A3BD1BCB43EA001BD875 /* DynamicTiledMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B864A3BB1BCB43EA001BD875 /* DynamicTiledMap.cpp */; settings = {ASSET_TAGS = (); }; };
+		B86B5D1B1BCCA7340010EC71 /* NBWorldMapDecoration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B86B5D191BCCA7340010EC71 /* NBWorldMapDecoration.cpp */; settings = {ASSET_TAGS = (); }; };
+		B86B5D2E1BCCF2360010EC71 /* NBWaterShaderLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B86B5D2C1BCCF2360010EC71 /* NBWaterShaderLayer.cpp */; settings = {ASSET_TAGS = (); }; };
 		BA19245118C87ED7009C1CEA /* CCLabelIFBMFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA19244D18C87ED7009C1CEA /* CCLabelIFBMFont.cpp */; };
 		BA19245218C87ED7009C1CEA /* CCLabelIFTTF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA19244F18C87ED7009C1CEA /* CCLabelIFTTF.cpp */; };
 		BA2EB25818E2A0DA00DB3D83 /* DefaultTableViewDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA2EB25618E2A0DA00DB3D83 /* DefaultTableViewDelegate.cpp */; };
@@ -3136,6 +3138,10 @@
 		B8581E9F1BBA34E70027F733 /* TypeDefinition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TypeDefinition.cpp; sourceTree = "<group>"; };
 		B864A3BB1BCB43EA001BD875 /* DynamicTiledMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DynamicTiledMap.cpp; sourceTree = "<group>"; };
 		B864A3BC1BCB43EA001BD875 /* DynamicTiledMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamicTiledMap.h; sourceTree = "<group>"; };
+		B86B5D191BCCA7340010EC71 /* NBWorldMapDecoration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBWorldMapDecoration.cpp; sourceTree = "<group>"; };
+		B86B5D1A1BCCA7340010EC71 /* NBWorldMapDecoration.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NBWorldMapDecoration.hpp; sourceTree = "<group>"; };
+		B86B5D2C1BCCF2360010EC71 /* NBWaterShaderLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBWaterShaderLayer.cpp; sourceTree = "<group>"; };
+		B86B5D2D1BCCF2360010EC71 /* NBWaterShaderLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBWaterShaderLayer.h; sourceTree = "<group>"; };
 		BA19244D18C87ED7009C1CEA /* CCLabelIFBMFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelIFBMFont.cpp; sourceTree = "<group>"; };
 		BA19244E18C87ED7009C1CEA /* CCLabelIFBMFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelIFBMFont.h; sourceTree = "<group>"; };
 		BA19244F18C87ED7009C1CEA /* CCLabelIFTTF.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelIFTTF.cpp; sourceTree = "<group>"; };
@@ -5643,6 +5649,17 @@
 			path = libs/extensions/crashhelper;
 			sourceTree = "<group>";
 		};
+		B86B5D181BCCA2900010EC71 /* map */ = {
+			isa = PBXGroup;
+			children = (
+				B86B5D2C1BCCF2360010EC71 /* NBWaterShaderLayer.cpp */,
+				B86B5D2D1BCCF2360010EC71 /* NBWaterShaderLayer.h */,
+				B86B5D191BCCA7340010EC71 /* NBWorldMapDecoration.cpp */,
+				B86B5D1A1BCCA7340010EC71 /* NBWorldMapDecoration.hpp */,
+			);
+			path = map;
+			sourceTree = "<group>";
+		};
 		BAC692231A2DBD9B0014C752 /* helpshift-sdk-ios */ = {
 			isa = PBXGroup;
 			children = (
@@ -6352,6 +6369,7 @@
 		FD3E3809183B3F19005596BD /* world */ = {
 			isa = PBXGroup;
 			children = (
+				B86B5D181BCCA2900010EC71 /* map */,
 				06CFA9511B84BECC0056E76A /* IFShakeGuideLayer.cpp */,
 				06CFA9521B84BECC0056E76A /* IFShakeGuideLayer.h */,
 				06C0EFE41AEE541200228485 /* AAreaBuildCCB.cpp */,
@@ -7511,6 +7529,7 @@
 				60015CDD1B57A2E90065C4C5 /* AnniversaryInfoView.cpp in Sources */,
 				272AB6771B15C7BC0052E896 /* ChatCellFrame.m in Sources */,
 				27AD60571B5D014A00B6AD40 /* MJRefreshStateHeader.m in Sources */,
+				B86B5D1B1BCCA7340010EC71 /* NBWorldMapDecoration.cpp in Sources */,
 				6CD847BF1B2EE5C500C8AF0D /* MemberTableCell.m in Sources */,
 				9441E48C1ADBDB500077035B /* AllianceTerritoryView.cpp in Sources */,
 				96361CBF1ACA8DA9000E5272 /* MonsterSiegeActivityInfoCommand.cpp in Sources */,
@@ -7713,6 +7732,7 @@
 				BADF472E1A3AA9A5008E2414 /* AppLibHelper.cpp in Sources */,
 				FD9C967A17CF2637005F493D /* PopupBaseView.cpp in Sources */,
 				1DB41C7E1A82038F00CB7D23 /* Search.cpp in Sources */,
+				B86B5D2E1BCCF2360010EC71 /* NBWaterShaderLayer.cpp in Sources */,
 				57FECAB818F38ADB0012D557 /* UserUpgradeView.cpp in Sources */,
 				963E3F451B20439D009783BE /* CrossServiceActivityCommand.cpp in Sources */,
 				FD9C968017CF2B7F005F493D /* PopupViewController.cpp in Sources */,
