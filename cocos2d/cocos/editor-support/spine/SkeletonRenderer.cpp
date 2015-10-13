@@ -154,7 +154,7 @@ void SkeletonRenderer::update (float deltaTime) {
 void SkeletonRenderer::draw (Renderer* renderer, const Mat4& transform, uint32_t transformFlags) {
 	_drawCommand.init(_globalZOrder);
 	_drawCommand.func = CC_CALLBACK_0(SkeletonRenderer::drawSkeleton, this, transform, transformFlags);
-    _drawCommand.set3D(true);
+//    _drawCommand.set3D(true);
 	renderer->addCommand(&_drawCommand);
 }
 //modify by elex
