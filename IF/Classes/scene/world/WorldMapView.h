@@ -447,6 +447,8 @@ private:
     };
     
     vector<FlagParInfo> m_flagParDatas;
+    
+    void update_water_shader();
 };
 
 #endif /* defined(__IF__WorldMapView__) */

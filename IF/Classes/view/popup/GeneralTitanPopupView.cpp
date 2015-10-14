@@ -218,10 +218,12 @@ bool GeneralTitanPopupView::init()
     m_CleanFeedCDBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::DISABLED)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
     
 
+    m_titanFeedBtn->setZoomOnTouchDown(false);
+    
+    m_CleanFeedCDBtn->setZoomOnTouchDown(false);//fusheng 不做放缩
+
     
     
-
-
     
   
     return true;

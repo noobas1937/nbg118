@@ -89,6 +89,9 @@ private:
     CCSafeObject<StoreBagView>m_bagView;
     CCSafeObject<StoreMallView>m_mallView;
     
+    CCSafeObject<CCSprite> m_bagIcon;
+    CCSafeObject<CCSprite> m_storeIcon;
+    
 //    CCSafeObject<CCMultiColTableView > m_tabView;
     CCSafeObject<CCTableView> m_tabView;
     

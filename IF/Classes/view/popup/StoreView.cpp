@@ -50,7 +50,7 @@ bool StoreView::init()
     setTitleName(_lang("102160").c_str());
     
     int oldBgHeight = m_buildBG->getContentSize().height;
-    changeBGHeight(m_buildBG);
+    changeBGMaxHeight(m_buildBG);
     int newBgHeight = m_buildBG->getContentSize().height;
     int addHeight = newBgHeight - oldBgHeight;
     int oldWidth = m_infoList->getContentSize().width;
@@ -72,7 +72,7 @@ bool StoreView::init()
 //        m_BGNode->addChild(pic);
 //    }
     
-    m_BGNode->setPreferredSize(Size(tmpCCB->getContentSize().width, tmpCCB->getContentSize().height + 320)); // guo.jiang
+    m_BGNode->setPreferredSize(Size(tmpCCB->getContentSize().width, tmpCCB->getContentSize().height + addHeight)); // guo.jiang
     
     CCCommonUtils::setButtonTitle(m_storeBtn, _lang("104900").c_str());
     CCCommonUtils::setButtonTitle(m_bagBtn, _lang("104901").c_str());
@@ -105,11 +105,17 @@ bool StoreView::init()
     ToolController::getInstance()->m_currentUseItemId=0;
     m_bagView = StoreBagView::create();
     m_mallView = StoreMallView::create();
-    float dy = 852-170;
+    float dy = 852-170;//fusheng m_bagNode的坐标为离左上角 170
+//    float dy = 0;
     if(CCCommonUtils::isIosAndroidPad())
         dy = 2048-340;
     m_mallView->setPositionY(-dy);
     m_bagView->setPositionY(-dy);
+    
+
+
+    m_bagBtn->setZoomOnTouchDown(false);
+    m_storeBtn->setZoomOnTouchDown(false);
 //    m_mallView->setVisible(false);
 //    m_bagView->setVisible(false);
     m_page = 2;
@@ -128,6 +134,7 @@ void StoreView::updateInfo()
     if (m_type==0) {
         m_storeBtn->setEnabled(false);
         m_bagBtn->setEnabled(true);
+        
         this->m_bagNode->removeAllChildren();
         m_mallNode->addChild(m_mallView);
     }
@@ -137,6 +144,10 @@ void StoreView::updateInfo()
         m_storeBtn->setEnabled(true);
         m_bagBtn->setEnabled(false);
     }
+    
+    CCCommonUtils::setSpriteGray(m_bagIcon, m_bagBtn->isEnabled());
+    
+    CCCommonUtils::setSpriteGray(m_storeIcon, m_storeBtn->isEnabled());
 //    
 //    m_warBtn->setEnabled(true);
 //    m_spdBtn->setEnabled(true);
@@ -359,6 +370,11 @@ bool StoreView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const cha
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_mallNode", CCNode*, this->m_mallNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_BGNode", CCScale9Sprite*, this->m_BGNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_buildBG", CCScale9Sprite*, this->m_buildBG);
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bagIcon", CCSprite*, this->m_bagIcon);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_storeIcon", CCSprite*, this->m_storeIcon);
+    
+    
     return false;
 }
 

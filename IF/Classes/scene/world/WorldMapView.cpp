@@ -64,6 +64,7 @@
 #include "IFShakeCmd.h"
 #include "InnerSettingView.h"
 #include "DynamicTiledMap.h"
+#include "NBWaterShaderLayer.h"
 
 #pragma mark * CloudLayer
 
@@ -229,10 +230,11 @@ bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType) {
 //        glprogramstate->setUniformFloat("u_radius", radius);
 //        glprogramstate->setUniformFloat("u_threshold", threshold);
 //        
-//        for (auto iter = map->getChildren().begin(); iter != map->getChildren().end(); ++iter)
-//        {
-//            auto layer = dynamic_cast<TMXLayer*>(*iter);
-//            if (!layer) continue;
+        for (auto iter = map->getChildren().begin(); iter != map->getChildren().end(); ++iter)
+        {
+            auto layer = dynamic_cast<TMXLayer*>(*iter);
+            if (!layer) continue;
+            layer->setGlobalZOrder(-2);
 //
 //            layer->setGLProgramState(glprogramstate);
 //            
@@ -285,7 +287,7 @@ bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType) {
 ////                    _AutoScrollCountV = 0;
 ////                }
 //            }, "shader_update");
-//        }
+        }
     }
 
     if(m_mapType == NORMAL_MAP){
@@ -1858,6 +1860,7 @@ void WorldMapView::leaveWorld() {
 
 void WorldMapView::updateSelfName() {
     m_map->updateDynamicMap();
+    update_water_shader();
 }
 
 void WorldMapView::clearPopupView() {
@@ -1966,6 +1969,7 @@ void WorldMapView::gotoTilePoint(const cocos2d::CCPoint &point,bool forceUpdate,
     }
     if (forceUpdate && !m_map->isSendCmd) {
         m_map->updateDynamicMap();
+        update_water_shader();
     }
     m_map->isSendCmd = false;
 }
@@ -2213,6 +2217,7 @@ void WorldMapView::onMarchCallback(cocos2d::CCObject *obj) {
         // refresh map point
         auto point = params->valueForKey("point")->intValue();
         WorldMapView::instance()->m_map->updateDynamicMap(WorldController::getPointByIndex(point));
+        update_water_shader();
     }
 }
 void WorldMapView::doAllianceArea(unsigned int type ,unsigned int index,bool isSuperMine/* false*/,bool isWarehouse/* false*/,WorldResourceType resType/* Wood*/,string aaid){
@@ -2470,6 +2475,7 @@ void WorldMapView::finishAllianceArea(CCObject* pObj){
     }
     if (!isSuperMine) {
         m_map->updateDynamicMap();
+        update_water_shader();
     }
     m_untouchableTiles.erase(std::remove(m_untouchableTiles.begin(), m_untouchableTiles.end(), index),m_untouchableTiles.end());
 }
@@ -8237,6 +8243,7 @@ void WorldMapView::onShake(CCObject* pObj){
             CCPoint tilePoint = WorldController::getPointByIndex(index);
             if (m_cityInfo.find(index) == m_cityInfo.end()) {
                 m_map->updateDynamicMap(tilePoint);
+                update_water_shader();
                 CCLOG("shakeLog sendcmd point%f, %f",tilePoint.x,tilePoint.y);
             }
             auto view =  dynamic_cast<IFShakeLayer*>(PopupViewController::getInstance()->getCurrentPopupView());
@@ -8295,4 +8302,30 @@ void WorldMapView::testCastle(int level){
     createCity(m_cityInfo[WorldController::getIndexByPoint(ccpAdd(myPoint, ccp(-1, -1)))]);
     createCity(m_cityInfo[WorldController::getIndexByPoint(ccpAdd(myPoint, ccp(0, 0)))]);
 
+}
+
+void WorldMapView::update_water_shader()
+{
+    NBWaterShaderLayer* water = dynamic_cast<NBWaterShaderLayer*>(m_layers[WM_BG]->getChildByTag(WM_BG_TAG + 1));
+    if (water == nullptr) {
+        water = NBWaterShaderLayer::create();
+        water->setTag(WM_BG_TAG + 1);
+        m_layers[WM_BG]->addChild(water, -9);
+        water->schedule([water](float dt){water->tick(dt);}, "sh");
+    }
+    if (water) {
+//        auto nb_ocean = m_layers[WM_BG]->getChildByTag(WM_BG_TAG);
+//        if (nb_ocean) {
+//            nb_ocean->setGlobalZOrder(0);
+//            water->setGlobalZOrder(0);
+            water->getMapSprite()->setGlobalZOrder(-1);
+//        }
+//        for (int i = WM_BG; i <= WM_COVER; i ++) {
+//            if (m_layers[i]) {
+//                m_layers[i]->setGlobalZOrder(i);
+//            }
+//        }
+        auto fPos = m_map->getViewPointByTilePoint(m_map->currentTilePoint);
+        water->setPosition(fPos);
+    }
 }
