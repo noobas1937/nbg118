@@ -46,6 +46,25 @@ QueueController::~QueueController() {
     CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(QueueController::onEnterFrame), this);
 }
 
+void QueueController::TitanFinishCD(float dt)
+{
+    int qid = QueueController::getInstance()->getQueueQidByKey(CC_ITOA(400000000));
+    string uuid = GlobalData::shared()->allQueuesInfo[qid].uuid;//fusheng 10.13
+    QueueFinishCommand* cmd = new QueueFinishCommand(QUEUE_FINISH_COMMAND, uuid);
+    
+    auto biter = GlobalData::shared()->imperialInfo.find(400000000);
+    
+    if (biter!=GlobalData::shared()->imperialInfo.end()) {
+        
+        FunBuildController::getInstance()->completeUpOrCreate(400000000);//fusheng 主城数据刷新
+        biter->second.state = FUN_BUILD_UPING_END;//fusheng  设置状态 保证正常逻辑
+    }
+    
+    CCLOG("TitanFinishCD");
+    cmd->sendAndRelease();
+}
+
+
 void QueueController::onEnterFrame(float dt)
 {
     if (ShowRecAllianceTime>0) {
@@ -93,6 +112,13 @@ void QueueController::onEnterFrame(float dt)
                                     string para2 = string (" Lv") + CC_ITOA(biter->second.level + 1) + string(" ");
                                     CCCommonUtils::flyHint("", "", _lang_2("137480", para1.c_str(), para2.c_str()), 2, 0, true);
                                     SoundController::sharedSound()->playEffects(Music_Sfx_UI_buildfinish);
+                                    
+                                    //fusheng 在世界场景里  建筑物升级 仅仅只是提示一下
+                                    if(it->second.itemId == 400000) //主城发一个
+                                    {
+                                        CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(QueueController::TitanFinishCD), this, 0.5f,0, 1.0f, false);//fusheng 延迟1。5秒  确保数据正常
+                                        CCLOG("pre TitanFinishCD");
+                                    }
                                 } else {
                                     if (it->second.key != iter->second.key || it->second.startTime != iter->second.startTime || it->second.endTime != iter->second.endTime || it->second.finishTime != iter->second.finishTime) {
 //                                        m_buildQueueInfo[it->first] = QueueInfo(it->second);
@@ -109,6 +135,8 @@ void QueueController::onEnterFrame(float dt)
                                         string para2 = string (" Lv") + CC_ITOA(biter->second.level + 1) + string(" ");
                                         CCCommonUtils::flyHint("", "", _lang_2("137480", para1.c_str(), para2.c_str()), 2, 0, true);
                                         SoundController::sharedSound()->playEffects(Music_Sfx_UI_buildfinish);
+                                        
+
                                     }
                                 }
                             }

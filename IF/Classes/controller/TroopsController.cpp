@@ -195,7 +195,17 @@ CCDictionary* TroopsController::saveBattle()
     map<string, int>::iterator it;
     for (it = m_tmpBattleInfos.begin(); it != m_tmpBattleInfos.end(); it++) {
         if (m_tmpBattleInfos[it->first] > 0) {
-            dict->setObject(CCInteger::create(m_tmpBattleInfos[it->first]), it->first);
+            
+            int sid = CCString::create(it->first)->intValue();
+            if(sid>=107401&&sid<=107430)//fusheng 泰坦特殊处理  在出征界面下  泰坦升级的话 it->first取得值是错误的
+            {
+                dict->setObject(CCInteger::create(m_tmpBattleInfos[it->first]), GlobalData::shared()->titanInfo.titanId);
+            }
+            else
+            {
+                dict->setObject(CCInteger::create(m_tmpBattleInfos[it->first]), it->first);
+            }
+            
             m_saveSoldierNum += m_tmpBattleInfos[it->first];
         }
     }

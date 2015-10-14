@@ -993,7 +993,16 @@ void FunBuildController::endUpFunBuild(CCDictionary* dict, int type)
             
             if(tk == 400000000)
             {
-                CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_SPEED_UP_COMPLETE,CCString::create("upgrade"));
+                CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_SPEED_UP_COMPLETE,CCString::create("upgrade"));//fusheng 用金币直接升级
+                
+                if(SceneController::getInstance()->currentSceneId == SCENE_ID_WORLD)
+                {
+                    
+                    int qid = QueueController::getInstance()->getQueueQidByKey(CC_ITOA(400000000));
+                 
+                    QueueController::getInstance()->startFinishQueue(qid,false);//fusheng 在世界里升级  取消升级队列占用
+                }
+                    
             }
         }
         else {

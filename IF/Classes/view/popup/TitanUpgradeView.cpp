@@ -605,6 +605,19 @@ void TitanUpgradeView::onOkInstantUp()
             m_isReturn = false;
             PopupViewController::getInstance()->removeAllPopupView();
             CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_MAINSCENCE_GOBACK);
+            
+            
+            //fusheng 如果在世界里的话  更新主城数据
+            if(SceneController::getInstance()->currentSceneId == SCENE_ID_WORLD)
+            {
+                auto biter = GlobalData::shared()->imperialInfo.find(400000000);
+                
+                if (biter!=GlobalData::shared()->imperialInfo.end()) {
+                    
+                    FunBuildController::getInstance()->completeUpOrCreate(400000000);//fusheng 主城数据刷新
+                    biter->second.state = FUN_BUILD_UPING_END;//fusheng  设置状态 保证正常逻辑
+                }
+            }
         }
     }
     else {
