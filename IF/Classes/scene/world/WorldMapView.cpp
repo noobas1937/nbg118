@@ -172,7 +172,6 @@ bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType) {
     // because map is moved by touch delegate view , we must add BG CITY ROAD layer at map
     // guo.jiang
     std::string tmxPath = "nb_world.tmx";
-//    std::string tmxPath = "WorldMap_nb_top.tmx";
 //    std::string tmxPath = "WorldMap.tmx";
     int loopSize = _big_tilecountX;
     if(m_mapType == SERVERFIGHT_MAP){
@@ -195,99 +194,7 @@ bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType) {
         m_map->addChild(m_layers[WM_BG], -10);
         m_layers[WM_BG]->setTag(WM_BG_TAG);
         
-//        auto map = DynamicTiledMap::create("nb_world_bottom.tmx", gotoPoint, 1207);
-        auto map = DynamicTiledMap::create("nb_ocean.tmx", gotoPoint, 1201);
-        map->setTag(WM_BG_TAG);
-//        map->setPosition(-ccp(256 * (1207 - _tile_count_x) / 2, 128 * (1207 - _tile_count_y)));
-        m_layers[WM_BG]->addChild(map);
-        
-//        auto fileUtiles = FileUtils::getInstance();
-//        auto fragmentFullPath = fileUtiles->fullPathForFilename("shaders/water.fsh");
-//        auto fragSource = fileUtiles->getStringFromFile(fragmentFullPath);
-//        auto glprogram = GLProgram::createWithByteArrays(ccPositionTextureColor_vert, fragSource.c_str());
-//        auto glprogramstate = GLProgramState::getOrCreateWithGLProgram(glprogram);
-//        
-////        auto textrue2 = Director::getInstance()->getTextureCache()->addImage("shaders/caustics.png");
-////        glprogramstate->setUniformTexture("u_lightTexture", textrue2);
-////        
-////        Texture2D::TexParams tRepeatParams;
-////        tRepeatParams.magFilter = GL_LINEAR_MIPMAP_LINEAR;
-////        tRepeatParams.minFilter = GL_LINEAR;
-////        tRepeatParams.wrapS = GL_REPEAT;
-////        tRepeatParams.wrapT = GL_REPEAT;
-////        textrue2->setTexParameters(tRepeatParams);
-////        
-////        Vec4 tLightColor(1.0, 1.0, 1.0, 1.0);
-////        glprogramstate->setUniformVec4("v_LightColor", tLightColor);
-////        
-////        glprogramstate->setUniformFloat("rrr", 1.0);
-//        
-//        Vec3 color(1.0f, 0.2f, 0.3f);
-//        GLfloat radius = 0.01f;
-//        GLfloat threshold = 1.75;
-//        
-//        glprogramstate->setUniformVec3("u_outlineColor", color);
-//        glprogramstate->setUniformFloat("u_radius", radius);
-//        glprogramstate->setUniformFloat("u_threshold", threshold);
-//        
-        for (auto iter = map->getChildren().begin(); iter != map->getChildren().end(); ++iter)
-        {
-            auto layer = dynamic_cast<TMXLayer*>(*iter);
-            if (!layer) continue;
-            layer->setGlobalZOrder(-2);
-//
-//            layer->setGLProgramState(glprogramstate);
-//            
-//            layer->schedule([layer](float dt){
-////                static bool _AutoScrollU = true;
-////                static float _AutoScrollSpeedU = 0;
-////                static bool _AutoScrollV = false;
-////                static float _AutoScrollSpeedV = 0;
-////                static float _AutoScrollCountU = 0;
-////                static float _AutoScrollCountV = 0;
-////                
-////                auto glprogramstate = layer->getGLProgramState();
-////                glprogramstate->setUniformVec2("texOffset", cocos2d::Vec2(_AutoScrollCountU, _AutoScrollCountV));
-////                
-////                auto textrue2 = Director::getInstance()->getTextureCache()->addImage("shaders/caustics.png");
-////                glprogramstate->setUniformTexture("u_lightTexture", textrue2);
-////                
-////                Texture2D::TexParams tRepeatParams;
-////                tRepeatParams.magFilter = GL_LINEAR_MIPMAP_LINEAR;
-////                tRepeatParams.minFilter = GL_LINEAR;
-////                tRepeatParams.wrapS = GL_REPEAT;
-////                tRepeatParams.wrapT = GL_REPEAT;
-////                textrue2->setTexParameters(tRepeatParams);
-////                
-////                Vec4 tLightColor(1.0, 1.0, 1.0, 1.0);
-////                glprogramstate->setUniformVec4("v_LightColor", tLightColor);
-////                
-////                glprogramstate->setUniformFloat("rrr", 1.0);
-////                
-////                //更新u
-////                if (_AutoScrollU)
-////                {
-////                    _AutoScrollCountU += dt * _AutoScrollSpeedU;
-////                }
-////                
-////                //更新v
-////                if (_AutoScrollV)
-////                {
-////                    _AutoScrollCountV += dt * _AutoScrollSpeedV;
-////                }
-////                
-////                //如果超出范围从0开始
-////                if (_AutoScrollCountU > 1.0 || _AutoScrollCountU < -1.0)
-////                {
-////                    _AutoScrollCountU = 0;
-////                }
-////                
-////                if (_AutoScrollCountV > 1.0 || _AutoScrollCountV < -1.0)
-////                {
-////                    _AutoScrollCountV = 0;
-////                }
-//            }, "shader_update");
-        }
+        m_map->layerNamed("ocean")->setGlobalZOrder(-2);
     }
 
     if(m_mapType == NORMAL_MAP){
@@ -4911,12 +4818,21 @@ void WorldMapView::addUnderNode(unsigned int index) {
     auto pos = m_map->getViewPointByTilePoint(WorldController::getPointByIndex(index),info.tileServerId);
     switch (info.cityType) {
         case ResourceTile:{
-            auto under = CCLoadSprite::createSprite(getSpriteName(info).c_str());
+            Node* under = Node::create();
             under->setAnchorPoint(ccp(0, 0));
             under->setTag(index);
             under->setPosition(ccp(pos.x-_halfTileSize.width,pos.y-_halfTileSize.height)); // left-bottom corner
             m_cityItem[index].push_back(under);
             m_cityBatchNode->addChild(under, index);
+            
+            auto island = CCLoadSprite::createSprite("decor_island_100.png");
+            island->setAnchorPoint(Vec2(0, 0));
+            under->addChild(island);
+
+            auto house = CCLoadSprite::createSprite(getSpriteName(info).c_str());
+            house->setAnchorPoint(Vec2(0, 0));
+            under->addChild(house);
+            under->setContentSize(house->getContentSize());
             
             addBatchItem(LevelTag, index);
             auto lv = CCLabelBatch::create(CC_ITOA((int)info.resource.lv),m_labelNode);
@@ -5976,7 +5892,7 @@ std::string WorldMapView::getSpriteName(WorldCityInfo &info){
         }else if(info.resource.type == Stone){
             picName = "0018.png";
         }else if(info.resource.type == Iron){
-            picName = "mine_01.png"; // "0019.png"; // guo.jiang
+            picName = "0019.png";
         }else if(info.resource.type == Food){
             picName = "0020.png";
         }else if(info.resource.type == Gold){
@@ -8314,17 +8230,8 @@ void WorldMapView::update_water_shader()
         water->schedule([water](float dt){water->tick(dt);}, "sh");
     }
     if (water) {
-//        auto nb_ocean = m_layers[WM_BG]->getChildByTag(WM_BG_TAG);
-//        if (nb_ocean) {
-//            nb_ocean->setGlobalZOrder(0);
-//            water->setGlobalZOrder(0);
-            water->getMapSprite()->setGlobalZOrder(-1);
-//        }
-//        for (int i = WM_BG; i <= WM_COVER; i ++) {
-//            if (m_layers[i]) {
-//                m_layers[i]->setGlobalZOrder(i);
-//            }
-//        }
+        water->getMapSprite()->setGlobalZOrder(-1);
+
         auto fPos = m_map->getViewPointByTilePoint(m_map->currentTilePoint);
         water->setPosition(fPos);
     }

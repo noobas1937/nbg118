@@ -62,6 +62,7 @@ private:
     void loadResource(float _time);
     void updateLoadInfo(CCObject* obj);
     void titanNumChange(CCObject* obj);//fusheng 泰坦数量变化
+    void titanInfoChange(CCObject* obj);//fusheng 泰坦属性变化（升级）
     void setAddBtnState();
     void makeArrTime(CCObject* obj);
     void march();
@@ -124,6 +125,7 @@ public:
     void setData(string itemId, int num, int type, int rally);
     void refresh();
     void cellTouchEnded(CCTouch* pTouch);
+    string m_soldierId;
 private:
     virtual bool init(string itemId, int num, int type, int rally);
     virtual void onEnter();
@@ -147,7 +149,7 @@ private:
     CCSafeObject<CCNode> m_editNode;
     CCSafeObject<CCNode> m_headTouchNode;
     CCEditBox* m_editBox;
-    string m_soldierId;
+    
     int m_num;
     int m_cntNum;
     int m_type;

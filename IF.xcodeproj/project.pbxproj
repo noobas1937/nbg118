@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		061E39911B833C2F00E8CD32 /* IFShakeLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 061E398F1B833C2F00E8CD32 /* IFShakeLayer.cpp */; };
-		06290E8E1B4664FB0021F04F /* WorldMap1.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 06290E8D1B4664FB0021F04F /* WorldMap1.tmx */; };
 		06705ED41B836B8E00CEF154 /* ShakeController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 06705ED21B836B8E00CEF154 /* ShakeController.cpp */; };
 		067119721B4F66B0004C7B35 /* IFMapMaskLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 067119701B4F66B0004C7B35 /* IFMapMaskLayer.cpp */; };
 		068F15921B0B187D008AC0E4 /* SuperMinePopupView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 068F15901B0B187D008AC0E4 /* SuperMinePopupView.cpp */; };
@@ -988,11 +987,8 @@
 		B1FD956D18F790F20083574F /* EmailConfirmPush.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B1FD956B18F790F20083574F /* EmailConfirmPush.cpp */; };
 		B1FD957018F7BBFF0083574F /* PushSettingCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B1FD956E18F7BBFF0083574F /* PushSettingCommand.cpp */; };
 		B80D4B261BAFA1CC00422225 /* nb_world in Resources */ = {isa = PBXBuildFile; fileRef = B80D4B251BAFA1CC00422225 /* nb_world */; settings = {ASSET_TAGS = (); }; };
-		B80D4B291BAFA1D800422225 /* nb_world_bottom.tmx in Resources */ = {isa = PBXBuildFile; fileRef = B80D4B271BAFA1D800422225 /* nb_world_bottom.tmx */; settings = {ASSET_TAGS = (); }; };
 		B80D4B2A1BAFA1D800422225 /* nb_world.tmx in Resources */ = {isa = PBXBuildFile; fileRef = B80D4B281BAFA1D800422225 /* nb_world.tmx */; settings = {ASSET_TAGS = (); }; };
 		B80D4B2F1BAFCA6B00422225 /* nb_world_link_area.tmx in Resources */ = {isa = PBXBuildFile; fileRef = B80D4B2E1BAFCA6B00422225 /* nb_world_link_area.tmx */; settings = {ASSET_TAGS = (); }; };
-		B80E14461BC75C420042B725 /* nb_ocean in Resources */ = {isa = PBXBuildFile; fileRef = B80E14441BC75C420042B725 /* nb_ocean */; settings = {ASSET_TAGS = (); }; };
-		B80E14471BC75C420042B725 /* nb_ocean.tmx in Resources */ = {isa = PBXBuildFile; fileRef = B80E14451BC75C420042B725 /* nb_ocean.tmx */; settings = {ASSET_TAGS = (); }; };
 		B8581EA01BBA34E70027F733 /* TypeDefinition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8581E9F1BBA34E70027F733 /* TypeDefinition.cpp */; settings = {ASSET_TAGS = (); }; };
 		B864A3BD1BCB43EA001BD875 /* DynamicTiledMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B864A3BB1BCB43EA001BD875 /* DynamicTiledMap.cpp */; settings = {ASSET_TAGS = (); }; };
 		B86B5D1B1BCCA7340010EC71 /* NBWorldMapDecoration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B86B5D191BCCA7340010EC71 /* NBWorldMapDecoration.cpp */; settings = {ASSET_TAGS = (); }; };
@@ -1261,7 +1257,6 @@
 		FDD1FD5D182374C900AB2208 /* ScienceView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FDD1FD5B182374C900AB2208 /* ScienceView.cpp */; };
 		FDD3AC79184C226B00AE9834 /* LoginRewardCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FDD3AC77184C226B00AE9834 /* LoginRewardCommand.cpp */; };
 		FDD3AC7C184C267000AE9834 /* LoginRewardInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FDD3AC7A184C267000AE9834 /* LoginRewardInfo.cpp */; };
-		FDD956EC18DFC36100946C40 /* WorldMap.tmx in Resources */ = {isa = PBXBuildFile; fileRef = FDD956EB18DFC36100946C40 /* WorldMap.tmx */; };
 		FDD9697317E2C4DB0091A6FA /* CCThreadManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FDD9697117E2C4DA0091A6FA /* CCThreadManager.cpp */; };
 		FDE39D7419172D2D00ECEAA5 /* MinimapView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FDE39D7219172D2D00ECEAA5 /* MinimapView.cpp */; };
 		FDE5C9D918F4F67E0047D3FD /* CCLabelBatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FDE5C9D718F4F67E0047D3FD /* CCLabelBatch.cpp */; };
@@ -1308,7 +1303,6 @@
 /* Begin PBXFileReference section */
 		061E398F1B833C2F00E8CD32 /* IFShakeLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IFShakeLayer.cpp; sourceTree = "<group>"; };
 		061E39901B833C2F00E8CD32 /* IFShakeLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFShakeLayer.h; sourceTree = "<group>"; };
-		06290E8D1B4664FB0021F04F /* WorldMap1.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = WorldMap1.tmx; path = Resources/WorldMap1.tmx; sourceTree = "<group>"; };
 		06705ED21B836B8E00CEF154 /* ShakeController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShakeController.cpp; sourceTree = "<group>"; };
 		06705ED31B836B8E00CEF154 /* ShakeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShakeController.h; sourceTree = "<group>"; };
 		067119701B4F66B0004C7B35 /* IFMapMaskLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IFMapMaskLayer.cpp; sourceTree = "<group>"; };
@@ -3133,11 +3127,8 @@
 		B1FD956E18F7BBFF0083574F /* PushSettingCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PushSettingCommand.cpp; sourceTree = "<group>"; };
 		B1FD956F18F7BBFF0083574F /* PushSettingCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushSettingCommand.h; sourceTree = "<group>"; };
 		B80D4B251BAFA1CC00422225 /* nb_world */ = {isa = PBXFileReference; lastKnownFileType = folder; name = nb_world; path = Resources/nb_world; sourceTree = "<group>"; };
-		B80D4B271BAFA1D800422225 /* nb_world_bottom.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = nb_world_bottom.tmx; path = Resources/nb_world_bottom.tmx; sourceTree = "<group>"; };
 		B80D4B281BAFA1D800422225 /* nb_world.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = nb_world.tmx; path = Resources/nb_world.tmx; sourceTree = "<group>"; };
 		B80D4B2E1BAFCA6B00422225 /* nb_world_link_area.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = nb_world_link_area.tmx; path = Resources/nb_world_link_area.tmx; sourceTree = "<group>"; };
-		B80E14441BC75C420042B725 /* nb_ocean */ = {isa = PBXFileReference; lastKnownFileType = folder; name = nb_ocean; path = Resources/nb_ocean; sourceTree = "<group>"; };
-		B80E14451BC75C420042B725 /* nb_ocean.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = nb_ocean.tmx; path = Resources/nb_ocean.tmx; sourceTree = "<group>"; };
 		B8581E9F1BBA34E70027F733 /* TypeDefinition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TypeDefinition.cpp; sourceTree = "<group>"; };
 		B864A3BB1BCB43EA001BD875 /* DynamicTiledMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DynamicTiledMap.cpp; sourceTree = "<group>"; };
 		B864A3BC1BCB43EA001BD875 /* DynamicTiledMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamicTiledMap.h; sourceTree = "<group>"; };
@@ -3646,7 +3637,6 @@
 		FDD3AC78184C226B00AE9834 /* LoginRewardCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginRewardCommand.h; sourceTree = "<group>"; };
 		FDD3AC7A184C267000AE9834 /* LoginRewardInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LoginRewardInfo.cpp; sourceTree = "<group>"; };
 		FDD3AC7B184C267000AE9834 /* LoginRewardInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginRewardInfo.h; sourceTree = "<group>"; };
-		FDD956EB18DFC36100946C40 /* WorldMap.tmx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = WorldMap.tmx; path = Resources/WorldMap.tmx; sourceTree = "<group>"; };
 		FDD9697117E2C4DA0091A6FA /* CCThreadManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCThreadManager.cpp; sourceTree = "<group>"; };
 		FDD9697217E2C4DB0091A6FA /* CCThreadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCThreadManager.h; sourceTree = "<group>"; };
 		FDE39D7219172D2D00ECEAA5 /* MinimapView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MinimapView.cpp; sourceTree = "<group>"; };
@@ -5867,10 +5857,7 @@
 		DB9F590717CD9A520037F7E5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				B80E14441BC75C420042B725 /* nb_ocean */,
-				B80E14451BC75C420042B725 /* nb_ocean.tmx */,
 				B80D4B2E1BAFCA6B00422225 /* nb_world_link_area.tmx */,
-				B80D4B271BAFA1D800422225 /* nb_world_bottom.tmx */,
 				B80D4B281BAFA1D800422225 /* nb_world.tmx */,
 				B80D4B251BAFA1CC00422225 /* nb_world */,
 				36DE16D71BA188C00020785E /* 3d */,
@@ -5878,7 +5865,6 @@
 				5A6CE7B01B8F023D005CCFAA /* hdccbi */,
 				DB35489E1B6A336C001B7FA0 /* number.fnt */,
 				DB35489F1B6A336C001B7FA0 /* number.png */,
-				06290E8D1B4664FB0021F04F /* WorldMap1.tmx */,
 				1C49506F1AA0576200333C5E /* Spine */,
 				96F6B7E71A79D67C0032D9C0 /* particleImg */,
 				C280C8AE1A4C1147002C7860 /* footprintsingle.png */,
@@ -5895,7 +5881,6 @@
 				B15628B018FEB62000902628 /* pve_fnt_title.png */,
 				DB368DA618EAC5BF00C886DF /* Arial_Bold.fnt */,
 				DB368DA718EAC5BF00C886DF /* Arial_Bold.png */,
-				FDD956EB18DFC36100946C40 /* WorldMap.tmx */,
 				FD81B87418B4C9AE002A1B57 /* World */,
 				E6402A0718AC5BEF00CCE64C /* cloud2.tmx */,
 				5736A1AC18225C9D007C431C /* Imperial */,
@@ -7060,7 +7045,6 @@
 			files = (
 				5945BDCC1B7B7F6A002B23D6 /* VKSdkResources.bundle in Resources */,
 				DB4B32661A371DC700A47ED7 /* sounds in Resources */,
-				FDD956EC18DFC36100946C40 /* WorldMap.tmx in Resources */,
 				27AD60581B5D014A00B6AD40 /* MJRefresh.bundle in Resources */,
 				272AB6441B15C7BC0052E896 /* g012.png in Resources */,
 				36DE16D91BA188C00020785E /* 3d in Resources */,
@@ -7164,7 +7148,6 @@
 				6C0AB99E1B32ABBD00CAF8F0 /* ZYTAlertView.xib in Resources */,
 				272AB6471B15C7BC0052E896 /* g024.png in Resources */,
 				272AB63F1B15C7BC0052E896 /* forum_back.png in Resources */,
-				B80E14471BC75C420042B725 /* nb_ocean.tmx in Resources */,
 				B15628B218FEB62000902628 /* pve_fnt_boss.png in Resources */,
 				272AB6501B15C7BC0052E896 /* guide_player_icon.png in Resources */,
 				272AB6681B15C7BC0052E896 /* ui_gray_biaotilan.png in Resources */,
@@ -7190,10 +7173,8 @@
 				DB368DA918EAC5BF00C886DF /* Arial_Bold.png in Resources */,
 				272AB65F1B15C7BC0052E896 /* mod.png in Resources */,
 				59D7F0461AF0BF85000120F9 /* HSChatBubbleWhite@3x.png in Resources */,
-				06290E8E1B4664FB0021F04F /* WorldMap1.tmx in Resources */,
 				59D7F0331AF0BF85000120F9 /* HS-Attachment@3x.png in Resources */,
 				272AB6481B15C7BC0052E896 /* g026.png in Resources */,
-				B80D4B291BAFA1D800422225 /* nb_world_bottom.tmx in Resources */,
 				59D7F0361AF0BF85000120F9 /* HS-camera-button@3x.png in Resources */,
 				272AB65C1B15C7BC0052E896 /* input.png in Resources */,
 				272AB64D1B15C7BC0052E896 /* g044_middle.png in Resources */,
@@ -7212,7 +7193,6 @@
 				272AB6281B15C7BC0052E896 /* bottom_bg.png in Resources */,
 				272AB65A1B15C7BC0052E896 /* icon_chat_translate3.png in Resources */,
 				272AB6311B15C7BC0052E896 /* chat_bottom_keyboard_press.png in Resources */,
-				B80E14461BC75C420042B725 /* nb_ocean in Resources */,
 				272AB6531B15C7BC0052E896 /* horn_checked.png in Resources */,
 				272AB6341B15C7BC0052E896 /* chat_bottom_textfield.png in Resources */,
 				5736A1AD18225C9D007C431C /* Imperial in Resources */,

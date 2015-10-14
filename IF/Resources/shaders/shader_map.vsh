@@ -5,7 +5,7 @@
 #define lowp
 #endif
 
-//#define SIMPLE
+#define SIMPLE
 
 attribute vec4 a_position;
 attribute vec2 a_texCoord;

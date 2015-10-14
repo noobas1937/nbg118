@@ -174,6 +174,7 @@ bool BattleView::init(unsigned int startIndex,unsigned int targetIndex,unsigned 
         }else {
             int usePower = WorldController::getInstance()->getMonsterUsePower(m_targetIndex);
             if (usePower == 0) {
+                
                 usePower = GlobalData::shared()->worldConfig.stamineCostPerTime;
             }
             str += CC_ITOA(usePower);
@@ -270,6 +271,7 @@ void BattleView::onEnter()
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(BattleView::makeArrTime), MSG_TROOPS_TIME, NULL);
     
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(BattleView::titanNumChange), MSG_TITAN_COUNT_CHANGE, NULL);//fusheng 泰坦数量变化
+    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(BattleView::titanInfoChange), MSG_TITAN_INFORMATION_RESET, NULL);
 }
 
 void BattleView::onExit()
@@ -279,7 +281,56 @@ void BattleView::onExit()
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this,MSG_TROOPS_BACK);
     
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this,MSG_TITAN_COUNT_CHANGE);//fusheng 泰坦数量变化
+    CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this,MSG_TITAN_INFORMATION_RESET);
     CCNode::onExit();
+}
+void BattleView::titanInfoChange(CCObject* obj)
+{
+    
+    auto& children = m_tabView->getContainer()->getChildren();
+    for (auto child : children)
+    {
+        auto& childrenArr = child->getChildren();
+        SoldierCell *cell = dynamic_cast<SoldierCell*>(childrenArr.at(0));
+        if(cell){
+           
+            int sid = atoi(cell->m_soldierId.c_str());
+            if(sid>=107401&&sid<=107430)//fusheng 存在泰坦
+            {
+                string oldID = cell->m_soldierId;
+                cell->m_soldierId = GlobalData::shared()->titanInfo.titanId;
+                
+                
+                if (TroopsController::getInstance()->m_tmpBattleInfos.find(oldID)!=TroopsController::getInstance()->m_tmpBattleInfos.end()) {
+                    
+                    TroopsController::getInstance()->m_tmpBattleInfos[cell->m_soldierId] = TroopsController::getInstance()->m_tmpBattleInfos[oldID];
+                    
+                    TroopsController::getInstance()->m_tmpBattleInfos[oldID] = 0;
+                    
+                    TroopsController::getInstance()->m_tmpFreeSoldiers[cell->m_soldierId] = TroopsController::getInstance()->m_tmpFreeSoldiers[oldID];
+                    
+                    TroopsController::getInstance()->m_tmpFreeSoldiers[oldID] = 0;
+                    
+                    TroopsController::getInstance()->m_tmpConfSoldiers[cell->m_soldierId] = TroopsController::getInstance()->m_tmpConfSoldiers[oldID];
+                    
+                    TroopsController::getInstance()->m_tmpConfSoldiers[oldID] = 0;
+                    
+
+                    GlobalData::shared()->titanInfo.currentManual = 41;
+                    CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_COUNT_CHANGE
+                                                                                           , CCInteger::create(TroopsController::getInstance()->m_tmpBattleInfos[cell->m_soldierId])); //计算体力是否充足
+                    
+                    CCLOG("march update titan");
+                }
+                
+
+                
+                cell->refresh();
+            }
+            
+        }
+    }
+    TroopsController::getInstance()->changeArrTime();
 }
 
 void BattleView::generalSelect(){
@@ -353,27 +404,39 @@ void BattleView::updateLoadInfo(CCObject* obj)
 }
 void BattleView::titanNumChange(CCObject* obj)
 {
-    CCInteger *num = dynamic_cast<CCInteger*>(obj);
-    if (num) {
-        
-        if (num->getValue() == 1)
-        {
-            if (GlobalData::shared()->titanInfo.currentManual<GlobalData::shared()->titanInfo.costmanual)
+    auto info = WorldController::getInstance()->getCityInfos().find(m_targetIndex);
+    
+    CCLOG("titanNumChange" );
+    if(m_targetType==ActBossTile || (info != WorldController::getInstance()->getCityInfos().end() && (info->second.cityType == FieldMonster || info->second.cityType == MonsterTile || info->second.cityType == MonsterRange || info->second.cityType == ActBossTile))){
+        CCInteger *num = dynamic_cast<CCInteger*>(obj);
+        if (num) {
+            CCLOG("titanNumChange %d %d %d", num->getValue(),GlobalData::shared()->titanInfo.currentManual, GlobalData::shared()->titanInfo.costmanual);
+            if (num->getValue() == 1)
             {
-                m_marchBtn->setColor(ccRED);
-                
+                if (GlobalData::shared()->titanInfo.currentManual<GlobalData::shared()->titanInfo.costmanual)
+                {
+                    this->m_marchBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::NORMAL)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
+                    this->m_marchBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::HIGH_LIGHTED)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
+                    this->m_marchBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::SELECTED)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
+                    
+                }
+                else
+                {
+                    this->m_marchBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::NORMAL)->setState(cocos2d::ui::Scale9Sprite::State::NORMAL);
+                    this->m_marchBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::HIGH_LIGHTED)->setState(cocos2d::ui::Scale9Sprite::State::NORMAL);
+                    this->m_marchBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::SELECTED)->setState(cocos2d::ui::Scale9Sprite::State::NORMAL);
+                }
             }
             else
             {
-                m_marchBtn->setColor(ccWHITE);
+                this->m_marchBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::NORMAL)->setState(cocos2d::ui::Scale9Sprite::State::NORMAL);
+                this->m_marchBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::HIGH_LIGHTED)->setState(cocos2d::ui::Scale9Sprite::State::NORMAL);
+                this->m_marchBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::SELECTED)->setState(cocos2d::ui::Scale9Sprite::State::NORMAL);
             }
+            //        m_marchBtn->setEnabled(true);
         }
-        else
-        {
-            m_marchBtn->setColor(ccWHITE);
-        }
-//        m_marchBtn->setEnabled(true);
-    }
+
+    } //fusheng 花费体力的出征
     
 }
 
@@ -594,10 +657,10 @@ void BattleView::onHelpClick(CCObject * pSender, Control::EventType pCCControlEv
 void BattleView::onClickMarchBtn(CCObject * pSender, Control::EventType pCCControlEvent)
 {
     
-    if( m_marchBtn->getColor() == ccRED)
+    if( this->m_marchBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::NORMAL)->getState() == cocos2d::ui::Scale9Sprite::State::GRAY)
     {
         
-        CCCommonUtils::flyHint("", "", "Insufficient Titan manual");
+        CCCommonUtils::flyHint("", "", "Insufficient Titan manual");//fusheng 需要文本
         return ;
     }
     
@@ -880,12 +943,19 @@ void BattleView::selectAll(){
             }
         }
         TroopsController::getInstance()->updateTmpBattleData(m_soldierId, tmpCntNum, m_soldierId);
-        int sid = CCString::create(m_soldierId)->intValue();
-        if(sid>=107401&&sid<=107430&&GlobalData::shared()->titanInfo.currentManual<GlobalData::shared()->titanInfo.costmanual)
-        {
-            
-            this->m_marchBtn->setColor(ccRED); //fusheng onEnter之后注册通知函数  第一次在这里还没注册
-        }
+        auto info = WorldController::getInstance()->getCityInfos().find(m_targetIndex);
+        
+        if(m_targetType==ActBossTile || (info != WorldController::getInstance()->getCityInfos().end() && (info->second.cityType == FieldMonster || info->second.cityType == MonsterTile || info->second.cityType == MonsterRange || info->second.cityType == ActBossTile))){
+            int sid = CCString::create(m_soldierId)->intValue();
+            if(sid>=107401&&sid<=107430&&GlobalData::shared()->titanInfo.currentManual<GlobalData::shared()->titanInfo.costmanual)
+            {
+                this->m_marchBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::NORMAL)->setState(cocos2d::ui::Scale9Sprite::State::GRAY); //fusheng onEnter之后注册通知函数  第一次在这里还没注册
+                this->m_marchBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::HIGH_LIGHTED)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
+                this->m_marchBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::SELECTED)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
+            }
+
+        } //fusheng 花费体力的出征
+        
         if(totalNum + tmpCntNum >= maxForceNum){
             break;
         }
@@ -900,7 +970,10 @@ void BattleView::selectAll(){
 
 void BattleView::unselectAll(){
 
-    this->m_marchBtn->setColor(ccWHITE);//fusheng onEnter之后注册通知函数  第一次在这里还没注册
+    
+    this->m_marchBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::NORMAL)->setState(cocos2d::ui::Scale9Sprite::State::NORMAL);//fusheng onEnter之后注册通知函数  第一次在这里还没注册
+    this->m_marchBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::HIGH_LIGHTED)->setState(cocos2d::ui::Scale9Sprite::State::NORMAL);
+    this->m_marchBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::SELECTED)->setState(cocos2d::ui::Scale9Sprite::State::NORMAL);
 
     for (int i = 0; i<m_tmpArray->count(); i++) {
         std::string m_soldierId = dynamic_cast<CCString*>(m_tmpArray->objectAtIndex(i))->getCString();
