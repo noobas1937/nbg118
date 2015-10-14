@@ -86,6 +86,9 @@ public:
     map<int, QueueInfo> m_buildQueueInfo;
     
     int ShowRecAllianceTime;
+    
+    void TitanFinishCD(float dt);
+    
 };
 
 #endif

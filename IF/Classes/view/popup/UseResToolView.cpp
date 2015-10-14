@@ -59,6 +59,10 @@ bool UseResToolView::init(int resType, string itemId, string parentView)
         int oldHeight = m_infoList->getContentSize().height;
         m_infoList->setPositionY(m_infoList->getPositionY()-addHeight);
         m_infoList->setContentSize(CCSizeMake(oldWidth, oldHeight+addHeight));
+        
+        changeBGMaxHeight(m_buildBG);//fusheng 适配
+        
+        m_buildBG->setPositionY(m_buildBG->getPositionY()+m_buildBG->getContentSize().height-newBgHeight);
     }
     
     m_tabView = CCMultiColTableView::create(this, m_infoList->getContentSize());
