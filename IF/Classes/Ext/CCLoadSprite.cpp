@@ -271,7 +271,7 @@ void CCLoadSprite::parseLoadOrRelease(bool isLoad,int sceneId, CCDictionary *dic
                     actor(path,i);
                 }
                 actor(NB_WORLD_FLA_PATH, 0); // guo.jiang
-                actor("nb_ocean/nb_ocean.plist", 0); // guo.jiang
+                actor("nb_world/nb_ocean.plist", 0); // guo.jiang
                 DynamicResourceController::getInstance()->loadNameTypeResource(DynamicResource_SERVERFIGHT_TEXTURE,isLoad);
             } else {
             }
