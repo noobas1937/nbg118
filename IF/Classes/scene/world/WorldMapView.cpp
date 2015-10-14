@@ -4818,12 +4818,21 @@ void WorldMapView::addUnderNode(unsigned int index) {
     auto pos = m_map->getViewPointByTilePoint(WorldController::getPointByIndex(index),info.tileServerId);
     switch (info.cityType) {
         case ResourceTile:{
-            auto under = CCLoadSprite::createSprite(getSpriteName(info).c_str());
+            Node* under = Node::create();
             under->setAnchorPoint(ccp(0, 0));
             under->setTag(index);
             under->setPosition(ccp(pos.x-_halfTileSize.width,pos.y-_halfTileSize.height)); // left-bottom corner
             m_cityItem[index].push_back(under);
             m_cityBatchNode->addChild(under, index);
+            
+            auto island = CCLoadSprite::createSprite("decor_island_100.png");
+            island->setAnchorPoint(Vec2(0, 0));
+            under->addChild(island);
+
+            auto house = CCLoadSprite::createSprite(getSpriteName(info).c_str());
+            house->setAnchorPoint(Vec2(0, 0));
+            under->addChild(house);
+            under->setContentSize(house->getContentSize());
             
             addBatchItem(LevelTag, index);
             auto lv = CCLabelBatch::create(CC_ITOA((int)info.resource.lv),m_labelNode);
@@ -5883,7 +5892,7 @@ std::string WorldMapView::getSpriteName(WorldCityInfo &info){
         }else if(info.resource.type == Stone){
             picName = "0018.png";
         }else if(info.resource.type == Iron){
-            picName = "mine_01.png"; // "0019.png"; // guo.jiang
+            picName = "0019.png";
         }else if(info.resource.type == Food){
             picName = "0020.png";
         }else if(info.resource.type == Gold){

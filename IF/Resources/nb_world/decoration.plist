@@ -33,7 +33,7 @@
             <key>decor_island_003.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{0,128},{256,128}}</string>
+                <string>{{512,0},{256,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -46,7 +46,7 @@
             <key>decor_island_004.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{256,128},{256,128}}</string>
+                <string>{{768,0},{256,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -59,7 +59,7 @@
             <key>decor_island_005.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{0,256},{256,128}}</string>
+                <string>{{0,128},{256,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -72,7 +72,7 @@
             <key>decor_island_006.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{256,256},{256,128}}</string>
+                <string>{{256,128},{256,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -85,7 +85,7 @@
             <key>decor_island_007.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{0,384},{256,128}}</string>
+                <string>{{512,128},{256,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -98,7 +98,7 @@
             <key>decor_island_008.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{256,384},{256,128}}</string>
+                <string>{{768,128},{256,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -111,7 +111,7 @@
             <key>decor_island_009.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{0,512},{256,128}}</string>
+                <string>{{0,256},{256,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -124,7 +124,7 @@
             <key>decor_island_010.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{256,512},{256,128}}</string>
+                <string>{{256,256},{256,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -137,7 +137,7 @@
             <key>decor_island_011.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{0,640},{256,128}}</string>
+                <string>{{512,256},{256,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -150,7 +150,7 @@
             <key>decor_island_012.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{256,640},{256,128}}</string>
+                <string>{{768,256},{256,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -160,6 +160,97 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
+            <key>decor_island_100.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{0,384},{235,102}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{235,102}}</string>
+                <key>sourceSize</key>
+                <string>{235,102}</string>
+            </dict>
+            <key>surface_bolder_093.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{235,384},{256,140}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{256,140}}</string>
+                <key>sourceSize</key>
+                <string>{256,140}</string>
+            </dict>
+            <key>surface_bolder_094.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{491,384},{256,140}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{256,140}}</string>
+                <key>sourceSize</key>
+                <string>{256,140}</string>
+            </dict>
+            <key>surface_bolder_095.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{747,384},{256,140}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{256,140}}</string>
+                <key>sourceSize</key>
+                <string>{256,140}</string>
+            </dict>
+            <key>surface_bolder_096.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{0,524},{256,140}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{256,140}}</string>
+                <key>sourceSize</key>
+                <string>{256,140}</string>
+            </dict>
+            <key>surface_bolder_097.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{256,524},{256,140}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{256,140}}</string>
+                <key>sourceSize</key>
+                <string>{256,140}</string>
+            </dict>
+            <key>surface_bolder_098.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{512,524},{256,140}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{256,140}}</string>
+                <key>sourceSize</key>
+                <string>{256,140}</string>
+            </dict>
         </dict>
         <key>metadata</key>
         <dict>
@@ -168,9 +259,9 @@
             <key>realTextureFileName</key>
             <string>decoration.png</string>
             <key>size</key>
-            <string>{512,1024}</string>
+            <string>{1024,1024}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:0caee9b97f52d7a0e5960b3c88b1b274:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:c26261e274ae7504f82c4b7081d49bfc:1/1$</string>
             <key>textureFileName</key>
             <string>decoration.png</string>
         </dict>

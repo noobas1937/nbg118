@@ -24,8 +24,6 @@
 #define IMPERIAL_PATH "Imperial/Imperial_%d.plist"
 #define BATTLE_SOLDIER_PATH "Battle/Battle_%s.plist"
 
-#define NB_WORLD_FLA_PATH "nb_world/fla.plist"
-
 // hd
 #define COMMON_PATH_HD "Common/Common_%d_hd.plist"
 #define IMPERIAL_PATH_0_HD "Imperial/Imperial_0_hd.plist"
