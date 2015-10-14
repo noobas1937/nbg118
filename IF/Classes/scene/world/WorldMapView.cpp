@@ -5175,8 +5175,23 @@ void WorldMapView::addUnderNode(unsigned int index) {
                 island->setAnchorPoint(Vec2(0, 0));
                 under->addChild(island);
                 
+                // guo.jiang todo
+                // 暂时按照 COK 的规则填充 4 个 tile
+                Vec2 house_pos(0, 0);
+                if (player.cityLv == 1) {
+                    if (picStr == "41.png") {
+                        picStr = "lv1.png";
+                        // 美术给出的坐标为 (-162, -76)
+                        house_pos.x = 256 / 2 - 162;
+                        house_pos.y = 76;
+                    } else {
+                        picStr = "tile_place_holder.png";
+                    }
+                }
+                
                 auto house = CCLoadSprite::createSprite(picStr.c_str());
                 house->setAnchorPoint(Vec2(0, 0));
+                house->setPosition(house_pos);
                 under->addChild(house);
                 under->setContentSize(house->getContentSize());
             }

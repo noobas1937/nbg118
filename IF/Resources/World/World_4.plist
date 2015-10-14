@@ -3410,6 +3410,19 @@
                 <key>sourceSize</key>
                 <string>{289,200}</string>
             </dict>
+            <key>tile_place_holder.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{821,1575},{256,128}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{256,128}}</string>
+                <key>sourceSize</key>
+                <string>{256,128}</string>
+            </dict>
         </dict>
         <key>metadata</key>
         <dict>
@@ -3420,7 +3433,7 @@
             <key>size</key>
             <string>{2048,2048}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:4df3e30fb1d3429b476e401e13394842:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:27eaade6af69d1fe84872bc97dd0ef74:1/1$</string>
             <key>textureFileName</key>
             <string>World_4.pvr.ccz</string>
         </dict>
