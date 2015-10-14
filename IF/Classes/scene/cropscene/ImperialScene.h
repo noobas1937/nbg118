@@ -39,6 +39,7 @@
 #define MSG_SHOW_POWER_PARTICLE "msg.show.power.particle"
 #define ACTIVITY_BOTTLE_TAG 1000
 
+#define JUST3D_NODE_TAG 89757
 
 class ImperialScene:public CCLayer,public ITouchDelegate,public CCBMemberVariableAssigner
 {
@@ -379,6 +380,7 @@ private:
     CCSafeObject<Sprite3D> m_Layer2d;
     
     CCSafeObject<Titan> m_Titan;
+    CCSafeObject<CCNode> m_TitanNode;
     
     CCSafeObject<CCNode> m_wallNode;
     CCSafeObject<WallBuild> m_wallBuild;

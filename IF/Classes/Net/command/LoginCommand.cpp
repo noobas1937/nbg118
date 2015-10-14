@@ -282,12 +282,12 @@ bool LoginCommand::handleRecieve(cocos2d::CCDictionary *dict)
         LuaController::getInstance()->luaSize = data->valueForKey("luaSize")->intValue();
     }
     // tao.yu 暂时取消下载更新
-    DynamicResourceController::getInstance()->initServerFightInfo(data);
-    DynamicResourceController::getInstance()->initGoodsInfo(data);
-    DynamicResourceController::getInstance()->initMonsterInfo(data);
-    DynamicResourceController::getInstance()->initThorneInfo(data);
-    DynamicResourceController::getInstance()->initMonsterLayerInfo(data);
-    DynamicResourceController::getInstance()->initMinimapViewInfo(data);
+//    DynamicResourceController::getInstance()->initServerFightInfo(data);
+//    DynamicResourceController::getInstance()->initGoodsInfo(data);
+//    DynamicResourceController::getInstance()->initMonsterInfo(data);
+//    DynamicResourceController::getInstance()->initThorneInfo(data);
+//    DynamicResourceController::getInstance()->initMonsterLayerInfo(data);
+//    DynamicResourceController::getInstance()->initMinimapViewInfo(data);
     if((CCCommonUtils::isIOSPad() || CCCommonUtils::isAdriodPad()))  // lzy 下载高清资源
     {
 //        DynamicResourceController::getInstance()->initHDCCBInfo(data);

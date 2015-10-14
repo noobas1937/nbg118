@@ -382,10 +382,10 @@ CCAnimate *Soldier::getAnimate(float direction, int state){
         totalFrame = 6;
         stateStr = "die";
     }else if(state == 1){
-        totalFrame = 12;
+        totalFrame = 11;
         stateStr = "attack";
     }else{
-        totalFrame = 8;
+        totalFrame = 7;
         stateStr = "move";
     }
     std::string str = "a060_0_%s_%s_%d.png";
@@ -466,7 +466,7 @@ CCAnimate *Soldier::getAnimate(float direction, int state){
     }
     CCAnimate *animate = CCAnimate::create(animation);
     if(m_kingSprite1){
-       float s = 0.3;
+       float s = 0.45;
        auto w = spriteW * m_sprite->getScale() * s;
        m_kingSprite1->setScale(w / m_kingSprite1->getContentSize().width);
        m_kingSprite2->setScale(m_kingSprite1->getScale());
