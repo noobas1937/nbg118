@@ -26,6 +26,18 @@
 			<key>position</key>
 			<real>10</real>
 		</dict>
+		<dict>
+			<key>orientation</key>
+			<integer>0</integer>
+			<key>position</key>
+			<real>771</real>
+		</dict>
+		<dict>
+			<key>orientation</key>
+			<integer>0</integer>
+			<key>position</key>
+			<real>853</real>
+		</dict>
 	</array>
 	<key>jsControlled</key>
 	<false/>
@@ -62,7 +74,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>-319.79998779296875</real>
+									<real>0.0</real>
 									<real>343.67999267578125</real>
 									<integer>0</integer>
 								</array>
@@ -74,7 +86,7 @@
 								<string>Point</string>
 								<key>value</key>
 								<array>
-									<real>0.0</real>
+									<real>0.5</real>
 									<real>1</real>
 								</array>
 							</dict>
@@ -107,7 +119,7 @@
 								<key>value</key>
 								<array>
 									<string>Common/Common_1.plist</string>
-									<string>UI_Popup_BG.png</string>
+									<string>UI_paper_3.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -118,7 +130,7 @@
 								<key>value</key>
 								<array>
 									<real>640</real>
-									<real>769</real>
+									<real>700</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -199,7 +211,7 @@
 								<key>value</key>
 								<array>
 									<real>0.0</real>
-									<real>335</real>
+									<real>344</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -242,8 +254,8 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string>Common/Common_6.plist</string>
-									<string>Mail_BG1.png</string>
+									<string>Common/Common_1.plist</string>
+									<string>nb_chat_edit_area.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -253,8 +265,8 @@
 								<string>Size</string>
 								<key>value</key>
 								<array>
-									<real>638</real>
-									<real>770</real>
+									<real>640</real>
+									<real>700</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -524,7 +536,7 @@
 								<key>value</key>
 								<array>
 									<real>0.0</real>
-									<real>336</real>
+									<real>344</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -567,8 +579,8 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string>Common/Common_6.plist</string>
-									<string>Mail_BG2.png</string>
+									<string>Common/Common_1.plist</string>
+									<string>nb_bg_shadow.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -578,8 +590,8 @@
 								<string>Size</string>
 								<key>value</key>
 								<array>
-									<real>638</real>
-									<real>770</real>
+									<real>640</real>
+									<real>700</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -636,6 +648,8 @@
 								<real>0.0</real>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -2357,142 +2371,6 @@
 								<string>Check</string>
 								<key>value</key>
 								<false/>
-							</dict>
-						</array>
-					</dict>
-					<dict>
-						<key>baseClass</key>
-						<string>CCScale9Sprite</string>
-						<key>children</key>
-						<array/>
-						<key>customClass</key>
-						<string></string>
-						<key>displayName</key>
-						<string>CCScale9Sprite</string>
-						<key>memberVarAssignmentName</key>
-						<string></string>
-						<key>memberVarAssignmentType</key>
-						<integer>0</integer>
-						<key>properties</key>
-						<array>
-							<dict>
-								<key>name</key>
-								<string>position</string>
-								<key>type</key>
-								<string>Position</string>
-								<key>value</key>
-								<array>
-									<real>-2</real>
-									<real>340</real>
-									<integer>0</integer>
-								</array>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>anchorPoint</string>
-								<key>type</key>
-								<string>Point</string>
-								<key>value</key>
-								<array>
-									<real>0.5</real>
-									<real>0.5</real>
-								</array>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>scale</string>
-								<key>type</key>
-								<string>ScaleLock</string>
-								<key>value</key>
-								<array>
-									<real>1</real>
-									<real>1</real>
-									<false/>
-									<integer>0</integer>
-								</array>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>ignoreAnchorPointForPosition</string>
-								<key>type</key>
-								<string>Check</string>
-								<key>value</key>
-								<false/>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>spriteFrame</string>
-								<key>type</key>
-								<string>SpriteFrame</string>
-								<key>value</key>
-								<array>
-									<string>Common/Common_1.plist</string>
-									<string>UI_huitiao.png</string>
-								</array>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>preferedSize</string>
-								<key>type</key>
-								<string>Size</string>
-								<key>value</key>
-								<array>
-									<real>648</real>
-									<real>30</real>
-									<integer>0</integer>
-								</array>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>opacity</string>
-								<key>type</key>
-								<string>Byte</string>
-								<key>value</key>
-								<integer>255</integer>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>color</string>
-								<key>type</key>
-								<string>Color3</string>
-								<key>value</key>
-								<array>
-									<integer>255</integer>
-									<integer>255</integer>
-									<integer>255</integer>
-								</array>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>insetLeft</string>
-								<key>type</key>
-								<string>Float</string>
-								<key>value</key>
-								<real>0.0</real>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>insetTop</string>
-								<key>type</key>
-								<string>Float</string>
-								<key>value</key>
-								<real>0.0</real>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>insetRight</string>
-								<key>type</key>
-								<string>Float</string>
-								<key>value</key>
-								<real>0.0</real>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>insetBottom</string>
-								<key>type</key>
-								<string>Float</string>
-								<key>value</key>
-								<real>0.0</real>
 							</dict>
 						</array>
 					</dict>
