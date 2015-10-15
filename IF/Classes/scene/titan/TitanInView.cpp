@@ -8,6 +8,9 @@
 
 #include "TitanInView.h"
 #include "CCBExtension.h"
+//begin a by ljf
+#include "NBGRenderTarget.h"
+//end a by ljf
 TitanInView* TitanInView::create()
 {
     auto titan = new (std::nothrow) TitanInView();
@@ -28,8 +31,13 @@ bool TitanInView::init()
     auto bg = CCBLoadFile("Titan",this,this);
     m_Titan = Titan::create(1);
     m_Titan->setScale(0.7);
-    m_titanPos->addChild(m_Titan);
-
+    //m_titanPos->addChild(m_Titan); //d by ljf
+    //begin a by ljf
+    auto s = Director::getInstance()->getWinSize();
+    auto renderTexture = NBGRenderTarget::create(s.width , s.height , cocos2d::Texture2D::PixelFormat::RGBA8888);
+    renderTexture->addChild(m_Titan);
+    m_titanPos->addChild(renderTexture);
+    //end a by ljf
     return true;
     
 }
