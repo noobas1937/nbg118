@@ -581,6 +581,10 @@ void ImperialScene::buildingCallBack(CCObject* params)
 void ImperialScene::onCreateTitan()
 {
     m_Titan = Titan::create(0);
+    if (!m_Titan) {
+        CCLOG("Titan create error!!!!!!!!!!!!");
+        return;
+    }
     m_Titan->turnFront();
 //    m_Titan->setPosition(Vec2(0,0));
     //m_titanNode->addChild(m_Titan); //d by ljf

@@ -308,7 +308,7 @@ void ProductionSoldiersView::addSoldierIcon(){
     int btype = m_buildingId/1000;
     CCPoint pos = ccp(0,172);
     if(btype == FUN_BUILD_FORT){
-        pos = ccp(0,50);
+//        pos = ccp(0,50);
     }
     else if(btype == FUN_BUILD_BARRACK4)
     {
@@ -362,11 +362,20 @@ void ProductionSoldiersView::addSoldierIcon(){
             act2 = Repeat::create(pAnim,1);
         }
     }
+    if (act1 && act2) {
+        Sequence* pSeq = Sequence::createWithTwoActions(act2, act1);
+        auto act = RepeatForever::create(pSeq);
+        pic->getModel().getObject()->stopAllActions();
+        pic->getModel().getObject()->runAction(act);
+    }
+    else if ((act1 && !act2) || (!act1 && act2))
+    {
+        auto action = act1 ? act1 : act2;
+        auto act = RepeatForever::create(action);
+        pic->getModel().getObject()->stopAllActions();
+        pic->getModel().getObject()->runAction(act);
+    }
     
-    Sequence* pSeq = Sequence::createWithTwoActions(act2, act1);
-    auto act = RepeatForever::create(pSeq);
-    pic->getModel().getObject()->stopAllActions();
-    pic->getModel().getObject()->runAction(act);
     m_soldierIconNode->addChild(pic);
 
 //    static const int light_beam_TAG = 60000;

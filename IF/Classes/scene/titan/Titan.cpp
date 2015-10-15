@@ -62,7 +62,7 @@ bool Titan::initWithFile(int uid)
     
     sModelPram bodyParam;
 //    bodyParam.modelName = "3d/titan_1.c3b";
-    bodyParam.modelName = "3d/dragon_1_skin.c3b";
+    bodyParam.modelName = "3d/dragon_2_skin.c3b";
     bodyParam.textureName = "3d/dragon.jpg";
     bodyParam.textureShaderName = "3d/titan_1_shader.jpg";
     bodyParam.vShaderFileName = "shaders/titan.vsh";
@@ -83,8 +83,8 @@ bool Titan::initWithFile(int uid)
 //    _model->setEmittingShaderDuration(bodyParam.speed, bodyParam.min, bodyParam.max);
 //    _model->applyEmittingShader(bodyParam.color,bodyParam.textureShaderName);
     _model->setScale(nModelScale);
-    _model->setPosition3D(Vec3(-0.1,0,0));
-    _model->setRotation3D(Vec3(16,0,0));
+//    _model->setPosition3D(Vec3(0,0,0));
+//    _model->setRotation3D(Vec3(0,0,0));
 //    _drawDebug = DrawNode3D::create();
 //    _model->addChild(_drawDebug);
 //    _obbt = OBB(_model->getAABB());
@@ -365,7 +365,7 @@ void Titan::ilde()
     std::map<eActState,Animate3D*>::iterator it = _actionCache.find(eActState::Idle);
     Animate3D* pAnim = nullptr;
     if (it == _actionCache.end()) {
-        auto animation3d = Animation3D::create("3d/dragon_1_stand.c3b");
+        auto animation3d = Animation3D::create("3d/dragon_2_stand.c3b");
 //        auto animation3d = Animation3D::create("3d/titan_act.c3b");
         if (animation3d) {
 //            pAnim = Animate3D::create(animation3d);
