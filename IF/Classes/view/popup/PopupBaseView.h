@@ -15,8 +15,8 @@
 
 class PopupViewController;
 
-#define TOP_HEIGHT 0
-#define TOP_HEIGHT_HD 0
+#define TOP_HEIGHT 75
+#define TOP_HEIGHT_HD 154
 #define DOWN_HEIGHT 105
 #define DOWN_HEIGHT_HD 210
 #define DEF_HEIGHT 852

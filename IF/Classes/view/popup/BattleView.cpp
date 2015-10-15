@@ -315,8 +315,6 @@ void BattleView::titanInfoChange(CCObject* obj)
                     
                     TroopsController::getInstance()->m_tmpConfSoldiers[oldID] = 0;
                     
-
-                    GlobalData::shared()->titanInfo.currentManual = 41;
                     CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_COUNT_CHANGE
                                                                                            , CCInteger::create(TroopsController::getInstance()->m_tmpBattleInfos[cell->m_soldierId])); //计算体力是否充足
                     

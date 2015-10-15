@@ -92,6 +92,8 @@ private:
     
     bool isUpgrading ;
     
+    bool isFoodEnough;
+    
     
     TitanInfo m_titanInfo;
 
@@ -107,6 +109,8 @@ private:
     void onToolSpeedUpClick(CCObject * pSender, Control::EventType pCCControlEvent);
 
     void speedUpCallBack();
+    
+    void AccGrowthCallBack();
     
     void spdCallBack();
 //    void onChangeName(CCObject * pSender, Control::EventType pCCControlEvent);
@@ -148,6 +152,8 @@ private:
     CCSafeObject<CCNode> m_titanFeedCDNode;
     CCSafeObject<CCNode> m_titanFeedBtnNode;
     CCSafeObject<CCNode> m_CleanFeedCDBtnNode;
+    CCSafeObject<CCNode> m_needFoodNode;
+    CCSafeObject<CCNode> m_needGoldNode;
     CCSafeObject<CCControlButton> m_titanFeedBtn;
     CCSafeObject<CCControlButton> m_speedUpBtn;
     CCSafeObject<CCControlButton> m_toolSpeedUpBtn;
@@ -156,6 +162,12 @@ private:
     CCSafeObject<CCScale9Sprite> m_buildBG;
     CCSafeObject<CCNode>m_titanPosInView;
     CCSafeObject<CCLabelIF> m_titanAPTxt;
+    CCSafeObject<CCLabelIF> m_titanAPTxtPre;
+    CCSafeObject<CCLabelIF> m_titanFeedStatus;
+    CCSafeObject<CCLabelIF> m_feedCDGoldTxt;
+    CCSafeObject<CCLabelIF> m_needGlod;//fusheng 快速成长的Label
+    CCSafeObject<CCLabelIF> m_feedCDBtnTxt;
+    
     CCSafeObject<CCLabelIF> m_titanAttackTxt;
     CCSafeObject<CCLabelIF> m_titanMagicTxt;
     CCSafeObject<CCLabelIF> m_Txt1;
@@ -168,6 +180,7 @@ private:
     CCSafeObject<CCLabelIF> m_feedCDTxt;
     CCSafeObject<CCLabelIF> m_upgradeCDTxt;
     CCSafeObject<CCLabelIF> m_titanStatusDesc;
+    CCSafeObject<CCLabelIF> m_titanFeedTxt;
     
 
     CCSafeObject<CCSprite> m_foodStatus;
@@ -228,6 +241,7 @@ private:
     CCSafeObject<CCLabelIF> m_equipLabel6;
     CCSafeObject<CCLabelIF> m_equipLabel7;
     CCSafeObject<CCLabelIF> m_equipLabel8;
+    
 //
 //    CCSafeObject<CCNode> m_icon;
 //    CCSafeObject<CCNode> m_touchNode;

@@ -58,6 +58,7 @@ private:
 
     void onSkillClick(CCObject * pSender, Control::EventType pCCControlEvent);
     void onChangeName(CCObject * pSender, Control::EventType pCCControlEvent);
+
     void onPicClick(CCObject * pSender, Control::EventType pCCControlEvent);
     void onResetPicClick(CCObject * pSender, Control::EventType pCCControlEvent);
     void onSkillBtnClick(CCObject * pSender, Control::EventType pCCControlEvent);
@@ -149,6 +150,8 @@ private:
     CCSafeObject<Label> m_nameTxt;
     CCSafeObject<CCLabelIF> m_expTxt;
     CCSafeObject<CCLabelIF> m_pointText;
+    CCSafeObject<CCLabelIF> m_expTxtPre;
+    CCSafeObject<CCLabelIF> m_stamineTextPre;
     CCSafeObject<CCScale9Sprite> m_expBar;
     CCSafeObject<CCNode> m_bustPic;
     CCSafeObject<CCSprite> m_pic;
@@ -159,6 +162,8 @@ private:
     CCSafeObject<CCNode> m_particleNode;
     CCSafeObject<CCSprite> m_leftBg;
     CCSafeObject<CCSprite> m_rightBg;
+    CCSafeObject<CCSprite> m_ChangeAvatar;
+    
     CCSafeObject<CCControlButton> m_renameBtn;
     CCSafeObject<CCControlButton> m_picBtn;
 //    CCSafeObject<CCNode> m_buttonNode;

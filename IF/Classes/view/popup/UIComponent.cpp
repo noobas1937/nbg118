@@ -1847,7 +1847,8 @@ void UIComponent::showPopupView(UIPopupViewType type, bool isHD)
     }
     
     this->m_googlePlayNode->setVisible(false);
-    if(type==UIPopupViewType_Tool_Store||type==UIPopupViewType_Sacrifice||type==UIPopupViewType_Merchant||type==UIPopupViewType_Repay_Lottery){
+//    if(type==UIPopupViewType_Tool_Store||type==UIPopupViewType_Sacrifice||type==UIPopupViewType_Merchant||type==UIPopupViewType_Repay_Lottery){
+    if(type==UIPopupViewType_Sacrifice||type==UIPopupViewType_Merchant||type==UIPopupViewType_Repay_Lottery){//fusheng PopUpView store 不显示资源条
         this->m_goldNewNode->setVisible(true);
         m_UserNode->setVisible(true);
         m_woodBarNode->setVisible(true);

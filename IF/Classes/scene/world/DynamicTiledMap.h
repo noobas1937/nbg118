@@ -43,7 +43,7 @@ public:
     //    static DynamicTiledMap* loadFromCache(const std::string& key);
     
 protected:
-
+    void updateOctopus();
 };
 
 #endif /* DynamicTiledMap_h */
