@@ -77,7 +77,7 @@ bool StoreMallView::init()
     m_startPoint4 = m_othBtn->getTitleLabel()->getPosition();
     m_startPoint5 = m_hotBtn->getTitleLabel()->getPosition();
     m_btnPartNode->setPositionY(m_btnPartNode->getPositionY()+20);
-//    int count = (size.height-170)/44+1;
+//    int count = (size.height-170)/44+1; //fusheng 不使用这些图片拼背景
 //    for (int i=0; i<count; i++) {
 //        auto spr = CCLoadSprite::createSprite("Items_bg_big.png");
 //        this->m_bgNode->addChild(spr);

@@ -12,6 +12,7 @@
 #include "TitanInfoCommand.h"
 #include "BuildUpgradeView.h"
 #include "TitanUpgradeView.h"
+#include "UseResToolView.h"
 //#include "GeneralManager.h"
 #include "UIComponent.h"
 #include "PopupViewController.h"
@@ -78,6 +79,33 @@ GeneralTitanPopupView* GeneralTitanPopupView::create(){
 //    
 //}
 //
+
+void setGrayNode(cocos2d::CCNode *node , bool gray)
+{
+    auto trySpr = dynamic_cast<CCSprite*>(node);
+    
+    auto trySpr9 = dynamic_cast<CCScale9Sprite*>(node);
+    
+    if (trySpr) {
+        CCCommonUtils::setSpriteGray(trySpr, gray);
+    }
+    
+    if (trySpr9) {
+        if(gray)
+            trySpr9->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
+        else
+            trySpr9->setState(cocos2d::ui::Scale9Sprite::State::NORMAL);
+    }
+    
+    
+    
+    for(auto child:node->getChildren())
+    {
+        setGrayNode(child,gray);
+    }
+    
+    
+}
 void GeneralTitanPopupView::onGetPlayerInfoCallback(cocos2d::CCObject *obj) {
     auto ret = dynamic_cast<NetResult*>(obj);
     if (!ret || ret->getErrorCode() != Error_OK) {
@@ -203,7 +231,9 @@ bool GeneralTitanPopupView::init()
     
     this->scheduleUpdate();
     
-    CCCommonUtils::setButtonTitle(this->m_CleanFeedCDBtn,_lang("104903").c_str());
+    m_feedCDBtnTxt->setString(_lang("104903").c_str());
+    
+//    CCCommonUtils::setButtonTitle(this->m_CleanFeedCDBtn,_lang("104903").c_str());
     
 //    CCCommonUtils::setButtonTitle(this->m_titanFeedBtn,"喂食");
     
@@ -223,7 +253,7 @@ bool GeneralTitanPopupView::init()
     m_CleanFeedCDBtn->setZoomOnTouchDown(false);//fusheng 不做放缩
 
     
-    
+    m_titanAPTxtPre->setString("AP");//fusheng 需要文本
     
   
     return true;
@@ -269,7 +299,9 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
     }
     
 
-    bool isCanFeed = true;//fusheng 标记可以喂食
+    bool isCanFeed = true;
+    
+    isFoodEnough = true;//fusheng 标记粮食充足
     
     FunBuildInfo& fbiInfo = FunBuildController::getInstance()->getFunbuildById(400000000);
     
@@ -335,6 +367,8 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
             
             m_toolSpeedUpBtn->setEnabled(false);
         }
+        
+        
 
     }
     else
@@ -363,7 +397,9 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
 
     if(m_titanInfo.nextExp!=0)
     {
-        this->m_titanExtTxt->setString(CCString::createWithFormat("%d/%d",m_titanInfo.exp,m_titanInfo.nextExp)->getCString());
+//        this->m_titanExtTxt->setString(CCString::createWithFormat("%d/%d",m_titanInfo.exp,m_titanInfo.nextExp)->getCString());
+        
+        this->m_titanExtTxt->setString(CCString::createWithFormat("%s/%s",CC_ITOA_K((long)m_titanInfo.exp),CC_ITOA_K((long)m_titanInfo.nextExp))->getCString());
         
         float ratio =((float)m_titanInfo.exp)/m_titanInfo.nextExp;
         
@@ -429,7 +465,7 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         
         
         
-        this->m_titanAPTxt->setString(CCString::createWithFormat("AP:%d/%d",m_titanInfo.currentManual,m_titanInfo.maxManual)->getCString());
+        this->m_titanAPTxt->setString(CCString::createWithFormat("(%d/%d)",m_titanInfo.currentManual,m_titanInfo.maxManual)->getCString());
 
     }
     else
@@ -442,135 +478,174 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
 
     }
    
-    this->m_needFood->setString(CCString::createWithFormat("%d",m_titanInfo.feedFoodNum)->getCString());
+    this->m_needFood->setString(CC_CMDITOAL(m_titanInfo.feedFoodNum));
     
-    
-    if(params)
+    if(m_titanInfo.feedNum<m_titanInfo.feedMaxNum)//fusheng 只有在小于免费喂食的情况下  才判断粮食的
     {
-        
-        auto food = params->valueForKey("food");
-        if(food->length()!=0)
+        if(params)
         {
-            this->m_currentFoodNum->setString(CCString::createWithFormat("/%ld",food->longValue())->getCString());
             
-            if(m_titanInfo.feedFoodNum>food->longValue())
+            auto food = params->valueForKey("food");
+            if(food->length()!=0)
             {
+                this->m_currentFoodNum->setString(CCString::createWithFormat("/%s",CC_CMDITOAL(food->longValue()).c_str())->getCString());
                 
-                this->m_needFood->setColor(ccColor3B::RED);
-                isCanFeed = false;
+                if(m_titanInfo.feedFoodNum>food->longValue())
+                {
+                    
+                    this->m_needFood->setColor(ccColor3B::RED);
+                    
+                    isFoodEnough = false;
+                    
+                }
+                else
+                {
+                    this->m_needFood->setColor(ccColor3B::WHITE);
+                }
             }
             else
             {
-                this->m_needFood->setColor(ccColor3B::WHITE);
+                //long lfood = GlobalData::shared()->resourceInfo.lFood;
+                
+                
+                
+                long lfood = GlobalData::shared()->resourceInfo.lFood;
+                if(m_titanInfo.feedFoodNum>lfood)
+                {
+                    
+                    this->m_needFood->setColor(ccColor3B::RED);
+                    
+                    isFoodEnough = false;
+                }
+                else
+                {
+                    this->m_needFood->setColor(ccColor3B::WHITE);
+                }
+                
+                //            this->m_currentFoodNum->setString(CCString::createWithFormat("/%ld",lfood)->getCString());
+                this->m_currentFoodNum->setString(CCString::createWithFormat("/%s",CC_CMDITOAL(lfood).c_str())->getCString());
             }
         }
         else
         {
-            //long lfood = GlobalData::shared()->resourceInfo.lFood;
-            
-            
-            
             long lfood = GlobalData::shared()->resourceInfo.lFood;
+            
+            
+            this->m_currentFoodNum->setString(CCString::createWithFormat("/%s",CC_CMDITOAL(lfood).c_str())->getCString());
+            
             if(m_titanInfo.feedFoodNum>lfood)
             {
                 
                 this->m_needFood->setColor(ccColor3B::RED);
-                isCanFeed = false;
+                
+                isFoodEnough = false;
             }
             else
             {
                 this->m_needFood->setColor(ccColor3B::WHITE);
             }
-            
-            this->m_currentFoodNum->setString(CCString::createWithFormat("/%ld",lfood)->getCString());
         }
+    }
+
+    
+    
+    
+    
+    if(m_titanInfo.exp>=m_titanInfo.nextExp)
+    {
+        isCanFeed = false;
+        this->m_CleanFeedCDBtn->setEnabled(false);
+        this->m_CleanFeedCDBtnNode->setVisible(false);
+        
+        this->m_titanFeedBtnNode->setVisible(true);
     }
     else
     {
-        long lfood = GlobalData::shared()->resourceInfo.lFood;
-        
-        this->m_currentFoodNum->setString(CCString::createWithFormat("/%ld",lfood)->getCString());
-        
-        if(m_titanInfo.feedFoodNum>lfood)
+        if(m_titanInfo.feedcd!=0)
         {
             
-            this->m_needFood->setColor(ccColor3B::RED);
-            isCanFeed = false;
+            this->feedCD =(float)(m_titanInfo.feedcd - GlobalData::shared()->getWorldTime());
+            if (this->feedCD<0) {
+                this->feedCD=0;
+                isUpdating |= false;
+                
+
+                this->m_CleanFeedCDBtn->setEnabled(false);
+                this->m_CleanFeedCDBtnNode->setVisible(false);
+                
+                this->m_titanFeedBtn->setEnabled(true);
+                this->m_titanFeedBtnNode->setVisible(true);
+                //            titanFeedNode->setVisible(true);
+                //            titanUpingNode->setVisible(false);
+                
+                
+            }
+            else
+            {
+                isUpdating = true;
+                this->m_CleanFeedCDBtn->setEnabled(true);
+                m_CleanFeedCDBtnNode->setVisible(true);
+                
+                this->m_titanFeedBtn->setEnabled(false);
+                m_titanFeedBtnNode->setVisible(false);
+                
+                
+            }
+            string timeInfo = CC_SECTOA((int)this->feedCD);
+            this->m_feedCDTxt->setString(timeInfo);
+            
+            
         }
         else
         {
-            this->m_needFood->setColor(ccColor3B::WHITE);
+            this->feedCD=0;
+            isUpdating |= false;
+            this->m_CleanFeedCDBtn->setEnabled(false);
+            m_CleanFeedCDBtnNode->setVisible(false);
+            
+            m_titanFeedBtnNode->setVisible(true);
+
+            string timeInfo = CC_SECTOA((int)this->feedCD);
+            this->m_feedCDTxt->setString(timeInfo);
+            
+            
         }
     }
     
-    if(m_titanInfo.feedcd!=0)
-    {
-        
-        this->feedCD =(float)(m_titanInfo.feedcd - GlobalData::shared()->getWorldTime());
-        if (this->feedCD<0) {
-            this->feedCD=0;
-            isUpdating |= false;
-            
-            if(m_titanInfo.exp>=m_titanInfo.nextExp)
-            {
-                isCanFeed = false;
-            }
-            this->m_CleanFeedCDBtn->setEnabled(false);
-            this->m_CleanFeedCDBtnNode->setVisible(false);
-            
-            this->m_titanFeedBtn->setEnabled(true);
-            this->m_titanFeedBtnNode->setVisible(true);
-//            titanFeedNode->setVisible(true);
-//            titanUpingNode->setVisible(false);
-
-            
-        }
-        else
-        {
-            isUpdating = true;
-            this->m_CleanFeedCDBtn->setEnabled(true);
-            m_CleanFeedCDBtnNode->setVisible(true);
-            
-            this->m_titanFeedBtn->setEnabled(false);
-            m_titanFeedBtnNode->setVisible(false);
-            
-
-        }
-        string timeInfo = CC_SECTOA((int)this->feedCD);
-        this->m_feedCDTxt->setString(timeInfo);
-        
-      
-    }
-    else
-    {
-        this->feedCD=0;
-        isUpdating |= false;
-        this->m_CleanFeedCDBtn->setEnabled(false);
-        m_CleanFeedCDBtnNode->setVisible(false);
-        
-        m_titanFeedBtnNode->setVisible(true);
-        if(m_titanInfo.exp>=m_titanInfo.nextExp)
-        {
-            isCanFeed = false;
-        }
-        string timeInfo = CC_SECTOA((int)this->feedCD);
-        this->m_feedCDTxt->setString(timeInfo);
-        
-//        titanFeedNode->setVisible(true);
-//        titanUpingNode->setVisible(false);
-
-    }
+ 
     
     if(m_titanInfo.feedNum>=m_titanInfo.feedMaxNum)
     {
-        isCanFeed = false;
+        m_titanFeedStatus->setString(CCString::createWithFormat("Count : %d/%d",m_titanInfo.feedMaxNum,m_titanInfo.feedMaxNum)->getCString());//fusheng 需要文本
+        m_titanFeedTxt->setString("Accelerated growth");//fusheng 需要文本
+        
+        int gold = (m_titanInfo.feedNum - m_titanInfo.feedMaxNum)*50+CCCommonUtils::getGoldByTime(3600);
+        gold = gold>1000? 1000:gold;
+        this->m_needGlod->setString(CC_CMDITOAL(gold));
+        this->m_needGlod->setColor(ccWHITE);
+        m_needGoldNode->setVisible(true);
+        m_needFoodNode->setVisible(false);
+
+    }
+    else
+    {
+        m_needGoldNode->setVisible(false);
+        m_needFoodNode->setVisible(true);
+        m_titanFeedStatus->setString(CCString::createWithFormat("Count : %d/%d",m_titanInfo.feedNum,m_titanInfo.feedMaxNum)->getCString());//fusheng 需要文本  还有中文
+        m_titanFeedTxt->setString("Feed");//fusheng 需要文本
     }
 
-    
+    if(m_titanInfo.exp>=m_titanInfo.nextExp)
+    {
+        m_titanFeedStatus->setString(CCString::createWithFormat("Experience full, you can upgrade!!!")->getCString());
+        m_titanFeedTxt->setString("Feed");//fusheng 需要文本
+    }
 
     this->m_titanFeedBtn->setEnabled(isCanFeed);
     
-    CCCommonUtils::setSpriteGray(m_titanFeedBtnSprite, !isCanFeed);
+    setGrayNode(m_titanFeedBtnNode,!isCanFeed);
+//    CCCommonUtils::setSpriteGray(m_titanFeedBtnSprite, !isCanFeed);
+
 }
 
 
@@ -595,12 +670,8 @@ void GeneralTitanPopupView::onEnter(){
 //    
     onRefreshEquip();
     
-//    auto dropCCB = DropRdCCB::create(5);
-//    
-//    this->addChild(dropCCB);
-//    dropCCB->setPositionZ(1000);
-    
-    
+
+    resetAttribute(nullptr);//fusheng onEnter时刷新数据
     
     
 
@@ -635,12 +706,17 @@ bool GeneralTitanPopupView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarge
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanExtTxt", CCLabelIF*, this->m_titanExtTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_feedCDTxt", CCLabelIF*, this->m_feedCDTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_upgradeCDTxt", CCLabelIF*, this->m_upgradeCDTxt);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanFeedStatus", CCLabelIF*, this->m_titanFeedStatus);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanFeedTxt", CCLabelIF*, this->m_titanFeedTxt);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_feedCDBtnTxt", CCLabelIF*, this->m_feedCDBtnTxt);
+    
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_needFood", CCLabelIF*, this->m_needFood);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_currentFoodNum", CCLabelIF*, this->m_currentFoodNum);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanFeedBtn", CCControlButton*, this->m_titanFeedBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_speedUpBtn", CCControlButton*, this->m_speedUpBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_CleanFeedCDBtn", CCControlButton*, this->m_CleanFeedCDBtn);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_feedCDGoldTxt", CCLabelIF*, this->m_feedCDGoldTxt);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_toolSpeedUpBtn", CCControlButton*, this->m_toolSpeedUpBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_foodStatus", CCSprite*, this->m_foodStatus);
@@ -657,7 +733,10 @@ bool GeneralTitanPopupView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarge
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "titanFeedNode", CCNode*, this->titanFeedNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "titanUpingNode", CCNode*, this->titanUpingNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanFeedCDNode", CCNode*, this->m_titanFeedCDNode);
-     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanStatusDesc", CCLabelIF*, this->m_titanStatusDesc);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanStatusDesc", CCLabelIF*, this->m_titanStatusDesc);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_needGlod", CCLabelIF*, this->m_needGlod);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_needFoodNode", CCNode*, this->m_needFoodNode);
+    
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bNode", CCNode*, this->m_bNode);
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nameTxt", Label*, this->m_nameTxt);
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pointText", CCLabelIF*, this->m_pointText);
@@ -692,6 +771,7 @@ bool GeneralTitanPopupView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarge
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_stamineIcon", CCSprite*, this->m_stamineIcon);
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_touchNode", CCNode*, this->m_touchNode);
 //    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_needGoldNode", CCNode*, this->m_needGoldNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_mainNode", CCNode*, this->m_mainNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanExtNode", CCNode*, this->m_titanExtNode);
     
@@ -703,6 +783,8 @@ bool GeneralTitanPopupView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarge
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanPosInView", CCNode*, this->m_titanPosInView);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanAPTxt", CCLabelIF*, this->m_titanAPTxt);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanAPTxtPre", CCLabelIF*, this->m_titanAPTxtPre);
+    
 ////    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_skillBtn", CCControlButton*, this->m_skillBtn);
 //    
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_equipNode1", CCNode*, this->m_equipNode1);
@@ -819,6 +901,7 @@ void GeneralTitanPopupView::update(float time){
             this->feedCD -= time;
             string timeInfo = CC_SECTOA((int)this->feedCD);
             this->m_feedCDTxt->setString(timeInfo);
+            m_feedCDGoldTxt->setString(CC_CMDITOAL(CCCommonUtils::getGoldByTime((int)this->feedCD)));
             
         }
         else
@@ -855,6 +938,13 @@ void GeneralTitanPopupView::onTitanFeedClick(CCObject * pSender, Control::EventT
             CCCommonUtils::flyHint("", "", "please ungrade titan!");
             return;
         }
+        
+        if(!isFoodEnough)
+        {
+            
+            PopupViewController::getInstance()->addPopupInView(UseResToolView::create(WorldResourceType::Food));
+            return;
+        }
         if(m_titanInfo.feedNum<m_titanInfo.feedMaxNum)
         {
             //        if (this->feedCD<=0) {
@@ -870,15 +960,26 @@ void GeneralTitanPopupView::onTitanFeedClick(CCObject * pSender, Control::EventT
         else
         {
             
+            int gold = (m_titanInfo.feedNum - m_titanInfo.feedMaxNum)*50+CCCommonUtils::getGoldByTime(3600);
+            gold = gold>1000? 1000:gold;
+            YesNoDialog::showButtonAndGold(_lang("102120").c_str() , CCCallFunc::create(this, callfunc_selector(GeneralTitanPopupView::AccGrowthCallBack)), "OK", gold);
         }
 
     }
-    else
-    {
-        YesNoDialog::showTime( _lang("102120").c_str() , CCCallFunc::create(this, callfunc_selector(GeneralTitanPopupView::speedUpCallBack)), (int)this->feedCD, _lang("104903").c_str());
-    }
+//    else
+//    {
+//        
+//        YesNoDialog::showTime( _lang("102120").c_str() , CCCallFunc::create(this, callfunc_selector(GeneralTitanPopupView::speedUpCallBack)), (int)this->feedCD, _lang("104903").c_str());
+//    }
     
     
+}
+void GeneralTitanPopupView::AccGrowthCallBack()
+{
+    TitanFeedCommand *tfCommand = new TitanFeedCommand();
+    tfCommand->sendAndRelease();
+    CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("Titan_Feed"));
+    m_titanFeedBtn->setEnabled(false);
 }
 
 void GeneralTitanPopupView::onSpeedUpClick(CCObject * pSender, Control::EventType pCCControlEvent){
@@ -912,7 +1013,7 @@ void GeneralTitanPopupView::spdCallBack()
 void GeneralTitanPopupView::onCleanFeedCDClick(CCObject * pSender, Control::EventType pCCControlEvent){
     
     
-    YesNoDialog::showTime( _lang("102120").c_str() , CCCallFunc::create(this, callfunc_selector(GeneralTitanPopupView::speedUpCallBack)), (int)this->feedCD, _lang("104903").c_str());
+    YesNoDialog::showTime( _lang("102120").c_str() , CCCallFunc::create(this, callfunc_selector(GeneralTitanPopupView::speedUpCallBack)), (int)this->feedCD, _lang("104903").c_str(),false);
     
     
 }
