@@ -485,6 +485,27 @@ void DynamicTiledMap::updateDynamicMap(CCPoint point) {
     }
 }
 
+class OctopusNode
+: public Node
+{
+public:
+    static OctopusNode * create()
+    {
+        OctopusNode * ret = new (std::nothrow) OctopusNode();
+        if (ret && ret->init())
+        {
+            ret->autorelease();
+        }
+        else
+        {
+            CC_SAFE_DELETE(ret);
+        }
+        return ret;
+    }
+    
+    Sprite* octopus;
+    float show_time;
+};
 void DynamicTiledMap::updateOctopus()
 {
     static const int SEA_MONSTER_AREA_X = 5;
@@ -510,12 +531,12 @@ void DynamicTiledMap::updateOctopus()
     float speedx = -10;
     float speedy = 5;
     float speedScale = 1.2;
+    random_variable = rand() % 100;
+    int offset_tile = 0;//(rand() % 2) * (random_variable > 50 ? 1 : -1);
     if (isX && !isY)
     {
-        int random_variable = rand() % 100;
-        ty = currentTilePoint.y + (rand() % 2) * (random_variable > 50 ? 1 : -1);
+        ty = currentTilePoint.y + offset_tile;
         
-        random_variable = rand() % 100;
         if (random_variable > 50)
         {
             tx = _tile_count_x + 1;
@@ -537,10 +558,8 @@ void DynamicTiledMap::updateOctopus()
     }
     else if (!isX && isY)
     {
-        int random_variable = rand() % 100;
-        tx = currentTilePoint.x + (rand() % 2) * (random_variable > 50 ? 1 : -1);
+        tx = currentTilePoint.x + offset_tile;
         
-        random_variable = rand() % 100;
         if (random_variable > 50)
         {
             ty = _tile_count_y + 1;
@@ -560,20 +579,24 @@ void DynamicTiledMap::updateOctopus()
             speedy *= speedScale;
         }
     }
-    int random_offset_y = 128 / 2 + rand() % 30;
     
     auto fPos = WORLD_MAP_VIEW->m_map->getViewPointByTilePoint(Vec2(tx, ty));
     auto mSprite_pos = fPos;
-    auto spriteCache = SpriteFrameCache::getInstance();
-    spriteCache->addSpriteFramesWithFile("World/World_5.plist");
-    auto mSprite = Sprite::createWithSpriteFrameName("anima_sea_monster_01.png");
+    auto mSprite = OctopusNode::create();
     mSprite->setGlobalZOrder(-1.5);
     mSprite->setScaleX(sx);
     mSprite->setScaleY(sy);
+    int random_offset_y = 128 / 2 + rand() % 30;
     mSprite->setPosition(mSprite_pos.x, mSprite_pos.y + random_offset_y);
     mSprite->setTag(SEA_MONSTER_TAG);
     WORLD_MAP_VIEW->m_layers[WM_BETWEEN_SERVER_MAP]->addChild(mSprite);
     
+    mSprite->octopus = Sprite::createWithSpriteFrameName("anima_sea_monster_01.png");
+    mSprite->octopus->setOpacity(0);
+    mSprite->octopus->setGlobalZOrder(-1.5);
+    mSprite->addChild(mSprite->octopus);
+    auto spriteCache = SpriteFrameCache::getInstance();
+    spriteCache->addSpriteFramesWithFile("World/World_5.plist");
     Vector<SpriteFrame*> vsp;
     for (int i = 1; i <= 8; i++)
     {
@@ -584,27 +607,30 @@ void DynamicTiledMap::updateOctopus()
     Animation *animation = Animation::createWithSpriteFrames(vsp, 0.1);
     Animate *animate = Animate::create(animation);
     auto *ac1 = RepeatForever::create(animate);
+    mSprite->octopus->runAction(ac1);
     
-    //
+    int total_time = 12.0 + rand() % 8;
+    mSprite->show_time = total_time;
     
-    int showTime = 12 + rand() % 8;
-    auto delay1 = DelayTime::create(showTime);
-    auto cb = CallFunc::create([mSprite](){
-        mSprite->removeFromParent();
-    });
-    auto se1 = Sequence::create(delay1, cb, NULL);
-    
-    auto delay2 = DelayTime::create(showTime - 1);
-    auto alpha = FadeOut::create(1);
-    auto se2 = Sequence::create(delay2, alpha, NULL);
-    
-    auto sp = Spawn::create(se1, se2, NULL);
-    
-    //
-    auto spawn = Spawn::create(ac1, sp, NULL);
-    mSprite->runAction(spawn);
-    mSprite->schedule([mSprite, speedx, speedy](float dt){
+    mSprite->schedule([mSprite, speedx, speedy, total_time](float dt){
+        if (mSprite->show_time < 0)
+        {
+            mSprite->removeFromParent();
+            return;
+        }
+        
         mSprite->setPositionX(mSprite->getPositionX() + dt * speedx);
         mSprite->setPositionY(mSprite->getPositionY() + dt * speedy);
+        
+        if (mSprite->show_time <= 2.0)
+        {
+            int o = 255.0 * mSprite->show_time / 2.0;
+            mSprite->octopus->setOpacity(o);
+        }
+        else if (mSprite->octopus->getOpacity() <= 245)
+        {
+            mSprite->octopus->setOpacity(mSprite->octopus->getOpacity() + 10);
+        }
+        mSprite->show_time -= dt;
     }, "move");
 }
