@@ -259,6 +259,7 @@
 		36A968A817E981DE002129DA /* YesNoDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36A968A617E981DE002129DA /* YesNoDialog.cpp */; };
 		36AA340C1BBA60ED006D7E97 /* C3DShowView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36AA340A1BBA60ED006D7E97 /* C3DShowView.cpp */; settings = {ASSET_TAGS = (); }; };
 		36D7170318D9C6E3002FC987 /* CCGraySprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36D7170118D9C6E3002FC987 /* CCGraySprite.cpp */; };
+		36DA93901BCE353D0091A48B /* NBGRenderTarget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36DA938E1BCE353D0091A48B /* NBGRenderTarget.cpp */; settings = {ASSET_TAGS = (); }; };
 		36DE16D91BA188C00020785E /* 3d in Resources */ = {isa = PBXBuildFile; fileRef = 36DE16D71BA188C00020785E /* 3d */; };
 		36DE16DA1BA188C00020785E /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = 36DE16D81BA188C00020785E /* shaders */; };
 		36DE16E61BA188D60020785E /* DrawNode3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36DE16E01BA188D60020785E /* DrawNode3D.cpp */; };
@@ -1713,6 +1714,8 @@
 		36AA340B1BBA60ED006D7E97 /* C3DShowView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = C3DShowView.hpp; sourceTree = "<group>"; };
 		36D7170118D9C6E3002FC987 /* CCGraySprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGraySprite.cpp; sourceTree = "<group>"; };
 		36D7170218D9C6E3002FC987 /* CCGraySprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGraySprite.h; sourceTree = "<group>"; };
+		36DA938E1BCE353D0091A48B /* NBGRenderTarget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBGRenderTarget.cpp; sourceTree = "<group>"; };
+		36DA938F1BCE353D0091A48B /* NBGRenderTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBGRenderTarget.h; sourceTree = "<group>"; };
 		36DE16D71BA188C00020785E /* 3d */ = {isa = PBXFileReference; lastKnownFileType = folder; name = 3d; path = Resources/3d; sourceTree = "<group>"; };
 		36DE16D81BA188C00020785E /* shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = shaders; path = Resources/shaders; sourceTree = "<group>"; };
 		36DE16E01BA188D60020785E /* DrawNode3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DrawNode3D.cpp; path = ../scene/titan/DrawNode3D.cpp; sourceTree = "<group>"; };
@@ -6531,6 +6534,8 @@
 		FD6F416017CDD218008FDB9C /* GUI */ = {
 			isa = PBXGroup;
 			children = (
+				36DA938E1BCE353D0091A48B /* NBGRenderTarget.cpp */,
+				36DA938F1BCE353D0091A48B /* NBGRenderTarget.h */,
 				2AB5E04A1B687E42001E0A7E /* CCTableViewTouchIFCell.cpp */,
 				2AB5E04B1B687E42001E0A7E /* CCTableViewTouchIFCell.h */,
 				9688FAB11AADA0DF009AE069 /* CCRichLabel */,
@@ -8152,6 +8157,7 @@
 				6030CF431ADB993D00E5C4C6 /* InnerSettingView.cpp in Sources */,
 				B8581EA01BBA34E70027F733 /* TypeDefinition.cpp in Sources */,
 				96E0D38A18ED06A4001E296E /* AllianceApplylistCommand.cpp in Sources */,
+				36DA93901BCE353D0091A48B /* NBGRenderTarget.cpp in Sources */,
 				96E0D39018ED0A8F001E296E /* AllianceManager.cpp in Sources */,
 				E683AEF718ED1359004BA78D /* ActivityController.cpp in Sources */,
 				60FB55ED1AEDD50700ADC2E0 /* WorldBossMailView.cpp in Sources */,

@@ -242,7 +242,7 @@ bool ImperialScene::init()
     m_touchLayer->setScale(FunBuildController::getInstance()->oldScale);
     
     float maxZoomScale = 1.2;
-    float minZoomScale = m_viewPort->getMinZoom();
+    float minZoomScale = m_viewPort->getMinZoom() * 1.4;
     float curZoomScale = 0.75;
     TargetPlatform target = CCApplication::sharedApplication()->getTargetPlatform();
     if(target == kTargetIpad || CCCommonUtils::isAdriodPad()){
@@ -590,6 +590,7 @@ void ImperialScene::onCreateTitan()
     
     m_TitanNode = CCNode::create();
     m_TitanNode->setRotation3D(Vec3(32, 39, -24));
+    m_TitanNode->setPosition(-200,-50);
     m_TitanNode->addChild(m_Titan);
     m_TitanNode->setPosition(m_touchLayer->convertToNodeSpace(m_titanNode->convertToWorldSpace(Point(0, 0))));
     //SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE)->addChild(titanNode);

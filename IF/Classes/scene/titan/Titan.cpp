@@ -83,8 +83,8 @@ bool Titan::initWithFile(int uid)
 //    _model->setEmittingShaderDuration(bodyParam.speed, bodyParam.min, bodyParam.max);
 //    _model->applyEmittingShader(bodyParam.color,bodyParam.textureShaderName);
     _model->setScale(nModelScale);
-//    _model->setPosition3D(Vec3(getContentSize().width*0.5,0,200));
-    _model->setRotation3D(Vec3(22,0,0));
+    _model->setPosition3D(Vec3(-0.1,0,0));
+    _model->setRotation3D(Vec3(16,0,0));
 //    _drawDebug = DrawNode3D::create();
 //    _model->addChild(_drawDebug);
 //    _obbt = OBB(_model->getAABB());
@@ -388,6 +388,9 @@ void Titan::ilde()
 
 void Titan::attack()
 {
+    if (true) {
+        return;
+    }
     std::map<eActState,Animate3D*>::iterator it = _actionCache.find(eActState::Attack);
     Animate3D* pAnim = nullptr;
     if (it == _actionCache.end()) {
@@ -414,6 +417,9 @@ void Titan::attack()
 
 void Titan::walk()
 {
+    if (true) {
+        return;
+    }
     std::map<eActState,Animate3D*>::iterator it = _actionCache.find(eActState::Walk);
     Animate3D* pAnim = nullptr;
     if (it == _actionCache.end()) {
@@ -440,6 +446,9 @@ void Titan::walk()
 
 void Titan::run()
 {
+    if (true) {
+        return;
+    }
     std::map<eActState,Animate3D*>::iterator it = _actionCache.find(eActState::Run);
     Animate3D* pAnim = nullptr;
     if (it == _actionCache.end()) {

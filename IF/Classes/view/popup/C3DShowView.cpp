@@ -8,6 +8,9 @@
 
 #include "C3DShowView.hpp"
 #include "CCBExtension.h"
+//begin a by ljf
+#include "NBGRenderTarget.h"
+//end a by ljf
 C3DShowView* C3DShowView::create(const char* modelPath, const char* texPath)
 {
     auto c3dspr = new (std::nothrow) C3DShowView();
@@ -31,8 +34,19 @@ bool C3DShowView::init(const char* modelPath, const char* texPath)
     std::string shaderTexPath = texPath;
     int pos = shaderTexPath.find(".");
     shaderTexPath.insert(pos, "_shader");
-    m_modelPos->addChild(m_Model);
     
+    
+    //m_modelPos->addChild(m_Model); //d by ljf
+    
+    //begin a by ljf
+    auto renderTexture = NBGRenderTarget::create(200, 200, cocos2d::Texture2D::PixelFormat::RGBA4444);
+    auto pNode = CCNode::create();
+    pNode->setRotation3D(Vec3(Vec3(22, 0, 0)));
+    pNode->setScale(0.7);
+    pNode->addChild(m_Model);
+    renderTexture->addChild(pNode);
+    m_modelPos->addChild(renderTexture);
+    //end a by ljf
     return true;
     
 }

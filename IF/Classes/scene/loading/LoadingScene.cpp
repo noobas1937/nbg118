@@ -109,9 +109,10 @@ bool LoadingScene::init()
             addChild(colorLayer);
         }else{
             auto loadingBG = CCLoadSprite::createSprite("loading.png");
-            loadingBG->setAnchorPoint(ccp(0, 1));
-            loadingBG->setScale(640.0 / loadingBG->getContentSize().width);
-            loadingBG->setPositionY(size.height);
+            loadingBG->setAnchorPoint(ccp(0.5, 0.5));
+//            loadingBG->setScale(640.0 / loadingBG->getContentSize().width);
+            loadingBG->setPositionX(size.width/2);
+            loadingBG->setPositionY(size.height/2);
             if(CCCommonUtils::isIosAndroidPad())
             {
                 loadingBG->setScale(1536/653.0);
@@ -128,7 +129,7 @@ bool LoadingScene::init()
             addFireParticle(fireParticle, "LoadingMan_cloud", ccp(size.width / 2, size.height - 130));
 
             auto kingSpine = IFLoadingSceneArmyNode::create("Loading/Loading_3.atlas", "Spine/Loading/loading.json", "loading", 0.5);
-            this->addChild(kingSpine);
+//            this->addChild(kingSpine);
             kingSpine->setPositionY(1050);
             if(CCCommonUtils::isIosAndroidPad())
             {
@@ -293,7 +294,7 @@ bool LoadingScene::init()
             
             logo->setPosition(ccp(size.width/2, 150));//
             logo->setTag(LOADING_LOGO_TAG);
-            addChild(logo);
+//            addChild(logo);
             
             auto logFireNode1 = CCNode::create();
             this->addChild(logFireNode1);
