@@ -140,19 +140,6 @@ struct CellMap{
     int cityIndex;
 };
 
-class WorldMapView;
-
-class CloudLayer : public CCParallaxNode {
-public:
-    static CloudLayer* create() {
-        CloudLayer *pRet = new CloudLayer();
-        pRet->autorelease();
-        return pRet;
-    }
-    
-    virtual void visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags);
-};
-
 class DynamicTiledMap;
 
 class WorldMapView : public CCLayer,public ITouchDelegate
@@ -449,6 +436,8 @@ private:
     vector<FlagParInfo> m_flagParDatas;
     
     void update_water_shader();
+    
+    friend class NBWorldMonster;
 };
 
 #endif /* defined(__IF__WorldMapView__) */
