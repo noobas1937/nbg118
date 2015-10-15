@@ -168,16 +168,19 @@ bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType) {
         m_map->layerNamed("ocean")->setGlobalZOrder(-100);
     }
 
-    if(m_mapType == NORMAL_MAP){
+    if(m_mapType == NORMAL_MAP) {
         m_map->addChild(m_layers[WM_BETWEEN_SERVER_MAP], 2);
         m_layers[WM_BETWEEN_SERVER_MAP]->setTag(WM_BETWEEN_SERVER_MAP_TAG);
 
 //        auto map = DynamicTiledMap::create("WorldMap1.tmx", gotoPoint, loopSize);
         // guo.jiang
-        auto map = DynamicTiledMap::create("nb_world_link_area.tmx", gotoPoint, loopSize);
-        m_layers[WM_BETWEEN_SERVER_MAP]->addChild(map);
-        map->setTag(WM_BETWEEN_SERVER_MAP_TAG);
-        map->setPosition(-ccp(256 * (_big_tilecountX - _tile_count_x) / 2, 128 * (_big_tilecountY - _tile_count_y)));
+        auto link_area_pos = Vec2(-256 * (_big_tilecountX - _tile_count_x) / 2, -128 * (_big_tilecountY - _tile_count_y));
+        auto link_area = DynamicTiledMap::create("nb_world_link_area.tmx", gotoPoint, loopSize);
+        link_area->setTag(WM_BETWEEN_SERVER_MAP_TAG);
+        link_area->setPosition(link_area_pos);
+        link_area->layerNamed("tile")->setGlobalZOrder(-100);
+        link_area->layerNamed("ocean")->setGlobalZOrder(-100);
+        m_layers[WM_BETWEEN_SERVER_MAP]->addChild(link_area);
     }
     m_map->addChild(m_layers[WM_CITY], 3);
     m_map->addChild(m_layers[WM_ROAD], 4);
@@ -7723,10 +7726,7 @@ void WorldMapView::testCastle(int level){
 void WorldMapView::update_water_shader()
 {
     static const int WATER_SHADER_TAG = WM_BG_TAG + 1;
-    static const int SEA_MONSTER_TAG = WM_BG_TAG + 2;
-    
     static const int WATER_SHADER_GZ = -1;
-    static const int SEA_MONSTER_GZ = -2;
     
     NBWaterShaderLayer* water = dynamic_cast<NBWaterShaderLayer*>(m_layers[WM_BG]->getChildByTag(WATER_SHADER_TAG));
     if (water == nullptr) {
@@ -7740,31 +7740,5 @@ void WorldMapView::update_water_shader()
 
         auto fPos = m_map->getViewPointByTilePoint(m_map->currentTilePoint);
         water->setPosition(fPos);
-        
-        auto mSprite = dynamic_cast<Sprite*>(m_layers[WM_BG]->getChildByTag(SEA_MONSTER_TAG));
-        if (!mSprite) {
-            auto spriteCache = SpriteFrameCache::getInstance();
-            spriteCache->addSpriteFramesWithFile("World/World_5.plist");
-            mSprite = Sprite::createWithSpriteFrameName("anima_sea_monster_01.png");
-            mSprite->setGlobalZOrder(-1.5);
-            mSprite->setScale(4);
-            mSprite->setPosition(fPos);
-            mSprite->setTag(SEA_MONSTER_TAG);
-            m_layers[WM_BG]->addChild(mSprite);
-            Vector<SpriteFrame*> vsp;
-            for (int i = 1; i <= 8; i++) {
-                String *string = String::createWithFormat("anima_sea_monster_0%d.png", i);
-                SpriteFrame *spfr = spriteCache->getSpriteFrameByName(string->getCString());
-                vsp.pushBack(spfr);
-            }
-            Animation *animation = Animation::createWithSpriteFrames(vsp, 0.1);
-            Animate *animate = Animate::create(animation);
-            auto *ac1 = RepeatForever::create(animate);
-            mSprite->runAction(ac1);
-            mSprite->schedule([mSprite](float dt){
-                mSprite->setPositionX(mSprite->getPositionX() - dt * 10);
-                mSprite->setPositionY(mSprite->getPositionY() + dt * 5);
-            }, "move");
-        }
     }
 }

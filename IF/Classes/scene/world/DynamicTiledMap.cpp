@@ -14,16 +14,19 @@
 #include "WorldMapView.h"
 #include "IFMapMaskLayer.h"
 
+#define WORLD_CONTROLLER   WorldController::getInstance()
+#define WORLD_MAP_VIEW     WorldMapView::instance()
+
 DynamicTiledMap* DynamicTiledMap::create(const char *tmxFile,const CCPoint& pos, int loopSize) {
     
     DynamicTiledMap *pRet = new DynamicTiledMap();
     pRet->isChangingServer = false;
     pRet->currentTilePoint = pos;
     pRet->lastDisplayTilePoint = pos;
-    pRet->centerTilePoint = ccp((int)(WorldController::getInstance()->_current_tile_count_x/2),(int)(WorldController::getInstance()->_current_tile_count_y/2));
-    pRet->centerViewPoint = ccp(WorldController::getInstance()->_current_map_width/2, WorldController::getInstance()->_current_map_height/2);
-    CCPoint serverViewPoint =  WorldController::getInstance()->getServerViewPosByPos(WorldController::getInstance()->getServerPosById(GlobalData::shared()->playerInfo.currentServerId));
-    if(WorldController::getInstance()->currentMapType == SERVERFIGHT_MAP){
+    pRet->centerTilePoint = ccp((int)(WORLD_CONTROLLER->_current_tile_count_x/2),(int)(WORLD_CONTROLLER->_current_tile_count_y/2));
+    pRet->centerViewPoint = ccp(WORLD_CONTROLLER->_current_map_width/2, WORLD_CONTROLLER->_current_map_height/2);
+    CCPoint serverViewPoint =  WORLD_CONTROLLER->getServerViewPosByPos(WORLD_CONTROLLER->getServerPosById(GlobalData::shared()->playerInfo.currentServerId));
+    if(WORLD_CONTROLLER->currentMapType == SERVERFIGHT_MAP){
         serverViewPoint = ccp(0, 0);
     }
     //todo liudi
@@ -43,36 +46,36 @@ DynamicTiledMap::~DynamicTiledMap()
 
 void DynamicTiledMap::setPosition(const cocos2d::CCPoint &position) {
     CCNode::setPosition(position);
-    if(WorldMapView::instance()->m_touchDelegateView){
-        WorldMapView::instance()->m_touchDelegateView->setMovable(true);
+    if(WORLD_MAP_VIEW->m_touchDelegateView){
+        WORLD_MAP_VIEW->m_touchDelegateView->setMovable(true);
     }
     if (this->getTag() == WM_BETWEEN_SERVER_MAP_TAG || getTag() == WM_BG_TAG) {
         return;
     }
     CCSize winsize = CCDirector::sharedDirector()->getWinSize();
     
-    float mapScaleX = WorldMapView::instance()->m_map->getScaleX();
-    float mapScaleY = WorldMapView::instance()->m_map->getScaleY();
+    float mapScaleX = WORLD_MAP_VIEW->m_map->getScaleX();
+    float mapScaleY = WORLD_MAP_VIEW->m_map->getScaleY();
     int oldCurrentServerId = GlobalData::shared()->playerInfo.currentServerId;
     int nowCurrentServerId = -1;
-    if (WorldController::getInstance()->currentMapType == NORMAL_MAP) {
-        nowCurrentServerId = WorldMapView::instance()->m_map->getServerIdByViewPoint(ccp((winsize.width / 2 - position.x)/mapScaleX , (winsize.height / 2 - position.y)/mapScaleY));
+    if (WORLD_CONTROLLER->currentMapType == NORMAL_MAP) {
+        nowCurrentServerId = WORLD_MAP_VIEW->m_map->getServerIdByViewPoint(ccp((winsize.width / 2 - position.x)/mapScaleX , (winsize.height / 2 - position.y)/mapScaleY));
     }
     
     CCPoint needMovePos = CCPointZero;
     if (oldCurrentServerId != nowCurrentServerId   && nowCurrentServerId != -1) {
         
-        auto oldPos = WorldController::getInstance()->getServerPosById(oldCurrentServerId);
-        auto newPos = WorldController::getInstance()->getServerPosById(nowCurrentServerId);
+        auto oldPos = WORLD_CONTROLLER->getServerPosById(oldCurrentServerId);
+        auto newPos = WORLD_CONTROLLER->getServerPosById(nowCurrentServerId);
         auto disPos = newPos - oldPos;
         
         CCLOG("change to serverId =%d",nowCurrentServerId);
-        needMovePos = WorldController::getInstance()->getChangeViewPosByServerPos(disPos,true);
+        needMovePos = WORLD_CONTROLLER->getChangeViewPosByServerPos(disPos,true);
         needMovePos.x =  needMovePos.x * mapScaleX;
         needMovePos.y =  needMovePos.y * mapScaleY;
-        CCPoint shouldToPos = WorldMapView::instance()->m_map->getPosition() + needMovePos;
+        CCPoint shouldToPos = WORLD_MAP_VIEW->m_map->getPosition() + needMovePos;
         CCLOG("shouldGotoPoint:%f,%f",shouldToPos.x,shouldToPos.y);
-        auto  gotoPoint = WorldMapView::instance()->m_map->getTilePointByViewPoint(ccp((winsize.width / 2 - shouldToPos.x)/mapScaleX , (winsize.height / 2 - shouldToPos.y)/mapScaleY));
+        auto  gotoPoint = WORLD_MAP_VIEW->m_map->getTilePointByViewPoint(ccp((winsize.width / 2 - shouldToPos.x)/mapScaleX , (winsize.height / 2 - shouldToPos.y)/mapScaleY));
         if (gotoPoint.x < 0) {
             gotoPoint.x = 0;
         }
@@ -86,14 +89,14 @@ void DynamicTiledMap::setPosition(const cocos2d::CCPoint &position) {
             gotoPoint.y = _tile_count_x - 1;
         }
         PopupViewController::getInstance()->removeAllPopupView();
-        WorldMapView::instance()->changeServer(nowCurrentServerId);
-        WorldMapView::instance()->m_map->setPosition(shouldToPos);
+        WORLD_MAP_VIEW->changeServer(nowCurrentServerId);
+        WORLD_MAP_VIEW->m_map->setPosition(shouldToPos);
         updateDynamicMap();
         
-        WorldMapView::instance()->onCloseTilePopup();
+        WORLD_MAP_VIEW->onCloseTilePopup();
         
-        if(WorldMapView::instance()->m_touchDelegateView){
-            WorldMapView::instance()->m_touchDelegateView->setMovable(false);
+        if(WORLD_MAP_VIEW->m_touchDelegateView){
+            WORLD_MAP_VIEW->m_touchDelegateView->setMovable(false);
         }
         CCLOG("testwdz:%f,%f",gotoPoint.x,gotoPoint.y);
         onShowMapMask();
@@ -101,10 +104,10 @@ void DynamicTiledMap::setPosition(const cocos2d::CCPoint &position) {
         
         return;
     }
-    if(WorldMapView::instance() && SceneController::getInstance()->currentSceneId == SCENE_ID_WORLD){
-        WorldMapView::instance()->showAndHideUnBatchLabel();
-        WorldMapView::instance()->showAndHideFieldMonster();
-        WorldMapView::instance()->onShowAndHideSpinLb();
+    if(WORLD_MAP_VIEW && SceneController::getInstance()->currentSceneId == SCENE_ID_WORLD){
+        WORLD_MAP_VIEW->showAndHideUnBatchLabel();
+        WORLD_MAP_VIEW->showAndHideFieldMonster();
+        WORLD_MAP_VIEW->onShowAndHideSpinLb();
     }
     bool needUpdate = false;
     if (isNeedUpdate()) {
@@ -112,7 +115,7 @@ void DynamicTiledMap::setPosition(const cocos2d::CCPoint &position) {
         needUpdate = true;
     }
     
-    if (needUpdate && WorldController::getInstance()->currentMapType != SERVERFIGHT_MAP) {
+    if (needUpdate && WORLD_CONTROLLER->currentMapType != SERVERFIGHT_MAP) {
         vector<CCPoint> viewPointVec;
         CCPoint lbPos = ccp((0 - position.x)/mapScaleX , (0 - position.y)/mapScaleY);
         CCPoint ltPos = ccp((0 - position.x)/mapScaleX , (winsize.height - position.y)/mapScaleY);
@@ -126,7 +129,7 @@ void DynamicTiledMap::setPosition(const cocos2d::CCPoint &position) {
         map<int ,CCPoint> ServerPointMap;
         int index = 0;
         while (index < viewPointVec.size()) {
-            int tempServerId = WorldMapView::instance()->m_map->getServerIdByViewPoint(viewPointVec.at(index));
+            int tempServerId = WORLD_MAP_VIEW->m_map->getServerIdByViewPoint(viewPointVec.at(index));
             if (tempServerId != GlobalData::shared()->playerInfo.currentServerId) {
                 ServerPointMap[tempServerId] = viewPointVec.at(index);
             }
@@ -135,25 +138,25 @@ void DynamicTiledMap::setPosition(const cocos2d::CCPoint &position) {
         
         auto it = ServerPointMap.begin();
         for (; it!= ServerPointMap.end(); it++) {
-            CCPoint tilePoint = WorldMapView::instance()->m_map->getTilePointByViewPoint(it->second);
-            if(WorldController::getInstance()->getisAsyEnd()){
+            CCPoint tilePoint = WORLD_MAP_VIEW->m_map->getTilePointByViewPoint(it->second);
+            if(WORLD_CONTROLLER->getisAsyEnd()){
                 updataBoderMap(tilePoint, it->first);
             }
             else{
-                auto tempVec = WorldController::getInstance()->m_helpCmdVec;
+                auto tempVec = WORLD_CONTROLLER->m_helpCmdVec;
                 if (tempVec.size() == 0) {
-                    WorldController::getInstance()->m_helpCmdVec.push_back(make_pair(it->first, tilePoint));
+                    WORLD_CONTROLLER->m_helpCmdVec.push_back(make_pair(it->first, tilePoint));
                 }
                 else{
-                    auto tempIt = WorldController::getInstance()->m_helpCmdVec.begin();
-                    for (; tempIt != WorldController::getInstance()->m_helpCmdVec.end(); ) {
+                    auto tempIt = WORLD_CONTROLLER->m_helpCmdVec.begin();
+                    for (; tempIt != WORLD_CONTROLLER->m_helpCmdVec.end(); ) {
                         if (tempIt->first == it->first) {
-                            WorldController::getInstance()->m_helpCmdVec.erase(tempIt);
+                            WORLD_CONTROLLER->m_helpCmdVec.erase(tempIt);
                             break;
                         }
                         tempIt++;
                     }
-                    WorldController::getInstance()->m_helpCmdVec.push_back(make_pair(it->first, tilePoint));
+                    WORLD_CONTROLLER->m_helpCmdVec.push_back(make_pair(it->first, tilePoint));
                 }
                 
             }
@@ -163,14 +166,14 @@ void DynamicTiledMap::setPosition(const cocos2d::CCPoint &position) {
 void DynamicTiledMap::onShowMapMask(){
     int nowCurrentServerId = GlobalData::shared()->playerInfo.currentServerId;
     for (int index = 0; index < 9; index++) {
-        CCPoint changeServerPos = WorldController::getInstance()->getChangePointByTypeNum(index);
+        CCPoint changeServerPos = WORLD_CONTROLLER->getChangePointByTypeNum(index);
         CCPoint maskServerPos = WorldController::getServerPosById(nowCurrentServerId)  + changeServerPos;
         int serverId = WorldController::getServerIdByServerPoint(maskServerPos);
-        IFMapMaskLayer * tempNode  = dynamic_cast<IFMapMaskLayer*>(WorldMapView::instance()->m_mapMaskNode->getChildByTag(WM_MASK_TAG + index));
+        IFMapMaskLayer * tempNode  = dynamic_cast<IFMapMaskLayer*>(WORLD_MAP_VIEW->m_mapMaskNode->getChildByTag(WM_MASK_TAG + index));
         if(tempNode){
-            CCPoint movePoint = WorldController::getInstance()->getChangeViewPosByServerPos(changeServerPos,true);
-            tempNode->setPosition(movePoint + ccp(0, _map_height /2)+ WorldController::getInstance()->getServerViewPosByPos(WorldController::getServerPosById(GlobalData::shared()->playerInfo.currentServerId)));
-            if (WorldController::getInstance()->currentMapType == SERVERFIGHT_MAP) {
+            CCPoint movePoint = WORLD_CONTROLLER->getChangeViewPosByServerPos(changeServerPos,true);
+            tempNode->setPosition(movePoint + ccp(0, _map_height /2)+ WORLD_CONTROLLER->getServerViewPosByPos(WorldController::getServerPosById(GlobalData::shared()->playerInfo.currentServerId)));
+            if (WORLD_CONTROLLER->currentMapType == SERVERFIGHT_MAP) {
                 tempNode->setVisible(false);
             }else{
                 if(GlobalData::shared()->isCrossService){
@@ -195,12 +198,12 @@ void DynamicTiledMap::onShowMapMask(){
 }
 bool DynamicTiledMap::isNeedUpdate() {
     // this assume anchorPoint is (0,0)
-    if(!WorldMapView::instance() || !WorldMapView::instance()->m_touchDelegateView){
+    if(!WORLD_MAP_VIEW || !WORLD_MAP_VIEW->m_touchDelegateView){
         return false;
     }
-    WorldMapView::instance()->updateDirection();
+    WORLD_MAP_VIEW->updateDirection();
     
-    auto newViewPoint = WorldMapView::instance()->m_touchDelegateView->getCurrentCenterGridPoint();
+    auto newViewPoint = WORLD_MAP_VIEW->m_touchDelegateView->getCurrentCenterGridPoint();
     auto tilePoint = getTilePointByViewPoint(newViewPoint);
     
     auto testPoint = ccpSub(lastDisplayTilePoint, tilePoint);
@@ -209,8 +212,8 @@ bool DynamicTiledMap::isNeedUpdate() {
     }
     
     CCPoint displayPoint = tilePoint;
-    displayPoint.x = displayPoint.x > 0 ? (displayPoint.x > WorldController::getInstance()->_current_tile_count_x - 1 ? WorldController::getInstance()->_current_tile_count_x - 1 : displayPoint.x) : 0;
-    displayPoint.y = displayPoint.y > 0 ? (displayPoint.y > WorldController::getInstance()->_current_tile_count_y - 1 ? WorldController::getInstance()->_current_tile_count_y - 1 : displayPoint.y) : 0;
+    displayPoint.x = displayPoint.x > 0 ? (displayPoint.x > WORLD_CONTROLLER->_current_tile_count_x - 1 ? WORLD_CONTROLLER->_current_tile_count_x - 1 : displayPoint.x) : 0;
+    displayPoint.y = displayPoint.y > 0 ? (displayPoint.y > WORLD_CONTROLLER->_current_tile_count_y - 1 ? WORLD_CONTROLLER->_current_tile_count_y - 1 : displayPoint.y) : 0;
     
     UIComponent::getInstance()->m_xCoordText->setString(CC_ITOA((int)displayPoint.x));
     UIComponent::getInstance()->m_yCoordText->setString(CC_ITOA((int)displayPoint.y));
@@ -235,7 +238,7 @@ bool DynamicTiledMap::isNeedUpdate() {
 
 CCPoint DynamicTiledMap::getTilePointByViewPoint(const cocos2d::CCPoint &viewPoint) {
     auto newViewPoint = viewPoint;
-    auto disPoint = ccpSub(newViewPoint,WorldController::getInstance()->serverMap_centerViewPoint);
+    auto disPoint = ccpSub(newViewPoint,WORLD_CONTROLLER->serverMap_centerViewPoint);
     float x = disPoint.x/(_big_mapWidth/2);
     float y = disPoint.y/(_big_mapHeight/2);
     
@@ -257,15 +260,15 @@ CCPoint DynamicTiledMap::getTilePointByViewPoint(const cocos2d::CCPoint &viewPoi
     CCPoint currentServerPos = WorldController::getServerPosById(currentServerId);
     
     CCPoint serverTilePoint = ccp((int)(currentServerPos.x) + a,(int)(currentServerPos.y) + b);
-    //    int serverId = WorldController::getInstance()->getServerIdByServerPoint(serverTilePoint);
+    //    int serverId = WORLD_CONTROLLER->getServerIdByServerPoint(serverTilePoint);
     //elem map左下角0.0 原來的1201view为座標系
-    auto childMapPos = WorldController::getInstance()->getServerViewPosByPos(serverTilePoint);
+    auto childMapPos = WORLD_CONTROLLER->getServerViewPosByPos(serverTilePoint);
     return getTileMapPointByViewPoint(newViewPoint - childMapPos);//old fun
 }
 
 int DynamicTiledMap::getServerIdByViewPoint(const CCPoint &viewPoint){
     auto newViewPoint = viewPoint;
-    auto disPoint = ccpSub(newViewPoint,WorldController::getInstance()->serverMap_centerViewPoint);
+    auto disPoint = ccpSub(newViewPoint,WORLD_CONTROLLER->serverMap_centerViewPoint);
     double x = (double)(disPoint.x)/(_big_mapWidth/2);
     double y =(double)(disPoint.y)/(_big_mapHeight/2);
     
@@ -284,9 +287,9 @@ int DynamicTiledMap::getServerIdByViewPoint(const CCPoint &viewPoint){
         b = (b-1)/2;
     }
     auto &playerInfo = GlobalData::shared()->playerInfo;
-    auto centerPoint = WorldController::getInstance()->getServerPosById(playerInfo.currentServerId);
+    auto centerPoint = WORLD_CONTROLLER->getServerPosById(playerInfo.currentServerId);
     CCPoint serverTilePoint = ccp((int)(centerPoint.x) + a,(int)(centerPoint.y) + b);
-    int serverId = WorldController::getInstance()->getServerIdByServerPoint(serverTilePoint);
+    int serverId = WORLD_CONTROLLER->getServerIdByServerPoint(serverTilePoint);
     return serverId;
 }
 
@@ -331,29 +334,29 @@ CCPoint DynamicTiledMap::getViewPointByTilePoint(const cocos2d::CCPoint &tilePoi
         tempPoint.y = 0;
         needFixServer = true;
     }
-    if (tilePoint.x > WorldController::getInstance()->_current_tile_count_x - 1) {
-        tempPoint.x = WorldController::getInstance()->_current_tile_count_x - 1;
+    if (tilePoint.x > WORLD_CONTROLLER->_current_tile_count_x - 1) {
+        tempPoint.x = WORLD_CONTROLLER->_current_tile_count_x - 1;
         needFixServer = true;
     }
-    if (tilePoint.y > WorldController::getInstance()->_current_tile_count_y - 1) {
-        tempPoint.y = WorldController::getInstance()->_current_tile_count_y - 1;
+    if (tilePoint.y > WORLD_CONTROLLER->_current_tile_count_y - 1) {
+        tempPoint.y = WORLD_CONTROLLER->_current_tile_count_y - 1;
         needFixServer = true;
     }
     if (needFixServer) {
         int tempCityIndex = WorldController::getIndexByPoint(tempPoint);
-        if (WorldController::getInstance()->getCityInfos().find(tempCityIndex) != WorldController::getInstance()->getCityInfos().end() ) {
-            serverId = WorldController::getInstance()->getCityInfos()[tempCityIndex].tileServerId;
+        if (WORLD_CONTROLLER->getCityInfos().find(tempCityIndex) != WORLD_CONTROLLER->getCityInfos().end() ) {
+            serverId = WORLD_CONTROLLER->getCityInfos()[tempCityIndex].tileServerId;
         }
     }
     //    CCLOG("logwdz+++++++++++++%d",serverId);
     auto disPoint = ccpSub(tilePoint, centerTilePoint);
     CCPoint childMapPoint = ccp(centerViewPoint.x+(disPoint.x-disPoint.y)*_halfTileSize.width,centerViewPoint.y-(disPoint.x+disPoint.y)*_halfTileSize.height);
-    CCPoint serverViewPoint =  WorldController::getInstance()->getServerViewPosByPos(WorldController::getServerPosById(serverId));
+    CCPoint serverViewPoint =  WORLD_CONTROLLER->getServerViewPosByPos(WorldController::getServerPosById(serverId));
     return serverViewPoint + childMapPoint;
 }
 
 void DynamicTiledMap::updataBoderMap(CCPoint point,int forceServerId){
-    if (!WorldMapView::instance()) {
+    if (!WORLD_MAP_VIEW) {
         return;
     }
     if(GlobalData::shared()->playerInfo.uid == ""){
@@ -363,7 +366,7 @@ void DynamicTiledMap::updataBoderMap(CCPoint point,int forceServerId){
     if(!GuideController::share()->updateWorldInfo){
         return;
     }
-    WorldMapView::instance()->m_updateTimeStamp = time(NULL);
+    WORLD_MAP_VIEW->m_updateTimeStamp = time(NULL);
     if (point.x < 0) {
         point.x = 0;
     }
@@ -376,32 +379,32 @@ void DynamicTiledMap::updataBoderMap(CCPoint point,int forceServerId){
     if (point.y > _tile_count_x - 1) {
         point.y = _tile_count_x - 1;
     }
-    auto cmd = new WorldCommand(point,WorldMapView::instance()->m_updateTimeStamp,type,forceServerId);
+    auto cmd = new WorldCommand(point,WORLD_MAP_VIEW->m_updateTimeStamp,type,forceServerId);
     int cmdSid = cmd->getServerId();
-    bool isNormalMap =    WorldController::getInstance()->currentMapType == NORMAL_MAP ? true :false;
+    bool isNormalMap =    WORLD_CONTROLLER->currentMapType == NORMAL_MAP ? true :false;
     if(cmdSid != 0){
         if (isNormalMap && GlobalData::shared()->serverMax < cmdSid) {
-            WorldController::getInstance()->setisAsyEnd(true);
+            WORLD_CONTROLLER->setisAsyEnd(true);
             return;
         }
         cmd->sendAndRelease();
         isSendCmd = true;
-        WorldMapView::instance()->m_loadingIcon->setVisible(true);
+        WORLD_MAP_VIEW->m_loadingIcon->setVisible(true);
     }
     else{
-        WorldController::getInstance()->setisAsyEnd(true);
+        WORLD_CONTROLLER->setisAsyEnd(true);
 #if COCOS2D_DEBUG == 2
         cmd->sendAndRelease();
         isSendCmd = true;
-        WorldMapView::instance()->m_loadingIcon->setVisible(true);
-        WorldController::getInstance()->setisAsyEnd(false);
+        WORLD_MAP_VIEW->m_loadingIcon->setVisible(true);
+        WORLD_CONTROLLER->setisAsyEnd(false);
 #endif
     }
     
 }
 
 void DynamicTiledMap::updateDynamicMap(CCPoint point) {
-    if (!WorldMapView::instance()) {
+    if (!WORLD_MAP_VIEW) {
         return;
     }
     if(GlobalData::shared()->playerInfo.uid == ""){
@@ -411,17 +414,20 @@ void DynamicTiledMap::updateDynamicMap(CCPoint point) {
     if (point.x < 0 || point.y < 0) {
         point = currentTilePoint;
         type = 0;
-        CCPoint serverViewPoint =  WorldController::getInstance()->getServerViewPosByPos(WorldController::getInstance()->getServerPosById(GlobalData::shared()->playerInfo.currentServerId));
-        if(WorldController::getInstance()->currentMapType == SERVERFIGHT_MAP){
+        CCPoint serverViewPoint =  WORLD_CONTROLLER->getServerViewPosByPos(WORLD_CONTROLLER->getServerPosById(GlobalData::shared()->playerInfo.currentServerId));
+        if(WORLD_CONTROLLER->currentMapType == SERVERFIGHT_MAP){
             serverViewPoint = ccp(0, 0);
         }
         
         updateMap(currentTilePoint, serverViewPoint);
         auto node = this->getChildByTag(WM_BETWEEN_SERVER_MAP_TAG);
-        if(node){
+        if(node)
+        {
             auto map = dynamic_cast<DynamicTiledMap*>(node->getChildByTag(WM_BETWEEN_SERVER_MAP_TAG));
-            if(map){
+            if (map)
+            {
                 map->updateMap(currentTilePoint, serverViewPoint);
+                updateOctopus();
             }
         }
         
@@ -439,9 +445,9 @@ void DynamicTiledMap::updateDynamicMap(CCPoint point) {
         return;
     }
     // do other update request here
-    WorldMapView::instance()->m_updateTimeStamp = time(NULL);
-    int limitX = WorldController::getInstance()->_current_tile_count_x;
-    int limitY = WorldController::getInstance()->_current_tile_count_y;
+    WORLD_MAP_VIEW->m_updateTimeStamp = time(NULL);
+    int limitX = WORLD_CONTROLLER->_current_tile_count_x;
+    int limitY = WORLD_CONTROLLER->_current_tile_count_y;
     if (point.x < 0) {
         point.x = 0;
     }
@@ -454,27 +460,151 @@ void DynamicTiledMap::updateDynamicMap(CCPoint point) {
     if (point.y > limitY - 1) {
         point.y = limitY - 1;
     }
-    auto cmd = new WorldCommand(point,WorldMapView::instance()->m_updateTimeStamp,type);
+    auto cmd = new WorldCommand(point,WORLD_MAP_VIEW->m_updateTimeStamp,type);
     int cmdSid = cmd->getServerId();
-    bool isNormalMap =    WorldController::getInstance()->currentMapType == NORMAL_MAP ? true :false;
+    bool isNormalMap =    WORLD_CONTROLLER->currentMapType == NORMAL_MAP ? true :false;
     if(cmdSid != 0){
         if (isNormalMap && GlobalData::shared()->serverMax < cmdSid) {
-            WorldController::getInstance()->setisAsyEnd(true);
+            WORLD_CONTROLLER->setisAsyEnd(true);
             return;
         }
         cmd->sendAndRelease();
         isSendCmd = true;
         if (type == 0) {
-            WorldMapView::instance()->m_loadingIcon->setVisible(true);
+            WORLD_MAP_VIEW->m_loadingIcon->setVisible(true);
         }
     }
     else{
-        WorldController::getInstance()->setisAsyEnd(true);
+        WORLD_CONTROLLER->setisAsyEnd(true);
 #if COCOS2D_DEBUG == 2
         cmd->sendAndRelease();
         isSendCmd = true;
-        WorldMapView::instance()->m_loadingIcon->setVisible(true);
-        WorldController::getInstance()->setisAsyEnd(false);
+        WORLD_MAP_VIEW->m_loadingIcon->setVisible(true);
+        WORLD_CONTROLLER->setisAsyEnd(false);
 #endif
     }
+}
+
+void DynamicTiledMap::updateOctopus()
+{
+    static const int SEA_MONSTER_AREA_X = 5;
+    static const int SEA_MONSTER_AREA_Y = 10;
+    static const int SEA_MONSTER_TAG = WM_BETWEEN_SERVER_MAP_TAG + 1;
+    static const int SEA_MONSTER_GZ = -2;
+    
+    srand((unsigned int)time(0));
+    int random_variable = rand() % 100;
+    if (random_variable > 75) return;
+    
+    bool isX = abs(currentTilePoint.x - _tile_count_x) <= SEA_MONSTER_AREA_X;
+    bool isY = abs(currentTilePoint.y - _tile_count_y) <= SEA_MONSTER_AREA_Y;
+    if (!isX && !isY)
+    {
+        return;
+    }
+    
+    int tx = _tile_count_x + 2;
+    int ty = _tile_count_y + 2;
+    float sx = 2 + rand() % 4;
+    float sy = sx;
+    float speedx = -10;
+    float speedy = 5;
+    float speedScale = 1.2;
+    if (isX && !isY)
+    {
+        int random_variable = rand() % 100;
+        ty = currentTilePoint.y + (rand() % 2) * (random_variable > 50 ? 1 : -1);
+        
+        random_variable = rand() % 100;
+        if (random_variable > 50)
+        {
+            tx = _tile_count_x + 1;
+            sx *= 1;
+            sy *= -1;
+            
+            speedx *= speedScale;
+            speedy *= -speedScale;
+        }
+        else
+        {
+            tx = _tile_count_x + 2;
+            sx *= -1;
+            sy *= 1;
+            
+            speedx *= -speedScale;
+            speedy *= speedScale;
+        }
+    }
+    else if (!isX && isY)
+    {
+        int random_variable = rand() % 100;
+        tx = currentTilePoint.x + (rand() % 2) * (random_variable > 50 ? 1 : -1);
+        
+        random_variable = rand() % 100;
+        if (random_variable > 50)
+        {
+            ty = _tile_count_y + 1;
+            sx *= -1;
+            sy *= -1;
+            
+            speedx *= -speedScale;
+            speedy *= -speedScale;
+        }
+        else
+        {
+            ty = _tile_count_y + 2;
+            sx *= 1;
+            sy *= 1;
+            
+            speedx *= speedScale;
+            speedy *= speedScale;
+        }
+    }
+    int random_offset_y = 128 / 2 + rand() % 30;
+    
+    auto fPos = WORLD_MAP_VIEW->m_map->getViewPointByTilePoint(Vec2(tx, ty));
+    auto mSprite_pos = fPos;
+    auto spriteCache = SpriteFrameCache::getInstance();
+    spriteCache->addSpriteFramesWithFile("World/World_5.plist");
+    auto mSprite = Sprite::createWithSpriteFrameName("anima_sea_monster_01.png");
+    mSprite->setGlobalZOrder(-1.5);
+    mSprite->setScaleX(sx);
+    mSprite->setScaleY(sy);
+    mSprite->setPosition(mSprite_pos.x, mSprite_pos.y + random_offset_y);
+    mSprite->setTag(SEA_MONSTER_TAG);
+    WORLD_MAP_VIEW->m_layers[WM_BETWEEN_SERVER_MAP]->addChild(mSprite);
+    
+    Vector<SpriteFrame*> vsp;
+    for (int i = 1; i <= 8; i++)
+    {
+        String *string = String::createWithFormat("anima_sea_monster_0%d.png", i);
+        SpriteFrame *spfr = spriteCache->getSpriteFrameByName(string->getCString());
+        vsp.pushBack(spfr);
+    }
+    Animation *animation = Animation::createWithSpriteFrames(vsp, 0.1);
+    Animate *animate = Animate::create(animation);
+    auto *ac1 = RepeatForever::create(animate);
+    
+    //
+    
+    int showTime = 12 + rand() % 8;
+    auto delay1 = DelayTime::create(showTime);
+    auto cb = CallFunc::create([mSprite](){
+        mSprite->removeFromParent();
+    });
+    auto se1 = Sequence::create(delay1, cb, NULL);
+    
+    auto delay2 = DelayTime::create(showTime - 1);
+    auto alpha = FadeOut::create(1);
+    auto se2 = Sequence::create(delay2, alpha, NULL);
+    
+    auto sp = Spawn::create(se1, se2, NULL);
+    
+    //
+    auto spawn = Spawn::create(ac1, sp, NULL);
+    mSprite->runAction(spawn);
+    mSprite->schedule([mSprite, speedx, speedy](float dt){
+        mSprite->setPositionX(mSprite->getPositionX() + dt * speedx);
+        mSprite->setPositionY(mSprite->getPositionY() + dt * speedy);
+    }, "move");
 }

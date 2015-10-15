@@ -437,6 +437,7 @@ private:
     
     void update_water_shader();
     
+    friend class DynamicTiledMap;
     friend class NBWorldMonster;
 };
 
