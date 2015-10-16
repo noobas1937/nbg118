@@ -22,6 +22,8 @@ class ProductionSoldiersView: public PopupBaseView
 ,public CCBSelectorResolver
 ,public CCBMemberVariableAssigner
 ,public CCEditBoxDelegate
+,public CCGalleryDelegate
+
 //,public CCTouchDelegate
 {
 public:
@@ -32,6 +34,12 @@ public:
     virtual void editBoxTextChanged(CCEditBox* editBox, const std::string& text);
     CCNode* getGuideNode(string _key);
     virtual void update(float time);
+    
+public:
+    virtual void slideBegan(CCGallery *gallery);
+    virtual void slideEnded(CCGallery *gallery, CCGalleryItem *pGItem);
+    virtual void selectionChanged(CCGallery *gallery, CCGalleryItem *pGItem);
+    virtual void selectionDecided(CCGallery *gallery, CCGalleryItem *pGItem);
 protected:
     
     virtual bool onTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
@@ -84,6 +92,7 @@ private:
     void writeLastGoldBuyCount(int count);
     int getLastGoldBuyCount(int defCount);
     
+    void refreshGalleryCells();
     
     void ClearCD();
     
@@ -96,6 +105,7 @@ private:
     CCSafeObject<CCControlButton> m_trainBtn;
     CCSafeObject<CCControlButton> m_infoBtn;
     CCSafeObject<CCNode> m_arcNode;
+    CCSafeObject<CCLayer> m_arcLayer;
     CCSafeObject<CCNode> m_resNode;
     CCSafeObject<CCLabelIF> m_numTxt;
     CCSafeObject<CCLabelIF> m_numValueTxt;
@@ -119,6 +129,10 @@ private:
 //    CCSafeObject<ArmyInfo> m_info;
 //    ArmyInfo* m_info;
 //    CCSafeObject<CCArray> m_armys;
+    
+    CCSafeObject<CCGallery> m_ArcGallery;
+    int m_lastGalleryIndex;
+    int m_curGalleryIndex;
     
     string m_armyId;
     vector<string> m_armyIds;

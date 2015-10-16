@@ -41,7 +41,7 @@ bool TitanInView::init()
     renderTexture->addChild(titanParent);
     titanParent->setRotation3D(Vec3(10, 0, 0));
     m_titanPos->addChild(renderTexture);
-    m_Titan->changeTitanState(Titan::eActState::Stand);
+//    m_Titan->changeTitanState(Titan::eActState::Stand);
     //end a by ljf
     return true;
     
