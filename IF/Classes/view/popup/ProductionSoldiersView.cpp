@@ -194,7 +194,7 @@ bool ProductionSoldiersView::init()
     }
     if (!CCCommonUtils::isIosAndroidPad()){
         m_arcNode->setPosition(ccp(m_arcNode->getPositionX()-40, m_arcNode->getPositionY()+add/2));
-//        m_soldierNode->setPosition(ccp(m_soldierNode->getPositionX(), m_soldierNode->getPositionY()+add/2));
+        m_soldierNode->setPosition(ccp(m_soldierNode->getPositionX(), m_soldierNode->getPositionY()+add/2));
     }
     if(m_isFort){
         m_btnTitle1->setString(_lang("102128").c_str());
@@ -323,7 +323,7 @@ void ProductionSoldiersView::addSoldierIcon(){
     {
         pos = ccp(0,120);
     }
-    
+    pos = ccp(0,0);//fusheng 士兵不需要偏移
     if(!m_isFort){
         CCLoadSprite::doResourceByCommonIndex(m_resIndex, true);
     }
@@ -465,6 +465,7 @@ void ProductionSoldiersView::refresh(CCObject* p){
     }
     if(m_info==NULL){
         m_makeResNode->setVisible(false);
+        m_resBGNode->setVisible(false);
         m_bottomNode->setVisible(false);
         m_numValueTxt->setString("0");
         return ;
@@ -472,6 +473,7 @@ void ProductionSoldiersView::refresh(CCObject* p){
     if(m_info!=NULL && m_buildingLevel<m_info->unlockLevel){
         m_lockTxt->setString(_lang_2("102119", _lang(m_buildingName).c_str(), CC_ITOA(m_info->unlockLevel)));
         m_makeResNode->setVisible(false);
+        m_resBGNode->setVisible(false);
         m_bottomNode->setVisible(false);
         m_numValueTxt->setString("0");
         this->addSoldierIcon();
@@ -489,6 +491,7 @@ void ProductionSoldiersView::refresh(CCObject* p){
         }
     }
     m_makeResNode->setVisible(true);
+    m_resBGNode->setVisible(true);
     m_bottomNode->setVisible(true);
     m_sliderNode->setVisible(true);
     m_lockTxt->setString("");
@@ -1285,6 +1288,8 @@ bool ProductionSoldiersView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarg
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_arcNode", CCNode*, this->m_arcNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_arcLayer", CCLayer*, this->m_arcLayer);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_resNode", CCNode*, this->m_resNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_resBGNode", CCNode*, this->m_resBGNode);
+    
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_numTxt", CCLabelIF*, this->m_numTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_numValueTxt", CCLabelIF*, this->m_numValueTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_woodTxt", CCLabelIF*, this->m_woodTxt);

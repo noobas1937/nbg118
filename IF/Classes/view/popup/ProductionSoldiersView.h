@@ -124,6 +124,7 @@ private:
     CCSafeObject<CCLabelIF> m_btnUseGoldTxt;
     CCSafeObject<CCLabelIF> m_btnTitle2;
     CCSafeObject<CCNode> m_useEditNode;
+    CCSafeObject<CCNode> m_resBGNode;
     CCSafeObject<CCEditBox> m_useEditTxt;
 //    CCSafeObject<ArmyInfo> m_info;
 //    ArmyInfo* m_info;

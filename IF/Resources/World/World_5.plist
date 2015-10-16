@@ -7,7 +7,7 @@
             <key>anima_bird_01.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,4},{58,39}}</string>
+                <string>{{358,259},{58,39}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -20,7 +20,7 @@
             <key>anima_bird_02.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{68,4},{58,39}}</string>
+                <string>{{294,229},{58,39}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -33,7 +33,7 @@
             <key>anima_bird_03.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{132,4},{58,39}}</string>
+                <string>{{230,229},{58,39}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -46,7 +46,7 @@
             <key>anima_bird_04.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{196,4},{58,39}}</string>
+                <string>{{415,139},{58,39}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -59,7 +59,7 @@
             <key>anima_bird_05.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{260,4},{58,39}}</string>
+                <string>{{415,94},{58,39}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -72,7 +72,7 @@
             <key>anima_bird_06.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{324,4},{58,39}}</string>
+                <string>{{415,49},{58,39}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -85,7 +85,7 @@
             <key>anima_bird_07.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{388,4},{58,39}}</string>
+                <string>{{415,4},{58,39}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -98,7 +98,7 @@
             <key>anima_bird_08.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,49},{58,39}}</string>
+                <string>{{189,154},{58,39}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -111,7 +111,7 @@
             <key>anima_sea_monster_01.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{68,49},{107,69}}</string>
+                <string>{{366,184},{107,69}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -124,7 +124,7 @@
             <key>anima_sea_monster_02.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{181,49},{107,69}}</string>
+                <string>{{253,154},{107,69}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -137,7 +137,7 @@
             <key>anima_sea_monster_03.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{294,49},{107,69}}</string>
+                <string>{{302,79},{107,69}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -150,7 +150,7 @@
             <key>anima_sea_monster_04.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,124},{107,69}}</string>
+                <string>{{302,4},{107,69}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -163,7 +163,7 @@
             <key>anima_sea_monster_05.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{117,124},{107,69}}</string>
+                <string>{{189,79},{107,69}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -176,7 +176,7 @@
             <key>anima_sea_monster_06.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{230,124},{107,69}}</string>
+                <string>{{189,4},{107,69}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -189,7 +189,7 @@
             <key>anima_sea_monster_07.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{343,124},{107,69}}</string>
+                <string>{{117,432},{107,69}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -202,7 +202,7 @@
             <key>anima_sea_monster_08.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,199},{107,69}}</string>
+                <string>{{4,432},{107,69}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -211,6 +211,32 @@
                 <string>{{0,0},{107,69}}</string>
                 <key>sourceSize</key>
                 <string>{107,69}</string>
+            </dict>
+            <key>nb_octopus_01.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{4,4},{179,212}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{179,212}}</string>
+                <key>sourceSize</key>
+                <string>{179,212}</string>
+            </dict>
+            <key>nb_octopus_02.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{4,222},{184,204}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{184,204}}</string>
+                <key>sourceSize</key>
+                <string>{184,204}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -222,7 +248,7 @@
             <key>size</key>
             <string>{512,512}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:03fb85ee06906539fa020cde7a9ecdfb:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:a782f20f65b9aa1f093334763b6e3483:1/1$</string>
             <key>textureFileName</key>
             <string>World_5.pvr.ccz</string>
         </dict>

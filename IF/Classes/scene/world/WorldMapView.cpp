@@ -380,6 +380,8 @@ bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType) {
     
     m_mapMonsterNode = IFSkeletonBatchLayer::create();
     m_layers[WM_CITY]->addChild(m_mapMonsterNode, 13);
+    m_mapMonstersNode = Node::create();
+    m_layers[WM_CITY]->addChild(m_mapMonstersNode, 13);
     
     //    m_mapMonsterBossNode = IFSkeletonBatchLayer::create();
     //    m_layers[WM_CITY]->addChild(m_mapMonsterBossNode, 12);
@@ -3791,6 +3793,7 @@ void WorldMapView::update(float delta) {
         WorldMapView::instance()->m_simNameUnbatchNode->removeAllChildren();
         WorldMapView::instance()->m_aAreaUnbachLbNode->removeAllChildren();
         WorldMapView::instance()->m_mapMonsterNode->removeAllChildren();
+        WorldMapView::instance()->m_mapMonstersNode->removeAllChildren();
         WorldMapView::instance()->m_mapMonsterShadowNode->removeAllChildren();
         WorldMapView::instance()->m_lianNode->removeAllChildren();
         WorldMapView::instance()->m_csNode->removeAllChildren();
@@ -6582,6 +6585,11 @@ void WorldMapView::delBatchItem(BatchTagType type, unsigned int index) {
     if (monster) {
         monster->removeFromParentAndCleanup(true);
     }
+    // guo.jiang
+    monster = m_mapMonstersNode->getChildByTag(getBatchTag(type, index));
+    if (monster) {
+        monster->removeFromParentAndCleanup(true);
+    }
 }
 
 std::map<int, unsigned int> WorldMapView::getCurrentTile(CCPoint &pt, int rowNum, int colNum, int tileX){
@@ -6827,35 +6835,35 @@ void WorldMapView::onShowAndHideCloud(){
     }
 }
 void WorldMapView::showAndHideFieldMonster(){return;
-    int index = 0;
-    auto arr = m_mapMonsterNode->getChildren();
-    while (index < arr.size())
-    {
-        IFFieldMonsterNode* monsterNode = dynamic_cast<IFFieldMonsterNode*>(arr.at(index));
-        if(monsterNode && monsterNode->getParent())
-        {
-            CCPoint p = monsterNode->getPosition();
-            CCPoint p2 = monsterNode->getParent()->convertToWorldSpace(p);
-            auto size = CCDirector::sharedDirector()->getWinSize();
-            if(p2.x < -_tile_width || p2.x > size.width + _tile_width || p2.y < -_tile_height || p2.y > size.height + _tile_height){
-                monsterNode->setVisible(false);
-            }else{
-                monsterNode->setVisible(true);
-            }
-            //            m_monsterRect.origin.x = monsterNode->getPositionX()-_tile_width/2;
-            //            m_monsterRect.origin.y = monsterNode->getPositionY()-_tile_height/2;
-            //            m_monsterRect.size = CCSize(_tile_width, _tile_height*2);
-            //            if(m_viewPort.intersectsRect(m_monsterRect))
-            //            {
-            //                monsterNode->setVisible(true);
-            //            }
-            //            else
-            //            {
-            //                monsterNode->setVisible(false);
-            //            }
-        }
-        index++;
-    }
+//    int index = 0;
+//    auto arr = m_mapMonsterNode->getChildren();
+//    while (index < arr.size())
+//    {
+//        IFFieldMonsterNode* monsterNode = dynamic_cast<IFFieldMonsterNode*>(arr.at(index));
+//        if(monsterNode && monsterNode->getParent())
+//        {
+//            CCPoint p = monsterNode->getPosition();
+//            CCPoint p2 = monsterNode->getParent()->convertToWorldSpace(p);
+//            auto size = CCDirector::sharedDirector()->getWinSize();
+//            if(p2.x < -_tile_width || p2.x > size.width + _tile_width || p2.y < -_tile_height || p2.y > size.height + _tile_height){
+//                monsterNode->setVisible(false);
+//            }else{
+//                monsterNode->setVisible(true);
+//            }
+//            //            m_monsterRect.origin.x = monsterNode->getPositionX()-_tile_width/2;
+//            //            m_monsterRect.origin.y = monsterNode->getPositionY()-_tile_height/2;
+//            //            m_monsterRect.size = CCSize(_tile_width, _tile_height*2);
+//            //            if(m_viewPort.intersectsRect(m_monsterRect))
+//            //            {
+//            //                monsterNode->setVisible(true);
+//            //            }
+//            //            else
+//            //            {
+//            //                monsterNode->setVisible(false);
+//            //            }
+//        }
+//        index++;
+//    }
 }
 
 void addIsland4City(int x, int y, int startIndex, int addIndex, CCDictionary& dict) {
