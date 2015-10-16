@@ -824,13 +824,21 @@
 								<array>
 									<dict>
 										<key>name</key>
+										<string>visible</string>
+										<key>type</key>
+										<string>Check</string>
+										<key>value</key>
+										<false/>
+									</dict>
+									<dict>
+										<key>name</key>
 										<string>position</string>
 										<key>type</key>
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>193</real>
-											<real>-221</real>
+											<real>547</real>
+											<real>-132</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -899,6 +907,8 @@
 										</array>
 									</dict>
 								</array>
+								<key>selected</key>
+								<true/>
 								<key>seqExpanded</key>
 								<true/>
 							</dict>
