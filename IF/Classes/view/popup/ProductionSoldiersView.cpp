@@ -763,7 +763,7 @@ void ProductionSoldiersView::onEnter(){
 void ProductionSoldiersView::AsyLoadRes2(CCObject* p){
     if(m_arcScroll==NULL){
         
-        m_ArcGallery = CCGallery::create(Size(200,230),Size(640,230));
+        m_ArcGallery = CCGallery::create(Size(200,215),Size(640,230));
         m_ArcGallery->setBackScale(0.9);
         m_ArcGallery->setDelegate(this);
         m_ArcGallery->setDirection(kCCGalleryDirectionHorizontal);
@@ -1403,6 +1403,10 @@ void ProductionSoldiersView::ClearCD()
 
 void ProductionSoldiersView::refreshGalleryCells()
 {
+    if (m_lastGalleryIndex == m_curGalleryIndex)
+    {
+        return;
+    }
     for(int i=0;i<m_armyIds.size();i++){
         int resIndex = m_resIndex;
         ArmyInfo aInfo;
@@ -1429,15 +1433,6 @@ void ProductionSoldiersView::refreshGalleryCells()
         auto pItemCCBNode = static_cast<ArcGalleryCell*>(pItem->getChildByTag(1));
         if (!pItemCCBNode) {
             return;
-        }
-        if (i == m_lastGalleryIndex) {
-            
-        }
-        else if (i == m_curGalleryIndex) {
-            
-        }
-        else {
-            
         }
 //        m_lockIcon = NULL;
         CCLoadSprite::doResourceByCommonIndex(resIndex, true);
@@ -1470,8 +1465,8 @@ void ProductionSoldiersView::refreshGalleryCells()
         }else{
             CCCommonUtils::setSpriteGray(pItemCCBNode->m_button, false);
             if (i == m_lastGalleryIndex) {
-                pItemCCBNode->m_button->setColor(Color3B(200,0,0));
-                pItemCCBNode->m_icon->setColor(Color3B(200,0,0));
+                pItemCCBNode->m_button->setColor(Color3B(127,127,127));
+                pItemCCBNode->m_icon->setColor(Color3B(127,127,127));
             }
             else if (i == m_curGalleryIndex) {
                 pItemCCBNode->m_button->setColor(Color3B(255,255,255));
@@ -1481,7 +1476,7 @@ void ProductionSoldiersView::refreshGalleryCells()
             pItemCCBNode->m_txtNode->setVisible(true);
         }
         
-        CCCommonUtils::setSpriteMaxSize(pItemCCBNode->m_icon, 150, true);
+//        CCCommonUtils::setSpriteMaxSize(pItemCCBNode->m_icon, 150, true);
         pItemCCBNode->m_icon->setPosition(ccp(84,120));
         pItemCCBNode->m_button->addChild(pItemCCBNode->m_icon,1000);
         

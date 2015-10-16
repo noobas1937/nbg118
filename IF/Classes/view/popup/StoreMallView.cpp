@@ -31,6 +31,7 @@
 #include "SceneController.h"
 #include "StoreView.h"
 #include "YesNoDialog.h"
+#include "CCGallery.h"
 
 static int advertiseCellW = 540;
 
@@ -50,13 +51,13 @@ bool StoreMallView::init()
     auto bg = CCBLoadFile("StoreMallView",this,this);
     setContentSize(bg->getContentSize());
     auto size = CCDirector::sharedDirector()->getWinSize();
-    float dh = size.height-852-8;
+    float dh = size.height-170-130;
     if (CCCommonUtils::isIosAndroidPad())
     {
         advertiseCellW = 1450;
         dh = size.height-2048;
     }
-    m_infoList->setContentSize(CCSize(m_infoList->getContentSize().width, m_infoList->getContentSize().height+dh));
+    m_infoList->setContentSize(CCSize(m_infoList->getContentSize().width,dh));
     m_data = CCArray::create();
     m_tabView = CCTableView::create(this, m_infoList->getContentSize());
     m_tabView->setDirection(kCCScrollViewDirectionVertical);
@@ -66,17 +67,25 @@ bool StoreMallView::init()
     m_infoList->addChild(m_tabView);
     m_cityLv = FunBuildController::getInstance()->getMainCityLv();
     
-    CCCommonUtils::setButtonTitle(m_buffBtn, _lang("104953").c_str());
-    CCCommonUtils::setButtonTitle(m_warBtn, _lang("104902").c_str());
-    CCCommonUtils::setButtonTitle(m_resBtn, _lang("104904").c_str());
-    CCCommonUtils::setButtonTitle(m_othBtn, _lang("104905").c_str());
-    CCCommonUtils::setButtonTitle(m_hotBtn, _lang("101224").c_str());
-    m_startPoint1 = m_buffBtn->getTitleLabel()->getPosition();
-    m_startPoint2 = m_warBtn->getTitleLabel()->getPosition();
-    m_startPoint3 = m_resBtn->getTitleLabel()->getPosition();
-    m_startPoint4 = m_othBtn->getTitleLabel()->getPosition();
-    m_startPoint5 = m_hotBtn->getTitleLabel()->getPosition();
-    m_btnPartNode->setPositionY(m_btnPartNode->getPositionY()+20);
+    m_mallGallery = CCGallery::create(Size(232,130), Size(640,130));
+    m_mallGallery->setBackScale(0.9);
+    for (int i = 0; i < 5; i++) {
+        Node* node = Node::create();
+        auto spr = CCLoadSprite::createSprite((std::string("shop_bn_")+ CC_ITOA(i+1) + ".png").c_str());
+        node->addChild(spr);
+        m_mallGallery->addChild(node);
+    }
+    m_mallGallery->addChildFinish();
+    m_mallGallery->setDelegate(this);
+    m_galleryLayer->addChild(m_mallGallery);
+//    int layerposY = size.height - 170 -130 - 852/2;
+//    m_galleryLayer->setPositionY(layerposY);
+//    CCCommonUtils::setButtonTitle(m_buffBtn, _lang("104953").c_str());
+//    CCCommonUtils::setButtonTitle(m_warBtn, _lang("104902").c_str());
+//    CCCommonUtils::setButtonTitle(m_resBtn, _lang("104904").c_str());
+//    CCCommonUtils::setButtonTitle(m_othBtn, _lang("104905").c_str());
+//    CCCommonUtils::setButtonTitle(m_hotBtn, _lang("101224").c_str());
+//    m_btnPartNode->setPositionY(m_btnPartNode->getPositionY()+20);
 //    int count = (size.height-170)/44+1; //fusheng 不使用这些图片拼背景
 //    for (int i=0; i<count; i++) {
 //        auto spr = CCLoadSprite::createSprite("Items_bg_big.png");
@@ -97,22 +106,22 @@ bool StoreMallView::init()
 void StoreMallView::onEnter(){
     
     CCNode::onEnter();
-    m_leftNode->removeAllChildren();
-    m_rightNode->removeAllChildren();
-    auto particle = ParticleController::createParticle("UICandle_1");
-    auto particle1 = ParticleController::createParticle("UICandle_2");
-    particle->setPosition(0, 30);
-    m_leftNode->addChild(particle);
-    m_leftNode->addChild(particle1);
-    particle1->setPosition(0, 30);
-    
-    auto particle2 = ParticleController::createParticle("UICandle_1");
-    auto particle3 = ParticleController::createParticle("UICandle_2");
-    particle->setPosition(0, 0);
-    m_rightNode->addChild(particle2);
-    m_rightNode->addChild(particle3);
-    particle2->setPosition(0, 30);
-    particle3->setPosition(0, 30);
+//    m_leftNode->removeAllChildren();
+//    m_rightNode->removeAllChildren();
+//    auto particle = ParticleController::createParticle("UICandle_1");
+//    auto particle1 = ParticleController::createParticle("UICandle_2");
+//    particle->setPosition(0, 30);
+//    m_leftNode->addChild(particle);
+//    m_leftNode->addChild(particle1);
+//    particle1->setPosition(0, 30);
+//    
+//    auto particle2 = ParticleController::createParticle("UICandle_1");
+//    auto particle3 = ParticleController::createParticle("UICandle_2");
+//    particle->setPosition(0, 0);
+//    m_rightNode->addChild(particle2);
+//    m_rightNode->addChild(particle3);
+//    particle2->setPosition(0, 30);
+//    particle3->setPosition(0, 30);
     setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
     setTouchEnabled(true);
 
@@ -235,50 +244,36 @@ string StoreMallView::getTimeStr(int secs){
 void StoreMallView::generateData(){
     m_data->removeAllObjects();
     m_dataList = NULL;
-    m_warBtn->setEnabled(true);
-    m_buffBtn->setEnabled(true);
-    m_resBtn->setEnabled(true);
-    m_othBtn->setEnabled(true);
-    m_hotBtn->setEnabled(true);
-    CCCommonUtils::setButtonTitlePoint(m_buffBtn,m_startPoint1);
-    CCCommonUtils::setButtonTitlePoint(m_warBtn,m_startPoint2);
-    CCCommonUtils::setButtonTitlePoint(m_resBtn,m_startPoint3);
-    CCCommonUtils::setButtonTitlePoint(m_othBtn,m_startPoint4);
-    CCCommonUtils::setButtonTitlePoint(m_hotBtn,m_startPoint5);
+//    m_warBtn->setEnabled(true);
+//    m_buffBtn->setEnabled(true);
+//    m_resBtn->setEnabled(true);
+//    m_othBtn->setEnabled(true);
+//    m_hotBtn->setEnabled(true);
+//    CCCommonUtils::setButtonTitlePoint(m_buffBtn,m_startPoint1);
+//    CCCommonUtils::setButtonTitlePoint(m_warBtn,m_startPoint2);
+//    CCCommonUtils::setButtonTitlePoint(m_resBtn,m_startPoint3);
+//    CCCommonUtils::setButtonTitlePoint(m_othBtn,m_startPoint4);
+//    CCCommonUtils::setButtonTitlePoint(m_hotBtn,m_startPoint5);
 
     if (m_page == 1) {
-//        m_dataList = &(ToolController::getInstance()->m_allTools);
         m_dataList = &ToolController::getInstance()->m_warList;
-        m_warBtn->setEnabled(false);
         m_timeNode->setVisible(false);
-        CCCommonUtils::setButtonTitlePoint(m_warBtn,ccp(m_startPoint2.x, m_startPoint2.y-5));
     }
     else if (m_page == 2) {
-//        m_dataList = &(ToolController::getInstance()->m_allTools);
         m_dataList = &ToolController::getInstance()->m_buffList;
-        m_buffBtn->setEnabled(false);
         m_timeNode->setVisible(false);
-        CCCommonUtils::setButtonTitlePoint(m_buffBtn,ccp(m_startPoint1.x, m_startPoint1.y-5));
     }
     else if (m_page == 3) {
-//        m_dataList = &(ToolController::getInstance()->m_allTools);
         m_dataList = &ToolController::getInstance()->m_resList;
-        m_resBtn->setEnabled(false);
         m_timeNode->setVisible(false);
-        CCCommonUtils::setButtonTitlePoint(m_resBtn,ccp(m_startPoint3.x, m_startPoint3.y-5));
     }
     else if (m_page == 4) {
-//        m_dataList = &(ToolController::getInstance()->m_resTools);
         m_dataList = &ToolController::getInstance()->m_otherList;
-        m_othBtn->setEnabled(false);
         m_timeNode->setVisible(false);
-        CCCommonUtils::setButtonTitlePoint(m_othBtn,ccp(m_startPoint4.x, m_startPoint4.y-5));
     }
     else if (m_page == 5) {
         m_dataList = &ToolController::getInstance()->m_hotList;
-        m_hotBtn->setEnabled(false);
         m_timeNode->setVisible(false);
-        CCCommonUtils::setButtonTitlePoint(m_hotBtn,ccp(m_startPoint5.x, m_startPoint5.y-5));
     }
     
     m_curList.clear();
@@ -335,116 +330,78 @@ void StoreMallView::sortDataByOrderNum(){
 }
 
 void StoreMallView::refreshView(CCObject* obj){
-    if(m_page == 5){
-        m_sprHot->setVisible(false);
-    }else{
-        m_sprHot->setVisible(true);
-    }
+//    if(m_page == 5){
+//        m_sprHot->setVisible(false);
+//    }else{
+//        m_sprHot->setVisible(true);
+//    }
     generateData();
     m_tabView->reloadData();
 }
 
 SEL_CCControlHandler StoreMallView::onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName)
 {
-    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onClickWarBtn", StoreMallView::onClickWarBtn);
-    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onClickBuffBtn", StoreMallView::onClickBuffBtn);
-    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onClickResBtn", StoreMallView::onClickResBtn);
-    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onClickOthBtn", StoreMallView::onClickOthBtn);
-    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onClickHotBtn", StoreMallView::onClickHotBtn);
+//    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onClickWarBtn", StoreMallView::onClickWarBtn);
+//    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onClickBuffBtn", StoreMallView::onClickBuffBtn);
+//    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onClickResBtn", StoreMallView::onClickResBtn);
+//    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onClickOthBtn", StoreMallView::onClickOthBtn);
+//    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onClickHotBtn", StoreMallView::onClickHotBtn);
     return NULL;
 }
 
 bool StoreMallView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode)
 {
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_sprHot", CCSprite*, this->m_sprHot);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_warBtn", CCControlButton*, this->m_warBtn);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_buffBtn", CCControlButton*, this->m_buffBtn);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_resBtn", CCControlButton*, this->m_resBtn);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_othBtn", CCControlButton*, this->m_othBtn);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_hotBtn", CCControlButton*, this->m_hotBtn);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_sprHot", CCSprite*, this->m_sprHot);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_warBtn", CCControlButton*, this->m_warBtn);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_buffBtn", CCControlButton*, this->m_buffBtn);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_resBtn", CCControlButton*, this->m_resBtn);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_othBtn", CCControlButton*, this->m_othBtn);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_hotBtn", CCControlButton*, this->m_hotBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_infoList", CCNode*, this->m_infoList);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_leftNode", CCNode*, this->m_leftNode);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_rightNode", CCNode*, this->m_rightNode);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_btnPartNode", CCNode*, this->m_btnPartNode);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_leftNode", CCNode*, this->m_leftNode);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_rightNode", CCNode*, this->m_rightNode);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_btnPartNode", CCNode*, this->m_btnPartNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bgNode", CCNode*, this->m_bgNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_timeNode", CCNode*, this->m_timeNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_timeTitleText", CCLabelIF*, this->m_timeTitleText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_timeLeftText", CCLabelIF*, this->m_timeLeftText);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_galleryLayer", CCLayer*, this->m_galleryLayer);
     return false;
 }
 
 
-void StoreMallView::onClickWarBtn(CCObject * pSender, Control::EventType pCCControlEvent)
+void StoreMallView::onClickWarBtn()
 {
     if (m_page != 1) {
         m_page = 1;
-        CCPoint pos = m_warBtn->getPosition();
-        m_btnPartNode->setPosition(ccp(pos.x,pos.y+20));
-//        m_btnPartNode->setPositionX(-76);
-        m_btnPartNode->removeAllChildren();
-        auto particle = ParticleController::createParticle("DrawerSmoke_1");
-        auto particle1 = ParticleController::createParticle("DrawerSmoke_2");
-        m_btnPartNode->addChild(particle);
-        m_btnPartNode->addChild(particle1);
         refreshView(NULL);
     }
 }
 
-void StoreMallView::onClickBuffBtn(CCObject * pSender, Control::EventType pCCControlEvent)
+void StoreMallView::onClickBuffBtn()
 {
     if (m_page != 2) {
         m_page = 2;
-        CCPoint pos = m_buffBtn->getPosition();
-        m_btnPartNode->setPosition(ccp(pos.x,pos.y+20));
-//        m_btnPartNode->setPositionX(76);
-        m_btnPartNode->removeAllChildren();
-        auto particle = ParticleController::createParticle("DrawerSmoke_1");
-        auto particle1 = ParticleController::createParticle("DrawerSmoke_2");
-        m_btnPartNode->addChild(particle);
-        m_btnPartNode->addChild(particle1);
         refreshView(NULL);
     }
 }
 
-void StoreMallView::onClickResBtn(CCObject * pSender, Control::EventType pCCControlEvent)
+void StoreMallView::onClickResBtn()
 {
     if (m_page != 3) {
         m_page = 3;
-        CCPoint pos = m_resBtn->getPosition();
-        m_btnPartNode->setPosition(ccp(pos.x,pos.y+20));
-//        m_btnPartNode->setPositionX(-228);
-        m_btnPartNode->removeAllChildren();
-        auto particle = ParticleController::createParticle("DrawerSmoke_1");
-        auto particle1 = ParticleController::createParticle("DrawerSmoke_2");
-        m_btnPartNode->addChild(particle);
-        m_btnPartNode->addChild(particle1);
         refreshView(NULL);
     }
 }
-void StoreMallView::onClickOthBtn(CCObject * pSender, Control::EventType pCCControlEvent)
+void StoreMallView::onClickOthBtn()
 {
     if (m_page != 4) {
-        CCPoint pos = m_othBtn->getPosition();
-        m_btnPartNode->setPosition(ccp(pos.x,pos.y+20));
-//        m_btnPartNode->setPositionX(228);
-        m_btnPartNode->removeAllChildren();
-        auto particle = ParticleController::createParticle("DrawerSmoke_1");
-        auto particle1 = ParticleController::createParticle("DrawerSmoke_2");
-        m_btnPartNode->addChild(particle);
-        m_btnPartNode->addChild(particle1);
         m_page = 4;
         refreshView(NULL);
     }
 }
-void StoreMallView::onClickHotBtn(cocos2d::CCObject *pSender, Control::EventType pCCControlEvent){
+void StoreMallView::onClickHotBtn(){
     if(m_page != 5){
-        CCPoint pos = m_hotBtn->getPosition();
-        m_btnPartNode->setPosition(ccp(pos.x,pos.y+20));
-        m_btnPartNode->removeAllChildren();
-        auto particle = ParticleController::createParticle("DrawerSmoke_1");
-        auto particle1 = ParticleController::createParticle("DrawerSmoke_2");
-        m_btnPartNode->addChild(particle);
-        m_btnPartNode->addChild(particle1);
         m_page = 5;
         refreshView(NULL);
     }
@@ -488,6 +445,8 @@ CCSize StoreMallView::cellSizeForTable(CCTableView *table)
     return CCSize(advertiseCellW, 200);
 }
 
+
+
 CCTableViewCell* StoreMallView::tableCellAtIndex(CCTableView *table, ssize_t idx)
 {
     if(idx >= m_data->count()){
@@ -530,6 +489,52 @@ void StoreMallView::scrollViewDidScroll(CCScrollView* view){
         m_tabView->setContentOffset(ccp(0, mindy));
     }
 }
+
+
+
+
+void StoreMallView::slideBegan(CCGallery *gallery)
+{
+    
+}
+
+void StoreMallView::slideEnded(CCGallery *gallery, CCGalleryItem *pGItem)
+{
+    
+}
+
+void StoreMallView::selectionChanged(CCGallery *gallery, CCGalleryItem *pGItem)
+{
+    int idx = pGItem->getIdx();
+    switch (idx) {
+        case 0:
+            onClickHotBtn();
+            break;
+        case 1:
+            onClickResBtn();
+            break;
+        case 2:
+            onClickWarBtn();
+            break;
+        case 3:
+            onClickBuffBtn();
+            break;
+        case 4:
+            onClickOthBtn();
+            break;
+        default:
+            break;
+    }
+    
+}
+
+void StoreMallView::selectionDecided(CCGallery *gallery, CCGalleryItem *pGItem)
+{
+    
+}
+
+
+// ====================
 
 //class cell
 StoreMallCell::StoreMallCell():m_itemId(0),m_itemId1(0),m_price(0),m_boostBid(0),m_touchNode(NULL),m_isClick(false){
@@ -1050,3 +1055,4 @@ void StoreMallCell::setRightHot(bool ishot,int num){
         m_priceLabel2->setPositionY(0);
     }
 }
+

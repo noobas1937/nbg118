@@ -387,8 +387,8 @@ void Titan::stand()
         auto animInfo = getAnimationByType(eActState::Stand);
         auto animation3d = Animation3D::create(animInfo->animationName);
         if (animation3d) {
-            //            pAnim = Animate3D::create(animation3d);
-            pAnim = Animate3D::createWithFrames(animation3d, animInfo->startFrame, animInfo->endFrame);
+            pAnim = Animate3D::create(animation3d);
+//            pAnim = Animate3D::createWithFrames(animation3d, animInfo->startFrame, animInfo->endFrame);
             pAnim->retain();
             _actionCache.insert(std::map<eActState,Animate3D*>::value_type(eActState::Stand,pAnim));
         }

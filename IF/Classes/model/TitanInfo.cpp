@@ -49,7 +49,7 @@ int TitanInfo::resetTitanInfo(CCDictionary* dict)//0没有改变 1数值改变(�
             dataStatus |= TITANVALUECHANGE;
             level = newLevel;
             tid = 60000 + level;
-            auto temp = dynamic_cast<CCDictionary*>(LocalController::shared()->DBXMLManager()->getGroupByKey("item_titan")->objectForKey(CCString::createWithFormat("%d", tid)->getCString()));
+            auto temp = dynamic_cast<CCDictionary*>(LocalController::shared()->DBXMLManager()->getGroupByKey("titan")->objectForKey(CCString::createWithFormat("%d", tid)->getCString()));
             if(temp)
             {
                 feedFoodNum = temp->valueForKey("needfood")->intValue();
