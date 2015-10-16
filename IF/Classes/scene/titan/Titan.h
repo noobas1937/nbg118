@@ -14,15 +14,25 @@
 #include "DrawNode3D.h"
 USING_NS_CC;
 
+class sAnimationInfo : public Ref
+{
+public:
+    std::string animationName;
+    int startFrame;
+    int endFrame;
+};
+
 class Titan : public Node
 {
 public:
+
+    
     enum class eActState
     {
-        Idle = 0,
-        Attack,
+        Stand = 0,
         Walk,
-        Run,
+        Idle,
+        Attack,
         Sleep,
         Dream,
     };
@@ -36,7 +46,7 @@ public:
 public:
     Titan();
     virtual ~Titan();
-    static Titan* create(int uid);
+    static Titan* create(int tid);
 
     NBSprite3D* getSprite(){
         return _model;
@@ -74,15 +84,16 @@ public:
 
 protected:
     
-    bool initWithFile(int uid);
+    bool initWithFile(int tid);
     
+    void stand();
     void ilde();
-    void attack();
     void walk();
-    void run();
+    void attack();
     void sleep();
     void dream();
 
+    sAnimationInfo* getAnimationByType(eActState e);
     
 protected:
     NBSprite3D* _model;
@@ -98,6 +109,7 @@ protected:
     int _curMovePosIndex;
     DrawNode3D* _drawDebug;
     OBB _obbt;
+    int _tid;
 };
 
 #endif /* defined(__IF__Titan__) */

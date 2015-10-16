@@ -40,6 +40,7 @@ public:
     TitanInfo(CCDictionary* dict);
     
     TitanInfo():
+    tid(0),
     feedNum(0),
     level(0),
     currentManual(-1),
@@ -59,7 +60,7 @@ public:
     {}
     
     int resetTitanInfo(CCDictionary* dict);// 0没有改变 1数值改变(页面需要刷新的数值) 2状态改变
-    
+    int tid;
     int feedNum;
     int level;
     int currentManual;
