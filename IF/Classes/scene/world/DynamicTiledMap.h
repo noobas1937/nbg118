@@ -44,6 +44,7 @@ public:
     
 protected:
     void updateOctopus();
+    void updateBirds();
 };
 
 #endif /* DynamicTiledMap_h */

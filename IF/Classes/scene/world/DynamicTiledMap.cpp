@@ -634,3 +634,20 @@ void DynamicTiledMap::updateOctopus()
         mSprite->show_time -= dt;
     }, "move");
 }
+
+// m_layers[WM_TILE]
+void DynamicTiledMap::updateBirds()
+{
+    auto spriteCache = SpriteFrameCache::getInstance();
+    spriteCache->addSpriteFramesWithFile("World/World_5.plist");
+    Vector<SpriteFrame*> vsp;
+    for (int i = 1; i <= 8; i++)
+    {
+        String *string = String::createWithFormat("anima_bird_0%d.png", i);
+        SpriteFrame *spfr = spriteCache->getSpriteFrameByName(string->getCString());
+        vsp.pushBack(spfr);
+    }
+    Animation *animation = Animation::createWithSpriteFrames(vsp, 0.1);
+    Animate *animate = Animate::create(animation);
+    auto *ac1 = RepeatForever::create(animate);
+}
