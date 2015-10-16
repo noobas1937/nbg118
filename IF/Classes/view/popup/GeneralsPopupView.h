@@ -94,6 +94,8 @@ private:
     CCSafeObject<CCNode> m_infoNode;
     CCSafeObject<CCNode> m_bgNode;
     CCSafeObject<CCScale9Sprite> m_buildBG;
+    float m_ExtMaxWidth;//fusheng 存储一下
+    float m_APMaxWidth;
 //    CCSafeObject<CCControlButton> m_skillBtn;
     
     CCSafeObject<CCNode> m_equipNode1;
