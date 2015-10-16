@@ -541,7 +541,7 @@ void NBWorldMonster::createMonsterBatchItem(BatchTagType type, unsigned int inde
             monsterNode->setVisible(false);
             auto octopus = CCLoadSprite::createSprite(index % 2 ? "nb_octopus_01.png" : "nb_octopus_02.png");
             octopus->setScaleX(monsterNode->getScaleX());
-            octopus->setPosition(monsterNode->getPosition());
+            octopus->setPosition(monsterNode->getPosition() + Vec2(octopus->getContentSize().width * 0, octopus->getContentSize().height / 4));
             octopus->setTag(monsterNode->getTag());
             WORLD_MAP_VIEW->m_mapMonstersNode->addChild(octopus, monsterNode->getZOrder());
         }

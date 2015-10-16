@@ -203,7 +203,7 @@ void NBWorldNPC::updateBirds(const Vec2& currentTilePoint, Node* animation_layer
     srand((unsigned int)time(0));
     
     int random_variable = rand() % 100;
-    if (random_variable > 33) return;
+    if (random_variable > 50) return;
     
     int pos_offset_X = (rand() % 300) * (rand() % 2 == 0 ? 1 : -1);
     int pos_offset_Y = (rand() % 600) * (rand() % 2 == 0 ? 1 : -1);
@@ -230,6 +230,7 @@ void NBWorldNPC::updateBirds(const Vec2& currentTilePoint, Node* animation_layer
         for (int j = js; j < jj; j++)
         {
             auto bird = Sprite::createWithSpriteFrameName("anima_bird_01.png");
+            bird->setOpacity(0);
             bird->setPosition(i * bird->getContentSize().width + rand() % (int)(bird->getContentSize().width / 2), j * bird->getContentSize().height + rand() % (int)(bird->getContentSize().height / 2));
             birdsNode->setScaleX(flipX);
             birdsNode->setScaleY(flipY);
