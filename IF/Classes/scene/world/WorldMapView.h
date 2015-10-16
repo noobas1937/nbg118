@@ -296,6 +296,7 @@ public:
     CCNode* m_flagBatch;//旗帜
     CCSpriteBatchNode* m_mapMarchNode;//侦查，交易
     IFSkeletonBatchLayer* m_mapMonsterNode;
+    Node*                 m_mapMonstersNode; // guo.jiang
     //    IFSkeletonBatchLayer* m_mapMonsterBossNode;//世界boss
     IFSkeletonBatchLayer* m_mapHeiqishiMarchNode;//黑骑士
     CCNode* m_spinLabelNode;//黑骑士 lb
