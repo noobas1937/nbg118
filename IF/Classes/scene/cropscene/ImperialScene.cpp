@@ -580,7 +580,7 @@ void ImperialScene::buildingCallBack(CCObject* params)
 
 void ImperialScene::onCreateTitan()
 {
-    m_Titan = Titan::create(0);
+    m_Titan = Titan::create(GlobalData::shared()->titanInfo.tid);
     if (!m_Titan) {
         CCLOG("Titan create error!!!!!!!!!!!!");
         return;
@@ -589,9 +589,8 @@ void ImperialScene::onCreateTitan()
 //    m_Titan->setPosition(Vec2(0,0));
     //m_titanNode->addChild(m_Titan); //d by ljf
     //begin a by ljf
-    
-    
-    
+    m_Titan->changeTitanState(Titan::eActState::Stand);
+   
     m_TitanNode = CCNode::create();
     m_TitanNode->setRotation3D(Vec3(32, 39, -24));
     m_TitanNode->setPosition(-200,-50);
@@ -599,31 +598,13 @@ void ImperialScene::onCreateTitan()
     m_TitanNode->setPosition(m_touchLayer->convertToNodeSpace(m_titanNode->convertToWorldSpace(Point(0, 0))));
     //SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE)->addChild(titanNode);
     m_touchLayer->addChild(m_TitanNode);
+    
     m_TitanNode->setTag(JUST3D_NODE_TAG);
     
     m_touchLayer->setCameraMask((unsigned short)CameraFlag::USER4, true);
     m_TitanNode->setCameraMask((unsigned short) CameraFlag::USER2, true);
-    //m_Node0->setCameraMask((unsigned short) CameraFlag::DEFAULT);
     
-//    auto resSp = CCLoadSprite::createSprite("pic400000_2.png");
-//    //m_titanNode->addChild(resSp);
-//    resSp->setCameraMask((unsigned short) CameraFlag::USER2, true);
-//    
-//    CCSpriteBatchNode* batchNode = CCSpriteBatchNode::createWithTexture(resSp->getTexture());
-//    
-//    //batchNode->setCameraMask((unsigned short)CameraFlag::USER4, true);
-//    CCSprite* sprite = CCSprite::createWithTexture( batchNode->getTexture());
-//    
-//    batchNode->addChild(sprite);
-//    //m_titanNode->addChild(batchNode);
-//    cocos2d::MoveBy*  _moveAction1 = MoveBy::create(4.f, Vec2(200, 0));
-//    cocos2d::MoveBy*  _moveAction2 = MoveBy::create(4.f, Vec2(-200, 0));
-//    
-//    auto seq = Sequence::createWithTwoActions(_moveAction1, _moveAction2);
-//    auto repeat = RepeatForever::create(seq);
-//    //m_titanNode->runAction(repeat);
-//    
-//   
+    
 //    //end a by ljf
 //    std::vector<Vec2> movePoint;
 //    movePoint.push_back(m_tpath_1->getPosition());

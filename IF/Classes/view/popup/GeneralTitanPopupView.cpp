@@ -255,6 +255,8 @@ bool GeneralTitanPopupView::init()
     
     m_titanAPTxtPre->setString("AP");//fusheng 需要文本
     
+    m_titanExtTxtPre->setString("Exp");//fusheng 需要文本
+    
   
     return true;
 }
@@ -717,6 +719,7 @@ bool GeneralTitanPopupView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarge
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_speedUpBtn", CCControlButton*, this->m_speedUpBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_CleanFeedCDBtn", CCControlButton*, this->m_CleanFeedCDBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_feedCDGoldTxt", CCLabelIF*, this->m_feedCDGoldTxt);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanExtTxtPre", CCLabelIF*, this->m_titanExtTxtPre);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_toolSpeedUpBtn", CCControlButton*, this->m_toolSpeedUpBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_foodStatus", CCSprite*, this->m_foodStatus);

@@ -10,6 +10,7 @@
 #include "CCBExtension.h"
 //begin a by ljf
 #include "NBGRenderTarget.h"
+#include "GlobalData.h"
 //end a by ljf
 TitanInView* TitanInView::create()
 {
@@ -29,14 +30,18 @@ bool TitanInView::init()
         return false;
     }
     auto bg = CCBLoadFile("Titan",this,this);
-    m_Titan = Titan::create(1);
+    m_Titan = Titan::create(GlobalData::shared()->titanInfo.tid);
     m_Titan->setScale(0.7);
     //m_titanPos->addChild(m_Titan); //d by ljf
     //begin a by ljf
     auto s = Director::getInstance()->getWinSize();
     auto renderTexture = NBGRenderTarget::create(s.width , s.height , cocos2d::Texture2D::PixelFormat::RGBA8888);
-    renderTexture->addChild(m_Titan);
+    auto titanParent = Node::create();
+    titanParent->addChild(m_Titan);
+    renderTexture->addChild(titanParent);
+    titanParent->setRotation3D(Vec3(10, 0, 0));
     m_titanPos->addChild(renderTexture);
+    m_Titan->changeTitanState(Titan::eActState::Stand);
     //end a by ljf
     return true;
     

@@ -195,6 +195,11 @@ bool GeneralsPopupView::init()
     CCCommonUtils::setButtonTitle(m_btnAlliance, _lang("102161").c_str());
     CCCommonUtils::setButtonTitle(m_msgBtn, _lang("105308").c_str());
     
+    //fusheng begin 存储进度条最大值
+    m_ExtMaxWidth = m_expBar->getContentSize().width;
+    m_APMaxWidth = m_staminePro->getContentSize().width;
+    //fusheng end
+    
     if (m_playerUid=="" || m_playerUid==GlobalData::shared()->playerInfo.uid)
     {
         if (!CCCommonUtils::isIosAndroidPad()) {
@@ -216,13 +221,38 @@ bool GeneralsPopupView::init()
         m_selfInfoNode->setVisible(true);
         m_otherNode->setVisible(false);
         
+        
+        
         auto &info = GlobalData::shared()->generals.begin()->second;
         std::string name = GlobalData::shared()->playerInfo.name;
         m_nameTxt->setString(name.c_str());
         float len = info.currExp*1.0/info.maxExp;
         len = MAX(len,0);
         len = MIN(len,1);
-        m_expBar->setScaleX(len);
+        //fusheng begin
+//        m_expBar->setScaleX(len);
+       
+        auto size = m_expBar->getContentSize();
+        
+        size.width = m_ExtMaxWidth * len;
+        
+        
+        m_expBar->setVisible(len != 0);
+        
+        auto oriSize = m_expBar->getOriginalSize();
+        
+        if (size.width<oriSize.width) {
+            
+            this->m_expBar->setContentSize(oriSize);
+            
+        }
+        else
+        {
+            this->m_expBar->setContentSize(size);
+            
+        }
+        
+        //fusheng end
         std::string expStr = CC_ITOA(info.currExp);
         expStr.append("/");
         expStr.append(CC_ITOA(info.maxExp));
@@ -381,6 +411,9 @@ bool GeneralsPopupView::init()
     CCLoadSprite::doResourceByGeneralIndex(2, true);
     CCLoadSprite::doResourceByGeneralIndex(3, true);
     //fusheng end
+    
+    
+
     return true;
 }
 
@@ -483,7 +516,7 @@ void GeneralsPopupView::onEnter(){
     updatePlayerName(NULL);
     
     onRefreshEquip();
-    onSetBagTipNode();
+//    onSetBagTipNode();//fusheng 不显示提示
     if (!CCCommonUtils::isIosAndroidPad())
     {
         m_scrollView->setContentSize(CCSize(m_infoNode->getContentSize().width,880));
@@ -723,7 +756,31 @@ void GeneralsPopupView::update(float time){
     m_stamineText->setString(std::string("") + CC_ITOA(currt) + "/" + CC_ITOA(total));
     currt = MIN(currt, total);
     float s = 1.0 * currt / total;
-    m_staminePro->setScaleX(s);
+    
+    
+    //fusheng begin
+//    m_staminePro->setScaleX(s);
+    
+    auto size = m_staminePro->getContentSize();
+    
+    size.width = m_APMaxWidth * s;
+    
+    
+    m_staminePro->setVisible(s != 0);
+    
+    auto oriSize = m_staminePro->getOriginalSize();
+    
+    if (size.width<oriSize.width) {
+        
+        this->m_staminePro->setContentSize(oriSize);
+        
+    }
+    else
+    {
+        this->m_staminePro->setContentSize(size);
+        
+    }
+    //fusheng end
     m_tip->update(time);
 }
 

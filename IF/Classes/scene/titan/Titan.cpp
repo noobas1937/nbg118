@@ -10,12 +10,14 @@
 #include "Particle3D/CCParticleSystem3D.h"
 #include "Particle3D/PU/CCPUParticleSystem3D.h"
 #include "DrawNode3D.h"
+#include "CCCommonUtils.h"
 
 const float sfChangeActionTime = 3.f;
 const float sfMoveSpeed = 2;
 const float sfRunSpeed = 6;
 Titan::Titan()
 :_curMovePosIndex(0)
+,_tid(0)
 {
     _curFaceDir = eFaceDir::None;
 }
@@ -26,10 +28,10 @@ Titan::~Titan()
 }
 
 
-Titan* Titan::create(int uid)
+Titan* Titan::create(int tid)
 {
     auto titan = new (std::nothrow) Titan();
-    if (titan && titan->initWithFile(uid))
+    if (titan && titan->initWithFile(tid))
     {
         titan->autorelease();
         return titan;
@@ -50,27 +52,24 @@ struct sModelPram{
     float max;
 };
 
-bool Titan::initWithFile(int uid)
+bool Titan::initWithFile(int tid)
 {
+    _tid = tid;
     const int nModelScale = 1;
     // 设置当前node的contentSize 用于点击事件
-    setContentSize(Size(50*nModelScale,55*nModelScale));
+    setContentSize(Size(500*nModelScale,550*nModelScale));
     setAnchorPoint(Vec2(0.5,0));
-//    auto layer = LayerColor::create(ccc4(255, 0, 0, 255));
-//    layer->setContentSize(Size(50*nModelScale,50*nModelScale));
-//    addChild(layer);
     
     sModelPram bodyParam;
-//    bodyParam.modelName = "3d/titan_1.c3b";
-    bodyParam.modelName = "3d/dragon_2_skin.c3b";
-    bodyParam.textureName = "3d/dragon.jpg";
-    bodyParam.textureShaderName = "3d/titan_1_shader.jpg";
-    bodyParam.vShaderFileName = "shaders/titan.vsh";
-    bodyParam.fShaderFileName = "shaders/titan.fsh";
-    bodyParam.color = Vec3(68, 208, 255);
-    bodyParam.speed = 2;
-    bodyParam.min = 0.4;
-    bodyParam.max = 3;
+    bodyParam.modelName = "3d/" + CCCommonUtils::getPropById(CC_ITOA(tid), "model") + ".c3b";
+    bodyParam.textureName = "3d/" + CCCommonUtils::getPropById(CC_ITOA(tid), "texture") + ".jpg";
+//    bodyParam.textureShaderName = "3d/titan_1_shader.jpg";
+//    bodyParam.vShaderFileName = "shaders/titan.vsh";
+//    bodyParam.fShaderFileName = "shaders/titan.fsh";
+//    bodyParam.color = Vec3(68, 208, 255);
+//    bodyParam.speed = 2;
+//    bodyParam.min = 0.4;
+//    bodyParam.max = 3;
 
     _model = NBSprite3D::create(bodyParam.modelName);
     
@@ -181,7 +180,7 @@ bool Titan::initWithFile(int uid)
 //    auto handrightNode = _model->getAttachNode("hand_r");
 //    handrightNode->addChild(rootps2);
 
-    changeTitanState(eActState::Idle);
+    changeTitanState(eActState::Stand);
 
 //    Director::getInstance()->getScheduler()->schedule(schedule_selector(Titan::update), this, 0, false);
     return true;
@@ -197,60 +196,60 @@ void Titan::update(float dt)
         changeTitanState(_lastState);
     }
     
-    if (_curState == eActState::Walk || _curState == eActState::Run) {
-        float speed = sfMoveSpeed;
-        if (_curState == eActState::Run) {
-            speed = sfRunSpeed;
-        }
-        if (_curMovePosIndex < 3) {
-            turnFront();
-            // 从王座走到门口
-            float bx = _movePointVec[_curMovePosIndex].x;
-            float by = _movePointVec[_curMovePosIndex].y;
-            
-            float ex = _movePointVec[_curMovePosIndex+1].x;
-            float ey = _movePointVec[_curMovePosIndex+1].y;
-            
-            float dx = ex - bx;
-            float dy = ey - by;
-            
-            float nx = getPositionX() + speed;
-            float ny = getPositionY() + speed * dy / dx;
-            if (nx > ex || ny < ey) {
-                nx = ex;
-                ny = ey;
-                _curMovePosIndex++;
-            }
-            setPosition(nx,ny);
-        }
-        else if (_curMovePosIndex >= 3 && _curMovePosIndex < 6)
-        {
-            turnBack();
-            float bx = _movePointVec[6 - _curMovePosIndex].x;
-            float by = _movePointVec[6 - _curMovePosIndex].y;
-            
-            float ex = _movePointVec[6 - _curMovePosIndex - 1].x;
-            float ey = _movePointVec[6 - _curMovePosIndex - 1].y;
-            
-            float dx = ex - bx;
-            float dy = ey - by;
-            
-            float nx = getPositionX() - speed;
-            float ny = getPositionY() - speed * dy / dx;
-            
-            if (nx < ex || ny > ey) {
-                nx = ex;
-                ny = ey;
-                _curMovePosIndex++;
-            }
-            setPosition(nx,ny);
-        }
-        if (_curMovePosIndex >= 6) {
-            _curMovePosIndex = 0;
-            changeTitanState(eActState::Idle);
-            turnFront();
-        }
-    }
+//    if (_curState == eActState::Walk || _curState == eActState::Run) {
+//        float speed = sfMoveSpeed;
+//        if (_curState == eActState::Run) {
+//            speed = sfRunSpeed;
+//        }
+//        if (_curMovePosIndex < 3) {
+//            turnFront();
+//            // 从王座走到门口
+//            float bx = _movePointVec[_curMovePosIndex].x;
+//            float by = _movePointVec[_curMovePosIndex].y;
+//            
+//            float ex = _movePointVec[_curMovePosIndex+1].x;
+//            float ey = _movePointVec[_curMovePosIndex+1].y;
+//            
+//            float dx = ex - bx;
+//            float dy = ey - by;
+//            
+//            float nx = getPositionX() + speed;
+//            float ny = getPositionY() + speed * dy / dx;
+//            if (nx > ex || ny < ey) {
+//                nx = ex;
+//                ny = ey;
+//                _curMovePosIndex++;
+//            }
+//            setPosition(nx,ny);
+//        }
+//        else if (_curMovePosIndex >= 3 && _curMovePosIndex < 6)
+//        {
+//            turnBack();
+//            float bx = _movePointVec[6 - _curMovePosIndex].x;
+//            float by = _movePointVec[6 - _curMovePosIndex].y;
+//            
+//            float ex = _movePointVec[6 - _curMovePosIndex - 1].x;
+//            float ey = _movePointVec[6 - _curMovePosIndex - 1].y;
+//            
+//            float dx = ex - bx;
+//            float dy = ey - by;
+//            
+//            float nx = getPositionX() - speed;
+//            float ny = getPositionY() - speed * dy / dx;
+//            
+//            if (nx < ex || ny > ey) {
+//                nx = ex;
+//                ny = ey;
+//                _curMovePosIndex++;
+//            }
+//            setPosition(nx,ny);
+//        }
+//        if (_curMovePosIndex >= 6) {
+//            _curMovePosIndex = 0;
+//            changeTitanState(eActState::Idle);
+//            turnFront();
+//        }
+//    }
     
 //    if (_drawDebug)
 //    {
@@ -307,11 +306,11 @@ bool Titan::onTouched(CCTouch* pTouch)
         return false;
     }
     switch (_curState) {
-        case eActState::Idle:
+        case eActState::Stand:
             changeTitanState(eActState::Walk);
             break;
-        case eActState::Walk:
-            changeTitanState(eActState::Run);
+//        case eActState::Walk:
+//            changeTitanState(eActState::Idle);
             break;
         case eActState::Sleep:
             changeTitanState(eActState::Dream);
@@ -336,6 +335,9 @@ void Titan::changeTitanState(eActState state)
     _lastState = _curState;
     _curState = state;
     switch (state) {
+        case eActState::Stand:
+            stand();
+            break;
         case eActState::Idle:
             ilde();
             break;
@@ -344,9 +346,6 @@ void Titan::changeTitanState(eActState state)
             break;
         case eActState::Walk:
             walk();
-            break;
-        case eActState::Run:
-            run();
             break;
         case eActState::Sleep:
             sleep();
@@ -359,17 +358,62 @@ void Titan::changeTitanState(eActState state)
     }
 }
 
+sAnimationInfo* Titan::getAnimationByType(eActState e)
+{
+    sAnimationInfo* animInfo = new sAnimationInfo;
+    std::string anims = CCCommonUtils::getPropById(CC_ITOA(_tid), "animations");
+    vector<string> strArr;
+    CCCommonUtils::splitString(anims, "|", strArr);
+    
+    std::string strInfo = strArr.at(int(e));
+    if (strInfo.size() > 1) {
+        vector<string> strArr1;
+        CCCommonUtils::splitString(strInfo, ";", strArr1);
+        animInfo->animationName = "3d/"+strArr1.at(0)+".c3b";
+        animInfo->startFrame = atoi(strArr1.at(1).c_str());
+        animInfo->endFrame = atoi(strArr1.at(2).c_str());
+        return animInfo;
+    }
+    animInfo->release();
+    return nullptr;
+}
+
+void Titan::stand()
+{
+    std::map<eActState,Animate3D*>::iterator it = _actionCache.find(eActState::Stand);
+    Animate3D* pAnim = nullptr;
+    if (it == _actionCache.end()) {
+        auto animInfo = getAnimationByType(eActState::Stand);
+        auto animation3d = Animation3D::create(animInfo->animationName);
+        if (animation3d) {
+            //            pAnim = Animate3D::create(animation3d);
+            pAnim = Animate3D::createWithFrames(animation3d, animInfo->startFrame, animInfo->endFrame);
+            pAnim->retain();
+            _actionCache.insert(std::map<eActState,Animate3D*>::value_type(eActState::Stand,pAnim));
+        }
+    }
+    else
+    {
+        pAnim = it->second;
+    }
+    
+    if (pAnim) {
+        Action* act = RepeatForever::create(pAnim);
+        act->setTag(1);
+        _model->stopAllActions();
+        _model->runAction(act);
+    }
+}
 
 void Titan::ilde()
 {
     std::map<eActState,Animate3D*>::iterator it = _actionCache.find(eActState::Idle);
     Animate3D* pAnim = nullptr;
     if (it == _actionCache.end()) {
-        auto animation3d = Animation3D::create("3d/dragon_2_stand.c3b");
-//        auto animation3d = Animation3D::create("3d/titan_act.c3b");
+        auto animInfo = getAnimationByType(eActState::Idle);
+        auto animation3d = Animation3D::create(animInfo->animationName);
         if (animation3d) {
-//            pAnim = Animate3D::create(animation3d);
-            pAnim = Animate3D::createWithFrames(animation3d, 1, 400);
+            pAnim = Animate3D::createWithFrames(animation3d, animInfo->startFrame, animInfo->endFrame);
             pAnim->retain();
             _actionCache.insert(std::map<eActState,Animate3D*>::value_type(eActState::Idle,pAnim));
         }
@@ -379,7 +423,7 @@ void Titan::ilde()
         pAnim = it->second;
     }
     if (pAnim) {
-        Action* act = RepeatForever::create(pAnim);
+        Action* act = Repeat::create(pAnim,1);
         act->setTag(1);
         _model->stopAllActions();
         _model->runAction(act);
@@ -394,10 +438,10 @@ void Titan::attack()
     std::map<eActState,Animate3D*>::iterator it = _actionCache.find(eActState::Attack);
     Animate3D* pAnim = nullptr;
     if (it == _actionCache.end()) {
-        auto animation3d = Animation3D::create("3d/titan_attack.c3b");
+        auto animInfo = getAnimationByType(eActState::Attack);
+        auto animation3d = Animation3D::create(animInfo->animationName);
         if (animation3d) {
-//            pAnim = Animate3D::create(animation3d);
-            pAnim = Animate3D::createWithFrames(animation3d, 101, 250);
+            pAnim = Animate3D::createWithFrames(animation3d, animInfo->startFrame, animInfo->endFrame);
             pAnim->retain();
             _actionCache.insert(std::map<eActState,Animate3D*>::value_type(eActState::Attack,pAnim));
         }
@@ -417,17 +461,13 @@ void Titan::attack()
 
 void Titan::walk()
 {
-    if (true) {
-        return;
-    }
     std::map<eActState,Animate3D*>::iterator it = _actionCache.find(eActState::Walk);
     Animate3D* pAnim = nullptr;
     if (it == _actionCache.end()) {
-        auto animation3d = Animation3D::create("3d/titan_walk.c3b");
-        //        auto animation3d = Animation3D::create("3d/titan_act.c3b");
+        auto animInfo = getAnimationByType(eActState::Walk);
+        auto animation3d = Animation3D::create(animInfo->animationName);
         if (animation3d) {
-            //            pAnim = Animate3D::create(animation3d);
-            pAnim = Animate3D::createWithFrames(animation3d, 251, 310);
+            pAnim = Animate3D::createWithFrames(animation3d, animInfo->startFrame, animInfo->endFrame);
             pAnim->retain();
             _actionCache.insert(std::map<eActState,Animate3D*>::value_type(eActState::Walk,pAnim));
         }
@@ -437,41 +477,17 @@ void Titan::walk()
         pAnim = it->second;
     }
     if (pAnim) {
-        Action* act = RepeatForever::create(pAnim);
+        Action* act = Repeat::create(pAnim,1);
         act->setTag(1);
         _model->stopAllActions();
         _model->runAction(act);
-    }
-}
-
-void Titan::run()
-{
-    if (true) {
-        return;
-    }
-    std::map<eActState,Animate3D*>::iterator it = _actionCache.find(eActState::Run);
-    Animate3D* pAnim = nullptr;
-    if (it == _actionCache.end()) {
-        auto animation3d = Animation3D::create("3d/titan_run.c3b");
-        if (animation3d) {
-            //            pAnim = Animate3D::create(animation3d);
-            pAnim = Animate3D::createWithFrames(animation3d, 311, 340);
-            pAnim->retain();
-            _actionCache.insert(std::map<eActState,Animate3D*>::value_type(eActState::Run,pAnim));
-        }
     }
     else
     {
-        pAnim = it->second;
-    }
-    
-    if (pAnim) {
-        Action* act = Repeat::create(pAnim,3);
-        act->setTag(1);
-        _model->stopAllActions();
-        _model->runAction(act);
+        changeTitanState(_lastState);
     }
 }
+
 
 void Titan::sleep()
 {
@@ -524,7 +540,7 @@ void Titan::reset()
         return;
     }
     _model->setPosition(Vec2(getContentSize().width*0.5,0));
-    changeTitanState(eActState::Idle);
+    changeTitanState(eActState::Stand);
     _curMovePosIndex = 0;
     turnFront();
 
