@@ -1506,9 +1506,9 @@ void ProductionSoldiersView::selectionChanged(CCGallery *gallery, CCGalleryItem 
     }
     if(m_armyIds.size()>pGItem->getIdx()){
         m_armyId = m_armyIds[pGItem->getIdx()];
-        if (m_lastGalleryIndex != m_curGalleryIndex) {
+//        if (m_lastGalleryIndex != m_curGalleryIndex) {
             m_lastGalleryIndex = m_curGalleryIndex;
-        }
+//        }
         m_curGalleryIndex = pGItem->getIdx();
     }
     refreshGalleryCells();
