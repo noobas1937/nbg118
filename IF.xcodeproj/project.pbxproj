@@ -995,6 +995,7 @@
 		B86B5D2E1BCCF2360010EC71 /* NBWaterShaderLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B86B5D2C1BCCF2360010EC71 /* NBWaterShaderLayer.cpp */; settings = {ASSET_TAGS = (); }; };
 		B86B5D3E1BCF3D1E0010EC71 /* NBWorldMonster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B86B5D3C1BCF3D1E0010EC71 /* NBWorldMonster.cpp */; settings = {ASSET_TAGS = (); }; };
 		B86B5D411BCF422E0010EC71 /* CloudLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B86B5D3F1BCF422E0010EC71 /* CloudLayer.cpp */; settings = {ASSET_TAGS = (); }; };
+		B8F554041BD093CB00AD16E3 /* NBWorldNPC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8F554021BD093CB00AD16E3 /* NBWorldNPC.cpp */; settings = {ASSET_TAGS = (); }; };
 		BA19245118C87ED7009C1CEA /* CCLabelIFBMFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA19244D18C87ED7009C1CEA /* CCLabelIFBMFont.cpp */; };
 		BA19245218C87ED7009C1CEA /* CCLabelIFTTF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA19244F18C87ED7009C1CEA /* CCLabelIFTTF.cpp */; };
 		BA2EB25818E2A0DA00DB3D83 /* DefaultTableViewDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA2EB25618E2A0DA00DB3D83 /* DefaultTableViewDelegate.cpp */; };
@@ -3142,6 +3143,8 @@
 		B86B5D3D1BCF3D1E0010EC71 /* NBWorldMonster.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NBWorldMonster.hpp; sourceTree = "<group>"; };
 		B86B5D3F1BCF422E0010EC71 /* CloudLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CloudLayer.cpp; sourceTree = "<group>"; };
 		B86B5D401BCF422E0010EC71 /* CloudLayer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CloudLayer.hpp; sourceTree = "<group>"; };
+		B8F554021BD093CB00AD16E3 /* NBWorldNPC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBWorldNPC.cpp; sourceTree = "<group>"; };
+		B8F554031BD093CB00AD16E3 /* NBWorldNPC.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NBWorldNPC.hpp; sourceTree = "<group>"; };
 		BA19244D18C87ED7009C1CEA /* CCLabelIFBMFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelIFBMFont.cpp; sourceTree = "<group>"; };
 		BA19244E18C87ED7009C1CEA /* CCLabelIFBMFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelIFBMFont.h; sourceTree = "<group>"; };
 		BA19244F18C87ED7009C1CEA /* CCLabelIFTTF.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelIFTTF.cpp; sourceTree = "<group>"; };
@@ -5659,6 +5662,8 @@
 				B86B5D3D1BCF3D1E0010EC71 /* NBWorldMonster.hpp */,
 				B86B5D3F1BCF422E0010EC71 /* CloudLayer.cpp */,
 				B86B5D401BCF422E0010EC71 /* CloudLayer.hpp */,
+				B8F554021BD093CB00AD16E3 /* NBWorldNPC.cpp */,
+				B8F554031BD093CB00AD16E3 /* NBWorldNPC.hpp */,
 			);
 			path = map;
 			sourceTree = "<group>";
@@ -8154,6 +8159,7 @@
 				E60705D41990C703007F3773 /* MonsterTile.cpp in Sources */,
 				1DF827331B946D3B0003EA1F /* NewTroopsView.cpp in Sources */,
 				96D17A6F18EC3FB500663FAC /* AcceptAllianceApplyCommand.cpp in Sources */,
+				B8F554041BD093CB00AD16E3 /* NBWorldNPC.cpp in Sources */,
 				6030CF431ADB993D00E5C4C6 /* InnerSettingView.cpp in Sources */,
 				B8581EA01BBA34E70027F733 /* TypeDefinition.cpp in Sources */,
 				96E0D38A18ED06A4001E296E /* AllianceApplylistCommand.cpp in Sources */,

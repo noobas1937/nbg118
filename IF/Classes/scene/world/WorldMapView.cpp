@@ -152,6 +152,7 @@ bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType) {
     }
     
     m_map = DynamicTiledMap::create(tmxPath.c_str(), gotoPoint, loopSize);
+    m_map->setTag(WM_MAP_TAG);
     CCLOG("tmx Load Time %lu",clock() - ulc);
     this->addChild(m_map);
     
@@ -162,14 +163,14 @@ bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType) {
     
     // guo.jiang
     {
-        m_map->addChild(m_layers[WM_BG], -10);
+        m_map->addChild(m_layers[WM_BG], WM_BG);
         m_layers[WM_BG]->setTag(WM_BG_TAG);
         
         m_map->layerNamed("ocean")->setGlobalZOrder(-100);
     }
 
     if(m_mapType == NORMAL_MAP) {
-        m_map->addChild(m_layers[WM_BETWEEN_SERVER_MAP], 2);
+        m_map->addChild(m_layers[WM_BETWEEN_SERVER_MAP], WM_BETWEEN_SERVER_MAP);
         m_layers[WM_BETWEEN_SERVER_MAP]->setTag(WM_BETWEEN_SERVER_MAP_TAG);
 
 //        auto map = DynamicTiledMap::create("WorldMap1.tmx", gotoPoint, loopSize);
@@ -182,19 +183,20 @@ bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType) {
         link_area->layerNamed("ocean")->setGlobalZOrder(-100);
         m_layers[WM_BETWEEN_SERVER_MAP]->addChild(link_area);
     }
-    m_map->addChild(m_layers[WM_CITY], 3);
-    m_map->addChild(m_layers[WM_ROAD], 4);
-    m_map->addChild(m_layers[WM_TILE], 5);
+    m_map->addChild(m_layers[WM_CITY], WM_CITY);
+    m_map->addChild(m_layers[WM_ROAD], WM_ROAD);
+    m_map->addChild(m_layers[WM_SKY], WM_SKY);
+    m_map->addChild(m_layers[WM_TILE], WM_TILE);
     m_layers[WM_GUI]->setTag(WM_GUI_TAG);
     m_layers[WM_POPUP]->setTag(WM_POPUP_TAG);
     
     //    auto scene = CCDirector::sharedDirector()->getRunningScene();
     auto scene = SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_WORLD_UI);
-    scene->addChild(m_layers[WM_GUI]);
-    scene->addChild(m_layers[WM_POPUP]);
+    scene->addChild(m_layers[WM_GUI], WM_GUI);
+    scene->addChild(m_layers[WM_POPUP], WM_POPUP);
     
     auto layer = SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_MINIMAP);
-    layer->addChild(m_layers[WM_COVER]);
+    layer->addChild(m_layers[WM_COVER], WM_COVER);
     
     addCover();
     // todo : add fog

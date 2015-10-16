@@ -41,9 +41,6 @@ public:
     //    static Vector<DynamicTiledMap*> mZombieCaches;
     //    static void saveToCache(const std::string& key, DynamicTiledMap* );
     //    static DynamicTiledMap* loadFromCache(const std::string& key);
-    
-protected:
-    void updateOctopus();
 };
 
 #endif /* DynamicTiledMap_h */

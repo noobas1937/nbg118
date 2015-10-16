@@ -376,6 +376,11 @@ bool GeneralsPopupView::init()
     
     m_buildBG->setPositionY(m_buildBG->getPositionY()+m_buildBG->getContentSize().height-oldH);
     
+    //fusheng begin 添加图片
+    CCLoadSprite::doResourceByGeneralIndex(1, true);
+    CCLoadSprite::doResourceByGeneralIndex(2, true);
+    CCLoadSprite::doResourceByGeneralIndex(3, true);
+    //fusheng end
     return true;
 }
 
