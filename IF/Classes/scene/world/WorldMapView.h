@@ -21,25 +21,30 @@
 #include "NewBaseTileInfo.h"
 #include "IFSkeletonBatchLayer.h"
 #include "IFHeiqishiNode.h"
-#define LAYER_COUNT  8
 #define  MSG_SHAKETIME              "shakeTime"
 #define  MSG_SHAKECMDTIME              "shakeCmdTime"
 #define  MSG_SHAKEGUIDETIME              "shakeGuideTime"
 
 
 #define WM_BG_TAG 10010
+#define WM_MAP_TAG (WM_BG_TAG + 1)
 #define WM_BETWEEN_SERVER_MAP_TAG 100000
 #define WM_MASK_TAG 200000
 #define WM_COVER_TAG 10000
 
-#define WM_BG                 0
-#define WM_BETWEEN_SERVER_MAP 1
-#define WM_CITY               2
-#define WM_ROAD               3
-#define WM_TILE               4
-#define WM_GUI                5
-#define WM_POPUP              6
-#define WM_COVER              7
+enum
+{
+WM_BG                 = 0,
+WM_BETWEEN_SERVER_MAP,
+WM_CITY              ,
+WM_ROAD              ,
+WM_SKY               ,
+WM_TILE              ,
+WM_GUI               ,
+WM_POPUP             ,
+WM_COVER             ,
+    LAYER_COUNT
+};
 
 #define WM_GUI_TAG 453567
 #define WM_POPUP_TAG 453568
