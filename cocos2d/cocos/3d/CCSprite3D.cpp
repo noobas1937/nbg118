@@ -521,16 +521,18 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                             }
                         }
                     }
-                    
-                    Vec3 pos;
-                    Quaternion qua;
-                    Vec3 scale;
-                    nodedata->transform.decompose(&scale, &qua, &pos);
-                    setPosition3D(pos);
-                    setRotationQuat(qua);
-                    setScaleX(scale.x);
-                    setScaleY(scale.y);
-                    setScaleZ(scale.z);
+                    // tao.yu 这段代码导致模型中含有多个mesh时出现 位置 旋转 或 缩放 错误的bug，因为每一个单独的mesh有自己的矩阵信息，但转化出来的数据却设置给了根节点
+                    // 补充，按源代码的设计逻辑，应该是多个mesh的情况走crateSprite3DNode的函数，将it->bones.size() > 0 || singleSprite改为
+                    // it->bones.size() > 0 && singleSprite，既走else中的代码，但实际情况却不行，待查
+//                    Vec3 pos;
+//                    Quaternion qua;
+//                    Vec3 scale;
+//                    nodedata->transform.decompose(&scale, &qua, &pos);
+//                    setPosition3D(pos);
+//                    setRotationQuat(qua);
+//                    setScaleX(scale.x);
+//                    setScaleY(scale.y);
+//                    setScaleZ(scale.z);
                     
                 }
             }

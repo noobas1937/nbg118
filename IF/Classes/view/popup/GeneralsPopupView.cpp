@@ -171,26 +171,26 @@ bool GeneralsPopupView::init()
     }
     m_lockL->setVisible(!isOpenLongJing);
     
-    auto tbg = CCLoadSprite::loadResource("Bottom frame04.png");
-    auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
-    int maxHight = ceil(size.height*1.0/90);
-    for (int j = 0; j<maxHight; j++)
-    {
-        for (int i=0; i<8; i++) {
-            auto bg = CCLoadSprite::createSprite("Bottom frame04.png");
-            bg->setAnchorPoint(ccp(0, 0));
-            bg->setPosition(ccp(i*90, j*90));
-            tBatchNode->addChild(bg);
-        }
-    }
-    float scale = 1;
-    if (CCCommonUtils::isIosAndroidPad())
-    {
-        scale = 1536 * 1.0 / 640;
-        tBatchNode->setScaleX(scale);
-    }
+//    auto tbg = CCLoadSprite::loadResource("Bottom frame04.png");/fusheng 不加入这些
+//    auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
+//    int maxHight = ceil(size.height*1.0/90);
+//    for (int j = 0; j<maxHight; j++)
+//    {
+//        for (int i=0; i<8; i++) {
+//            auto bg = CCLoadSprite::createSprite("Bottom frame04.png");
+//            bg->setAnchorPoint(ccp(0, 0));
+//            bg->setPosition(ccp(i*90, j*90));
+//            tBatchNode->addChild(bg);
+//        }
+//    }
+//    float scale = 1;
+//    if (CCCommonUtils::isIosAndroidPad())
+//    {
+//        scale = 1536 * 1.0 / 640;
+//        tBatchNode->setScaleX(scale);
+//    }
     
-    m_bgNode->addChild(tBatchNode);
+//    m_bgNode->addChild(tBatchNode);/
     
     CCCommonUtils::setButtonTitle(m_btnAlliance, _lang("102161").c_str());
     CCCommonUtils::setButtonTitle(m_msgBtn, _lang("105308").c_str());
@@ -227,6 +227,9 @@ bool GeneralsPopupView::init()
         expStr.append("/");
         expStr.append(CC_ITOA(info.maxExp));
         m_expTxt->setString(expStr);
+        
+        this->m_expTxtPre->setString("Exp");//fusheng 需要文本
+        this->m_stamineTextPre->setString("AP");//fusheng 需要文本
     }
     else
     {
@@ -367,7 +370,17 @@ bool GeneralsPopupView::init()
         m_scrollView->addChild(m_receiveGlow);
     }
     
+    auto oldH = m_buildBG->getContentSize().height;
     
+    changeBGMaxHeight(m_buildBG);
+    
+    m_buildBG->setPositionY(m_buildBG->getPositionY()+m_buildBG->getContentSize().height-oldH);
+    
+    //fusheng begin 添加图片
+    CCLoadSprite::doResourceByGeneralIndex(1, true);
+    CCLoadSprite::doResourceByGeneralIndex(2, true);
+    CCLoadSprite::doResourceByGeneralIndex(3, true);
+    //fusheng end
     return true;
 }
 
@@ -465,7 +478,7 @@ void GeneralsPopupView::onEnter(){
     //CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, Touch_Default, false);
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GeneralsPopupView::onChangePic), MSG_CHANGE_PLAYER_PIC, NULL);
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GeneralsPopupView::updatePlayerName), MSG_CHANGE_PLAYER_NAME, NULL);
-    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GeneralsPopupView::updateEquipTips), "showEquipTips", NULL);
+//    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GeneralsPopupView::updateEquipTips), "showEquipTips", NULL);//fusheng 不监听
     CCDirector::sharedDirector()->getScheduler()->scheduleUpdateForTarget(this, 0, false);
     updatePlayerName(NULL);
     
@@ -487,7 +500,7 @@ void GeneralsPopupView::onExit(){
     setTouchEnabled(false);
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_CHANGE_PLAYER_PIC);
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_CHANGE_PLAYER_NAME);
-    CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, "showEquipTips");
+//    CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, "showEquipTips");//fusheng 不监听装备提示
     resetRankPop();
     CCLoadSprite::doResourceByCommonIndex(100, false);
 //    CCLoadSprite::doResourceByCommonIndex(305, false);
@@ -562,8 +575,14 @@ void GeneralsPopupView::onSkillBtnClick(CCObject * pSender, Control::EventType p
     onSkillClick(NULL,Control::EventType::TOUCH_DOWN);
 }
 
+
+
+
 bool GeneralsPopupView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode)
 {
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_expTxtPre", CCLabelIF*, this->m_expTxtPre);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_stamineTextPre", CCLabelIF*, this->m_stamineTextPre);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_ChangeAvatar", CCSprite*, this->m_ChangeAvatar);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bustPic", CCNode*, this->m_bustPic);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_icon", CCNode*, this->m_icon);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_touchLayer", CCNode*, this->m_touchLayer);
@@ -761,23 +780,23 @@ bool GeneralsPopupView::onTouchBegan(CCTouch *pTouch, CCEvent *pEvent){
         }
     }
     if (m_info) {
-        if(isTouchInside(m_eBgSpr1, pTouch)){
-            onShowEquipTip(0);
-        }else if(isTouchInside(m_eBgSpr2, pTouch)){
-            onShowEquipTip(1);
-        }else if(isTouchInside(m_eBgSpr3, pTouch)){
-            onShowEquipTip(2);
-        }else if(isTouchInside(m_eBgSpr4, pTouch)){
-            onShowEquipTip(3);
-        }else if(isTouchInside(m_eBgSpr5, pTouch)){
-            onShowEquipTip(4);
-        }else if(isTouchInside(m_eBgSpr6, pTouch)){
-            onShowEquipTip(5);
-        }else if(isTouchInside(m_eBgSpr7, pTouch)){
-            onShowEquipTip(6);
-        }else if(isTouchInside(m_eBgSpr8, pTouch)){
-            onShowEquipTip(7);
-        }
+//        if(isTouchInsideVisible(m_eBgSpr1, pTouch)){//fusheng 去掉装备
+//            onShowEquipTip(0);
+//        }else if(isTouchInsideVisible(m_eBgSpr2, pTouch)){
+//            onShowEquipTip(1);
+//        }else if(isTouchInsideVisible(m_eBgSpr3, pTouch)){
+//            onShowEquipTip(2);
+//        }else if(isTouchInsideVisible(m_eBgSpr4, pTouch)){
+//            onShowEquipTip(3);
+//        }else if(isTouchInsideVisible(m_eBgSpr5, pTouch)){
+//            onShowEquipTip(4);
+//        }else if(isTouchInsideVisible(m_eBgSpr6, pTouch)){
+//            onShowEquipTip(5);
+//        }else if(isTouchInsideVisible(m_eBgSpr7, pTouch)){
+//            onShowEquipTip(6);
+//        }else if(isTouchInsideVisible(m_eBgSpr8, pTouch)){
+//            onShowEquipTip(7);
+//        }
     }
     m_x = 1000;
     m_startY = pTouch->getLocation().y;
@@ -801,14 +820,19 @@ void GeneralsPopupView::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
         return;
     }
     
-    if (m_info) {
-        if(isTouchInside(m_clickNode4, pTouch)){
+    if (m_info)
+    {
+        if(isTouchInside(m_clickNode4, pTouch))
+        {
             SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
             PopupViewController::getInstance()->addPopupInView(RoleInfoView::create(m_info,0,m_achievePro,m_medalCntStr,m_medalIconId));
         }
     }
-    else {
-        if(isTouchInside(m_clickNode7, pTouch)){
+    else
+    {
+//        if(isTouchInsideVisible(m_clickNode7, pTouch))
+        if(false)//fusheng 去掉响应
+        {
             onSkillClick(NULL, CCControlEvent::TOUCH_DOWN);
             
             CCArray* p = CCArray::create();
@@ -818,29 +842,37 @@ void GeneralsPopupView::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
             DataRecordCommand* cmd = new DataRecordCommand(OPEN_PANEL, p, d);
             cmd->sendAndRelease();
             m_particleNode->removeAllChildren();
-
-    }else if(isTouchInside(m_nameTouch, pTouch)){
-        onChangeName(NULL,Control::EventType::TOUCH_DOWN);
-    }else if(isTouchInside(m_infoNode, pTouch)){
-        if(isTouchInside(m_eBgSpr1, pTouch)){
-            onClickEquip(0);
-        }else if(isTouchInside(m_eBgSpr2, pTouch)){
-            onClickEquip(1);
-        }else if(isTouchInside(m_eBgSpr3, pTouch)){
-            onClickEquip(2);
-        }else if(isTouchInside(m_eBgSpr4, pTouch)){
-            onClickEquip(3);
-        }else if(isTouchInside(m_eBgSpr5, pTouch)){
-            onClickEquip(4);
-        }else if(isTouchInside(m_eBgSpr6, pTouch)){
-            onClickEquip(5);
-        }else if(isTouchInside(m_eBgSpr7, pTouch)){
-            onClickEquip(6);
-        }else if(isTouchInside(m_eBgSpr8, pTouch)){
-            onClickEquip(7);
-        }else if(isTouchInside(m_clickNode4, pTouch)){
+            
+        }else if(isTouchInside(m_nameTouch, pTouch)){
+            onChangeName(NULL,Control::EventType::TOUCH_DOWN);
+        }else if(isTouchInside(m_infoNode, pTouch)){
+//            if(isTouchInsideVisible(m_eBgSpr1, pTouch)){//fusheng 去掉装备
+//                onClickEquip(0);
+//            }else if(isTouchInsideVisible(m_eBgSpr2, pTouch)){
+//                onClickEquip(1);
+//            }else if(isTouchInsideVisible(m_eBgSpr3, pTouch)){
+//                onClickEquip(2);
+//            }else if(isTouchInsideVisible(m_eBgSpr4, pTouch)){
+//                onClickEquip(3);
+//            }else if(isTouchInsideVisible(m_eBgSpr5, pTouch)){
+//                onClickEquip(4);
+//            }else if(isTouchInsideVisible(m_eBgSpr6, pTouch)){
+//                onClickEquip(5);
+//            }else if(isTouchInsideVisible(m_eBgSpr7, pTouch)){
+//                onClickEquip(6);
+//            }else if(isTouchInsideVisible(m_eBgSpr8, pTouch)){
+//                onClickEquip(7);
+//            }
+//            else if(isTouchInside(m_clickNode4, pTouch)){
+            if(isTouchInside(m_clickNode4, pTouch)){
                 SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
                 PopupViewController::getInstance()->addPopupInView(RoleInfoView::create(&(GlobalData::shared()->playerInfo)));
+            }
+            else if(isTouchInside(m_ChangeAvatar, pTouch)){
+                
+                
+                PopupViewController::getInstance()->addPopupView(ChangePicPopupView::create());
+                
             }
         }else if(isTouchInside(m_clickNode2, pTouch)){
             PopupViewController::getInstance()->addPopupView(ChangePicView::create());
@@ -864,11 +896,12 @@ void GeneralsPopupView::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
         }else if(isTouchInside(m_clickNode6, pTouch)){
             // tao.yu 第一版本不开放成就功能
             CCCommonUtils::flyHint("", "", _lang("E100008"));
-//            if(AchievementController::getInstance()->openFlag == FUNCTION_ON){
-//                AchievementController::getInstance()->firstOpenPopup();
-//                PopupViewController::getInstance()->addPopupInView(AchievementNewView::create());
-//            }
-        }else{
+            //            if(AchievementController::getInstance()->openFlag == FUNCTION_ON){
+            //                AchievementController::getInstance()->firstOpenPopup();
+            //                PopupViewController::getInstance()->addPopupInView(AchievementNewView::create());
+            //            }
+        }
+        else{
         }
     }
 }
@@ -878,6 +911,7 @@ void GeneralsPopupView::resetRankPop(CCObject *obj){
 }
 void GeneralsPopupView::onRefreshEquip()
 {
+    return; //fusheng 不刷新装备
     CCLoadSprite::doResourceByCommonIndex(100, true);
     m_equipNode1->removeAllChildren();
     m_equipNode2->removeAllChildren();
@@ -1542,12 +1576,12 @@ bool ChangePicPopupView::init()
     CCLoadSprite::doLoadResourceAsync(GENERAL_PATH, CCCallFuncO::create(this, callfuncO_selector(ChangePicPopupView::asyDelayLoad), NULL), 3);
     
 
-    setCleanFunction([](){
-        CCLoadSprite::doResourceByGeneralIndex(1, false);
-        CCLoadSprite::doResourceByGeneralIndex(2, false);
-        CCLoadSprite::doResourceByGeneralIndex(3, false);
-        CCLoadSprite::doResourceByCommonIndex(305, false);
-    });
+//    setCleanFunction([](){ //fusheng 删除ChangePicPopupView时不清理缓存
+//        CCLoadSprite::doResourceByGeneralIndex(1, false);
+//        CCLoadSprite::doResourceByGeneralIndex(2, false);
+//        CCLoadSprite::doResourceByGeneralIndex(3, false);
+//        CCLoadSprite::doResourceByCommonIndex(305, false);
+//    });
     
     return true;
 }
