@@ -12,6 +12,8 @@
 #include "PopupBaseView.h"
 #include "DefaultTableViewDelegate.h"
 #include "CCTableViewTouchIFCell.h"
+#include "CCGallery.h"
+
 #define  STORE_MALL_HIDE_DES "store.mall.hide.des"
 
 class StoreMallView: public Layer
@@ -19,12 +21,17 @@ class StoreMallView: public Layer
 ,public CCBMemberVariableAssigner
 ,public CCTableViewDataSource
 ,public DefaultTableViewDelegate
-
+,public CCGalleryDelegate
 {
 public:
     static StoreMallView* create();
     static bool sortByUseOder(int itemId1, int itemId2);
-    
+
+public:
+    virtual void slideBegan(CCGallery *gallery);
+    virtual void slideEnded(CCGallery *gallery, CCGalleryItem *pGItem);
+    virtual void selectionChanged(CCGallery *gallery, CCGalleryItem *pGItem);
+    virtual void selectionDecided(CCGallery *gallery, CCGalleryItem *pGItem);
 protected:
     // scrollview delegate
     virtual CCSize tableCellSizeForIndex(CCTableView *table, ssize_t idx);
@@ -48,11 +55,16 @@ private:
     virtual void onTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
     void getHotItems();
     void refreshView(CCObject* obj);
-    void onClickWarBtn(CCObject * pSender, Control::EventType pCCControlEvent);
-    void onClickBuffBtn(CCObject * pSender, Control::EventType pCCControlEvent);
-    void onClickResBtn(CCObject * pSender, Control::EventType pCCControlEvent);
-    void onClickOthBtn(CCObject * pSender, Control::EventType pCCControlEvent);
-    void onClickHotBtn(CCObject * pSender, Control::EventType pCCControlEvent);
+//    void onClickWarBtn(CCObject * pSender, Control::EventType pCCControlEvent);
+//    void onClickBuffBtn(CCObject * pSender, Control::EventType pCCControlEvent);
+//    void onClickResBtn(CCObject * pSender, Control::EventType pCCControlEvent);
+//    void onClickOthBtn(CCObject * pSender, Control::EventType pCCControlEvent);
+//    void onClickHotBtn(CCObject * pSender, Control::EventType pCCControlEvent);
+    void onClickWarBtn();
+    void onClickBuffBtn();
+    void onClickResBtn();
+    void onClickOthBtn();
+    void onClickHotBtn();
     void sortDataByOrderNum();
     void refreshTime(CCObject* param);
     void onTimer(float dt);
@@ -75,6 +87,10 @@ private:
     CCSafeObject<CCNode> m_timeNode;
     CCSafeObject<CCLabelIF> m_timeTitleText;
     CCSafeObject<CCLabelIF> m_timeLeftText;
+    
+    CCSafeObject<CCLayer> m_galleryLayer;
+    CCSafeObject<CCGallery> m_mallGallery;
+    
     double m_refreshTime;
     double m_leftTime;
     
