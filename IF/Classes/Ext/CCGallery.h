@@ -58,7 +58,7 @@ public:
 		CCGalleryItem *pRet = new CCGalleryItem();
 		if (pRet) {
 			pRet->setIdx(uIdx);
-			
+            pRet->setTag(uIdx);
 			pRet->autorelease();
 			return pRet;
 		}

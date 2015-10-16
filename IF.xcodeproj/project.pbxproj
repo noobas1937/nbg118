@@ -255,6 +255,7 @@
 		366E309017D9C554006CCCBF /* ResourcesPush.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 366E308E17D9C553006CCCBF /* ResourcesPush.cpp */; };
 		3676B3191BB393AC00120B78 /* CCGallery.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3676B3171BB393AC00120B78 /* CCGallery.cpp */; settings = {ASSET_TAGS = (); }; };
 		369BF39318290446006F12B9 /* QuestSubmitCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 369BF39118290446006F12B9 /* QuestSubmitCommand.cpp */; };
+		36A11F981BD0E35C00C62FD8 /* ArcGalleryCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36A11F961BD0E35C00C62FD8 /* ArcGalleryCell.cpp */; settings = {ASSET_TAGS = (); }; };
 		36A9688617E8468D002129DA /* WaitInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36A9688417E8468D002129DA /* WaitInterface.cpp */; };
 		36A968A817E981DE002129DA /* YesNoDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36A968A617E981DE002129DA /* YesNoDialog.cpp */; };
 		36AA340C1BBA60ED006D7E97 /* C3DShowView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36AA340A1BBA60ED006D7E97 /* C3DShowView.cpp */; settings = {ASSET_TAGS = (); }; };
@@ -1706,6 +1707,8 @@
 		3676B3181BB393AC00120B78 /* CCGallery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGallery.h; sourceTree = "<group>"; };
 		369BF39118290446006F12B9 /* QuestSubmitCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = QuestSubmitCommand.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		369BF39218290446006F12B9 /* QuestSubmitCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestSubmitCommand.h; sourceTree = "<group>"; };
+		36A11F961BD0E35C00C62FD8 /* ArcGalleryCell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ArcGalleryCell.cpp; sourceTree = "<group>"; };
+		36A11F971BD0E35C00C62FD8 /* ArcGalleryCell.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ArcGalleryCell.hpp; sourceTree = "<group>"; };
 		36A9687B17E6E454002129DA /* ResourceInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceInfo.h; sourceTree = "<group>"; };
 		36A9688417E8468D002129DA /* WaitInterface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WaitInterface.cpp; sourceTree = "<group>"; };
 		36A9688517E8468D002129DA /* WaitInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitInterface.h; sourceTree = "<group>"; };
@@ -6282,6 +6285,8 @@
 				FDB6C4B117F02BB700B73999 /* skill */,
 				7C97CE1C18713DB9001DD73B /* tip */,
 				FD9C967717CF261F005F493D /* popup */,
+				36A11F961BD0E35C00C62FD8 /* ArcGalleryCell.cpp */,
+				36A11F971BD0E35C00C62FD8 /* ArcGalleryCell.hpp */,
 			);
 			name = view;
 			path = Classes/view;
@@ -7613,6 +7618,7 @@
 				59DEBDF21B058B40007FC5CB /* ADJActivityPackage.m in Sources */,
 				FDC9E79518BDED7800F0962F /* ResourceTile.cpp in Sources */,
 				E63B935E198749E10018E35F /* WildMonsterPopUp.cpp in Sources */,
+				36A11F981BD0E35C00C62FD8 /* ArcGalleryCell.cpp in Sources */,
 				A8AAEE2F1B95CDE300129FFD /* ReportCustomHeadPicCommand.cpp in Sources */,
 				BA2EB25818E2A0DA00DB3D83 /* DefaultTableViewDelegate.cpp in Sources */,
 				27AD604B1B5D014A00B6AD40 /* MJRefreshBackFooter.m in Sources */,

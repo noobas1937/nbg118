@@ -540,9 +540,9 @@ bool comperUnLockLv(string s1, string s2)
     }
     
     if (info1->unlockLevel > info2->unlockLevel) {
-        return true;
-    }else {
         return false;
+    }else {
+        return true;
     }
 }
 

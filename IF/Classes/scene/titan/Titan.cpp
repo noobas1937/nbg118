@@ -88,7 +88,7 @@ bool Titan::initWithFile(int tid)
 //    _model->addChild(_drawDebug);
 //    _obbt = OBB(_model->getAABB());
     
-    
+    reset();
     if (true) {
         return true;
     }
@@ -179,8 +179,9 @@ bool Titan::initWithFile(int tid)
 //    rootps2->startParticleSystem();
 //    auto handrightNode = _model->getAttachNode("hand_r");
 //    handrightNode->addChild(rootps2);
-
-    changeTitanState(eActState::Stand);
+    
+    
+//    changeTitanState(eActState::Stand);
 
 //    Director::getInstance()->getScheduler()->schedule(schedule_selector(Titan::update), this, 0, false);
     return true;

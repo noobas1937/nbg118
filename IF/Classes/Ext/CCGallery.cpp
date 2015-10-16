@@ -165,7 +165,7 @@ void CCGallery::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 		CCGalleryItem *pGItem = touchGalleryItems(touchPoint);
 		if (pGItem) {
 			if (m_pDelegate) {
-//				m_pDelegate->selectionDecided(this, pGItem);
+				m_pDelegate->selectionDecided(this, pGItem);
 			}
 			
 //			CCLuaEngine::defaultEngine()->executeGalleryEvent(this, pGItem, kCCGalleryEventDecided);
@@ -454,6 +454,9 @@ void CCGallery::update(float delta)
             itemPos = ccpSub(itemPos, m_tCenter);
             if (fabsf(itemPos.x) < m_tItemSize.width * 0.5f) {
                 m_nSelectedItemIdx = pGItem->getIdx();
+                if (m_pDelegate) {
+                    m_pDelegate->selectionChanged(this, pGItem);
+                }
 //                CCLuaEngine::defaultEngine()->executeGalleryEvent(this, pGItem, kCCGalleryEventEnded);
                 break;
             }

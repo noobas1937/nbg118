@@ -589,7 +589,7 @@ void ImperialScene::onCreateTitan()
 //    m_Titan->setPosition(Vec2(0,0));
     //m_titanNode->addChild(m_Titan); //d by ljf
     //begin a by ljf
-    m_Titan->changeTitanState(Titan::eActState::Stand);
+//    m_Titan->changeTitanState(Titan::eActState::Stand);
    
     m_TitanNode = CCNode::create();
     m_TitanNode->setRotation3D(Vec3(32, 39, -24));

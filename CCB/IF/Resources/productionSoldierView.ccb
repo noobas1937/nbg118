@@ -476,9 +476,9 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>0.0</real>
-									<real>0.0</real>
-									<integer>1</integer>
+									<real>-320</real>
+									<real>-200</real>
+									<integer>0</integer>
 								</array>
 							</dict>
 							<dict>
@@ -569,7 +569,7 @@
 								<key>value</key>
 								<array>
 									<real>-320</real>
-									<real>-100</real>
+									<real>-200</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -581,7 +581,7 @@
 								<key>value</key>
 								<array>
 									<real>640</real>
-									<real>200</real>
+									<real>230</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -648,6 +648,8 @@
 								<true/>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 						<key>seqExpanded</key>
 						<true/>
 					</dict>
@@ -8273,8 +8275,6 @@
 										<false/>
 									</dict>
 								</array>
-								<key>selected</key>
-								<true/>
 							</dict>
 						</array>
 						<key>customClass</key>
@@ -8493,9 +8493,9 @@
 			<key>name</key>
 			<string>Default Timeline</string>
 			<key>offset</key>
-			<real>0.0</real>
+			<real>1.0729169845581055</real>
 			<key>position</key>
-			<real>7.6666665077209473</real>
+			<real>9.6666669845581055</real>
 			<key>resolution</key>
 			<real>30</real>
 			<key>scale</key>

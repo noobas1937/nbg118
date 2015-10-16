@@ -28,8 +28,17 @@
 #include "GuideController.h"
 #include "C3DShowView.hpp"
 #include "IFSkeletonAnimation.h"
+#include "ArcGalleryCell.hpp"
 
-ProductionSoldiersView::ProductionSoldiersView(int buildingId):m_buildingId(buildingId),m_waitInterface(NULL),m_isWaitingSeverRes(false),m_isShowRefresh(false){
+ProductionSoldiersView::ProductionSoldiersView(int buildingId)
+:m_buildingId(buildingId)
+,m_waitInterface(NULL)
+,m_isWaitingSeverRes(false)
+,m_isShowRefresh(false)
+,m_curGalleryIndex(0)
+,m_lastGalleryIndex(-1)
+,m_ArcGallery(NULL)
+{
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this,callfuncO_selector(ProductionSoldiersView::immediatelyHarvestFinish),MSG_QUICK_TROOPS_HARVEST, NULL);
 }
 
@@ -750,38 +759,25 @@ void ProductionSoldiersView::onEnter(){
 
 void ProductionSoldiersView::AsyLoadRes2(CCObject* p){
     if(m_arcScroll==NULL){
-        auto m_arcArmys = CCArray::create();
+        
+        m_ArcGallery = CCGallery::create(Size(200,230),Size(640,230));
+        m_ArcGallery->setBackScale(0.9);
+        m_ArcGallery->setDelegate(this);
+        m_ArcGallery->setDirection(kCCGalleryDirectionHorizontal);
+        
         for(int i=0;i<m_armyIds.size();i++){
-            
-            if ( m_isFort ) {
-                auto& aInfo = GlobalData::shared()->fortList[m_armyIds[i]];
-                ArcInfo* info = new ArcInfo(i,CCString::createWithFormat("%s",aInfo.getName().c_str())->getCString(),aInfo.getHeadIcon(),aInfo.unlockLevel>m_buildingLevel,110,m_resIndex);
-                m_arcArmys->addObject(info);
-                info->release();
-                
-            }else {
-                auto& aInfo = GlobalData::shared()->armyList[m_armyIds[i]];
-                ArcInfo* info = new ArcInfo(i,CCString::createWithFormat("%s",aInfo.getName().c_str())->getCString(),aInfo.getHeadIcon(),aInfo.unlockLevel>m_buildingLevel,110,204,aInfo.armyId);
-                m_arcArmys->addObject(info);
-                info->release();
-            }
-            
+            ArcGalleryCell* cell = ArcGalleryCell::create();
+            m_ArcGallery->addChild(cell);
+            cell->setAnchorPoint(ccp(0.5, 0.5));
         }
+        m_ArcGallery->addChildFinish();
         
-        auto gallery = CCGallery::create(Size(100,300),Size(640,300));
-        gallery->setBackScale(0.5);
-        gallery->setDirection(kCCGalleryDirectionHorizontal);
-        for (int i = 0; i < 5; ++i) {
-            auto sp = CCLoadSprite::createSprite("zb_bp_xuanzhong.png");
-            gallery->addChild(sp);
-        }
-        gallery->addChildFinish();
-
-//        m_arcNode->addChild(gallery);
+        m_arcLayer->addChild(m_ArcGallery);
         
-        m_arcScroll = ArcScrollView::create(m_arcArmys,2,m_pos);
-        m_arcScroll->setCallback(this, callfunc_selector(ProductionSoldiersView::arcButtonClick));
-        m_arcNode->addChild(m_arcScroll);
+        refreshGalleryCells();
+//        m_arcScroll = ArcScrollView::create(m_arcArmys,2,m_pos);
+//        m_arcScroll->setCallback(this, callfunc_selector(ProductionSoldiersView::arcButtonClick));
+//        m_arcNode->addChild(m_arcScroll);
     }
 }
 
@@ -1287,6 +1283,7 @@ bool ProductionSoldiersView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarg
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_infoBtn", CCControlButton*, this->m_infoBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_trainBtn", CCControlButton*, this->m_trainBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_arcNode", CCNode*, this->m_arcNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_arcLayer", CCLayer*, this->m_arcLayer);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_resNode", CCNode*, this->m_resNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_numTxt", CCLabelIF*, this->m_numTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_numValueTxt", CCLabelIF*, this->m_numValueTxt);
@@ -1397,4 +1394,128 @@ void ProductionSoldiersView::ClearCD()
     }
     QueueController::getInstance()->startCCDQueue(m_qid, "", false, m_tmpGold,"",2);
     PopupViewController::getInstance()->removeAllPopupView();
+}
+
+void ProductionSoldiersView::refreshGalleryCells()
+{
+    for(int i=0;i<m_armyIds.size();i++){
+        int resIndex = m_resIndex;
+        ArmyInfo aInfo;
+        std::string itemId = "";
+        bool isLock = false;
+        if ( m_isFort ) {
+            aInfo = GlobalData::shared()->fortList[m_armyIds[i]];
+            isLock = aInfo.unlockLevel > m_buildingLevel;
+//            ArcInfo* info = new ArcInfo(i,CCString::createWithFormat("%s",aInfo.getName().c_str())->getCString(),aInfo.getHeadIcon(),aInfo.unlockLevel>m_buildingLevel,110,m_resIndex);
+            
+            
+        }else {
+            aInfo = GlobalData::shared()->armyList[m_armyIds[i]];
+            resIndex = 204;
+            itemId = aInfo.armyId;
+            isLock = aInfo.unlockLevel > m_buildingLevel;
+//            ArcInfo* info = new ArcInfo(i,CCString::createWithFormat("%s",aInfo.getName().c_str())->getCString(),aInfo.getHeadIcon(),aInfo.unlockLevel>m_buildingLevel,110,204,aInfo.armyId);
+        }
+//      m_index(index),m_title(title),m_icon(icon),isLock(isLock),maxIconSize(iconSize),m_srcIndex(srcIndex),m_id(itemId){};
+        auto pItem = m_ArcGallery->getChildByTag(i);
+        if (!pItem) {
+            return;
+        }
+        auto pItemCCBNode = static_cast<ArcGalleryCell*>(pItem->getChildByTag(1));
+        if (!pItemCCBNode) {
+            return;
+        }
+        if (i == m_lastGalleryIndex) {
+            
+        }
+        else if (i == m_curGalleryIndex) {
+            
+        }
+        else {
+            
+        }
+//        m_lockIcon = NULL;
+        CCLoadSprite::doResourceByCommonIndex(resIndex, true);
+        int sIndex = resIndex;
+        setCleanFunction([sIndex](){
+            CCLoadSprite::doResourceByCommonIndex(4, false);
+            if(sIndex!=-1){
+                CCLoadSprite::doResourceByCommonIndex(sIndex, false);
+            }
+        });
+        
+        if(itemId!=""){
+            string num = itemId.substr(itemId.size()-2);
+            auto lvSpr1 = CCCommonUtils::getRomanSprite(atoi(num.c_str())+1, 1);
+            pItemCCBNode->m_lockLvNode->addChild(lvSpr1);
+            auto lvSpr2 = CCCommonUtils::getRomanSprite(atoi(num.c_str())+1);
+            pItemCCBNode->m_LvNode->addChild(lvSpr2);
+        }
+        
+        pItemCCBNode->m_buttonTxt->setString(CCString::createWithFormat("%s",aInfo.getName().c_str())->getCString());
+        pItemCCBNode->m_buttonLockTxt->setString(CCString::createWithFormat("%s",aInfo.getName().c_str())->getCString());
+        pItemCCBNode->m_icon = CCLoadSprite::createSprite(aInfo.getHeadIcon().c_str());
+        
+        if(isLock)
+        {
+            CCCommonUtils::setSpriteGray(pItemCCBNode->m_button, true);
+            pItemCCBNode->m_lockNode->setVisible(true);
+            pItemCCBNode->m_txtNode->setVisible(false);
+            CCCommonUtils::setSpriteGray(pItemCCBNode->m_icon,true);
+        }else{
+            CCCommonUtils::setSpriteGray(pItemCCBNode->m_button, false);
+            if (i == m_lastGalleryIndex) {
+                pItemCCBNode->m_button->setColor(Color3B(200,0,0));
+                pItemCCBNode->m_icon->setColor(Color3B(200,0,0));
+            }
+            else if (i == m_curGalleryIndex) {
+                pItemCCBNode->m_button->setColor(Color3B(255,255,255));
+                pItemCCBNode->m_icon->setColor(Color3B(255,255,255));
+            }
+            pItemCCBNode->m_lockNode->setVisible(false);
+            pItemCCBNode->m_txtNode->setVisible(true);
+        }
+        
+        CCCommonUtils::setSpriteMaxSize(pItemCCBNode->m_icon, 150, true);
+        pItemCCBNode->m_icon->setPosition(ccp(84,120));
+        pItemCCBNode->m_button->addChild(pItemCCBNode->m_icon,1000);
+        
+        if (CCCommonUtils::isIosAndroidPad())
+        {
+            pItemCCBNode->m_buttonTxt->setDimensions(CCSize(300, 0));
+        }
+    }
+
+}
+
+void ProductionSoldiersView::slideBegan(CCGallery *gallery)
+{
+    
+}
+
+void ProductionSoldiersView::slideEnded(CCGallery *gallery, CCGalleryItem *pGItem)
+{
+    
+}
+
+void ProductionSoldiersView::selectionChanged(CCGallery *gallery, CCGalleryItem *pGItem)
+{
+    auto arcCell = pGItem->getChildByTag(1);
+    if (!arcCell) {
+        return;
+    }
+    if(m_armyIds.size()>pGItem->getIdx()){
+        m_armyId = m_armyIds[pGItem->getIdx()];
+        if (m_lastGalleryIndex != m_curGalleryIndex) {
+            m_lastGalleryIndex = m_curGalleryIndex;
+        }
+        m_curGalleryIndex = pGItem->getIdx();
+    }
+    refreshGalleryCells();
+    refresh();
+}
+
+void ProductionSoldiersView::selectionDecided(CCGallery *gallery, CCGalleryItem *pGItem)
+{
+    
 }
