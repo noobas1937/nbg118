@@ -166,7 +166,7 @@ bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType) {
         m_map->addChild(m_layers[WM_BG], WM_BG);
         m_layers[WM_BG]->setTag(WM_BG_TAG);
         
-        m_map->layerNamed("ocean")->setGlobalZOrder(-100);
+//        m_map->layerNamed("ocean")->setGlobalZOrder(-100);
     }
 
     if(m_mapType == NORMAL_MAP) {
@@ -179,8 +179,8 @@ bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType) {
         auto link_area = DynamicTiledMap::create("nb_world_link_area.tmx", gotoPoint, loopSize);
         link_area->setTag(WM_BETWEEN_SERVER_MAP_TAG);
         link_area->setPosition(link_area_pos);
-        link_area->layerNamed("tile")->setGlobalZOrder(-100);
-        link_area->layerNamed("ocean")->setGlobalZOrder(-100);
+//        link_area->layerNamed("tile")->setGlobalZOrder(-100);
+//        link_area->layerNamed("ocean")->setGlobalZOrder(-100);
         m_layers[WM_BETWEEN_SERVER_MAP]->addChild(link_area);
     }
     m_map->addChild(m_layers[WM_CITY], WM_CITY);
@@ -7736,19 +7736,113 @@ void WorldMapView::testCastle(int level){
 void WorldMapView::update_water_shader()
 {
     static const int WATER_SHADER_TAG = WM_BG_TAG + 1;
-    static const int WATER_SHADER_GZ = -1;
+    static const int WATER_SHADER_X_CNT = 4;
+    static const int WATER_SHADER_Y_CNT = 4;
     
-    NBWaterShaderLayer* water = dynamic_cast<NBWaterShaderLayer*>(m_layers[WM_BG]->getChildByTag(WATER_SHADER_TAG));
-    if (water == nullptr) {
-        water = NBWaterShaderLayer::create();
-        water->setTag(WATER_SHADER_TAG);
-        m_layers[WM_BG]->addChild(water);
-        water->schedule([water](float dt){water->tick(dt);}, "sh");
-    }
-    if (water) {
-        water->getMapSprite()->setGlobalZOrder(WATER_SHADER_GZ);
-
-        auto fPos = m_map->getViewPointByTilePoint(m_map->currentTilePoint);
-        water->setPosition(fPos);
+//    static const int WATER_SHADER_GZ = -1;
+    
+//    NBWaterShaderLayer* water = dynamic_cast<NBWaterShaderLayer*>(m_layers[WM_BG]->getChildByTag(WATER_SHADER_TAG));
+//    if (water == nullptr) {
+//        water = NBWaterShaderLayer::create();
+//        water->setTag(WATER_SHADER_TAG);
+//        m_layers[WM_BG]->addChild(water);
+//        water->schedule([water](float dt){water->tick(dt);}, "sh");
+//    }
+//    if (water) {
+//        water->getMapSprite()->setGlobalZOrder(WATER_SHADER_GZ);
+//
+//        auto fPos = m_map->getViewPointByTilePoint(m_map->currentTilePoint);
+//        water->setPosition(fPos);
+//    }
+    
+    auto fPos = m_map->getViewPointByTilePoint(m_map->currentTilePoint);
+    int tag = 0;
+    for (int i = -WATER_SHADER_X_CNT / 2; i < WATER_SHADER_X_CNT / 2; i++)
+    {
+        for (int j = -WATER_SHADER_Y_CNT / 2; j < WATER_SHADER_Y_CNT / 2; j++)
+        {
+            Sprite* sp = dynamic_cast<Sprite*>(m_layers[WM_BG]->getChildByTag(WATER_SHADER_TAG + tag));
+            if (!sp)
+            {
+                sp = Sprite::create("shaders/water2d.png", Rect(0, 0, 512, 512));
+                sp->setAnchorPoint(Vec2(0, 0));
+                sp->setTag(WATER_SHADER_TAG + tag);
+                m_layers[WM_BG]->addChild(sp);
+                
+                auto TexCache = Director::getInstance()->getTextureCache();
+                auto wave2 = TexCache->addImage("shaders/wave2d_1.png");
+                auto wave1 = TexCache->addImage("shaders/wave2d_0.jpg");
+                wave1->setTexParameters(Texture2D::TexParams{GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT});
+                wave2->setTexParameters(Texture2D::TexParams{GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT});
+                
+                const char* pszVertSource =
+                "attribute vec4 a_position; \n\
+                attribute vec2 a_texCoord; \n\
+                attribute vec4 a_color; \n\
+                 \n\
+                \n#ifdef GL_ES\n \n\
+                varying lowp vec4 v_fragmentColor; \n\
+                varying mediump vec2 v_texCoord; \n\
+                \n#else\n \n\
+                    varying vec4 v_fragmentColor; \n\
+                varying vec2 v_texCoord; \n\
+                \n#endif\n \n\
+                 \n\
+                void main() \n\
+                { \n\
+                    gl_Position = CC_PMatrix * a_position; \n\
+                    v_fragmentColor = a_color; \n\
+                    v_texCoord = a_texCoord; \n\
+                } \n";
+                
+                const char* pszFragSource =
+                "#ifdef GL_ES \n\
+                precision mediump float; \n\
+                #endif \n\
+                \n\
+                varying vec4 v_fragmentColor; \n\
+                varying vec2 v_texCoord; \n\
+                \n\
+                uniform sampler2D u_wave1; \n\
+                uniform sampler2D u_wave2; \n\
+                uniform float u_interpolate; \n\
+                uniform float saturateValue; \n\
+                uniform float wave_time; \n\
+                float verticalSpeed = 0.03797; \n\
+                float horizontalSpeed = 0.077; \n\
+                void main() { \n\
+                    vec2 textCoord1 = v_texCoord; \n\
+                    textCoord1.x += verticalSpeed * wave_time; \n\
+                    textCoord1.x = fract(textCoord1.x); \n\
+                    textCoord1.y += horizontalSpeed * wave_time; \n\
+                    textCoord1.y = fract(textCoord1.y); \n\
+                    vec3 color = texture2D(u_wave1, textCoord1).xyz; \n\
+                    color += texture2D(u_wave2, v_texCoord).xyz; \n\
+                    if (color.x > saturateValue) { \n\
+                        color = vec3(1.0); \n\
+                        gl_FragColor = vec4(color, 1.0); \n\
+                    } else { \n\
+                        color = texture2D(CC_Texture0, v_texCoord).xyz; \n\
+                        gl_FragColor = vec4(color, 0.5); \n\
+                    } \n\
+                }";
+                auto glprogram = GLProgram::createWithByteArrays(pszVertSource, pszFragSource);
+                auto glprogramstate = GLProgramState::getOrCreateWithGLProgram(glprogram);
+                sp->setGLProgramState(glprogramstate);
+                
+                glprogramstate->setUniformTexture("u_wave1", wave1);
+                glprogramstate->setUniformTexture("u_wave2", wave2);
+                glprogramstate->setUniformFloat("saturateValue", 1.2);
+                glprogramstate->setUniformFloat("wave_time", 0);
+                
+                static float wave_time = 0;
+                sp->schedule([sp, glprogramstate](float dt){
+                    wave_time += dt / 50.0;
+                    glprogramstate->setUniformFloat("wave_time", wave_time);
+                }, "water");
+            }
+            sp->setPosition(fPos.x + i * 512, fPos.y + j * 512);
+            tag++;
+        }
     }
 }

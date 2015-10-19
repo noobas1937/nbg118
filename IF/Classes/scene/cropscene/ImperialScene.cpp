@@ -2648,7 +2648,7 @@ void ImperialScene::onUpdateInfo()
             build->setNamePos(m_nodeBuildings[(it->second).pos]->getPositionX()
                               , m_nodeBuildings[(it->second).pos]->getPositionY(), m_signLayer, m_popLayer, m_arrbatchNode, curBatch, od, curBlentBatch);
             if (m_buildSpineMap.find((it->second).pos) != m_buildSpineMap.end()) {
-                build->setSpineLayer( m_buildSpineMap[(it->second).pos] );
+//                build->setSpineLayer( m_buildSpineMap[(it->second).pos] );
             }
             
             m_buildItems[it->first] = build;
