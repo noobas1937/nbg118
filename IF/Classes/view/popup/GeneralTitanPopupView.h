@@ -154,16 +154,29 @@ private:
     CCSafeObject<CCNode> m_CleanFeedCDBtnNode;
     CCSafeObject<CCNode> m_needFoodNode;
     CCSafeObject<CCNode> m_needGoldNode;
+    CCSafeObject<CCNode> m_speedUpBtnNode;
+    CCSafeObject<CCNode> m_toolSpeedUpBtnNode;
+    
     CCSafeObject<CCControlButton> m_titanFeedBtn;
     CCSafeObject<CCControlButton> m_speedUpBtn;
     CCSafeObject<CCControlButton> m_toolSpeedUpBtn;
     CCSafeObject<CCControlButton> m_CleanFeedCDBtn;
-
+    CCSafeObject<CCLabelIF> m_nameLabel;
+    CCSafeObject<CCLabelIF> m_toolSpeedUpTxt;
+    
+    
     CCSafeObject<CCScale9Sprite> m_buildBG;
     CCSafeObject<CCNode>m_titanPosInView;
-    CCSafeObject<CCLabelIF> m_titanAPTxt;
+//    CCSafeObject<CCLabelIF> m_titanAPTxt;
+    CCSafeObject<CCLabelIF> m_titanAPTxt_0;
+    CCSafeObject<CCLabelIF> m_titanAPTxt_1;
+    CCSafeObject<CCLabelIF> m_titanAPTxt_2;
+    
     CCSafeObject<CCLabelIF> m_titanAPTxtPre;
-    CCSafeObject<CCLabelIF> m_titanFeedStatus;
+//    CCSafeObject<CCLabelIF> m_titanFeedStatus;
+    CCSafeObject<CCLabelIF> m_titanFeedStatus_0;
+    CCSafeObject<CCLabelIF> m_titanFeedStatus_1;
+    CCSafeObject<CCLabelIF> m_titanFeedStatus_2;
     CCSafeObject<CCLabelIF> m_feedCDGoldTxt;
     CCSafeObject<CCLabelIF> m_needGlod;//fusheng 快速成长的Label
     CCSafeObject<CCLabelIF> m_feedCDBtnTxt;
@@ -174,7 +187,9 @@ private:
     CCSafeObject<CCLabelIF> m_titanMagicTxt;
     CCSafeObject<CCLabelIF> m_Txt1;
     CCSafeObject<CCLabelIF> m_Txt2;
-    CCSafeObject<CCLabelIF> m_titanExtTxt;
+    CCSafeObject<CCLabelIF> m_titanExtTxt_0;
+    CCSafeObject<CCLabelIF> m_titanExtTxt_1;
+    CCSafeObject<CCLabelIF> m_titanExtTxt_2;
     
     CCSafeObject<CCLabelIF> m_needFood;
     CCSafeObject<CCLabelIF> m_currentFoodNum;

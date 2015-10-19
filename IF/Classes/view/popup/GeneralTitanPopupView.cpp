@@ -106,6 +106,59 @@ void setGrayNode(cocos2d::CCNode *node , bool gray)
     
     
 }
+
+inline void arrangeLabel(vector<CCLabelIF*> &labels,vector<float> &gaps )
+{
+    size_t count = labels.size();
+    
+    size_t gaps_size = gaps.size();
+    
+    if (count == 0 || count == 1) {
+        return;
+    }
+    
+    for (int i = 1; i<count; i++) {
+        
+        CCLabelIF* nbPreLabel = labels.at(i-1);
+        
+        CCLabelIF* nbLabel = labels.at(i);
+        
+        nbLabel->setAnchorPoint(Vec2::ZERO);
+        
+        float gap = 0;
+        
+        if (i-1<gaps_size) {
+            gap = gaps.at(i-1);
+        }
+        
+        nbLabel->setPositionX(nbPreLabel->getContentSize().width * nbPreLabel->getOriginScaleX()+nbPreLabel->getPositionX()+gap);
+        
+    }
+    
+}
+inline void arrangeLabel(vector<CCLabelIF*> &labels )
+{
+    size_t count = labels.size();
+    
+    if (count == 0 || count == 1) {
+        return;
+    }
+    
+    for (int i = 1; i<count; i++) {
+        
+        CCLabelIF* nbPreLabel = labels.at(i-1);
+        
+        CCLabelIF* nbLabel = labels.at(i);
+        
+        nbLabel->setAnchorPoint(Vec2::ZERO);
+        
+        nbLabel->setPositionX(nbPreLabel->getContentSize().width * nbPreLabel->getOriginScaleX()+nbPreLabel->getPositionX());
+        
+    }
+    
+}
+
+
 void GeneralTitanPopupView::onGetPlayerInfoCallback(cocos2d::CCObject *obj) {
     auto ret = dynamic_cast<NetResult*>(obj);
     if (!ret || ret->getErrorCode() != Error_OK) {
@@ -251,12 +304,17 @@ bool GeneralTitanPopupView::init()
     m_titanFeedBtn->setZoomOnTouchDown(false);
     
     m_CleanFeedCDBtn->setZoomOnTouchDown(false);//fusheng 不做放缩
+    
+    m_toolSpeedUpBtn->setZoomOnTouchDown(false);
+    
+    m_speedUpBtn->setZoomOnTouchDown(false);
 
     
     m_titanAPTxtPre->setString("AP");//fusheng 需要文本
     
     m_titanExtTxtPre->setString("Exp");//fusheng 需要文本
     
+
   
     return true;
 }
@@ -312,6 +370,9 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
     
     FunBuildInfo& fbiInfo = FunBuildController::getInstance()->getFunbuildById(400000000);
     
+
+    m_nameLabel->setString(_lang(fbiInfo.name));
+    
     if(fbiInfo.state == FUN_BUILD_UPING)
     {
         CCCommonUtils::setSpriteGray(m_titanUngrade, true);
@@ -365,12 +426,17 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         {
 
             
+            setGrayNode(m_toolSpeedUpBtnNode, true);
+            
+            m_toolSpeedUpTxt->setColor(ccGRAY);
             
             m_toolSpeedUpBtn->setEnabled(true);
         }
         else
         {
+            m_toolSpeedUpTxt->setColor(ccColor3B(0,73,19));
           
+            setGrayNode(m_toolSpeedUpBtnNode, false);
             
             m_toolSpeedUpBtn->setEnabled(false);
         }
@@ -406,7 +472,16 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
     {
 //        this->m_titanExtTxt->setString(CCString::createWithFormat("%d/%d",m_titanInfo.exp,m_titanInfo.nextExp)->getCString());
         
-        this->m_titanExtTxt->setString(CCString::createWithFormat("%s/%s",CC_ITOA_K((long)m_titanInfo.exp),CC_ITOA_K((long)m_titanInfo.nextExp))->getCString());
+//        this->m_titanExtTxt->setString(CCString::createWithFormat("%s/%s",CC_ITOA_K((long)m_titanInfo.exp),CC_ITOA_K((long)m_titanInfo.nextExp))->getCString());
+        
+        this->m_titanExtTxt_0->setString("(");
+        this->m_titanExtTxt_1->setString(CCString::createWithFormat("%s",CC_ITOA_K((long)m_titanInfo.exp))->getCString());
+        this->m_titanExtTxt_2->setString(CCString::createWithFormat("/%s)",CC_ITOA_K((long)m_titanInfo.nextExp))->getCString());
+        vector<cocos2d::CCLabelIF *> labels;
+        labels.push_back(m_titanExtTxt_0);
+        labels.push_back(m_titanExtTxt_1);
+        labels.push_back(m_titanExtTxt_2);
+        arrangeLabel(labels);
         
         float ratio =((float)m_titanInfo.exp)/m_titanInfo.nextExp;
         
@@ -432,7 +507,7 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
     }
     else
     {
-        this->m_titanExtTxt->setString("数据异常");
+//        this->m_titanExtTxt->setString("数据异常");
         
 
         
@@ -472,8 +547,17 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         
         
         
-        this->m_titanAPTxt->setString(CCString::createWithFormat("(%d/%d)",m_titanInfo.currentManual,m_titanInfo.maxManual)->getCString());
-
+        this->m_titanAPTxt_0->setString("(");
+        this->m_titanAPTxt_1->setString(CCString::createWithFormat("%d",m_titanInfo.currentManual)->getCString());
+        this->m_titanAPTxt_2->setString(CCString::createWithFormat("/%d)",m_titanInfo.maxManual)->getCString());
+        
+        vector<cocos2d::CCLabelIF *> labels;
+        labels.push_back(m_titanAPTxtPre);
+        labels.push_back(m_titanAPTxt_0);
+        labels.push_back(m_titanAPTxt_1);
+        labels.push_back(m_titanAPTxt_2);
+        arrangeLabel(labels);
+        
     }
     else
     {
@@ -481,7 +565,7 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         auto size = this->m_ProTiTanAP->getContentSize();
         size.width = 0;
         this->m_ProTiTanAP->setContentSize(size);
-        this->m_titanAPTxt->setString("数据异常");
+//        this->m_titanAPTxt->setString("数据异常");
 
     }
    
@@ -500,14 +584,14 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
                 if(m_titanInfo.feedFoodNum>food->longValue())
                 {
                     
-                    this->m_needFood->setColor(ccColor3B::RED);
+//                    this->m_needFood->setColor(ccColor3B::RED);
                     
                     isFoodEnough = false;
                     
                 }
                 else
                 {
-                    this->m_needFood->setColor(ccColor3B::WHITE);
+//                    this->m_needFood->setColor(ccColor3B::WHITE);
                 }
             }
             else
@@ -520,13 +604,13 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
                 if(m_titanInfo.feedFoodNum>lfood)
                 {
                     
-                    this->m_needFood->setColor(ccColor3B::RED);
+//                    this->m_needFood->setColor(ccColor3B::RED);
                     
                     isFoodEnough = false;
                 }
                 else
                 {
-                    this->m_needFood->setColor(ccColor3B::WHITE);
+//                    this->m_needFood->setColor(ccColor3B::WHITE);
                 }
                 
                 //            this->m_currentFoodNum->setString(CCString::createWithFormat("/%ld",lfood)->getCString());
@@ -543,13 +627,13 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
             if(m_titanInfo.feedFoodNum>lfood)
             {
                 
-                this->m_needFood->setColor(ccColor3B::RED);
+//                this->m_needFood->setColor(ccColor3B::RED);
                 
                 isFoodEnough = false;
             }
             else
             {
-                this->m_needFood->setColor(ccColor3B::WHITE);
+//                this->m_needFood->setColor(ccColor3B::WHITE);
             }
         }
     }
@@ -623,13 +707,27 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
     
     if(m_titanInfo.feedNum>=m_titanInfo.feedMaxNum)
     {
-        m_titanFeedStatus->setString(CCString::createWithFormat("Count : %d/%d",m_titanInfo.feedMaxNum,m_titanInfo.feedMaxNum)->getCString());//fusheng 需要文本
+        m_titanFeedStatus_0->setString(CCString::createWithFormat("Count : ")->getCString());//fusheng 需要文本
+        m_titanFeedStatus_1->setString(CCString::createWithFormat("%d",m_titanInfo.feedMaxNum)->getCString());
+        m_titanFeedStatus_2->setString(CCString::createWithFormat("/%d",m_titanInfo.feedMaxNum)->getCString());
+        
+        m_titanFeedStatus_0->setColor(ccColor3B(195,206,254));
+        
+        m_titanFeedStatus_1->setVisible(true);
+        m_titanFeedStatus_2->setVisible(true);
+        
+        vector<cocos2d::CCLabelIF *> labels;
+        labels.push_back(m_titanFeedStatus_0);
+        labels.push_back(m_titanFeedStatus_1);
+        labels.push_back(m_titanFeedStatus_2);
+        arrangeLabel(labels);
+        
         m_titanFeedTxt->setString("Accelerated growth");//fusheng 需要文本
         
         int gold = (m_titanInfo.feedNum - m_titanInfo.feedMaxNum)*50+CCCommonUtils::getGoldByTime(3600);
         gold = gold>1000? 1000:gold;
         this->m_needGlod->setString(CC_CMDITOAL(gold));
-        this->m_needGlod->setColor(ccWHITE);
+        
         m_needGoldNode->setVisible(true);
         m_needFoodNode->setVisible(false);
 
@@ -638,19 +736,56 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
     {
         m_needGoldNode->setVisible(false);
         m_needFoodNode->setVisible(true);
-        m_titanFeedStatus->setString(CCString::createWithFormat("Count : %d/%d",m_titanInfo.feedNum,m_titanInfo.feedMaxNum)->getCString());//fusheng 需要文本  还有中文
+        m_titanFeedStatus_0->setString(CCString::createWithFormat("Count : ")->getCString());//fusheng 需要文本
+        m_titanFeedStatus_1->setString(CCString::createWithFormat("%d",m_titanInfo.feedMaxNum)->getCString());
+        m_titanFeedStatus_2->setString(CCString::createWithFormat("/%d",m_titanInfo.feedMaxNum)->getCString());
+        
+        
+        m_titanFeedStatus_0->setColor(ccColor3B(195,206,254));
+        
+        m_titanFeedStatus_1->setVisible(true);
+        m_titanFeedStatus_2->setVisible(true);
+        
+        vector<cocos2d::CCLabelIF *> labels;
+        labels.push_back(m_titanFeedStatus_0);
+        labels.push_back(m_titanFeedStatus_1);
+        labels.push_back(m_titanFeedStatus_2);
+        arrangeLabel(labels);
+
+        
         m_titanFeedTxt->setString("Feed");//fusheng 需要文本
     }
 
     if(m_titanInfo.exp>=m_titanInfo.nextExp)
     {
-        m_titanFeedStatus->setString(CCString::createWithFormat("Experience full, you can upgrade!!!")->getCString());
+    
+        
+        m_titanFeedStatus_0->setString(CCString::createWithFormat("Experience full, you can upgrade!!!")->getCString());//fusheng 需要文本
+
+        m_titanFeedStatus_0->setColor(ccColor3B(155,200,32));
+        
+        m_titanFeedStatus_1->setVisible(false);
+        m_titanFeedStatus_2->setVisible(false);
+        
         m_titanFeedTxt->setString("Feed");//fusheng 需要文本
     }
 
     this->m_titanFeedBtn->setEnabled(isCanFeed);
     
     setGrayNode(m_titanFeedBtnNode,!isCanFeed);
+    
+    if(isCanFeed)
+    {
+        m_titanFeedTxt->setColor(ccColor3B(31,72,14));
+        
+        m_needFood->setColor(ccColor3B(255,168,3));
+    }
+    else
+    {
+        m_titanFeedTxt->setColor(ccGRAY);
+        
+        m_needFood->setColor(ccGRAY);
+    }
 //    CCCommonUtils::setSpriteGray(m_titanFeedBtnSprite, !isCanFeed);
 
 }
@@ -710,10 +845,18 @@ bool GeneralTitanPopupView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarge
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanMagicTxt", CCLabelIF*, this->m_titanMagicTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_Txt1", CCLabelIF*, this->m_Txt1);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_Txt2", CCLabelIF*, this->m_Txt2);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanExtTxt", CCLabelIF*, this->m_titanExtTxt);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanExtTxt_0", CCLabelIF*, this->m_titanExtTxt_0);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanExtTxt_1", CCLabelIF*, this->m_titanExtTxt_1);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanExtTxt_2", CCLabelIF*, this->m_titanExtTxt_2);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_feedCDTxt", CCLabelIF*, this->m_feedCDTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_upgradeCDTxt", CCLabelIF*, this->m_upgradeCDTxt);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanFeedStatus", CCLabelIF*, this->m_titanFeedStatus);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_toolSpeedUpTxt", CCLabelIF*, this->m_toolSpeedUpTxt);
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanFeedStatus_0", CCLabelIF*, this->m_titanFeedStatus_0);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanFeedStatus_1", CCLabelIF*, this->m_titanFeedStatus_1);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanFeedStatus_2", CCLabelIF*, this->m_titanFeedStatus_2);
+    
+    
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanFeedTxt", CCLabelIF*, this->m_titanFeedTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_feedCDBtnTxt", CCLabelIF*, this->m_feedCDBtnTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_lvLabel", CCLabelIF*, this->m_lvLabel);
@@ -735,6 +878,9 @@ bool GeneralTitanPopupView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarge
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bustPic", CCNode*, this->m_bustPic);
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_icon", CCNode*, this->m_icon);
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_touchLayer", CCNode*, this->m_touchLayer);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_toolSpeedUpBtnNode", CCNode*, this->m_toolSpeedUpBtnNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_speedUpBtnNode", CCNode*, this->m_speedUpBtnNode);
+    
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bottomNode", CCNode*, this->m_bottomNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanFeedBtnNode", CCNode*, this->m_titanFeedBtnNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_CleanFeedCDBtnNode", CCNode*, this->m_CleanFeedCDBtnNode);
@@ -790,7 +936,10 @@ bool GeneralTitanPopupView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarge
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_ProTiTanAP", CCScale9Sprite*, this->m_ProTiTanAP);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanPosInView", CCNode*, this->m_titanPosInView);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanAPTxt", CCLabelIF*, this->m_titanAPTxt);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanAPTxt_0", CCLabelIF*, this->m_titanAPTxt_0);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanAPTxt_1", CCLabelIF*, this->m_titanAPTxt_1);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanAPTxt_2", CCLabelIF*, this->m_titanAPTxt_2);
+    
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanAPTxtPre", CCLabelIF*, this->m_titanAPTxtPre);
     
 ////    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_skillBtn", CCControlButton*, this->m_skillBtn);
@@ -867,6 +1016,8 @@ bool GeneralTitanPopupView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarge
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_equipTipLabel", CCLabelIF*, this->m_equipTipLabel);
 //    
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_receiveGlow", CCNode*, this->m_receiveGlow);
+    
+        CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nameLabel", CCLabelIF*, this->m_nameLabel);
 //
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_lockL", CCSprite*, this->m_lockL);
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_lockR", CCSprite*, this->m_lockR);
@@ -1277,7 +1428,7 @@ void GeneralTitanPopupView::onRefreshEquip()
     //打开屏蔽装备
 //    if(m_info&&(!m_info->showEquip)){
     if(true){
-        for (int i=0; i<=7; i++) {
+        for (int i=0; i<=5; i++) {
             string siteIcon = "";
             if (i==0) {
                 siteIcon = "icon_weapons_close.png";
@@ -1324,11 +1475,11 @@ void GeneralTitanPopupView::onRefreshEquip()
                 m_red6Pt->setVisible(false);
                 m_eLvBg6->setVisible(false);
             }else if (i==6) {
-                if (isOpenLongJing) {
-                    m_equipNode7->addChild(icon);
-                    m_red7Pt->setVisible(false);
-                    m_eLvBg7->setVisible(false);
-                }
+//                if (isOpenLongJing) {
+//                    m_equipNode7->addChild(icon);
+//                    m_red7Pt->setVisible(false);
+//                    m_eLvBg7->setVisible(false);
+//                }
             }
 //            else if (i==7) {
 //                m_equipNode8->addChild(icon);
