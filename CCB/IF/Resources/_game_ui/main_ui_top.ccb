@@ -7872,8 +7872,8 @@
 												<string>Size</string>
 												<key>value</key>
 												<array>
-													<real>77</real>
-													<real>51</real>
+													<real>54</real>
+													<real>62</real>
 													<integer>0</integer>
 												</array>
 											</dict>
@@ -7893,7 +7893,7 @@
 												<key>value</key>
 												<array>
 													<string>Common/Common_2.plist</string>
-													<string>mail_edit.png</string>
+													<string>mail_btn_write.png</string>
 												</array>
 											</dict>
 											<dict>
@@ -7916,7 +7916,7 @@
 												<key>value</key>
 												<array>
 													<string>Common/Common_2.plist</string>
-													<string>mail_edit.png</string>
+													<string>mail_btn_write.png</string>
 												</array>
 											</dict>
 											<dict>
@@ -7939,7 +7939,7 @@
 												<key>value</key>
 												<array>
 													<string>Common/Common_2.plist</string>
-													<string>mail_edit.png</string>
+													<string>mail_btn_write.png</string>
 												</array>
 											</dict>
 											<dict>
@@ -7955,6 +7955,8 @@
 												</array>
 											</dict>
 										</array>
+										<key>selected</key>
+										<true/>
 									</dict>
 									<dict>
 										<key>baseClass</key>
