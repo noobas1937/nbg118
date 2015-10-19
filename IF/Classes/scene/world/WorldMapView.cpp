@@ -98,6 +98,10 @@ bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType) {
     if (!CCLayer::init()) {
         return false;
     }
+    
+    m_water_wave1 = nullptr;
+    m_water_wave2 = nullptr;
+    
     cocos2d::CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Battle/Battle_soldier.plist");
     CCLoadSprite::doResourceByCommonIndex(205, true);
     CCLoadSprite::doResourceByCommonIndex(507, true);
@@ -1031,6 +1035,10 @@ void WorldMapView::onExit() {
     }
     m_marchArmy.clear();
     WorldController::getInstance()->purge();
+    
+    CC_SAFE_RELEASE_NULL(m_water_wave1);
+    CC_SAFE_RELEASE_NULL(m_water_wave2);
+    
     CCLayer::onExit();
 }
 
@@ -1745,7 +1753,7 @@ void WorldMapView::leaveWorld() {
 
 void WorldMapView::updateSelfName() {
     m_map->updateDynamicMap();
-    update_water_shader();
+//    update_water_shader();
 }
 
 void WorldMapView::clearPopupView() {
@@ -1854,9 +1862,10 @@ void WorldMapView::gotoTilePoint(const cocos2d::CCPoint &point,bool forceUpdate,
     }
     if (forceUpdate && !m_map->isSendCmd) {
         m_map->updateDynamicMap();
-        update_water_shader();
+//        update_water_shader();
     }
     m_map->isSendCmd = false;
+    update_water_shader(Vec2(x, y));
 }
 
 void WorldMapView::gotoTilePoint(const CCPoint &point, int serverId, bool isForceUpdate){
@@ -2102,7 +2111,7 @@ void WorldMapView::onMarchCallback(cocos2d::CCObject *obj) {
         // refresh map point
         auto point = params->valueForKey("point")->intValue();
         WorldMapView::instance()->m_map->updateDynamicMap(WorldController::getPointByIndex(point));
-        update_water_shader();
+//        update_water_shader();
     }
 }
 void WorldMapView::doAllianceArea(unsigned int type ,unsigned int index,bool isSuperMine/* false*/,bool isWarehouse/* false*/,WorldResourceType resType/* Wood*/,string aaid){
@@ -2360,7 +2369,7 @@ void WorldMapView::finishAllianceArea(CCObject* pObj){
     }
     if (!isSuperMine) {
         m_map->updateDynamicMap();
-        update_water_shader();
+//        update_water_shader();
     }
     m_untouchableTiles.erase(std::remove(m_untouchableTiles.begin(), m_untouchableTiles.end(), index),m_untouchableTiles.end());
 }
@@ -4030,6 +4039,8 @@ void WorldMapView::update(float delta) {
     }
     
     m_currentState = WorldController::getInstance()->getKingActivityStateByType(FIGHT_OF_KING);
+    
+    update_water_shader(m_map->getViewPointByTilePoint(m_map->currentTilePoint));
 }
 IFHeiqishiNode* WorldMapView::createHeiqishiSoldier(MarchInfo& info){//default info for （info.marchType MethodHeiqishi）、(info.targetType CityTile)
     float fNodeScale = 0.8;
@@ -7672,7 +7683,7 @@ void WorldMapView::onShake(CCObject* pObj){
             CCPoint tilePoint = WorldController::getPointByIndex(index);
             if (m_cityInfo.find(index) == m_cityInfo.end()) {
                 m_map->updateDynamicMap(tilePoint);
-                update_water_shader();
+//                update_water_shader();
                 CCLOG("shakeLog sendcmd point%f, %f",tilePoint.x,tilePoint.y);
             }
             auto view =  dynamic_cast<IFShakeLayer*>(PopupViewController::getInstance()->getCurrentPopupView());
@@ -7733,11 +7744,11 @@ void WorldMapView::testCastle(int level){
 
 }
 
-void WorldMapView::update_water_shader()
+void WorldMapView::update_water_shader(const Vec2& position)
 {
     static const int WATER_SHADER_TAG = WM_BG_TAG + 1;
     static const int WATER_SHADER_X_CNT = 4;
-    static const int WATER_SHADER_Y_CNT = 4;
+    static const int WATER_SHADER_Y_CNT = 6;
     
 //    static const int WATER_SHADER_GZ = -1;
     
@@ -7755,7 +7766,6 @@ void WorldMapView::update_water_shader()
 //        water->setPosition(fPos);
 //    }
     
-    auto fPos = m_map->getViewPointByTilePoint(m_map->currentTilePoint);
     int tag = 0;
     for (int i = -WATER_SHADER_X_CNT / 2; i < WATER_SHADER_X_CNT / 2; i++)
     {
@@ -7768,12 +7778,19 @@ void WorldMapView::update_water_shader()
                 sp->setAnchorPoint(Vec2(0, 0));
                 sp->setTag(WATER_SHADER_TAG + tag);
                 m_layers[WM_BG]->addChild(sp);
-                
+#define USE_WATER_SHADER
+#ifdef USE_WATER_SHADER
                 auto TexCache = Director::getInstance()->getTextureCache();
-                auto wave2 = TexCache->addImage("shaders/wave2d_1.png");
-                auto wave1 = TexCache->addImage("shaders/wave2d_0.jpg");
-                wave1->setTexParameters(Texture2D::TexParams{GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT});
-                wave2->setTexParameters(Texture2D::TexParams{GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT});
+                if (!m_water_wave1) {
+                    m_water_wave1 = TexCache->addImage("shaders/wave2d_0.jpg");
+                    m_water_wave1->retain();
+                }
+                if (!m_water_wave2) {
+                    m_water_wave2 = TexCache->addImage("shaders/wave2d_1.png");
+                    m_water_wave2->retain();
+                }
+                m_water_wave1->setTexParameters(Texture2D::TexParams{GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT});
+                m_water_wave2->setTexParameters(Texture2D::TexParams{GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT});
                 
                 const char* pszVertSource =
                 "attribute vec4 a_position; \n\
@@ -7830,8 +7847,8 @@ void WorldMapView::update_water_shader()
                 auto glprogramstate = GLProgramState::getOrCreateWithGLProgram(glprogram);
                 sp->setGLProgramState(glprogramstate);
                 
-                glprogramstate->setUniformTexture("u_wave1", wave1);
-                glprogramstate->setUniformTexture("u_wave2", wave2);
+                glprogramstate->setUniformTexture("u_wave1", m_water_wave1);
+                glprogramstate->setUniformTexture("u_wave2", m_water_wave2);
                 glprogramstate->setUniformFloat("saturateValue", 1.2);
                 glprogramstate->setUniformFloat("wave_time", 0);
                 
@@ -7840,8 +7857,9 @@ void WorldMapView::update_water_shader()
                     wave_time += dt / 50.0;
                     glprogramstate->setUniformFloat("wave_time", wave_time);
                 }, "water");
+#endif
             }
-            sp->setPosition(fPos.x + i * 512, fPos.y + j * 512);
+            sp->setPosition(position.x + i * 512, position.y + j * 512);
             tag++;
         }
     }
