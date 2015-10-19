@@ -189,6 +189,7 @@ void TileOpenView::updateInfo(CCObject* p)
         curY -= 46;
     } else {
         curY -= 23;
+        curY -= 46;//fusheng 原本显示少一个
     }
     m_scrollView->setContentSize(CCSize(m_infoList->getContentSize().width,curY));
     m_scrollView->setContentOffset(ccp(0, m_infoList->getContentSize().height - curY));

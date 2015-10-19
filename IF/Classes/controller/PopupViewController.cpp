@@ -30,6 +30,7 @@
 #include "LongJingStoreView.h"
 #include "GeneralTitanPopupView.h"
 #include "TitanUpgradeView.h"
+#include "MailSystemListPopUp.h"
 
 static PopupViewController *_instance = NULL;
 static int _view_count = 0;
@@ -125,6 +126,7 @@ int PopupViewController::addPopupInViewWithAnim(PopupBaseView *view, bool needLa
         world->updateGUI(true);
     }
     auto ArcPop = dynamic_cast<ArcPopupBaseView*>(view);
+    MailSystemListPopUp* mailSystemListPopUp = nullptr;
     if (ArcPop) {
         UIComponent::getInstance()->showPopupView(UIPopupViewType_ArcPop_TitanUpgrade);
     } else {
@@ -132,6 +134,7 @@ int PopupViewController::addPopupInViewWithAnim(PopupBaseView *view, bool needLa
         if(mailwrite){
             UIComponent::getInstance()->showPopupView(UIPopupViewType_Mail);
         }else{
+            mailSystemListPopUp = dynamic_cast<MailSystemListPopUp*>(view);
             UIComponent::getInstance()->showPopupView();
         }
     }
@@ -163,7 +166,14 @@ int PopupViewController::addPopupInViewWithAnim(PopupBaseView *view, bool needLa
     popupLayer->addChild(view);
     view->setUseAnimation(false);
     view->setOpenAnimation(true);
-    view->addToLayer();
+    if (mailSystemListPopUp)
+    {
+        mailSystemListPopUp->setPositionX(0);
+    }
+    else
+    {
+        view->addToLayer();
+    }
     
     return _view_count;
 }
@@ -417,13 +427,16 @@ int PopupViewController::goBackPopupViewWithAnim(PopupBaseView *removeView,Popup
     }
     m_isPlayingInAnim = true;
     auto ArcPop = dynamic_cast<ArcPopupBaseView*>(gobackView);
+    MailPopUpView* mailwrite = nullptr;
+    MailSystemListPopUp* mailSys = nullptr;
     if (ArcPop) {
         UIComponent::getInstance()->showPopupView(UIPopupViewType_ArcPop_TitanUpgrade);
     } else {
-        auto mailwrite = dynamic_cast<MailPopUpView*>(gobackView);
+        mailwrite = dynamic_cast<MailPopUpView*>(gobackView);
         if(mailwrite){
             UIComponent::getInstance()->showPopupView(UIPopupViewType_Mail);
         }else{
+            mailSys = dynamic_cast<MailSystemListPopUp*>(gobackView);
             UIComponent::getInstance()->showPopupView();
         }
     }
@@ -434,7 +447,16 @@ int PopupViewController::goBackPopupViewWithAnim(PopupBaseView *removeView,Popup
     gobackView->setUseAnimation(false);
     popupLayer->addChild(gobackView);
     //gobackView->release();
-    gobackView->setReturnPlayAnim();
+    
+    if (mailwrite || mailSys)
+    {
+        gobackView->setPositionX(0);
+    }
+    else
+    {
+        gobackView->setReturnPlayAnim();
+    }
+    
     removeView->setZOrder(1);
     float x = removeView->getPositionX()+removeView->getContentSize().width;
     float y = removeView->getPositionY();
