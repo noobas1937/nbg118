@@ -42,7 +42,7 @@ MailSystemCell* MailSystemCell::create(MailInfo *info,CCTableView *tableView){
 
 bool MailSystemCell::init(){
     m_ccbNode = CCBLoadFile("MailRenderNew", this, this);
-    m_ccbNode->setPositionX(-m_ccbNode->getContentSize().width); // 2-1 显示不正确的问题 原因未知 暴力解决 guo.jiang
+//    m_ccbNode->setPositionX(-m_ccbNode->getContentSize().width); // 2-1 显示不正确的问题 原因未知 暴力解决 guo.jiang
     this->setContentSize(m_ccbNode->getContentSize());
     m_readColor = ccc3(60,28,0);//ccc3(122,102,78);
     
@@ -1418,7 +1418,7 @@ bool isTouchInside_hack(CCNode* pNodeCCB, CCNode* pNode, CCTouch* touch)
         return false;
     CCPoint touchLocation = pNode->getParent()->convertToNodeSpace(touch->getLocation());
     CCRect bBox = pNode->boundingBox();
-    bBox.origin.x += pNodeCCB->getContentSize().width;
+//    bBox.origin.x += pNodeCCB->getContentSize().width;
     return bBox.containsPoint(touchLocation);
 }
 

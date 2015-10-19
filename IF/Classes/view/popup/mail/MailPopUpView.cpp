@@ -125,7 +125,7 @@ bool MailPopUpView::init(){
         this->m_bg->setContentSize(CCSize(m_bg->getContentSize().width, m_bg->getContentSize().height +dh));
         this->m_bg1->setContentSize(CCSize(m_bg1->getContentSize().width, m_bg1->getContentSize().height +dh));
         this->m_listContainer->setContentSize(CCSize(m_listContainer->getContentSize().width, m_listContainer->getContentSize().height + dh));
-        this->m_downNode->setPositionY(m_downNode->getPositionY() - dh);
+        this->m_downNode->setPositionY(m_downNode->getPositionY() - dh + 77/*bg sprite's height*/);
     }
     
     setTitleName(_lang("105513"));
