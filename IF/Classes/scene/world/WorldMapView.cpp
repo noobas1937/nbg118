@@ -7807,21 +7807,24 @@ void WorldMapView::update_water_shader()
                 uniform sampler2D u_wave2; \n\
                 uniform float u_interpolate; \n\
                 uniform float saturateValue; \n\
-                float verticalSpeed = 0.3797; \n\
-                float horizontalSpeed = 0.77; \n\
+                uniform float wave_time; \n\
+                float verticalSpeed = 0.03797; \n\
+                float horizontalSpeed = 0.077; \n\
                 void main() { \n\
-                vec2 textCoord1 = v_texCoord; \n\
-                textCoord1.x += verticalSpeed * CC_Time.x; \n\
-                textCoord1.x = fract(textCoord1.x); \n\
-                textCoord1.y += horizontalSpeed * CC_Time.x; \n\
-                textCoord1.y = fract(textCoord1.y); \n\
-                vec3 color = texture2D(u_wave1, textCoord1).xyz; \n\
-                color += texture2D(u_wave2, v_texCoord).xyz; \n\
-                if(color.x > saturateValue) { \n\
-                color = vec3(1.0); gl_FragColor = vec4(color, 1.0); } \n\
-                else { \n\
-                color = texture2D(CC_Texture0, v_texCoord).xyz; \n\
-                gl_FragColor = vec4(color, 0.5); }\n\
+                    vec2 textCoord1 = v_texCoord; \n\
+                    textCoord1.x += verticalSpeed * wave_time; \n\
+                    textCoord1.x = fract(textCoord1.x); \n\
+                    textCoord1.y += horizontalSpeed * wave_time; \n\
+                    textCoord1.y = fract(textCoord1.y); \n\
+                    vec3 color = texture2D(u_wave1, textCoord1).xyz; \n\
+                    color += texture2D(u_wave2, v_texCoord).xyz; \n\
+                    if (color.x > saturateValue) { \n\
+                        color = vec3(1.0); \n\
+                        gl_FragColor = vec4(color, 1.0); \n\
+                    } else { \n\
+                        color = texture2D(CC_Texture0, v_texCoord).xyz; \n\
+                        gl_FragColor = vec4(color, 0.5); \n\
+                    } \n\
                 }";
                 auto glprogram = GLProgram::createWithByteArrays(pszVertSource, pszFragSource);
                 auto glprogramstate = GLProgramState::getOrCreateWithGLProgram(glprogram);
@@ -7830,6 +7833,13 @@ void WorldMapView::update_water_shader()
                 glprogramstate->setUniformTexture("u_wave1", wave1);
                 glprogramstate->setUniformTexture("u_wave2", wave2);
                 glprogramstate->setUniformFloat("saturateValue", 1.2);
+                glprogramstate->setUniformFloat("wave_time", 0);
+                
+                static float wave_time = 0;
+                sp->schedule([sp, glprogramstate](float dt){
+                    wave_time += dt / 50.0;
+                    glprogramstate->setUniformFloat("wave_time", wave_time);
+                }, "water");
             }
             sp->setPosition(fPos.x + i * 512, fPos.y + j * 512);
             tag++;
