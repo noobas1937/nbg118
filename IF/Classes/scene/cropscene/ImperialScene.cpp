@@ -4004,15 +4004,16 @@ void ImperialScene::refreshSoldiers(CCObject* obj)
 
 void ImperialScene::addSoldierToMap(int stype, int num, int ptx, int pty)
 {
-    int rowWidth = 20;//不同行x偏移
-    int colHeight = 10;//不同行y偏移
-    int perX = 10;//同一行，每一个兵的x偏移
-    int perY = 5;//同一行，每一个兵的y偏移
+    // tao.yu 场景中的兵阵
+    int rowWidth = 30;//不同行x偏移
+    int colHeight = 20;//不同行y偏移
+    int perX = 30;//同一行，每一个兵的x偏移
+    int perY = 20;//同一行，每一个兵的y偏移
     int preNum = 200/10;
     int m_row = 6;
     int m_col = 3;
     string m_icon = "";
-    float scale = 0.7;
+    float scale = 1;
     
     int tX = 0;
     int tY = 0;
@@ -4027,22 +4028,22 @@ void ImperialScene::addSoldierToMap(int stype, int num, int ptx, int pty)
         case 2://骑兵
             rowWidth = 30;
             colHeight = 15;
-            perX = 15;
-            perY = 7;
+//            perX = 15;
+//            perY = 7;
             m_row = 4;
             m_col = 2;
             m_icon = "a020";
             preNum = 450/10;
-            scale = 0.7;
+            scale = 1;
             break;
         case 4://战车
             m_row = 3;
             m_col = 1;
-            perX = 20;
-            perY = 10;
+//            perX = 20;
+//            perY = 10;
             m_icon = "zhanche";
             preNum = 1200/10;
-            scale = 0.7;
+            scale = 1;
             tX = 0;
             tX = -20;
             break;
@@ -4073,6 +4074,7 @@ void ImperialScene::addSoldierToMap(int stype, int num, int ptx, int pty)
         soldier->setSoldierPosition(endPos+ccp(tX, tY));
         soldier->setAnchorPoint(ccp(0.5, 0.5));
         soldier->setSprScale(scale);
+        soldier->playAnimation(ActionStatus::ACTION_STAND);
         m_soldierArray->addObject(soldier);
     }
 }

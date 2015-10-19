@@ -219,10 +219,12 @@ void BattleSoldier2::delayPlayAnimation(){
     CCSpriteFrame *cf;
     switch (m_status) {
         case S_STAND:
-            cf = CCLoadSprite::getSF(CCString::createWithFormat("%s_%d_%s_%s_%d.png",m_icon.c_str(),m_side,m_direct.c_str(),ATTACK,0)->getCString());
-            CC_BREAK_IF(!cf);
-            myArray.pushBack(cf);
-            m_iconSpr->setDisplayFrame(cf);
+            for(int j=0;j<10;j++){
+                cf = CCLoadSprite::getSF(CCString::createWithFormat("%s_%d_%s_%s_%d.png",m_icon.c_str(),m_side,m_direct.c_str(),STAND,j)->getCString());
+                CC_BREAK_IF(!cf);
+                myArray.pushBack(cf);
+                m_iconSpr->setDisplayFrame(cf);
+            }
             break;
         case S_DEATH:
             for(int j=0;j<size;j++){

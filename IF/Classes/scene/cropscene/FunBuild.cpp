@@ -233,7 +233,17 @@ bool FunBuild::initFunBuild(int itemId, CCLabelBatchNode* nameLayer)
             m_lvLabel->setVisible(false);
             m_arrSpr->setVisible(false);
             m_lvBG->setVisible(false);
+            
+            //begin a by ljf
+            if(m_info->type == FUN_BUILD_SACRIFICE)
+            {
+                CCSpriteFrame* newSp = CCLoadSprite::getSF("pic428000_2_unlock.png");
+                m_spr->setDisplayFrame(newSp);
+            }
+            //end a by ljf
+            
         }
+        
         onCheckOutPut();
         
         m_effectSpr = CCSprite::create();
@@ -272,17 +282,7 @@ bool FunBuild::initFunBuild(int itemId, CCLabelBatchNode* nameLayer)
         
         // begin a by ljf
         auto& tileInfo = FunBuildController::getInstance()->m_tileMap[itemId];
-        /*
-        int position = tileInfo.tileId;
-        if (FunBuildController::getInstance()->m_tilePositionUnlockMap.find(position) != FunBuildController::getInstance()->m_tilePositionUnlockMap.end()) //在position_unlock中配置过
-        {
-            auto& tilePositionUnlockInfo = FunBuildController::getInstance()->m_tilePositionUnlockMap[position];
-            
-            if (tilePositionUnlockInfo.state == FUN_BUILD_LOCK )
-            {
-                tileName = "res_tile_lock.png";
-            }
-        }*/
+        
         if (tileInfo.state == FUN_BUILD_LOCK) {
             tileName = "res_tile_lock.png";
         }
@@ -298,11 +298,10 @@ bool FunBuild::initFunBuild(int itemId, CCLabelBatchNode* nameLayer)
        
         
         //auto& tileInfo = FunBuildController::getInstance()->m_tileMap[itemId]; //d by ljf
-        //if (FunBuildController::getInstance()->m_tilePositionUnlockMap.find(position) == FunBuildController::getInstance()->m_tilePositionUnlockMap.end()){ // a by ljf， //未在position_unlock中配置过
             if (tileInfo.state == FUN_BUILD_LOCK || tileInfo.xmlOpen==1) {
                 //m_tile->setVisible(false); // d by ljf
             }
-        //}// a by ljf
+        
         
         m_moveFrame = CCLoadSprite::createSprite("Tile_frame.png");
         m_moveFrame->setPosition(ccp(93, 56));
@@ -418,6 +417,23 @@ void FunBuild::playOpenLock()
     m_lvLabel->setVisible(true);
     m_arrSpr->setVisible(true);
     m_lvBG->setVisible(true);
+    //begin a by ljf
+    if (m_info->type == FUN_BUILD_SACRIFICE)
+    {
+        
+        m_spr->setOpacity(0);
+        
+        CCSpriteFrame* newSp = CCLoadSprite::getSF("pic428000_2.png");
+        m_spr->stopAllActions();
+        m_spr->setDisplayFrame(newSp);
+        m_spr->getTexture()->setAntiAliasTexParameters();
+        
+        m_spr->setVisible(true);
+        auto delate = CCDelayTime::create(0.5);
+        auto fadeIn = CCFadeIn::create(1.0);
+        m_spr->runAction(CCSequence::create(delate,fadeIn,NULL));
+    }
+    //end a by ljf
 }
 
 void FunBuild::setTileBatch(int x, int y, CCSpriteBatchNode* batchNode, int zOrder)
@@ -1054,6 +1070,17 @@ void FunBuild::onUpdateUpIcon(float dt)
                     }
                 }
             }
+            //begin  a by ljf
+            if(m_info->type == FUN_BUILD_SACRIFICE)
+            {
+                if(m_info->open > FunBuildController::getInstance()->getMainCityLv())
+                {
+                    canUp = false;
+                }
+                
+            }
+            //end a by ljf
+            
             m_arrSpr->setVisible(canUp);
         }
         else {
@@ -1364,19 +1391,6 @@ void FunBuild::onClickThis(float _time)
             }
         }
         //begin a by ljf
-        /*
-        int tileId = tileInfo.tileId;
-        if (tileId >= 17 and tileId <= 51 )
-        {
-            if (tileInfo.state == FUN_BUILD_LOCK) {
-                if(tileInfo.level > FunBuildController::getInstance()->getMainCityLv())
-                {
-                    CCCommonUtils::flyHint("res_tile_lock.png", "", _lang_1("102118", CC_ITOA(tileInfo.level)));
-                }
-            }
-        }
-        */
-        
         int position = tileInfo.tileId;
         if (FunBuildController::getInstance()->m_tilePositionUnlockMap.find(position) != FunBuildController::getInstance()->m_tilePositionUnlockMap.end()) //在position_unlock中配置过
         {
@@ -1421,11 +1435,14 @@ void FunBuild::onClickThis(float _time)
         
         if(m_lockIcon && m_lockIcon->isVisible() && !isUnLock)
         {
+            
             string tmpInfo = _lang_2("102184", _lang(m_info->name).c_str(), CC_ITOA(m_info->open));
+           
             CCCommonUtils::flyHint("", "", tmpInfo);
             scheduleOnce(schedule_selector(FunBuild::onCanClick), 0.2f);
             return;
         }
+        
         if (isUnLock) {
             playOpenLock();
             scheduleOnce(schedule_selector(FunBuild::onCanClick), 0.2f);

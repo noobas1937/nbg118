@@ -699,9 +699,20 @@ void Sprite3D::visit(cocos2d::Renderer *renderer, const cocos2d::Mat4 &parentTra
 void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
 #if CC_USE_CULLING
+    //begin d by ljf
+    //去掉视锥裁剪,有bug
+    /*
     // camera clipping
     if(Camera::getVisitingCamera() && !Camera::getVisitingCamera()->isVisibleInFrustum(&this->getAABB()))
         return;
+    */
+    //end d by ljf
+    //begin a by ljf
+    if(Camera::getVisitingCamera())
+    {
+        getAABB();
+    }
+    //end a by ljf
 #endif
     
     if (_skeleton)

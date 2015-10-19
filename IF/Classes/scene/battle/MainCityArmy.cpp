@@ -177,10 +177,11 @@ void MainCityArmy::restart(){
 }
 
 bool MainCityArmy::MackSoldier(int type, int idx){
+    // tao.yu 跑路的兵
     string m_icon = "";
-    int tmpPx = 20;
-    int tmpPy = 10;
-    float scale = 0.7;
+    int tmpPx = 40;
+    int tmpPy = 30;
+    float scale = 1;
     switch (type) {
         case 0://步兵
             m_icon = "a010";
