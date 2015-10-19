@@ -108,7 +108,7 @@ bool ProductionSoldiersView::init()
 //    m_slider->setTag(1);
 //    m_slider->setLimitMoveValue(20);
     m_slider = NBSlider::create("nb_bar_bg.png", "nb_bar_pro.png", "nb_cursor_icon.png",NBSlider::TextureResType::PLIST);
-    m_slider->setContentSize(Size(300,15));
+    m_slider->setContentSize(Size(sliderW,15));
 //    m_slider->setPosition(ccp(-60, -59));//fusheng d
     if (CCCommonUtils::isIosAndroidPad()) {
 //        m_slider->setPosition(ccp(-137, -56));//fusheng d
@@ -335,6 +335,7 @@ void ProductionSoldiersView::addSoldierIcon(){
     auto pic = C3DShowView::create(m_info->getModelName().c_str(),m_info->getModelTexName().c_str());
     pic->getModel().getObject()->setScale(18);
     pic->setPosition3D(Vec3(pos.x,pos.y,200));
+    pic->setAnchorPoint(Vec2(0.5,0));
     
 //    // TODO
 //    srand((unsigned int)time(0));
@@ -413,6 +414,12 @@ void ProductionSoldiersView::addSoldierIcon(){
          m_soldierBg->setVisible(true);
     }
     m_soldierBg->setVisible(false);
+    
+    if (CCCommonUtils::isPad())
+    {
+        pic->setScale(pic->getScale()*0.7);//fusheng pad调整大小0.7
+
+    }
     
 }
 
@@ -1383,7 +1390,7 @@ void ProductionSoldiersView::update(float time)
     pro = pro>1?1:pro;
     m_timeText->setString(CC_SECTOA(m_curTime));
     
-    int totalW = 342;
+    int totalW = 360;//fusheng 进度条宽度
     float w = totalW - pro*totalW;
     m_barClipNode->setContentSize(CCSize(w, m_progrossBar->getContentSize().height));
     
