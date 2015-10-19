@@ -134,7 +134,6 @@ void NBWorldNPC::updateOctopus(const Vec2& currentTilePoint, Node* animation_lay
     auto fPos = WORLD_MAP_VIEW->m_map->getViewPointByTilePoint(Vec2(tx, ty));
     auto mSprite_pos = fPos;
     auto mSprite = OctopusNode::create();
-    mSprite->setGlobalZOrder(-1.5);
     mSprite->setScaleX(sx);
     mSprite->setScaleY(sy);
     int random_offset_y = 128 / 2 + rand() % 30;
@@ -144,7 +143,6 @@ void NBWorldNPC::updateOctopus(const Vec2& currentTilePoint, Node* animation_lay
     
     mSprite->octopus = Sprite::createWithSpriteFrameName("anima_sea_monster_01.png");
     mSprite->octopus->setOpacity(0);
-    mSprite->octopus->setGlobalZOrder(-1.5);
     mSprite->addChild(mSprite->octopus);
     auto *ac1 = createAnimation("World/World_5.plist", "anima_sea_monster_0%d.png", 1, 8);
     mSprite->octopus->runAction(ac1);

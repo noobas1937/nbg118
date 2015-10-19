@@ -234,7 +234,7 @@
 		3642EC74184DBF8600D49597 /* FBUtilies.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3642EC71184DBF8600D49597 /* FBUtilies.cpp */; };
 		3642EC75184DBF8600D49597 /* FBUtilies.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3642EC73184DBF8600D49597 /* FBUtilies.mm */; };
 		3642EC77184DBFBE00D49597 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3642EC76184DBFBE00D49597 /* MessageUI.framework */; };
-		3646A6751BB945D200248935 /* NBSprite3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3646A6731BB945D200248935 /* NBSprite3D.cpp */; settings = {ASSET_TAGS = (); }; };
+		3646A6751BB945D200248935 /* NBSprite3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3646A6731BB945D200248935 /* NBSprite3D.cpp */; };
 		366A8461180BE37100790261 /* ClippingNodeExt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 366A845F180BE37100790261 /* ClippingNodeExt.cpp */; };
 		366E1C6A17D04FA0006CCCBF /* SoundController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 366E1C6717D04FA0006CCCBF /* SoundController.cpp */; };
 		366E1C6D17D07261006CCCBF /* LocalController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 366E1C6B17D07261006CCCBF /* LocalController.cpp */; };
@@ -253,14 +253,14 @@
 		366E308C17D70557006CCCBF /* NetController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 366E308917D70557006CCCBF /* NetController.cpp */; };
 		366E308D17D70557006CCCBF /* NetController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 366E308B17D70557006CCCBF /* NetController.mm */; };
 		366E309017D9C554006CCCBF /* ResourcesPush.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 366E308E17D9C553006CCCBF /* ResourcesPush.cpp */; };
-		3676B3191BB393AC00120B78 /* CCGallery.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3676B3171BB393AC00120B78 /* CCGallery.cpp */; settings = {ASSET_TAGS = (); }; };
+		3676B3191BB393AC00120B78 /* CCGallery.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3676B3171BB393AC00120B78 /* CCGallery.cpp */; };
 		369BF39318290446006F12B9 /* QuestSubmitCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 369BF39118290446006F12B9 /* QuestSubmitCommand.cpp */; };
-		36A11F981BD0E35C00C62FD8 /* ArcGalleryCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36A11F961BD0E35C00C62FD8 /* ArcGalleryCell.cpp */; settings = {ASSET_TAGS = (); }; };
+		36A11F981BD0E35C00C62FD8 /* ArcGalleryCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36A11F961BD0E35C00C62FD8 /* ArcGalleryCell.cpp */; };
 		36A9688617E8468D002129DA /* WaitInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36A9688417E8468D002129DA /* WaitInterface.cpp */; };
 		36A968A817E981DE002129DA /* YesNoDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36A968A617E981DE002129DA /* YesNoDialog.cpp */; };
-		36AA340C1BBA60ED006D7E97 /* C3DShowView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36AA340A1BBA60ED006D7E97 /* C3DShowView.cpp */; settings = {ASSET_TAGS = (); }; };
+		36AA340C1BBA60ED006D7E97 /* C3DShowView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36AA340A1BBA60ED006D7E97 /* C3DShowView.cpp */; };
 		36D7170318D9C6E3002FC987 /* CCGraySprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36D7170118D9C6E3002FC987 /* CCGraySprite.cpp */; };
-		36DA93901BCE353D0091A48B /* NBGRenderTarget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36DA938E1BCE353D0091A48B /* NBGRenderTarget.cpp */; settings = {ASSET_TAGS = (); }; };
+		36DA93901BCE353D0091A48B /* NBGRenderTarget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36DA938E1BCE353D0091A48B /* NBGRenderTarget.cpp */; };
 		36DE16D91BA188C00020785E /* 3d in Resources */ = {isa = PBXBuildFile; fileRef = 36DE16D71BA188C00020785E /* 3d */; };
 		36DE16DA1BA188C00020785E /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = 36DE16D81BA188C00020785E /* shaders */; };
 		36DE16E61BA188D60020785E /* DrawNode3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36DE16E01BA188D60020785E /* DrawNode3D.cpp */; };
@@ -942,6 +942,7 @@
 		9708FD591BA947CD00C6B3C3 /* TitanInfoCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9708FD571BA947CD00C6B3C3 /* TitanInfoCommand.cpp */; };
 		9708FD5C1BAA65E600C6B3C3 /* TitanInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9708FD5A1BAA65E600C6B3C3 /* TitanInfo.cpp */; };
 		9708FD5F1BAA861D00C6B3C3 /* TitanUpgradeView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9708FD5D1BAA861D00C6B3C3 /* TitanUpgradeView.cpp */; };
+		9716CF2A1BD4A1BC00BC3D38 /* NBSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9716CF281BD4A1BC00BC3D38 /* NBSlider.cpp */; };
 		972666461BAC07D300D59BC2 /* TitanInView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 972666441BAC07D300D59BC2 /* TitanInView.cpp */; };
 		974034461BAFDB3C00330AD3 /* TitanController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 974034441BAFDB3C00330AD3 /* TitanController.cpp */; };
 		A817139A1B660629008DE4D4 /* ChatTestCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A81713941B660629008DE4D4 /* ChatTestCommand.cpp */; };
@@ -987,16 +988,16 @@
 		B1FD956A18F6A0210083574F /* RegisterView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B1FD956818F6A0210083574F /* RegisterView.cpp */; };
 		B1FD956D18F790F20083574F /* EmailConfirmPush.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B1FD956B18F790F20083574F /* EmailConfirmPush.cpp */; };
 		B1FD957018F7BBFF0083574F /* PushSettingCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B1FD956E18F7BBFF0083574F /* PushSettingCommand.cpp */; };
-		B80D4B261BAFA1CC00422225 /* nb_world in Resources */ = {isa = PBXBuildFile; fileRef = B80D4B251BAFA1CC00422225 /* nb_world */; settings = {ASSET_TAGS = (); }; };
-		B80D4B2A1BAFA1D800422225 /* nb_world.tmx in Resources */ = {isa = PBXBuildFile; fileRef = B80D4B281BAFA1D800422225 /* nb_world.tmx */; settings = {ASSET_TAGS = (); }; };
-		B80D4B2F1BAFCA6B00422225 /* nb_world_link_area.tmx in Resources */ = {isa = PBXBuildFile; fileRef = B80D4B2E1BAFCA6B00422225 /* nb_world_link_area.tmx */; settings = {ASSET_TAGS = (); }; };
-		B8581EA01BBA34E70027F733 /* TypeDefinition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8581E9F1BBA34E70027F733 /* TypeDefinition.cpp */; settings = {ASSET_TAGS = (); }; };
-		B864A3BD1BCB43EA001BD875 /* DynamicTiledMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B864A3BB1BCB43EA001BD875 /* DynamicTiledMap.cpp */; settings = {ASSET_TAGS = (); }; };
-		B86B5D1B1BCCA7340010EC71 /* NBWorldMapDecoration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B86B5D191BCCA7340010EC71 /* NBWorldMapDecoration.cpp */; settings = {ASSET_TAGS = (); }; };
-		B86B5D2E1BCCF2360010EC71 /* NBWaterShaderLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B86B5D2C1BCCF2360010EC71 /* NBWaterShaderLayer.cpp */; settings = {ASSET_TAGS = (); }; };
-		B86B5D3E1BCF3D1E0010EC71 /* NBWorldMonster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B86B5D3C1BCF3D1E0010EC71 /* NBWorldMonster.cpp */; settings = {ASSET_TAGS = (); }; };
-		B86B5D411BCF422E0010EC71 /* CloudLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B86B5D3F1BCF422E0010EC71 /* CloudLayer.cpp */; settings = {ASSET_TAGS = (); }; };
-		B8F554041BD093CB00AD16E3 /* NBWorldNPC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8F554021BD093CB00AD16E3 /* NBWorldNPC.cpp */; settings = {ASSET_TAGS = (); }; };
+		B80D4B261BAFA1CC00422225 /* nb_world in Resources */ = {isa = PBXBuildFile; fileRef = B80D4B251BAFA1CC00422225 /* nb_world */; };
+		B80D4B2A1BAFA1D800422225 /* nb_world.tmx in Resources */ = {isa = PBXBuildFile; fileRef = B80D4B281BAFA1D800422225 /* nb_world.tmx */; };
+		B80D4B2F1BAFCA6B00422225 /* nb_world_link_area.tmx in Resources */ = {isa = PBXBuildFile; fileRef = B80D4B2E1BAFCA6B00422225 /* nb_world_link_area.tmx */; };
+		B8581EA01BBA34E70027F733 /* TypeDefinition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8581E9F1BBA34E70027F733 /* TypeDefinition.cpp */; };
+		B864A3BD1BCB43EA001BD875 /* DynamicTiledMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B864A3BB1BCB43EA001BD875 /* DynamicTiledMap.cpp */; };
+		B86B5D1B1BCCA7340010EC71 /* NBWorldMapDecoration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B86B5D191BCCA7340010EC71 /* NBWorldMapDecoration.cpp */; };
+		B86B5D2E1BCCF2360010EC71 /* NBWaterShaderLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B86B5D2C1BCCF2360010EC71 /* NBWaterShaderLayer.cpp */; };
+		B86B5D3E1BCF3D1E0010EC71 /* NBWorldMonster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B86B5D3C1BCF3D1E0010EC71 /* NBWorldMonster.cpp */; };
+		B86B5D411BCF422E0010EC71 /* CloudLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B86B5D3F1BCF422E0010EC71 /* CloudLayer.cpp */; };
+		B8F554041BD093CB00AD16E3 /* NBWorldNPC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8F554021BD093CB00AD16E3 /* NBWorldNPC.cpp */; };
 		BA19245118C87ED7009C1CEA /* CCLabelIFBMFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA19244D18C87ED7009C1CEA /* CCLabelIFBMFont.cpp */; };
 		BA19245218C87ED7009C1CEA /* CCLabelIFTTF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA19244F18C87ED7009C1CEA /* CCLabelIFTTF.cpp */; };
 		BA2EB25818E2A0DA00DB3D83 /* DefaultTableViewDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA2EB25618E2A0DA00DB3D83 /* DefaultTableViewDelegate.cpp */; };
@@ -3054,6 +3055,8 @@
 		9708FD5B1BAA65E600C6B3C3 /* TitanInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitanInfo.h; sourceTree = "<group>"; };
 		9708FD5D1BAA861D00C6B3C3 /* TitanUpgradeView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TitanUpgradeView.cpp; sourceTree = "<group>"; };
 		9708FD5E1BAA861D00C6B3C3 /* TitanUpgradeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitanUpgradeView.h; sourceTree = "<group>"; };
+		9716CF281BD4A1BC00BC3D38 /* NBSlider.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBSlider.cpp; sourceTree = "<group>"; };
+		9716CF291BD4A1BC00BC3D38 /* NBSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBSlider.h; sourceTree = "<group>"; };
 		972666441BAC07D300D59BC2 /* TitanInView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TitanInView.cpp; sourceTree = "<group>"; };
 		972666451BAC07D300D59BC2 /* TitanInView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitanInView.h; sourceTree = "<group>"; };
 		974034441BAFDB3C00330AD3 /* TitanController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TitanController.cpp; sourceTree = "<group>"; };
@@ -6544,6 +6547,8 @@
 		FD6F416017CDD218008FDB9C /* GUI */ = {
 			isa = PBXGroup;
 			children = (
+				9716CF281BD4A1BC00BC3D38 /* NBSlider.cpp */,
+				9716CF291BD4A1BC00BC3D38 /* NBSlider.h */,
 				36DA938E1BCE353D0091A48B /* NBGRenderTarget.cpp */,
 				36DA938F1BCE353D0091A48B /* NBGRenderTarget.h */,
 				2AB5E04A1B687E42001E0A7E /* CCTableViewTouchIFCell.cpp */,
@@ -7642,6 +7647,7 @@
 				3642EC75184DBF8600D49597 /* FBUtilies.mm in Sources */,
 				57FAFDC118F55ED500366A17 /* AllianceScienceDonateView.cpp in Sources */,
 				6CD847C61B2EED7600C8AF0D /* NSObject+HelpModel.m in Sources */,
+				9716CF2A1BD4A1BC00BC3D38 /* NBSlider.cpp in Sources */,
 				96169CDD1B42738000CA4AEF /* VipActiveView.cpp in Sources */,
 				BA2F458F18F7853900FF58DF /* GetAllianceCommentsCommand.cpp in Sources */,
 				BA19245218C87ED7009C1CEA /* CCLabelIFTTF.cpp in Sources */,

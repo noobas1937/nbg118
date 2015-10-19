@@ -557,7 +557,7 @@
 								<key>value</key>
 								<array>
 									<real>-320</real>
-									<real>-100</real>
+									<real>-153</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -569,7 +569,7 @@
 								<key>value</key>
 								<array>
 									<real>640</real>
-									<real>200</real>
+									<real>230</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -4064,8 +4064,6 @@
 										<string>lock tip</string>
 									</dict>
 								</array>
-								<key>selected</key>
-								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>
@@ -4597,6 +4595,79 @@
 													<integer>255</integer>
 													<integer>255</integer>
 												</array>
+											</dict>
+										</array>
+									</dict>
+									<dict>
+										<key>baseClass</key>
+										<string>CCNode</string>
+										<key>children</key>
+										<array/>
+										<key>customClass</key>
+										<string></string>
+										<key>displayName</key>
+										<string>m_sliderPos</string>
+										<key>memberVarAssignmentName</key>
+										<string>m_sliderPos</string>
+										<key>memberVarAssignmentType</key>
+										<integer>2</integer>
+										<key>properties</key>
+										<array>
+											<dict>
+												<key>name</key>
+												<string>position</string>
+												<key>type</key>
+												<string>Position</string>
+												<key>value</key>
+												<array>
+													<real>-206</real>
+													<real>-73</real>
+													<integer>0</integer>
+												</array>
+											</dict>
+											<dict>
+												<key>name</key>
+												<string>contentSize</string>
+												<key>type</key>
+												<string>Size</string>
+												<key>value</key>
+												<array>
+													<real>300</real>
+													<real>15</real>
+													<integer>0</integer>
+												</array>
+											</dict>
+											<dict>
+												<key>name</key>
+												<string>anchorPoint</string>
+												<key>type</key>
+												<string>Point</string>
+												<key>value</key>
+												<array>
+													<real>0.0</real>
+													<real>0.0</real>
+												</array>
+											</dict>
+											<dict>
+												<key>name</key>
+												<string>scale</string>
+												<key>type</key>
+												<string>ScaleLock</string>
+												<key>value</key>
+												<array>
+													<real>1</real>
+													<real>1</real>
+													<false/>
+													<integer>0</integer>
+												</array>
+											</dict>
+											<dict>
+												<key>name</key>
+												<string>ignoreAnchorPointForPosition</string>
+												<key>type</key>
+												<string>Check</string>
+												<key>value</key>
+												<false/>
 											</dict>
 										</array>
 									</dict>
@@ -6019,13 +6090,25 @@
 								<array>
 									<dict>
 										<key>name</key>
+										<string>position</string>
+										<key>type</key>
+										<string>Position</string>
+										<key>value</key>
+										<array>
+											<real>0.0</real>
+											<real>62.900001525878906</real>
+											<integer>0</integer>
+										</array>
+									</dict>
+									<dict>
+										<key>name</key>
 										<string>anchorPoint</string>
 										<key>type</key>
 										<string>Point</string>
 										<key>value</key>
 										<array>
 											<real>0.5</real>
-											<real>0.5</real>
+											<real>0.0</real>
 										</array>
 									</dict>
 									<dict>
@@ -6149,7 +6232,7 @@
 										<key>value</key>
 										<array>
 											<real>0.0</real>
-											<real>92.883209228515625</real>
+											<real>62.883209228515625</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -6218,7 +6301,7 @@
 										<key>value</key>
 										<array>
 											<real>0.0</real>
-											<real>92.900001525878906</real>
+											<real>62.900001525878906</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -7412,7 +7495,7 @@
 								<key>value</key>
 								<array>
 									<real>0.0</real>
-									<real>0.0</real>
+									<real>-49</real>
 									<integer>1</integer>
 								</array>
 							</dict>
@@ -7975,7 +8058,7 @@
 										<key>value</key>
 										<array>
 											<string>Common/Common_1.plist</string>
-											<string>Allance_team_jindutiao03.png</string>
+											<string>nb_bar_bg.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -8157,6 +8240,18 @@
 										<array>
 											<dict>
 												<key>name</key>
+												<string>position</string>
+												<key>type</key>
+												<string>Position</string>
+												<key>value</key>
+												<array>
+													<real>-10</real>
+													<real>-12</real>
+													<integer>0</integer>
+												</array>
+											</dict>
+											<dict>
+												<key>name</key>
 												<string>scale</string>
 												<key>type</key>
 												<string>ScaleLock</string>
@@ -8183,8 +8278,8 @@
 												<string>SpriteFrame</string>
 												<key>value</key>
 												<array>
-													<string>Common/Common_2.plist</string>
-													<string>kji_jindutiao.png</string>
+													<string>Common/Common_1.plist</string>
+													<string>nb_bar_pro.png</string>
 												</array>
 											</dict>
 											<dict>
@@ -8194,8 +8289,8 @@
 												<string>Size</string>
 												<key>value</key>
 												<array>
-													<real>342</real>
-													<real>28</real>
+													<real>360</real>
+													<real>50</real>
 													<integer>0</integer>
 												</array>
 											</dict>
@@ -8507,8 +8602,8 @@
 										<string>Color3</string>
 										<key>value</key>
 										<array>
-											<integer>222</integer>
-											<integer>191</integer>
+											<integer>240</integer>
+											<integer>130</integer>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -8553,6 +8648,37 @@
 							<dict>
 								<key>animatedProperties</key>
 								<dict>
+									<key>0</key>
+									<dict>
+										<key>scale</key>
+										<dict>
+											<key>keyframes</key>
+											<array>
+												<dict>
+													<key>easing</key>
+													<dict>
+														<key>type</key>
+														<integer>1</integer>
+													</dict>
+													<key>name</key>
+													<string>scale</string>
+													<key>time</key>
+													<real>7.6666665077209473</real>
+													<key>type</key>
+													<integer>4</integer>
+													<key>value</key>
+													<array>
+														<real>0.80000001192092896</real>
+														<real>0.80000001192092896</real>
+													</array>
+												</dict>
+											</array>
+											<key>name</key>
+											<string>scale</string>
+											<key>type</key>
+											<integer>4</integer>
+										</dict>
+									</dict>
 									<key>1</key>
 									<dict>
 										<key>scale</key>
@@ -8801,7 +8927,7 @@
 										<key>value</key>
 										<array>
 											<string>Common/Common_1.plist</string>
-											<string>btn_Orange.png</string>
+											<string>btn_gold.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -8824,7 +8950,7 @@
 										<key>value</key>
 										<array>
 											<string>Common/Common_1.plist</string>
-											<string>btn_Orange.png</string>
+											<string>btn_gold.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -8847,7 +8973,7 @@
 										<key>value</key>
 										<array>
 											<string>Common/Common_1.plist</string>
-											<string>btn_Orange.png</string>
+											<string>btn_gold.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -8863,6 +8989,8 @@
 										</array>
 									</dict>
 								</array>
+								<key>seqExpanded</key>
+								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>
