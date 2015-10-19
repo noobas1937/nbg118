@@ -168,6 +168,7 @@ private:
     CCSafeObject<CCLabelIF> m_needGlod;//fusheng 快速成长的Label
     CCSafeObject<CCLabelIF> m_feedCDBtnTxt;
     CCSafeObject<CCLabelIF> m_titanExtTxtPre;
+    CCSafeObject<CCLabelIF> m_lvLabel;
     
     CCSafeObject<CCLabelIF> m_titanAttackTxt;
     CCSafeObject<CCLabelIF> m_titanMagicTxt;
