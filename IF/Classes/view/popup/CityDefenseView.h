@@ -45,10 +45,10 @@ private:
     void sendSuccess(CCObject* data);
     
     CCSafeObject<CCNode> m_mainNode;
-    CCSafeObject<CCNode> m_bNode;
+//    CCSafeObject<CCNode> m_bNode;
     CCSafeObject<CCScale9Sprite> m_buildBG;
-    CCSafeObject<CCNode> m_fireNode1;
-    CCSafeObject<CCNode> m_fireNode2;
+//    CCSafeObject<CCNode> m_fireNode1;
+//    CCSafeObject<CCNode> m_fireNode2;
     
     CCSafeObject<CCControlButton> m_defBtn;
     CCSafeObject<CCLabelIF> m_defLabel;

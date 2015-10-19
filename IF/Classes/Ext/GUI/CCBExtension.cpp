@@ -20,6 +20,7 @@ NS_CC_EXT_BEGIN
 
 CCNode* CCBLoadFile(const char * pCCBFileName, CCNode* pParent /*= NULL*/, CCObject* pOwner /*= NULL*/, bool batchFlag/*= false*/)
 {
+    CCLOG("CCBLoadFile : %s",pCCBFileName);
     /* get shared CCNodeLoaderLibrary */
 	CCNodeLoaderLibrary * ccNodeLoaderLibrary = CCNodeLoaderLibrary::getInstance();
     if (!ccNodeLoaderLibrary)
