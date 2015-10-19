@@ -300,7 +300,12 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         m_Txt2->setString(CC_ITOA(armTitanInfo.attack));
     }
     
-
+    string title = _lang_1("102272", CC_ITOA(m_titanInfo.level));
+    if(m_titanInfo.level>=GlobalData::shared()->MaxBuildLv) {
+        title += _lang("102183");
+    }
+    m_lvLabel->setString(title);
+    
     bool isCanFeed = true;
     
     isFoodEnough = true;//fusheng 标记粮食充足
@@ -711,7 +716,7 @@ bool GeneralTitanPopupView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarge
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanFeedStatus", CCLabelIF*, this->m_titanFeedStatus);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanFeedTxt", CCLabelIF*, this->m_titanFeedTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_feedCDBtnTxt", CCLabelIF*, this->m_feedCDBtnTxt);
-    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_lvLabel", CCLabelIF*, this->m_lvLabel);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_needFood", CCLabelIF*, this->m_needFood);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_currentFoodNum", CCLabelIF*, this->m_currentFoodNum);
