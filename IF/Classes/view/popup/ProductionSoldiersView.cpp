@@ -101,20 +101,23 @@ bool ProductionSoldiersView::init()
         thuSp->setScaleX(thuSp->getScaleX() * 0.77);
     }
 
-    m_slider = CCSliderBar::createSlider(m_sliderBg, proSp, thuSp);
-    m_slider->setMinimumValue(0.0f);
-    m_slider->setMaximumValue(1.0f);
-    m_slider->setProgressScaleX(sliderW/proSp->getContentSize().width);
-    m_slider->setTag(1);
-    m_slider->setLimitMoveValue(20);
-    m_slider->setPosition(ccp(-60, -59));
+//    m_slider = CCSliderBar::createSlider(m_sliderBg, proSp, thuSp);//fusheng d
+//    m_slider->setMinimumValue(0.0f);
+//    m_slider->setMaximumValue(1.0f);
+//    m_slider->setProgressScaleX(sliderW/proSp->getContentSize().width);
+//    m_slider->setTag(1);
+//    m_slider->setLimitMoveValue(20);
+    m_slider = NBSlider::create("nb_bar_bg.png", "nb_bar_pro.png", "nb_cursor_icon.png",NBSlider::TextureResType::PLIST);
+    m_slider->setContentSize(Size(300,15));
+//    m_slider->setPosition(ccp(-60, -59));//fusheng d
     if (CCCommonUtils::isIosAndroidPad()) {
-        m_slider->setPosition(ccp(-137, -56));
+//        m_slider->setPosition(ccp(-137, -56));//fusheng d
         m_slider->setScaleX(2.6);
         m_slider->setScaleY(2.0);
     }
-    m_slider->addTargetWithActionForControlEvents(this, cccontrol_selector(ProductionSoldiersView::moveSlider), CCControlEventValueChanged);
-    m_sliderNode->addChild(m_slider, 1);
+//    m_slider->addTargetWithActionForControlEvents(this, cccontrol_selector(ProductionSoldiersView::moveSlider), CCControlEventValueChanged);//fusheng d
+    m_slider->addEventListener(CC_CALLBACK_2(ProductionSoldiersView::moveSlider, this));
+    m_sliderPos->addChild(m_slider, 1);
 
     auto editSize = CCSizeMake(120,30);
     if (CCCommonUtils::isIosAndroidPad())
@@ -720,7 +723,9 @@ void ProductionSoldiersView::refreshTrainNumText(int num){
     }
 }
 
-void ProductionSoldiersView::moveSlider(CCObject * pSender, Control::EventType pCCControlEvent){
+//void ProductionSoldiersView::moveSlider(CCObject * pSender, Control::EventType pCCControlEvent){
+void ProductionSoldiersView::moveSlider(Ref *pSender, NBSlider::EventType type){
+    
     if (m_invalideSlider) {
         m_invalideSlider = false;
         return ;
@@ -1289,6 +1294,8 @@ bool ProductionSoldiersView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarg
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_arcLayer", CCLayer*, this->m_arcLayer);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_resNode", CCNode*, this->m_resNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_resBGNode", CCNode*, this->m_resBGNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_sliderPos", CCNode*, this->m_sliderPos);
+    
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_numTxt", CCLabelIF*, this->m_numTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_numValueTxt", CCLabelIF*, this->m_numValueTxt);

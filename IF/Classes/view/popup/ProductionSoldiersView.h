@@ -17,6 +17,7 @@
 #include "CCSliderBar.h"
 #include "CCClipNode.h"
 #include "CCGallery.h"
+#include "NBSlider.h"
 
 class ProductionSoldiersView: public PopupBaseView
 ,public CCBSelectorResolver
@@ -64,7 +65,8 @@ private:
     void onTrainBtnClick(CCObject * pSender, Control::EventType pCCControlEvent);
     void onInfoBtnClick(CCObject * pSender, Control::EventType pCCControlEvent);
     void onFortHelpClick(CCObject * pSender, Control::EventType pCCControlEvent);
-    void moveSlider(CCObject * pSender, Control::EventType pCCControlEvent);
+//    void moveSlider(CCObject * pSender, Control::EventType pCCControlEvent);//fusheng d
+    void moveSlider(Ref *pSender, NBSlider::EventType type);
     void onAddClick(CCObject * pSender, Control::EventType pCCControlEvent);
     void onReduceClick(CCObject * pSender, Control::EventType pCCControlEvent);
     void onClearCDClick(CCObject * pSender, Control::EventType pCCControlEvent);
@@ -98,7 +100,8 @@ private:
     
     ArmyInfo* getCurArmy();
     
-    CCSafeObject<CCSliderBar> m_slider;
+//    CCSafeObject<CCSliderBar> m_slider; //fusheng d
+    CCSafeObject<NBSlider> m_slider;
     CCSafeObject<ArcScrollView> m_arcScroll;
     CCSafeObject<CCGallery> m_arcGallery;
     CCSafeObject<CCControlButton> m_immediateBtn;
@@ -126,6 +129,8 @@ private:
     CCSafeObject<CCNode> m_useEditNode;
     CCSafeObject<CCNode> m_resBGNode;
     CCSafeObject<CCEditBox> m_useEditTxt;
+    CCSafeObject<CCNode> m_sliderPos;
+    
 //    CCSafeObject<ArmyInfo> m_info;
 //    ArmyInfo* m_info;
 //    CCSafeObject<CCArray> m_armys;
