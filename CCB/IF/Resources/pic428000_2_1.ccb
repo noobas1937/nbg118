@@ -7,7 +7,7 @@
 	<key>currentResolution</key>
 	<integer>0</integer>
 	<key>currentSequenceId</key>
-	<integer>0</integer>
+	<integer>1</integer>
 	<key>fileType</key>
 	<string>CocosBuilder</string>
 	<key>fileVersion</key>
@@ -101,6 +101,11 @@
 						</array>
 					</dict>
 					<dict>
+						<key>animatedProperties</key>
+						<dict>
+							<key>1</key>
+							<dict/>
+						</dict>
 						<key>baseClass</key>
 						<string>CCSprite</string>
 						<key>children</key>
@@ -167,7 +172,7 @@
 								<key>value</key>
 								<array>
 									<string>Imperial/Imperial_22.plist</string>
-									<string>pic428000_2.png</string>
+									<string>pic428000_2_unlock.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -182,6 +187,10 @@
 								</array>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
+						<key>seqExpanded</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -267,6 +276,11 @@
 						</array>
 					</dict>
 					<dict>
+						<key>animatedProperties</key>
+						<dict>
+							<key>1</key>
+							<dict/>
+						</dict>
 						<key>baseClass</key>
 						<string>CCSprite</string>
 						<key>children</key>
@@ -281,6 +295,14 @@
 						<integer>2</integer>
 						<key>properties</key>
 						<array>
+							<dict>
+								<key>name</key>
+								<string>visible</string>
+								<key>type</key>
+								<string>Check</string>
+								<key>value</key>
+								<false/>
+							</dict>
 							<dict>
 								<key>name</key>
 								<string>position</string>
@@ -348,6 +370,8 @@
 								</array>
 							</dict>
 						</array>
+						<key>seqExpanded</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -649,13 +673,13 @@
 			<key>chainedSequenceId</key>
 			<integer>1</integer>
 			<key>length</key>
-			<real>10</real>
+			<real>2</real>
 			<key>name</key>
-			<string>Update</string>
+			<string>unlock</string>
 			<key>offset</key>
 			<real>0.0</real>
 			<key>position</key>
-			<real>0.0</real>
+			<real>1.0333333015441895</real>
 			<key>resolution</key>
 			<real>30</real>
 			<key>scale</key>

@@ -37,6 +37,11 @@ typedef enum {
 } CCGalleryEvent;
 
 typedef enum {
+    kCCGalleryCycleModeCircular,
+    kCCGalleryCycleModeNotCircular
+} CCGalleryCycleMode;
+
+typedef enum {
 	kDragDirLeft,
 	kDragDirRight,
 	kDragDirUp,
@@ -105,6 +110,7 @@ public:
 	void setDelegate(CCGalleryDelegate *delegate);
 	
 	void setDirection(int dir);
+    void setCycleMode(int mode);
 	void setItemSpace(float space);
 	void setFrontScale(float scale);
 	void setBackScale(float scale);
@@ -141,6 +147,8 @@ protected:
 	int m_nNumItems;
 	// 滚动方向
 	int m_nDirection;
+    // 循环模式 是否是循环的
+    int m_nCycleMode;
 	// 栏目间隔
 	float m_fInterspace;
 	float m_fFrontScale;
@@ -168,6 +176,7 @@ protected:
 	Size m_tItemSize;
 	// 显示Size
 	Size m_tViewSize;
+    
 };
 
 #endif

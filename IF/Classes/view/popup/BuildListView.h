@@ -50,7 +50,6 @@ private:
     virtual void onTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
     
     void onCloseView();
-    void arcButtonClick();
     void refreshGalleryCells();
     void refeash(int idx);
     void onInitEnd(float _time);
@@ -82,7 +81,6 @@ private:
     CCSafeObject<CCLabelIF> m_nameText;
     CCSafeObject<CCLabelIF> m_contentText;
     
-    CCSafeObject<ArcScrollView> m_arcScroll;
     CCSafeObject<CCGallery> m_ArcGallery;
     int m_lastGalleryIndex;
     int m_curGalleryIndex;

@@ -334,6 +334,9 @@ void ProductionSoldiersView::addSoldierIcon(){
 //    CCSprite* pic = CCLoadSprite::createSprite(m_info->getBodyIcon().c_str());
     auto pic = C3DShowView::create(m_info->getModelName().c_str(),m_info->getModelTexName().c_str());
     pic->getModel().getObject()->setScale(18);
+    if(btype == FUN_BUILD_FORT){
+        pic->getModel().getObject()->setRotation3D(Vec3(0,35,0));
+    }
     pic->setPosition3D(Vec3(pos.x,pos.y,200));
     pic->setAnchorPoint(Vec2(0.5,0));
     
@@ -778,6 +781,7 @@ void ProductionSoldiersView::AsyLoadRes2(CCObject* p){
         m_ArcGallery = CCGallery::create(Size(200,215),Size(640,230));
         m_ArcGallery->setBackScale(0.9);
         m_ArcGallery->setDelegate(this);
+        m_ArcGallery->setCycleMode(kCCGalleryCycleModeNotCircular);
         m_ArcGallery->setDirection(kCCGalleryDirectionHorizontal);
         
         for(int i=0;i<m_armyIds.size();i++){
@@ -1417,10 +1421,6 @@ void ProductionSoldiersView::ClearCD()
 
 void ProductionSoldiersView::refreshGalleryCells()
 {
-    if (m_lastGalleryIndex == m_curGalleryIndex)
-    {
-        return;
-    }
     for(int i=0;i<m_armyIds.size();i++){
         int resIndex = m_resIndex;
         ArmyInfo aInfo;
@@ -1478,13 +1478,13 @@ void ProductionSoldiersView::refreshGalleryCells()
             CCCommonUtils::setSpriteGray(pItemCCBNode->m_icon,true);
         }else{
             CCCommonUtils::setSpriteGray(pItemCCBNode->m_button, false);
-            if (i == m_lastGalleryIndex) {
-                pItemCCBNode->m_button->setColor(Color3B(127,127,127));
-                pItemCCBNode->m_icon->setColor(Color3B(127,127,127));
-            }
-            else if (i == m_curGalleryIndex) {
+            if (i == m_curGalleryIndex) {
                 pItemCCBNode->m_button->setColor(Color3B(255,255,255));
                 pItemCCBNode->m_icon->setColor(Color3B(255,255,255));
+            }
+            else {
+                pItemCCBNode->m_button->setColor(Color3B(127,127,127));
+                pItemCCBNode->m_icon->setColor(Color3B(127,127,127));
             }
             pItemCCBNode->m_lockNode->setVisible(false);
             pItemCCBNode->m_txtNode->setVisible(true);
@@ -1524,6 +1524,10 @@ void ProductionSoldiersView::selectionChanged(CCGallery *gallery, CCGalleryItem 
             m_lastGalleryIndex = m_curGalleryIndex;
 //        }
         m_curGalleryIndex = pGItem->getIdx();
+    }
+    if (m_lastGalleryIndex == m_curGalleryIndex)
+    {
+        return;
     }
     refreshGalleryCells();
     refresh();

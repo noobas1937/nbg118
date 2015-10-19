@@ -94,6 +94,7 @@ CCScale9Sprite* CCLoadSprite::createScale9Sprite(const char *fileName) {
 
 cocos2d::CCSpriteFrame* CCLoadSprite::loadResource(const char *fileName) {
     auto ret = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(fileName);
+    CCLOG("CCLoadSprite loadResource: No file found in spriteFrames : %s. Possible missing file.", fileName);
     if (ret == NULL) {
         // Gets the texture by key firstly.
         auto texture = CCTextureCache::sharedTextureCache()->textureForKey(CC_2x2_WHITE_IMAGE_KEY);

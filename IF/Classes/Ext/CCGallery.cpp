@@ -61,7 +61,7 @@ bool CCGallery::init(CCSize itemSize, CCSize viewSize)
 	m_tCenter = ccp(m_tViewSize.width * 0.5f, m_tViewSize.height * 0.5f);
 	
 	setDirection(kCCGalleryDirectionHorizontal);
-	
+    setCycleMode(kCCGalleryCycleModeCircular);
 	return true;
 }
 
@@ -266,6 +266,11 @@ void CCGallery::setDirection(int dir)
 	m_nDirection = dir;
 }
 
+void CCGallery::setCycleMode(int mode)
+{
+    m_nCycleMode = mode;
+}
+
 void CCGallery::setItemSpace(float space)
 {
 	m_fInterspace = space;
@@ -298,7 +303,19 @@ int CCGallery::getGalleryScriptHandler()
 
 void CCGallery::updateItemsPos(void)
 {
-	m_tMoveOffset = ccpAdd(m_tMoveOffset, m_tMoveDistance);
+    if (m_nCycleMode == kCCGalleryCycleModeNotCircular) {
+        if (m_nDragDirection == kDragDirLeft || m_nDragDirection == kDragDirUp) {
+            if (m_fRightDownDis <= m_fInterspace && (m_tMoveOffset.x <= 0 && m_tMoveDistance.x <= 0)) {
+                return;
+            }
+        } else if (m_nDragDirection == kDragDirRight || m_nDragDirection == kDragDirDown) {
+            if (m_fLeftTopDis <= m_fInterspace && (m_tMoveOffset.x >= 0 && m_tMoveDistance.x >= 0)) {
+                return;
+            }
+        }
+    }
+    m_tMoveOffset = ccpAdd(m_tMoveOffset, m_tMoveDistance);
+    
 	if (m_nDragDirection == kDragDirLeft && m_tMoveOffset.x <= -m_fInterspace) {
 		m_tMoveOffset.x = m_tMoveOffset.x + m_fInterspace;
 		
@@ -310,21 +327,7 @@ void CCGallery::updateItemsPos(void)
 		m_fLeftTopDis = m_fLeftTopDis - m_fInterspace;
 		m_fRightDownDis = m_fRightDownDis + m_fInterspace;
 	}
-	
-//	CCObject *pItemObj = NULL;
-//	CCArray *pItemsArray = getChildren();
-//    CCARRAY_FOREACH(pItemsArray, pItemObj) {
-//        CCGalleryItem *pGItem = (CCGalleryItem *) pItemObj;
-//        CCPoint itemPos = ccpAdd(pGItem->getPosition(), m_tMoveDistance);
-//        pGItem->setPosition(itemPos);
-//        
-//        float distance = m_fInterspace - fabsf(pGItem->getPosition().x - m_tCenter.x);
-//        if (distance < 0.0f) {
-//            distance = 0.0f;
-//        }
-//        float scale = (distance / m_fInterspace) * (m_fFrontScale - m_fBackScale) + m_fBackScale;
-//        pGItem->setScale(scale);
-//    }
+
     Vector<Node*>& children = getChildren();
     for (auto child : children)
     {
@@ -340,20 +343,22 @@ void CCGallery::updateItemsPos(void)
         pGItem->setScale(scale);
     }
 
-	
-	if (m_nDragDirection == kDragDirLeft || m_nDragDirection == kDragDirUp) {
-		CCGalleryItem *pGItem = (CCGalleryItem *) m_pItemsArray->objectAtIndex(0);
-		if (updateItemStatus(pGItem)) {
-			m_pItemsArray->removeObjectAtIndex(0);
-			m_pItemsArray->addObject(pGItem);
-		}
-	} else if (m_nDragDirection == kDragDirRight || m_nDragDirection == kDragDirDown) {
-		CCGalleryItem *pGItem = (CCGalleryItem *) m_pItemsArray->lastObject();
-		if (updateItemStatus(pGItem)) {
-			m_pItemsArray->removeLastObject();
-			m_pItemsArray->insertObject(pGItem, 0);
-		}
-	}
+    if (m_nCycleMode == kCCGalleryCycleModeCircular) {
+        if (m_nDragDirection == kDragDirLeft || m_nDragDirection == kDragDirUp) {
+            CCGalleryItem *pGItem = (CCGalleryItem *) m_pItemsArray->objectAtIndex(0);
+            if (updateItemStatus(pGItem)) {
+                m_pItemsArray->removeObjectAtIndex(0);
+                m_pItemsArray->addObject(pGItem);
+            }
+        } else if (m_nDragDirection == kDragDirRight || m_nDragDirection == kDragDirDown) {
+            CCGalleryItem *pGItem = (CCGalleryItem *) m_pItemsArray->lastObject();
+            if (updateItemStatus(pGItem)) {
+                m_pItemsArray->removeLastObject();
+                m_pItemsArray->insertObject(pGItem, 0);
+            }
+        }
+    }
+
 
     for (auto child : children)
     {
@@ -371,21 +376,6 @@ void CCGallery::updateItemsPos(void)
             }
         }
     }
-//	CCARRAY_FOREACH(pItemsArray, pItemObj) {
-//		CCGalleryItem *pGItem = (CCGalleryItem *) pItemObj;
-//		
-//		float scale = pGItem->getScale();
-//		CCPoint itemPos = pGItem->getPosition();
-//		
-//		float width = m_fInterspace * 0.5f * scale;
-//		if (m_nDirection == kCCGalleryDirectionHorizontal) {
-//			if ((itemPos.x + width) < 0.0f || (itemPos.x - width) > m_tViewSize.width) {
-//				pGItem->setVisible(false);
-//			} else {
-//				pGItem->setVisible(true);
-//			}
-//		}
-//	}
 	
 	if (m_pDelegate) {
 //		m_pDelegate->selectionChanged(this, m_nSelectIdx);

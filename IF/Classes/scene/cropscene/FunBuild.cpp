@@ -2028,21 +2028,21 @@ void FunBuild::drowEffectSpr(int zOrder, int tmpOrd)
         onShowParticle();
     }
     else if (m_info->type == FUN_BUILD_SACRIFICE){
-        auto particle0 = ParticleController::createParticle(CCString::createWithFormat("Wish_Pool_0")->getCString());
-        particle0->setPosition(ccp(parentX+135, parentY+150));
-        addParticleToBatch(particle0);
-        auto particle1 = ParticleController::createParticle(CCString::createWithFormat("Wish_Pool_1")->getCString());
-        particle1->setPosition(ccp(parentX+135, parentY+140));
-        addParticleToBatch(particle1);
-        auto particle2 = ParticleController::createParticle(CCString::createWithFormat("Wish_Pool_2")->getCString());
-        particle2->setPosition(ccp(parentX+135, parentY+110));
-        addParticleToBatch(particle2);
-        auto particle3 = ParticleController::createParticle(CCString::createWithFormat("Wish_Pool_3")->getCString());
-        particle3->setPosition(ccp(parentX+135, parentY+70));
-        addParticleToBatch(particle3);
-        auto particle4 = ParticleController::createParticle(CCString::createWithFormat("Wish_Pool_4")->getCString());
-        particle4->setPosition(ccp(parentX+135, parentY+70));
-        addParticleToBatch(particle4);
+//        auto particle0 = ParticleController::createParticle(CCString::createWithFormat("Wish_Pool_0")->getCString());
+//        particle0->setPosition(ccp(parentX+135, parentY+150));
+//        addParticleToBatch(particle0);
+//        auto particle1 = ParticleController::createParticle(CCString::createWithFormat("Wish_Pool_1")->getCString());
+//        particle1->setPosition(ccp(parentX+135, parentY+140));
+//        addParticleToBatch(particle1);
+//        auto particle2 = ParticleController::createParticle(CCString::createWithFormat("Wish_Pool_2")->getCString());
+//        particle2->setPosition(ccp(parentX+135, parentY+110));
+//        addParticleToBatch(particle2);
+//        auto particle3 = ParticleController::createParticle(CCString::createWithFormat("Wish_Pool_3")->getCString());
+//        particle3->setPosition(ccp(parentX+135, parentY+70));
+//        addParticleToBatch(particle3);
+//        auto particle4 = ParticleController::createParticle(CCString::createWithFormat("Wish_Pool_4")->getCString());
+//        particle4->setPosition(ccp(parentX+135, parentY+70));
+//        addParticleToBatch(particle4);
     }
     else if (m_info->type == FUN_BUILD_WORKSHOP)
     {
@@ -2489,21 +2489,21 @@ void FunBuild::onShowParticleByType(int type)
         onPlayParticle();
     }
     else if (type == 6) {
-        auto particleL1 = ParticleController::createParticle(CCString::createWithFormat("Wish_Fountain_1")->getCString());
-        particleL1->setPosition(ccp(parentX+135, parentY+70));
-        addSpeParticleToBatch(particleL1);
-        auto particleL2 = ParticleController::createParticle(CCString::createWithFormat("Wish_Fountain_2")->getCString());
-        particleL2->setPosition(ccp(parentX+135, parentY+75));
-        addSpeParticleToBatch(particleL2);
-        auto particleL3 = ParticleController::createParticle(CCString::createWithFormat("Wish_Fountain_S")->getCString());
-        particleL3->setPosition(ccp(parentX+135, parentY+95));
-        addSpeParticleToBatch(particleL3);
-        auto particleL4 = ParticleController::createParticle(CCString::createWithFormat("Wish_Fountain_S")->getCString());
-        particleL4->setPosition(ccp(parentX+80, parentY+65));
-        addSpeParticleToBatch(particleL4);
-        auto particleL5 = ParticleController::createParticle(CCString::createWithFormat("Wish_Fountain_S")->getCString());
-        particleL5->setPosition(ccp(parentX+190, parentY+65));
-        addSpeParticleToBatch(particleL5);
+//        auto particleL1 = ParticleController::createParticle(CCString::createWithFormat("Wish_Fountain_1")->getCString());
+//        particleL1->setPosition(ccp(parentX+135, parentY+70));
+//        addSpeParticleToBatch(particleL1);
+//        auto particleL2 = ParticleController::createParticle(CCString::createWithFormat("Wish_Fountain_2")->getCString());
+//        particleL2->setPosition(ccp(parentX+135, parentY+75));
+//        addSpeParticleToBatch(particleL2);
+//        auto particleL3 = ParticleController::createParticle(CCString::createWithFormat("Wish_Fountain_S")->getCString());
+//        particleL3->setPosition(ccp(parentX+135, parentY+95));
+//        addSpeParticleToBatch(particleL3);
+//        auto particleL4 = ParticleController::createParticle(CCString::createWithFormat("Wish_Fountain_S")->getCString());
+//        particleL4->setPosition(ccp(parentX+80, parentY+65));
+//        addSpeParticleToBatch(particleL4);
+//        auto particleL5 = ParticleController::createParticle(CCString::createWithFormat("Wish_Fountain_S")->getCString());
+//        particleL5->setPosition(ccp(parentX+190, parentY+65));
+//        addSpeParticleToBatch(particleL5);
     }
     else if (type == 7) {
         int count = 6;

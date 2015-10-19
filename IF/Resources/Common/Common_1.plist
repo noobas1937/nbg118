@@ -1151,15 +1151,15 @@
             <key>Roman_10.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{577,1811},{30,31}}</string>
+                <string>{{706,1542},{22,23}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{30,31}}</string>
+                <string>{{1,0},{22,23}}</string>
                 <key>sourceSize</key>
-                <string>{30,31}</string>
+                <string>{24,23}</string>
             </dict>
             <key>Roman_2.png</key>
             <dict>
@@ -1278,6 +1278,19 @@
                 <key>sourceSize</key>
                 <string>{33,30}</string>
             </dict>
+            <key>Roman_g_10.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{1712,1922},{31,30}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{1,0},{31,30}}</string>
+                <key>sourceSize</key>
+                <string>{33,30}</string>
+            </dict>
             <key>Roman_g_2.png</key>
             <dict>
                 <key>frame</key>
@@ -1294,7 +1307,7 @@
             <key>Roman_g_3.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1712,1922},{31,30}}</string>
+                <string>{{1712,1886},{31,30}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -1372,11 +1385,11 @@
             <key>Roman_g_9.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1712,1886},{31,30}}</string>
+                <string>{{577,1811},{31,30}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{1,0},{31,30}}</string>
                 <key>sourceSize</key>
@@ -3309,7 +3322,7 @@
             <key>cd_tiao_02.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{706,1542},{21,22}}</string>
+                <string>{{735,1542},{21,22}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -8100,7 +8113,7 @@
             <key>size</key>
             <string>{1959,2047}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:c41e5941b4de9e7e269ca72b94a38a5d:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:23cd3dd08d8dfd3df289ef7227a13d5e:1/1$</string>
             <key>textureFileName</key>
             <string>Common_1.pvr.ccz</string>
         </dict>

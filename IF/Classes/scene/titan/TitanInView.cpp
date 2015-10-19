@@ -39,7 +39,7 @@ bool TitanInView::init()
     auto titanParent = Node::create();
     titanParent->addChild(m_Titan);
     renderTexture->addChild(titanParent);
-    titanParent->setRotation3D(Vec3(10, 0, 0));
+    titanParent->setRotation3D(Vec3(10, 40, 0));
     m_titanPos->addChild(renderTexture);
 //    m_Titan->changeTitanState(Titan::eActState::Stand);
     //end a by ljf
