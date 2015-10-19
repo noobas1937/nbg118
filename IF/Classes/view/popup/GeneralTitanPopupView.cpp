@@ -1272,10 +1272,11 @@ void GeneralTitanPopupView::onRefreshEquip()
     m_equipLabel7->setString("");
     m_equipLabel8->setString("");
     
-    return;
+//    return;
     
     //打开屏蔽装备
-    if(m_info&&(!m_info->showEquip)){
+//    if(m_info&&(!m_info->showEquip)){
+    if(true){
         for (int i=0; i<=7; i++) {
             string siteIcon = "";
             if (i==0) {
