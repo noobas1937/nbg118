@@ -126,6 +126,7 @@ int PopupViewController::addPopupInViewWithAnim(PopupBaseView *view, bool needLa
         world->updateGUI(true);
     }
     auto ArcPop = dynamic_cast<ArcPopupBaseView*>(view);
+    MailSystemListPopUp* mailSystemListPopUp = nullptr;
     if (ArcPop) {
         UIComponent::getInstance()->showPopupView(UIPopupViewType_ArcPop_TitanUpgrade);
     } else {
@@ -133,6 +134,7 @@ int PopupViewController::addPopupInViewWithAnim(PopupBaseView *view, bool needLa
         if(mailwrite){
             UIComponent::getInstance()->showPopupView(UIPopupViewType_Mail);
         }else{
+            mailSystemListPopUp = dynamic_cast<MailSystemListPopUp*>(view);
             UIComponent::getInstance()->showPopupView();
         }
     }
@@ -164,7 +166,14 @@ int PopupViewController::addPopupInViewWithAnim(PopupBaseView *view, bool needLa
     popupLayer->addChild(view);
     view->setUseAnimation(false);
     view->setOpenAnimation(true);
-    view->addToLayer();
+    if (mailSystemListPopUp)
+    {
+        mailSystemListPopUp->setPositionX(0);
+    }
+    else
+    {
+        view->addToLayer();
+    }
     
     return _view_count;
 }
