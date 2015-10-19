@@ -7778,7 +7778,8 @@ void WorldMapView::update_water_shader(const Vec2& position)
                 sp->setAnchorPoint(Vec2(0, 0));
                 sp->setTag(WATER_SHADER_TAG + tag);
                 m_layers[WM_BG]->addChild(sp);
-                
+#define USE_WATER_SHADER
+#ifdef USE_WATER_SHADER
                 auto TexCache = Director::getInstance()->getTextureCache();
                 if (!m_water_wave1) {
                     m_water_wave1 = TexCache->addImage("shaders/wave2d_0.jpg");
@@ -7856,6 +7857,7 @@ void WorldMapView::update_water_shader(const Vec2& position)
                     wave_time += dt / 50.0;
                     glprogramstate->setUniformFloat("wave_time", wave_time);
                 }, "water");
+#endif
             }
             sp->setPosition(position.x + i * 512, position.y + j * 512);
             tag++;
