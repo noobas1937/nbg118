@@ -50,7 +50,7 @@ bool CityDefenseView::init(int buildId)
     
     this->setContentSize(CCDirector::sharedDirector()->getWinSize());
 
-    changeBGHeight(m_buildBG);
+//    changeBGHeight(m_buildBG);
 //    auto size = CCDirector::sharedDirector()->getWinSize();
 //    m_smokeNode->setAnchorPoint(ccp(0.5, 0.5));
 //    m_smokeNode->setPosition(0, 0);
@@ -59,7 +59,7 @@ bool CityDefenseView::init(int buildId)
     
     int addHeight = getExtendHeight();
     m_mainNode->setPositionY(m_mainNode->getPositionY()+addHeight);
-    m_bNode->setPositionY(m_bNode->getPositionY()-addHeight);
+//    m_bNode->setPositionY(m_bNode->getPositionY()-addHeight);
 
     m_fullbar->setVisible(false);
     //m_defMsgLabel->setString(_lang("102307")+"\n"+_lang("102308")+"\n"+_lang("102309")+"\n"+_lang("102310"));
@@ -70,13 +70,13 @@ bool CityDefenseView::init(int buildId)
     FunBuildInfo& m_info = FunBuildController::getInstance()->getFunbuildById(m_buildId);
     setTitleName(_lang("102206"));
     
-    for (int i=1; i<=4; i++) {
-        auto particle = ParticleController::createParticle(CCString::createWithFormat("UiFire_%d",i)->getCString());
-        m_fireNode1->addChild(particle);
-        
-        auto particle1 = ParticleController::createParticle(CCString::createWithFormat("UiFire_%d",i)->getCString());
-        m_fireNode2->addChild(particle1);
-    }
+//    for (int i=1; i<=4; i++) {
+//        auto particle = ParticleController::createParticle(CCString::createWithFormat("UiFire_%d",i)->getCString());
+//        m_fireNode1->addChild(particle);
+//        
+//        auto particle1 = ParticleController::createParticle(CCString::createWithFormat("UiFire_%d",i)->getCString());
+//        m_fireNode2->addChild(particle1);
+//    }
     string str = _lang("102335");
     m_statusTxt->setString(_lang("102335"));
     int per = 0;
@@ -154,11 +154,11 @@ SEL_CCControlHandler CityDefenseView::onResolveCCBCCControlSelector(cocos2d::CCO
 bool CityDefenseView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode)
 {
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_mainNode", CCNode*, this->m_mainNode);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bNode", CCNode*, this->m_bNode);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bNode", CCNode*, this->m_bNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_buildBG", CCScale9Sprite*, this->m_buildBG);
     
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_fireNode1", CCNode*, this->m_fireNode1);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_fireNode2", CCNode*, this->m_fireNode2);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_fireNode1", CCNode*, this->m_fireNode1);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_fireNode2", CCNode*, this->m_fireNode2);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_defLabel", CCLabelIF*, this->m_defLabel);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_defMsgLabel", CCLabelIF*, this->m_defMsgLabel);
@@ -284,6 +284,7 @@ void CityDefenseView::onEnterFrame(float dt)
     if (cityDefFix >= cityDefMax) {
         changeST(0);
         m_fullbar->setVisible(true);
+        m_defbar->setVisible(false);
         m_defBtn->setVisible(false);
         m_defBtn->setEnabled(false);
         m_defBtn->setColor(ccGRAY);
@@ -295,6 +296,7 @@ void CityDefenseView::onEnterFrame(float dt)
         m_defBtn->setVisible(true);
         m_middleNode->setVisible(true);
         m_fullbar->setVisible(false);
+        m_defbar->setVisible(true);
         m_fullTip->setString("");
         if (now < GlobalData::shared()->cityFireStamp) {
             changeST(1);
