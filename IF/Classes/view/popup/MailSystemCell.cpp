@@ -1410,6 +1410,18 @@ void MailSystemCell::onTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pE
     return;
     
 }
+
+// 2-2 显示不正确的问题 原因未知 暴力解决 guo.jiang
+bool isTouchInside_hack(CCNode* pNodeCCB, CCNode* pNode, CCTouch* touch)
+{
+    if (!pNode || !pNode->getParent())
+        return false;
+    CCPoint touchLocation = pNode->getParent()->convertToNodeSpace(touch->getLocation());
+    CCRect bBox = pNode->boundingBox();
+    bBox.origin.x += pNodeCCB->getContentSize().width;
+    return bBox.containsPoint(touchLocation);
+}
+
 void MailSystemCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent){
     m_modelLayer->setVisible(false);
     if(m_tableView!=NULL){
@@ -1429,13 +1441,12 @@ void MailSystemCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pE
         isTouchDelete = false;
         //return;
     }
-    else if (m_editNode->isVisible() && isTouchInside(m_editNode, pTouch)) {
+    else if (m_editNode->isVisible() && isTouchInside_hack(m_ccbNode, m_editNode, pTouch)) {
         SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
         isTouchDelete = false;
         deleteMailByOp();
     }
-//    else if(isTouchInside(m_moveNode, pTouch)) // 2-2 显示不正确的问题 原因未知 暴力解决 guo.jiang
-    else if(isTouchInside(this, pTouch))
+    else if(isTouchInside_hack(m_ccbNode, m_moveNode, pTouch))
     {
         SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
         if(predeleteSysNum==0){
@@ -1444,7 +1455,7 @@ void MailSystemCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pE
             CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MAIL_LIST_DELETERECOVER);
         }
         
-    }else if (isTouchInside(m_deleteBG, pTouch)) {
+    }else if (isTouchInside_hack(m_ccbNode, m_deleteBG, pTouch)) {
         SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
         isTouchDelete = false;
         onDeleteMail();
