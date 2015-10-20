@@ -14,7 +14,7 @@ logfileName=$logRoot/$curDate/$BUILD_NUMBER-$curDate-$curTime
 #echo $logfileName
 mkdir $logRoot/$curDate >/dev/null 2>/dev/null
 
-apkSrcPath=./bin/NBG_CN1-release.apk
+apkSrcPath=./bin/NBG_CN1-debug.apk
 soPath=./libs/armeabi/libgame.so
 apkTargetDir=$packageroot/$curDate
 soTargetDir=$soRootPath/$curDate
@@ -71,7 +71,7 @@ cd .. >/dev/null 2>/dev/null
 echo "2.Building for libgame.so..."
 #echo $logfileName
 sh build_native.sh  #>$logfileName.log 2>$logfileName.err
-python build_native.py -b release
+python build_native.py -b debug
 if [ -f "$soPath" ]; then
 	echo "[Done]"
 	echo ""
@@ -119,7 +119,7 @@ else
 fi
 
 echo "4.Packing APK..."
-ant release #>$logfileName.log 2>$logfileName.err
+ant debug #>$logfileName.log 2>$logfileName.err
 errorMsg=`cat $logfileName.err`
 if [ ! -n "$errorMsg" ]; then
 	echo "[Done]"
