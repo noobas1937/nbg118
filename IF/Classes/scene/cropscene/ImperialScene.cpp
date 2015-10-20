@@ -750,7 +750,8 @@ void ImperialScene::onEnter()
     string gFake = CCUserDefault::sharedUserDefault()->getStringForKey("Guide_Fake","");
     if (GlobalData::shared()->playerInfo.level==1 && GlobalData::shared()->playerInfo.exp==0 && (gFake==""||gFake=="start_1")) {
     }else{
-        SoundController::sharedSound()->playBGMusic(Music_M_city_1);
+//        SoundController::sharedSound()->playBGMusic(Music_M_city_1);//fusheng for 黄迪
+        CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("sounds/background/m_city.mp3");
     }
     
     m_isDay = true;//默认白天
