@@ -637,7 +637,7 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
     if(m_titanInfo.feedNum>=m_titanInfo.feedMaxNum)
     {
         m_titanFeedStatus_0->setString(CCString::createWithFormat("Count : ")->getCString());//fusheng 需要文本
-        m_titanFeedStatus_1->setString(CCString::createWithFormat("%d",m_titanInfo.feedNum)->getCString());
+        m_titanFeedStatus_1->setString(CCString::createWithFormat("%d",m_titanInfo.feedMaxNum)->getCString());
         m_titanFeedStatus_2->setString(CCString::createWithFormat("/%d",m_titanInfo.feedMaxNum)->getCString());
         
         m_titanFeedStatus_0->setColor(ccColor3B(195,206,254));
