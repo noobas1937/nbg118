@@ -944,6 +944,7 @@
 		9708FD5F1BAA861D00C6B3C3 /* TitanUpgradeView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9708FD5D1BAA861D00C6B3C3 /* TitanUpgradeView.cpp */; };
 		9716CF2A1BD4A1BC00BC3D38 /* NBSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9716CF281BD4A1BC00BC3D38 /* NBSlider.cpp */; };
 		972666461BAC07D300D59BC2 /* TitanInView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 972666441BAC07D300D59BC2 /* TitanInView.cpp */; };
+		9737F0B31BD6188900E1B440 /* NBCommonUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9737F0B11BD6188900E1B440 /* NBCommonUtils.cpp */; };
 		974034461BAFDB3C00330AD3 /* TitanController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 974034441BAFDB3C00330AD3 /* TitanController.cpp */; };
 		A817139A1B660629008DE4D4 /* ChatTestCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A81713941B660629008DE4D4 /* ChatTestCommand.cpp */; };
 		A817139B1B660629008DE4D4 /* GetNewMailMsgCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A81713961B660629008DE4D4 /* GetNewMailMsgCommand.cpp */; };
@@ -3059,6 +3060,8 @@
 		9716CF291BD4A1BC00BC3D38 /* NBSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBSlider.h; sourceTree = "<group>"; };
 		972666441BAC07D300D59BC2 /* TitanInView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TitanInView.cpp; sourceTree = "<group>"; };
 		972666451BAC07D300D59BC2 /* TitanInView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitanInView.h; sourceTree = "<group>"; };
+		9737F0B11BD6188900E1B440 /* NBCommonUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBCommonUtils.cpp; sourceTree = "<group>"; };
+		9737F0B21BD6188900E1B440 /* NBCommonUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBCommonUtils.h; sourceTree = "<group>"; };
 		974034441BAFDB3C00330AD3 /* TitanController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TitanController.cpp; sourceTree = "<group>"; };
 		974034451BAFDB3C00330AD3 /* TitanController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitanController.h; sourceTree = "<group>"; };
 		A81713941B660629008DE4D4 /* ChatTestCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChatTestCommand.cpp; sourceTree = "<group>"; };
@@ -6539,6 +6542,8 @@
 				3646A6741BB945D200248935 /* NBSprite3D.h */,
 				36DE16E01BA188D60020785E /* DrawNode3D.cpp */,
 				36DE16E11BA188D60020785E /* DrawNode3D.h */,
+				9737F0B11BD6188900E1B440 /* NBCommonUtils.cpp */,
+				9737F0B21BD6188900E1B440 /* NBCommonUtils.h */,
 			);
 			name = Ext;
 			path = Classes/Ext;
@@ -7432,6 +7437,7 @@
 				9708FD561BA9203A00C6B3C3 /* TitanFeedCommand.cpp in Sources */,
 				57120D8F1A42C8040095C20D /* EquipmentListView.cpp in Sources */,
 				57E871EE186A879000BD6EFD /* GCMRewardCommand.cpp in Sources */,
+				9737F0B31BD6188900E1B440 /* NBCommonUtils.cpp in Sources */,
 				6C0AB99C1B32ABA800CAF8F0 /* ZYTAlertView.m in Sources */,
 				272AB6111B15C7BC0052E896 /* ChatServiceController.mm in Sources */,
 				BAB5370C18F517A500AD382B /* ChangeAllianceRankUpCommand.cpp in Sources */,

@@ -42,7 +42,8 @@
 #include "CheckAllianceInfoView.h"
 #include "MailController.h"
 #include "ActivityController.h"
-
+#include "NBCommonUtils.h"
+using namespace NBCommonUtils;
 //const int cellW = 640;
 static int cellW = 520;
 
@@ -252,14 +253,38 @@ bool GeneralsPopupView::init()
             
         }
         
-        //fusheng end
-        std::string expStr = CC_ITOA(info.currExp);
-        expStr.append("/");
-        expStr.append(CC_ITOA(info.maxExp));
-        m_expTxt->setString(expStr);
         
-        this->m_expTxtPre->setString("Exp");//fusheng 需要文本
+//        std::string expStr = CC_ITOA(info.currExp);
+//        expStr.append("/");
+//        expStr.append(CC_ITOA(info.maxExp));
+//        m_expTxt0->setString(expStr);
         this->m_stamineTextPre->setString("AP");//fusheng 需要文本
+         this->m_expTxtPre->setString("Exp");//fusheng 需要文本
+       
+        m_expTxt0->setString("(");
+        
+        m_expTxt1->setString(std::string("") + CC_CMDITOAL(info.currExp));
+        
+        m_expTxt2->setString(std::string("")  + "/" + CC_CMDITOAL(info.maxExp)+ ")" );
+        
+        
+        vector<CCLabelIF*> vec ;
+        
+        vec.push_back(m_expTxtPre);
+        
+        vec.push_back(m_expTxt0);
+        
+        vec.push_back(m_expTxt1);
+        vec.push_back(m_expTxt2);
+        
+        arrangeLabel(vec);
+        
+        
+        
+       
+        
+        
+        //fusheng end
     }
     else
     {
@@ -623,7 +648,11 @@ bool GeneralsPopupView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, c
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bNode", CCNode*, this->m_bNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nameTxt", Label*, this->m_nameTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pointText", CCLabelIF*, this->m_pointText);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_expTxt", CCLabelIF*, this->m_expTxt);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_expTxt", CCLabelIF*, this->m_expTxt);//fusheng d
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_expTxt0", CCLabelIF*, this->m_expTxt0);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_expTxt1", CCLabelIF*, this->m_expTxt1);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_expTxt2", CCLabelIF*, this->m_expTxt2);
+    
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_expBar", CCScale9Sprite*, this->m_expBar);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_leftBg", CCSprite*, this->m_leftBg);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_rightBg", CCSprite*, this->m_rightBg);
@@ -650,7 +679,11 @@ bool GeneralsPopupView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, c
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_picCover", CCScale9Sprite*, this->m_picCover);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_staminePro", CCScale9Sprite*, this->m_staminePro);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_stamineBG", CCScale9Sprite*, this->m_stamineBG);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_stamineText", CCLabelIF*, this->m_stamineText);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_stamineText", CCLabelIF*, this->m_stamineText); //fusheng d
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_stamineText0", CCLabelIF*, this->m_stamineText0);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_stamineText1", CCLabelIF*, this->m_stamineText1);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_stamineText2", CCLabelIF*, this->m_stamineText2);
+    
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_stamineIcon", CCSprite*, this->m_stamineIcon);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_touchNode", CCNode*, this->m_touchNode);
     
@@ -753,12 +786,33 @@ CCNode* GeneralsPopupView::getGuideNode(string _key)
 void GeneralsPopupView::update(float time){
     int currt = WorldController::getInstance()->currentStamine;
     int total = GlobalData::shared()->worldConfig.stamineMax;
-    m_stamineText->setString(std::string("") + CC_ITOA(currt) + "/" + CC_ITOA(total));
+    
+  //fusheng begin
+    m_stamineText0->setString("(");
+    
+    m_stamineText1->setString(std::string("") + CC_ITOA(currt));
+    
+    m_stamineText2->setString(std::string("")  + "/" + CC_ITOA(total)+")");
+    
+    
+    vector<CCLabelIF*> vec ;
+    
+    vec.push_back(m_stamineTextPre);
+    
+    vec.push_back(m_stamineText0);
+    
+    vec.push_back(m_stamineText1);
+    vec.push_back(m_stamineText2);
+    
+    arrangeLabel(vec);
+    
+    
+    
     currt = MIN(currt, total);
     float s = 1.0 * currt / total;
     
     
-    //fusheng begin
+  
 //    m_staminePro->setScaleX(s);
     
     auto size = m_staminePro->getContentSize();

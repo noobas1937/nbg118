@@ -41,6 +41,10 @@
 
 #define JUST3D_NODE_TAG 89757
 
+//begin a by ljf
+#define IMPERIAL_SCENE_TOUCH_LAYER_TAG 89217
+//end a by ljf
+
 class ImperialScene:public CCLayer,public ITouchDelegate,public CCBMemberVariableAssigner
 {
 public:

@@ -243,7 +243,29 @@ bool FunBuild::initFunBuild(int itemId, CCLabelBatchNode* nameLayer)
             //end a by ljf
             
         }
-        
+        //begin a by ljf
+        if (m_info->open>0 && m_info->type == FUN_BUILD_SACRIFICE && m_info->open <= FunBuildController::getInstance()->getMainCityLv())
+        {
+            string key = "user_manual_unlock_funbuild_wishing_well";
+            int value = CCUserDefault::sharedUserDefault()->getIntegerForKey(key.c_str());
+            if(value != 1)
+            {
+                m_lockIcon = CCLoadSprite::createSprite("build_lock.png");
+                m_lockIcon->setAnchorPoint(ccp(0.5, 0.5));
+                int lockX = mainWidth/2;
+                int lockY = mainHeight/2;
+                m_lockIcon->setPosition(ccp(lockX, lockY));
+                
+                m_lvLabel->setVisible(false);
+                m_arrSpr->setVisible(false);
+                m_lvBG->setVisible(false);
+                
+                CCSpriteFrame* newSp = CCLoadSprite::getSF("pic428000_2_unlock.png");
+                m_spr->setDisplayFrame(newSp);
+                
+            }
+        }
+        //end a by ljf
         onCheckOutPut();
         
         m_effectSpr = CCSprite::create();
@@ -427,6 +449,15 @@ void FunBuild::playOpenLock()
         auto delate = CCDelayTime::create(0.5);
         auto fadeIn = CCFadeIn::create(1.0);
         m_spr->runAction(CCSequence::create(delate,fadeIn,NULL));
+        
+        
+        if (m_info->type == FUN_BUILD_SACRIFICE)
+        {
+            string key = "user_manual_unlock_funbuild_wishing_well";
+            CCUserDefault::sharedUserDefault()->setIntegerForKey(key.c_str(), 1);
+            CCUserDefault::sharedUserDefault()->flush();
+        }
+        
     }
     //end a by ljf
 }
@@ -1071,6 +1102,16 @@ void FunBuild::onUpdateUpIcon(float dt)
                 if(m_info->open > FunBuildController::getInstance()->getMainCityLv())
                 {
                     canUp = false;
+                }
+                if(m_info->open <= FunBuildController::getInstance()->getMainCityLv())
+                {
+                    string key = "user_manual_unlock_funbuild_wishing_well";
+                    int value = CCUserDefault::sharedUserDefault()->getIntegerForKey(key.c_str());
+                    if(value != 1)
+                    {
+                        canUp = false;
+                    }
+
                 }
                 
             }

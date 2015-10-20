@@ -80,6 +80,7 @@ cocos2d.cpp \
 2d/CCTMXLayer.cpp \
 2d/CCTMXObjectGroup.cpp \
 2d/CCTMXTiledMap.cpp \
+2d/CCTMXTiledSprite.cpp \
 2d/CCTMXXMLParser.cpp \
 2d/CCTextFieldTTF.cpp \
 2d/CCTileMapAtlas.cpp \

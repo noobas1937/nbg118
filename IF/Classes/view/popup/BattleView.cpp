@@ -300,26 +300,33 @@ void BattleView::titanInfoChange(CCObject* obj)
                 string oldID = cell->m_soldierId;
                 cell->m_soldierId = GlobalData::shared()->titanInfo.titanId;
                 
-                
-                if (TroopsController::getInstance()->m_tmpBattleInfos.find(oldID)!=TroopsController::getInstance()->m_tmpBattleInfos.end()) {
-                    
-                    TroopsController::getInstance()->m_tmpBattleInfos[cell->m_soldierId] = TroopsController::getInstance()->m_tmpBattleInfos[oldID];
-                    
-                    TroopsController::getInstance()->m_tmpBattleInfos[oldID] = 0;
-                    
-                    TroopsController::getInstance()->m_tmpFreeSoldiers[cell->m_soldierId] = TroopsController::getInstance()->m_tmpFreeSoldiers[oldID];
-                    
-                    TroopsController::getInstance()->m_tmpFreeSoldiers[oldID] = 0;
-                    
-                    TroopsController::getInstance()->m_tmpConfSoldiers[cell->m_soldierId] = TroopsController::getInstance()->m_tmpConfSoldiers[oldID];
-                    
-                    TroopsController::getInstance()->m_tmpConfSoldiers[oldID] = 0;
-                    
-                    CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_COUNT_CHANGE
-                                                                                           , CCInteger::create(TroopsController::getInstance()->m_tmpBattleInfos[cell->m_soldierId])); //计算体力是否充足
-                    
-                    CCLOG("march update titan");
+                if (oldID == GlobalData::shared()->titanInfo.titanId) {
+                    CCLOG("march titan ti li hui fu");
                 }
+                else
+                {
+                    if (TroopsController::getInstance()->m_tmpBattleInfos.find(oldID)!=TroopsController::getInstance()->m_tmpBattleInfos.end()) {
+                        
+                        TroopsController::getInstance()->m_tmpBattleInfos[cell->m_soldierId] = TroopsController::getInstance()->m_tmpBattleInfos[oldID];
+                        
+                        TroopsController::getInstance()->m_tmpBattleInfos[oldID] = 0;
+                        
+                        TroopsController::getInstance()->m_tmpFreeSoldiers[cell->m_soldierId] = TroopsController::getInstance()->m_tmpFreeSoldiers[oldID];
+                        
+                        TroopsController::getInstance()->m_tmpFreeSoldiers[oldID] = 0;
+                        
+                        TroopsController::getInstance()->m_tmpConfSoldiers[cell->m_soldierId] = TroopsController::getInstance()->m_tmpConfSoldiers[oldID];
+                        
+                        TroopsController::getInstance()->m_tmpConfSoldiers[oldID] = 0;
+                        
+                        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_COUNT_CHANGE
+                                                                                               , CCInteger::create(TroopsController::getInstance()->m_tmpBattleInfos[cell->m_soldierId])); //计算体力是否充足
+                        
+                        CCLOG("march update titan");
+                    }
+                }
+                
+                
                 
 
                 

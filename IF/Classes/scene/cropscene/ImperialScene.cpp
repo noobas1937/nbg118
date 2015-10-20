@@ -140,6 +140,7 @@ bool ImperialScene::init()
 //    m_touchLayer->addChild(m_Layer2d);
 //    m_touchLayer->addChild(m_Layer3d);
     this->addChild(m_touchLayer);
+    m_touchLayer->setTag(IMPERIAL_SCENE_TOUCH_LAYER_TAG); //a by ljf
     
     m_sunNode = CCNode::create();//太阳光节点
     m_sunNode->setPosition(CCDirector::sharedDirector()->getWinSize().width + 50, CCDirector::sharedDirector()->getWinSize().height - 50);
@@ -601,6 +602,7 @@ void ImperialScene::onCreateTitan()
     
     m_TitanNode->setTag(JUST3D_NODE_TAG);
     
+    
     m_touchLayer->setCameraMask((unsigned short)CameraFlag::USER4, true);
     m_TitanNode->setCameraMask((unsigned short) CameraFlag::USER2, true);
     
@@ -750,7 +752,8 @@ void ImperialScene::onEnter()
     string gFake = CCUserDefault::sharedUserDefault()->getStringForKey("Guide_Fake","");
     if (GlobalData::shared()->playerInfo.level==1 && GlobalData::shared()->playerInfo.exp==0 && (gFake==""||gFake=="start_1")) {
     }else{
-        SoundController::sharedSound()->playBGMusic(Music_M_city_1);
+        SoundController::sharedSound()->playBGMusic(Music_M_city_1);//fusheng for 黄迪
+//        CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("sounds/background/m_city.mp3");
     }
     
     m_isDay = true;//默认白天
