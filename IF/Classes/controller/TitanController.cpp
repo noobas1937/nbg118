@@ -121,13 +121,15 @@ void TitanController::handleErrorCode(int errorCode)
         }
         case Error::TITAN_ALL_READLY_GO:
         {
-            CCCommonUtils::flyText("data error ");
-
+//            CCCommonUtils::flyText("data error ");
+            TitanInfoCommand *ticmd = new TitanInfoCommand();
+            ticmd->sendAndRelease();
             break;
         }
         case Error::TITAN_EXP_FULL:
         {
-            
+            TitanInfoCommand *ticmd = new TitanInfoCommand();
+            ticmd->sendAndRelease();
            // CCCommonUtils::flyText("data error ");
             
             break;
@@ -135,13 +137,15 @@ void TitanController::handleErrorCode(int errorCode)
         case Error::TITAN_NO_FEED_NUM :
         {
             // CCCommonUtils::flyText("data error ");
+            TitanInfoCommand *ticmd = new TitanInfoCommand();
+            ticmd->sendAndRelease();
             
             break;
         }
         case Error::TITAN_NEED_WAIT :
         {
             // CCCommonUtils::flyText("data error ");
-            CCCommonUtils::flyHint("","","feed CD error please refresh");
+//            CCCommonUtils::flyHint("","","feed CD error please refresh");
             TitanInfoCommand *ticmd = new TitanInfoCommand();
             ticmd->sendAndRelease();
             
@@ -150,7 +154,9 @@ void TitanController::handleErrorCode(int errorCode)
         case Error::TITAN_NOT_ENOUGH_FOOD :
         {
             
-            CCCommonUtils::flyText("data error food not enough");
+//            CCCommonUtils::flyText("data error food not enough");
+            TitanInfoCommand *ticmd = new TitanInfoCommand();
+            ticmd->sendAndRelease();
             
             break;
         }
@@ -158,6 +164,8 @@ void TitanController::handleErrorCode(int errorCode)
         {
             
            // CCCommonUtils::flyText("data error ");
+            TitanInfoCommand *ticmd = new TitanInfoCommand();
+            ticmd->sendAndRelease();
             
             break;
         }

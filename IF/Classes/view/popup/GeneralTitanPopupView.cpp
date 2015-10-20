@@ -666,7 +666,7 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         m_needGoldNode->setVisible(false);
         m_needFoodNode->setVisible(true);
         m_titanFeedStatus_0->setString(CCString::createWithFormat("Count : ")->getCString());//fusheng 需要文本
-        m_titanFeedStatus_1->setString(CCString::createWithFormat("%d",m_titanInfo.feedMaxNum)->getCString());
+        m_titanFeedStatus_1->setString(CCString::createWithFormat("%d",m_titanInfo.feedNum)->getCString());
         m_titanFeedStatus_2->setString(CCString::createWithFormat("/%d",m_titanInfo.feedMaxNum)->getCString());
         
         
@@ -1051,7 +1051,7 @@ void GeneralTitanPopupView::onTitanFeedClick(CCObject * pSender, Control::EventT
             int gold = (m_titanInfo.feedNum - m_titanInfo.feedMaxNum)*50+CCCommonUtils::getGoldByTime(3600);
             gold = gold>1000? 1000:gold;
             YesNoDialog::showButtonAndGold(_lang("102120").c_str() , CCCallFunc::create(this, callfunc_selector(GeneralTitanPopupView::AccGrowthCallBack)), "OK", gold);
-            m_titanFeedBtn->setEnabled(false);//fusheng  这里也需要 设置不可点击
+
         }
 
     }
@@ -1067,7 +1067,6 @@ void GeneralTitanPopupView::AccGrowthCallBack()
 {
     TitanFeedCommand *tfCommand = new TitanFeedCommand();
     tfCommand->sendAndRelease();
-    CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("Titan_Feed"));
     m_titanFeedBtn->setEnabled(false);
 }
 
@@ -1078,8 +1077,6 @@ void GeneralTitanPopupView::onSpeedUpClick(CCObject * pSender, Control::EventTyp
     
     YesNoDialog::showTime( _lang("102120").c_str() , CCCallFunc::create(this, callfunc_selector(GeneralTitanPopupView::spdCallBack)), tmpTime, _lang("104903").c_str());
     
-   
-
 
 //
 ////    int tmpTime = GlobalData::shared()->allQueuesInfo[qid].finishTime - GlobalData::shared()->getWorldTime();
