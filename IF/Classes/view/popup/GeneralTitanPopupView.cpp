@@ -314,7 +314,7 @@ bool GeneralTitanPopupView::init()
     
     m_titanExtTxtPre->setString("Exp");//fusheng 需要文本
     
-
+    m_toolSpeedUpTxt->setString(_lang("104903"));
   
     return true;
 }
@@ -428,15 +428,19 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
             
             setGrayNode(m_toolSpeedUpBtnNode, true);
             
-            m_toolSpeedUpTxt->setColor(ccGRAY);
+            m_toolSpeedUpTxt->setColor(ccColor3B(0,73,19));
+            
+            
             
             m_toolSpeedUpBtn->setEnabled(true);
+            
+            setGrayNode(m_toolSpeedUpBtnNode, false);
         }
         else
         {
-            m_toolSpeedUpTxt->setColor(ccColor3B(0,73,19));
+            m_toolSpeedUpTxt->setColor(ccGRAY);
           
-            setGrayNode(m_toolSpeedUpBtnNode, false);
+            setGrayNode(m_toolSpeedUpBtnNode, true);
             
             m_toolSpeedUpBtn->setEnabled(false);
         }
