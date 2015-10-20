@@ -140,6 +140,7 @@ bool ImperialScene::init()
 //    m_touchLayer->addChild(m_Layer2d);
 //    m_touchLayer->addChild(m_Layer3d);
     this->addChild(m_touchLayer);
+    m_touchLayer->setTag(IMPERIAL_SCENE_TOUCH_LAYER_TAG); //a by ljf
     
     m_sunNode = CCNode::create();//太阳光节点
     m_sunNode->setPosition(CCDirector::sharedDirector()->getWinSize().width + 50, CCDirector::sharedDirector()->getWinSize().height - 50);
@@ -600,6 +601,7 @@ void ImperialScene::onCreateTitan()
     m_touchLayer->addChild(m_TitanNode);
     
     m_TitanNode->setTag(JUST3D_NODE_TAG);
+    
     
     m_touchLayer->setCameraMask((unsigned short)CameraFlag::USER4, true);
     m_TitanNode->setCameraMask((unsigned short) CameraFlag::USER2, true);
