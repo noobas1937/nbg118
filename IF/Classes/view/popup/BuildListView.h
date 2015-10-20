@@ -28,7 +28,7 @@ class BuildListView
 {
 public:
     static BuildListView* create(int pos);
-    BuildListView():m_pos(0),m_openNum(0),m_itemId(0),m_initEnd(false),gBuildId(0){};
+    BuildListView():m_pos(0),m_openNum(0),m_itemId(0),m_initEnd(false),gBuildId(0),m_lastGalleryIndex(-1),m_curGalleryIndex(0){};
     ~BuildListView(){};
     void updateInfo(int pos);
     CCNode *getGuideNode(string _key);

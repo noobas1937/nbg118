@@ -493,7 +493,7 @@ void ImperialScene::buildingCallBack(CCObject* params)
 //        m_bRunning = true;
         onMoveToPos(m_curBuildPosx, m_curBuildPosy, TYPE_POS_MID, dt, scale, true);
         if (newPlayerST) {
-            onPlayBattle();
+//            onPlayBattle();
         }
         FunBuildController::getInstance()->isFirst=true;
         scheduleOnce(schedule_selector(ImperialScene::startGuide), 0.5f);
@@ -2661,18 +2661,17 @@ void ImperialScene::onUpdateInfo()
         if (cnt<=0) {
             //加入地块
             FunBuild* build = FunBuild::create( i , m_nameLayer);  //ljf, 此时funbuild的itemId为position字段
-            
-            build->setTag(i);
-            m_nodeBuildings[i]->addChild(build);
-            
-            m_nodeBuildings[i]->setContentSize(CCSizeMake(build->mainWidth, build->mainHeight));
-            int od = m_nodeBuildings[i]->getZOrder();
-            m_nodeBuildings[i]->setZOrder(od);
-            
-            build->setTileBatch(m_nodeBuildings[i]->getPositionX(), m_nodeBuildings[i]->getPositionY(), m_resbatchNode, od);
-            build->m_key = 1000-od;
-            
-            
+            if (build) {
+                build->setTag(i);
+                m_nodeBuildings[i]->addChild(build);
+                
+                m_nodeBuildings[i]->setContentSize(CCSizeMake(build->mainWidth, build->mainHeight));
+                int od = m_nodeBuildings[i]->getZOrder();
+                m_nodeBuildings[i]->setZOrder(od);
+                
+                build->setTileBatch(m_nodeBuildings[i]->getPositionX(), m_nodeBuildings[i]->getPositionY(), m_resbatchNode, od);
+                build->m_key = 1000-od;
+            }
         }
     }
 }

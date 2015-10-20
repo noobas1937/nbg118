@@ -178,8 +178,8 @@ bool GuideController::start(){
 }
 
 void GuideController::setGuide(std::string guideId){
-//    guideId = "";
-//    return;
+    guideId = "";
+    return;
     if (m_currentId == guideId && guideId != "") {
         return;
     }

@@ -386,19 +386,19 @@ void HFViewport::applyZoom(float newZoom)
     CCPoint centerDif = ccpSub(mWSZoomCenter, newCenter);
     
     cocos2d::CCPoint pos = ccpAdd(m_TargetNode->getPosition(), centerDif);
-    CCLOGFUNCF("pos.x=%f, pos.y=%f, centerDif.x=%f, y=%f", pos.x, pos.y, centerDif.x, centerDif.y);
+//    CCLOGFUNCF("pos.x=%f, pos.y=%f, centerDif.x=%f, y=%f", pos.x, pos.y, centerDif.x, centerDif.y);
     if(boundPos(pos))
     {
         this->m_TargetNode->setPosition(pos);
         mCurZoomScale = newZoom;
-        CCLOGFUNCF("new mCurZoomScale=%f", mCurZoomScale);
+//        CCLOGFUNCF("new mCurZoomScale=%f", mCurZoomScale);
         
     }
     else
     {
         this->m_TargetNode->setScale(oldScale);
         mCurZoomScale = oldScale;
-        CCLOGFUNCF("old mCurZoomScale=%f", mCurZoomScale);
+//        CCLOGFUNCF("old mCurZoomScale=%f", mCurZoomScale);
     }
 }
 

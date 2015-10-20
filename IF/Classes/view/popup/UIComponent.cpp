@@ -5396,7 +5396,15 @@ CCNode* UIComponent::getNodeByIndex(string _key){
         
     }else if(_key == "UI_titan"){
         
-        return m_skillBG;
+        auto& titan = FunBuildController::getInstance()->getFunbuildById(FUN_BUILD_MAIN_CITY_ID);
+        if (titan.state!=FUN_BUILD_NORMAL || titan.level >=2) {
+            //泰坦已经升级完毕 或者 正在升级 则跳转到下一步
+            GuideController::share()->setGuide("3072200");
+            return NULL;
+        }
+        else {
+            return m_skillBG;
+        }
         
     }
     
