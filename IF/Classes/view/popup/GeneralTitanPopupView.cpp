@@ -54,6 +54,8 @@
 //
 ////const int cellW = 640;
 //static int cellW = 520;
+#include "NBCommonUtils.h"
+using namespace NBCommonUtils;
 
 GeneralTitanPopupView* GeneralTitanPopupView::create(){
     GeneralTitanPopupView* ret = new GeneralTitanPopupView();
@@ -80,83 +82,6 @@ GeneralTitanPopupView* GeneralTitanPopupView::create(){
 //}
 //
 
-void setGrayNode(cocos2d::CCNode *node , bool gray)
-{
-    auto trySpr = dynamic_cast<CCSprite*>(node);
-    
-    auto trySpr9 = dynamic_cast<CCScale9Sprite*>(node);
-    
-    if (trySpr) {
-        CCCommonUtils::setSpriteGray(trySpr, gray);
-    }
-    
-    if (trySpr9) {
-        if(gray)
-            trySpr9->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
-        else
-            trySpr9->setState(cocos2d::ui::Scale9Sprite::State::NORMAL);
-    }
-    
-    
-    
-    for(auto child:node->getChildren())
-    {
-        setGrayNode(child,gray);
-    }
-    
-    
-}
-
-inline void arrangeLabel(vector<CCLabelIF*> &labels,vector<float> &gaps )
-{
-    size_t count = labels.size();
-    
-    size_t gaps_size = gaps.size();
-    
-    if (count == 0 || count == 1) {
-        return;
-    }
-    
-    for (int i = 1; i<count; i++) {
-        
-        CCLabelIF* nbPreLabel = labels.at(i-1);
-        
-        CCLabelIF* nbLabel = labels.at(i);
-        
-        nbLabel->setAnchorPoint(Vec2::ZERO);
-        
-        float gap = 0;
-        
-        if (i-1<gaps_size) {
-            gap = gaps.at(i-1);
-        }
-        
-        nbLabel->setPositionX(nbPreLabel->getContentSize().width * nbPreLabel->getOriginScaleX()+nbPreLabel->getPositionX()+gap);
-        
-    }
-    
-}
-inline void arrangeLabel(vector<CCLabelIF*> &labels )
-{
-    size_t count = labels.size();
-    
-    if (count == 0 || count == 1) {
-        return;
-    }
-    
-    for (int i = 1; i<count; i++) {
-        
-        CCLabelIF* nbPreLabel = labels.at(i-1);
-        
-        CCLabelIF* nbLabel = labels.at(i);
-        
-        nbLabel->setAnchorPoint(Vec2::ZERO);
-        
-        nbLabel->setPositionX(nbPreLabel->getContentSize().width * nbPreLabel->getOriginScaleX()+nbPreLabel->getPositionX());
-        
-    }
-    
-}
 
 
 void GeneralTitanPopupView::onGetPlayerInfoCallback(cocos2d::CCObject *obj) {
@@ -1126,6 +1051,7 @@ void GeneralTitanPopupView::onTitanFeedClick(CCObject * pSender, Control::EventT
             int gold = (m_titanInfo.feedNum - m_titanInfo.feedMaxNum)*50+CCCommonUtils::getGoldByTime(3600);
             gold = gold>1000? 1000:gold;
             YesNoDialog::showButtonAndGold(_lang("102120").c_str() , CCCallFunc::create(this, callfunc_selector(GeneralTitanPopupView::AccGrowthCallBack)), "OK", gold);
+            m_titanFeedBtn->setEnabled(false);//fusheng  这里也需要 设置不可点击
         }
 
     }

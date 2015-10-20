@@ -150,7 +150,12 @@ private:
 //    CCSafeObject<CCScale9Sprite> m_picCover;
     CCSafeObject<CCScale9Sprite> m_stamineBG;
     CCSafeObject<Label> m_nameTxt;
-    CCSafeObject<CCLabelIF> m_expTxt;
+//    CCSafeObject<CCLabelIF> m_expTxt;
+    CCSafeObject<CCLabelIF> m_expTxt0;
+    CCSafeObject<CCLabelIF> m_expTxt1;
+    CCSafeObject<CCLabelIF> m_expTxt2;
+    
+    
     CCSafeObject<CCLabelIF> m_pointText;
     CCSafeObject<CCLabelIF> m_expTxtPre;
     CCSafeObject<CCLabelIF> m_stamineTextPre;
@@ -196,7 +201,11 @@ private:
     CCSafeObject<CCLabelIF> m_goldNum;
     CCSafeObject<CCSprite> m_goldIcon;
     
-    CCSafeObject<CCLabelIF> m_stamineText;
+//    CCSafeObject<CCLabelIF> m_stamineText;
+    CCSafeObject<CCLabelIF> m_stamineText0;
+    CCSafeObject<CCLabelIF> m_stamineText1;
+    CCSafeObject<CCLabelIF> m_stamineText2;
+    
 //    CCSafeObject<CCLabelIF> m_timeText;
     CCSafeObject<ClickTipView> m_tip;
     CCSafeObject<CCScale9Sprite> m_staminePro;
