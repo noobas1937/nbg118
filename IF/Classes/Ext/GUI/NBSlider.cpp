@@ -7,7 +7,7 @@
 //
 
 #include "NBSlider.h"
-#include "UIHelper.h"
+#include "ui/UIHelper.h"
 #include "CCTypesExt.h"
 
 float NBSlider::getValue()
