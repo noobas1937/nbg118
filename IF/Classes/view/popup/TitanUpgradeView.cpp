@@ -33,6 +33,9 @@
 #include "TitanInView.h"
 #define MSG_BUILD_CELL "msg_build_cell"
 
+#include "NBCommonUtils.h"
+using namespace NBCommonUtils;
+
 TitanUpgradeView* TitanUpgradeView::create(int buildId,int titanId, int pos){
     TitanUpgradeView* ret = new TitanUpgradeView();
     if(ret && ret->init(buildId, pos)){
@@ -133,11 +136,27 @@ bool TitanUpgradeView::init(int buildId, int pos)
 
 void TitanUpgradeView::updateTitanInfo(CCObject* obj)
 {
-    ArmyInfo titanInfo = GlobalData::shared()->armyList[GlobalData::shared()->titanInfo.titanId]; //fusheng map中通过id获得泰坦属性 泰坦满记属性
-    ArmyInfo nextTitanInfo = GlobalData::shared()->armyList[ CC_ITOA(CCString::create(GlobalData::shared()->titanInfo.titanId)->intValue()+1)];
-    m_titanCurrentZDL->setString(CC_ITOA(titanInfo.power));
-    m_titanCurrentZDLInNext->setString(CC_ITOA(nextTitanInfo.power));
-    m_titanZDLAddValue->setString(CCString::createWithFormat("+%.1f",nextTitanInfo.power-titanInfo.power)->getCString());
+    if(GlobalData::shared()->titanInfo.level<GlobalData::shared()->MaxBuildLv) {//fusheng 没有满级
+        ArmyInfo titanInfo = GlobalData::shared()->armyList[GlobalData::shared()->titanInfo.titanId]; //fusheng map中通过id获得泰坦属性 泰坦满记属性
+        ArmyInfo nextTitanInfo = GlobalData::shared()->armyList[ CC_ITOA(CCString::create(GlobalData::shared()->titanInfo.titanId)->intValue()+1)];
+        m_titanCurrentZDL->setString(CC_ITOA(titanInfo.power));
+        m_titanCurrentZDLInNext->setString(CC_ITOA(nextTitanInfo.power));
+        m_titanZDLAddValue->setString(CCString::createWithFormat("+%.1f",nextTitanInfo.power-titanInfo.power)->getCString());
+        
+        nextLevelNode->setVisible(true);
+        
+        currentLevelNode->setPosition(70.0,64);
+    }
+    else
+    {
+        ArmyInfo titanInfo = GlobalData::shared()->armyList[GlobalData::shared()->titanInfo.titanId];
+        m_titanCurrentZDL->setString(CC_ITOA(titanInfo.power));
+        
+        nextLevelNode->setVisible(false);
+        
+        currentLevelNode->setPosition(70.0,204);
+    }
+    ;
     updateInfo(nullptr);
     
 }
@@ -188,26 +207,29 @@ void TitanUpgradeView::updateInfo(CCObject* obj)
     }
     _tmpTime = time_need;
     m_nameLabel->setString(_lang(name));
-    
-    string title = _lang_1("102272", CC_ITOA(level));
+
+//    string title = _lang_1("102272", CC_ITOA(level));
+    string title = _lang_1("102272", " ");
     if(level>=GlobalData::shared()->MaxBuildLv) {
         title += _lang("102183");
     }
-    m_lvLabel->setString(title);
-    string nextLv = _lang_1("102272", CC_ITOA(level+1));
-    m_nextLvLabel->setString(nextLv);
-
+    m_lvLabelPre->setString(title);
     
-    if (m_pos>0) {
-        m_lvLabel->setString("");
-        m_nextLvLabel->setString("");
+    m_lvLabel->setString(CC_ITOA(level));
+    vector<cocos2d::CCLabelIF *> labels;
+    labels.push_back(m_lvLabelPre);
+    labels.push_back(m_lvLabel);
+    arrangeLabel(labels);
+    
+//    string nextLv = _lang_1("102272", );
+    m_nextLvLabelPre->setString(title);
+    m_nextLvLabel->setString(CC_ITOA(level+1));
 
-        if (CCCommonUtils::isIosAndroidPad()) {
-            m_nameLabel->setPositionY(m_nameLabel->getPositionY() + 19.4);
-        } else {
-            m_nameLabel->setPositionY(m_nameLabel->getPositionY()+10);
-        }
-    }
+    labels.clear();
+    labels.push_back(m_nextLvLabelPre);
+    labels.push_back(m_nextLvLabel);
+    arrangeLabel(labels);
+    
     float tmpEffect = CCCommonUtils::getEffectValueByNum(68);
     _tmpTime = time_need/(1+CCCommonUtils::getEffectValueByNum(68)*1.0/100);
     _tmpGold = CCCommonUtils::getGoldByTime(_tmpTime);
@@ -425,10 +447,10 @@ void TitanUpgradeView::onExit()
     
     setTouchEnabled(false);
     
-    if(SceneController::getInstance()->currentSceneId == SCENE_ID_WORLD)
-    {
-        CCLoadSprite::doResourceByPathIndex(IMPERIAL_PATH,22, true);
-    }
+//    if(SceneController::getInstance()->currentSceneId == SCENE_ID_WORLD)
+//    {
+//        CCLoadSprite::doResourceByPathIndex(IMPERIAL_PATH,22, true);
+//    }
     CCNode::onExit();
 }
 
@@ -531,11 +553,17 @@ bool TitanUpgradeView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, co
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_btnMsgLabel", CCLabelIF*, this->m_btnMsgLabel);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_inBtnGoldNum", CCLabelIF*, this->m_inBtnGoldNum);
     
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "currentLevelNode", CCNode*, this->currentLevelNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "nextLevelNode", CCNode*, this->nextLevelNode);
+    
+    
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_lvLabel", CCLabelIF*, this->m_lvLabel);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_lvLabelPre", CCLabelIF*, this->m_lvLabelPre);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nameLabel", CCLabelIF*, this->m_nameLabel);
 
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nextLvLabel", CCLabelIF*, this->m_nextLvLabel);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nextLvLabelPre", CCLabelIF*, this->m_nextLvLabelPre);
    
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_upBtnMsgLabel", CCLabelIF*, this->m_upBtnMsgLabel);
     
@@ -585,7 +613,9 @@ void TitanUpgradeView::showWarningInstantUp(){
         auto dictInfo = LocalController::shared()->DBXMLManager()->getObjectByKey(CC_ITOA(m_buildId));
         name = dictInfo->valueForKey("name")->getCString();
     }
-    std::string showString = _lang_1("102498",_lang(name).c_str());
+//    std::string showString = _lang_1("102498",_lang(name).c_str());
+    std::string showString = _lang("500008");
+    
     YesNoDialog::showButtonAndGold(showString.c_str(), CCCallFunc::create(this, callfunc_selector(TitanUpgradeView::onOkInstantUp)),m_btnMsgLabel->getString().c_str(), _tmpGold);
 }
 void TitanUpgradeView::onOkInstantUp()

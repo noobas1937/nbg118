@@ -209,13 +209,10 @@ bool GeneralTitanPopupView::init()
     
     this->scheduleUpdate();
     
-    m_feedCDBtnTxt->setString(_lang("104903").c_str());
+    m_feedCDBtnTxt->setString(_lang("500003").c_str());
     
-//    CCCommonUtils::setButtonTitle(this->m_CleanFeedCDBtn,_lang("104903").c_str());
     
-//    CCCommonUtils::setButtonTitle(this->m_titanFeedBtn,"喂食");
-    
-    this->m_titanStatusDesc->setString("Titan Upgrage CD......");//fusheng 需要文本
+    this->m_titanStatusDesc->setString(_lang("500006"));//fusheng 需要文本
     
 
     
@@ -239,7 +236,7 @@ bool GeneralTitanPopupView::init()
     
     m_titanExtTxtPre->setString("Exp");//fusheng 需要文本
     
-    m_toolSpeedUpTxt->setString(_lang("104903"));
+    m_toolSpeedUpTxt->setString(_lang("500009"));
   
     return true;
 }
@@ -636,7 +633,8 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
     
     if(m_titanInfo.feedNum>=m_titanInfo.feedMaxNum)
     {
-        m_titanFeedStatus_0->setString(CCString::createWithFormat("Count : ")->getCString());//fusheng 需要文本
+//        m_titanFeedStatus_0->setString(CCString::createWithFormat("Count : ")->getCString());//fusheng 需要文本
+        m_titanFeedStatus_0->setString(_lang("500001"));
         m_titanFeedStatus_1->setString(CCString::createWithFormat("%d",m_titanInfo.feedMaxNum)->getCString());
         m_titanFeedStatus_2->setString(CCString::createWithFormat("/%d",m_titanInfo.feedMaxNum)->getCString());
         
@@ -651,7 +649,8 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         labels.push_back(m_titanFeedStatus_2);
         arrangeLabel(labels);
         
-        m_titanFeedTxt->setString("Accelerated growth");//fusheng 需要文本
+//        m_titanFeedTxt->setString("Accelerated growth");//fusheng 需要文本
+        m_titanFeedTxt->setString(_lang("500002"));
         
         int gold = (m_titanInfo.feedNum - m_titanInfo.feedMaxNum)*50+CCCommonUtils::getGoldByTime(3600);
         gold = gold>1000? 1000:gold;
@@ -665,11 +664,12 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
     {
         m_needGoldNode->setVisible(false);
         m_needFoodNode->setVisible(true);
-        m_titanFeedStatus_0->setString(CCString::createWithFormat("Count : ")->getCString());//fusheng 需要文本
+//        m_titanFeedStatus_0->setString(CCString::createWithFormat("Count : ")->getCString());//fusheng 需要文本
+        m_titanFeedStatus_0->setString(_lang("500001"));
         m_titanFeedStatus_1->setString(CCString::createWithFormat("%d",m_titanInfo.feedNum)->getCString());
         m_titanFeedStatus_2->setString(CCString::createWithFormat("/%d",m_titanInfo.feedMaxNum)->getCString());
         
-        
+        m_titanFeedStatus_0->setPosition(121,139);
         m_titanFeedStatus_0->setColor(ccColor3B(195,206,254));
         
         m_titanFeedStatus_1->setVisible(true);
@@ -682,21 +682,23 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         arrangeLabel(labels);
 
         
-        m_titanFeedTxt->setString("Feed");//fusheng 需要文本
+        m_titanFeedTxt->setString(_lang("500002"));//fusheng 需要文本
     }
 
     if(m_titanInfo.exp>=m_titanInfo.nextExp)
     {
     
         
-        m_titanFeedStatus_0->setString(CCString::createWithFormat("Experience full, you can upgrade!!!")->getCString());//fusheng 需要文本
+        m_titanFeedStatus_0->setString(_lang("500005"));//fusheng 需要文本
 
         m_titanFeedStatus_0->setColor(ccColor3B(155,200,32));
+        
+        m_titanFeedStatus_0->setPosition(91,-159);
         
         m_titanFeedStatus_1->setVisible(false);
         m_titanFeedStatus_2->setVisible(false);
         
-        m_titanFeedTxt->setString("Feed");//fusheng 需要文本
+        m_titanFeedTxt->setString(_lang("500002"));//fusheng 需要文本
     }
 
     this->m_titanFeedBtn->setEnabled(isCanFeed);
@@ -708,12 +710,16 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         m_titanFeedTxt->setColor(ccColor3B(31,72,14));
         
         m_needFood->setColor(ccColor3B(255,168,3));
+        
+        m_needGlod->setColor(ccColor3B(41,95,128));
     }
     else
     {
         m_titanFeedTxt->setColor(ccGRAY);
         
         m_needFood->setColor(ccGRAY);
+        
+        m_needGlod->setColor(ccGRAY);
     }
 //    CCCommonUtils::setSpriteGray(m_titanFeedBtnSprite, !isCanFeed);
 
@@ -1075,7 +1081,7 @@ void GeneralTitanPopupView::onSpeedUpClick(CCObject * pSender, Control::EventTyp
     
     int tmpTime = GlobalData::shared()->allQueuesInfo[queue_id].finishTime - GlobalData::shared()->getWorldTime();
     
-    YesNoDialog::showTime( _lang("102120").c_str() , CCCallFunc::create(this, callfunc_selector(GeneralTitanPopupView::spdCallBack)), tmpTime, _lang("104903").c_str());
+    YesNoDialog::showTime( _lang("500008").c_str() , CCCallFunc::create(this, callfunc_selector(GeneralTitanPopupView::spdCallBack)), tmpTime, _lang("104903").c_str());
     
 
 //
@@ -1099,7 +1105,7 @@ void GeneralTitanPopupView::spdCallBack()
 void GeneralTitanPopupView::onCleanFeedCDClick(CCObject * pSender, Control::EventType pCCControlEvent){
     
     
-    YesNoDialog::showTime( _lang("102120").c_str() , CCCallFunc::create(this, callfunc_selector(GeneralTitanPopupView::speedUpCallBack)), (int)this->feedCD, _lang("104903").c_str(),false);
+    YesNoDialog::showTime( _lang("500004").c_str() , CCCallFunc::create(this, callfunc_selector(GeneralTitanPopupView::speedUpCallBack)), (int)this->feedCD, _lang("104903").c_str(),false);
     
     
 }
@@ -1225,7 +1231,7 @@ bool GeneralTitanPopupView::onTouchBegan(CCTouch *pTouch, CCEvent *pEvent){
         if(fbiInfo.state == FUN_BUILD_UPING)
         {
         
-            CCCommonUtils::flyHint("", "", "Titan is upgrading");
+            CCCommonUtils::flyHint("", "", _lang("500007"));
             return true;
         }
         
