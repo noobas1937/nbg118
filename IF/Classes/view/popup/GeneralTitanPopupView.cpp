@@ -666,7 +666,7 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         m_needGoldNode->setVisible(false);
         m_needFoodNode->setVisible(true);
         m_titanFeedStatus_0->setString(CCString::createWithFormat("Count : ")->getCString());//fusheng 需要文本
-        m_titanFeedStatus_1->setString(CCString::createWithFormat("%d",m_titanInfo.feedMaxNum)->getCString());
+        m_titanFeedStatus_1->setString(CCString::createWithFormat("%d",m_titanInfo.feedNum)->getCString());
         m_titanFeedStatus_2->setString(CCString::createWithFormat("/%d",m_titanInfo.feedMaxNum)->getCString());
         
         
