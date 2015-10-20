@@ -3114,8 +3114,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>640.38616943359375</real>
-							<real>1675.6240234375</real>
+							<real>3037.534423828125</real>
+							<real>1987.36083984375</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -3175,8 +3175,69 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>3201.25830078125</real>
-							<real>1870.644287109375</real>
+							<real>3351.751953125</real>
+							<real>1852.7283935546875</real>
+							<integer>0</integer>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>anchorPoint</string>
+						<key>type</key>
+						<string>Point</string>
+						<key>value</key>
+						<array>
+							<real>0.0</real>
+							<real>0.0</real>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>scale</string>
+						<key>type</key>
+						<string>ScaleLock</string>
+						<key>value</key>
+						<array>
+							<real>1</real>
+							<real>1</real>
+							<false/>
+							<integer>0</integer>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>ignoreAnchorPointForPosition</string>
+						<key>type</key>
+						<string>Check</string>
+						<key>value</key>
+						<false/>
+					</dict>
+				</array>
+			</dict>
+			<dict>
+				<key>baseClass</key>
+				<string>CCNode</string>
+				<key>children</key>
+				<array/>
+				<key>customClass</key>
+				<string></string>
+				<key>displayName</key>
+				<string>m_vikingNode</string>
+				<key>memberVarAssignmentName</key>
+				<string>m_vikingNode</string>
+				<key>memberVarAssignmentType</key>
+				<integer>2</integer>
+				<key>properties</key>
+				<array>
+					<dict>
+						<key>name</key>
+						<string>position</string>
+						<key>type</key>
+						<string>Position</string>
+						<key>value</key>
+						<array>
+							<real>2845.205810546875</real>
+							<real>2123.1298828125</real>
 							<integer>0</integer>
 						</array>
 					</dict>

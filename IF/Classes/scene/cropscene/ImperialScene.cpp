@@ -158,36 +158,36 @@ bool ImperialScene::init()
     
     for (int i=0; i<BUILD_COUNT; i++) {
         int od = m_nodeBuildings[i]->getOrderOfArrival();
-        m_nodeBuildings[i]->setZOrder(od*10);
+        m_nodeBuildings[i]->setZOrder(od);
     }
     
-    m_mcNode1->setZOrder(m_mcNode1->getOrderOfArrival()*10);
-    m_mcNode2->setZOrder(m_mcNode2->getOrderOfArrival()*10);
-    m_mcNode3->setZOrder(m_mcNode3->getOrderOfArrival()*10);
-    m_mcNode4->setZOrder(m_mcNode4->getOrderOfArrival()*10);
-    m_mcNode5->setZOrder(m_mcNode5->getOrderOfArrival()*10);
-    m_desNode1->setZOrder(m_desNode1->getOrderOfArrival()*10);
-    m_desNode2->setZOrder(m_desNode2->getOrderOfArrival()*10);
-    m_desNode3->setZOrder(m_desNode3->getOrderOfArrival()*10);
-    m_flagNode->setZOrder(m_flagNode->getOrderOfArrival()*10);
-    m_hdNode->setZOrder(m_hdNode->getOrderOfArrival()*10);
-    m_goldMineNode->setZOrder(m_goldMineNode->getOrderOfArrival()*10);
-    m_goldBoxNode->setZOrder(m_goldBoxNode->getOrderOfArrival()*10);
-    m_shipNode->setZOrder(m_shipNode->getOrderOfArrival()*10);
-    m_merchanteNode->setZOrder(m_merchanteNode->getOrderOfArrival()*10);
-    m_cargoNode->setZOrder(m_cargoNode->getOrderOfArrival()*10);
-    m_newRDNode->setZOrder(m_newRDNode->getOrderOfArrival()*10);
-    m_xiongdiNode->setZOrder(m_xiongdiNode->getOrderOfArrival()*10);
+    m_mcNode1->setZOrder(m_mcNode1->getOrderOfArrival());
+    m_mcNode2->setZOrder(m_mcNode2->getOrderOfArrival());
+    m_mcNode3->setZOrder(m_mcNode3->getOrderOfArrival());
+    m_mcNode4->setZOrder(m_mcNode4->getOrderOfArrival());
+    m_mcNode5->setZOrder(m_mcNode5->getOrderOfArrival());
+    m_desNode1->setZOrder(m_desNode1->getOrderOfArrival());
+    m_desNode2->setZOrder(m_desNode2->getOrderOfArrival());
+    m_desNode3->setZOrder(m_desNode3->getOrderOfArrival());
+    m_flagNode->setZOrder(m_flagNode->getOrderOfArrival());
+    m_hdNode->setZOrder(m_hdNode->getOrderOfArrival());
+    m_goldMineNode->setZOrder(m_goldMineNode->getOrderOfArrival());
+    m_goldBoxNode->setZOrder(m_goldBoxNode->getOrderOfArrival());
+    m_shipNode->setZOrder(m_shipNode->getOrderOfArrival());
+    m_merchanteNode->setZOrder(m_merchanteNode->getOrderOfArrival());
+    m_cargoNode->setZOrder(m_cargoNode->getOrderOfArrival());
+    m_newRDNode->setZOrder(m_newRDNode->getOrderOfArrival());
+    m_xiongdiNode->setZOrder(m_xiongdiNode->getOrderOfArrival());
     
-    m_wallZOrder_0->setZOrder(m_wallZOrder_0->getOrderOfArrival()*10);
-    m_wallZOrder_1->setZOrder(m_wallZOrder_1->getOrderOfArrival()*10);
-    m_wallZOrder_2->setZOrder(m_wallZOrder_2->getOrderOfArrival()*10);
-    m_wallZOrder_3->setZOrder(m_wallZOrder_3->getOrderOfArrival()*10);
-    m_wallZOrder_4->setZOrder(m_wallZOrder_4->getOrderOfArrival()*10);
+    m_wallZOrder_0->setZOrder(m_wallZOrder_0->getOrderOfArrival());
+    m_wallZOrder_1->setZOrder(m_wallZOrder_1->getOrderOfArrival());
+    m_wallZOrder_2->setZOrder(m_wallZOrder_2->getOrderOfArrival());
+    m_wallZOrder_3->setZOrder(m_wallZOrder_3->getOrderOfArrival());
+    m_wallZOrder_4->setZOrder(m_wallZOrder_4->getOrderOfArrival());
     
     map<int, CCNode*>::iterator it=m_bigTileNodes.begin();
     for (; it!=m_bigTileNodes.end(); it++) {
-        (it->second)->setZOrder((it->second)->getOrderOfArrival()*10);
+        (it->second)->setZOrder((it->second)->getOrderOfArrival());
     }
     
     m_touchLayer->addChild(m_bgParticleLayer,101);
@@ -241,6 +241,10 @@ bool ImperialScene::init()
     m_viewPort->setWorldBound(CCRect(0,0, sumWidth, sumHight));
     
     m_touchLayer->setScale(FunBuildController::getInstance()->oldScale);
+    
+    m_node3d = CCNode::create();
+    m_touchLayer->addChild(m_node3d);
+    m_node3d->setTag(JUST3D_NODE_TAG);
     
     float maxZoomScale = 1.2;
     float minZoomScale = m_viewPort->getMinZoom() * 1.4;
@@ -432,7 +436,7 @@ void ImperialScene::buildingCallBack(CCObject* params)
     for (int i=0; i<BUILD_COUNT; i++) {
         auto bdLayer = CCLayer::create();
         m_buildSpineMap[i] = bdLayer;
-        m_touchLayer->addChild(bdLayer,baseZorder+i*10);
+        m_touchLayer->addChild(bdLayer,baseZorder+i);
         
         auto bdBatch = CCSpriteBatchNode::createWithTexture(resSp->getTexture());
         bdBatch->setTag(1);
@@ -587,24 +591,15 @@ void ImperialScene::onCreateTitan()
         return;
     }
     m_Titan->turnFront();
-//    m_Titan->setPosition(Vec2(0,0));
-    //m_titanNode->addChild(m_Titan); //d by ljf
-    //begin a by ljf
-//    m_Titan->changeTitanState(Titan::eActState::Stand);
-   
-    m_TitanNode = CCNode::create();
-    m_TitanNode->setRotation3D(Vec3(32, 39, -24));
-    m_TitanNode->setPosition(-200,-50);
-    m_TitanNode->addChild(m_Titan);
-    m_TitanNode->setPosition(m_touchLayer->convertToNodeSpace(m_titanNode->convertToWorldSpace(Point(0, 0))));
-    //SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE)->addChild(titanNode);
-    m_touchLayer->addChild(m_TitanNode);
-    
-    m_TitanNode->setTag(JUST3D_NODE_TAG);
-    
-    
+
+    auto titanRootNode = Node::create();
+    titanRootNode->setRotation3D(Vec3(32, 39, -24));
+    titanRootNode->addChild(m_Titan);
+    titanRootNode->setPosition(m_touchLayer->convertToNodeSpace(m_titanNode->convertToWorldSpace(Point(0, 0))));
+    m_node3d->addChild(titanRootNode);
+
     m_touchLayer->setCameraMask((unsigned short)CameraFlag::USER4, true);
-    m_TitanNode->setCameraMask((unsigned short) CameraFlag::USER2, true);
+    m_node3d->setCameraMask((unsigned short) CameraFlag::USER2, true);
     
     
 //    //end a by ljf
@@ -615,6 +610,34 @@ void ImperialScene::onCreateTitan()
 //    movePoint.push_back(m_tpath_4->getPosition());
 //    m_Titan->initMovePoint(movePoint);
     
+}
+
+void ImperialScene::onCreateVikingsShip()
+{
+    auto m_vikings3D = NBSprite3D::create("3d/ship/ship_3_skin.c3b");
+    m_vikings3D->setTexture("3d/ship/ship_3.jpg");
+    auto vikingsRootNode = CCNode::create();
+    vikingsRootNode->setRotation3D(Vec3(32, 39, -24));
+//    vikingsRootNode->setPosition(-200,-50);
+    vikingsRootNode->addChild(m_vikings3D);
+    vikingsRootNode->setPosition(m_touchLayer->convertToNodeSpace(m_vikingNode->convertToWorldSpace(Point(0, 0))));
+    m_node3d->addChild(vikingsRootNode);
+    
+//    std::vector<std::string> stand;
+//    int standActIndex = 0;
+//    int idleActIndex = 1;
+//    m_info->getModelAniByName(standActIndex,stand);
+    auto anim_stand = Animation3D::create("3d/ship/ship_3_stand.c3b");
+    if (anim_stand) {
+        auto pAnim = Animate3D::createWithFrames(anim_stand, 1, 100);
+        if (pAnim) {
+            auto act = RepeatForever::create(pAnim);
+            m_vikings3D->runAction(act);
+        }
+    }
+    
+    m_touchLayer->setCameraMask((unsigned short)CameraFlag::USER4, true);
+    m_node3d->setCameraMask((unsigned short) CameraFlag::USER2, true);
 }
 
 void ImperialScene::wallCallBack(CCObject* params)
@@ -2656,6 +2679,10 @@ void ImperialScene::onUpdateInfo()
             
             m_buildItems[it->first] = build;
             build->m_key = 1000-od;
+            
+            if ((it->second).type == FUN_BUILD_TRAINFIELD) {
+                onCreateVikingsShip();
+            }
         }
     }
     
@@ -3290,6 +3317,8 @@ bool ImperialScene::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const
         m_bigTileNodes[idx] = pNode;
         return true;
     }
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vikingNode", CCNode*, this->m_vikingNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_mcNode1", CCNode*, this->m_mcNode1);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_mcNode2", CCNode*, this->m_mcNode2);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_mcNode3", CCNode*, this->m_mcNode3);

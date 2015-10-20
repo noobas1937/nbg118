@@ -13,7 +13,20 @@
 	<key>fileVersion</key>
 	<integer>4</integer>
 	<key>guides</key>
-	<array/>
+	<array>
+		<dict>
+			<key>orientation</key>
+			<integer>0</integer>
+			<key>position</key>
+			<real>-1</real>
+		</dict>
+		<dict>
+			<key>orientation</key>
+			<integer>1</integer>
+			<key>position</key>
+			<real>0.0</real>
+		</dict>
+	</array>
 	<key>jsControlled</key>
 	<false/>
 	<key>nodeGraph</key>
@@ -49,8 +62,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>72</real>
-									<real>37</real>
+									<real>50</real>
+									<real>31</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -61,8 +74,8 @@
 								<string>Size</string>
 								<key>value</key>
 								<array>
+									<real>140</real>
 									<real>100</real>
-									<real>70</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -122,8 +135,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>39.47998046875</real>
-									<real>23.639999389648438</real>
+									<real>42</real>
+									<real>22</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -205,7 +218,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>221.4873046875</real>
+									<real>222.4873046875</real>
 									<real>66.393463134765625</real>
 									<integer>0</integer>
 								</array>
@@ -288,7 +301,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>253</real>
+									<real>254</real>
 									<real>79</real>
 									<integer>0</integer>
 								</array>
@@ -371,7 +384,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>253</real>
+									<real>254</real>
 									<real>79</real>
 									<integer>0</integer>
 								</array>
@@ -432,7 +445,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>227.5</real>
+									<real>228.5</real>
 									<real>69.400001525878906</real>
 									<integer>0</integer>
 								</array>
