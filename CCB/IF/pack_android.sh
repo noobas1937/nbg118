@@ -17,9 +17,9 @@ do
 			fileName=${fullFileName##_alpha_}
 
 
-			if [[ "$fullFileName" == "_alpha_World_1" || "$fullFileName" == "_alpha_World_2" ||  "$fullFileName" == "_alpha_World_4" ]]; then
+			if [[ "$fullFileName" == "_alpha_World_1" || "$fullFileName" == "_alpha_World_2" ||  "$fullFileName" == "_alpha_World_4" || "$fullFileName" == "_alpha_World_5"]]; then
 				TexturePacker --texture-format png --png-opt-level 0 --reduce-border-artifacts --opt RGBA8888 --size-constraints POT --sheet "$fullFileName.png" --data "$fileName.plist" $tpsFile
-            elif [[ "$fullFileName" == "_alpha_World_3" || "$fullFileName" == "_alpha_World_5" || "$fullFileName" == "_alpha_Imperial_30" || "$fullFileName" == "_alpha_Loading_1" || "$fullFileName" == "_alpha_Common_511" || "$fullFileName" == "_alpha_Loading_3" ]]; then
+            elif [[ "$fullFileName" == "_alpha_World_3" || "$fullFileName" == "_alpha_Imperial_30" || "$fullFileName" == "_alpha_Loading_1" || "$fullFileName" == "_alpha_Common_511" || "$fullFileName" == "_alpha_Loading_3" ]]; then
                 TexturePacker --format libgdx --texture-format png --png-opt-level 0 --opt RGBA8888 --size-constraints POT --sheet "$fullFileName.png" --data "$fileName.atlas" $tpsFile
 			elif [[ "$fullFileName" == "_alpha_Common_502" ]]; then
 				TexturePacker --texture-format png --png-opt-level 0 --opt RGBA8888  --scale 0.5 --algorithm Basic --size-constraints POT --sheet "$fullFileName.png" --data "$fileName.plist" $tpsFile
@@ -29,7 +29,7 @@ do
 				TexturePacker --texture-format png --png-opt-level 0 --opt RGBA8888 --size-constraints POT --sheet "$fullFileName.png" --data "$fileName.plist" $tpsFile 			
 			fi
 
-            if [[ "$fullFileName" == "_alpha_World_3" || "$fullFileName" == "_alpha_World_5" || "$fullFileName" == "_alpha_Imperial_30" || "$fullFileName" == "_alpha_Loading_1" || "$fullFileName" == "_alpha_Common_511" || "$fullFileName" == "_alpha_Loading_3" ]]; then
+            if [[ "$fullFileName" == "_alpha_World_3" || "$fullFileName" == "_alpha_Imperial_30" || "$fullFileName" == "_alpha_Loading_1" || "$fullFileName" == "_alpha_Common_511" || "$fullFileName" == "_alpha_Loading_3" ]]; then
                 # fix atlas file from .png to .pkm
                 sed -i.bak 's/'$fullFileName'.png/'$fullFileName'.pkm/g' $fileName.atlas
                 rm -rf *.bak
@@ -57,7 +57,7 @@ do
 				mkdir $desDir
 			fi
 
-            if [[ "$fullFileName" == "_alpha_World_3" || "$fullFileName" == "_alpha_World_5" || "$fullFileName" == "_alpha_Imperial_30" || "$fullFileName" == "_alpha_Loading_1" || "$fullFileName" == "_alpha_Common_511" || "$fullFileName" == "_alpha_Loading_3" ]]; then
+            if [[ "$fullFileName" == "_alpha_World_3" || "$fullFileName" == "_alpha_Imperial_30" || "$fullFileName" == "_alpha_Loading_1" || "$fullFileName" == "_alpha_Common_511" || "$fullFileName" == "_alpha_Loading_3" ]]; then
                 if [[ "$fullFileName" == "$fileName" ]]; then
                     # NO alpha channel
                     cp "$fullFileName.pkm" "$fileName.atlas" $desDir
