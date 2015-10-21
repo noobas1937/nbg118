@@ -616,6 +616,7 @@ void ImperialScene::onCreateVikingsShip()
 {
     auto m_vikings3D = NBSprite3D::create("3d/ship/ship_3_skin.c3b");
     m_vikings3D->setTexture("3d/ship/ship_3.jpg");
+    m_vikings3D->setScale(1.5);
     auto vikingsRootNode = CCNode::create();
     vikingsRootNode->setRotation3D(Vec3(32, 39, -24));
 //    vikingsRootNode->setPosition(-200,-50);

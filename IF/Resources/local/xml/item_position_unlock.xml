@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <tns:database xmlns:tns="http://www.iw.com/sns/platform/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <Group id="position_unlock">
-        <ItemSpec id="9990" lv="1" unlock="1" position="17;18;19;20;21;22;23;24;25;26" wood="1" pos="6"/>
-        <ItemSpec id="9991" lv="1" position="27" food="10000" wood="10000" iron="0" stone="0" pos="7"/>
-        <ItemSpec id="9992" lv="1" position="28" food="10000" wood="10000" iron="0" stone="0" pos="1"/>
-        <ItemSpec id="9993" lv="1" position="29" food="10000" wood="10000" iron="0" stone="0" pos="2"/>
-        <ItemSpec id="9994" lv="2" position="30" food="20000" wood="20000" iron="0" stone="0" pos="3"/>
-        <ItemSpec id="9995" lv="2" position="31" food="20000" wood="20000" iron="0" stone="0" pos="4"/>
-        <ItemSpec id="9996" lv="3" position="32" food="30000" wood="30000" iron="0" stone="0" pos="5"/>
-        <ItemSpec id="9997" lv="3" position="33" food="30000" wood="30000" iron="0" stone="0"/>
-        <ItemSpec id="9998" lv="4" position="34" food="40000" wood="40000" iron="0" stone="0"/>
-        <ItemSpec id="9999" lv="4" position="35" food="40000" wood="40000" iron="0" stone="0"/>
-        <ItemSpec id="10000" lv="5" position="36" food="50000" wood="50000" iron="0" stone="0"/>
-        <ItemSpec id="10001" lv="5" position="37" food="50000" wood="50000" iron="0" stone="0"/>
-        <ItemSpec id="10002" lv="6" position="38" food="60000" wood="60000" iron="0" stone="0"/>
-        <ItemSpec id="10003" lv="6" position="39" food="60000" wood="60000" iron="0" stone="0"/>
-        <ItemSpec id="10004" lv="8" position="40" food="80000" wood="80000" iron="0" stone="0"/>
-        <ItemSpec id="10005" lv="8" position="41" food="80000" wood="80000" iron="0" stone="0"/>
-        <ItemSpec id="10006" lv="10" position="42" food="100000" wood="100000" iron="20000" stone="0"/>
-        <ItemSpec id="10007" lv="10" position="43" food="100000" wood="100000" iron="20000" stone="0"/>
-        <ItemSpec id="10008" lv="10" position="44" food="100000" wood="100000" iron="20000" stone="0"/>
-        <ItemSpec id="10009" lv="12" position="45" food="120000" wood="120000" iron="24000" stone="0"/>
-        <ItemSpec id="10010" lv="12" position="46" food="120000" wood="120000" iron="24000" stone="0"/>
-        <ItemSpec id="10011" lv="15" position="47" food="150000" wood="150000" iron="30000" stone="3000"/>
-        <ItemSpec id="10012" lv="15" position="48" food="150000" wood="150000" iron="30000" stone="3000"/>
-        <ItemSpec id="10013" lv="15" position="49" food="150000" wood="150000" iron="30000" stone="3000"/>
-        <ItemSpec id="10014" lv="20" position="50" food="200000" wood="200000" iron="40000" stone="4000"/>
-        <ItemSpec id="10015" lv="20" position="51" food="200000" wood="200000" iron="40000" stone="4000"/>
+        <ItemSpec id="9990" lv="1" unlock="1" position="23" wood="1" pos="6"/>
+        <ItemSpec id="9991" lv="1" position="23" food="10000" wood="10000" iron="0" stone="0" pos="7"/>
+        <ItemSpec id="9992" lv="1" position="23" food="10000" wood="10000" iron="0" stone="0" pos="1"/>
+        <ItemSpec id="9993" lv="1" position="23" food="10000" wood="10000" iron="0" stone="0" pos="2"/>
+        <ItemSpec id="9994" lv="2" position="23" food="20000" wood="20000" iron="0" stone="0" pos="3"/>
+        <ItemSpec id="9995" lv="2" position="23" food="20000" wood="20000" iron="0" stone="0" pos="4"/>
+        <ItemSpec id="9996" lv="3" position="23" food="30000" wood="30000" iron="0" stone="0" pos="5"/>
+        <ItemSpec id="9997" lv="3" position="23" food="30000" wood="30000" iron="0" stone="0"/>
+        <ItemSpec id="9998" lv="4" position="23" food="40000" wood="40000" iron="0" stone="0"/>
+        <ItemSpec id="9999" lv="4" position="23" food="40000" wood="40000" iron="0" stone="0"/>
+        <ItemSpec id="10000" lv="5" position="23" food="50000" wood="50000" iron="0" stone="0"/>
+        <ItemSpec id="10001" lv="5" position="23" food="50000" wood="50000" iron="0" stone="0"/>
+        <ItemSpec id="10002" lv="6" position="23" food="60000" wood="60000" iron="0" stone="0"/>
+        <ItemSpec id="10003" lv="6" position="23" food="60000" wood="60000" iron="0" stone="0"/>
+        <ItemSpec id="10004" lv="8" position="23" food="80000" wood="80000" iron="0" stone="0"/>
+        <ItemSpec id="10005" lv="8" position="23" food="80000" wood="80000" iron="0" stone="0"/>
+        <ItemSpec id="10006" lv="10" position="23" food="100000" wood="100000" iron="20000" stone="0"/>
+        <ItemSpec id="10007" lv="10" position="23" food="100000" wood="100000" iron="20000" stone="0"/>
+        <ItemSpec id="10008" lv="10" position="23" food="100000" wood="100000" iron="20000" stone="0"/>
+        <ItemSpec id="10009" lv="12" position="23" food="120000" wood="120000" iron="24000" stone="0"/>
+        <ItemSpec id="10010" lv="12" position="23" food="120000" wood="120000" iron="24000" stone="0"/>
+        <ItemSpec id="10011" lv="15" position="23" food="150000" wood="150000" iron="30000" stone="3000"/>
+        <ItemSpec id="10012" lv="15" position="23" food="150000" wood="150000" iron="30000" stone="3000"/>
+        <ItemSpec id="10013" lv="15" position="23" food="150000" wood="150000" iron="30000" stone="3000"/>
+        <ItemSpec id="10014" lv="20" position="23" food="200000" wood="200000" iron="40000" stone="4000"/>
+        <ItemSpec id="10015" lv="20" position="23" food="200000" wood="200000" iron="40000" stone="4000"/>
     </Group>
 </tns:database>
