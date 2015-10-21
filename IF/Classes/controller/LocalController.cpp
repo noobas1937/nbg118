@@ -242,7 +242,7 @@ void LocalController::init() {
             m_objXMLParser->initWithFile(filePath.c_str());
         }
 #else
-        m_objXMLParser = CCRapidXMLParser::parseWithFileAndLocalDir("", "local/xml/");
+        m_objXMLParser = CCRapidXMLParser::parseWithFileAndLocalDir("", "local/xml");
 #endif
     }
     else
