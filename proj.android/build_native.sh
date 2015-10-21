@@ -1,4 +1,4 @@
-APPNAME="if"
+APPNAME="IF"
 
 # options
 
@@ -36,6 +36,10 @@ exit 1
 fi
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+cd $DIR
+python android_update_project.py
+
 # ... use paths relative to current directory
 # COCOS2DX_ROOT="$DIR/../IF/libs"
 APP_ROOT="$DIR/.."
