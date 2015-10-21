@@ -1,4 +1,4 @@
-APPNAME="IF"
+APPNAME="if"
 
 # options
 
