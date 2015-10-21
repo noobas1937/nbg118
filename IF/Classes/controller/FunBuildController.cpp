@@ -293,7 +293,7 @@ void FunBuildController::retDataFromServer(CCDictionary* dict)
             int tmpQid1 = QueueController::getInstance()->getMinTimeQidByType(TYPE_RIDE_SOLDIER);//骑兵队列 待秒cd
             int tmpQid2 = QueueController::getInstance()->getCanRecQidByType(TYPE_RIDE_SOLDIER);//骑兵队列 待收兵
             int totoalArmy = ArmyController::getInstance()->getTotalArmy();
-            if (totoalArmy > 0 || tmpQid2 != QID_MAX || tmpQid1 != QID_MAX) {//数据修复,造兵了,但是清数据了
+            if (totoalArmy > 1 || tmpQid2 != QID_MAX || tmpQid1 != QID_MAX) {//数据修复,造兵了,但是清数据了
                 gFake = "start_4";
                 CCUserDefault::sharedUserDefault()->setStringForKey("Guide_Fake","start_4");
                 CCUserDefault::sharedUserDefault()->flush();

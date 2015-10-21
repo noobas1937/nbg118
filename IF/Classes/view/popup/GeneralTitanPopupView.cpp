@@ -244,7 +244,7 @@ bool GeneralTitanPopupView::init()
 CCNode* GeneralTitanPopupView::getGuideNode(string _key)
 {
     if (_key == "Titan_Feed") {
-        if (m_titanFeedBtn->isVisible() || !m_titanFeedBtn->isEnabled()) {
+        if (!m_titanFeedBtn->isVisible() || !m_titanFeedBtn->isEnabled()) {
             CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("Titan_Feed"));
             return NULL;
         }else {

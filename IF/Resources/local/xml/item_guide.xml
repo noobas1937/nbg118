@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <tns:database xmlns:tns="http://www.iw.com/sns/platform/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <Group id="guide">
-        <ItemSpec id="3070100" next="3070200" enforce="1" mark="1"/>
+        <ItemSpec id="3070100" next="3070200" lag="1" enforce="1" mark="1"/>
         <ItemSpec id="3070200" next="3070300" plot="3070210" arrow="0" area="plot_continue" enforce="1"/>
         <ItemSpec id="3070300" next="3070400" plot="3070310" arrow="0" area="plot_continue" enforce="1"/>
-        <ItemSpec id="3070400" next="3070500" enforce="1"/>
+        <ItemSpec id="3070400" next="3070500" lag="1" enforce="1"/>
         <ItemSpec id="3070500" next="3070600" plot="3070410" arrow="0" area="plot_continue" enforce="1"/>
         <ItemSpec id="3070600" next="3070700" plot="3070510" arrow="0" area="plot_continue" enforce="1"/>
         <ItemSpec id="3070700" next="3070800" plot="3070610" arrow="0" area="plot_continue" enforce="1"/>
@@ -12,7 +12,7 @@
         <ItemSpec id="3070900" next="3071000" plot="3070810" arrow="0" area="plot_continue" enforce="1"/>
         <ItemSpec id="3071000" next="3071100" plot="3070910" arrow="0" area="plot_continue" enforce="1"/>
         <ItemSpec id="3071100" next="3071200" plot="3071010" arrow="0" area="plot_continue" enforce="1"/>
-        <ItemSpec id="3071200" next="3071300" enforce="1"/>
+        <ItemSpec id="3071200" next="3071300" lag="1" enforce="1"/>
         <ItemSpec id="3071300" next="3071400" plot="3071010" arrow="0" area="plot_continue" enforce="1"/>
         <ItemSpec id="3071400" next="3071500" plot="3071110" arrow="0" area="plot_continue" enforce="1" mark="1"/>
         <ItemSpec id="3071500" next="3071600" plot="3071210" arrow="0" area="plot_continue" enforce="1" mark="1"/>

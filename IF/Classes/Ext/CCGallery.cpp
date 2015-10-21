@@ -241,6 +241,9 @@ void CCGallery::setTargetIndexItem(int idx, bool animated/* = false*/)
 	}
 	
 	m_nSelectedItemIdx = idx;
+    if (m_pDelegate) {
+        m_pDelegate->selectionChanged(this, (CCGalleryItem *)getChildByTag(m_nSelectedItemIdx));
+    }
 }
 
 CCGalleryItem* CCGallery::itemAtIndex(int idx)
@@ -377,9 +380,9 @@ void CCGallery::updateItemsPos(void)
         }
     }
 	
-	if (m_pDelegate) {
+//	if (m_pDelegate) {
 //		m_pDelegate->selectionChanged(this, m_nSelectIdx);
-	}
+//	}
 }
 
 bool CCGallery::updateItemStatus(CCGalleryItem *pGItem)

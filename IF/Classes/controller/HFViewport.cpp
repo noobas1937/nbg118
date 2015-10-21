@@ -386,19 +386,19 @@ void HFViewport::applyZoom(float newZoom)
     CCPoint centerDif = ccpSub(mWSZoomCenter, newCenter);
     
     cocos2d::CCPoint pos = ccpAdd(m_TargetNode->getPosition(), centerDif);
-    CCLOGFUNCF("pos.x=%f, pos.y=%f, centerDif.x=%f, y=%f", pos.x, pos.y, centerDif.x, centerDif.y);
+//    CCLOGFUNCF("pos.x=%f, pos.y=%f, centerDif.x=%f, y=%f", pos.x, pos.y, centerDif.x, centerDif.y);
     if(boundPos(pos))
     {
         this->m_TargetNode->setPosition(pos);
         mCurZoomScale = newZoom;
-        CCLOGFUNCF("new mCurZoomScale=%f", mCurZoomScale);
+//        CCLOGFUNCF("new mCurZoomScale=%f", mCurZoomScale);
         
     }
     else
     {
         this->m_TargetNode->setScale(oldScale);
         mCurZoomScale = oldScale;
-        CCLOGFUNCF("old mCurZoomScale=%f", mCurZoomScale);
+//        CCLOGFUNCF("old mCurZoomScale=%f", mCurZoomScale);
     }
 }
 
@@ -727,7 +727,7 @@ void HFViewport::onTouchesBegan(const std::vector<Touch*>& pTouches, Event *pEve
     unscheduleAll();
     CC_ASSERT(this->m_TargetNode);
     //tao.yu 为解决batch不跟随自定义摄像机走的问题，增加此行代码
-    if (m_TargetNode->getTag() == IMPERIAL_SCENE_TOUCH_LAYER_TAG)
+//    if (m_TargetNode->getTag() == IMPERIAL_SCENE_TOUCH_LAYER_TAG)
     {
         m_TargetNode->setCameraMask((unsigned short)CameraFlag::USER4, true);
         auto node3d = m_TargetNode->getChildByTag(JUST3D_NODE_TAG);

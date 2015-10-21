@@ -64,6 +64,8 @@ public:
     
     // tao.yu titan
     void onCreateTitan();
+    // tao.yu vikings
+    void onCreateVikingsShip();
     
     void onUpdateInfo();
     void onCreateBuild(int itemId);
@@ -349,16 +351,7 @@ private:
 //    CCSafeObject<CCNode> m_couldNode;
     CCSafeObject<CCNode> m_crossNode;
     CCSafeObject<CCNode> m_crossClickNode;
-    // tao.yu titan node
-    CCSafeObject<CCNode> m_titanNode;
-    // tao.yu titan move path
-    //begin a by ljf
-    CCSafeObject<CCNode> m_Node0;
-    //end a by ljf
-    CCSafeObject<CCNode> m_tpath_1;
-    CCSafeObject<CCNode> m_tpath_2;
-    CCSafeObject<CCNode> m_tpath_3;
-    CCSafeObject<CCNode> m_tpath_4;
+
     
     CCSafeObject<FunBuildBtnsView> m_buildBtnsView;
     CCSafeObject<SpeBuildBtnsView> m_speBuildBtnsView;
@@ -384,8 +377,19 @@ private:
     CCSafeObject<Sprite3D> m_Layer2d;
     
     CCSafeObject<Titan> m_Titan;
-    CCSafeObject<CCNode> m_TitanNode;
-    
+    CCSafeObject<CCNode> m_node3d;
+    // tao.yu titan node
+    CCSafeObject<CCNode> m_titanNode;
+    // tao.yu 维京船
+    CCSafeObject<CCNode> m_vikingNode;
+    //begin a by ljf
+    CCSafeObject<CCNode> m_Node0;
+    //end a by ljf
+    // tao.yu titan move path
+    CCSafeObject<CCNode> m_tpath_1;
+    CCSafeObject<CCNode> m_tpath_2;
+    CCSafeObject<CCNode> m_tpath_3;
+    CCSafeObject<CCNode> m_tpath_4;
     CCSafeObject<CCNode> m_wallNode;
     CCSafeObject<WallBuild> m_wallBuild;
     CCSafeObject<CCNode> m_wallZOrder_0;
