@@ -311,7 +311,7 @@ bool FunBuild::initFunBuild(int itemId, CCLabelBatchNode* nameLayer)
         
         if (tileInfo.xmlOpen == FUN_BUILD_HIDE) {
             // tao.yu 如果表中配置hide，则不显示地块
-            tileName = "res_tile_lock.png";
+            tileName = "build_hide.png";
         }
         
         m_tile = CCLoadSprite::createSprite(tileName.c_str());
@@ -1415,6 +1415,13 @@ void FunBuild::onClickThis(float _time)
     if(m_buildingKey<1000)
     {
         auto& tileInfo = FunBuildController::getInstance()->m_tileMap[m_buildingKey];
+        
+        if (tileInfo.xmlOpen == FUN_BUILD_HIDE) {
+            CCCommonUtils::flyHint("build_hide.png", "", _lang("E100008"));
+            scheduleOnce(schedule_selector(FunBuild::onCanClick), 0.2f);
+            return;
+        }
+        
         if (tileInfo.state == FUN_BUILD_ULOCK) {
             CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_MAINSCENCE_SAVEPOS);
             if(layer) {
@@ -1460,10 +1467,6 @@ void FunBuild::onClickThis(float _time)
         
         //end a by ljf
         
-        if (tileInfo.xmlOpen == FUN_BUILD_HIDE) {
-            CCCommonUtils::flyHint("res_tile_lock.png", "", _lang("102118"));
-            scheduleOnce(schedule_selector(FunBuild::onCanClick), 0.2f);
-        }
     }
     else
     {
