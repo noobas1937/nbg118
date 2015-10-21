@@ -76,12 +76,16 @@ private:
 
     
     CCSafeObject<CCLabelIF> m_lvLabel;
+    CCSafeObject<CCLabelIF> m_lvLabelPre;
     CCSafeObject<CCLabelIF> m_nameLabel;
 
     CCSafeObject<CCLabelIF> m_nextLvLabel;
+    CCSafeObject<CCLabelIF> m_nextLvLabelPre;
 
     CCSafeObject<CCLabelIF> m_upBtnMsgLabel;
     
+    CCSafeObject<CCNode> nextLevelNode;
+    CCSafeObject<CCNode> currentLevelNode;
 
     
     CCSafeObject<CCNode> m_iconList;

@@ -301,7 +301,6 @@ bool FunBuild::initFunBuild(int itemId, CCLabelBatchNode* nameLayer)
                 tileName = "build_tile.png";
             }
         }
-        
         // begin a by ljf
         auto& tileInfo = FunBuildController::getInstance()->m_tileMap[itemId];
         
@@ -310,21 +309,17 @@ bool FunBuild::initFunBuild(int itemId, CCLabelBatchNode* nameLayer)
         }
         //end a by ljf
         
+        if (tileInfo.xmlOpen == FUN_BUILD_HIDE) {
+            // tao.yu 如果表中配置hide，则不显示地块
+            tileName = "res_tile_lock.png";
+        }
+        
         m_tile = CCLoadSprite::createSprite(tileName.c_str());
         m_tile->getTexture()->setAntiAliasTexParameters();
         this->setContentSize(m_tile->getContentSize());
         m_tile->setAnchorPoint(ccp(0,0));
         mainWidth = m_tile->getContentSize().width;
         mainHeight = m_tile->getContentSize().height;
-       
-       
-        
-        //auto& tileInfo = FunBuildController::getInstance()->m_tileMap[itemId]; //d by ljf
-            if (tileInfo.state == FUN_BUILD_LOCK || tileInfo.xmlOpen==1) {
-                //m_tile->setVisible(false); // d by ljf
-            }
-        
-        
         m_moveFrame = CCLoadSprite::createSprite("Tile_frame.png");
         m_moveFrame->setPosition(ccp(93, 56));
         m_moveFrame->setVisible(false);
@@ -1464,6 +1459,11 @@ void FunBuild::onClickThis(float _time)
             }
         
         //end a by ljf
+        
+        if (tileInfo.xmlOpen == FUN_BUILD_HIDE) {
+            CCCommonUtils::flyHint("res_tile_lock.png", "", _lang("102118"));
+            scheduleOnce(schedule_selector(FunBuild::onCanClick), 0.2f);
+        }
     }
     else
     {

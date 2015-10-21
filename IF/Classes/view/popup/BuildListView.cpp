@@ -174,6 +174,7 @@ void BuildListView::updateInfo(int pos)
     
     m_arcLayer->addChild(m_ArcGallery);
     
+//    m_ArcGallery->setTargetIndexItem(0);
     refreshGalleryCells();
     refeash(0);
 }
@@ -505,14 +506,14 @@ void BuildListView::showHand()
     }
     m_handBg->setVisible(true);
     if (m_curIdx > m_itemIdx) {
-        this->getAnimationManager()->runAnimationsForSequenceNamed("Show");
-    }else {
         this->getAnimationManager()->runAnimationsForSequenceNamed("Show_3");
+    }else {
+        this->getAnimationManager()->runAnimationsForSequenceNamed("Show");
     }
     if(!m_npcNode->isVisible()) {
-        m_npcNode->setPosition(ccp(-650, -140));
+        m_npcNode->setPosition(ccp(-650, 30));
         m_npcNode->setVisible(true);
-        m_npcNode->runAction(CCMoveTo::create(0.3, ccp(-22, -140)));
+        m_npcNode->runAction(CCMoveTo::create(0.3, ccp(-38, -140)));
     }
 }
 
@@ -559,11 +560,9 @@ void BuildListView::selectionChanged(CCGallery *gallery, CCGalleryItem *pGItem)
     if (!arcCell) {
         return;
     }
+
     if(m_buildIds.size()>pGItem->getIdx()){
-//        m_armyId = m_buildIds[pGItem->getIdx()];
-        //        if (m_lastGalleryIndex != m_curGalleryIndex) {
         m_lastGalleryIndex = m_curGalleryIndex;
-        //        }
         m_curGalleryIndex = pGItem->getIdx();
     }
     if (m_lastGalleryIndex == m_curGalleryIndex)
