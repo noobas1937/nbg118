@@ -126,7 +126,7 @@ std::string LocalController::getLanguageFileName()
         fileName=preferredLanguage;
     }
 
-    bool fileExist = CCFileUtils::sharedFileUtils()->isFileExist("local/text_"+fileName+".ini");
+    bool fileExist = CCFileUtils::sharedFileUtils()->isFileExist("local/text/text_"+fileName+".ini");
     
     if (!fileExist)
     {
@@ -180,7 +180,70 @@ void LocalController::init() {
     bool test_xml = false;
     if (false == test_xml)
     {
-        m_objXMLParser = CCRapidXMLParser::parseWithFileAndLocalDir("", "local/xml");
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+        const char* XMLS[51] = {
+            "local/xml/item_ab.xml",
+            "local/xml/item_achievement.xml",
+            "local/xml/item_activity_panel.xml",
+            "local/xml/item_alliancescience.xml",
+            "local/xml/item_allianceshop.xml",
+            "local/xml/item_arms.xml",
+            "local/xml/item_building.xml",
+            "local/xml/item_changeLanguage.xml",
+            "local/xml/item_cn.xml",
+            "local/xml/item_daily_quest.xml",
+            "local/xml/item_equipment.xml",
+            "local/xml/item_explore.xml",
+            "local/xml/item_field_monster.xml",
+            "local/xml/item_general.xml",
+            "local/xml/item_gift.xml",
+            "local/xml/item_goods.xml",
+            "local/xml/item_grade.xml",
+            "local/xml/item_guide.xml",
+            "local/xml/item_help_link.xml",
+            "local/xml/item_house.xml",
+            "local/xml/item_howtoplay.xml",
+            "local/xml/item_language.xml",
+            "local/xml/item_lordDetails.xml",
+            "local/xml/item_lueagearea.xml",
+            "local/xml/item_medal.xml",
+            "local/xml/item_monster.xml",
+            "local/xml/item_office.xml",
+            "local/xml/item_plot.xml",
+            "local/xml/item_position_unlock.xml",
+            "local/xml/item_position.xml",
+            "local/xml/item_power.xml",
+            "local/xml/item_quest.xml",
+            "local/xml/item_rank.xml",
+            "local/xml/item_resource2.xml",
+            "local/xml/item_reward.xml",
+            "local/xml/item_role.xml",
+            "local/xml/item_science.xml",
+            "local/xml/item_scienceType.xml",
+            "local/xml/item_score.xml",
+            "local/xml/item_serverpos.xml",
+            "local/xml/item_sk.xml",
+            "local/xml/item_status.xml",
+            "local/xml/item_territory_effect.xml",
+            "local/xml/item_territory.xml",
+            "local/xml/item_time_gift.xml",
+            "local/xml/item_titan.xml",
+            "local/xml/item_trial.xml",
+            "local/xml/item_vip.xml",
+            "local/xml/item_wonder.xml",
+            "local/xml/item_worldcastle.xml",
+            "local/xml/loading_tips.xml",
+        };
+        m_objXMLParser = new CCRapidXMLParser();
+        for (int i = 0; i < 51; i++)
+        {
+            std::string filePath = FileUtils::getInstance()->fullPathForFilename(XMLS[i]);
+            CCLOG("android m_objXMLParser: %s", filePath.c_str());
+            m_objXMLParser->initWithFile(filePath.c_str());
+        }
+#else
+        m_objXMLParser = CCRapidXMLParser::parseWithFileAndLocalDir("", "local/xml/");
+#endif
     }
     else
     {
