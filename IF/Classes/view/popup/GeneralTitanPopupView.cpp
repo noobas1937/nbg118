@@ -635,7 +635,7 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
     {
 //        m_titanFeedStatus_0->setString(CCString::createWithFormat("Count : ")->getCString());//fusheng 需要文本
         m_titanFeedStatus_0->setString(_lang("500001"));
-        m_titanFeedStatus_1->setString(CCString::createWithFormat("%d",m_titanInfo.feedMaxNum)->getCString());
+        m_titanFeedStatus_1->setString(CCString::createWithFormat("%3d",m_titanInfo.feedMaxNum)->getCString());
         m_titanFeedStatus_2->setString(CCString::createWithFormat("/%d",m_titanInfo.feedMaxNum)->getCString());
         
         m_titanFeedStatus_0->setColor(ccColor3B(195,206,254));
@@ -666,10 +666,10 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         m_needFoodNode->setVisible(true);
 //        m_titanFeedStatus_0->setString(CCString::createWithFormat("Count : ")->getCString());//fusheng 需要文本
         m_titanFeedStatus_0->setString(_lang("500001"));
-        m_titanFeedStatus_1->setString(CCString::createWithFormat("%d",m_titanInfo.feedNum)->getCString());
+        m_titanFeedStatus_1->setString(CCString::createWithFormat("%3d",m_titanInfo.feedNum)->getCString());
         m_titanFeedStatus_2->setString(CCString::createWithFormat("/%d",m_titanInfo.feedMaxNum)->getCString());
         
-        m_titanFeedStatus_0->setPosition(121,139);
+        m_titanFeedStatus_0->setPosition(121,-139);
         m_titanFeedStatus_0->setColor(ccColor3B(195,206,254));
         
         m_titanFeedStatus_1->setVisible(true);

@@ -205,7 +205,8 @@ bool GeneralsPopupView::init()
     {
         if (!CCCommonUtils::isIosAndroidPad()) {
             m_infoNode->setContentSize(CCSize(m_infoNode->getContentSize().width, m_infoNode->getContentSize().height+extH));
-            m_infoNode->setPositionY(m_infoNode->getPositionY()-extH);
+//            m_infoNode->setPositionY(m_infoNode->getPositionY()-extH); //fusheng 应美术要求 下调100像素
+            m_infoNode->setPositionY(m_infoNode->getPositionY()-extH-100);
             m_scrollView = CCScrollView::create(m_infoNode->getContentSize());
             m_scrollView->setDirection(kCCScrollViewDirectionVertical);
             m_infoNode->addChild(m_scrollView);
