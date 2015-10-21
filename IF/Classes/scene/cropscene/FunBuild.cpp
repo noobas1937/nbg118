@@ -663,7 +663,8 @@ void FunBuild::setSpineLayer(CCLayer* spineLayer)
     m_spineLayer = spineLayer;
     m_spineLayer->setPosition(ccp(parentX, parentY));
     
-    
+    //begin d by ljf
+    /*
     if (CCFileUtils::sharedFileUtils()->isFileExist("Spine/Imperial/lianjingongfang.json") &&
         CCFileUtils::sharedFileUtils()->isFileExist("Imperial/Imperial_30.atlas"))
     {
@@ -674,6 +675,26 @@ void FunBuild::setSpineLayer(CCLayer* spineLayer)
             m_spineAni->setTimeScale(entry->endTime/8.0f);
         }
     }
+    */
+    //end d by ljf
+    //begin a by ljf
+    if(m_spineNode)
+    {
+        int state = m_info->state;
+        const string spineJsonName = "Spine/Imperial/" + m_info->pic + "_" + CC_ITOA(GlobalData::shared()->contryResType) + "_1" + "_spine.json";
+        const string spineAtlasName = "Imperial/Imperial_30.atlas";
+        if (CCFileUtils::sharedFileUtils()->isFileExist(spineJsonName) &&
+            CCFileUtils::sharedFileUtils()->isFileExist(spineAtlasName))
+        {
+            m_spineAni = new IFSkeletonAnimation(spineJsonName.c_str(), spineAtlasName.c_str());
+            if (m_spineAni) {
+                m_spineNode->addChild(m_spineAni);
+                //spTrackEntry* entry = m_spineAni->setAnimation(0, "gongzuo", true);
+                //m_spineAni->setTimeScale(entry->endTime/8.0f);
+            }
+        }
+    }
+    //end a by ljf
 }
 
 void FunBuild::onBuildDelete()
@@ -2298,6 +2319,9 @@ bool FunBuild::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_spr", CCSprite*, this->m_spr);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_arrSpr", CCSprite*, this->m_arrSpr);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_lvBG", CCSprite*, this->m_lvBG);
+    //begin a by ljf
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_spineNode", CCNode*, this->m_spineNode);
+    //end a by ljf
     return false;
 }
 

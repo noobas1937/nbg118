@@ -146,6 +146,10 @@ protected:
 //    CCSafeObject<CCSprite> m_spr;
     CCSafeObject<CCSprite> m_lvBG;
     
+    //begin a by ljf
+    CCSafeObject<CCNode> m_spineNode;
+    //end a by ljf
+    
     CCSafeObject<CCNode> m_mainNode;
     
     CCSafeObject<CCSprite> m_bg;
