@@ -538,12 +538,7 @@ bool comperUnLockLv(string s1, string s2)
         info1 = &(GlobalData::shared()->armyList[s1]);
         info2 = &(GlobalData::shared()->armyList[s2]);
     }
-    
-    if (info1->unlockLevel > info2->unlockLevel) {
-        return false;
-    }else {
-        return true;
-    }
+    return info1->unlockLevel < info2->unlockLevel;
 }
 
 vector<string> ArmyController::getCreateSoldierIds(string sildiers, bool isFort)
@@ -578,8 +573,8 @@ vector<string> ArmyController::getCreateSoldierIds(string sildiers, bool isFort)
             }
         }
     }
-    
+
     sort(ret.begin(), ret.end(), comperUnLockLv);
-    
+
     return ret;
 }

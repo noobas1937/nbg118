@@ -1422,24 +1422,18 @@ void ProductionSoldiersView::ClearCD()
 void ProductionSoldiersView::refreshGalleryCells()
 {
     for(int i=0;i<m_armyIds.size();i++){
-        int resIndex = m_resIndex;
+        int resIndex = 204;
         ArmyInfo aInfo;
         std::string itemId = "";
         bool isLock = false;
         if ( m_isFort ) {
             aInfo = GlobalData::shared()->fortList[m_armyIds[i]];
             isLock = aInfo.unlockLevel > m_buildingLevel;
-//            ArcInfo* info = new ArcInfo(i,CCString::createWithFormat("%s",aInfo.getName().c_str())->getCString(),aInfo.getHeadIcon(),aInfo.unlockLevel>m_buildingLevel,110,m_resIndex);
-            
-            
         }else {
             aInfo = GlobalData::shared()->armyList[m_armyIds[i]];
-            resIndex = 204;
             itemId = aInfo.armyId;
             isLock = aInfo.unlockLevel > m_buildingLevel;
-//            ArcInfo* info = new ArcInfo(i,CCString::createWithFormat("%s",aInfo.getName().c_str())->getCString(),aInfo.getHeadIcon(),aInfo.unlockLevel>m_buildingLevel,110,204,aInfo.armyId);
         }
-//      m_index(index),m_title(title),m_icon(icon),isLock(isLock),maxIconSize(iconSize),m_srcIndex(srcIndex),m_id(itemId){};
         auto pItem = m_ArcGallery->getChildByTag(i);
         if (!pItem) {
             return;
@@ -1448,7 +1442,6 @@ void ProductionSoldiersView::refreshGalleryCells()
         if (!pItemCCBNode) {
             return;
         }
-//        m_lockIcon = NULL;
         CCLoadSprite::doResourceByCommonIndex(resIndex, true);
         int sIndex = resIndex;
         setCleanFunction([sIndex](){
@@ -1490,8 +1483,7 @@ void ProductionSoldiersView::refreshGalleryCells()
             pItemCCBNode->m_txtNode->setVisible(true);
         }
         
-//        CCCommonUtils::setSpriteMaxSize(pItemCCBNode->m_icon, 150, true);
-        pItemCCBNode->m_icon->setPosition(ccp(84,120));
+        pItemCCBNode->m_icon->setPosition(ccp(pItemCCBNode->m_button->getContentSize().width/2,pItemCCBNode->m_button->getContentSize().height/2));
         pItemCCBNode->m_button->addChild(pItemCCBNode->m_icon,1000);
         
         if (CCCommonUtils::isIosAndroidPad())

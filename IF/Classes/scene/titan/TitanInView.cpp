@@ -32,16 +32,15 @@ bool TitanInView::init()
     auto bg = CCBLoadFile("Titan",this,this);
     m_Titan = Titan::create(GlobalData::shared()->titanInfo.tid);
     m_Titan->setScale(0.7);
-    //m_titanPos->addChild(m_Titan); //d by ljf
     //begin a by ljf
     auto s = Director::getInstance()->getWinSize();
     auto renderTexture = NBGRenderTarget::create(s.width , s.height , cocos2d::Texture2D::PixelFormat::RGBA8888);
     auto titanParent = Node::create();
     titanParent->addChild(m_Titan);
     renderTexture->addChild(titanParent);
-    titanParent->setRotation3D(Vec3(0, 40, 0));
+    titanParent->setRotation3D(Vec3(15, 0, 0));
+    m_Titan->onRotationY(40);
     m_titanPos->addChild(renderTexture);
-//    m_Titan->changeTitanState(Titan::eActState::Stand);
     //end a by ljf
     return true;
     
