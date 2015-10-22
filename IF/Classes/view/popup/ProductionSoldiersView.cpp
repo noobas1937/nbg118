@@ -244,7 +244,7 @@ bool ProductionSoldiersView::init()
         }
     }
     
-    m_soldierLight->setPositionZ(400);
+//    m_soldierLight->setPositionZ(400);
 //    float extH = getExtendHeight();
     int nAdd =  winSize.height - 852;
     if (CCCommonUtils::isIosAndroidPad())
@@ -253,6 +253,8 @@ bool ProductionSoldiersView::init()
 //        extH = winSize.height - 2048;
     }
     m_soldierLight->setPosition(0, 852/2 + nAdd + 10);
+    auto startparticle = ParticleController::createParticle("soldierView");
+    m_soldier_light_star->addChild(startparticle);
     update(1.0f);
     return true;
 }
@@ -1350,7 +1352,7 @@ bool ProductionSoldiersView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarg
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_newIcon", CCSprite*, this->m_newIcon);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_soldierLight", CCNode*, this->m_soldierLight);
-    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_soldier_light_star", CCNode*, this->m_soldier_light_star);
     return false;
 }
 
