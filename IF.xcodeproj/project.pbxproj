@@ -989,6 +989,7 @@
 		B1FD956A18F6A0210083574F /* RegisterView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B1FD956818F6A0210083574F /* RegisterView.cpp */; };
 		B1FD956D18F790F20083574F /* EmailConfirmPush.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B1FD956B18F790F20083574F /* EmailConfirmPush.cpp */; };
 		B1FD957018F7BBFF0083574F /* PushSettingCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B1FD956E18F7BBFF0083574F /* PushSettingCommand.cpp */; };
+		B80A40AE1BD88A7A00B4D9CB /* NBWorldMapMainCity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B80A40AC1BD88A7A00B4D9CB /* NBWorldMapMainCity.cpp */; settings = {ASSET_TAGS = (); }; };
 		B80D4B261BAFA1CC00422225 /* nb_world in Resources */ = {isa = PBXBuildFile; fileRef = B80D4B251BAFA1CC00422225 /* nb_world */; };
 		B80D4B2A1BAFA1D800422225 /* nb_world.tmx in Resources */ = {isa = PBXBuildFile; fileRef = B80D4B281BAFA1D800422225 /* nb_world.tmx */; };
 		B80D4B2F1BAFCA6B00422225 /* nb_world_link_area.tmx in Resources */ = {isa = PBXBuildFile; fileRef = B80D4B2E1BAFCA6B00422225 /* nb_world_link_area.tmx */; };
@@ -3138,6 +3139,8 @@
 		B1FD956C18F790F20083574F /* EmailConfirmPush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailConfirmPush.h; sourceTree = "<group>"; };
 		B1FD956E18F7BBFF0083574F /* PushSettingCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PushSettingCommand.cpp; sourceTree = "<group>"; };
 		B1FD956F18F7BBFF0083574F /* PushSettingCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushSettingCommand.h; sourceTree = "<group>"; };
+		B80A40AC1BD88A7A00B4D9CB /* NBWorldMapMainCity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBWorldMapMainCity.cpp; sourceTree = "<group>"; };
+		B80A40AD1BD88A7A00B4D9CB /* NBWorldMapMainCity.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NBWorldMapMainCity.hpp; sourceTree = "<group>"; };
 		B80D4B251BAFA1CC00422225 /* nb_world */ = {isa = PBXFileReference; lastKnownFileType = folder; name = nb_world; path = Resources/nb_world; sourceTree = "<group>"; };
 		B80D4B281BAFA1D800422225 /* nb_world.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = nb_world.tmx; path = Resources/nb_world.tmx; sourceTree = "<group>"; };
 		B80D4B2E1BAFCA6B00422225 /* nb_world_link_area.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = nb_world_link_area.tmx; path = Resources/nb_world_link_area.tmx; sourceTree = "<group>"; };
@@ -5673,6 +5676,8 @@
 				B86B5D3D1BCF3D1E0010EC71 /* NBWorldMonster.hpp */,
 				B8F554021BD093CB00AD16E3 /* NBWorldNPC.cpp */,
 				B8F554031BD093CB00AD16E3 /* NBWorldNPC.hpp */,
+				B80A40AC1BD88A7A00B4D9CB /* NBWorldMapMainCity.cpp */,
+				B80A40AD1BD88A7A00B4D9CB /* NBWorldMapMainCity.hpp */,
 			);
 			path = map;
 			sourceTree = "<group>";
@@ -8122,6 +8127,7 @@
 				7C20006819B56BA70055FC94 /* AllianceShopPush.cpp in Sources */,
 				E68B965118DA833100718A08 /* TalentInfo.cpp in Sources */,
 				572440471B2186AF000DAF5F /* DragonUpgradeView.cpp in Sources */,
+				B80A40AE1BD88A7A00B4D9CB /* NBWorldMapMainCity.cpp in Sources */,
 				96C8923B1B4694F200EC6E69 /* CKFGetTopInfoCommand.cpp in Sources */,
 				E68B965418DA839200718A08 /* TalentController.cpp in Sources */,
 				96B94FD919AEE0390014C3F1 /* PushAllianceMarchSpd.cpp in Sources */,
@@ -8517,7 +8523,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.guojiang.nbg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2baf0b76-82a7-461a-ac97-125285dd3717";
+				PROVISIONING_PROFILE = "94e78410-7d6f-4a35-8191-377f40e2e9a9";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "\"IF/libs/Chipmunk/include/chipmunk\"";
 				VALIDATE_PRODUCT = NO;
@@ -8594,7 +8600,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2baf0b76-82a7-461a-ac97-125285dd3717";
+				PROVISIONING_PROFILE = "94e78410-7d6f-4a35-8191-377f40e2e9a9";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "\"IF/libs/Chipmunk/include/chipmunk\"";
 				VALIDATE_PRODUCT = NO;
