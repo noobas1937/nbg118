@@ -127,6 +127,9 @@ protected:
     bool isUnLock;
     bool isCanClick;
     bool isEffectRunning;
+    //beign a by ljf
+    int m_effectState;
+    //end a by ljf
     int m_zOrder;
     int m_clickType;
     int m_output;
@@ -229,6 +232,8 @@ private:
     void showForgeFire(float dt);
     
     string STClickName;
+    
+    void initEffectState(); //a by ljf
 };
 
 class FunBuildState: public CCAniNode
