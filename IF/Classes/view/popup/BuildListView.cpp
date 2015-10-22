@@ -181,14 +181,8 @@ void BuildListView::updateInfo(int pos)
     refeash(0);
 }
 
-bool compareInt(int n1, int n2)
-{
-    return n1 > n2;
-}
-
 void BuildListView::refreshGalleryCells()
 {
-//    sort(m_buildIds.begin(), m_buildIds.end(), compareInt);
     for(int i = 0;i < m_buildIds.size() ;i++){
         
         auto pItem = m_ArcGallery->getChildByTag(i);
@@ -281,8 +275,7 @@ void BuildListView::refreshGalleryCells()
             pItemCCBNode->m_lockNode->setVisible(false);
             pItemCCBNode->m_txtNode->setVisible(true);
         }
-        
-        pItemCCBNode->m_icon->setPosition(ccp(84,120));
+        pItemCCBNode->m_icon->setPosition(ccp(pItemCCBNode->m_button->getContentSize().width/2,pItemCCBNode->m_button->getContentSize().height/2));
         pItemCCBNode->m_button->addChild(pItemCCBNode->m_icon,1000);
         
         if (CCCommonUtils::isIosAndroidPad())

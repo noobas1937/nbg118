@@ -43,6 +43,7 @@ echo ""
 echo "building start with log:$logfileName"
 echo "*************************************************"
 oldBuildNumber=999
+# guo jiang local
 sed -i.bak 's/'$oldBuildNumber'/'$BUILD_NUMBER'/g' AndroidManifest.xml
 rm -rf *.bak
 
@@ -52,6 +53,8 @@ rm -rf *
 cd ../CCB/IF >/dev/null 2>/dev/null
 echo "0.pack_all.command..."
 sh pack_android.sh
+# guo jiang todo
+cp  -rf ./Imperial/Imperial_41/*.jpg ../../Android_Resource/Imperial/
 echo "[Done]"
 echo ""
 
@@ -130,6 +133,7 @@ else
 fi
 
 ant crashlytics-symbols
+# guo jiang local
 rm -rf AndroidManifest.xml
 
 mkdir $apkTargetDir >/dev/null 2>/dev/null

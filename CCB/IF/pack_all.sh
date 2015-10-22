@@ -15,7 +15,7 @@ do
 			fullFileName=${tpsFile##./}
 			fullFileName=${fullFileName%%.tps}
 			fileName=${fullFileName##_alpha_}
-            if [[ "$fullFileName" == "_alpha_World_3" || "$fullFileName" == "_alpha_World_5" || "$fullFileName" == "_alpha_Imperial_30"|| "$fullFileName" == "_alpha_Common_511"|| "$fullFileName" == "_alpha_Loading_1"  || "$fullFileName" == "_alpha_Loading_3" ]]; then
+            if [[ "$fullFileName" == "_alpha_World_3" || "$fullFileName" == "_alpha_Imperial_30"|| "$fullFileName" == "_alpha_Common_511"|| "$fullFileName" == "_alpha_Loading_1"  || "$fullFileName" == "_alpha_Loading_3" ]]; then
                 TexturePacker $tpsFile 
 			elif [[ "$fullFileName" == "_alpha_World_1" ]]; then
 				TexturePacker --opt PVRTC4 --premultiply-alpha $tpsFile  
