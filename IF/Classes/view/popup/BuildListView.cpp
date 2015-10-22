@@ -75,7 +75,8 @@ CCNode* BuildListView::getGuideNode(string _key)
                     break;
                 }
             }
-            if (idx>0) {
+//            if (idx>0) {
+            if (idx>=0) { //fusheng
                 int curIdx = m_buildIds.size()-1;
                 bool up = false;
                 if (idx > curIdx) {
@@ -83,7 +84,8 @@ CCNode* BuildListView::getGuideNode(string _key)
                 }
                 int moveCnt = abs(curIdx-idx);
                 // tao.yu TODO 新的滑动控件需要测试引导
-                refeash(idx);
+                m_ArcGallery->setTargetIndexItem(idx,true);
+//                refeash(idx);
                 CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE
                                                                                        , CCString::createWithFormat("LI_%d",gBuildId));
             }

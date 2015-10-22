@@ -460,6 +460,7 @@ void WorldMapView::removeCover(){
 CCNode *WorldMapView::getNodeByType(std::string typeStr){
     if(typeStr == "wood" || typeStr == "relic" || typeStr == "food"){
         if(GuideController::share()->arr->count() != 1){
+            int count = GuideController::share()->arr->count();
             return NULL;
         }
         
@@ -1174,9 +1175,10 @@ void WorldMapView::asyncCityInfoParse(cocos2d::CCObject *obj) {
                 hideSameBoard(index);
                 addToMap(cityMap, index, currentCenterPoint, index);
                 //tutorial
-                if (GuideController::share()->getCurrentId() == "3031200"
-                   || GuideController::share()->getCurrentId() == "3031300"
-                   || GuideController::share()->getCurrentId() == "3031400") {
+//                if (GuideController::share()->getCurrentId() == "3031200"
+//                   || GuideController::share()->getCurrentId() == "3031300"
+//                   || GuideController::share()->getCurrentId() == "3031400") {
+                if (GuideController::share()->getCurrentId() == "3074100" || GuideController::share()->getCurrentId() == "3074200"){//fusheng world里的教程
                     CCPoint addPt = WorldController::getPointByIndex(index);
                     if (WorldController::getInstance()->getCityInfos()[index].cityType == ResourceTile
                        && WorldController::getInstance()->getCityInfos()[index].resource.type == Food

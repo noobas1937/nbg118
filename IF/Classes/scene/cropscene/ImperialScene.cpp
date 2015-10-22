@@ -702,6 +702,7 @@ void ImperialScene::startGuide(float _time)
         return;
     }
     GuideController::share()->start();
+//    GuideController::share()->setGuide("3076500");//fusheng 教程test
     UserUpgradeView*  pop = dynamic_cast<UserUpgradeView*>(PopupViewController::getInstance()->getCurrentPopupView());
     
 // tao.yu 第一版不需要活动界面

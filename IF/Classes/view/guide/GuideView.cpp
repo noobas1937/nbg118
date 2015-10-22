@@ -99,14 +99,15 @@ void GuideView::gotoEnd(cocos2d::CCObject *pTarget, CCControlEvent touchEvent){
 }
 void GuideView::showGoToBtn()
 {
-    m_gotoNode->removeFromParent();
-    if (true || CCCommonUtils::isTestPlatformAndServer("guide_skip_1")) {
-        string curGuideId = GuideController::share()->getCurGuideID();
-        if (curGuideId == "3070100"||curGuideId == "3070200"||curGuideId == "3070300"||curGuideId == "3070400"||curGuideId == "3070500"||curGuideId == "3070600") {
-            this->addChild(m_gotoNode);
-            m_gotoNode->setVisible(true);
-        }
-    }
+//    fusheng 不显示跳过
+//    m_gotoNode->removeFromParent();
+//    if (true || CCCommonUtils::isTestPlatformAndServer("guide_skip_1")) {
+//        string curGuideId = GuideController::share()->getCurGuideID();
+//        if (curGuideId == "3070100"||curGuideId == "3070200"||curGuideId == "3070300"||curGuideId == "3070400"||curGuideId == "3070500"||curGuideId == "3070600") {
+//            this->addChild(m_gotoNode);
+//            m_gotoNode->setVisible(true);
+//        }
+//    }
 }
 
 void GuideView::setArrow(CCPoint p, int w, int h, int d, bool fly){

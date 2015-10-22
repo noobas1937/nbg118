@@ -243,15 +243,57 @@ bool GeneralTitanPopupView::init()
 
 CCNode* GeneralTitanPopupView::getGuideNode(string _key)
 {
+    
+    FunBuildInfo& fbiInfo = FunBuildController::getInstance()->getFunbuildById(FUN_BUILD_MAIN_CITY_ID);
     if (_key == "Titan_Feed") {
-        if (!m_titanFeedBtn->isVisible() || !m_titanFeedBtn->isEnabled()) {
+        
+        if(fbiInfo.state == FUN_BUILD_UPING || fbiInfo.level>1)//fusheng 升级中或者级别大于1
+        {
             CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("Titan_Feed"));
             return NULL;
-        }else {
-            return m_titanFeedBtn;
         }
+        else
+        {
+            if (!m_titanFeedBtn->isVisible() || !m_titanFeedBtn->isEnabled()) {
+                CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("Titan_Feed"));
+                return NULL;
+            }else {
+                return m_titanFeedBtn;
+            }
+        }
+        
     }else if (_key == "Titan_Up") {
+        if(fbiInfo.state == FUN_BUILD_UPING || fbiInfo.level>1)//fusheng 升级中或者级别大于1
+        {
+            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("Titan_Up"));
+            return NULL;
+        }
         return m_titanUngrade;
+    }else if (_key == "Titan_Speed") {
+        if(fbiInfo.state == FUN_BUILD_UPING && fbiInfo.level==1)//fusheng 1级且升级中
+        {
+            if (!m_speedUpBtn->isVisible() || !m_speedUpBtn->isEnabled()) {
+                CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("Titan_Speed"));
+                return NULL;
+            }else {
+                return m_speedUpBtn;
+            }
+            
+        }
+        else
+        {
+            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("Titan_Speed"));
+            return NULL;
+        }
+        
+    }else if (_key == "Titan_Close") {
+        GeneralTitanPopupView* generalTitanPopupView = dynamic_cast<GeneralTitanPopupView*>(PopupViewController::getInstance()->getCurrentPopupView());
+        
+        if(generalTitanPopupView)
+        {
+            return UIComponent::getInstance()->m_popupReturnBtn;//fusheng 当前界面是GeneralTitanPopupView时
+        }
+        return NULL;
     }
     return NULL;
 }
@@ -1077,8 +1119,13 @@ void GeneralTitanPopupView::AccGrowthCallBack()
 }
 
 void GeneralTitanPopupView::onSpeedUpClick(CCObject * pSender, Control::EventType pCCControlEvent){
-
-    
+    FunBuildInfo& fbiInfo = FunBuildController::getInstance()->getFunbuildById(FUN_BUILD_MAIN_CITY_ID);
+    if(fbiInfo.state == FUN_BUILD_UPING && fbiInfo.level==1)//fusheng 1级且升级中
+    {
+        GeneralTitanPopupView::spdCallBack();
+        return;
+        
+    }
     int tmpTime = GlobalData::shared()->allQueuesInfo[queue_id].finishTime - GlobalData::shared()->getWorldTime();
     
     YesNoDialog::showTime( _lang("500008").c_str() , CCCallFunc::create(this, callfunc_selector(GeneralTitanPopupView::spdCallBack)), tmpTime, _lang("104903").c_str());
@@ -1099,6 +1146,7 @@ void GeneralTitanPopupView::spdCallBack()
         gold = 0;
     }
     FunBuildController::getInstance()->costCD(400000000, "", gold);
+    CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("Titan_Speed"));
     
 };
 
