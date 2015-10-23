@@ -941,12 +941,16 @@ void ProductionSoldiersView::confirmCallBack(){
 }
 
 void ProductionSoldiersView::onInfoBtnClick(CCObject * pSender, Control::EventType pCCControlEvent){
-    ArmyInfo* m_info = getCurArmy();
-    PopupViewController::getInstance()->addPopupInView(SoldierInfoView::create(m_info,m_buildingId));
-    if (m_newIcon->isVisible()) {
-        CCUserDefault::sharedUserDefault()->setStringForKey(m_info->armyId.c_str(), "");
-        CCUserDefault::sharedUserDefault()->flush();
-        m_newIcon->setVisible(false);
+    // tao.yu 第一版没有兵种信息界面，暂时关闭
+    if(!true)
+    {
+        ArmyInfo* m_info = getCurArmy();
+        PopupViewController::getInstance()->addPopupInView(SoldierInfoView::create(m_info,m_buildingId));
+        if (m_newIcon->isVisible()) {
+            CCUserDefault::sharedUserDefault()->setStringForKey(m_info->armyId.c_str(), "");
+            CCUserDefault::sharedUserDefault()->flush();
+            m_newIcon->setVisible(false);
+        }
     }
 }
 void ProductionSoldiersView::cmdStringToNormal(std::string &text){
