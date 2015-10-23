@@ -234,6 +234,7 @@ private:
     string STClickName;
     
     void initEffectState(); //a by ljf
+    void initSpineNode(string picName); //a by ljf
 };
 
 class FunBuildState: public CCAniNode

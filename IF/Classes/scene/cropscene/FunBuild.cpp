@@ -93,7 +93,9 @@ bool FunBuild::initTmpBuild(int itemId, int x, int y, CCSpriteBatchNode* batchNo
     m_mainNode = CCNode::create();
     this->addChild(m_mainNode);
     CCBLoadFile(ccbName.c_str(),m_mainNode,this);
+    //begin a by ljf
     
+    //end a by ljf
     parentX = x;
     parentY = y;
     m_batchNode = batchNode;
@@ -151,6 +153,11 @@ bool FunBuild::initTmpBuild(int itemId, int x, int y, CCSpriteBatchNode* batchNo
     if(m_lvBG) {
         this->m_arrSpr->setVisible(false);
     }
+    
+    //begin a by ljf
+    initSpineNode(pic + "_" + CC_ITOA(GlobalData::shared()->contryResType) + "_1");
+    //end a by ljf
+    
     return true;
 }
 
@@ -278,6 +285,11 @@ bool FunBuild::initFunBuild(int itemId, CCLabelBatchNode* nameLayer)
             m_moveFrame->setScale(1.3);
             m_moveFrame->setPosition(ccp(131, 67));
         }
+        
+        //begin a by ljf
+        initEffectState();
+        initSpineNode(m_info->pic + "_" + CC_ITOA(GlobalData::shared()->contryResType) + "_1");
+        //end a by ljf
     }
     else   //ljf, 这代表没有创建的空块，itemId对应的是position字段
     {
@@ -344,9 +356,7 @@ bool FunBuild::initFunBuild(int itemId, CCLabelBatchNode* nameLayer)
         m_forgeEffectNode->addChild(particle);
     }
     
-    //begin a by ljf
-    initEffectState();
-    //end a by ljf
+    
     
     return true;
 }
@@ -682,13 +692,22 @@ void FunBuild::setSpineLayer(CCLayer* spineLayer)
     */
     //end d by ljf
     //begin a by ljf
+    //end a by ljf
+}
+//begin a by ljf
+void FunBuild::initSpineNode(string picName)
+{
     if(m_spineNode)
     {
-        int state = m_info->state;
-        const string spineJsonName = "Spine/Imperial/" + m_info->pic + "_" + CC_ITOA(GlobalData::shared()->contryResType) + "_1" + "_spine.json";
+        
+        //const string spineJsonName = "Spine/Imperial/" + m_info->pic + "_" + CC_ITOA(GlobalData::shared()->contryResType) + "_1" + "_spine.json";
         //const string spineJsonName = "Spine/Imperial/lianjingongfang.json";
-        //const string spineJsonName = "Spine/Imperial/nongtian_1.json";
+        
+        const string spineJsonName = "Spine/Imperial/" + picName + "_spine.json";
         const string spineAtlasName = "Imperial/Imperial_30.atlas";
+        
+        //const string spineJsonName = "Spine/Imperial/nongtian.json";
+        //const string spineAtlasName = "Imperial/nongtian.atlas";
         if (CCFileUtils::sharedFileUtils()->isFileExist(spineJsonName) &&
             CCFileUtils::sharedFileUtils()->isFileExist(spineAtlasName))
         {
@@ -707,9 +726,8 @@ void FunBuild::setSpineLayer(CCLayer* spineLayer)
             }
         }
     }
-    //end a by ljf
 }
-
+//end a by ljf
 void FunBuild::onBuildDelete()
 {
     if(!GlobalData::shared()->isInitFlag){
