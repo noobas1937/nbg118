@@ -125,8 +125,8 @@
         
 		<receiver android:name="org.nbg.stac.empire.common.manager.NotificationReceiver" android:process=":remote" >
 		    <intent-filter>
-                <action android:name="com.hcg.cok.intent.action.NOTIFICATION" />
-                <action android:name="com.hcg.cok.intent.action.FREE_LOTTERY"/>
+                <action android:name="com.nbg.intent.action.NOTIFICATION" />
+                <action android:name="com.nbg.intent.action.FREE_LOTTERY"/>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 		</receiver>
@@ -216,7 +216,7 @@
         <receiver android:name="com.clash.of.notifies.HFParseCustomReceiver" 
             android:exported="false">
 		  <intent-filter>
-		    <action android:name="com.hcg.cok.gp.UPDATE_STATUS" />
+		    <action android:name="com.nbg.gp.UPDATE_STATUS" />
 		  </intent-filter>
 		</receiver>
 		<!-- helpshift -->

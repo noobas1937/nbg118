@@ -318,7 +318,7 @@ public class IF extends Cocos2dxActivity implements IAnalyticTracker {
 			getCallbackManager();
 		}
 		if(miAnalyticsEnabled)
-	        MiGameChannel.Initialize(this, "com.hcg.cok.mi", getPublishImpl().getPublish_Region());
+	        MiGameChannel.Initialize(this, "com.nbg.mi", getPublishImpl().getPublish_Region());
 		
 		Native.nativeSetFromCountry(Locale.getDefault().getCountry());
 		

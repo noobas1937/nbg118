@@ -12,7 +12,7 @@ import com.clash.of.weibo.WBUtil;
 import com.stac.empire.pay.platform.PlatformPay;
 
 public class Jni {
-	private static String TAG = "COK_JNI";
+	private static String TAG = "NBG_JNI";
 	
 	public static void doPlatformLogin(){
 		NBG_CN1.doLogin();
