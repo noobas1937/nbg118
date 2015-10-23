@@ -132,7 +132,7 @@ else
 	exit -1
 fi
 
-ant crashlytics-symbols
+# ant crashlytics-symbols
 # guo jiang local
 rm -rf AndroidManifest.xml
 

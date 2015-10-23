@@ -2337,8 +2337,8 @@ void FunBuildController::initPosPath()
         posToZorders[53] = zorders;
     }
     
-    int offset_x = 2824; // guo.jiang
-    int offset_y = 2270; // guo.jiang
+    int offset_x = 2900; // guo.jiang
+    int offset_y = 2600; // guo.jiang
     
     sqerPoints.push_back(ccp(290 + offset_x, 560 + offset_y));
     sqerPoints.push_back(ccp(380 + offset_x, 515 + offset_y));
