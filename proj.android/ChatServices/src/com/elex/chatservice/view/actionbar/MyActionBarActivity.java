@@ -348,7 +348,7 @@ public abstract class MyActionBarActivity extends FragmentActivity
 		
 		try{
 			// 从onResume()调用时，可能在FragmentManagerImpl.checkStateLoss()出异常
-			// java.lang.RuntimeException Unable to resume activity {com.hcg.cok.gp/com.elex.chatservice.view.ChatActivity}:
+			// java.lang.RuntimeException Unable to resume activity {com.nbg.gp/com.elex.chatservice.view.ChatActivity}:
 			// java.lang.IllegalStateException: Can not perform this action after onSaveInstanceState
 			super.onBackPressed();
 		}

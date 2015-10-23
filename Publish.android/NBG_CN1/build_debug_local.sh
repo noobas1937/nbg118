@@ -52,7 +52,7 @@ rm -rf *
 
 cd ../CCB/IF >/dev/null 2>/dev/null
 echo "0.pack_all.command..."
-# sh pack_android.sh
+sh pack_android.sh
 # guo jiang todo
 # cp  -rf ./Imperial/Imperial_41/*.jpg ../../Android_Resource/Imperial/
 echo "[Done]"
@@ -132,7 +132,7 @@ else
 	exit -1
 fi
 
-ant crashlytics-symbols
+# ant crashlytics-symbols
 # guo jiang local
 # rm -rf AndroidManifest.xml
 

@@ -1194,7 +1194,7 @@ static AOEUtiliesIOS *_sharedUtilies;
                   objectValue, objectType,
                   actionsValue, actions,
                   ref,@"ref",
-                  "Clash of Kings",@"caption",
+                  "Dragon Clans",@"caption",
                   @"true",@"fb:explicitly_shared",
                   nil];
     }

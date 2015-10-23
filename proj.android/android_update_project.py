@@ -12,5 +12,9 @@ list_dirs = os.walk(SCRIPT_PATH + '/../')
 for root, dirs, files in list_dirs: 
     for f in files:
         if f == 'project.properties':
-            print(root)
+            if os.path.isfile(root + '/proguard-project.txt'):
+                os.rename(root + '/proguard-project.txt', root + '/proguard-project_2.txt')
             print(subprocess.Popen("android update project --path %s" % root, shell=True, stdout=subprocess.PIPE).stdout.read())
+            if os.path.isfile(root + '/proguard-project_2.txt'):
+                os.remove(root + '/proguard-project.txt')
+                os.rename(root + '/proguard-project_2.txt', root + '/proguard-project.txt')

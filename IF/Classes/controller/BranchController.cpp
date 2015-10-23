@@ -114,7 +114,7 @@ std::string BranchController::getBranchValue(std::string cmd){
 
 void BranchController::doSendToBranchAndroid(std::string cmd, std::string value){
     JniMethodInfo minfo;
-    if (! JniHelper::getStaticMethodInfo(minfo, "org/hcg/IF/Jni", "doSetBranch", "(Ljava/lang/String;Ljava/lang/String;)V") ) {
+    if (! JniHelper::getStaticMethodInfo(minfo, "org/nbg/IF/Jni", "doSetBranch", "(Ljava/lang/String;Ljava/lang/String;)V") ) {
         CCLOG("JNI: AppLibHelper method doSetBranch not found!");
         return;
     }
@@ -128,7 +128,7 @@ void BranchController::doSendToBranchAndroid(std::string cmd, std::string value)
 
 void BranchController::redeemCreditAndriod(int creditNum){
     JniMethodInfo minfo;
-    if (! JniHelper::getStaticMethodInfo(minfo, "org/hcg/IF/Jni", "redeemCredit", "(I)V") ) {
+    if (! JniHelper::getStaticMethodInfo(minfo, "org/nbg/IF/Jni", "redeemCredit", "(I)V") ) {
         CCLOG("JNI: AppLibHelper method redeemCredit not found!");
         return;
     }
@@ -138,7 +138,7 @@ void BranchController::redeemCreditAndriod(int creditNum){
 
 int BranchController::getCreditAndroid(){
     JniMethodInfo minfo;
-    if (! JniHelper::getStaticMethodInfo(minfo, "org/hcg/IF/Jni", "getCredit", "()I") ) {
+    if (! JniHelper::getStaticMethodInfo(minfo, "org/nbg/IF/Jni", "getCredit", "()I") ) {
         CCLOGFUNC("jni: no method getCredit");
         return 0;
     }

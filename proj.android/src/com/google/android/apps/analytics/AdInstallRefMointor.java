@@ -8,9 +8,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.util.Log;
 import org.cocos2dx.ext.Tracker;
-
-import org.hcg.util.GameContext;
-//import com.xingcloud.analytic.CloudAnalytic;
+import org.nbg.util.GameContext;
 
 /**
  * 推广渠道跟踪
