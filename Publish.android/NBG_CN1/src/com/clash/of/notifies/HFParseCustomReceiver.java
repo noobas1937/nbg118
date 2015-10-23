@@ -7,7 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import org.nbg.notifies.*;
-import com.hcg.cok.cn1.R;
+import com.nbg.cn1.R;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
