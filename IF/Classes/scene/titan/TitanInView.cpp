@@ -98,3 +98,9 @@ void TitanInView::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 
 }
 
+void TitanInView::resetDisplay(int tid)
+{
+    m_Titan->resetDisplay(tid);
+    m_Titan->onRotationY(40);
+}
+

@@ -195,7 +195,9 @@ bool GeneralTitanPopupView::init()
 //    m_Titan = Titan::create(1);
 //    m_Titan->setScale(0.7);
 //    m_titanPos->addChild(m_Titan);
-    m_titanPosInView->addChild( TitanInView::create());
+    auto tieanInView = TitanInView::create();
+    tieanInView->setTag(10086);
+    m_titanPosInView->addChild(tieanInView );
 //    auto sdsds = cocos2d::Label::createWithBMFont("Arial_Bold.fnt", "222221122");
 //        this->m_titanPos->addChild(sdsds);
     
@@ -298,6 +300,25 @@ CCNode* GeneralTitanPopupView::getGuideNode(string _key)
     return NULL;
 }
 
+void GeneralTitanPopupView::handleTitanUpgrade(CCObject* obj)
+{
+    if(GlobalData::shared()->titanInfo.level == 2)
+    {
+        
+        
+        TitanInView* view = dynamic_cast<TitanInView*>(  m_titanPosInView->getChildByTag(10086));
+        
+        if (view) {
+            view->resetDisplay(GlobalData::shared()->titanInfo.tid);
+            CCLOG("GeneralTitanPopupView titan sheng ji ");
+        }
+        
+    }
+    
+    
+    
+    
+}
 void GeneralTitanPopupView::resetAttribute(CCObject* obj)
 {
     CCDictionary *params = dynamic_cast<CCDictionary*>(obj);
@@ -785,7 +806,10 @@ void GeneralTitanPopupView::onEnter(){
     setTouchEnabled(true);
    
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GeneralTitanPopupView::resetAttribute), MSG_TITAN_INFORMATION_RESET, NULL);
-
+    
+    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GeneralTitanPopupView::handleTitanUpgrade), MSG_TITAN_UPGRADE_COMLETE, NULL);
+    
+    
 //    
     onRefreshEquip();
     
@@ -799,8 +823,13 @@ void GeneralTitanPopupView::onEnter(){
 void GeneralTitanPopupView::onExit(){
 
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_TITAN_INFORMATION_RESET);
+    
+    CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_TITAN_UPGRADE_COMLETE);
 
-    CCLoadSprite::doResourceByGeneralIndex(3, false);
+    
+    
+
+//    CCLoadSprite::doResourceByGeneralIndex(3, false);
 
     
     PopupBaseView::onExit();
