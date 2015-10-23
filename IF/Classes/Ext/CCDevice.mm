@@ -70,7 +70,7 @@ string CCDevice::getDeviceUid()
 {
     static string uid;
     
-    uid = "test00000000000000007";
+//    uid = "test00000000000000007";
 
     if (uid.empty()) {
         uid = CCUserDefault::sharedUserDefault()->getStringForKey("ACCOUNT_OPENUDID","");
