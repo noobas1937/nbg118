@@ -385,7 +385,7 @@ void GuideController::next(float t){
     std::string next = CCCommonUtils::getPropById(m_currentId, "next");
     int tmpRecordStep = atoi(m_currentId.c_str());
     recordStep(CC_ITOA(tmpRecordStep+2));
-    
+//fusheng 下面的好可疑啊
     if (m_currentId=="3031000" &&  !CCCommonUtils::isTestPlatformAndServer("guide_3")) {//从世界回来
         next = GUIDE_HAVEST_ST;
     }
@@ -885,12 +885,27 @@ CCNode* GuideController::getNode(std::string str){
             if(curView && curView->isAniComplete()){
                 node = curView->getGuideNode(str);
             }
+            else
+            {
+                CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat(str.c_str()));//fusheng 不在这个界面 就直接认为完成
+                node = NULL;
+            }
         }
         if(str == "TitanUp_End") {
-            TitanUpgradeView *curView = dynamic_cast<TitanUpgradeView*>(PopupViewController::getInstance()->getCurrentPopupView());
-            if(curView && curView->isAniComplete()){
-                node = curView->getGuideNode(str);
+            FunBuildInfo& fbiInfo = FunBuildController::getInstance()->getFunbuildById(FUN_BUILD_MAIN_CITY_ID);
+            if(fbiInfo.state != FUN_BUILD_UPING && fbiInfo.level==1)//fusheng 1级且不在升级中
+            {
+                TitanUpgradeView *curView = dynamic_cast<TitanUpgradeView*>(PopupViewController::getInstance()->getCurrentPopupView());
+                if(curView && curView->isAniComplete()){
+                    node = curView->getGuideNode(str);
+                }
             }
+            else
+            {
+                CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("TitanUp_End"));
+                node = NULL;
+            }
+            
 
         }
     }

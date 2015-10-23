@@ -188,6 +188,34 @@ bool Titan::initWithFile(int tid)
 
 }
 
+void Titan::resetDisplay(int tid)
+{
+    _tid = tid;
+    int nModelScale = atoi(CCCommonUtils::getPropById(CC_ITOA(_tid), "scale").c_str());
+    // 设置当前node的contentSize 用于点击事件
+    setContentSize(Size(500*nModelScale,550*nModelScale));
+    setAnchorPoint(Vec2(0.5,0));
+    
+    sModelPram bodyParam;
+    bodyParam.modelName = "3d/" + CCCommonUtils::getPropById(CC_ITOA(tid), "model") + ".c3b";
+    bodyParam.textureName = "3d/" + CCCommonUtils::getPropById(CC_ITOA(tid), "texture") + ".jpg";
+
+    if (_model) {
+        _model->removeFromParent();
+    }
+    
+    _model = NBSprite3D::create(bodyParam.modelName);
+    
+
+    addChild(_model);
+    _model->setTexture(bodyParam.textureName);
+
+    _model->setScale(nModelScale);
+
+    
+    reset();
+}
+
 void Titan::update(float dt)
 {
     if (!_model) {

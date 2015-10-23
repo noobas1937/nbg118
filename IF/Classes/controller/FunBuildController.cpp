@@ -288,31 +288,32 @@ void FunBuildController::retDataFromServer(CCDictionary* dict)
         //分析提取引导数据
         string gFake = CCUserDefault::sharedUserDefault()->getStringForKey("Guide_Fake","");
         string GuideBuildKey = "";
-        if (GlobalData::shared()->playerInfo.level == 1 && GlobalData::shared()->playerInfo.exp == 0)
+        if (GlobalData::shared()->playerInfo.level == 1 && GlobalData::shared()->playerInfo.exp == 0) //fusheng 新手引导提取数据
         {
-            int tmpQid1 = QueueController::getInstance()->getMinTimeQidByType(TYPE_RIDE_SOLDIER);//骑兵队列 待秒cd
-            int tmpQid2 = QueueController::getInstance()->getCanRecQidByType(TYPE_RIDE_SOLDIER);//骑兵队列 待收兵
-            int totoalArmy = ArmyController::getInstance()->getTotalArmy();
-            if (totoalArmy > 1 || tmpQid2 != QID_MAX || tmpQid1 != QID_MAX) {//数据修复,造兵了,但是清数据了
-                gFake = "start_4";
-                CCUserDefault::sharedUserDefault()->setStringForKey("Guide_Fake","start_4");
-                CCUserDefault::sharedUserDefault()->flush();
-            }
+//            fusheng d 没有骑兵营  建造步兵营后不用再建造
+//            int tmpQid1 = QueueController::getInstance()->getMinTimeQidByType(TYPE_RIDE_SOLDIER);//骑兵队列 待秒cd
+//            int tmpQid2 = QueueController::getInstance()->getCanRecQidByType(TYPE_RIDE_SOLDIER);//骑兵队列 待收兵
+//            int totoalArmy = ArmyController::getInstance()->getTotalArmy();
+//            if (totoalArmy > 1 || tmpQid2 != QID_MAX || tmpQid1 != QID_MAX) {//数据修复,造兵了,但是清数据了
+//                gFake = "start_4";
+//                CCUserDefault::sharedUserDefault()->setStringForKey("Guide_Fake","start_4");
+//                CCUserDefault::sharedUserDefault()->flush();
+//            }
             
             if(gFake=="" || gFake=="start_1")//提取4个建筑数据
             {
                 CCUserDefault::sharedUserDefault()->setStringForKey("Guide_Fake","start_1");
                 CCUserDefault::sharedUserDefault()->flush();
-                if (id==FUN_BUILD_WOOD && pos==26 && level==1) {//伐木场
+                if (id==FUN_BUILD_WOOD && pos==17 && level==1) {//伐木场
                     GuideBuildKey = GuideBuildKey + CC_ITOA(id)+"_"+CC_ITOA(pos)+"_"+CC_ITOA(level);
                     m_guideBuildMap[GuideBuildKey] = info;
                     continue;
                 }
-                else if (id==FUN_BUILD_BARRACK2 && pos==11 && level==1) {//骑兵营
-                    GuideBuildKey = GuideBuildKey + CC_ITOA(id)+"_"+CC_ITOA(pos)+"_"+CC_ITOA(level);
-                    m_guideBuildMap[GuideBuildKey] = info;
-                    continue;
-                }
+//                else if (id==FUN_BUILD_BARRACK2 && pos==11 && level==1) {//骑兵营
+//                    GuideBuildKey = GuideBuildKey + CC_ITOA(id)+"_"+CC_ITOA(pos)+"_"+CC_ITOA(level);
+//                    m_guideBuildMap[GuideBuildKey] = info;
+//                    continue;
+//                }
                 else if (id==FUN_BUILD_FOOD && pos==21 && level==1) {//农田
                     GuideBuildKey = GuideBuildKey + CC_ITOA(id)+"_"+CC_ITOA(pos)+"_"+CC_ITOA(level);
                     m_guideBuildMap[GuideBuildKey] = info;
@@ -328,12 +329,13 @@ void FunBuildController::retDataFromServer(CCDictionary* dict)
             {
                 CCUserDefault::sharedUserDefault()->setStringForKey("Guide_Fake","start_2");
                 CCUserDefault::sharedUserDefault()->flush();
-                if (id==FUN_BUILD_BARRACK2 && pos==11 && level==1) {//骑兵营
-                    GuideBuildKey = GuideBuildKey + CC_ITOA(id)+"_"+CC_ITOA(pos)+"_"+CC_ITOA(level);
-                    m_guideBuildMap[GuideBuildKey] = info;
-                    continue;
-                }
-                else if (id==FUN_BUILD_FOOD && pos==21 && level==1) {//农田
+//                if (id==FUN_BUILD_BARRACK2 && pos==11 && level==1) {//骑兵营
+//                    GuideBuildKey = GuideBuildKey + CC_ITOA(id)+"_"+CC_ITOA(pos)+"_"+CC_ITOA(level);
+//                    m_guideBuildMap[GuideBuildKey] = info;
+//                    continue;
+//                }
+//                else if (id==FUN_BUILD_FOOD && pos==17 && level==1) {//农田
+                if (id==FUN_BUILD_FOOD && pos==21 && level==1) {//农田
                     GuideBuildKey = GuideBuildKey + CC_ITOA(id)+"_"+CC_ITOA(pos)+"_"+CC_ITOA(level);
                     m_guideBuildMap[GuideBuildKey] = info;
                     continue;
@@ -348,27 +350,28 @@ void FunBuildController::retDataFromServer(CCDictionary* dict)
             {
                 CCUserDefault::sharedUserDefault()->setStringForKey("Guide_Fake","start_3");
                 CCUserDefault::sharedUserDefault()->flush();
-                if (id==FUN_BUILD_FOOD && pos==21 && level==1) {//农田
-                    GuideBuildKey = GuideBuildKey + CC_ITOA(id)+"_"+CC_ITOA(pos)+"_"+CC_ITOA(level);
-                    m_guideBuildMap[GuideBuildKey] = info;
-                    continue;
-                }
-                else if (id==FUN_BUILD_BARRACK1 && pos==10 && level==1) {//步兵营
-                    GuideBuildKey = GuideBuildKey + CC_ITOA(id)+"_"+CC_ITOA(pos)+"_"+CC_ITOA(level);
-                    m_guideBuildMap[GuideBuildKey] = info;
-                    continue;
-                }
-            }
-            else if(gFake=="end_3" || gFake=="start_4")//提取1个建筑数据
-            {
-                CCUserDefault::sharedUserDefault()->setStringForKey("Guide_Fake","start_4");
-                CCUserDefault::sharedUserDefault()->flush();
+//                if (id==FUN_BUILD_FOOD && pos==21 && level==1) {//农田
+//                    GuideBuildKey = GuideBuildKey + CC_ITOA(id)+"_"+CC_ITOA(pos)+"_"+CC_ITOA(level);
+//                    m_guideBuildMap[GuideBuildKey] = info;
+//                    continue;
+//                }
+//                else if (id==FUN_BUILD_BARRACK1 && pos==10 && level==1) {//步兵营
                 if (id==FUN_BUILD_BARRACK1 && pos==10 && level==1) {//步兵营
                     GuideBuildKey = GuideBuildKey + CC_ITOA(id)+"_"+CC_ITOA(pos)+"_"+CC_ITOA(level);
                     m_guideBuildMap[GuideBuildKey] = info;
                     continue;
                 }
             }
+//            else if(gFake=="end_3" || gFake=="start_4")//提取1个建筑数据
+//            {
+//                CCUserDefault::sharedUserDefault()->setStringForKey("Guide_Fake","start_4");
+//                CCUserDefault::sharedUserDefault()->flush();
+//                if (id==FUN_BUILD_BARRACK1 && pos==10 && level==1) {//步兵营
+//                    GuideBuildKey = GuideBuildKey + CC_ITOA(id)+"_"+CC_ITOA(pos)+"_"+CC_ITOA(level);
+//                    m_guideBuildMap[GuideBuildKey] = info;
+//                    continue;
+//                }
+//            }
         }
         //分析提取引导数据结束
         
@@ -658,23 +661,39 @@ bool FunBuildController::startOpenFunBuild(int itemId, int pos, int gold, bool i
     if (m_guideBuildMap.find(GuideBuildKey) != m_guideBuildMap.end())
     {
         bool gFakeState = false;
-        if ((gFake==""||gFake=="start_1") && itemId==FUN_BUILD_WOOD && pos==26) {
+        //fushen d
+//        if ((gFake==""||gFake=="start_1") && itemId==FUN_BUILD_WOOD && pos==26) {
+//            gFakeState = true;
+//            CCUserDefault::sharedUserDefault()->setStringForKey("Guide_Fake","end_1");
+//        }
+//        else if ((gFake=="end_1"||gFake=="start_2") && itemId==FUN_BUILD_BARRACK2 && pos==11) {
+//            gFakeState = true;
+//            CCUserDefault::sharedUserDefault()->setStringForKey("Guide_Fake","end_2");
+//        }
+//        else if ((gFake=="end_2"||gFake=="start_3") && itemId==FUN_BUILD_FOOD && pos==21) {
+//            gFakeState = true;
+//            CCUserDefault::sharedUserDefault()->setStringForKey("Guide_Fake","end_3");
+//        }
+//        else if ((gFake=="end_3"||gFake=="start_4") && itemId==FUN_BUILD_BARRACK1 && pos==10) {
+//            gFakeState = true;
+//            CCUserDefault::sharedUserDefault()->setStringForKey("Guide_Fake","end_4");
+//        }
+        
+//        fusheng begin
+        if ((gFake==""||gFake=="start_1") && itemId==FUN_BUILD_WOOD && pos==17) {
             gFakeState = true;
             CCUserDefault::sharedUserDefault()->setStringForKey("Guide_Fake","end_1");
         }
-        else if ((gFake=="end_1"||gFake=="start_2") && itemId==FUN_BUILD_BARRACK2 && pos==11) {
+        else if ((gFake=="end_1"||gFake=="start_2") && itemId==FUN_BUILD_FOOD && pos==21) {
             gFakeState = true;
             CCUserDefault::sharedUserDefault()->setStringForKey("Guide_Fake","end_2");
         }
-        else if ((gFake=="end_2"||gFake=="start_3") && itemId==FUN_BUILD_FOOD && pos==21) {
+        else if ((gFake=="end_2"||gFake=="start_3") && itemId==FUN_BUILD_BARRACK1 && pos==10) {
             gFakeState = true;
             CCUserDefault::sharedUserDefault()->setStringForKey("Guide_Fake","end_3");
         }
-        else if ((gFake=="end_3"||gFake=="start_4") && itemId==FUN_BUILD_BARRACK1 && pos==10) {
-            gFakeState = true;
-            CCUserDefault::sharedUserDefault()->setStringForKey("Guide_Fake","end_4");
-        }
-        
+
+//       fusheng end 
         if (gFakeState) {
             CCUserDefault::sharedUserDefault()->flush();
             
