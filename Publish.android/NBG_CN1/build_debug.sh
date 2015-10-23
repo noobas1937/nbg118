@@ -131,7 +131,7 @@ else
 	exit -1
 fi
 
-ant crashlytics-symbols
+# ant crashlytics-symbols
 rm -rf AndroidManifest.xml
 
 mkdir $apkTargetDir >/dev/null 2>/dev/null
