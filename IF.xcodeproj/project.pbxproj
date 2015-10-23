@@ -993,10 +993,10 @@
 		B80D4B261BAFA1CC00422225 /* nb_world in Resources */ = {isa = PBXBuildFile; fileRef = B80D4B251BAFA1CC00422225 /* nb_world */; };
 		B80D4B2A1BAFA1D800422225 /* nb_world.tmx in Resources */ = {isa = PBXBuildFile; fileRef = B80D4B281BAFA1D800422225 /* nb_world.tmx */; };
 		B80D4B2F1BAFCA6B00422225 /* nb_world_link_area.tmx in Resources */ = {isa = PBXBuildFile; fileRef = B80D4B2E1BAFCA6B00422225 /* nb_world_link_area.tmx */; };
+		B838C5B11BDA36EE00EC74B3 /* NBWaterSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B838C5AF1BDA36EE00EC74B3 /* NBWaterSprite.cpp */; settings = {ASSET_TAGS = (); }; };
 		B8581EA01BBA34E70027F733 /* TypeDefinition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8581E9F1BBA34E70027F733 /* TypeDefinition.cpp */; };
 		B864A3BD1BCB43EA001BD875 /* DynamicTiledMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B864A3BB1BCB43EA001BD875 /* DynamicTiledMap.cpp */; };
 		B86B5D1B1BCCA7340010EC71 /* NBWorldMapDecoration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B86B5D191BCCA7340010EC71 /* NBWorldMapDecoration.cpp */; };
-		B86B5D2E1BCCF2360010EC71 /* NBWaterShaderLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B86B5D2C1BCCF2360010EC71 /* NBWaterShaderLayer.cpp */; };
 		B86B5D3E1BCF3D1E0010EC71 /* NBWorldMonster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B86B5D3C1BCF3D1E0010EC71 /* NBWorldMonster.cpp */; };
 		B86B5D411BCF422E0010EC71 /* CloudLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B86B5D3F1BCF422E0010EC71 /* CloudLayer.cpp */; };
 		B8F554041BD093CB00AD16E3 /* NBWorldNPC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8F554021BD093CB00AD16E3 /* NBWorldNPC.cpp */; };
@@ -3144,13 +3144,13 @@
 		B80D4B251BAFA1CC00422225 /* nb_world */ = {isa = PBXFileReference; lastKnownFileType = folder; name = nb_world; path = Resources/nb_world; sourceTree = "<group>"; };
 		B80D4B281BAFA1D800422225 /* nb_world.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = nb_world.tmx; path = Resources/nb_world.tmx; sourceTree = "<group>"; };
 		B80D4B2E1BAFCA6B00422225 /* nb_world_link_area.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = nb_world_link_area.tmx; path = Resources/nb_world_link_area.tmx; sourceTree = "<group>"; };
+		B838C5AF1BDA36EE00EC74B3 /* NBWaterSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBWaterSprite.cpp; sourceTree = "<group>"; };
+		B838C5B01BDA36EE00EC74B3 /* NBWaterSprite.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NBWaterSprite.hpp; sourceTree = "<group>"; };
 		B8581E9F1BBA34E70027F733 /* TypeDefinition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TypeDefinition.cpp; sourceTree = "<group>"; };
 		B864A3BB1BCB43EA001BD875 /* DynamicTiledMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DynamicTiledMap.cpp; sourceTree = "<group>"; };
 		B864A3BC1BCB43EA001BD875 /* DynamicTiledMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamicTiledMap.h; sourceTree = "<group>"; };
 		B86B5D191BCCA7340010EC71 /* NBWorldMapDecoration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBWorldMapDecoration.cpp; sourceTree = "<group>"; };
 		B86B5D1A1BCCA7340010EC71 /* NBWorldMapDecoration.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NBWorldMapDecoration.hpp; sourceTree = "<group>"; };
-		B86B5D2C1BCCF2360010EC71 /* NBWaterShaderLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBWaterShaderLayer.cpp; sourceTree = "<group>"; };
-		B86B5D2D1BCCF2360010EC71 /* NBWaterShaderLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBWaterShaderLayer.h; sourceTree = "<group>"; };
 		B86B5D3C1BCF3D1E0010EC71 /* NBWorldMonster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBWorldMonster.cpp; sourceTree = "<group>"; };
 		B86B5D3D1BCF3D1E0010EC71 /* NBWorldMonster.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NBWorldMonster.hpp; sourceTree = "<group>"; };
 		B86B5D3F1BCF422E0010EC71 /* CloudLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CloudLayer.cpp; sourceTree = "<group>"; };
@@ -5668,8 +5668,6 @@
 			children = (
 				B86B5D3F1BCF422E0010EC71 /* CloudLayer.cpp */,
 				B86B5D401BCF422E0010EC71 /* CloudLayer.hpp */,
-				B86B5D2C1BCCF2360010EC71 /* NBWaterShaderLayer.cpp */,
-				B86B5D2D1BCCF2360010EC71 /* NBWaterShaderLayer.h */,
 				B86B5D191BCCA7340010EC71 /* NBWorldMapDecoration.cpp */,
 				B86B5D1A1BCCA7340010EC71 /* NBWorldMapDecoration.hpp */,
 				B86B5D3C1BCF3D1E0010EC71 /* NBWorldMonster.cpp */,
@@ -5678,6 +5676,8 @@
 				B8F554031BD093CB00AD16E3 /* NBWorldNPC.hpp */,
 				B80A40AC1BD88A7A00B4D9CB /* NBWorldMapMainCity.cpp */,
 				B80A40AD1BD88A7A00B4D9CB /* NBWorldMapMainCity.hpp */,
+				B838C5AF1BDA36EE00EC74B3 /* NBWaterSprite.cpp */,
+				B838C5B01BDA36EE00EC74B3 /* NBWaterSprite.hpp */,
 			);
 			path = map;
 			sourceTree = "<group>";
@@ -7530,6 +7530,7 @@
 				1D076FFE1B45080100CB7A28 /* AlPointFindCommand.cpp in Sources */,
 				5724404D1B21873B000DAF5F /* DragonScene.cpp in Sources */,
 				60004B5E1B7D8DBC0070951D /* LongJingStoreView.cpp in Sources */,
+				B838C5B11BDA36EE00EC74B3 /* NBWaterSprite.cpp in Sources */,
 				6CF3204C1B57B2ED006912DB /* MKAnnotationView+EMWebCache.m in Sources */,
 				6CF320521B57B2ED006912DB /* UIImageView+EMHighlightedWebCache.m in Sources */,
 				1D5FA00A1B018D89004D2E51 /* LuaCommand.cpp in Sources */,
@@ -7756,7 +7757,6 @@
 				BADF472E1A3AA9A5008E2414 /* AppLibHelper.cpp in Sources */,
 				FD9C967A17CF2637005F493D /* PopupBaseView.cpp in Sources */,
 				1DB41C7E1A82038F00CB7D23 /* Search.cpp in Sources */,
-				B86B5D2E1BCCF2360010EC71 /* NBWaterShaderLayer.cpp in Sources */,
 				57FECAB818F38ADB0012D557 /* UserUpgradeView.cpp in Sources */,
 				963E3F451B20439D009783BE /* CrossServiceActivityCommand.cpp in Sources */,
 				FD9C968017CF2B7F005F493D /* PopupViewController.cpp in Sources */,

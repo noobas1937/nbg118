@@ -1150,7 +1150,15 @@ bool Image::initWithPngData(const unsigned char * data, ssize_t dataLen)
         // premultiplied alpha for RGBA8888
         if (color_type == PNG_COLOR_TYPE_RGB_ALPHA)
         {
-            premultipliedAlpha();
+            // NBG water-shader's texture need to skip premultipliedAlpha()
+            if (std::string::npos == _filePath.find("water_normals.png"))
+            {
+                premultipliedAlpha();
+            }
+            else
+            {
+                _hasPremultipliedAlpha = false;
+            }
         }
         else
         {

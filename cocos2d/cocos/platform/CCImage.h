@@ -150,6 +150,12 @@ public:
     bool saveToFile(const std::string &filename, bool isToRGB = true);
     
     
+    /**
+        NBG for water shader
+     */
+    bool useInitWithImageFileThreadSafe(const std::string& fullpath){return initWithImageFileThreadSafe(fullpath);};
+    
+    
     /** treats (or not) PVR files as if they have alpha premultiplied.
      Since it is impossible to know at runtime if the PVR images have the alpha channel premultiplied, it is
      possible load them as if they have (or not) the alpha channel premultiplied.
