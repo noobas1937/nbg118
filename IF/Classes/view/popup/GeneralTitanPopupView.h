@@ -29,6 +29,7 @@
 //    CCSafeObject<CCLabelIF> m_desText;
 //};
 
+const char * const MSG_TITAN_UPGRADE_ANIMATION_COMLETE = "MSG_TITAN_UPGRADE_ANIMATION_COMLETE"; //泰坦升级完成
 
 class GeneralTitanPopupView: public PopupBaseView
 ,public CCBSelectorResolver
@@ -134,6 +135,9 @@ private:
     void onRefreshEquip();
     
     void handleTitanUpgrade(CCObject* obj);
+    
+    void handleTianUpgradeAnimationComplete(CCObject* obj);
+
 //    void onClickEquip(int site);
 //    void onPlayPutOnEquip();
 //    void onYesGoToBuild();
@@ -364,127 +368,33 @@ private:
     bool isOpenLongJing;//龙晶装备开关1
 };
 
-//class ChangePicPopupView: public PopupBaseView
-//,public CCBSelectorResolver
-//,public CCBMemberVariableAssigner
-////, public CCTouchDelegate
-//,public CCTableViewDataSource
-//,public DefaultTableViewDelegate
-//{
-//public:
-//    static ChangePicPopupView* create();
-//    
-//protected:
-//    // scrollview delegate
-//    virtual CCSize tableCellSizeForIndex(CCTableView *table, ssize_t idx);
-//    virtual CCSize cellSizeForTable(CCTableView *table);
-//    virtual CCTableViewCell* tableCellAtIndex(CCTableView *table, ssize_t idx);
-//    virtual ssize_t numberOfCellsInTableView(CCTableView *table);
-//    virtual void tableCellWillRecycle(CCTableView* table, CCTableViewCell* cell);
-//    virtual void scrollViewDidScroll(CCScrollView* view);
-//    
-//private:
-//    virtual void onEnter();
-//    virtual void onExit();
-//    virtual bool init();
-//    
-//    virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(cocos2d::CCObject * pTarget, const char * pSelectorName){return NULL;}
-//	virtual SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName);
-//	virtual bool onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode);
-//    
-//    virtual bool onTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
-//    virtual void onTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
-//    virtual void onTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
-//    
-//    void refreshView();
-//    void asyDelayLoad(CCObject* p);
-//    void onResetPicClick(CCObject * pSender, Control::EventType pCCControlEvent);
-//    void onSetUserPicClick(CCObject * pSender, Control::EventType pCCControlEvent);
-//    void changePic();
-//    void onOKCostGold();
-//    bool haveUpload();
-//    void onGetPicBack(cocos2d::CCObject *pObj);
-//    void onGameTick(float time);
-//    
-//    CCSafeObject<CCTableView> m_tabView;
-//    CCSafeObject<CCArray> m_data;
-//    
-//    CCSafeObject<CCNode> m_scrollContainer;
-//    CCSafeObject<CCControlButton> m_resetPicBtn;
-//    CCSafeObject<CCControlButton> m_setUserPicBtn;
-//    CCSafeObject<CCLabelIF> m_btnText;
-//    CCSafeObject<CCLabelIF> m_goldNum;
-//    CCSafeObject<CCSprite> m_goldIcon;
-//    CCSafeObject<CCSprite> m_pageFlag;
-//    CCSafeObject<CCLayerColor> m_bgColor;
-//    CCSafeObject<CCLabelIF> m_timeLb;
-//    
-//    
-//    void generateData();
-//    void setButtonState(int offX);
-//    int m_generalIndex;
-//    int m_x;
-//    int m_count;
-//};
-//
-//class GeneralPicCell :
-//public CCBSelectorResolver
-//,public CCBMemberVariableAssigner
-//,public CCTableViewCell
-//{
-//public:
-//    static GeneralPicCell *create(std::string generalId);
-//    GeneralPicCell(std::string generalId) : m_generalId(generalId) {};
-//    void setData(std::string generalId);
-//private:
-//    void refreshView();
-//    bool init();
-//    
-//    virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(cocos2d::CCObject * pTarget, const char * pSelectorName){return NULL;}
-//	virtual SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName);
-//	virtual bool onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode);
-//
-//    CCSafeObject<CCNode> m_picNode;
-//    
-//    virtual void onEnter();
-//    virtual void onExit();
-//    std::string m_generalId;
-//};
-//
-//class GeneralCustomPicView : public PopupBaseView
-//,public CCBSelectorResolver
-//,public CCBMemberVariableAssigner
-////,public CCTouchDelegate
-//{
-//public:
-//    static GeneralCustomPicView* create();
-//    
-//private:
-//    virtual void onEnter();
-//    virtual void onExit();
-//    virtual bool init();
-//    
-//    virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(cocos2d::CCObject * pTarget, const char * pSelectorName){return NULL;}
-//    virtual SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName);
-//    virtual bool onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode);
-//    
-//    virtual bool onTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
-//    virtual void onTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
-//    
-//    void onGetCustomPicClick(CCObject * pSender, Control::EventType pCCControlEvent);
-//    void onGetPicBack(CCObject* pObj);
-//    void doGetPicAction();
-//    
-//private:
-//    CCSafeObject<CCNode> m_touchNode;
-//    CCSafeObject<CCNode> m_resetNode;
-//    CCSafeObject<CCControlButton> m_pictureBtn;
-//    CCSafeObject<CCControlButton> m_cemaraBtn;
-//    CCSafeObject<CCLayerColor> m_bgColor;
-//    CCSafeObject<CCLabelIF> m_alertTTF;
-//    
-//    int m_selectIndex;
-//    
-//};
+
+class DragonUpgradeAniNode :
+public CCBSelectorResolver
+,public CCBMemberVariableAssigner
+,public CCAniNode
+{
+public:
+    static DragonUpgradeAniNode *create(int tid);
+    DragonUpgradeAniNode() :_tid(-1) {};
+
+private:
+    
+    bool init(int tid);
+    
+    int _tid;
+    virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(cocos2d::CCObject * pTarget, const char * pSelectorName){return NULL;}
+	virtual SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName);
+	virtual bool onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode);
+    
+    void animationCallBack();
+
+    CCSafeObject<CCNode> m_picNode;
+    
+    virtual void onEnter();
+    virtual void onExit();
+
+};
+
 
 #endif /* defined(__IF__GeneralTitanPopupView__) */

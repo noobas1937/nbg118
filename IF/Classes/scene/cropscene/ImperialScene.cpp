@@ -701,7 +701,7 @@ void ImperialScene::startGuide(float _time)
     if(WorldController::getInstance()->selfPoint.x < 0){
         return;
     }
-//    GuideController::share()->start();
+    GuideController::share()->start();
 //    GuideController::share()->setGuide("3076500");//fusheng 教程test
     UserUpgradeView*  pop = dynamic_cast<UserUpgradeView*>(PopupViewController::getInstance()->getCurrentPopupView());
     
