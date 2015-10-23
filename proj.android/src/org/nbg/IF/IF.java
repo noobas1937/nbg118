@@ -313,7 +313,7 @@ public class IF extends Cocos2dxActivity implements IAnalyticTracker {
 		// facebook 初始化
 		if(facebookEnabled){
 			FacebookSdk.sdkInitialize(this);
-			FacebookSdk.setApplicationName("Clash of Kings");
+			FacebookSdk.setApplicationName("Dragon Clans");
 			getProfileTracker();
 			getCallbackManager();
 		}

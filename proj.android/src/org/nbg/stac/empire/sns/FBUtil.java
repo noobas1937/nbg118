@@ -634,7 +634,7 @@ public class FBUtil {
 	    	params.putString(actions, actionsValue);
 	    }
 	    params.putString("fb:explicitly_shared", "true");
-	    params.putString("caption", "Clash of Kings");
+	    params.putString("caption", "Dragon Clans");
 	    params.putString("ref", ref);
 	    IF.getInstance().runOnUiThread(new Runnable() {			
 			@Override

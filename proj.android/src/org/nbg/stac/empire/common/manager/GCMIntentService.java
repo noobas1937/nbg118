@@ -85,7 +85,7 @@ public class GCMIntentService extends GCMBaseIntentService{
 		PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
 				notificationIntent, 0);
 		
-		Notification notification = new Notification(R.drawable.cok_icon, message,
+		Notification notification = new Notification(R.drawable.ic_launcher, message,
 				System.currentTimeMillis());
 		// 设定Notification出现时的声音，一般不建议自定义
 		notification.defaults |= Notification.DEFAULT_SOUND;
