@@ -98,7 +98,9 @@ public class UpdateManager
      */
     public void checkUpdate()
     {
-    	execPHP("http://p1cok.elexapp.com/gameservice/api/get_cn_apk_ver.php");
+    	// execPHP("http://p1cok.elexapp.com/gameservice/api/get_cn_apk_ver.php");
+        execPHP("http://p1nbg.elexapp.com/gameservice/api/get_cn_apk_ver.php");
+
 //        if (isUpdate())
 //        {
 //            // 显示提示对话框

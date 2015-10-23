@@ -482,7 +482,7 @@ public class Net implements IEventListener {
 
 	public static void login(final ISFSObject sfso, final String username,
 			final String passwd) {
-		System.out.println("[Net.login] username:"+username + " passwd:"+passwd);
+		System.out.println("[Net.login] username:" + username + " passwd:" + passwd + ", ip:" + getIP());
 		IF.getInstance().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
