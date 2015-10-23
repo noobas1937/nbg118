@@ -66,6 +66,7 @@
 #include "DynamicTiledMap.h"
 #include "NBWaterShaderLayer.h"
 #include "NBWorldMonster.hpp"
+#include "NBWorldMapMainCity.hpp"
 
 static WorldMapView* worldMapInstance = nullptr;
 static float FLAG_SCALE = 0.4;
@@ -460,6 +461,7 @@ void WorldMapView::removeCover(){
 CCNode *WorldMapView::getNodeByType(std::string typeStr){
     if(typeStr == "wood" || typeStr == "relic" || typeStr == "food"){
         if(GuideController::share()->arr->count() != 1){
+            int count = GuideController::share()->arr->count();
             return NULL;
         }
         
@@ -1174,9 +1176,10 @@ void WorldMapView::asyncCityInfoParse(cocos2d::CCObject *obj) {
                 hideSameBoard(index);
                 addToMap(cityMap, index, currentCenterPoint, index);
                 //tutorial
-                if (GuideController::share()->getCurrentId() == "3031200"
-                   || GuideController::share()->getCurrentId() == "3031300"
-                   || GuideController::share()->getCurrentId() == "3031400") {
+//                if (GuideController::share()->getCurrentId() == "3031200"
+//                   || GuideController::share()->getCurrentId() == "3031300"
+//                   || GuideController::share()->getCurrentId() == "3031400") {
+                if (GuideController::share()->getCurrentId() == "3074100" || GuideController::share()->getCurrentId() == "3074200"){//fusheng world里的教程
                     CCPoint addPt = WorldController::getPointByIndex(index);
                     if (WorldController::getInstance()->getCityInfos()[index].cityType == ResourceTile
                        && WorldController::getInstance()->getCityInfos()[index].resource.type == Food
@@ -5159,31 +5162,31 @@ void WorldMapView::addUnderNode(unsigned int index) {
                 m_cityItem[index].push_back(under);
                 m_cityBatchNode->addChild(under, index + i);
                 i++;
-
-                std::string island_picStr = pics->valueForKey("island")->getCString();
-                auto island = CCLoadSprite::createSprite(island_picStr.c_str());
-                island->setAnchorPoint(Vec2(0, 0));
-                under->addChild(island);
                 
                 // guo.jiang todo
                 // 暂时按照 COK 的规则填充 4 个 tile
-                Vec2 house_pos(0, 0);
-                if (player.cityLv == 1) {
-                    if (picStr == "41.png") {
-                        picStr = "lv1.png";
-                        // 美术给出的坐标为 (-162, -76)
-                        house_pos.x = 256 / 2 - 162;
-                        house_pos.y = 76;
-                    } else {
-                        picStr = "tile_place_holder.png";
+                Node* house = nullptr;
+                if (i == 1) // 附加图不考虑 worldcastle.xls/addPic
+                {
+                    int island_idx = NBWorldMapMainCity::getMainCityIslandImageIndex(&info, player.cityLv, -1);
+                    if (island_idx >= 0)
+                    {
+                        auto island = CCLoadSprite::createSprite(NBWorldMapMainCity::getMainCityIslandImage(island_idx, pos.x, pos.y));
+                        island->setAnchorPoint(Vec2(0, 0));
+                        under->addChild(island);
+                        
+                        house = NBWorldMapMainCity::getMainCity(island_idx, player.cityLv, -1);
                     }
                 }
-                
-                auto house = CCLoadSprite::createSprite(picStr.c_str());
-                house->setAnchorPoint(Vec2(0, 0));
-                house->setPosition(house_pos);
-                under->addChild(house);
-                under->setContentSize(house->getContentSize());
+                else
+                {
+                    house = NBWorldMapMainCity::getMainCity(-1, player.cityLv, -1);
+                }
+                if (house)
+                {
+                    under->addChild(house);
+                    under->setContentSize(house->getContentSize());
+                }
             }
             
             if (info.parentCityIndex == info.cityIndex) {
@@ -6877,25 +6880,6 @@ void WorldMapView::showAndHideFieldMonster(){return;
 //    }
 }
 
-void addIsland4City(int x, int y, int startIndex, int addIndex, CCDictionary& dict) {
-    static const char* ISLANDS_0[] = {"island_001.png", "island_002.png", "island_003.png", "island_004.png",};
-    static const char* ISLANDS_1[] = {"island_005.png", "island_006.png", "island_007.png", "island_008.png",};
-    static const char* ISLANDS_2[] = {"island_009.png", "island_010.png", "island_011.png", "island_012.png",};
-    static const char* ISLANDS_3[] = {"island_013.png", "island_014.png", "island_015.png", "island_016.png",};
-    
-    if (addIndex >= 0 && addIndex < 4) {
-        // 根据坐标和城市开始索引计算岛的外观，不用存储数据到服务器
-        startIndex = startIndex ? startIndex : 1;
-        int random_variable = (x + y) / startIndex % 4;
-        
-        const char** ISLANDS = ISLANDS_0;
-        if (random_variable == 1) ISLANDS = ISLANDS_1;
-        else if (random_variable == 2) ISLANDS = ISLANDS_2;
-        else if (random_variable == 3) ISLANDS = ISLANDS_3;
-        dict.setObject(CCString::create(ISLANDS[addIndex]), "island");
-    }
-}
-
 CCArray *WorldMapView::getCityPicArr(int addIndex, int level, bool isKing ,int nSpecialId, const Vec2& pos){
     int id = 44100 - 1 + level;
     if(isKing){
@@ -6917,7 +6901,6 @@ CCArray *WorldMapView::getCityPicArr(int addIndex, int level, bool isKing ,int n
         dict->setObject(CCString::createWithFormat("%d.png", startIndex + addIndex), "pic");
         dict->setObject(CCString::create("0"), "x");
         dict->setObject(CCString::create("0"), "y");
-        addIsland4City(pos.x, pos.y, startIndex, addIndex, *dict);
         if (isNewStyle == "0" || (isNewStyle == "" && nSpecialId == -1)) {
             arr->addObject(dict);
         }
@@ -6944,7 +6927,6 @@ CCArray *WorldMapView::getCityPicArr(int addIndex, int level, bool isKing ,int n
                 addDict->setObject(CCString::createWithFormat("%d.png", indexPic), "pic");
                 addDict->setObject(CCString::create(CC_ITOA(x)), "x");
                 addDict->setObject(CCString::create(CC_ITOA(y)), "y");
-                addIsland4City(pos.x, pos.y, indexPic, addIndex, *dict);
                 arr->addObject(addDict);
                 addIndex++;
                 
@@ -6957,7 +6939,6 @@ CCArray *WorldMapView::getCityPicArr(int addIndex, int level, bool isKing ,int n
         dict->setObject(CCString::createWithFormat("%d.png", defaultStartBaseIndex + addIndex), "pic");
         dict->setObject(CCString::create("0"), "x");
         dict->setObject(CCString::create("0"), "y");
-        addIsland4City(pos.x, pos.y, 0, addIndex, *dict);
         arr->addObject(dict);
     }
     

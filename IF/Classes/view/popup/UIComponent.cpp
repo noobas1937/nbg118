@@ -4722,6 +4722,14 @@ void UIComponent::onPopupReturnClick(CCObject * pSender, Control::EventType pCCC
         
     }
     
+    GeneralTitanPopupView* generalTitanPopupView = dynamic_cast<GeneralTitanPopupView*>(PopupViewController::getInstance()->getCurrentPopupView());
+    
+    if(generalTitanPopupView)
+    {
+        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("Titan_Close"));
+    }
+    
+    
     
     
 }
@@ -5358,10 +5366,19 @@ CCNode* UIComponent::getNodeByIndex(string _key){
     
     if(_key == "UI_world_go"){
         
+        if (QuestController::getInstance()->currentAchList.find("2102501") != QuestController::getInstance()->currentAchList.end()) {
+            QuestInfo* qusetTmp = QuestController::getInstance()->currentAchList["2102501"];
+            if(qusetTmp->state == ACCEPT) {
+                
+                return NULL;
+            }
+        }
+        
         return m_homeBG;
         
     }else if(_key == "UI_world_back"){
         
+
         return m_homeBG;
         
     }else if(_key == "UI_achievement"){
@@ -5378,7 +5395,7 @@ CCNode* UIComponent::getNodeByIndex(string _key){
         
     }else if(_key == "UI_target"){
         
-        m_CanClickTarget = true;
+        m_CanClickTarget = true;//fusheng
         
         return m_questBG;
         
@@ -5396,15 +5413,15 @@ CCNode* UIComponent::getNodeByIndex(string _key){
         
     }else if(_key == "UI_titan"){
         
-        auto& titan = FunBuildController::getInstance()->getFunbuildById(FUN_BUILD_MAIN_CITY_ID);
-        if (titan.state!=FUN_BUILD_NORMAL || titan.level >=2) {
-            //泰坦已经升级完毕 或者 正在升级 则跳转到下一步
-            GuideController::share()->setGuide("3072200");
-            return NULL;
-        }
-        else {
+//        auto& titan = FunBuildController::getInstance()->getFunbuildById(FUN_BUILD_MAIN_CITY_ID);
+//        if (titan.state!=FUN_BUILD_NORMAL || titan.level >=2) {
+//            //泰坦已经升级完毕 或者 正在升级 则跳转到下一步
+//            GuideController::share()->setGuide("3072200");
+//            return NULL;
+//        }
+//        else {
             return m_skillBG;
-        }
+//        }
         
     }
     

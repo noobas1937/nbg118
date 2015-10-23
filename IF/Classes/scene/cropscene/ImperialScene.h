@@ -229,6 +229,7 @@ private:
     void showFirework(CCObject* obj);//烟花
     void startShowFirework(float t);//烟花序列特效
     void titanChangeStatus(CCObject* obj);//泰坦状态改变
+    void handleTitanUpgrade(CCObject* obj);//泰坦升级完成
     void titanUpgradeComplete(CCObject* obj);//泰坦升级完成
     
     void onShowTalkView(CCObject* obj);

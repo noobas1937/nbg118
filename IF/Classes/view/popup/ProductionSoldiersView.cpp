@@ -108,6 +108,7 @@ bool ProductionSoldiersView::init()
 //    m_slider->setTag(1);
 //    m_slider->setLimitMoveValue(20);
     m_slider = NBSlider::create("nb_bar_bg.png", "nb_bar_pro.png", "nb_cursor_icon.png",NBSlider::TextureResType::PLIST);
+    m_slider->setCapInsets(Rect(8, 1, 30, 13));
     m_slider->setContentSize(Size(sliderW,15));
 //    m_slider->setPosition(ccp(-60, -59));//fusheng d
     if (CCCommonUtils::isIosAndroidPad()) {
@@ -244,7 +245,7 @@ bool ProductionSoldiersView::init()
         }
     }
     
-    m_soldierLight->setPositionZ(400);
+//    m_soldierLight->setPositionZ(400);
 //    float extH = getExtendHeight();
     int nAdd =  winSize.height - 852;
     if (CCCommonUtils::isIosAndroidPad())
@@ -253,6 +254,8 @@ bool ProductionSoldiersView::init()
 //        extH = winSize.height - 2048;
     }
     m_soldierLight->setPosition(0, 852/2 + nAdd + 10);
+    auto startparticle = ParticleController::createParticle("soldierView");
+    m_soldier_light_star->addChild(startparticle);
     update(1.0f);
     return true;
 }
@@ -1350,7 +1353,7 @@ bool ProductionSoldiersView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarg
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_newIcon", CCSprite*, this->m_newIcon);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_soldierLight", CCNode*, this->m_soldierLight);
-    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_soldier_light_star", CCNode*, this->m_soldier_light_star);
     return false;
 }
 

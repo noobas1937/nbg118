@@ -47,6 +47,10 @@ int TitanInfo::resetTitanInfo(CCDictionary* dict)//0没有改变 1数值改变(�
         int newLevel = dict->valueForKey("level")->intValue();
         if (newLevel != level) {
             dataStatus |= TITANVALUECHANGE;
+            
+            if (level != 0) {//fusheng 级别不是0 表示不是第一次初始化 泰坦升级
+                dataStatus |= TITANUPGRADE;
+            }
             level = newLevel;
             tid = 60000 + level;
             auto temp = dynamic_cast<CCDictionary*>(LocalController::shared()->DBXMLManager()->getGroupByKey("titan")->objectForKey(CCString::createWithFormat("%d", tid)->getCString()));

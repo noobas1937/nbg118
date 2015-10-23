@@ -163,20 +163,20 @@
             <key>decor_island_100.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{0,384},{235,102}}</string>
+                <string>{{0,384},{256,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{235,102}}</string>
+                <string>{{0,0},{256,128}}</string>
                 <key>sourceSize</key>
-                <string>{235,102}</string>
+                <string>{256,128}</string>
             </dict>
             <key>surface_bolder_093.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{235,384},{256,128}}</string>
+                <string>{{256,384},{256,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -189,7 +189,7 @@
             <key>surface_bolder_094.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{491,384},{256,128}}</string>
+                <string>{{512,384},{256,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -202,7 +202,7 @@
             <key>surface_bolder_095.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{747,384},{256,128}}</string>
+                <string>{{768,384},{256,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -222,7 +222,7 @@
             <key>size</key>
             <string>{1024,512}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:bca6d243e92473b1c13a1ac18ac0b540:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:c6c458e8d671c8534da583e99514392a:1/1$</string>
             <key>textureFileName</key>
             <string>decoration.png</string>
         </dict>

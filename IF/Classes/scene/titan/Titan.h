@@ -75,6 +75,8 @@ public:
 
     
     void reset();
+    
+    void resetDisplay(int tid);
 
     
     void onRotateX(float dtAngle);

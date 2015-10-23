@@ -55,7 +55,7 @@ struct sModelPram{
 bool Titan::initWithFile(int tid)
 {
     _tid = tid;
-    const int nModelScale = 1;
+    int nModelScale = atoi(CCCommonUtils::getPropById(CC_ITOA(_tid), "scale").c_str());
     // 设置当前node的contentSize 用于点击事件
     setContentSize(Size(500*nModelScale,550*nModelScale));
     setAnchorPoint(Vec2(0.5,0));
@@ -186,6 +186,34 @@ bool Titan::initWithFile(int tid)
 //    Director::getInstance()->getScheduler()->schedule(schedule_selector(Titan::update), this, 0, false);
     return true;
 
+}
+
+void Titan::resetDisplay(int tid)
+{
+    _tid = tid;
+    int nModelScale = atoi(CCCommonUtils::getPropById(CC_ITOA(_tid), "scale").c_str());
+    // 设置当前node的contentSize 用于点击事件
+    setContentSize(Size(500*nModelScale,550*nModelScale));
+    setAnchorPoint(Vec2(0.5,0));
+    
+    sModelPram bodyParam;
+    bodyParam.modelName = "3d/" + CCCommonUtils::getPropById(CC_ITOA(tid), "model") + ".c3b";
+    bodyParam.textureName = "3d/" + CCCommonUtils::getPropById(CC_ITOA(tid), "texture") + ".jpg";
+
+    if (_model) {
+        _model->removeFromParent();
+    }
+    
+    _model = NBSprite3D::create(bodyParam.modelName);
+    
+
+    addChild(_model);
+    _model->setTexture(bodyParam.textureName);
+
+    _model->setScale(nModelScale);
+
+    
+    reset();
 }
 
 void Titan::update(float dt)
@@ -370,10 +398,12 @@ sAnimationInfo* Titan::getAnimationByType(eActState e)
     if (strInfo.size() > 1) {
         vector<string> strArr1;
         CCCommonUtils::splitString(strInfo, ";", strArr1);
-        animInfo->animationName = "3d/"+strArr1.at(0)+".c3b";
-        animInfo->startFrame = atoi(strArr1.at(1).c_str());
-        animInfo->endFrame = atoi(strArr1.at(2).c_str());
-        return animInfo;
+        if (strArr1.at(0) != "null") {
+            animInfo->animationName = "3d/"+strArr1.at(0)+".c3b";
+            animInfo->startFrame = atoi(strArr1.at(1).c_str());
+            animInfo->endFrame = atoi(strArr1.at(2).c_str());
+            return animInfo;
+        }
     }
     animInfo->release();
     return nullptr;
@@ -385,12 +415,14 @@ void Titan::stand()
     Animate3D* pAnim = nullptr;
     if (it == _actionCache.end()) {
         auto animInfo = getAnimationByType(eActState::Stand);
-        auto animation3d = Animation3D::create(animInfo->animationName);
-        if (animation3d) {
-            pAnim = Animate3D::create(animation3d);
-//            pAnim = Animate3D::createWithFrames(animation3d, animInfo->startFrame, animInfo->endFrame);
-            pAnim->retain();
-            _actionCache.insert(std::map<eActState,Animate3D*>::value_type(eActState::Stand,pAnim));
+        if (animInfo) {
+            auto animation3d = Animation3D::create(animInfo->animationName);
+            if (animation3d) {
+//                pAnim = Animate3D::create(animation3d);
+                pAnim = Animate3D::createWithFrames(animation3d, animInfo->startFrame, animInfo->endFrame);
+                pAnim->retain();
+                _actionCache.insert(std::map<eActState,Animate3D*>::value_type(eActState::Stand,pAnim));
+            }
         }
     }
     else
@@ -412,11 +444,13 @@ void Titan::ilde()
     Animate3D* pAnim = nullptr;
     if (it == _actionCache.end()) {
         auto animInfo = getAnimationByType(eActState::Idle);
-        auto animation3d = Animation3D::create(animInfo->animationName);
-        if (animation3d) {
-            pAnim = Animate3D::createWithFrames(animation3d, animInfo->startFrame, animInfo->endFrame);
-            pAnim->retain();
-            _actionCache.insert(std::map<eActState,Animate3D*>::value_type(eActState::Idle,pAnim));
+        if (animInfo) {
+            auto animation3d = Animation3D::create(animInfo->animationName);
+            if (animation3d) {
+                pAnim = Animate3D::createWithFrames(animation3d, animInfo->startFrame, animInfo->endFrame);
+                pAnim->retain();
+                _actionCache.insert(std::map<eActState,Animate3D*>::value_type(eActState::Idle,pAnim));
+            }
         }
     }
     else
@@ -440,11 +474,13 @@ void Titan::attack()
     Animate3D* pAnim = nullptr;
     if (it == _actionCache.end()) {
         auto animInfo = getAnimationByType(eActState::Attack);
-        auto animation3d = Animation3D::create(animInfo->animationName);
-        if (animation3d) {
-            pAnim = Animate3D::createWithFrames(animation3d, animInfo->startFrame, animInfo->endFrame);
-            pAnim->retain();
-            _actionCache.insert(std::map<eActState,Animate3D*>::value_type(eActState::Attack,pAnim));
+        if (animInfo) {
+            auto animation3d = Animation3D::create(animInfo->animationName);
+            if (animation3d) {
+                pAnim = Animate3D::createWithFrames(animation3d, animInfo->startFrame, animInfo->endFrame);
+                pAnim->retain();
+                _actionCache.insert(std::map<eActState,Animate3D*>::value_type(eActState::Attack,pAnim));
+            }
         }
     }
     else
@@ -466,11 +502,13 @@ void Titan::walk()
     Animate3D* pAnim = nullptr;
     if (it == _actionCache.end()) {
         auto animInfo = getAnimationByType(eActState::Walk);
-        auto animation3d = Animation3D::create(animInfo->animationName);
-        if (animation3d) {
-            pAnim = Animate3D::createWithFrames(animation3d, animInfo->startFrame, animInfo->endFrame);
-            pAnim->retain();
-            _actionCache.insert(std::map<eActState,Animate3D*>::value_type(eActState::Walk,pAnim));
+        if (animInfo) {
+            auto animation3d = Animation3D::create(animInfo->animationName);
+            if (animation3d) {
+                pAnim = Animate3D::createWithFrames(animation3d, animInfo->startFrame, animInfo->endFrame);
+                pAnim->retain();
+                _actionCache.insert(std::map<eActState,Animate3D*>::value_type(eActState::Walk,pAnim));
+            }
         }
     }
     else

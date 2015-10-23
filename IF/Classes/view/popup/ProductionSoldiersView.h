@@ -170,6 +170,7 @@ private:
     
     CCSafeObject<CCSprite> m_newIcon;
     CCSafeObject<CCNode> m_soldierLight;
+    CCSafeObject<CCNode> m_soldier_light_star;
     int m_pos;
     int m_resIndex;
     int m_buildingId;
