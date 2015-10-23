@@ -171,8 +171,21 @@ bool NBSlider::onTouchBegan(Touch *touch, Event *unusedEvent)
     if (isMoved) {
         return false;
     }
-    if(isTouchInside(_thumbRenderer,touch))
+    if(isTouchInside(_progressBarRenderer,touch))
     {
+        float tryX = _progressBarRenderer->convertToNodeSpace(touch->getLocation()).x;
+        
+        if (tryX<0) {
+            tryX = 0;
+        }
+        if (tryX>_thumbMaxLength) {
+            tryX = _thumbMaxLength;
+        }
+        
+        float percent = tryX/_thumbMaxLength;
+        
+        setValue(percent);
+        
         isMoved = true;
         return true;
     }

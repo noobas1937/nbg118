@@ -108,6 +108,7 @@ bool ProductionSoldiersView::init()
 //    m_slider->setTag(1);
 //    m_slider->setLimitMoveValue(20);
     m_slider = NBSlider::create("nb_bar_bg.png", "nb_bar_pro.png", "nb_cursor_icon.png",NBSlider::TextureResType::PLIST);
+    m_slider->setCapInsets(Rect(8, 1, 30, 13));
     m_slider->setContentSize(Size(sliderW,15));
 //    m_slider->setPosition(ccp(-60, -59));//fusheng d
     if (CCCommonUtils::isIosAndroidPad()) {

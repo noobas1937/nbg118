@@ -93,7 +93,9 @@ bool FunBuild::initTmpBuild(int itemId, int x, int y, CCSpriteBatchNode* batchNo
     m_mainNode = CCNode::create();
     this->addChild(m_mainNode);
     CCBLoadFile(ccbName.c_str(),m_mainNode,this);
+    //begin a by ljf
     
+    //end a by ljf
     parentX = x;
     parentY = y;
     m_batchNode = batchNode;
@@ -151,6 +153,11 @@ bool FunBuild::initTmpBuild(int itemId, int x, int y, CCSpriteBatchNode* batchNo
     if(m_lvBG) {
         this->m_arrSpr->setVisible(false);
     }
+    
+    //begin a by ljf
+    initSpineNode(pic + "_" + CC_ITOA(GlobalData::shared()->contryResType) + "_1");
+    //end a by ljf
+    
     return true;
 }
 
@@ -278,6 +285,11 @@ bool FunBuild::initFunBuild(int itemId, CCLabelBatchNode* nameLayer)
             m_moveFrame->setScale(1.3);
             m_moveFrame->setPosition(ccp(131, 67));
         }
+        
+        //begin a by ljf
+        initEffectState();
+        initSpineNode(m_info->pic + "_" + CC_ITOA(GlobalData::shared()->contryResType) + "_1");
+        //end a by ljf
     }
     else   //ljf, 这代表没有创建的空块，itemId对应的是position字段
     {
@@ -343,6 +355,8 @@ bool FunBuild::initFunBuild(int itemId, CCLabelBatchNode* nameLayer)
         particle->setPosition(CCPoint(10, -20));
         m_forgeEffectNode->addChild(particle);
     }
+    
+    
     
     return true;
 }
@@ -445,7 +459,7 @@ void FunBuild::playOpenLock()
         m_spr->setDisplayFrame(newSp);
         m_spr->getTexture()->setAntiAliasTexParameters();
         
-        m_spr->setVisible(true);
+        //m_spr->setVisible(true);
         auto delate = CCDelayTime::create(0.5);
         auto fadeIn = CCFadeIn::create(1.0);
         m_spr->runAction(CCSequence::create(delate,fadeIn,NULL));
@@ -663,7 +677,8 @@ void FunBuild::setSpineLayer(CCLayer* spineLayer)
     m_spineLayer = spineLayer;
     m_spineLayer->setPosition(ccp(parentX, parentY));
     
-    
+    //begin d by ljf
+    /*
     if (CCFileUtils::sharedFileUtils()->isFileExist("Spine/Imperial/lianjingongfang.json") &&
         CCFileUtils::sharedFileUtils()->isFileExist("Imperial/Imperial_30.atlas"))
     {
@@ -674,8 +689,45 @@ void FunBuild::setSpineLayer(CCLayer* spineLayer)
             m_spineAni->setTimeScale(entry->endTime/8.0f);
         }
     }
+    */
+    //end d by ljf
+    //begin a by ljf
+    //end a by ljf
 }
-
+//begin a by ljf
+void FunBuild::initSpineNode(string picName)
+{
+    if(m_spineNode)
+    {
+        
+        //const string spineJsonName = "Spine/Imperial/" + m_info->pic + "_" + CC_ITOA(GlobalData::shared()->contryResType) + "_1" + "_spine.json";
+        //const string spineJsonName = "Spine/Imperial/lianjingongfang.json";
+        
+        const string spineJsonName = "Spine/Imperial/" + picName + "_spine.json";
+        const string spineAtlasName = "Imperial/Imperial_30.atlas";
+        
+        //const string spineJsonName = "Spine/Imperial/nongtian.json";
+        //const string spineAtlasName = "Imperial/nongtian.atlas";
+        if (CCFileUtils::sharedFileUtils()->isFileExist(spineJsonName) &&
+            CCFileUtils::sharedFileUtils()->isFileExist(spineAtlasName))
+        {
+            m_spineAni = new IFSkeletonAnimation(spineJsonName.c_str(), spineAtlasName.c_str());
+            if (m_spineAni) {
+                m_spineNode->addChild(m_spineAni);
+                
+                //m_spr->setVisible(false);
+                //spTrackEntry* entry = m_spineAni->setAnimation(0, "gongzuo", true);
+                //spTrackEntry* entry = m_spineAni->setAnimation(0, "BeforeHarvestWait", true);
+                //spTrackEntry* entry = m_spineAni->setAnimation(0, "Harvest", true);
+                //m_spineAni->setTimeScale(entry->endTime/8.0f);
+                //spTrackEntry* entry = m_spineAni->setAnimation(0, "gongzuo", true);
+                //m_spineAni->setTimeScale(entry->endTime/8.0f);
+                //m_spineAni->setTimeScale(0.2);
+            }
+        }
+    }
+}
+//end a by ljf
 void FunBuild::onBuildDelete()
 {
     if(!GlobalData::shared()->isInitFlag){
@@ -1974,11 +2026,14 @@ void FunBuild::canShowState()
         }
     }
     else if (m_info->type == FUN_BUILD_WOOD || m_info->type == FUN_BUILD_FOOD || m_info->type == FUN_BUILD_IRON || m_info->type == FUN_BUILD_STONE) {
+        //begin d by ljf
+        /*
         if (!isEffectRunning && FunBuildController::getInstance()->canShowOutPut(m_info->itemId)) {
             addFunBuildState();
             isEffectRunning = true;
             if(m_info->type == FUN_BUILD_FOOD || m_info->type == FUN_BUILD_WOOD) {
                 this->getAnimationManager()->runAnimationsForSequenceNamed("GrowthProcess");
+                
             }
         }
         else if (isEffectRunning && !FunBuildController::getInstance()->canShowOutPut(m_info->itemId) && m_buildState->CanDel ) {
@@ -1986,8 +2041,80 @@ void FunBuild::canShowState()
             isEffectRunning = false;
             if(m_info->type == FUN_BUILD_FOOD || m_info->type == FUN_BUILD_WOOD) {
                 this->getAnimationManager()->runAnimationsForSequenceNamed("Havest");
+                
             }
         }
+        */
+        //end d by ljf
+        //begin a by ljf
+        //未长出状态未显示0，未长出状态已显示1， 长出过程未显示2， 长出过程已显示3， 等收割未显示4， 等收割已显示5， 收割未显示6， 收割已显示7
+        //m_spineAni->setAnimation(0, "GrowthProcess", true);
+        
+        if(!FunBuildController::getInstance()->canShowOutPut(m_info->itemId))
+        {
+            if(m_effectState == 0)
+            {
+                if(m_info->type == FUN_BUILD_FOOD) {
+                    m_spineAni->setToSetupPose();
+                    m_spineAni->setAnimation(0, "AfterHarvestWait", true);
+                    m_spineAni->update(0.00001);
+                }
+                if(m_info->type == FUN_BUILD_WOOD || m_info->type == FUN_BUILD_STONE || m_info->type == FUN_BUILD_IRON) {
+                    m_spineAni->setToSetupPose();
+                    m_spineAni->setAnimation(0, "Working", true);
+                    m_spineAni->update(0.00001);
+                }
+                m_effectState = 2;
+
+            }
+            else if(m_effectState == 6)
+            {
+                if(m_buildState->CanDel)
+                {
+                    removeFunBuildState();
+                    if(m_info->type == FUN_BUILD_FOOD) {
+                        m_spineAni->setToSetupPose();
+                        m_spineAni->setAnimation(0, "Harvest", false);
+                         m_spineAni->update(0.00001);
+                        m_spineAni->addAnimation(0, "AfterHarvestWait", true);
+                    }
+                    if(m_info->type == FUN_BUILD_WOOD || m_info->type == FUN_BUILD_STONE || m_info->type == FUN_BUILD_IRON) {
+                        m_spineAni->setToSetupPose();
+                        m_spineAni->setAnimation(0, "Working", true);
+                        m_spineAni->update(0.00001);
+                    }
+                    m_effectState = 2;
+                }
+            }
+        }
+        else
+        {
+            if(m_effectState == 2)
+            {
+                addFunBuildState();
+                if(m_info->type == FUN_BUILD_FOOD) {
+                    m_spineAni->setToSetupPose();
+                    m_spineAni->setAnimation(0, "GrowthProcess", false);
+                    m_spineAni->update(0.00001);
+                    m_spineAni->addAnimation(0, "BeforeHarvestWait", true);
+                }
+                if(m_info->type == FUN_BUILD_STONE || m_info->type == FUN_BUILD_IRON) {
+                    m_spineAni->setToSetupPose();
+                    m_spineAni->setAnimation(0, "Finish", true);
+                    m_spineAni->update(0.00001);
+                }
+                if(m_info->type == FUN_BUILD_WOOD)
+                {
+                    m_spineAni->setToSetupPose();
+                    m_spineAni->setAnimation(0, "Working", false);
+                    m_spineAni->update(0.00001);
+                }
+                m_effectState = 6;
+            }
+            
+        }
+        
+        //end a by ljf
     }
     else if (m_info->type == FUN_BUILD_SACRIFICE) {
         
@@ -2004,6 +2131,22 @@ void FunBuild::canShowState()
     }
 }
 
+//begin a by ljf
+void FunBuild::initEffectState()
+{
+     if (m_info->type == FUN_BUILD_WOOD || m_info->type == FUN_BUILD_FOOD || m_info->type == FUN_BUILD_IRON || m_info->type == FUN_BUILD_STONE)
+     {
+         if(FunBuildController::getInstance()->canShowOutPut(m_info->itemId) == false)
+         {
+             m_effectState = 0;
+         }
+         else
+         {
+             m_effectState = 2;
+         }
+     }
+}
+//end a by ljf
 void FunBuild::retTouch(CCTouch *pTouch, CCEvent *pEvent)
 {
     if(pTouch==NULL)
@@ -2301,6 +2444,9 @@ bool FunBuild::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_spr", CCSprite*, this->m_spr);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_arrSpr", CCSprite*, this->m_arrSpr);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_lvBG", CCSprite*, this->m_lvBG);
+    //begin a by ljf
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_spineNode", CCNode*, this->m_spineNode);
+    //end a by ljf
     return false;
 }
 

@@ -132,6 +132,8 @@ private:
 //    void resetRankPop(CCObject *obj = NULL);
 //    
     void onRefreshEquip();
+    
+    void handleTitanUpgrade(CCObject* obj);
 //    void onClickEquip(int site);
 //    void onPlayPutOnEquip();
 //    void onYesGoToBuild();

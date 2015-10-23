@@ -28,14 +28,16 @@ public:
     virtual ~TitanInView(){};
     static TitanInView* create();
     
-
+    
+    void resetDisplay(int tid);
 private:
+    CCSafeObject<Titan> m_Titan;
     virtual void onEnter();
     virtual void onExit();
     virtual bool onTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
     virtual void onTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
     virtual void onTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
-    CCSafeObject<Titan> m_Titan;
+    
     bool init();
     virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(cocos2d::CCObject * pTarget, const char * pSelectorName){return NULL;}
     virtual SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName){return NULL;}

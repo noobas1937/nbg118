@@ -701,7 +701,7 @@ void ImperialScene::startGuide(float _time)
     if(WorldController::getInstance()->selfPoint.x < 0){
         return;
     }
-    GuideController::share()->start();
+//    GuideController::share()->start();
 //    GuideController::share()->setGuide("3076500");//fusheng 教程test
     UserUpgradeView*  pop = dynamic_cast<UserUpgradeView*>(PopupViewController::getInstance()->getCurrentPopupView());
     
@@ -770,6 +770,7 @@ void ImperialScene::onEnter()
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::onRemoveGuideParticle), GUIDE_BATTLE_END, NULL);
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::showFirework), "showFirework", NULL);
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::titanChangeStatus), MSG_TITAN_STATUS_CHANGE, NULL);//fusheng 泰坦状态改变
+    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::handleTitanUpgrade), MSG_TITAN_UPGRADE_COMPLETE, NULL);
     
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::titanUpgradeComplete), MSG_TITAN_UPGRADE_COMPLETE, NULL);
     
@@ -823,6 +824,10 @@ void ImperialScene::onEnter()
     this->scheduleOnce(schedule_selector(ImperialScene::scheduleHarvestEffect), 0.45);
     //    GuideController::share()->start();
     BranchController::getInstance()->excute("InviteForGift");
+    
+//    if (m_Titan) {//fusheng 龙的形象
+//        m_Titan->resetDisplay(GlobalData::shared()->titanInfo.tid);
+//    }
 }
 
 void ImperialScene::showRain()
@@ -872,6 +877,14 @@ void ImperialScene::titanChangeStatus(CCObject* obj){
             m_Titan->setVisible(false);
         }
     }
+}
+void ImperialScene::handleTitanUpgrade(CCObject* obj)
+{
+    if (m_Titan) {
+        m_Titan->resetDisplay(GlobalData::shared()->titanInfo.tid);
+    }
+    
+    CCLOG("ImperialScene titan sheng ji ");
 }
 void ImperialScene::titanUpgradeComplete(CCObject* obj){
     
@@ -2675,7 +2688,7 @@ void ImperialScene::onUpdateInfo()
             build->setNamePos(m_nodeBuildings[(it->second).pos]->getPositionX()
                               , m_nodeBuildings[(it->second).pos]->getPositionY(), m_signLayer, m_popLayer, m_arrbatchNode, curBatch, od, curBlentBatch);
             if (m_buildSpineMap.find((it->second).pos) != m_buildSpineMap.end()) {
-//                build->setSpineLayer( m_buildSpineMap[(it->second).pos] );
+                build->setSpineLayer( m_buildSpineMap[(it->second).pos] ); //a by ljf
             }
             
             m_buildItems[it->first] = build;
