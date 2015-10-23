@@ -1772,17 +1772,13 @@ DragonUpgradeAniNode* DragonUpgradeAniNode::create(int tid){
 
 bool DragonUpgradeAniNode::init(int tid)
 {
-    auto bg = CCBLoadFile("pic415000_2_1",this,this);
-    
-//    
+//    auto bg = CCBLoadFile("pic415000_2_1",this,this);
 //
 //    
-    
-    getAnimationManager()->runAnimations("Havest");
-//    float dt = getAnimationManager()->getSequenceDuration("Havest");
-    getAnimationManager()->setAnimationCompletedCallback(this, CC_CALLFUNC_SELECTOR(DragonUpgradeAniNode::animationCallBack));
+//    getAnimationManager()->runAnimations("Havest");
 //
-//    getAnimationManager()->runAnimationsForSequenceNamed("Havest");
+//    getAnimationManager()->setAnimationCompletedCallback(this, CC_CALLFUNC_SELECTOR(DragonUpgradeAniNode::animationCallBack));
+
     
     
     
@@ -1796,7 +1792,7 @@ void DragonUpgradeAniNode::onEnter()
     
     
     
-//    this->runAction(Sequence::create(DelayTime::create(1),CallFunc::create(CC_CALLBACK_0(DragonUpgradeAniNode::animationCallBack,this)),nullptr));
+    this->runAction(Sequence::create(DelayTime::create(1),CallFunc::create(CC_CALLBACK_0(DragonUpgradeAniNode::animationCallBack,this)),nullptr));
 };
 
 void DragonUpgradeAniNode::onExit()
@@ -1806,9 +1802,11 @@ void DragonUpgradeAniNode::onExit()
 
 void DragonUpgradeAniNode::animationCallBack()
 {
+    CCLOG("animation complete !!!!");
+    
     CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_UPGRADE_ANIMATION_COMLETE, CCString::createWithFormat("animationComplete"));
     
-    CCLOG("animation complete !!!!");
+  
     this->removeFromParent();
 };
 SEL_CCControlHandler DragonUpgradeAniNode::onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName)
