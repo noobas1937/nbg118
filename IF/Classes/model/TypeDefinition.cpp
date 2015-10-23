@@ -8,10 +8,10 @@
 
 #include "TypeDefinition.h"
 
-#define CHANGE_SERVER COCOS2D_DEBUG
+//#define CHANGE_SERVER COCOS2D_DEBUG
 //测试使用 不要提交
 //#define CHANGE_SERVER 1
-//#define CHANGE_SERVER 2
+#define CHANGE_SERVER 2
 
 #if CHANGE_SERVER == 1
     // 本地服
@@ -28,10 +28,10 @@
         #define __SERVERLIST__IP "10.1.4.121"
     #else
         // 正式服
-        #define __SERVER__IP "10.1.4.121"
+        #define __SERVER__IP "106.39.79.93"
         #define __SERVER__PORT 80
         #define __SERVER__ZONE "COK2"
-        #define __SERVERLIST__IP "10.1.4.121"
+        #define __SERVERLIST__IP "106.39.79.93"
     #endif
 #endif
 
