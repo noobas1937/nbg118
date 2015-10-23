@@ -6,7 +6,7 @@ import java.util.Iterator;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import org.hcg.notifies.*;
+import org.nbg.notifies.*;
 import com.hcg.cok.cn1.R;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
@@ -49,8 +49,8 @@ public class HFParseCustomReceiver extends BroadcastReceiver {
 		      notifyIntent.putExtra(LocalNotificationManager.SOUND_KEY, soundKey);
 		      notifyIntent.putExtra(LocalNotificationManager.NUMBER_ANNOTATION, 1);
 		      notifyIntent.putExtra(LocalNotificationManager.MAIN_ACTIVITY_CLASS_NAME_KEY,
-		    		  "com.clash.of.kings.COK_CN1");
-		      notifyIntent.setAction("org.hcg.stac.empire.intent.action.IF");
+		    		  "com.clash.of.kings.NBG_CN1");
+		      notifyIntent.setAction("org.nbg.stac.empire.intent.action.IF");
 		      Log.d(TAG, "got action " + action + " on channel " + channel + " with message:" + message + " all keys:");
 		      Iterator<String> itr = json.keys();
 		      while (itr.hasNext()) {

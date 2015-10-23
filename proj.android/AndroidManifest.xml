@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="org.hcg.IF"
+      package="org.nbg.IF"
       android:versionCode="1"
       android:versionName="1.0"
       android:installLocation="auto">
@@ -28,7 +28,7 @@
         android:debuggable="true"
         android:icon="@drawable/cok_icon">
 
-        <activity android:name="org.hcg.IF.IF"
+        <activity android:name="org.nbg.IF.IF"
                   android:label="@string/app_name"
                   android:screenOrientation="portrait"
                   android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
@@ -38,7 +38,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
-                <action android:name="org.hcg.IF.intent.action.IF" />
+                <action android:name="org.nbg.IF.intent.action.IF" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter>
@@ -60,12 +60,12 @@
                   android:screenOrientation="unspecified"
                   android:configChanges="orientation|keyboardHidden"></activity>
         
-        <service android:name="org.hcg.notifies.LocalNotificationIntentService"/>
-        <receiver android:name="org.hcg.notifies.LocalBroadcastReceiver" />
+        <service android:name="org.nbg.notifies.LocalNotificationIntentService"/>
+        <receiver android:name="org.nbg.notifies.LocalBroadcastReceiver" />
         
-        <receiver android:name="org.hcg.stac.empire.common.manager.NotificationReceiver" android:process=":remote">
+        <receiver android:name="org.nbg.stac.empire.common.manager.NotificationReceiver" android:process=":remote">
             <intent-filter>
-                <action android:name="org.hcg.IF.intent.action.NOTIFICATION" />
+                <action android:name="org.nbg.IF.intent.action.NOTIFICATION" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>

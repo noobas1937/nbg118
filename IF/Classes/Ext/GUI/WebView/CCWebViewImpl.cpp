@@ -56,13 +56,13 @@ void CCWebViewImpl::createWebView(int x,int y,int width,int height)
     JniMethodInfo minfo;
     //getStaticMethodInfo 次函数返回一个bool值表示是否找到此函数
     jobject activityObj;
-    if(JniHelper::getStaticMethodInfo(minfo,"org/hcg/IF/IF","getInstance","()Lorg/hcg/IF/IF;"))
+    if(JniHelper::getStaticMethodInfo(minfo,"org/nbg/IF/IF","getInstance","()Lorg/nbg/IF/IF;"))
     {
         activityObj = minfo.env->CallStaticObjectMethod(minfo.classID, minfo.methodID);
     }
     
     //2. 查找updateURL接口，并用jobj调用
-    if(!JniHelper::getMethodInfo(minfo,"org/hcg/IF/IF","displayWebView", "(IIII)V"))
+    if(!JniHelper::getMethodInfo(minfo,"org/nbg/IF/IF","displayWebView", "(IIII)V"))
     {
         return;
     }
@@ -79,13 +79,13 @@ void CCWebViewImpl::showWebView(const char* url)
     JniMethodInfo minfo;
     //getStaticMethodInfo 次函数返回一个bool值表示是否找到此函数
     jobject activityObj;
-    if(JniHelper::getStaticMethodInfo(minfo,"org/hcg/IF/IF","getInstance","()Lorg/hcg/IF/IF;"))
+    if(JniHelper::getStaticMethodInfo(minfo,"org/nbg/IF/IF","getInstance","()Lorg/nbg/IF/IF;"))
     {
         activityObj = minfo.env->CallStaticObjectMethod(minfo.classID, minfo.methodID);
     }
     
     //2. 查找updateURL接口，并用jobj调用
-    if(!JniHelper::getMethodInfo(minfo,"org/hcg/IF/IF","updateURL", "(Ljava/lang/String;)V"))
+    if(!JniHelper::getMethodInfo(minfo,"org/nbg/IF/IF","updateURL", "(Ljava/lang/String;)V"))
     {
         return;
     }
@@ -103,12 +103,12 @@ void CCWebViewImpl::removeWebView()
     JniMethodInfo minfo;
     //getStaticMethodInfo 次函数返回一个bool值表示是否找到此函数
     jobject activityObj;
-    if(JniHelper::getStaticMethodInfo(minfo,"org/hcg/IF/IF","getInstance","()Lorg/hcg/IF/IF;"))
+    if(JniHelper::getStaticMethodInfo(minfo,"org/nbg/IF/IF","getInstance","()Lorg/nbg/IF/IF;"))
     {
         activityObj = minfo.env->CallStaticObjectMethod(minfo.classID, minfo.methodID);
     }
     //2. 查找updateURL接口，并用jobj调用
-    if (!JniHelper::getMethodInfo(minfo,"org/hcg/IF/IF","removeWebView", "()V"))
+    if (!JniHelper::getMethodInfo(minfo,"org/nbg/IF/IF","removeWebView", "()V"))
     {
         return;
     }

@@ -26,7 +26,8 @@ package org.cocos2dx.lib;
 
 import java.lang.ref.WeakReference;
 
-import org.hcg.IF.IF;
+import org.nbg.IF.IF;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Handler;

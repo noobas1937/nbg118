@@ -2,14 +2,14 @@ package com.stac.empire.publish;
 
 import java.util.HashMap;
 
-import org.hcg.util.GameContext;
-import org.hcg.stac.empire.common.constant.CommonConst;
+import org.nbg.util.GameContext;
+import org.nbg.stac.empire.common.constant.CommonConst;
 //import com.stac.empire.pay.PayFactory;
 import com.stac.empire.pay.platform.PlatformPay;
-import org.hcg.stac.empire.pay.platform.IPlatformPay;
-import org.hcg.stac.empire.pay.platform.PayPlatformConst;
-import org.hcg.stac.empire.publish.IPublishAD;
-import org.hcg.stac.empire.publish.IPublishChannel;
+import org.nbg.stac.empire.pay.platform.IPlatformPay;
+import org.nbg.stac.empire.pay.platform.PayPlatformConst;
+import org.nbg.stac.empire.publish.IPublishAD;
+import org.nbg.stac.empire.publish.IPublishChannel;
 
 /**
  * AOE --360简体中文

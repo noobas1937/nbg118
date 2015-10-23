@@ -233,7 +233,7 @@ public class UpdateManager
                     String sdpath = Environment.getExternalStorageDirectory() + "/";
                     mSavePath = sdpath + "download";
                     URL url = new URL(downLoadURL);
-//                    URL url = new URL("http://10.1.6.36:8081/hudson/job/IF_cn1/ws/package/20150604/COK_CN1.apk");
+//                    URL url = new URL("http://10.1.6.36:8081/hudson/job/IF_cn1/ws/package/20150604/NBG_CN1.apk");
                     Log.d("tag1", url.getPath());
                     // 创建连接
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();

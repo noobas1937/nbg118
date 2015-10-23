@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     android:installLocation="preferExternal"
-    package="com.hcg.cok.cn1"
+    package="com.nbg.cn1"
     android:versionCode="999"
     android:versionName="1.1.8" >
 
@@ -65,7 +65,7 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
         <activity
-            android:name="com.clash.of.kings.COK_CN1"
+            android:name="com.clash.of.kings.NBG_CN1"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
             android:theme="@style/MyTheme"
@@ -77,7 +77,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
-                <action android:name="org.hcg.stac.empire.intent.action.IF" />
+                <action android:name="org.nbg.stac.empire.intent.action.IF" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter>
@@ -120,10 +120,10 @@
 				<action android:name="com.android.vending.INSTALL_REFERRER" />
 			</intent-filter>
 		</receiver>
-		<service android:name="org.hcg.notifies.LocalNotificationIntentService"/>
-        <receiver android:name="org.hcg.notifies.LocalBroadcastReceiver" />
+		<service android:name="org.nbg.notifies.LocalNotificationIntentService"/>
+        <receiver android:name="org.nbg.notifies.LocalBroadcastReceiver" />
         
-		<receiver android:name="org.hcg.stac.empire.common.manager.NotificationReceiver" android:process=":remote" >
+		<receiver android:name="org.nbg.stac.empire.common.manager.NotificationReceiver" android:process=":remote" >
 		    <intent-filter>
                 <action android:name="com.hcg.cok.intent.action.NOTIFICATION" />
                 <action android:name="com.hcg.cok.intent.action.FREE_LOTTERY"/>
@@ -172,7 +172,7 @@
 		    <category android:name="com.hcg.cok.cn1" />
 		  </intent-filter>
 		</receiver>
-		<service android:name="org.hcg.stac.empire.common.manager.GCMIntentService" />
+		<service android:name="org.nbg.stac.empire.common.manager.GCMIntentService" />
 		<!-- GCM 需求 END -->
 		
 		<!-- 友盟：sina微博 -->

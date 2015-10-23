@@ -1,13 +1,13 @@
 package com.clash.of.jni;
 
-import org.hcg.IF.IF;
-import org.hcg.util.Constants;
-import org.hcg.stac.empire.pay.PayItemData;
+import org.nbg.IF.IF;
+import org.nbg.util.Constants;
+import org.nbg.stac.empire.pay.PayItemData;
 
 import android.util.Log;
 
 import com.adjust.sdk.Adjust;
-import com.clash.of.kings.COK_CN1;
+import com.clash.of.kings.NBG_CN1;
 import com.clash.of.weibo.WBUtil;
 import com.stac.empire.pay.platform.PlatformPay;
 
@@ -15,7 +15,7 @@ public class Jni {
 	private static String TAG = "COK_JNI";
 	
 	public static void doPlatformLogin(){
-		COK_CN1.doLogin();
+		NBG_CN1.doLogin();
 	}
 	
 	public static void payClicked(final String pay_id , final String gold_num, final String get_gold_count, final String userId) {
