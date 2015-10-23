@@ -1,7 +1,7 @@
 package com.clash.of.weibo;
 
 import org.cocos2dx.ext.Native;
-import org.hcg.IF.IF;
+import org.nbg.IF.IF;
 import org.json.JSONException;
 import org.json.JSONObject;
 

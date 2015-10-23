@@ -903,7 +903,7 @@ NetController::~NetController()
 
 bool NetController::isNetWorkOK(){
     JniMethodInfo minfo;
-    if (!JniHelper::getStaticMethodInfo(minfo, "org/hcg/IF/Net", "isNetWorkOK", "()Z")) {
+    if (!JniHelper::getStaticMethodInfo(minfo, "org/nbg/IF/Net", "isNetWorkOK", "()Z")) {
         CCLOGFUNC("jni: no method");
         return false;
     }
@@ -915,7 +915,7 @@ bool NetController::isNetWorkOK(){
 bool NetController::isConnected()
 {
     JniMethodInfo minfo;
-    if (!JniHelper::getStaticMethodInfo(minfo, "org/hcg/IF/Net", "isConnected", "()Z")) {
+    if (!JniHelper::getStaticMethodInfo(minfo, "org/nbg/IF/Net", "isConnected", "()Z")) {
         CCLOGFUNC("jni: no method");
         return false;
     }
@@ -933,7 +933,7 @@ void NetController::disconnect()
 {
     CCLOGFUNC();
     JniMethodInfo minfo;
-    if (!JniHelper::getStaticMethodInfo(minfo, "org/hcg/IF/Net", "disconnect", "()V")) {
+    if (!JniHelper::getStaticMethodInfo(minfo, "org/nbg/IF/Net", "disconnect", "()V")) {
         CCLOGFUNC("jni: no method");
         return;
     }
@@ -945,7 +945,7 @@ void NetController::doConnect(CCObject* p)
 {
     m_isRetry = false;
     JniMethodInfo minfo;
-    if (!JniHelper::getStaticMethodInfo(minfo, "org/hcg/IF/Net", "connect", "(Ljava/lang/String;ILjava/lang/String;)V")) {
+    if (!JniHelper::getStaticMethodInfo(minfo, "org/nbg/IF/Net", "connect", "(Ljava/lang/String;ILjava/lang/String;)V")) {
         CCLOGFUNC("jni: no method");
         return;
     }
@@ -965,7 +965,7 @@ void NetController::doConnect(CCObject* p)
 static jobject getSFSObject(JNIEnv* env)
 {
     JniMethodInfo minfo;
-    if (! JniHelper::getStaticMethodInfo(minfo, "org/hcg/IF/Net", "getSFSObject", "()Lcom/smartfoxserver/v2/entities/data/ISFSObject;") ) {
+    if (! JniHelper::getStaticMethodInfo(minfo, "org/nbg/IF/Net", "getSFSObject", "()Lcom/smartfoxserver/v2/entities/data/ISFSObject;") ) {
         return NULL;
     }
     jobject jobj=minfo.env->CallStaticObjectMethod(minfo.classID, minfo.methodID);
@@ -978,7 +978,7 @@ static jobject getSFSObject(JNIEnv* env)
 static jobject getSFSArray(JNIEnv* env)
 {
     JniMethodInfo minfo;
-    if (! JniHelper::getStaticMethodInfo(minfo, "org/hcg/IF/Net", "getSFSArray", "()Lcom/smartfoxserver/v2/entities/data/ISFSArray;") ) {
+    if (! JniHelper::getStaticMethodInfo(minfo, "org/nbg/IF/Net", "getSFSArray", "()Lcom/smartfoxserver/v2/entities/data/ISFSArray;") ) {
         return NULL;
     }
     jobject jobj=minfo.env->CallStaticObjectMethod(minfo.classID, minfo.methodID);
@@ -991,7 +991,7 @@ static jobject getSFSArray(JNIEnv* env)
 static jobject getIntArray(JNIEnv* env)
 {
     JniMethodInfo minfo;
-    if (! JniHelper::getStaticMethodInfo(minfo, "org/hcg/IF/Net", "getIntArray", "()Ljava/util/Collection;") ) {
+    if (! JniHelper::getStaticMethodInfo(minfo, "org/nbg/IF/Net", "getIntArray", "()Ljava/util/Collection;") ) {
         return NULL;
     }
     jobject jobj=minfo.env->CallStaticObjectMethod(minfo.classID, minfo.methodID);
@@ -1013,7 +1013,7 @@ static jobject CCIntArrayToJava(JNIEnv* env, CCIntArray *array)
             continue;
         
         JniMethodInfo minfo;
-        if (! JniHelper::getStaticMethodInfo(minfo, "org/hcg/IF/Net", "addToIntArray", "(Ljava/util/Collection;I)V") )
+        if (! JniHelper::getStaticMethodInfo(minfo, "org/nbg/IF/Net", "addToIntArray", "(Ljava/util/Collection;I)V") )
             continue;
         jobject jobj=minfo.env->CallStaticObjectMethod(minfo.classID, minfo.methodID, ret, intValue->getValue());
         minfo.env->DeleteLocalRef(minfo.classID);
@@ -1205,7 +1205,7 @@ static CCDictionary * SFSObjectToCCDictionary(jobject obj)
 void NetController::doLogin(LoginCommand *request)
 {
     JniMethodInfo minfo;
-    if (! JniHelper::getStaticMethodInfo(minfo, "org/hcg/IF/Net", "login", "(Lcom/smartfoxserver/v2/entities/data/ISFSObject;Ljava/lang/String;Ljava/lang/String;)V") ) {
+    if (! JniHelper::getStaticMethodInfo(minfo, "org/nbg/IF/Net", "login", "(Lcom/smartfoxserver/v2/entities/data/ISFSObject;Ljava/lang/String;Ljava/lang/String;)V") ) {
         return;
     }
     
@@ -1221,7 +1221,7 @@ void NetController::doLogin(LoginCommand *request)
 
 void NetController::recordCmd(string cmd){
     JniMethodInfo minfo;
-    if (! JniHelper::getStaticMethodInfo(minfo, "org/hcg/IF/Jni", "recordCmd", "(Ljava/lang/String;)V") ) {
+    if (! JniHelper::getStaticMethodInfo(minfo, "org/nbg/IF/Jni", "recordCmd", "(Ljava/lang/String;)V") ) {
         CCLOGFUNC("jni: no method");
         return;
     }
@@ -1243,7 +1243,7 @@ void NetController::doSend(CommandBase *request)
     
     CCLOGFUNCF("doSend------------->2");
     JniMethodInfo minfo;
-    if (! JniHelper::getStaticMethodInfo(minfo, "org/hcg/IF/Net", "send", "(Ljava/lang/String;Lcom/smartfoxserver/v2/entities/data/ISFSObject;)V") ) {
+    if (! JniHelper::getStaticMethodInfo(minfo, "org/nbg/IF/Net", "send", "(Ljava/lang/String;Lcom/smartfoxserver/v2/entities/data/ISFSObject;)V") ) {
         return;
     }
     
@@ -1271,7 +1271,7 @@ void NetController::doLogout(LogoutCommand *request)
     }
     
     JniMethodInfo minfo;
-    if (! JniHelper::getStaticMethodInfo(minfo, "org/hcg/IF/Net", "logout", "()V") ) {
+    if (! JniHelper::getStaticMethodInfo(minfo, "org/nbg/IF/Net", "logout", "()V") ) {
         return;
     }
     
@@ -1282,7 +1282,7 @@ void NetController::doLogout(LogoutCommand *request)
 void NetController::doJoinRoom()
 {
     JniMethodInfo minfo;
-    if (! JniHelper::getStaticMethodInfo(minfo, "org/hcg/IF/Net", "joinRoom", "(Ljava/lang/String;)V") ) {
+    if (! JniHelper::getStaticMethodInfo(minfo, "org/nbg/IF/Net", "joinRoom", "(Ljava/lang/String;)V") ) {
         return;
     }
     
@@ -1299,7 +1299,7 @@ void NetController::doJoinRoom()
 #ifdef __cplusplus
 extern "C" {
 #endif
-	void Java_org_hcg_IF_Net_nativeOnResponse(JNIEnv* env, jobject thiz, jlong response)
+	void Java_org_nbg_IF_Net_nativeOnResponse(JNIEnv* env, jobject thiz, jlong response)
 	{
         CCDictionary * result=(CCDictionary*)response;
         CCLOGFUNCF(result->valueForKey("cmd")->getCString());
@@ -1307,14 +1307,14 @@ extern "C" {
         result->release();
 	}
     
-	jlong Java_org_hcg_IF_Net_nativeCCDictionary()
+	jlong Java_org_nbg_IF_Net_nativeCCDictionary()
     {
         CCDictionary* dict=CCDictionary::create();
         dict->retain();
         return (long)dict;
     }
     
-	void Java_org_hcg_IF_Net_nativeAddCCObjectToCCDictionary(JNIEnv* env, jobject thiz, jlong d, jstring key, jlong v)
+	void Java_org_nbg_IF_Net_nativeAddCCObjectToCCDictionary(JNIEnv* env, jobject thiz, jlong d, jstring key, jlong v)
     {
         CCDictionary* dict=(CCDictionary*)d;
         CCObject* value=(CCObject*)v;
@@ -1322,34 +1322,34 @@ extern "C" {
         value->release();
     }
     
-	void Java_org_hcg_IF_Net_nativeAddStringToCCDictionary(JNIEnv* env, jobject thiz, jlong d, jstring key, jstring v)
+	void Java_org_nbg_IF_Net_nativeAddStringToCCDictionary(JNIEnv* env, jobject thiz, jlong d, jstring key, jstring v)
     {
         CCDictionary* dict=(CCDictionary*)d;
         CCString* value=CCString::create(JniHelper::jstring2string(v));
         dict->setObject(value, JniHelper::jstring2string(key).c_str());
     }
     
-	jlong Java_org_hcg_IF_Net_nativeCCArray()
+	jlong Java_org_nbg_IF_Net_nativeCCArray()
     {
         CCArray* arr=CCArray::create();
         arr->retain();
         return (long)arr;
     }
     
-    void Java_org_hcg_IF_Net_nativeConnectMode(JNIEnv* env, jobject thiz, jstring v)
+    void Java_org_nbg_IF_Net_nativeConnectMode(JNIEnv* env, jobject thiz, jstring v)
     {
         GlobalData::shared()->connectMode = JniHelper::jstring2string(v);
         CCLOG("Native ConnectMode:%s",GlobalData::shared()->connectMode.c_str());
     }
     
-	void Java_org_hcg_IF_Net_nativeAddStringToCCArray(JNIEnv* env, jobject thiz, jlong d, jstring v)
+	void Java_org_nbg_IF_Net_nativeAddStringToCCArray(JNIEnv* env, jobject thiz, jlong d, jstring v)
     {
         CCArray* arr=(CCArray*)d;
         CCString* value=CCString::create(JniHelper::jstring2string(v));
         arr->addObject(value);
     }
     
-	void Java_org_hcg_IF_Net_nativeAddCCObjectToCCArray(JNIEnv* env, jobject thiz, jlong d, jlong v)
+	void Java_org_nbg_IF_Net_nativeAddCCObjectToCCArray(JNIEnv* env, jobject thiz, jlong d, jlong v)
     {
         CCArray* arr=(CCArray*)d;
         CCObject* value=(CCObject*)v;
@@ -1357,13 +1357,13 @@ extern "C" {
         value->release();
     }
     
-	jobject Java_org_hcg_IF_Jni_nativeGetAppId(JNIEnv* env)
+	jobject Java_org_nbg_IF_Jni_nativeGetAppId(JNIEnv* env)
     {
 //        jstring jcmd=env->NewStringUTF(AOEUtilies::getXCAppId().c_str());
 //        return jcmd;
         return NULL;
     }
-    void Java_org_hcg_stac_empire_sns_FBUtil_nativeSetIsLogin(JNIEnv* env,jobject thiz,jboolean isLogin, jstring v, jstring userName){
+    void Java_org_nbg_stac_empire_sns_FBUtil_nativeSetIsLogin(JNIEnv* env,jobject thiz,jboolean isLogin, jstring v, jstring userName){
 //        CCSafeObject<CCBoolean> temp=CCBoolean::create(isLogin);
         if (isLogin) {
             CCString* value=CCString::create(JniHelper::jstring2string(v));
@@ -1389,13 +1389,13 @@ extern "C" {
             CCLOG("------nativeSetIsLogin facebook login fail");
         }
     }
-    void Java_org_hcg_stac_empire_sns_FBUtil_nativeSetIsFBFan(JNIEnv* env,jobject thiz,jboolean isFBFan){
+    void Java_org_nbg_stac_empire_sns_FBUtil_nativeSetIsFBFan(JNIEnv* env,jobject thiz,jboolean isFBFan){
         CCSafeObject<CCBoolean> temp=CCBoolean::create(isFBFan);
         CCLOG("------fb facebook fan jni-----");
         cocos2d::extension::CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_FBFans,temp);
     }
     
-    void Java_org_hcg_stac_empire_sns_FBUtil_nativeSetRequestResult(JNIEnv* env,jobject thiz,jint result, jstring requestID){
+    void Java_org_nbg_stac_empire_sns_FBUtil_nativeSetRequestResult(JNIEnv* env,jobject thiz,jint result, jstring requestID){
         //CCSafeObject<CCInteger> temp=CCInteger::create(result);
         CCInteger* temp= new CCInteger(result);
         CCUserDefault::sharedUserDefault()->setIntegerForKey(FB_RequestResult,result);
@@ -1421,7 +1421,7 @@ extern "C" {
         CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_FBRequestResult);
     }
     
-    void Java_org_hcg_stac_empire_sns_FBUtil_nativeSetFeedDialogResult(JNIEnv* env,jobject thiz,jint result){
+    void Java_org_nbg_stac_empire_sns_FBUtil_nativeSetFeedDialogResult(JNIEnv* env,jobject thiz,jint result){
         CCSafeObject<CCInteger> temp=CCInteger::create(result);
         if(result==1){
             CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_FBFeedDialogResult);
@@ -1429,7 +1429,7 @@ extern "C" {
         CCLOG("------facebook feeddialog request jni-----");
     }
     
-    void Java_org_hcg_stac_empire_sns_FBUtil_nativeSetFBUID(JNIEnv* env,jobject thiz,jstring userId){
+    void Java_org_nbg_stac_empire_sns_FBUtil_nativeSetFBUID(JNIEnv* env,jobject thiz,jstring userId){
         string id = JniHelper::jstring2string(userId);
         CCUserDefault::sharedUserDefault()->setStringForKey(FB_REQUEST_USER_ID, id);
         CCUserDefault::sharedUserDefault()->flush();
@@ -1437,7 +1437,7 @@ extern "C" {
         CCLOG("------facebook feeddialog nativeSetFBUID jni-----");
     }
     
-    void Java_org_hcg_stac_empire_sns_FBUtil_nativeSendFriendsList(JNIEnv* env,jobject thiz,jstring jstr){
+    void Java_org_nbg_stac_empire_sns_FBUtil_nativeSendFriendsList(JNIEnv* env,jobject thiz,jstring jstr){
         
         string installFriendsInfo = JniHelper::jstring2string(jstr);
         CCLOG("---------installFriendsInfo--%s",installFriendsInfo.c_str());
@@ -1451,7 +1451,7 @@ extern "C" {
 //        jmethodID arraylist_size = env->GetMethodID(cls_arraylist,"size","()I");
 //        jint len = env->CallIntMethod(friendList,arraylist_size);
 //       // printf("get java ArrayList<friend> object by C++ , then print it...../n");
-//        jclass cls_friend = env->FindClass("org/hcg/stac/empire/sns/FBFriendPoj");
+//        jclass cls_friend = env->FindClass("org/nbg/stac/empire/sns/FBFriendPoj");
 //        CCSafeObject<CCArray> result=CCArray::create();
 //        
 //        CCLOG(CCString::createWithFormat("------arr in size  :  %d-------",len)->getCString());
@@ -1482,7 +1482,7 @@ extern "C" {
 //        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_FBFriendsList,result);
     }
     
-    void Java_org_hcg_stac_empire_sns_FBUtil_nativeSendInviteFriendsList(JNIEnv* env,jobject thiz,jstring jstr){
+    void Java_org_nbg_stac_empire_sns_FBUtil_nativeSendInviteFriendsList(JNIEnv* env,jobject thiz,jstring jstr){
 
         CCUserDefault::sharedUserDefault()->setStringForKey("inviteFriends", JniHelper::jstring2string(jstr));
         CCUserDefault::sharedUserDefault()->flush();
@@ -1496,7 +1496,7 @@ extern "C" {
 //        jmethodID arraylist_size = env->GetMethodID(cls_arraylist,"size","()I");
 //        jint len = env->CallIntMethod(friendList,arraylist_size);
 //        // printf("get java ArrayList<friend> object by C++ , then print it...../n");
-//        jclass cls_friend = env->FindClass("org/hcg/stac/empire/sns/FBFriendPoj");
+//        jclass cls_friend = env->FindClass("org/nbg/stac/empire/sns/FBFriendPoj");
 //        CCArray* result = new CCArray();
 // 
 //        CCLOG(CCString::createWithFormat("------arr in size  :  %d-------",len)->getCString());
@@ -1772,7 +1772,7 @@ extern "C" {
         CCLog("fb nativeAPPLink= %s ",link.c_str());
     }
 
-    void Java_org_hcg_stac_empire_sns_FBUtil_nativeSendRequestFriendsList(JNIEnv* env,jobject thiz,jstring jstr){
+    void Java_org_nbg_stac_empire_sns_FBUtil_nativeSendRequestFriendsList(JNIEnv* env,jobject thiz,jstring jstr){
         string appRequestFriends = JniHelper::jstring2string(jstr);
         CCLog("fb appRequestFriends= %s ",appRequestFriends.c_str());
         CCUserDefault::sharedUserDefault()->setStringForKey("appRequestFriends", appRequestFriends);
@@ -1780,7 +1780,7 @@ extern "C" {
         CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(FB_APP_FriendsList);
     }
     
-    void Java_org_hcg_stac_empire_sns_FBUtil_nativeSendHeadImgUrl(JNIEnv* env,jobject thiz,jstring url){
+    void Java_org_nbg_stac_empire_sns_FBUtil_nativeSendHeadImgUrl(JNIEnv* env,jobject thiz,jstring url){
         
         string userHeadImgUrl = JniHelper::jstring2string(url);
         

@@ -674,7 +674,7 @@ void PayController::setItemId(string _itemId)
 
 void PayController::doPay() {
     JniMethodInfo minfo;
-    if (! JniHelper::getStaticMethodInfo(minfo, "org/hcg/IF/Pay", "doPay", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V") ) {
+    if (! JniHelper::getStaticMethodInfo(minfo, "org/nbg/IF/Pay", "doPay", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V") ) {
         CCLOG("JNI: pay method not found!");
         return;
     }
@@ -700,12 +700,12 @@ void PayController::removeWebView(){
     JniMethodInfo minfo;
     //getStaticMethodInfo 次函数返回一个bool值表示是否找到此函数
     jobject activityObj;
-    if(JniHelper::getStaticMethodInfo(minfo,"org/hcg/IF/IF","getInstance","()Lorg/hcg/IF/IF;"))
+    if(JniHelper::getStaticMethodInfo(minfo,"org/nbg/IF/IF","getInstance","()Lorg/nbg/IF/IF;"))
     {
         activityObj = minfo.env->CallStaticObjectMethod(minfo.classID, minfo.methodID);
     }
     //2. 查找updateURL接口，并用jobj调用
-    if (!JniHelper::getMethodInfo(minfo,"org/hcg/IF/IF","removeWebView", "()V"))
+    if (!JniHelper::getMethodInfo(minfo,"org/nbg/IF/IF","removeWebView", "()V"))
     {
         return;
     }
@@ -721,7 +721,7 @@ void PayController::removeWebView(){
 // for google play
 void PayController::doPayGoogle() {
     JniMethodInfo minfo;
-    if (! JniHelper::getStaticMethodInfo(minfo, "org/hcg/IF/Payment", "callBuyGold", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V") ) {
+    if (! JniHelper::getStaticMethodInfo(minfo, "org/nbg/IF/Payment", "callBuyGold", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V") ) {
         CCLOG("JNI: pay google method callBuyGold not found!");
         GlobalData::shared()->isBind = false;
         GlobalData::shared()->isPayBind = false;
@@ -829,7 +829,7 @@ void PayController::payAndroidToUid(const string &pay_id,const string &gold_num,
 
 void PayController::initGoogle() {
     JniMethodInfo minfo;
-    if (! JniHelper::getStaticMethodInfo(minfo, "org/hcg/IF/Payment", "callPayInit", "()V") ) {
+    if (! JniHelper::getStaticMethodInfo(minfo, "org/nbg/IF/Payment", "callPayInit", "()V") ) {
         CCLOG("JNI: pay google method callPayInit not found!");
         return;
     }
@@ -970,7 +970,7 @@ void PayController::onCallPaymentCheckCallback(CCObject* obj) {
     
     // call back java
     JniMethodInfo minfo;
-    if (! JniHelper::getStaticMethodInfo(minfo, "org/hcg/IF/Payment", "onConsumeCallback", "(Ljava/lang/String;I)V") ) {
+    if (! JniHelper::getStaticMethodInfo(minfo, "org/nbg/IF/Payment", "onConsumeCallback", "(Ljava/lang/String;I)V") ) {
         CCLOG("JNI: pay google method onConsumeCallback not found!");
         return;
     }
@@ -1016,7 +1016,7 @@ void PayController::onCallPaymentAndroidCallback(CCObject* obj) {
 extern "C" {
 #endif
 
-    void Java_org_hcg_IF_Pay_nativeOnPayCallback(JNIEnv* env,jobject thiz,jint result,jstring msg) {
+    void Java_org_nbg_IF_Pay_nativeOnPayCallback(JNIEnv* env,jobject thiz,jint result,jstring msg) {
         int resultType = result;
         string resultMsg = JniHelper::jstring2string(msg);
         GlobalData::shared()->isBind = false;
@@ -1111,13 +1111,13 @@ extern "C" {
         CCUserDefault::sharedUserDefault()->flush();
     }
     
-    jobject Java_org_hcg_IF_Pay_nativeGetUserUid(JNIEnv* env, jobject thiz) {
+    jobject Java_org_nbg_IF_Pay_nativeGetUserUid(JNIEnv* env, jobject thiz) {
         jstring uid = env->NewStringUTF(GlobalData::shared()->playerInfo.uid.c_str());
         return uid;
     }
     
     // for google play    
-    void Java_org_hcg_IF_Payment_nativeCallPaySuccess(JNIEnv* env,jobject thiz,
+    void Java_org_nbg_IF_Payment_nativeCallPaySuccess(JNIEnv* env,jobject thiz,
                                                       jstring orderId,
                                                       jstring purchaseTime,
                                                       jstring productId,
@@ -1138,7 +1138,7 @@ extern "C" {
         CCLOG("Signature: %s",sig.c_str());
         PayController::getInstance()->callPaymentCheck(oid,pct,prd,sid,sig);
     }
-    void Java_org_hcg_IF_Payment_nativeCallPayFailed(JNIEnv* env, jobject thiz,jint failedType,jstring failedMsg) {
+    void Java_org_nbg_IF_Payment_nativeCallPayFailed(JNIEnv* env, jobject thiz,jint failedType,jstring failedMsg) {
         int failCode = failedType;
         string failInfo = JniHelper::jstring2string(failedMsg);
         GlobalData::shared()->isBind = false;

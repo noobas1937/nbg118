@@ -20,7 +20,7 @@
 
 void AppLibHelper::relogin(){
     JniMethodInfo minfo;
-    if (! JniHelper::getStaticMethodInfo(minfo, "org/hcg/IF/Jni", "relogin", "()V") ) {
+    if (! JniHelper::getStaticMethodInfo(minfo, "org/nbg/IF/Jni", "relogin", "()V") ) {
         CCLOG("JNI: Jni method relogin not found!");
         return;
     }
@@ -68,7 +68,7 @@ void AppLibHelper::updatePlatformScore(int score){
 
 void AppLibHelper::triggerEventLoginComplete(const string &userId, const string &userName, const string &userLevel){
     JniMethodInfo minfo;
-    if (!JniHelper::getStaticMethodInfo(minfo, "org/hcg/IF/Jni", "triggerEventLoginComplete", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V")) {
+    if (!JniHelper::getStaticMethodInfo(minfo, "org/nbg/IF/Jni", "triggerEventLoginComplete", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V")) {
         CCLOGFUNC("jni: no method");
         return;
     }
@@ -84,7 +84,7 @@ void AppLibHelper::triggerEventLoginComplete(const string &userId, const string 
 
 void AppLibHelper::triggerEventCompletedRegistration(){
     JniMethodInfo minfo;
-    if (! JniHelper::getStaticMethodInfo(minfo, "org/hcg/IF/Jni", "triggerEventCompletedRegistration", "()V") ) {
+    if (! JniHelper::getStaticMethodInfo(minfo, "org/nbg/IF/Jni", "triggerEventCompletedRegistration", "()V") ) {
         CCLOG("JNI: Jni method triggerEventCompletedRegistration not found!");
         return;
     }
@@ -94,7 +94,7 @@ void AppLibHelper::triggerEventCompletedRegistration(){
 
 void AppLibHelper::triggerEventCompletedTutorial(){
     JniMethodInfo minfo;
-    if (! JniHelper::getStaticMethodInfo(minfo, "org/hcg/IF/Jni", "triggerEventCompletedTutorial", "()V") ) {
+    if (! JniHelper::getStaticMethodInfo(minfo, "org/nbg/IF/Jni", "triggerEventCompletedTutorial", "()V") ) {
         CCLOG("JNI: Jni method triggerEventCompletedTutorial not found!");
         return;
     }
@@ -104,7 +104,7 @@ void AppLibHelper::triggerEventCompletedTutorial(){
 
 void AppLibHelper::triggerEventAchievedLevel(int level){
     JniMethodInfo minfo;
-    if (! JniHelper::getStaticMethodInfo(minfo, "org/hcg/IF/Jni", "triggerEventAchievedLevel", "(I)V") ) {
+    if (! JniHelper::getStaticMethodInfo(minfo, "org/nbg/IF/Jni", "triggerEventAchievedLevel", "(I)V") ) {
         CCLOG("JNI: Jni method triggerEventAchievedLevel not found!");
         return;
     }
@@ -114,7 +114,7 @@ void AppLibHelper::triggerEventAchievedLevel(int level){
 
 void AppLibHelper::triggerEventPurchaseInit(const string &cost,const string &itemId){
     JniMethodInfo minfo;
-    if (! JniHelper::getStaticMethodInfo(minfo, "org/hcg/IF/Jni", "triggerEventPurchaseInit", "(Ljava/lang/String;Ljava/lang/String;)V") ) {
+    if (! JniHelper::getStaticMethodInfo(minfo, "org/nbg/IF/Jni", "triggerEventPurchaseInit", "(Ljava/lang/String;Ljava/lang/String;)V") ) {
         CCLOG("JNI: Jni method triggerEventPurchaseInit not found!");
         return;
     }
@@ -128,7 +128,7 @@ void AppLibHelper::triggerEventPurchaseInit(const string &cost,const string &ite
 
 void AppLibHelper::triggerEventPurchase(const string &cost,const string &itemId){
     JniMethodInfo minfo;
-    if (! JniHelper::getStaticMethodInfo(minfo, "org/hcg/IF/Jni", "triggerEventPurchase", "(Ljava/lang/String;Ljava/lang/String;)V") ) {
+    if (! JniHelper::getStaticMethodInfo(minfo, "org/nbg/IF/Jni", "triggerEventPurchase", "(Ljava/lang/String;Ljava/lang/String;)V") ) {
         CCLOG("JNI: Jni method triggerEventPurchase not found!");
         return;
     }

@@ -1,17 +1,17 @@
 package com.clash.of.util;
 
-import com.clash.of.kings.COK_CN1;
+import com.clash.of.kings.NBG_CN1;
 import android.app.Application;
 import android.util.Log;
 import android.content.Intent;
 
-import org.hcg.IF.NotifyUtilBase;
+import org.nbg.IF.NotifyUtilBase;
 
 import com.parse.ParseAnalytics;
 import com.parse.ParseInstallation;
 import com.parse.PushService;
 import com.parse.ParsePush;
-import org.hcg.util.GameContext;
+import org.nbg.util.GameContext;
 
 public class NotifyUtil extends NotifyUtilBase {
 
@@ -41,8 +41,8 @@ public class NotifyUtil extends NotifyUtilBase {
 //	    	ParseACL.setDefaultACL(defaultACL, true);
 	    	ParseInstallation data = ParseInstallation.getCurrentInstallation();
 	    	_parseNotifyToken = ((String)data.get("installationId"));
-//	    	PushService.subscribe(app, "", COK_CN1.class);
-//	    	PushService.setDefaultPushCallback(app, COK_CN1.class);
+//	    	PushService.subscribe(app, "", NBG_CN1.class);
+//	    	PushService.setDefaultPushCallback(app, NBG_CN1.class);
 	    	data.saveInBackground();
 		}catch(Exception e){
 			e.printStackTrace();

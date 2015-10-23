@@ -43,7 +43,6 @@ echo ""
 echo "building start with log:$logfileName"
 echo "*************************************************"
 oldBuildNumber=999
-# guo jiang local
 sed -i.bak 's/'$oldBuildNumber'/'$BUILD_NUMBER'/g' AndroidManifest.xml
 rm -rf *.bak
 
@@ -133,7 +132,6 @@ else
 fi
 
 ant crashlytics-symbols
-# guo jiang local
 rm -rf AndroidManifest.xml
 
 mkdir $apkTargetDir >/dev/null 2>/dev/null

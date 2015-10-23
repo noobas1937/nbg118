@@ -29,9 +29,10 @@ import java.util.Locale;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+
+import org.nbg.IF.IF;
+
 import java.lang.Runnable;
-import org.hcg.IF.IF;
-//import com.chukong.cocosplay.client.CocosPlayClient;
 
 import android.app.Activity;
 //import android.content.ComponentName;  //Enhance API modification

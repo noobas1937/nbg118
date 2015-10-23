@@ -28,8 +28,7 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.egl.EGLDisplay;
 
 import org.cocos2dx.lib.Cocos2dxHelper.Cocos2dxHelperListener;
-import org.hcg.stac.empire.sns.FBUtil;
-//import com.chukong.cocosplay.client.CocosPlayClient;
+import org.nbg.stac.empire.sns.FBUtil;
 
 import android.app.Activity;
 import android.content.Context;

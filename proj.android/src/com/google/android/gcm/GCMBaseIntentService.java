@@ -38,7 +38,7 @@ import android.util.Log;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-import org.hcg.stac.empire.common.manager.GCMIntentService;
+import org.nbg.stac.empire.common.manager.GCMIntentService;
 
 /**
  * Skeleton for application-specific {@link IntentService}s responsible for
@@ -57,7 +57,7 @@ public abstract class GCMBaseIntentService extends IntentService {
 	/**
 	 * GCM 消息传递使用的service所在的包路径
 	 */
-	public static final String GCM_SERVICE_PACKAGE_PATH = "org.hcg.stac.empire.common.manager";
+	public static final String GCM_SERVICE_PACKAGE_PATH = "org.nbg.stac.empire.common.manager";
 	
 	public static final String GCM_PREFERENCE = "gcm_preference";
 	
