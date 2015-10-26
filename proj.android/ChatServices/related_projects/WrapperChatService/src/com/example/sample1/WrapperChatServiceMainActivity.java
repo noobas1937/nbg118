@@ -246,7 +246,7 @@ public class WrapperChatServiceMainActivity extends Activity {
 				new LanguageItem("105369", "以下是最近{0}条新消息"),
 				new LanguageItem("105384", "信息"),
 				new LanguageItem("105519", "战斗报告"),
-				new LanguageItem("103731", "列王的纷争游戏工作室"),
+				new LanguageItem("103731", "龙族部落游戏工作室"),
 				new LanguageItem("132000", "联系MOD"),
 				new LanguageItem("108523", "删除"),
 				new LanguageItem("105569", "公告"),

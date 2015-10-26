@@ -5177,6 +5177,26 @@ void WorldMapView::addUnderNode(unsigned int index) {
                         
                         house = NBWorldMapMainCity::getMainCity(island_idx, player.cityLv, -1);
                     }
+//                    if (island_idx == 0)
+//                    {
+//                        static const char* images[] = {"z_island_001.png", "z_island_002.png", "z_island_003.png", "z_island_004.png"};
+//                        float xy[] = {0,       0 + 256, 0, 0 + 256,
+//                                      0 + 128, 0 + 128, 0,       0, };
+//                        
+//                        for (int iii = 0; iii < 4; iii++)
+//                        {
+//                            auto island = CCLoadSprite::createSprite(images[iii]);
+//                            island->setAnchorPoint(Vec2(0, 0));
+//                            island->setPosition(Vec2(xy[iii], xy[iii + 4]));
+//                            under->addChild(island);
+//                        }
+//                        
+//                        house = NBWorldMapMainCity::getMainCity(island_idx, player.cityLv, -1);
+//                    }
+//                    else
+//                    {
+//                        house = NBWorldMapMainCity::getMainCity(island_idx, player.cityLv, -1);
+//                    }
                 }
                 else
                 {

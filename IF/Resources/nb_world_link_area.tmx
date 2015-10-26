@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="isometric" renderorder="right-down" width="1204" height="1204" tilewidth="256" tileheight="128" nextobjectid="1">
  <tileset firstgid="1" name="throne" tilewidth="256" tileheight="128" tilecount="32">
-  <image source="nb_world/throne.pvr.ccz" width="1024" height="1024"/>
+  <image source="World/throne.pvr.ccz" width="1024" height="1024"/>
   <terraintypes>
    <terrain name="link_area" tile="-1"/>
   </terraintypes>
@@ -22,10 +22,10 @@
   <tile id="26" terrain="0,0,0,0"/>
  </tileset>
  <tileset firstgid="33" name="nb_ocean" tilewidth="256" tileheight="128" tilecount="32">
-  <image source="nb_world/nb_ocean.pvr.ccz" width="1024" height="1024"/>
+  <image source="World/nb_ocean.pvr.ccz" width="1024" height="1024"/>
  </tileset>
  <tileset firstgid="65" name="decoration" tilewidth="256" tileheight="128" tilecount="32">
-  <image source="nb_world/decoration.pvr.ccz" width="1024" height="1024"/>
+  <image source="World/decoration.pvr.ccz" width="1024" height="1024"/>
  </tileset>
  <layer name="ocean" width="1204" height="1204">
   <data encoding="base64" compression="zlib">
