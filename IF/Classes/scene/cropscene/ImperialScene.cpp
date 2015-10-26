@@ -772,7 +772,7 @@ void ImperialScene::onEnter()
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::titanChangeStatus), MSG_TITAN_STATUS_CHANGE, NULL);//fusheng 泰坦状态改变
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::handleTitanUpgrade), MSG_TITAN_UPGRADE_COMPLETE, NULL);
     
-    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::titanUpgradeComplete), MSG_TITAN_UPGRADE_COMPLETE, NULL);
+//    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::titanUpgradeComplete), MSG_TITAN_UPGRADE_COMPLETE, NULL);//fusheng 泰坦升级粒子效果
     
     string gFake = CCUserDefault::sharedUserDefault()->getStringForKey("Guide_Fake","");
     if (GlobalData::shared()->playerInfo.level==1 && GlobalData::shared()->playerInfo.exp==0 && (gFake==""||gFake=="start_1")) {
@@ -880,8 +880,11 @@ void ImperialScene::titanChangeStatus(CCObject* obj){
 }
 void ImperialScene::handleTitanUpgrade(CCObject* obj)
 {
-    if (m_Titan) {
-        m_Titan->resetDisplay(GlobalData::shared()->titanInfo.tid);
+    if(GlobalData::shared()->titanInfo.level == 2)//fusheng 龙需要重新设置状态
+    {
+        if (m_Titan){
+            m_Titan->resetDisplay(GlobalData::shared()->titanInfo.tid);
+        }
     }
     
     CCLOG("ImperialScene titan sheng ji ");

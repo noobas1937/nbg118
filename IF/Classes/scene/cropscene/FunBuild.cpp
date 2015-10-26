@@ -1674,7 +1674,7 @@ void FunBuild::onPlayUpEnd(bool isOnly)
 //            }
             
             
-            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_UPGRADE_COMPLETE,NULL);  //泰坦升级
+//            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_UPGRADE_COMPLETE,NULL);  //泰坦升级
             
         }
         else
