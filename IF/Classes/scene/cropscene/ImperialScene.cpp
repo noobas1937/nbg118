@@ -582,7 +582,7 @@ void ImperialScene::buildingCallBack(CCObject* params)
     
     GameController::getInstance()->enableQueryHistoryPurchase();
     
-    wallCallBack(nullptr);
+//    wallCallBack(nullptr);
 }
 
 void ImperialScene::onCreateTitan()
@@ -742,7 +742,7 @@ void ImperialScene::onEnter()
     
     CCLoadSprite::doLoadResourceAsync(IMPERIAL_PATH, CCCallFuncO::create(this, callfuncO_selector(ImperialScene::buildingCallBack), NULL), 2+10*GlobalData::shared()->contryResType);
 
-//    CCLoadSprite::doLoadResourceAsync(IMPERIAL_PATH, CCCallFuncO::create(this, callfuncO_selector(ImperialScene::wallCallBack), NULL), 8+10*GlobalData::shared()->contryResType);
+    CCLoadSprite::doLoadResourceAsync(IMPERIAL_PATH, CCCallFuncO::create(this, callfuncO_selector(ImperialScene::wallCallBack), NULL), 8+10*GlobalData::shared()->contryResType);
     
     CCLoadSprite::doLoadCommonResourceAsync();
     
