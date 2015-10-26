@@ -17,7 +17,7 @@ do
 			fileName=${fullFileName##_alpha_}
 
 
-			if [[ "$fullFileName" == "_alpha_World_1" || "$fullFileName" == "_alpha_World_2" || "$fullFileName" == "_alpha_World_4" || "$fullFileName" == "_alpha_World_5" ]]; then
+			if [[ "$fullFileName" == "_alpha_nb_ocean" || "$fullFileName" == "_alpha_decoration" || "$fullFileName" == "_alpha_throne" || "$fullFileName" == "_alpha_World_1" || "$fullFileName" == "_alpha_World_2" || "$fullFileName" == "_alpha_World_4" || "$fullFileName" == "_alpha_World_5" ]]; then
 				TexturePacker --texture-format png --png-opt-level 0 --reduce-border-artifacts --opt RGBA8888 --size-constraints POT --sheet "$fullFileName.png" --data "$fileName.plist" $tpsFile
             elif [[ "$fullFileName" == "_alpha_World_3" || "$fullFileName" == "_alpha_Imperial_30" || "$fullFileName" == "_alpha_Loading_1" || "$fullFileName" == "_alpha_Common_511" || "$fullFileName" == "_alpha_Loading_3" ]]; then
                 TexturePacker --format libgdx --texture-format png --png-opt-level 0 --opt RGBA8888 --size-constraints POT --sheet "$fullFileName.png" --data "$fileName.atlas" $tpsFile
