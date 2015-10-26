@@ -22,7 +22,7 @@
         <key>dataFormat</key>
         <string>cocos2d</string>
         <key>textureFileName</key>
-        <filename>../../../IF/Resources/Common/Common_1.pvr.ccz</filename>
+        <filename>../../../IF/Resources/Common/Common_513.pvr.ccz</filename>
         <key>flipPVR</key>
         <false/>
         <key>ditherType</key>
@@ -99,7 +99,7 @@
             <key>packageName</key>
             <string>Texture</string>
             <key>javaFileName</key>
-            <filename>../../../IF/Resources/Common/Common_1.java</filename>
+            <filename>../../../IF/Resources/Common/Common_6.java</filename>
             <key>wrap</key>
             <struct type="AndEngineWrap">
                 <key>s</key>
@@ -111,7 +111,7 @@
             <enum type="AndEngine::MagFilter">MagLinear</enum>
         </struct>
         <key>dataFileName</key>
-        <filename>../../../IF/Resources/Common/Common_1.plist</filename>
+        <filename>../../../IF/Resources/Common/Common_513.plist</filename>
         <key>multiPack</key>
         <false/>
         <key>mainExtension</key>
@@ -148,7 +148,7 @@
         </struct>
         <key>fileList</key>
         <array>
-            <filename>Common_1</filename>
+            <filename>Common_513</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

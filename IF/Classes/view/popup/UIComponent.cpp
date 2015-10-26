@@ -1410,11 +1410,11 @@ void UIComponent::UIMove(bool _bShow)
         
     }
     this->setActivityStatus();
-    m_upNode->setPosition(m_upPt.x,m_upPt.y+200);
+    m_upNode->setPosition(m_upPt.x,m_upPt.y+240);
     
-    m_mainControlNode->setPosition(m_mainPt.x,m_mainPt.y -150);
+    m_mainControlNode->setPosition(m_mainPt.x,m_mainPt.y -180);
     
-    m_UIQuestNode->setPosition(m_questPt.x, m_questPt.y-220);
+    m_UIQuestNode->setPosition(m_questPt.x, m_questPt.y-250);
     
     if (_bShow) {
         
@@ -1429,7 +1429,7 @@ void UIComponent::UIMove(bool _bShow)
         CCMoveTo* questMove = CCMoveTo::create(0.3f, ccp(m_questPt.x, m_questPt.y));
         
         this->m_UIQuestNode->runAction(CCSequence::create(questMove,CCCallFunc::create(this, callfunc_selector(UIComponent::questIconAction)),NULL));
-        
+
         m_bUIShowFlag = true;
         
     }
