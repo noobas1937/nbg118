@@ -14,7 +14,7 @@
         <key>quiet</key>
         <false/>
         <key>premultiplyAlpha</key>
-        <false/>
+        <true/>
         <key>shapeDebug</key>
         <false/>
         <key>dpi</key>
@@ -22,7 +22,7 @@
         <key>dataFormat</key>
         <string>cocos2d</string>
         <key>textureFileName</key>
-        <filename>../../../IF/Resources/nb_world/nb_ocean.pvr.ccz</filename>
+        <filename>../../../IF/Resources/World/nb_ocean.pvr.ccz</filename>
         <key>flipPVR</key>
         <false/>
         <key>ditherType</key>
@@ -111,7 +111,7 @@
             <enum type="AndEngine::MagFilter">MagLinear</enum>
         </struct>
         <key>dataFileName</key>
-        <filename>../../../IF/Resources/nb_world/nb_ocean.plist</filename>
+        <filename>../../../IF/Resources/World/nb_ocean.plist</filename>
         <key>multiPack</key>
         <false/>
         <key>mainExtension</key>

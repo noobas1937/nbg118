@@ -863,7 +863,7 @@ void MailReadPopUpView::refreshContent(CCObject* p){
     }
     m_totalH = 0;
     string tempstr = m_info.contents;
-//    tempstr = "亲爱的领主们，\n我们需要您们帮助我们与Wyne The Poo的家人取得联系，去年由癌症去世的那个马来西亚玩家！如果您知道谁是她的父母，或如何达到联系他们，请您在我们Facebook粉丝页上 <a href=\"http://dwz.cn/DbPmU/\">http://dwz.cn/DbPmU</a>和我们联系。\n我们知道，送礼是春节在马来西亚的一个重要组成部分，我们希望捐赠一万美元给她的父母作为一个农历新年礼物，像她的家人表示诚挚的慰问。让我们一起来做这件事，我们所有的人，因为我们是《列王的纷争》社会。\n非常感谢！";
+//    tempstr = "亲爱的领主们，\n我们需要您们帮助我们与Wyne The Poo的家人取得联系，去年由癌症去世的那个马来西亚玩家！如果您知道谁是她的父母，或如何达到联系他们，请您在我们Facebook粉丝页上 <a href=\"http://dwz.cn/DbPmU/\">http://dwz.cn/DbPmU</a>和我们联系。\n我们知道，送礼是春节在马来西亚的一个重要组成部分，我们希望捐赠一万美元给她的父母作为一个农历新年礼物，像她的家人表示诚挚的慰问。让我们一起来做这件事，我们所有的人，因为我们是《龙族部落》社会。\n非常感谢！";
 //    tempstr = tempstr + "\n";
 //    tempstr = tempstr + "亲爱的领主们，\n<a href=\"https://www.facebook.com/\">facebook</a>we are all excepted that you will like it. Thanks. <a href=\"https://www.facebook.com/Clash.Of.Kings.Game/\">https://www.facebook.com/Clash.Of.Kings.Game/</a>";
 

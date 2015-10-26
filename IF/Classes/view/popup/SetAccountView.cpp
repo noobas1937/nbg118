@@ -795,7 +795,7 @@ void SetAccountNextView::loginCancel(){
 //    if (FBUtilies::fbIsLogin())
 //    {
 //        CCLOG("发送feed");
-//        FBUtilies::fbPublishFeedDialog("列王的纷争","天网恢恢，肥而不腻！", "这只是个测试，哦！~"
+//        FBUtilies::fbPublishFeedDialog("龙族部落","天网恢恢，肥而不腻！", "这只是个测试，哦！~"
 //                                       ,"https://play.google.com/store/apps/details?id=air.com.elextech.happyfarm","http://pocket.eleximg.com/latest/public/assets/feed_trade.png");
 //    }
 //    else

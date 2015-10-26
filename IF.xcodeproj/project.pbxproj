@@ -990,7 +990,6 @@
 		B1FD956D18F790F20083574F /* EmailConfirmPush.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B1FD956B18F790F20083574F /* EmailConfirmPush.cpp */; };
 		B1FD957018F7BBFF0083574F /* PushSettingCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B1FD956E18F7BBFF0083574F /* PushSettingCommand.cpp */; };
 		B80A40AE1BD88A7A00B4D9CB /* NBWorldMapMainCity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B80A40AC1BD88A7A00B4D9CB /* NBWorldMapMainCity.cpp */; };
-		B80D4B261BAFA1CC00422225 /* nb_world in Resources */ = {isa = PBXBuildFile; fileRef = B80D4B251BAFA1CC00422225 /* nb_world */; };
 		B80D4B2A1BAFA1D800422225 /* nb_world.tmx in Resources */ = {isa = PBXBuildFile; fileRef = B80D4B281BAFA1D800422225 /* nb_world.tmx */; };
 		B80D4B2F1BAFCA6B00422225 /* nb_world_link_area.tmx in Resources */ = {isa = PBXBuildFile; fileRef = B80D4B2E1BAFCA6B00422225 /* nb_world_link_area.tmx */; };
 		B838C5B11BDA36EE00EC74B3 /* NBWaterSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B838C5AF1BDA36EE00EC74B3 /* NBWaterSprite.cpp */; };
@@ -3141,7 +3140,6 @@
 		B1FD956F18F7BBFF0083574F /* PushSettingCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushSettingCommand.h; sourceTree = "<group>"; };
 		B80A40AC1BD88A7A00B4D9CB /* NBWorldMapMainCity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBWorldMapMainCity.cpp; sourceTree = "<group>"; };
 		B80A40AD1BD88A7A00B4D9CB /* NBWorldMapMainCity.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NBWorldMapMainCity.hpp; sourceTree = "<group>"; };
-		B80D4B251BAFA1CC00422225 /* nb_world */ = {isa = PBXFileReference; lastKnownFileType = folder; name = nb_world; path = Resources/nb_world; sourceTree = "<group>"; };
 		B80D4B281BAFA1D800422225 /* nb_world.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = nb_world.tmx; path = Resources/nb_world.tmx; sourceTree = "<group>"; };
 		B80D4B2E1BAFCA6B00422225 /* nb_world_link_area.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = nb_world_link_area.tmx; path = Resources/nb_world_link_area.tmx; sourceTree = "<group>"; };
 		B838C5AF1BDA36EE00EC74B3 /* NBWaterSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBWaterSprite.cpp; sourceTree = "<group>"; };
@@ -5888,7 +5886,6 @@
 			children = (
 				B80D4B2E1BAFCA6B00422225 /* nb_world_link_area.tmx */,
 				B80D4B281BAFA1D800422225 /* nb_world.tmx */,
-				B80D4B251BAFA1CC00422225 /* nb_world */,
 				36DE16D71BA188C00020785E /* 3d */,
 				36DE16D81BA188C00020785E /* shaders */,
 				5A6CE7B01B8F023D005CCFAA /* hdccbi */,
@@ -7111,7 +7108,6 @@
 				59D7F03C1AF0BF85000120F9 /* HS-powered-by-logo.png in Resources */,
 				DB971A8F1A26CA9F00A194DB /* Images.xcassets in Resources */,
 				59D7F0441AF0BF85000120F9 /* HSChatBubbleWhite.png in Resources */,
-				B80D4B261BAFA1CC00422225 /* nb_world in Resources */,
 				59143E1C1B5F3F90005B101A /* WeiboSDK.bundle in Resources */,
 				59D7F0471AF0BF85000120F9 /* HSConfirmBox.png in Resources */,
 				272AB6561B15C7BC0052E896 /* horn_unchecked.png in Resources */,
