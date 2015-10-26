@@ -39,7 +39,7 @@
         <ItemSpec id="3073500" next="3073600" arrow="1" area="AC_reward" enforce="1"/>
         <ItemSpec id="3073600" next="3073700" lag="2"/>
         <ItemSpec id="3073700" next="3073800" arrow="1" area="AC_back" enforce="1" mark="1"/>
-        <ItemSpec id="3073800" next="3073900" plot="3073810" arrow="0" area="plot_continue" enforce="1"/>
+        <ItemSpec id="3073800" next="3073900" plot="3073810" arrow="0" area="plot_continue" enforce="1" mark="1"/>
         <ItemSpec id="3073900" arrow="2" area="UI_target" enforce="1" mark="1"/>
         <ItemSpec id="3074000" next="3074100" plot="3074010" arrow="0" area="plot_continue" enforce="1" mark="1"/>
         <ItemSpec id="3074100" next="3074200" arrow="2" area="UI_world_go" enforce="1"/>

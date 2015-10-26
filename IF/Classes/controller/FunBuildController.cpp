@@ -284,15 +284,14 @@ void FunBuildController::retDataFromServer(CCDictionary* dict)
         
         info.SetInfoFromServer(item);
         info.itemId = key;
-        
         //分析提取引导数据
         string gFake = CCUserDefault::sharedUserDefault()->getStringForKey("Guide_Fake","");
         string GuideBuildKey = "";
         if (GlobalData::shared()->playerInfo.level == 1 && GlobalData::shared()->playerInfo.exp == 0) //fusheng 新手引导提取数据
         {
-//            fusheng d 没有骑兵营  建造步兵营后不用再建造
-//            int tmpQid1 = QueueController::getInstance()->getMinTimeQidByType(TYPE_RIDE_SOLDIER);//骑兵队列 待秒cd
-//            int tmpQid2 = QueueController::getInstance()->getCanRecQidByType(TYPE_RIDE_SOLDIER);//骑兵队列 待收兵
+//fusheng d 没有骑兵营  建造步兵营后不用再建造
+//            int tmpQid1 = QueueController::getInstance()->getMinTimeQidByType(TYPE_FORCE);//骑兵队列 待秒cd
+//            int tmpQid2 = QueueController::getInstance()->getCanRecQidByType(TYPE_FORCE);//骑兵队列 待收兵
 //            int totoalArmy = ArmyController::getInstance()->getTotalArmy();
 //            if (totoalArmy > 1 || tmpQid2 != QID_MAX || tmpQid1 != QID_MAX) {//数据修复,造兵了,但是清数据了
 //                gFake = "start_4";

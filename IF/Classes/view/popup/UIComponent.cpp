@@ -5373,8 +5373,18 @@ CCNode* UIComponent::getNodeByIndex(string _key){
                 return NULL;
             }
         }
+        //fusheng begin 添加限制 必须造过兵
+        int tmpQid1 = QueueController::getInstance()->getMinTimeQidByType(TYPE_FORCE);//步兵队列 待秒cd
+        int tmpQid2 = QueueController::getInstance()->getCanRecQidByType(TYPE_FORCE);//步兵队列 待收兵
+        int totoalArmy = ArmyController::getInstance()->getTotalArmy();
         
-        return m_homeBG;
+        if (totoalArmy > 2 || tmpQid2 != QID_MAX || tmpQid1 != QID_MAX) {//士兵个数超过2个
+            return m_homeBG;
+        }
+        //fusheng end
+        
+        return NULL;
+        
         
     }else if(_key == "UI_world_back"){
         
