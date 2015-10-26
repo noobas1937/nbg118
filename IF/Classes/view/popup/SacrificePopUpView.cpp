@@ -68,10 +68,12 @@ bool SacrificePopUpView::init()
     CCLoadSprite::doResourceByCommonIndex(8, true);
     CCLoadSprite::doResourceByCommonIndex(7, true);
     CCLoadSprite::doResourceByCommonIndex(6, true);
+    CCLoadSprite::doResourceByCommonIndex(204, true);//fusheng 添加
     setCleanFunction([](){
         CCLoadSprite::doResourceByCommonIndex(8, false);
         CCLoadSprite::doResourceByCommonIndex(7, false);
         CCLoadSprite::doResourceByCommonIndex(6, false);
+        CCLoadSprite::doResourceByCommonIndex(204, false);
         
     });
     auto tmpCCB = CCBLoadFile("SacrificeCCB",this,this);
@@ -98,18 +100,26 @@ bool SacrificePopUpView::init()
     m_tabView->setTouchPriority(Touch_Default);
     
     m_infoList->addChild(m_tabView);
-    int count = (m_buildBG->getContentSize().height)/100+1;
-    for (int i=0; i<count; i++) {
-        auto pic = CCLoadSprite::createSprite("technology_09.png");
-        if (CCCommonUtils::isIosAndroidPad()) {
-            pic->setScaleX(2.51);
-        }
-        pic->setPositionY(-i*100);
-        this->m_bgNode->addChild(pic);
-    }
+    //fusheng d
+//    int count = (m_buildBG->getContentSize().height)/100+1;
+//    for (int i=0; i<count; i++) {
+//        auto pic = CCLoadSprite::createSprite("technology_09.png");
+//        if (CCCommonUtils::isIosAndroidPad()) {
+//            pic->setScaleX(2.51);
+//        }
+//        pic->setPositionY(-i*100);
+//        this->m_bgNode->addChild(pic);
+//    }
     m_getNumText->setVisible(false);
     addCommonAnim();
     getData();
+    
+    
+    int preHeight = this->m_buildBG->getContentSize().height;
+    changeBGMaxHeight(m_buildBG);
+    int dh = m_buildBG->getContentSize().height - preHeight;
+    m_buildBG->setPositionY(m_buildBG->getPositionY()+dh);
+    
     return true;
 }
 //首次打开面板引导
@@ -161,9 +171,9 @@ void SacrificePopUpView::refresh(CCObject* p){
     m_data->removeAllObjects();
     m_data->addObject(CCInteger::create(0));
     m_data->addObject(CCInteger::create(1));
-    if(info.isSteelOpen==true){
-        m_data->addObject(CCInteger::create(2));
-    }
+//    if(info.isSteelOpen==true){//fusheng 3行变两行
+//        m_data->addObject(CCInteger::create(2));
+//    }
     float needH = m_data->count() * Sacrifice_Cell_Height;
     if (CCCommonUtils::isIosAndroidPad()) {
         needH = m_data->count() * Sacrifice_Cell_HD_Height;
@@ -590,79 +600,123 @@ void SacrificeCell::setData(int type)
         auto cell = SacrificeOneCell::create(Wood);
         m_cellNode->addChild(cell);
         cell->setTag(99);
+        
+        cell->setPositionX(66);
         auto cell1 = SacrificeOneCell::create(Food);
         m_cellNode->addChild(cell1);
         if (CCCommonUtils::isIosAndroidPad()) {
             cell1->setPositionX(748);
         }
         else
-            cell1->setPositionX(319);
+//            cell1->setPositionX(319);//fusheng
+            cell1->setPositionX(236);
         cell1->setTag(100);
-    }else if(m_type==1){
+        
+        //fusheng begin 把原本的第二行提上来
         auto &info = GlobalData::shared()->sacrificeInfo;
-        if(info.isSteelOpen==true){
+//        if(info.isSteelOpen==true){
+        if(false){
             int mlv = FunBuildController::getInstance()->getMainCityLv();
             if (mlv>=FunBuildController::getInstance()->building_base_k3){
                 auto cell = SacrificeOneCell::create(Iron);
                 m_cellNode->addChild(cell);
-                cell->setTag(99);
-                if (mlv>=FunBuildController::getInstance()->building_base_k4) {
-                    auto cell1 = SacrificeOneCell::create(Stone);
-                    m_cellNode->addChild(cell1);
-                    if (CCCommonUtils::isIosAndroidPad()) {
-                        cell1->setPositionX(748);
-                    }
-                    else
-                        cell1->setPositionX(319);
-                    cell1->setTag(100);
-                }else{
-                    auto cell1 = SacrificeOneCell::create(Silver);
-                    m_cellNode->addChild(cell1);
-                    if (CCCommonUtils::isIosAndroidPad()) {
-                        cell1->setPositionX(748);
-                    }
-                    else
-                        cell1->setPositionX(319);
-                    cell1->setTag(100);
+                cell->setTag(101);
+                
+                cell->setPositionX(406);
                 }
-            }else{
+            else{
                 auto cell = SacrificeOneCell::create(Silver);
                 m_cellNode->addChild(cell);
-                cell->setTag(99);
-                auto cell1 = SacrificeOneCell::create(Iron);
-                m_cellNode->addChild(cell1);
-                if (CCCommonUtils::isIosAndroidPad()) {
-                    cell1->setPositionX(748);
-                }
-                else
-                    cell1->setPositionX(319);
-                cell1->setTag(100);
+                cell->setTag(101);
+                
+                cell->setPositionX(406);
+                
+                
+
             }
         }else{
             auto cell = SacrificeOneCell::create(Iron);
             m_cellNode->addChild(cell);
-            cell->setTag(99);
-            auto cell1 = SacrificeOneCell::create(Stone);
-            m_cellNode->addChild(cell1);
-            if (CCCommonUtils::isIosAndroidPad()) {
-                cell1->setPositionX(748);
-            }
-            else
-                cell1->setPositionX(319);
-            cell1->setTag(100);
+            cell->setTag(101);
+            
+            cell->setPositionX(406);
+
         }
-    }else if(m_type==2){
-        int mlv = FunBuildController::getInstance()->getMainCityLv();
-        if (mlv>=FunBuildController::getInstance()->building_base_k4){
-            auto cell = SacrificeOneCell::create(Silver);
-            m_cellNode->addChild(cell);
-            cell->setTag(99);
-        }else{
-            auto cell = SacrificeOneCell::create(Stone);
-            m_cellNode->addChild(cell);
-            cell->setTag(99);
-        }
+        //fusheng begin  end
+        
+    }else if(m_type==1){
+        auto &info = GlobalData::shared()->sacrificeInfo;
+////        if(info.isSteelOpen==true){
+//        if(false){
+//            int mlv = FunBuildController::getInstance()->getMainCityLv();
+//            if (mlv>=FunBuildController::getInstance()->building_base_k3){
+////                auto cell = SacrificeOneCell::create(Iron);
+////                m_cellNode->addChild(cell);
+////                cell->setTag(99);
+//                if (mlv>=FunBuildController::getInstance()->building_base_k4) {
+//                    auto cell = SacrificeOneCell::create(Stone);
+//                    m_cellNode->addChild(cell);
+//
+//                    cell->setTag(99);
+//                }else{
+//                    auto cell = SacrificeOneCell::create(Silver);
+//                    m_cellNode->addChild(cell);
+//
+//                    cell->setTag(99);
+//                }
+//            }else{
+//
+//                auto cell = SacrificeOneCell::create(Iron);
+//                m_cellNode->addChild(cell);
+//
+//                cell->setTag(99);
+//            }
+//        }else{
+//
+//            auto cell = SacrificeOneCell::create(Stone);
+//            m_cellNode->addChild(cell);
+//
+//            cell->setTag(99);
+//        }
+                        auto cell = SacrificeOneCell::create(Stone);
+                        m_cellNode->addChild(cell);
+        
+                        cell->setTag(99);
+        cell->setPositionX(66);
+        
+//        int mlv = FunBuildController::getInstance()->getMainCityLv();
+////        if (mlv>=FunBuildController::getInstance()->building_base_k4){
+//        if(false){
+//            auto cell1 = SacrificeOneCell::create(Silver);
+//            m_cellNode->addChild(cell1);
+//            cell1->setTag(100);
+//            cell1->setPositionX(170);
+//        }else{
+//            auto cell1 = SacrificeOneCell::create(Stone);
+//            m_cellNode->addChild(cell1);
+//            cell1->setTag(100);
+//            cell1->setPositionX(170);
+//        }
+//        
+        auto temp1 = CCLoadSprite::createSprite("xyc_xk_1.png");
+        
+        temp1->setAnchorPoint(Vec2::ZERO);
+        
+        temp1->setPositionX(236);
+        
+        this->addChild(temp1);
+        
+        
+        auto temp2 = CCLoadSprite::createSprite("xyc_xk_1.png");
+        
+        temp2->setAnchorPoint(Vec2::ZERO);
+        
+        temp2->setPositionX(406);
+        
+        this->addChild(temp2);
+        
     }
+
 
 }
 
@@ -703,7 +757,8 @@ bool SacrificeOneCell::init()
         this->setContentSize(CCSizeMake(690, Sacrifice_Cell_HD_Height));
     }
     else
-        this->setContentSize(CCSizeMake(290, Sacrifice_Cell_Height));
+//        this->setContentSize(CCSizeMake(290, Sacrifice_Cell_Height));//fusheng
+        this->setContentSize(CCSizeMake(163, Sacrifice_Cell_Height));
     setData(m_type);
     return ret;
 }
@@ -720,16 +775,21 @@ void SacrificeOneCell::setData(int type)
     SacrificeInfo& info = GlobalData::shared()->sacrificeInfo;
     string picPath = "";
    int mlv = FunBuildController::getInstance()->getMainCityLv();
-
+    string picPath1 = "";
+    string picPath2 = "";
     int gold = 0;
     if(m_type==Wood){
         m_getNumText->setString(CC_CMDITOA(info.wood));
-        picPath="The-fountain_icon1.png";
+        picPath="pic413000_2_small.png";
+        picPath1 = "res_btn.png";
+        picPath2 = "ui_wood.png";
         gold = info.goldwood;
     }else if(m_type==Stone){
         m_getNumText->setString(CC_CMDITOA(info.silver));
         gold = info.goldsilver;
-        picPath="The-fountain_icon4.png";
+        picPath="pic412000_2_small.png";
+        picPath1 = "resLV_btn.png";
+        picPath2 = "ui_silver.png";
         if (mlv>=FunBuildController::getInstance()->building_base_k4) {
             m_openNode->setVisible(true);
             m_closeDesText->setVisible(false);
@@ -742,7 +802,9 @@ void SacrificeOneCell::setData(int type)
     }else if(m_type==Iron){
         m_getNumText->setString(CC_CMDITOA(info.iron));
         gold = info.goldiron;
-        picPath="The-fountain_icon3.png";
+        picPath="pic414000_2_small.png";
+        picPath1 = "resLV_btn.png";
+        picPath2 = "ui_iron.png";
         if (mlv>=FunBuildController::getInstance()->building_base_k3) {
             m_openNode->setVisible(true);
             m_closeDesText->setVisible(false);
@@ -755,11 +817,16 @@ void SacrificeOneCell::setData(int type)
     }else if(m_type==Food){
         m_getNumText->setString(CC_CMDITOA(info.food));
         gold = info.goldfood;
-        picPath="The-fountain_icon2.png";
+        picPath="pic415000_2_small.png";
+        picPath1 = "res_btn.png";
+        picPath2 = "ui_food.png";
+        
     }else if(m_type == Silver){
         m_getNumText->setString(CC_CMDITOA(info.steel));
         gold = info.goldsteel;
-        picPath="The-fountain_icon5.png";
+        picPath="pic414000_2_small.png";
+        picPath1 = "resLV_btn.png";
+        picPath2 = "ui_steel.png";
     }
     string costStr = _lang("102326");
     costStr.append(CC_CMDITOA(gold));
@@ -776,12 +843,19 @@ void SacrificeOneCell::setData(int type)
     if (CCCommonUtils::isIosAndroidPad()) {
         pic->setScale(2);
     }
+    auto pic1 = CCLoadSprite::createSprite(picPath1.c_str());
+    auto pic2 = CCLoadSprite::createSprite(picPath2.c_str());
+    
+    pic1->setPosition(30, 40);
+    pic2->setPosition(30, 52);
     this->m_picNode->addChild(pic);
+    this->m_picNode->addChild(pic1);
+    this->m_picNode->addChild(pic2);
 
     if(info.canPray() == false ||(!m_openNode->isVisible())){
-        m_graySpr->setVisible(true);
+//        m_graySpr->setVisible(true);
     }else{
-        m_graySpr->setVisible(false);
+//        m_graySpr->setVisible(false);
     }
     m_layerColor->setVisible(false);
     if(info.isFirstFree==1){
@@ -827,7 +901,7 @@ SEL_CCControlHandler SacrificeOneCell::onResolveCCBCCControlSelector(cocos2d::CC
 }
 
 bool SacrificeOneCell::onAssignCCBMemberVariable(cocos2d::CCObject *pTarget, const char *pMemberVariableName, cocos2d::CCNode *pNode){
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_graySpr", CCScale9Sprite*, this->m_graySpr);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_graySpr", CCScale9Sprite*, this->m_graySpr);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_hintBG", CCScale9Sprite*, this->m_hintBG);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_picNode", CCNode*, this->m_picNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_totalNode", CCNode*, this->m_totalNode);
