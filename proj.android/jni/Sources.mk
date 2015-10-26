@@ -526,7 +526,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../IF/Classes/scene/world/IFShakeGuideLayer.cpp \
 ../../IF/Classes/scene/world/IFShakeLayer.cpp \
 ../../IF/Classes/scene/world/map/CloudLayer.cpp \
-../../IF/Classes/scene/world/map/NBWaterShaderLayer.cpp \
+../../IF/Classes/scene/world/map/NBWaterSprite.cpp \
 ../../IF/Classes/scene/world/map/NBWorldMapDecoration.cpp \
 ../../IF/Classes/scene/world/map/NBWorldMapMainCity.cpp \
 ../../IF/Classes/scene/world/map/NBWorldMonster.cpp \
