@@ -83,7 +83,7 @@ public class LanguageKeys
 	public static final String  TIP_SEARCH_RESULT					= "105357";			//搜索结果
 	public static final String  TIP_N_NEW_MESSAGE_BELOW				= "105369";			//以下是最近{0}条新消息
 	public static final String  MAIL_TABNAME_FIGHT					= "105519";			//战斗报告
-	public static final String  MAIL_TABNAME_STUDIO					= "103731";			//列王的纷争游戏工作室
+	public static final String  MAIL_TABNAME_STUDIO					= "103731";			//龙族部落游戏工作室
 	public static final String  MAIL_TABNAME_NOTICE					= "105569";			//公告
 	public static final String  MAIL_TABNAME_INVITE					= "103738";			//邀请函
 	public static final String  MAIL_TABNAME_QUITALLIANCE			= "103783";			//退盟通知	

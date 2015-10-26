@@ -51,6 +51,8 @@ enum
 #define WATER_GRID_ROWS	  64
 
 
+#define WATER_NORMALS "shaders/water_normals.png"
+
 class NBWaterSprite : public Sprite
 {
 public:

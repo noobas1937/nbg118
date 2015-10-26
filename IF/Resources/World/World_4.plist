@@ -3400,20 +3400,7 @@
             <key>lv1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{526,1575},{289,200}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{289,200}}</string>
-                <key>sourceSize</key>
-                <string>{289,200}</string>
-            </dict>
-            <key>lv10.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{821,1575},{209,173}}</string>
+                <string>{{526,1575},{209,173}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -3426,7 +3413,7 @@
             <key>tile_place_holder.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1036,1575},{256,128}}</string>
+                <string>{{741,1575},{256,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -3446,7 +3433,7 @@
             <key>size</key>
             <string>{2048,2048}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:c230e09cff49f83a2c7d07574ef07ff3:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:5f0abf809720b3ba08fa12950b5f24d0:1/1$</string>
             <key>textureFileName</key>
             <string>World_4.pvr.ccz</string>
         </dict>

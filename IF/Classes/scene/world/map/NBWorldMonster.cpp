@@ -536,21 +536,21 @@ void NBWorldMonster::createMonsterBatchItem(BatchTagType type, unsigned int inde
     // guo.jiang todo
     if (monsterNode)
     {
-        if (type == MonsterBreath)
-        {
+//        if (type == MonsterBreath)
+//        {
             monsterNode->setVisible(false);
-            auto octopus = CCLoadSprite::createSprite(index % 2 ? "nb_octopus_01.png" : "nb_octopus_02.png");
+            auto octopus = CCLoadSprite::createSprite((int)info.cityTilePoint.x % 2 ? "nb_octopus_01.png" : "nb_octopus_02.png");
             octopus->setScaleX(monsterNode->getScaleX());
             octopus->setPosition(monsterNode->getPosition() + Vec2(octopus->getContentSize().width * 0, octopus->getContentSize().height / 4));
             octopus->setTag(monsterNode->getTag());
             WORLD_MAP_VIEW->m_mapMonstersNode->addChild(octopus, monsterNode->getZOrder());
-        }
-        else
-        {
-            auto octopus = WORLD_MAP_VIEW->m_mapMonstersNode->getChildByTag(monsterNode->getTag());
-            if (octopus) octopus->setVisible(false);
-            monsterNode->setVisible(true);
-        }
+//        }
+//        else
+//        {
+//            auto octopus = WORLD_MAP_VIEW->m_mapMonstersNode->getChildByTag(monsterNode->getTag());
+//            if (octopus) octopus->setVisible(false);
+//            monsterNode->setVisible(true);
+//        }
     }
     
     return;

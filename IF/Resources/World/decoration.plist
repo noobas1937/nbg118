@@ -4,7 +4,7 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>Surface_throne_001.png</key>
+            <key>decor_island_001.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{0,0},{256,128}}</string>
@@ -17,7 +17,7 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>Surface_throne_002.png</key>
+            <key>decor_island_002.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{256,0},{256,128}}</string>
@@ -30,7 +30,7 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>Surface_throne_003.png</key>
+            <key>decor_island_003.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{512,0},{256,128}}</string>
@@ -43,7 +43,7 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>Surface_throne_004.png</key>
+            <key>decor_island_004.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{768,0},{256,128}}</string>
@@ -56,7 +56,7 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>Surface_throne_005.png</key>
+            <key>decor_island_005.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{0,128},{256,128}}</string>
@@ -69,7 +69,7 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>Surface_throne_006.png</key>
+            <key>decor_island_006.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{256,128},{256,128}}</string>
@@ -82,7 +82,7 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>Surface_throne_007.png</key>
+            <key>decor_island_007.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{512,128},{256,128}}</string>
@@ -95,7 +95,7 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>Surface_throne_008.png</key>
+            <key>decor_island_008.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{768,128},{256,128}}</string>
@@ -108,7 +108,7 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>Surface_throne_009.png</key>
+            <key>decor_island_009.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{0,256},{256,128}}</string>
@@ -121,7 +121,7 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>surface_battlefield_001.png</key>
+            <key>decor_island_010.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{256,256},{256,128}}</string>
@@ -134,7 +134,7 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>surface_battlefield_002.png</key>
+            <key>decor_island_011.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{512,256},{256,128}}</string>
@@ -147,7 +147,7 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>surface_battlefield_003.png</key>
+            <key>decor_island_012.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{768,256},{256,128}}</string>
@@ -160,7 +160,7 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>surface_battlefield_004.png</key>
+            <key>decor_island_100.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{0,384},{256,128}}</string>
@@ -173,7 +173,7 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>surface_battlefield_005.png</key>
+            <key>surface_bolder_093.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{256,384},{256,128}}</string>
@@ -186,7 +186,7 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>surface_battlefield_006.png</key>
+            <key>surface_bolder_094.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{512,384},{256,128}}</string>
@@ -199,153 +199,10 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>surface_battlefield_007.png</key>
+            <key>surface_bolder_095.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{768,384},{256,128}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{256,128}}</string>
-                <key>sourceSize</key>
-                <string>{256,128}</string>
-            </dict>
-            <key>surface_battlefield_008.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{0,512},{256,128}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{256,128}}</string>
-                <key>sourceSize</key>
-                <string>{256,128}</string>
-            </dict>
-            <key>surface_battlefield_009.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{256,512},{256,128}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{256,128}}</string>
-                <key>sourceSize</key>
-                <string>{256,128}</string>
-            </dict>
-            <key>surface_bolder_001.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{512,512},{256,128}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{256,128}}</string>
-                <key>sourceSize</key>
-                <string>{256,128}</string>
-            </dict>
-            <key>surface_bolder_002.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{768,512},{255,128}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{255,128}}</string>
-                <key>sourceSize</key>
-                <string>{255,128}</string>
-            </dict>
-            <key>surface_bolder_003.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{0,640},{256,128}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{256,128}}</string>
-                <key>sourceSize</key>
-                <string>{256,128}</string>
-            </dict>
-            <key>surface_bolder_004.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{256,640},{255,128}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{255,128}}</string>
-                <key>sourceSize</key>
-                <string>{255,128}</string>
-            </dict>
-            <key>surface_bolder_005.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{511,640},{256,128}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{256,128}}</string>
-                <key>sourceSize</key>
-                <string>{256,128}</string>
-            </dict>
-            <key>surface_bolder_006.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{767,640},{256,128}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{256,128}}</string>
-                <key>sourceSize</key>
-                <string>{256,128}</string>
-            </dict>
-            <key>surface_bolder_007.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{0,768},{256,128}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{256,128}}</string>
-                <key>sourceSize</key>
-                <string>{256,128}</string>
-            </dict>
-            <key>surface_bolder_008.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{256,768},{256,128}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{256,128}}</string>
-                <key>sourceSize</key>
-                <string>{256,128}</string>
-            </dict>
-            <key>surface_bolder_009.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{512,768},{256,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -361,13 +218,13 @@
             <key>format</key>
             <integer>2</integer>
             <key>realTextureFileName</key>
-            <string>throne.pvr.ccz</string>
+            <string>decoration.pvr.ccz</string>
             <key>size</key>
-            <string>{1024,1024}</string>
+            <string>{1024,512}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:41d4d78ad85be89def702bd28553147f:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:8bd2e3b10831879d8a146b4c4840fc79:1/1$</string>
             <key>textureFileName</key>
-            <string>throne.pvr.ccz</string>
+            <string>decoration.pvr.ccz</string>
         </dict>
     </dict>
 </plist>

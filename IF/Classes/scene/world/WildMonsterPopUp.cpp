@@ -54,9 +54,11 @@ bool WildMonsterPopUp::init(){
         
         m_iconNode->removeAllChildren();
         int picAddX = 0;
-        std::string icon = CCCommonUtils::getPropById(m_info.fieldMonsterInfo.monsterId, "monster") + "_bust.png";
+//        std::string icon = CCCommonUtils::getPropById(m_info.fieldMonsterInfo.monsterId, "monster") + "_bust.png";
+        std::string icon = (int)m_info.cityTilePoint.x % 2 ? "nb_octopus_01.png" : "nb_octopus_02.png";
         auto sprite  = CCLoadSprite::createSprite(icon.c_str(),true,CCLoadSpriteType_MONSTERLAYERBUST);
         m_iconNode->addChild(sprite);
+        
         sprite->setPositionX(picAddX);
         std::string showTip = _lang("103050");
 //        this->m_descriptionText->setString(_lang("103749"));
