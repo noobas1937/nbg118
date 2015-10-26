@@ -1639,8 +1639,6 @@
 										<string>3 more</string>
 									</dict>
 								</array>
-								<key>selected</key>
-								<true/>
 							</dict>
 						</array>
 						<key>customClass</key>
@@ -2838,8 +2836,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>0.0</real>
-									<real>1.7280001640319824</real>
+									<real>-50</real>
+									<real>0.72800016403198242</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -2850,7 +2848,7 @@
 								<string>Point</string>
 								<key>value</key>
 								<array>
-									<real>0.5</real>
+									<real>0.0</real>
 									<real>0.5</real>
 								</array>
 							</dict>
@@ -2861,9 +2859,9 @@
 								<string>ScaleLock</string>
 								<key>value</key>
 								<array>
-									<real>0.92000001668930054</real>
-									<real>0.92000001668930054</real>
-									<false/>
+									<real>1</real>
+									<real>1</real>
+									<true/>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -2898,6 +2896,8 @@
 								</array>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 				</array>
 				<key>customClass</key>
