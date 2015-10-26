@@ -69,7 +69,7 @@ public:
     int currentManual;
     int exp;
     std::string titanId;//对应士兵ID
-    int status;//泰坦状态 0在家
+    int status;//泰坦状态 0在家 1出征
     long feedcd;
     int nextExp;//升级所需经验值
     int feedMaxNum;//每天最多喂食几次

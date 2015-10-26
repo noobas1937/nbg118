@@ -30,8 +30,9 @@ public:
     
     
     void resetDisplay(int tid);
-private:
     CCSafeObject<Titan> m_Titan;
+private:
+    
     virtual void onEnter();
     virtual void onExit();
     virtual bool onTouchBegan(CCTouch *pTouch, CCEvent *pEvent);

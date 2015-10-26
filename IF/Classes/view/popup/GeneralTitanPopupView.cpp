@@ -307,11 +307,11 @@ void GeneralTitanPopupView::handleTitanUpgrade(CCObject* obj)
         
         
         TitanInView* view = dynamic_cast<TitanInView*>(  m_titanPosInView->getChildByTag(10086));
-        
+        view->m_Titan->changeTitanState(Titan::eActState::Idle);//fusheng 蛋破碎
         if (view) {
-            view->resetDisplay(GlobalData::shared()->titanInfo.tid);
+            
             CCLOG("GeneralTitanPopupView titan sheng ji ");
-            view->setVisible(false);
+//            view->setVisible(false);
         }
         
         auto node =DragonUpgradeAniNode::create(GlobalData::shared()->titanInfo.tid);
@@ -331,9 +331,10 @@ void GeneralTitanPopupView::handleTianUpgradeAnimationComplete(CCObject* obj)
         TitanInView* view = dynamic_cast<TitanInView*>(  m_titanPosInView->getChildByTag(10086));
         
         if (view) {
-//            view->resetDisplay(GlobalData::shared()->titanInfo.tid);
+
+            view->resetDisplay(GlobalData::shared()->titanInfo.tid);//fusheng 换成龙
             CCLOG("GeneralTitanPopupView titan sheng ji animation complete");
-            view->setVisible(true);
+//            view->setVisible(true);
         }
         
         
@@ -770,6 +771,9 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
 
         
         m_titanFeedTxt->setString(_lang("500002"));//fusheng 需要文本
+        
+        if(GlobalData::shared()->titanInfo.level == 1)
+            m_titanFeedTxt->setString(_lang("500011"));//fusheng 孵化
     }
 
     if(m_titanInfo.exp>=m_titanInfo.nextExp)
@@ -786,6 +790,9 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         m_titanFeedStatus_2->setVisible(false);
         
         m_titanFeedTxt->setString(_lang("500002"));//fusheng 需要文本
+        if(GlobalData::shared()->titanInfo.level == 1)
+            m_titanFeedTxt->setString(_lang("500011"));//fusheng 孵化
+
     }
 
     this->m_titanFeedBtn->setEnabled(isCanFeed);
@@ -1792,7 +1799,7 @@ void DragonUpgradeAniNode::onEnter()
     
     
     
-    this->runAction(Sequence::create(DelayTime::create(1),CallFunc::create(CC_CALLBACK_0(DragonUpgradeAniNode::animationCallBack,this)),nullptr));
+    this->runAction(Sequence::create(DelayTime::create(2),CallFunc::create(CC_CALLBACK_0(DragonUpgradeAniNode::animationCallBack,this)),nullptr));
 };
 
 void DragonUpgradeAniNode::onExit()
