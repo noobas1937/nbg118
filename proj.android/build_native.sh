@@ -103,6 +103,18 @@ rm -rf "$APP_COCOS_RES_ROOT"/*.bak
 sed -i.bak 's/World_4.pvr.ccz/_alpha_World_4.pkm/g' "$APP_COCOS_RES_ROOT"/WorldMap.tmx
 rm -rf "$APP_COCOS_RES_ROOT"/*.bak
 
+sed -i.bak 's/nb_ocean.pvr.ccz/_alpha_nb_ocean.pkm/g' "$APP_COCOS_RES_ROOT"/nb_world_link_area.tmx
+rm -rf "$APP_COCOS_RES_ROOT"/*.bak
+sed -i.bak 's/decoration.pvr.ccz/_alpha_decoration.pkm/g' "$APP_COCOS_RES_ROOT"/nb_world_link_area.tmx
+rm -rf "$APP_COCOS_RES_ROOT"/*.bak
+
+sed -i.bak 's/nb_ocean.pvr.ccz/_alpha_nb_ocean.pkm/g' "$APP_COCOS_RES_ROOT"/nb_world.tmx
+rm -rf "$APP_COCOS_RES_ROOT"/*.bak
+sed -i.bak 's/decoration.pvr.ccz/_alpha_decoration.pkm/g' "$APP_COCOS_RES_ROOT"/nb_world.tmx
+rm -rf "$APP_COCOS_RES_ROOT"/*.bak
+sed -i.bak 's/throne.pvr.ccz/_alpha_throne.pkm/g' "$APP_COCOS_RES_ROOT"/nb_world.tmx
+rm -rf "$APP_COCOS_RES_ROOT"/*.bak
+
 # copy icons (if they exist)
 file="$APP_COCOS_RES_ROOT"/Icon-72.png
 if [ -f "$file" ]; then

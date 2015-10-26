@@ -106,7 +106,7 @@ void TitanController::parse(CCDictionary *dict)
     
     if (status&TITANUPGRADE)
     {
-        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_UPGRADE_COMLETE,dict );
+        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_UPGRADE_COMPLETE,dict );
     }
     
 }

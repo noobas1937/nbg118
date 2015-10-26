@@ -831,7 +831,7 @@ void GeneralTitanPopupView::onEnter(){
    
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GeneralTitanPopupView::resetAttribute), MSG_TITAN_INFORMATION_RESET, NULL);
     
-    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GeneralTitanPopupView::handleTitanUpgrade), MSG_TITAN_UPGRADE_COMLETE, NULL);
+    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GeneralTitanPopupView::handleTitanUpgrade), MSG_TITAN_UPGRADE_COMPLETE, NULL);
     
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GeneralTitanPopupView::handleTianUpgradeAnimationComplete), MSG_TITAN_UPGRADE_ANIMATION_COMLETE, NULL);
     
@@ -851,7 +851,7 @@ void GeneralTitanPopupView::onExit(){
 
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_TITAN_INFORMATION_RESET);
     
-    CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_TITAN_UPGRADE_COMLETE);
+    CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_TITAN_UPGRADE_COMPLETE);
 
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_TITAN_UPGRADE_ANIMATION_COMLETE);
     

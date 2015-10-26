@@ -989,11 +989,11 @@
 		B1FD956A18F6A0210083574F /* RegisterView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B1FD956818F6A0210083574F /* RegisterView.cpp */; };
 		B1FD956D18F790F20083574F /* EmailConfirmPush.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B1FD956B18F790F20083574F /* EmailConfirmPush.cpp */; };
 		B1FD957018F7BBFF0083574F /* PushSettingCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B1FD956E18F7BBFF0083574F /* PushSettingCommand.cpp */; };
-		B80A40AE1BD88A7A00B4D9CB /* NBWorldMapMainCity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B80A40AC1BD88A7A00B4D9CB /* NBWorldMapMainCity.cpp */; settings = {ASSET_TAGS = (); }; };
+		B80A40AE1BD88A7A00B4D9CB /* NBWorldMapMainCity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B80A40AC1BD88A7A00B4D9CB /* NBWorldMapMainCity.cpp */; };
 		B80D4B261BAFA1CC00422225 /* nb_world in Resources */ = {isa = PBXBuildFile; fileRef = B80D4B251BAFA1CC00422225 /* nb_world */; };
 		B80D4B2A1BAFA1D800422225 /* nb_world.tmx in Resources */ = {isa = PBXBuildFile; fileRef = B80D4B281BAFA1D800422225 /* nb_world.tmx */; };
 		B80D4B2F1BAFCA6B00422225 /* nb_world_link_area.tmx in Resources */ = {isa = PBXBuildFile; fileRef = B80D4B2E1BAFCA6B00422225 /* nb_world_link_area.tmx */; };
-		B838C5B11BDA36EE00EC74B3 /* NBWaterSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B838C5AF1BDA36EE00EC74B3 /* NBWaterSprite.cpp */; settings = {ASSET_TAGS = (); }; };
+		B838C5B11BDA36EE00EC74B3 /* NBWaterSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B838C5AF1BDA36EE00EC74B3 /* NBWaterSprite.cpp */; };
 		B8581EA01BBA34E70027F733 /* TypeDefinition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8581E9F1BBA34E70027F733 /* TypeDefinition.cpp */; };
 		B864A3BD1BCB43EA001BD875 /* DynamicTiledMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B864A3BB1BCB43EA001BD875 /* DynamicTiledMap.cpp */; };
 		B86B5D1B1BCCA7340010EC71 /* NBWorldMapDecoration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B86B5D191BCCA7340010EC71 /* NBWorldMapDecoration.cpp */; };
@@ -8523,7 +8523,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.guojiang.nbg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2baf0b76-82a7-461a-ac97-125285dd3717";
+				PROVISIONING_PROFILE = "94e78410-7d6f-4a35-8191-377f40e2e9a9";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "\"IF/libs/Chipmunk/include/chipmunk\"";
 				VALIDATE_PRODUCT = NO;
@@ -8600,7 +8600,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2baf0b76-82a7-461a-ac97-125285dd3717";
+				PROVISIONING_PROFILE = "94e78410-7d6f-4a35-8191-377f40e2e9a9";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "\"IF/libs/Chipmunk/include/chipmunk\"";
 				VALIDATE_PRODUCT = NO;

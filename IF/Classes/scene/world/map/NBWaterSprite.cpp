@@ -169,11 +169,27 @@ void NBWaterSprite::setUniforms()
     getShaderProgram()->setUniformLocationWith1f(m_uUniforms[kCCWaterUniformWAVE_MOVEMENT], m_fMovement);
     getShaderProgram()->setUniformLocationWith1f(m_uUniforms[kCCWaterUniformWAVE_HEIGHT], m_fWaveHeight);
     
-    GLfloat shore_dark[3] = {0.0664062, 0.6875, 0.785156};//{0.0431373, 0.67451, 0.533333}
-    GLfloat sea_dark[3] = {0.113725, 0.211765, 0.356863};//{0.113725, 0.211765, 0.356863}
+//    SHORE_DARK ("SHORE_DARK", Color) = (0.0664062, 0.6875, 0.785156, 1)
+//    SHORE_LIGHT ("SHORE_LIGHT", Color) = (0.562500, 0.964843, 0.957031, 1)
+//    SEA_DARK ("SEA_DARK", Color) = (0.113725, 0.211765, 0.356863, 1)
+//    SEA_LIGHT ("SEA_LIGHT", Color) = (0.164706, 0.454902, 0.721569, 1)
     
-    GLfloat shore_light[3] = {0.562500, 0.964843, 0.957031};//{0.752941, 0.956863, 0.890196}
-    GLfloat sea_light[3] = {0.164706, 0.454902, 0.721569};//{0.164706, 0.454902, 0.721569}
+//    ①8,105,159→0.0313,0.4117,0.6235
+//    ②107,174,192→0.4196,0.6823,0.7529
+//    ③20,30,71→0.0784,0.1176,0.2784
+//    ④28,64,145→0.1098,0.251,0.5686
+    
+    GLfloat shore_dark[3] = {0.0313,0.4117,0.6235};
+    GLfloat sea_dark[3] = {0.0784,0.1176,0.2784};
+    
+    GLfloat shore_light[3] = {0.4196,0.6823,0.7529};
+    GLfloat sea_light[3] = {0.1098,0.251,0.5686};
+    
+//    GLfloat shore_dark[3] = {0.0664062, 0.6875, 0.785156};//{0.0431373, 0.67451, 0.533333}
+//    GLfloat sea_dark[3] = {0.113725, 0.211765, 0.356863};//{0.113725, 0.211765, 0.356863}
+//    
+//    GLfloat shore_light[3] = {0.562500, 0.964843, 0.957031};//{0.752941, 0.956863, 0.890196}
+//    GLfloat sea_light[3] = {0.164706, 0.454902, 0.721569};//{0.164706, 0.454902, 0.721569}
     
     getShaderProgram()->setUniformLocationWith3fv(m_uUniforms[kCCWaterUniformSHORE_DARK], shore_dark, 1);
     getShaderProgram()->setUniformLocationWith3fv(m_uUniforms[kCCWaterUniformSHORE_LIGHT], shore_light, 1);
@@ -196,7 +212,7 @@ void NBWaterSprite::initVertexData()
     int arrIndex = 0;
     
     Image * pMyimg = new Image();
-    pMyimg->useInitWithImageFileThreadSafe("shaders/water_normals.png");
+    pMyimg->useInitWithImageFileThreadSafe(WATER_NORMALS);
     unsigned char *data_=pMyimg->getData();
     for(int i = 0; i<= WATER_GRID_COLUMN; ++i)
     {

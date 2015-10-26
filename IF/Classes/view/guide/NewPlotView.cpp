@@ -302,7 +302,8 @@ void NewPlotView::playMove()
         m_txt2Node->runAction(CCSequence::create(delayT2,moveBy3,NULL));
     }
 
-    if (m_curGuideId=="3070200" || m_curGuideId=="3070300" || m_curGuideId=="3070400") {//自动进行下一步
+//    if (m_curGuideId=="3070200" || m_curGuideId=="3070300" || m_curGuideId=="3070400") {//自动进行下一步
+    if(false){//fusheng 不自动播放
         if (m_curGuideId=="3070400") {
             this->scheduleOnce(CC_CALLBACK_1(NewPlotView::canClick,this),3,m_curGuideId);
             //this->scheduleOnce(schedule_selector(NewPlotView::canClick), 3);
@@ -327,7 +328,8 @@ void NewPlotView::playMove()
 void NewPlotView::canClick(float t)
 {
     m_canClick = true;
-    if (m_curGuideId=="3070200" || m_curGuideId=="3070300" || m_curGuideId=="3070400") {//自动进行下一步
+//    if (m_curGuideId=="3070200" || m_curGuideId=="3070300" || m_curGuideId=="3070400") {//自动进行下一步
+    if(false){//fusheng 不自动播放
         onCloseClick(NULL,Control::EventType::TOUCH_DOWN);
     }else {
         if (true || CCCommonUtils::isTestPlatformAndServer("guide_skip_1")) {
@@ -367,9 +369,9 @@ void NewPlotView::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent){
         return;
     }
     
-    if (m_curGuideId=="3070200" || m_curGuideId=="3070300" || m_curGuideId=="3070400") {//自动进行下一步
-        return;
-    }
+//    if (m_curGuideId=="3070200" || m_curGuideId=="3070300" || m_curGuideId=="3070400") {//自动进行下一步
+//        return;
+//    }
     if (true || CCCommonUtils::isTestPlatformAndServer("guide_skip_1")) {
         if (m_curGuideId == "3070500") {
             return;

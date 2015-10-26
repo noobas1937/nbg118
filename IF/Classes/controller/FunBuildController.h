@@ -110,7 +110,7 @@
 
 #define MSG_MARK_LINE_AL "msg_mark_line_al"
 
-const char * const MSG_TITAN_UPGRADE_COMPLETE = "MSG_TITAN_UPGRADE_COMPLETE";//泰坦状态改变
+//泰坦状态改变
 
 
 class FunBuildController : public CCObject{
