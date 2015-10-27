@@ -4822,8 +4822,17 @@ void WorldMapView::addUnderNode(unsigned int index) {
             island->setAnchorPoint(Vec2(0, 0));
             under->addChild(island);
 
-            auto house = CCLoadSprite::createSprite(getSpriteName(info).c_str());
+            string house_img = getSpriteName(info);
+            auto house = CCLoadSprite::createSprite(house_img.c_str());
             house->setAnchorPoint(Vec2(0, 0));
+            if (house_img == "0020.png")
+            {
+                house->setPositionY(11);
+            }
+            else if (house_img == "0019.png")
+            {
+                house->setPositionY(6);
+            }
             under->addChild(house);
             under->setContentSize(house->getContentSize());
             
