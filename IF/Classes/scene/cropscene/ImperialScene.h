@@ -226,6 +226,7 @@ private:
     void setSunAngle(float _time);//设定阳光角度
     void checkDayTime(bool isInit=false);//判断是否是白天
     void showRain();//下雨
+    void showWaterfall();// 瀑布
     void showFirework(CCObject* obj);//烟花
     void startShowFirework(float t);//烟花序列特效
     void titanChangeStatus(CCObject* obj);//泰坦状态改变
@@ -399,6 +400,7 @@ private:
     CCSafeObject<CCNode> m_wallZOrder_3;
     CCSafeObject<CCNode> m_wallZOrder_4;
     
+    CCSafeObject<CCNode> m_waterfallNode;
     std::map<int, CCSpriteBatchNode*> m_wallBatchs;
     
     void addGuideParticleToBatch(cocos2d::CCParticleSystemQuad *particle);

@@ -239,6 +239,8 @@ bool GeneralTitanPopupView::init()
     m_titanExtTxtPre->setString("Exp");//fusheng 需要文本
     
     m_toolSpeedUpTxt->setString(_lang("500009"));
+    
+    m_dragonTip->setString(_lang("500017"));
   
     return true;
 }
@@ -891,6 +893,7 @@ bool GeneralTitanPopupView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarge
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_feedCDTxt", CCLabelIF*, this->m_feedCDTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_upgradeCDTxt", CCLabelIF*, this->m_upgradeCDTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_toolSpeedUpTxt", CCLabelIF*, this->m_toolSpeedUpTxt);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_dragonTip", CCLabelIF*, this->m_dragonTip);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanFeedStatus_0", CCLabelIF*, this->m_titanFeedStatus_0);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanFeedStatus_1", CCLabelIF*, this->m_titanFeedStatus_1);

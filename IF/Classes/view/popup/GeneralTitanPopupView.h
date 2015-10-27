@@ -169,6 +169,7 @@ private:
     CCSafeObject<CCControlButton> m_CleanFeedCDBtn;
     CCSafeObject<CCLabelIF> m_nameLabel;
     CCSafeObject<CCLabelIF> m_toolSpeedUpTxt;
+    CCSafeObject<CCLabelIF> m_dragonTip;
     
     
     CCSafeObject<CCScale9Sprite> m_buildBG;

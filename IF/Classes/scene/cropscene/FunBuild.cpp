@@ -215,6 +215,9 @@ bool FunBuild::initFunBuild(int itemId, CCLabelBatchNode* nameLayer)
 //        }
         CCBLoadFile(ccbName.c_str(),m_mainNode,this);
         
+        if (m_info->type == FUN_BUILD_MAIN) {
+            this->getAnimationManager()->runAnimationsForSequenceNamed("loop");
+        }
         auto pt = m_touchNode->getPosition();
         mainWidth = (m_touchNode->getContentSize().width*m_touchNode->getScaleX()/2+pt.x)*2;
         mainHeight = (m_touchNode->getContentSize().height*m_touchNode->getScaleY()/2+pt.y)*2;

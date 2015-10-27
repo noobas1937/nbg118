@@ -53,9 +53,8 @@ bool NewPlotView::onAssignCCBMemberVariable(cocos2d::CCObject *pTarget, const ch
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nextNode", CCNode*, m_nextNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_next2Node", CCNode*, m_next2Node);
     
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_leftArr", CCSprite*, m_leftArr);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_rightArr", CCSprite*, m_rightArr);
-
+ 
+   
     return false;
 }
 
@@ -92,18 +91,18 @@ void NewPlotView::refreshWord(){
             m_mainNode->setPositionY(m_mainNode->getPositionY()+100);
         }
         else if (seat == "2") {
+            
         }
         else if (seat == "3") {//下边显示
             m_mainNode->setPositionY(m_mainNode->getPositionY()-100);
         }
         
-        m_leftArr->setVisible(true);
-        m_rightArr->setVisible(false);
+   
         if (at == "2") {//右边显示
             m_iconNode->setPosition(ccp(302, -156.4));
             m_txtNode->setPositionX(-100);
-            m_leftArr->setVisible(false);
-            m_rightArr->setVisible(true);
+            
+            
             m_moveType = 2;
             
             if (CCCommonUtils::isIosAndroidPad())
@@ -127,6 +126,7 @@ void NewPlotView::refreshWord(){
             {
                 m_iconNode->setPositionX(m_iconNode->getPositionX()-600);
                 m_txtNode->setPositionX(m_txtNode->getPositionX()+700);
+                
             }
         }
         
@@ -157,6 +157,10 @@ void NewPlotView::refreshWord(){
             figure += ".png";
             auto spr = CCLoadSprite::createSprite(figure.c_str());
             spr->setAnchorPoint(ccp(0, 0));
+            if(seat == "2")
+            {
+                spr->setPositionY(spr->getPositionY()-44);
+            }
             m_iconNode->addChild(spr);
         }
         
@@ -180,8 +184,8 @@ void NewPlotView::refreshWord(){
         m_icon2Node->setPositionX(m_icon2Node->getPositionX()-600);
         m_txt2Node->setPositionX(m_txt2Node->getPositionX()+700);
         
-        m_leftArr->setVisible(true);
-        m_rightArr->setVisible(false);
+       
+       
         m_mainNode->setPositionY(m_mainNode->getPositionY()+170);
         vector<string> vecContent;
         CCCommonUtils::splitString(content, "|", vecContent);

@@ -592,6 +592,14 @@
 									</dict>
 									<dict>
 										<key>name</key>
+										<string>tag</string>
+										<key>type</key>
+										<string>Integer</string>
+										<key>value</key>
+										<integer>9991</integer>
+									</dict>
+									<dict>
+										<key>name</key>
 										<string>ignoreAnchorPointForPosition</string>
 										<key>type</key>
 										<string>Check</string>
@@ -674,6 +682,14 @@
 											<false/>
 											<integer>0</integer>
 										</array>
+									</dict>
+									<dict>
+										<key>name</key>
+										<string>tag</string>
+										<key>type</key>
+										<string>Integer</string>
+										<key>value</key>
+										<integer>9992</integer>
 									</dict>
 									<dict>
 										<key>name</key>
