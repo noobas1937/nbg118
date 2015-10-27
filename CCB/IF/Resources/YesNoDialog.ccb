@@ -2695,8 +2695,8 @@
 										<string>Size</string>
 										<key>value</key>
 										<array>
-											<real>244</real>
-											<real>74</real>
+											<real>317</real>
+											<real>90</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -2716,7 +2716,7 @@
 										<key>value</key>
 										<array>
 											<string>Common/Common_1.plist</string>
-											<string>btn_green3.png</string>
+											<string>nb_but_2.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -2739,7 +2739,7 @@
 										<key>value</key>
 										<array>
 											<string>Common/Common_1.plist</string>
-											<string>btn_green3.png</string>
+											<string>nb_but_2.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -2762,7 +2762,7 @@
 										<key>value</key>
 										<array>
 											<string>Common/Common_1.plist</string>
-											<string>btn_04grey.png</string>
+											<string>nb_but_2.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -3107,8 +3107,6 @@
 										</array>
 									</dict>
 								</array>
-								<key>selected</key>
-								<true/>
 							</dict>
 							<dict>
 								<key>animatedProperties</key>
@@ -3273,8 +3271,8 @@
 										<string>Size</string>
 										<key>value</key>
 										<array>
-											<real>244</real>
-											<real>74</real>
+											<real>317</real>
+											<real>90</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -3294,7 +3292,7 @@
 										<key>value</key>
 										<array>
 											<string>Common/Common_1.plist</string>
-											<string>btn_green3.png</string>
+											<string>nb_but_2.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -3317,7 +3315,7 @@
 										<key>value</key>
 										<array>
 											<string>Common/Common_1.plist</string>
-											<string>btn_green3.png</string>
+											<string>nb_but_2.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -3340,7 +3338,7 @@
 										<key>value</key>
 										<array>
 											<string>Common/Common_1.plist</string>
-											<string>btn_green3.png</string>
+											<string>nb_but_2.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -3560,16 +3558,6 @@
 							</dict>
 							<dict>
 								<key>name</key>
-								<string>accelerometerEnabled</string>
-								<key>platform</key>
-								<string>iOS</string>
-								<key>type</key>
-								<string>Check</string>
-								<key>value</key>
-								<false/>
-							</dict>
-							<dict>
-								<key>name</key>
 								<string>mouseEnabled</string>
 								<key>platform</key>
 								<string>Mac</string>
@@ -3577,16 +3565,6 @@
 								<string>Check</string>
 								<key>value</key>
 								<true/>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>keyboardEnabled</string>
-								<key>platform</key>
-								<string>Mac</string>
-								<key>type</key>
-								<string>Check</string>
-								<key>value</key>
-								<false/>
 							</dict>
 						</array>
 					</dict>
@@ -5095,16 +5073,6 @@
 			</dict>
 			<dict>
 				<key>name</key>
-				<string>accelerometerEnabled</string>
-				<key>platform</key>
-				<string>iOS</string>
-				<key>type</key>
-				<string>Check</string>
-				<key>value</key>
-				<false/>
-			</dict>
-			<dict>
-				<key>name</key>
 				<string>mouseEnabled</string>
 				<key>platform</key>
 				<string>Mac</string>
@@ -5112,16 +5080,6 @@
 				<string>Check</string>
 				<key>value</key>
 				<true/>
-			</dict>
-			<dict>
-				<key>name</key>
-				<string>keyboardEnabled</string>
-				<key>platform</key>
-				<string>Mac</string>
-				<key>type</key>
-				<string>Check</string>
-				<key>value</key>
-				<false/>
 			</dict>
 		</array>
 	</dict>

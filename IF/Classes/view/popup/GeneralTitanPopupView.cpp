@@ -334,7 +334,15 @@ void GeneralTitanPopupView::handleTianUpgradeAnimationComplete(CCObject* obj)
         
         if (view) {
 
-            view->resetDisplay(GlobalData::shared()->titanInfo.tid);//fusheng 换成龙
+//            view->resetDisplay(GlobalData::shared()->titanInfo.tid);//fusheng 换成龙
+            view->removeFromParent();
+           
+            auto tieanInView = TitanInView::create();
+            
+            tieanInView->setTag(10086);
+            
+            m_titanPosInView->addChild(tieanInView );
+            
             CCLOG("GeneralTitanPopupView titan sheng ji animation complete");
 //            view->setVisible(true);
         }
@@ -759,7 +767,7 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         m_titanFeedStatus_1->setString(CCString::createWithFormat("%3d",m_titanInfo.feedNum)->getCString());
         m_titanFeedStatus_2->setString(CCString::createWithFormat("/%d",m_titanInfo.feedMaxNum)->getCString());
         
-        m_titanFeedStatus_0->setPosition(121,-139);
+        m_titanFeedStatus_0->setPosition(138,-139);
         m_titanFeedStatus_0->setColor(ccColor3B(195,206,254));
         
         m_titanFeedStatus_1->setVisible(true);
@@ -786,7 +794,7 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
 
         m_titanFeedStatus_0->setColor(ccColor3B(155,200,32));
         
-        m_titanFeedStatus_0->setPosition(91,-159);
+        m_titanFeedStatus_0->setPosition(138,-159);
         
         m_titanFeedStatus_1->setVisible(false);
         m_titanFeedStatus_2->setVisible(false);
@@ -1799,14 +1807,21 @@ void DragonUpgradeAniNode::onEnter()
 {
     Node::onEnter();
     
+    auto bg = CCBLoadFile("Titan_eggfx",this,this);
+    
+    CCLoadSprite::doResourceByCommonIndex(513, true);
+    getAnimationManager()->runAnimations("FadeIn");
+    
+    getAnimationManager()->setAnimationCompletedCallback(this, CC_CALLFUNC_SELECTOR(DragonUpgradeAniNode::animationCallBack));
+
     
     
-    
-    this->runAction(Sequence::create(DelayTime::create(2),CallFunc::create(CC_CALLBACK_0(DragonUpgradeAniNode::animationCallBack,this)),nullptr));
+//    this->runAction(Sequence::create(DelayTime::create(2),CallFunc::create(CC_CALLBACK_0(DragonUpgradeAniNode::animationCallBack,this)),nullptr));
 };
 
 void DragonUpgradeAniNode::onExit()
 {
+    CCLoadSprite::doResourceByCommonIndex(513, false);
     Node::onExit();
 };
 

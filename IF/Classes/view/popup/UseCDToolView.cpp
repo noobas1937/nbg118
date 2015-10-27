@@ -81,6 +81,10 @@ bool UseCDToolView::init(string itemId, int qid, bool timeFlag, double startTime
     
     updateInfo();
     
+    float oldBgHeight = m_buildBG->getContentSize().height;//fusheng
+    changeBGMaxHeight(m_buildBG);
+    m_buildBG->setPositionY(m_buildBG->getPositionY()+m_buildBG->getContentSize().height-oldBgHeight);
+    
     return true;
 }
 

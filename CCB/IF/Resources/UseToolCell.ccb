@@ -1086,8 +1086,8 @@
 										<string>SpriteFrame</string>
 										<key>value</key>
 										<array>
-											<string>Common/Common_1.plist</string>
-											<string>btn_green3.png</string>
+											<string>Common/Common_3.plist</string>
+											<string>nb_btn_lt_fs.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -1109,8 +1109,8 @@
 										<string>SpriteFrame</string>
 										<key>value</key>
 										<array>
-											<string>Common/Common_1.plist</string>
-											<string>btn_green3.png</string>
+											<string>Common/Common_3.plist</string>
+											<string>nb_btn_lt_fs.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -1132,8 +1132,8 @@
 										<string>SpriteFrame</string>
 										<key>value</key>
 										<array>
-											<string>Common/Common_1.plist</string>
-											<string>btn_green3.png</string>
+											<string>Common/Common_3.plist</string>
+											<string>nb_btn_lt_fs.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -1476,8 +1476,6 @@
 										<string>999</string>
 									</dict>
 								</array>
-								<key>selected</key>
-								<true/>
 							</dict>
 						</array>
 						<key>customClass</key>
@@ -1776,16 +1774,6 @@
 			</dict>
 			<dict>
 				<key>name</key>
-				<string>accelerometerEnabled</string>
-				<key>platform</key>
-				<string>iOS</string>
-				<key>type</key>
-				<string>Check</string>
-				<key>value</key>
-				<false/>
-			</dict>
-			<dict>
-				<key>name</key>
 				<string>mouseEnabled</string>
 				<key>platform</key>
 				<string>Mac</string>
@@ -1793,16 +1781,6 @@
 				<string>Check</string>
 				<key>value</key>
 				<true/>
-			</dict>
-			<dict>
-				<key>name</key>
-				<string>keyboardEnabled</string>
-				<key>platform</key>
-				<string>Mac</string>
-				<key>type</key>
-				<string>Check</string>
-				<key>value</key>
-				<false/>
 			</dict>
 		</array>
 	</dict>
