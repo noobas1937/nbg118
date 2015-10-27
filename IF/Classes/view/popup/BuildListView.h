@@ -75,7 +75,6 @@ private:
     CCSafeObject<CCScale9Sprite> m_titleLvBG;
     CCSafeObject<CCLabelIF> m_nameLabel;
     CCSafeObject<CCNode> m_moveNode;
-    CCSafeObject<CCSprite> m_handBg;
     
     CCSafeObject<CCNode> m_npcNode;
     CCSafeObject<CCLabelIF> m_nameText;
