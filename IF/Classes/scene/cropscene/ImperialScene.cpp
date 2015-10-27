@@ -840,7 +840,7 @@ void ImperialScene::onEnter()
 void ImperialScene::showWaterfall()
 {
 //    auto waterfall = ParticleController::createParticle(CCString::createWithFormat("Drop_%d",i)->getCString());
-//    CCBLoadFile("waterfall",this,this);
+    CCBLoadFile("waterfall",m_waterfallNode,this);
 //    m_waterfallNode->addChild(waterfall);
 }
 
