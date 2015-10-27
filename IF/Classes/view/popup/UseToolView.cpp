@@ -113,6 +113,11 @@ bool UseToolView::init(string type, CCDictionary* dict,string title)
 //    m_tabView->setTouchPriority(Touch_Popup);
     m_infoList->addChild(m_tabView);
     
+    
+    oldBgHeight = m_buildBG->getContentSize().height;//fusheng
+    changeBGMaxHeight(m_buildBG);
+    m_buildBG->setPositionY(m_buildBG->getPositionY()+m_buildBG->getContentSize().height-oldBgHeight);
+    
     return true;
 }
 void UseToolView::onTimer(float dt){

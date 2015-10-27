@@ -104,7 +104,7 @@ bool BattleView::init(unsigned int startIndex,unsigned int targetIndex,unsigned 
     m_tabView->setMultiColTableViewDelegate(this);
 //    m_tabView->setTouchPriority(Touch_Popup);
     m_infoList->addChild(m_tabView);
-    
+    changeBGMaxHeight(m_bg);//fusheng
 //    m_box = CheckBox::create();
 //    this->m_checkBoxContainer->addChild(m_box);
 //    auto &generalInfo = GlobalData::shared()->generals.begin()->second;
