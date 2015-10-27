@@ -808,7 +808,8 @@ void ImperialScene::onEnter()
             this->addChild(m_dropNode);
             
             int rIdx = CCMathUtils::getRandomInt(0, 9);
-            if (rIdx < 5) {
+            if (rIdx < 0) {
+                // tao.yu 去掉雨
                 showRain();
             }
         }
@@ -840,7 +841,7 @@ void ImperialScene::onEnter()
 void ImperialScene::showWaterfall()
 {
 //    auto waterfall = ParticleController::createParticle(CCString::createWithFormat("Drop_%d",i)->getCString());
-//    CCBLoadFile("waterfall",this,this);
+    CCBLoadFile("waterfall",m_waterfallNode,this);
 //    m_waterfallNode->addChild(waterfall);
 }
 
@@ -2465,7 +2466,8 @@ void ImperialScene::onEnterFrame(float dt)
         //每隔80秒执行一次
         if (m_sysTime%160==0) {
             int rIdx = CCMathUtils::getRandomInt(0, 9);
-            if (rIdx < 2) {
+            if (rIdx < 0) {
+                // tao.yu 去掉雨
                 showRain();
             }else {
                 if (m_isDay && !m_isRain) {
