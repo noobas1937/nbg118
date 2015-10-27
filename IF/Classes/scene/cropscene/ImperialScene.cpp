@@ -454,6 +454,7 @@ void ImperialScene::buildingCallBack(CCObject* params)
     this->titanChangeStatus(NULL);
     onEnterFrame(0);
     initBigTile();
+    showWaterfall();
     onOpenNewBuild(NULL);
     //发生 22资源释放不掉的 区域 end end end end end end
     
@@ -828,6 +829,13 @@ void ImperialScene::onEnter()
 //    if (m_Titan) {//fusheng 龙的形象
 //        m_Titan->resetDisplay(GlobalData::shared()->titanInfo.tid);
 //    }
+}
+
+void ImperialScene::showWaterfall()
+{
+//    auto waterfall = ParticleController::createParticle(CCString::createWithFormat("Drop_%d",i)->getCString());
+    CCBLoadFile("waterfall",this,this);
+//    m_waterfallNode->addChild(waterfall);
 }
 
 void ImperialScene::showRain()
@@ -3385,6 +3393,10 @@ bool ImperialScene::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_wallZOrder_2", CCNode*, this->m_wallZOrder_2);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_wallZOrder_3", CCNode*, this->m_wallZOrder_3);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_wallZOrder_4", CCNode*, this->m_wallZOrder_4);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_wallZOrder_4", CCNode*, this->m_wallZOrder_4);
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_waterfallNode", CCNode*, this->m_waterfallNode);
+    
     
     
     return false;

@@ -176,6 +176,10 @@ void BuildListView::updateInfo(int pos)
     
     m_arcLayer->addChild(m_ArcGallery);
     
+    // 滚动条正中间有两个小箭头，在ccb中编辑的，需要置顶
+    m_arcLayer->getChildByTag(9991)->setZOrder(9991);
+    m_arcLayer->getChildByTag(9992)->setZOrder(9992);
+    
 //    m_ArcGallery->setTargetIndexItem(0);
     refreshGalleryCells();
     refeash(0);

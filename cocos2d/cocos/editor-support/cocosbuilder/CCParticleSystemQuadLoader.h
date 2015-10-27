@@ -70,6 +70,8 @@ protected:
      * @lua NA
      */
     virtual void onHandlePropTypeTexture(cocos2d::Node * pNode, cocos2d::Node * pParent, const char * pPropertyName, cocos2d::Texture2D * pTexture2D, CCBReader * ccbReader);
+    
+    virtual void onHandlePropTypeSpriteFrame(cocos2d::Node * pNode, cocos2d::Node * pParent, const char* pPropertyName, cocos2d::SpriteFrame * pSpriteFrame, CCBReader * ccbReader);
 };
 
 }

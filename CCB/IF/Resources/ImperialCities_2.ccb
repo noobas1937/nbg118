@@ -1809,8 +1809,6 @@
 						<false/>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>
@@ -2750,8 +2748,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>603.7991943359375</real>
-							<real>2132.151611328125</real>
+							<real>1296.547607421875</real>
+							<real>2153.053466796875</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -2933,8 +2931,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>1303.977783203125</real>
-							<real>2152.525390625</real>
+							<real>656.01910400390625</real>
+							<real>2101.763671875</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -4490,6 +4488,8 @@
 								<false/>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -7535,6 +7535,55 @@
 				<string>m_wallNode</string>
 				<key>memberVarAssignmentName</key>
 				<string>m_wallNode</string>
+				<key>memberVarAssignmentType</key>
+				<integer>2</integer>
+				<key>properties</key>
+				<array>
+					<dict>
+						<key>name</key>
+						<string>anchorPoint</string>
+						<key>type</key>
+						<string>Point</string>
+						<key>value</key>
+						<array>
+							<real>0.0</real>
+							<real>0.0</real>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>scale</string>
+						<key>type</key>
+						<string>ScaleLock</string>
+						<key>value</key>
+						<array>
+							<real>1</real>
+							<real>1</real>
+							<false/>
+							<integer>0</integer>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>ignoreAnchorPointForPosition</string>
+						<key>type</key>
+						<string>Check</string>
+						<key>value</key>
+						<false/>
+					</dict>
+				</array>
+			</dict>
+			<dict>
+				<key>baseClass</key>
+				<string>CCNode</string>
+				<key>children</key>
+				<array/>
+				<key>customClass</key>
+				<string></string>
+				<key>displayName</key>
+				<string>m_waterfallNode</string>
+				<key>memberVarAssignmentName</key>
+				<string>m_waterfallNode</string>
 				<key>memberVarAssignmentType</key>
 				<integer>2</integer>
 				<key>properties</key>

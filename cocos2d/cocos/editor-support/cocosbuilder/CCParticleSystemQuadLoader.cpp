@@ -137,4 +137,7 @@ void ParticleSystemQuadLoader::onHandlePropTypeTexture(Node * pNode, Node * pPar
     }
 }
 
+void ParticleSystemQuadLoader::onHandlePropTypeSpriteFrame(Node * pNode, Node * pParent, const char* pPropertyName, SpriteFrame * pSpriteFrame, CCBReader * ccbReader) {
+
+}
 }
