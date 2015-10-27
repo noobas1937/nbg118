@@ -2393,36 +2393,36 @@ void FunBuildController::initPosPath()
 //    sqerPoints.push_back(ccp(250 + offset_x, 200 + offset_y));
 //    sqerPoints.push_back(ccp(340 + offset_x, 155 + offset_y));
     
-    sqerPoints.push_back(Vec2(3099, 2709)); // troop0
-    sqerPoints.push_back(Vec2(3314, 2567)); // troop1
-    sqerPoints.push_back(Vec2(3562, 2403)); // troop2
-    sqerPoints.push_back(Vec2(3814, 2240)); // troop3
-    sqerPoints.push_back(Vec2(4092, 2046)); // troop4
-    sqerPoints.push_back(Vec2(4374, 1863)); // troop5
-    sqerPoints.push_back(Vec2(3459, 2813)); // troop6
-    sqerPoints.push_back(Vec2(3707, 2697)); // troop7
-    sqerPoints.push_back(Vec2(3953, 2567)); // troop8
-    sqerPoints.push_back(Vec2(4174, 2458)); // troop9
-    sqerPoints.push_back(Vec2(4422, 2342)); // troop10
-    sqerPoints.push_back(Vec2(4668, 2212)); // troop11
-    sqerPoints.push_back(Vec2(3858, 2858)); // troop13
-    sqerPoints.push_back(Vec2(4106, 2742)); // troop14
-    sqerPoints.push_back(Vec2(4352, 2612)); // troop15
-    sqerPoints.push_back(Vec2(4573, 2503)); // troop16
-    sqerPoints.push_back(Vec2(4821, 2387)); // troop17
-    sqerPoints.push_back(Vec2(5021, 2296)); // troop18
-    sqerPoints.push_back(Vec2(4923, 2113)); // troop12
-    sqerPoints.push_back(Vec2(5211, 2185)); // troop19
-    sqerPoints.push_back(Vec2(4734, 2678)); // troop20
-    sqerPoints.push_back(Vec2(4982, 2562)); // troop21
-    sqerPoints.push_back(Vec2(5228, 2432)); // troop22
-    sqerPoints.push_back(Vec2(5449, 2323)); // troop23
-    sqerPoints.push_back(Vec2(5697, 2207)); // troop24
-    sqerPoints.push_back(Vec2(5943, 2077)); // troop25
-    sqerPoints.push_back(Vec2(4646, 1908)); // troop26
-    sqerPoints.push_back(Vec2(4894, 1793)); // troop27
-    sqerPoints.push_back(Vec2(5140, 1663)); // troop28
-    sqerPoints.push_back(Vec2(5395, 1564)); // troop29
+    sqerPoints.push_back(Vec2(3171, 2657)); // troop0
+    sqerPoints.push_back(Vec2(3386, 2515)); // troop1
+    sqerPoints.push_back(Vec2(3330, 2755)); // troop2
+    sqerPoints.push_back(Vec2(3537, 2618)); // troop3
+    sqerPoints.push_back(Vec2(3470, 2846)); // troop4
+    sqerPoints.push_back(Vec2(3701, 2695)); // troop5
+    sqerPoints.push_back(Vec2(3624, 2917)); // troop6
+    sqerPoints.push_back(Vec2(3856, 2760)); // troop7
+    sqerPoints.push_back(Vec2(3985, 2852)); // troop8
+    sqerPoints.push_back(Vec2(3617, 2335)); // troop9
+    sqerPoints.push_back(Vec2(3832, 2193)); // troop10
+    sqerPoints.push_back(Vec2(3776, 2432)); // troop11
+    sqerPoints.push_back(Vec2(3983, 2296)); // troop12
+    sqerPoints.push_back(Vec2(3917, 2524)); // troop13
+    sqerPoints.push_back(Vec2(4130, 2382)); // troop14
+    sqerPoints.push_back(Vec2(4082, 2601)); // troop15
+    sqerPoints.push_back(Vec2(4293, 2465)); // troop16
+    sqerPoints.push_back(Vec2(4209, 2695)); // troop17
+    sqerPoints.push_back(Vec2(4421, 2555)); // troop18
+    sqerPoints.push_back(Vec2(4068, 2029)); // troop19
+    sqerPoints.push_back(Vec2(4283, 1888)); // troop20
+    sqerPoints.push_back(Vec2(4227, 2127)); // troop21
+    sqerPoints.push_back(Vec2(4434, 1990)); // troop22
+    sqerPoints.push_back(Vec2(4368, 2218)); // troop23
+    sqerPoints.push_back(Vec2(4599, 2067)); // troop24
+    sqerPoints.push_back(Vec2(4528, 2306)); // troop25
+    sqerPoints.push_back(Vec2(4744, 2160)); // troop26
+    sqerPoints.push_back(Vec2(4566, 2626)); // troop27
+    sqerPoints.push_back(Vec2(5124, 2001)); // troop28
+    sqerPoints.push_back(Vec2(5331, 1864)); // troop29
     
     // guo.jiang
 //    for (auto it = posToPath.begin(); it != posToPath.end(); ++it) {
