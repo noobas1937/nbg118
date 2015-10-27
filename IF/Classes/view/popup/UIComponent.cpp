@@ -2656,6 +2656,9 @@ bool UIComponent::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const c
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_homeBack", CCSprite*, this->m_homeBack);
     
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "quest_bg", CCSprite*, this->quest_bg);
+    
+    
     //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_PVE", CCSprite*, this->m_PVE);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_world", CCSprite*, this->m_world);
@@ -5393,7 +5396,8 @@ CCNode* UIComponent::getNodeByIndex(string _key){
         
     }else if(_key == "UI_achievement"){
         
-        return m_questBG2;
+//        return m_questBG2;//fusheng
+        return quest_bg;
         
     }else if(_key == "UI_goods"){
         
@@ -5411,7 +5415,8 @@ CCNode* UIComponent::getNodeByIndex(string _key){
         
     }else if(_key == "UI_target2"){
         
-        return m_questBG2;
+//        return m_questBG2;//fusheng
+        return quest_bg;
         
     }else if(_key == "SC2_out"){
         
