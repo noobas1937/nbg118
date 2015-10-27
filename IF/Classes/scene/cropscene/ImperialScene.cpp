@@ -4001,6 +4001,15 @@ void ImperialScene::refreshSoldiers(CCObject* obj)
     int numPerSqer = 3600/10;
     int sqerIdx = 0;
     vector<int> soldierSqerNum = ArmyController::getInstance()->getSoldierSqerNum();//返回各兵种方阵数量，依次为 骑， 步， 弓， 车
+//    vector<int> soldierSqerNum;
+//    soldierSqerNum.push_back(7);
+//    soldierSqerNum.push_back(7);
+//    soldierSqerNum.push_back(7);
+//    soldierSqerNum.push_back(9);
+//    soldierSqerNum.push_back(301);
+//    soldierSqerNum.push_back(301);
+//    soldierSqerNum.push_back(301);
+//    soldierSqerNum.push_back(301);
     for (int i=0; i<4; i++)
     {
         int sType = i+1;
