@@ -2355,43 +2355,74 @@ void FunBuildController::initPosPath()
         posToZorders[53] = zorders;
     }
     
-    int offset_x = 2900; // guo.jiang
-    int offset_y = 2600; // guo.jiang
+//    int offset_x = 2900; // guo.jiang
+//    int offset_y = 2600; // guo.jiang
+//    
+//    sqerPoints.push_back(ccp(290 + 125 + offset_x, 560 - 320 + offset_y));
+//    sqerPoints.push_back(ccp(380 + 175 + offset_x, 515 - 370 + offset_y));
+//    sqerPoints.push_back(ccp(470 + 255 + offset_x, 470 - 450 + offset_y));
+//    sqerPoints.push_back(ccp(560 + 365 + offset_x, 425 - 560 + offset_y));
+//    sqerPoints.push_back(ccp(650 + 365 + offset_x, 380 - 560 + offset_y));
+//    sqerPoints.push_back(ccp(740 + 365 + offset_x, 335 - 560 + offset_y));
+//    
+//    sqerPoints.push_back(ccp(190 + offset_x, 515 + offset_y));
+//    sqerPoints.push_back(ccp(280 + offset_x, 470 + offset_y));
+//    sqerPoints.push_back(ccp(370 + offset_x, 425 + offset_y));
+//    sqerPoints.push_back(ccp(460 + offset_x, 380 + offset_y));
+//    sqerPoints.push_back(ccp(550 + offset_x, 335 + offset_y));
+//    sqerPoints.push_back(ccp(640 + offset_x, 290 + offset_y));
+//    sqerPoints.push_back(ccp(730 + offset_x, 245 + offset_y));
+//    
+//    sqerPoints.push_back(ccp(90 + offset_x, 470 + offset_y));
+//    sqerPoints.push_back(ccp(180 + offset_x, 425 + offset_y));
+//    sqerPoints.push_back(ccp(270 + offset_x, 380 + offset_y));
+//    sqerPoints.push_back(ccp(360 + offset_x, 335 + offset_y));
+//    sqerPoints.push_back(ccp(450 + offset_x, 290 + offset_y));
+//    sqerPoints.push_back(ccp(540 + offset_x, 245 + offset_y));
+//    sqerPoints.push_back(ccp(630 + offset_x, 200 + offset_y));
+//    
+//    sqerPoints.push_back(ccp(80 + offset_x, 380 + offset_y));
+//    sqerPoints.push_back(ccp(170 + offset_x, 335 + offset_y));
+//    sqerPoints.push_back(ccp(260 + offset_x, 290 + offset_y));
+//    sqerPoints.push_back(ccp(350 + offset_x, 245 + offset_y));
+//    sqerPoints.push_back(ccp(440 + offset_x, 200 + offset_y));
+//    sqerPoints.push_back(ccp(530 + offset_x, 155 + offset_y));
+//    
+//    sqerPoints.push_back(ccp(70 + offset_x, 290 + offset_y));
+//    sqerPoints.push_back(ccp(160 + offset_x, 245 + offset_y));
+//    sqerPoints.push_back(ccp(250 + offset_x, 200 + offset_y));
+//    sqerPoints.push_back(ccp(340 + offset_x, 155 + offset_y));
     
-    sqerPoints.push_back(ccp(290 + offset_x, 560 + offset_y));
-    sqerPoints.push_back(ccp(380 + offset_x, 515 + offset_y));
-    sqerPoints.push_back(ccp(470 + offset_x, 470 + offset_y));
-    sqerPoints.push_back(ccp(560 + offset_x, 425 + offset_y));
-    sqerPoints.push_back(ccp(650 + offset_x, 380 + offset_y));
-    sqerPoints.push_back(ccp(740 + offset_x, 335 + offset_y));
-    
-    sqerPoints.push_back(ccp(190 + offset_x, 515 + offset_y));
-    sqerPoints.push_back(ccp(280 + offset_x, 470 + offset_y));
-    sqerPoints.push_back(ccp(370 + offset_x, 425 + offset_y));
-    sqerPoints.push_back(ccp(460 + offset_x, 380 + offset_y));
-    sqerPoints.push_back(ccp(550 + offset_x, 335 + offset_y));
-    sqerPoints.push_back(ccp(640 + offset_x, 290 + offset_y));
-    sqerPoints.push_back(ccp(730 + offset_x, 245 + offset_y));
-    
-    sqerPoints.push_back(ccp(90 + offset_x, 470 + offset_y));
-    sqerPoints.push_back(ccp(180 + offset_x, 425 + offset_y));
-    sqerPoints.push_back(ccp(270 + offset_x, 380 + offset_y));
-    sqerPoints.push_back(ccp(360 + offset_x, 335 + offset_y));
-    sqerPoints.push_back(ccp(450 + offset_x, 290 + offset_y));
-    sqerPoints.push_back(ccp(540 + offset_x, 245 + offset_y));
-    sqerPoints.push_back(ccp(630 + offset_x, 200 + offset_y));
-    
-    sqerPoints.push_back(ccp(80 + offset_x, 380 + offset_y));
-    sqerPoints.push_back(ccp(170 + offset_x, 335 + offset_y));
-    sqerPoints.push_back(ccp(260 + offset_x, 290 + offset_y));
-    sqerPoints.push_back(ccp(350 + offset_x, 245 + offset_y));
-    sqerPoints.push_back(ccp(440 + offset_x, 200 + offset_y));
-    sqerPoints.push_back(ccp(530 + offset_x, 155 + offset_y));
-    
-    sqerPoints.push_back(ccp(70 + offset_x, 290 + offset_y));
-    sqerPoints.push_back(ccp(160 + offset_x, 245 + offset_y));
-    sqerPoints.push_back(ccp(250 + offset_x, 200 + offset_y));
-    sqerPoints.push_back(ccp(340 + offset_x, 155 + offset_y));
+    sqerPoints.push_back(Vec2(3099, 2709)); // troop0
+    sqerPoints.push_back(Vec2(3314, 2567)); // troop1
+    sqerPoints.push_back(Vec2(3562, 2403)); // troop2
+    sqerPoints.push_back(Vec2(3814, 2240)); // troop3
+    sqerPoints.push_back(Vec2(4092, 2046)); // troop4
+    sqerPoints.push_back(Vec2(4374, 1863)); // troop5
+    sqerPoints.push_back(Vec2(3459, 2813)); // troop6
+    sqerPoints.push_back(Vec2(3707, 2697)); // troop7
+    sqerPoints.push_back(Vec2(3953, 2567)); // troop8
+    sqerPoints.push_back(Vec2(4174, 2458)); // troop9
+    sqerPoints.push_back(Vec2(4422, 2342)); // troop10
+    sqerPoints.push_back(Vec2(4668, 2212)); // troop11
+    sqerPoints.push_back(Vec2(3858, 2858)); // troop13
+    sqerPoints.push_back(Vec2(4106, 2742)); // troop14
+    sqerPoints.push_back(Vec2(4352, 2612)); // troop15
+    sqerPoints.push_back(Vec2(4573, 2503)); // troop16
+    sqerPoints.push_back(Vec2(4821, 2387)); // troop17
+    sqerPoints.push_back(Vec2(5021, 2296)); // troop18
+    sqerPoints.push_back(Vec2(4923, 2113)); // troop12
+    sqerPoints.push_back(Vec2(5211, 2185)); // troop19
+    sqerPoints.push_back(Vec2(4734, 2678)); // troop20
+    sqerPoints.push_back(Vec2(4982, 2562)); // troop21
+    sqerPoints.push_back(Vec2(5228, 2432)); // troop22
+    sqerPoints.push_back(Vec2(5449, 2323)); // troop23
+    sqerPoints.push_back(Vec2(5697, 2207)); // troop24
+    sqerPoints.push_back(Vec2(5943, 2077)); // troop25
+    sqerPoints.push_back(Vec2(4646, 1908)); // troop26
+    sqerPoints.push_back(Vec2(4894, 1793)); // troop27
+    sqerPoints.push_back(Vec2(5140, 1663)); // troop28
+    sqerPoints.push_back(Vec2(5395, 1564)); // troop29
     
     // guo.jiang
 //    for (auto it = posToPath.begin(); it != posToPath.end(); ++it) {
