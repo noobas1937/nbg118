@@ -95,6 +95,7 @@ int MoveCityPopUpView::getTileCount(){
     return 2;
 }
 void MoveCityPopUpView::createCitySprite(){
+    Vec2 offset(0, 0);
     string picName = "";
     switch (mCityType) {
         case MoveCity_Castle:{
@@ -143,6 +144,8 @@ void MoveCityPopUpView::createCitySprite(){
         }
         case MoveCity_Food:{
             picName = "0020.png";
+            offset.x = 0;
+            offset.y = 11;
             break;
         }
         case MoveCity_Wood:{
@@ -156,6 +159,8 @@ void MoveCityPopUpView::createCitySprite(){
         }
         case MoveCity_Iron:{
             picName = "0019.png";
+            offset.x = 0;
+            offset.y = 6;
             break;
         }
 //        case MoveCity_Silver:{
@@ -191,9 +196,9 @@ void MoveCityPopUpView::createCitySprite(){
             sprSize = sprite->getContentSize() * sprite->getScale();
         }
         if(sprSize.width < _tile_width && sprSize.height < _tile_height){
-            sprite->setPosition(CCPoint((_tile_width-sprSize.width)*0.5 ,(_tile_height-sprSize.height)*0.5));
+            sprite->setPosition(CCPoint((_tile_width-sprSize.width)*0.5 ,(_tile_height-sprSize.height)*0.5) + offset);
         }else{
-            sprite->setPosition(CCPointZero);
+            sprite->setPosition(CCPointZero + offset);
         }
     }
 }
