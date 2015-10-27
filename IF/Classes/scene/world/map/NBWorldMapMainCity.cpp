@@ -64,20 +64,10 @@ Node * NBWorldMapMainCity::getMainCity(int island_index, int level, int nSpecial
     string picStr = "tile_place_holder.png";
     if (island_index == 0)
     {
-        if (level > 0 && level < 10)
-        {
-            picStr = "lv1.png";
-            // 美术给出的坐标为 (-162, -76)
-            house_pos.x = 256 / 2 - 162;
-            house_pos.y = 76;
-        }
-        else
-        {
-            picStr = "lv10.png";
-            // 美术给出的坐标为 (-128, -53)
-            house_pos.x = 256 / 2 - 128;
-            house_pos.y = 53;
-        }
+        picStr = "lv1.png";
+        // 美术给出的坐标为 (-128, -53)
+        house_pos.x = 256 / 2 - 128;
+        house_pos.y = 53;
     }
     
     auto house = CCLoadSprite::createSprite(picStr.c_str());

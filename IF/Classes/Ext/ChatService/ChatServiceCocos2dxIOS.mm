@@ -1120,7 +1120,7 @@ void ChatServiceCocos2dx::pushSystemMailMsgWithMsgArray(cocos2d::CCArray *vSyste
 //            }else if ( maildata.tabType == Mail_BigType_Notice){
 //                channel.nameString = @"公告";
 //            }else if ( maildata.tabType == Mail_BigType_Studio){
-//                channel.nameString = @"列王的纷争游戏工作室";
+//                channel.nameString = @"龙族部落游戏工作室";
 //            }else if ( maildata.tabType == Mail_BigType_Fight){
 //                channel.nameString = @"战斗报告";
 //            }else if ( maildata.tabType == Mail_BigType_Mod){

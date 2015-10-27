@@ -222,6 +222,13 @@ void BattleView::generateData(){
         if(it->second.free <= 0 || !it->second.isArmy){
             continue;
         }
+        int sid = atoi(it->first.c_str());
+        if(sid>=107401&&sid<=107430)//fusheng 加一个保障
+        {
+            if (it->first != GlobalData::shared()->titanInfo.titanId) {
+                continue;
+            }
+        }
         TroopsController::getInstance()->m_tmpFreeSoldiers[it->first] = (it->second).free;
         TroopsController::getInstance()->m_tmpConfSoldiers[it->first] = (it->second).free;
         int index = 0;

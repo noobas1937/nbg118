@@ -28,10 +28,10 @@
         #define __SERVERLIST__IP "10.1.4.121"
     #else
         // 正式服
-        #define __SERVER__IP "10.1.4.121"
+        #define __SERVER__IP "106.39.79.93"
         #define __SERVER__PORT 80
         #define __SERVER__ZONE "COK2"
-        #define __SERVERLIST__IP "10.1.4.121"
+        #define __SERVERLIST__IP "106.39.79.93"
     #endif
 #endif
 

@@ -1410,11 +1410,11 @@ void UIComponent::UIMove(bool _bShow)
         
     }
     this->setActivityStatus();
-    m_upNode->setPosition(m_upPt.x,m_upPt.y+200);
+    m_upNode->setPosition(m_upPt.x,m_upPt.y+240);
     
-    m_mainControlNode->setPosition(m_mainPt.x,m_mainPt.y -150);
+    m_mainControlNode->setPosition(m_mainPt.x,m_mainPt.y -180);
     
-    m_UIQuestNode->setPosition(m_questPt.x, m_questPt.y-220);
+    m_UIQuestNode->setPosition(m_questPt.x, m_questPt.y-250);
     
     if (_bShow) {
         
@@ -1429,7 +1429,7 @@ void UIComponent::UIMove(bool _bShow)
         CCMoveTo* questMove = CCMoveTo::create(0.3f, ccp(m_questPt.x, m_questPt.y));
         
         this->m_UIQuestNode->runAction(CCSequence::create(questMove,CCCallFunc::create(this, callfunc_selector(UIComponent::questIconAction)),NULL));
-        
+
         m_bUIShowFlag = true;
         
     }
@@ -5373,8 +5373,18 @@ CCNode* UIComponent::getNodeByIndex(string _key){
                 return NULL;
             }
         }
+        //fusheng begin 添加限制 必须造过兵
+        int tmpQid1 = QueueController::getInstance()->getMinTimeQidByType(TYPE_FORCE);//步兵队列 待秒cd
+        int tmpQid2 = QueueController::getInstance()->getCanRecQidByType(TYPE_FORCE);//步兵队列 待收兵
+        int totoalArmy = ArmyController::getInstance()->getTotalArmy();
         
-        return m_homeBG;
+        if (totoalArmy > 2 || tmpQid2 != QID_MAX || tmpQid1 != QID_MAX) {//士兵个数超过2个
+            return m_homeBG;
+        }
+        //fusheng end
+        
+        return NULL;
+        
         
     }else if(_key == "UI_world_back"){
         

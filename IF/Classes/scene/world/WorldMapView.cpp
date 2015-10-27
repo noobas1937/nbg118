@@ -64,9 +64,9 @@
 #include "IFShakeCmd.h"
 #include "InnerSettingView.h"
 #include "DynamicTiledMap.h"
-#include "NBWaterShaderLayer.h"
 #include "NBWorldMonster.hpp"
 #include "NBWorldMapMainCity.hpp"
+#include "NBWaterSprite.hpp"
 
 static WorldMapView* worldMapInstance = nullptr;
 static float FLAG_SCALE = 0.4;
@@ -5177,6 +5177,26 @@ void WorldMapView::addUnderNode(unsigned int index) {
                         
                         house = NBWorldMapMainCity::getMainCity(island_idx, player.cityLv, -1);
                     }
+//                    if (island_idx == 0)
+//                    {
+//                        static const char* images[] = {"z_island_001.png", "z_island_002.png", "z_island_003.png", "z_island_004.png"};
+//                        float xy[] = {0,       0 + 256, 0, 0 + 256,
+//                                      0 + 128, 0 + 128, 0,       0, };
+//                        
+//                        for (int iii = 0; iii < 4; iii++)
+//                        {
+//                            auto island = CCLoadSprite::createSprite(images[iii]);
+//                            island->setAnchorPoint(Vec2(0, 0));
+//                            island->setPosition(Vec2(xy[iii], xy[iii + 4]));
+//                            under->addChild(island);
+//                        }
+//                        
+//                        house = NBWorldMapMainCity::getMainCity(island_idx, player.cityLv, -1);
+//                    }
+//                    else
+//                    {
+//                        house = NBWorldMapMainCity::getMainCity(island_idx, player.cityLv, -1);
+//                    }
                 }
                 else
                 {
@@ -7748,6 +7768,21 @@ void WorldMapView::update_water_shader(const Vec2& position)
 //    }
     
     int tag = 0;
+    NBWaterSprite* m_pWaterSprite = dynamic_cast<NBWaterSprite*>(m_layers[WM_BG]->getChildByTag(WATER_SHADER_TAG + tag));
+    if (!m_pWaterSprite)
+    {
+        m_pWaterSprite = NBWaterSprite::create(WATER_NORMALS);
+        m_pWaterSprite->setTag(WATER_SHADER_TAG + tag);
+        m_pWaterSprite->setScale(5.0);
+//        m_pWaterSprite->setSkewX(-10);
+        m_layers[WM_BG]->addChild(m_pWaterSprite);
+    }
+    int ox = 256;
+    int oy = 256;
+    m_pWaterSprite->setPosition(position.x + ox * m_pWaterSprite->getScale(), position.y + oy * m_pWaterSprite->getScale());
+    return;
+    
+    
     for (int i = -WATER_SHADER_X_CNT / 2; i < WATER_SHADER_X_CNT / 2; i++)
     {
         for (int j = -WATER_SHADER_Y_CNT / 2; j < WATER_SHADER_Y_CNT / 2; j++)

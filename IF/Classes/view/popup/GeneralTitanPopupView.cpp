@@ -307,11 +307,11 @@ void GeneralTitanPopupView::handleTitanUpgrade(CCObject* obj)
         
         
         TitanInView* view = dynamic_cast<TitanInView*>(  m_titanPosInView->getChildByTag(10086));
-        
+        view->m_Titan->changeTitanState(Titan::eActState::Idle);//fusheng 蛋破碎
         if (view) {
-            view->resetDisplay(GlobalData::shared()->titanInfo.tid);
+            
             CCLOG("GeneralTitanPopupView titan sheng ji ");
-            view->setVisible(false);
+//            view->setVisible(false);
         }
         
         auto node =DragonUpgradeAniNode::create(GlobalData::shared()->titanInfo.tid);
@@ -331,9 +331,10 @@ void GeneralTitanPopupView::handleTianUpgradeAnimationComplete(CCObject* obj)
         TitanInView* view = dynamic_cast<TitanInView*>(  m_titanPosInView->getChildByTag(10086));
         
         if (view) {
-//            view->resetDisplay(GlobalData::shared()->titanInfo.tid);
+
+            view->resetDisplay(GlobalData::shared()->titanInfo.tid);//fusheng 换成龙
             CCLOG("GeneralTitanPopupView titan sheng ji animation complete");
-            view->setVisible(true);
+//            view->setVisible(true);
         }
         
         
@@ -770,6 +771,9 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
 
         
         m_titanFeedTxt->setString(_lang("500002"));//fusheng 需要文本
+        
+        if(GlobalData::shared()->titanInfo.level == 1)
+            m_titanFeedTxt->setString(_lang("500011"));//fusheng 孵化
     }
 
     if(m_titanInfo.exp>=m_titanInfo.nextExp)
@@ -786,6 +790,9 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         m_titanFeedStatus_2->setVisible(false);
         
         m_titanFeedTxt->setString(_lang("500002"));//fusheng 需要文本
+        if(GlobalData::shared()->titanInfo.level == 1)
+            m_titanFeedTxt->setString(_lang("500011"));//fusheng 孵化
+
     }
 
     this->m_titanFeedBtn->setEnabled(isCanFeed);
@@ -831,7 +838,7 @@ void GeneralTitanPopupView::onEnter(){
    
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GeneralTitanPopupView::resetAttribute), MSG_TITAN_INFORMATION_RESET, NULL);
     
-    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GeneralTitanPopupView::handleTitanUpgrade), MSG_TITAN_UPGRADE_COMLETE, NULL);
+    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GeneralTitanPopupView::handleTitanUpgrade), MSG_TITAN_UPGRADE_COMPLETE, NULL);
     
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GeneralTitanPopupView::handleTianUpgradeAnimationComplete), MSG_TITAN_UPGRADE_ANIMATION_COMLETE, NULL);
     
@@ -851,7 +858,7 @@ void GeneralTitanPopupView::onExit(){
 
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_TITAN_INFORMATION_RESET);
     
-    CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_TITAN_UPGRADE_COMLETE);
+    CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_TITAN_UPGRADE_COMPLETE);
 
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_TITAN_UPGRADE_ANIMATION_COMLETE);
     
@@ -1772,17 +1779,13 @@ DragonUpgradeAniNode* DragonUpgradeAniNode::create(int tid){
 
 bool DragonUpgradeAniNode::init(int tid)
 {
-    auto bg = CCBLoadFile("pic415000_2_1",this,this);
-    
-//    
+//    auto bg = CCBLoadFile("pic415000_2_1",this,this);
 //
 //    
-    
-    getAnimationManager()->runAnimations("Havest");
-//    float dt = getAnimationManager()->getSequenceDuration("Havest");
-    getAnimationManager()->setAnimationCompletedCallback(this, CC_CALLFUNC_SELECTOR(DragonUpgradeAniNode::animationCallBack));
+//    getAnimationManager()->runAnimations("Havest");
 //
-//    getAnimationManager()->runAnimationsForSequenceNamed("Havest");
+//    getAnimationManager()->setAnimationCompletedCallback(this, CC_CALLFUNC_SELECTOR(DragonUpgradeAniNode::animationCallBack));
+
     
     
     
@@ -1796,7 +1799,7 @@ void DragonUpgradeAniNode::onEnter()
     
     
     
-//    this->runAction(Sequence::create(DelayTime::create(1),CallFunc::create(CC_CALLBACK_0(DragonUpgradeAniNode::animationCallBack,this)),nullptr));
+    this->runAction(Sequence::create(DelayTime::create(2),CallFunc::create(CC_CALLBACK_0(DragonUpgradeAniNode::animationCallBack,this)),nullptr));
 };
 
 void DragonUpgradeAniNode::onExit()
@@ -1806,9 +1809,11 @@ void DragonUpgradeAniNode::onExit()
 
 void DragonUpgradeAniNode::animationCallBack()
 {
+    CCLOG("animation complete !!!!");
+    
     CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_UPGRADE_ANIMATION_COMLETE, CCString::createWithFormat("animationComplete"));
     
-    CCLOG("animation complete !!!!");
+  
     this->removeFromParent();
 };
 SEL_CCControlHandler DragonUpgradeAniNode::onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName)
