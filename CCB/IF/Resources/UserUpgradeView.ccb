@@ -94,7 +94,7 @@
 								<key>value</key>
 								<array>
 									<string>Common/Common_1.plist</string>
-									<string>UI_paper_3.png</string>
+									<string>UI_Popup_BG.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -480,8 +480,8 @@
 								<string>ScaleLock</string>
 								<key>value</key>
 								<array>
-									<real>1</real>
-									<real>1</real>
+									<real>0.77999997138977051</real>
+									<real>1.059999942779541</real>
 									<false/>
 									<integer>0</integer>
 								</array>
@@ -501,8 +501,8 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string>Common/Common_104.plist</string>
-									<string>user_levelup.png</string>
+									<string>Common/Common_3.plist</string>
+									<string>nb_cz_bg.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -2635,8 +2635,6 @@
 								<false/>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -2938,9 +2936,9 @@
 			<key>name</key>
 			<string>Default Timeline</string>
 			<key>offset</key>
-			<real>0.0</real>
+			<real>4.0390625</real>
 			<key>position</key>
-			<real>2.7666666507720947</real>
+			<real>10</real>
 			<key>resolution</key>
 			<real>30</real>
 			<key>scale</key>

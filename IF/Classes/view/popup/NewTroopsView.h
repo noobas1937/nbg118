@@ -60,6 +60,8 @@ private:
     CCSafeObject<CCNode> m_iconNode;
     CCSafeObject<CCLabelIF> m_numLabel;
     CCSafeObject<CCLabelIF> m_levelLabel;
+    CCSafeObject<CCSprite> m_soliderBG;
+    CCSafeObject<CCSprite> m_soliderTypeSprite;
     string m_id;
 };
 

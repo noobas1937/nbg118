@@ -49,6 +49,18 @@
 								<array>
 									<dict>
 										<key>name</key>
+										<string>position</string>
+										<key>type</key>
+										<string>Position</string>
+										<key>value</key>
+										<array>
+											<real>0.0</real>
+											<real>-92</real>
+											<integer>0</integer>
+										</array>
+									</dict>
+									<dict>
+										<key>name</key>
 										<string>anchorPoint</string>
 										<key>type</key>
 										<string>Point</string>
@@ -86,8 +98,8 @@
 										<string>SpriteFrame</string>
 										<key>value</key>
 										<array>
-											<string>Common/Common_200.plist</string>
-											<string>Army_flag_01.png</string>
+											<string>Common/Common_201.plist</string>
+											<string>nb_typeBG.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -111,11 +123,11 @@
 								<key>customClass</key>
 								<string></string>
 								<key>displayName</key>
-								<string>CCSprite</string>
+								<string>m_soliderBG</string>
 								<key>memberVarAssignmentName</key>
-								<string></string>
+								<string>m_soliderBG</string>
 								<key>memberVarAssignmentType</key>
-								<integer>0</integer>
+								<integer>2</integer>
 								<key>properties</key>
 								<array>
 									<dict>
@@ -125,8 +137,91 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>-48</real>
-											<real>-102</real>
+											<real>0.0</real>
+											<real>34</real>
+											<integer>0</integer>
+										</array>
+									</dict>
+									<dict>
+										<key>name</key>
+										<string>anchorPoint</string>
+										<key>type</key>
+										<string>Point</string>
+										<key>value</key>
+										<array>
+											<real>0.5</real>
+											<real>0.5</real>
+										</array>
+									</dict>
+									<dict>
+										<key>name</key>
+										<string>scale</string>
+										<key>type</key>
+										<string>ScaleLock</string>
+										<key>value</key>
+										<array>
+											<real>1.6000000238418579</real>
+											<real>1.7259999513626099</real>
+											<false/>
+											<integer>0</integer>
+										</array>
+									</dict>
+									<dict>
+										<key>name</key>
+										<string>ignoreAnchorPointForPosition</string>
+										<key>type</key>
+										<string>Check</string>
+										<key>value</key>
+										<false/>
+									</dict>
+									<dict>
+										<key>name</key>
+										<string>displayFrame</string>
+										<key>type</key>
+										<string>SpriteFrame</string>
+										<key>value</key>
+										<array>
+											<string>Common/Common_3.plist</string>
+											<string>nb_cz_bzbg1.png</string>
+										</array>
+									</dict>
+									<dict>
+										<key>name</key>
+										<string>blendFunc</string>
+										<key>type</key>
+										<string>Blendmode</string>
+										<key>value</key>
+										<array>
+											<integer>770</integer>
+											<integer>771</integer>
+										</array>
+									</dict>
+								</array>
+							</dict>
+							<dict>
+								<key>baseClass</key>
+								<string>CCSprite</string>
+								<key>children</key>
+								<array/>
+								<key>customClass</key>
+								<string></string>
+								<key>displayName</key>
+								<string>m_soliderTypeSprite</string>
+								<key>memberVarAssignmentName</key>
+								<string>m_soliderTypeSprite</string>
+								<key>memberVarAssignmentType</key>
+								<integer>2</integer>
+								<key>properties</key>
+								<array>
+									<dict>
+										<key>name</key>
+										<string>position</string>
+										<key>type</key>
+										<string>Position</string>
+										<key>value</key>
+										<array>
+											<real>-29</real>
+											<real>-87</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -169,8 +264,8 @@
 										<string>SpriteFrame</string>
 										<key>value</key>
 										<array>
-											<string>Common/Common_200.plist</string>
-											<string>Army_flag_02.png</string>
+											<string>Common/Common_201.plist</string>
+											<string>bz_js.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -185,8 +280,6 @@
 										</array>
 									</dict>
 								</array>
-								<key>selected</key>
-								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>
@@ -210,8 +303,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>10</real>
-											<real>-101</real>
+											<real>-8</real>
+											<real>-97</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -222,8 +315,8 @@
 										<string>Point</string>
 										<key>value</key>
 										<array>
-											<real>0.5</real>
-											<real>0.5</real>
+											<real>0.0</real>
+											<real>0.0</real>
 										</array>
 									</dict>
 									<dict>
@@ -268,6 +361,18 @@
 									</dict>
 									<dict>
 										<key>name</key>
+										<string>color</string>
+										<key>type</key>
+										<string>Color3</string>
+										<key>value</key>
+										<array>
+											<integer>0</integer>
+											<integer>0</integer>
+											<integer>0</integer>
+										</array>
+									</dict>
+									<dict>
+										<key>name</key>
 										<string>dimensions</string>
 										<key>type</key>
 										<string>Size</string>
@@ -284,7 +389,7 @@
 										<key>type</key>
 										<string>IntegerLabeled</string>
 										<key>value</key>
-										<integer>1</integer>
+										<integer>0</integer>
 									</dict>
 									<dict>
 										<key>name</key>
@@ -292,7 +397,7 @@
 										<key>type</key>
 										<string>IntegerLabeled</string>
 										<key>value</key>
-										<integer>1</integer>
+										<integer>2</integer>
 									</dict>
 									<dict>
 										<key>name</key>
@@ -459,8 +564,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>-70</real>
-											<real>118</real>
+											<real>-57</real>
+											<real>-36</real>
 											<integer>0</integer>
 										</array>
 									</dict>
