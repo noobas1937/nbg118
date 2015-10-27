@@ -212,6 +212,136 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
+            <key>z_decor_island_013.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{0,512},{256,128}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{256,128}}</string>
+                <key>sourceSize</key>
+                <string>{256,128}</string>
+            </dict>
+            <key>z_decor_island_014.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{256,512},{256,128}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{256,128}}</string>
+                <key>sourceSize</key>
+                <string>{256,128}</string>
+            </dict>
+            <key>z_decor_island_015.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{512,512},{256,128}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{256,128}}</string>
+                <key>sourceSize</key>
+                <string>{256,128}</string>
+            </dict>
+            <key>z_decor_island_016.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{768,512},{256,128}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{256,128}}</string>
+                <key>sourceSize</key>
+                <string>{256,128}</string>
+            </dict>
+            <key>z_decor_island_017.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{0,640},{256,128}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{256,128}}</string>
+                <key>sourceSize</key>
+                <string>{256,128}</string>
+            </dict>
+            <key>z_decor_island_018.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{256,640},{256,128}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{256,128}}</string>
+                <key>sourceSize</key>
+                <string>{256,128}</string>
+            </dict>
+            <key>z_decor_island_019.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{512,640},{256,128}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{256,128}}</string>
+                <key>sourceSize</key>
+                <string>{256,128}</string>
+            </dict>
+            <key>z_decor_island_020.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{768,640},{256,128}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{256,128}}</string>
+                <key>sourceSize</key>
+                <string>{256,128}</string>
+            </dict>
+            <key>zz_decor_004.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{0,768},{112,92}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{112,92}}</string>
+                <key>sourceSize</key>
+                <string>{112,92}</string>
+            </dict>
+            <key>zz_decor_005.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{112,768},{150,131}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{150,131}}</string>
+                <key>sourceSize</key>
+                <string>{150,131}</string>
+            </dict>
         </dict>
         <key>metadata</key>
         <dict>
@@ -220,9 +350,9 @@
             <key>realTextureFileName</key>
             <string>decoration.pvr.ccz</string>
             <key>size</key>
-            <string>{1024,512}</string>
+            <string>{1024,1024}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:8bd2e3b10831879d8a146b4c4840fc79:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:509163eb3283e3534286704e38142568:1/1$</string>
             <key>textureFileName</key>
             <string>decoration.pvr.ccz</string>
         </dict>
