@@ -581,8 +581,6 @@ void ImperialScene::buildingCallBack(CCObject* params)
 
     
     GameController::getInstance()->enableQueryHistoryPurchase();
-    
-//    wallCallBack(nullptr);
 }
 
 void ImperialScene::onCreateTitan()

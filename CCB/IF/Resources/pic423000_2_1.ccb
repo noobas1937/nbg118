@@ -62,8 +62,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>41.000003814697266</real>
-									<real>17.000001907348633</real>
+									<real>-3.9999961853027344</real>
+									<real>12.000001907348633</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -128,6 +128,18 @@
 						<integer>2</integer>
 						<key>properties</key>
 						<array>
+							<dict>
+								<key>name</key>
+								<string>position</string>
+								<key>type</key>
+								<string>Position</string>
+								<key>value</key>
+								<array>
+									<real>-45</real>
+									<real>-5</real>
+									<integer>0</integer>
+								</array>
+							</dict>
 							<dict>
 								<key>name</key>
 								<string>anchorPoint</string>
@@ -206,8 +218,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>174.1273193359375</real>
-									<real>37.873458862304688</real>
+									<real>129.1273193359375</real>
+									<real>32.873458862304688</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -289,8 +301,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>146</real>
-									<real>36</real>
+									<real>101</real>
+									<real>31</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -372,8 +384,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>242</real>
-									<real>73</real>
+									<real>197</real>
+									<real>68</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -433,8 +445,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>179.10000610351562</real>
-									<real>40.900001525878906</real>
+									<real>134.10000610351562</real>
+									<real>35.900001525878906</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -1404,8 +1416,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>27.327672958374023</real>
-									<real>35.365222930908203</real>
+									<real>-17.672327041625977</real>
+									<real>30.365222930908203</real>
 									<integer>0</integer>
 								</array>
 							</dict>
