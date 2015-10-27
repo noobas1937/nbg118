@@ -53,7 +53,6 @@ bool BuildListView::init(int pos)
     setContentSize(size);
     
     CCBLoadFile("OptBuildView02",this,this);
-    m_handBg->setVisible(false);
     updateInfo(pos);
     m_openNum = 0;
     return true;
@@ -355,11 +354,9 @@ void BuildListView::refeash(int idx)
                 m_upBtn->setEnabled(true);
                 m_handParNode->removeAllChildren();
                 this->getAnimationManager()->runAnimationsForSequenceNamed("Loop");
-                m_handBg->setVisible(false);
                 m_npcNode->setVisible(false);
             }else {
                 m_upBtn->setEnabled(false);
-                m_handBg->setVisible(true);
                 showHand();
             }
         }
@@ -368,11 +365,9 @@ void BuildListView::refeash(int idx)
                 m_upBtn->setEnabled(true);
                 m_handParNode->removeAllChildren();
                 this->getAnimationManager()->runAnimationsForSequenceNamed("Loop");
-                m_handBg->setVisible(false);
                 m_npcNode->setVisible(false);
             }else {
                 m_upBtn->setEnabled(false);
-                m_handBg->setVisible(true);
                 showHand();
             }
         }
@@ -407,7 +402,6 @@ bool BuildListView::onAssignCCBMemberVariable(cocos2d::CCObject *pTarget, const 
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_npcNode", CCNode*, this->m_npcNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nameText", CCLabelIF*, this->m_nameText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_contentText", CCLabelIF*, this->m_contentText);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_handBg", CCSprite*, this->m_handBg);
     return false;
 }
 
@@ -503,7 +497,6 @@ void BuildListView::showHand()
         auto particle = ParticleController::createParticle(CCString::createWithFormat("FingerDown_%d",i)->getCString());
         m_handParNode->addChild(particle);
     }
-    m_handBg->setVisible(true);
     if (m_curIdx > m_itemIdx) {
         this->getAnimationManager()->runAnimationsForSequenceNamed("Show_3");
     }else {

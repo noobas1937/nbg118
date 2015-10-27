@@ -979,8 +979,10 @@ void GeneralsPopupView::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 //            }
 //            else if(isTouchInside(m_clickNode4, pTouch)){
             if(isTouchInside(m_clickNode4, pTouch)){
+                CCCommonUtils::flyHint("", "", _lang("E100008"));//fusheng 这个界面 美术没做
+
                 SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
-                PopupViewController::getInstance()->addPopupInView(RoleInfoView::create(&(GlobalData::shared()->playerInfo)));
+//                PopupViewController::getInstance()->addPopupInView(RoleInfoView::create(&(GlobalData::shared()->playerInfo)));
             }
             else if(isTouchInside(m_ChangeAvatar, pTouch)){
                 
