@@ -15831,6 +15831,134 @@
 						<array>
 							<dict>
 								<key>baseClass</key>
+								<string>CCLabelTTF</string>
+								<key>children</key>
+								<array/>
+								<key>customClass</key>
+								<string>CCLabelIF</string>
+								<key>displayName</key>
+								<string>m_dragonTip</string>
+								<key>memberVarAssignmentName</key>
+								<string>m_dragonTip</string>
+								<key>memberVarAssignmentType</key>
+								<integer>2</integer>
+								<key>properties</key>
+								<array>
+									<dict>
+										<key>name</key>
+										<string>position</string>
+										<key>type</key>
+										<string>Position</string>
+										<key>value</key>
+										<array>
+											<real>138</real>
+											<real>-36</real>
+											<integer>0</integer>
+										</array>
+									</dict>
+									<dict>
+										<key>name</key>
+										<string>anchorPoint</string>
+										<key>type</key>
+										<string>Point</string>
+										<key>value</key>
+										<array>
+											<real>0.0</real>
+											<real>0.0</real>
+										</array>
+									</dict>
+									<dict>
+										<key>name</key>
+										<string>scale</string>
+										<key>type</key>
+										<string>ScaleLock</string>
+										<key>value</key>
+										<array>
+											<real>1</real>
+											<real>1</real>
+											<false/>
+											<integer>0</integer>
+										</array>
+									</dict>
+									<dict>
+										<key>name</key>
+										<string>ignoreAnchorPointForPosition</string>
+										<key>type</key>
+										<string>Check</string>
+										<key>value</key>
+										<false/>
+									</dict>
+									<dict>
+										<key>name</key>
+										<string>fontName</string>
+										<key>type</key>
+										<string>FontTTF</string>
+										<key>value</key>
+										<string>Helvetica</string>
+									</dict>
+									<dict>
+										<key>name</key>
+										<string>fontSize</string>
+										<key>type</key>
+										<string>FloatScale</string>
+										<key>value</key>
+										<array>
+											<real>18</real>
+											<integer>0</integer>
+										</array>
+									</dict>
+									<dict>
+										<key>name</key>
+										<string>color</string>
+										<key>type</key>
+										<string>Color3</string>
+										<key>value</key>
+										<array>
+											<integer>195</integer>
+											<integer>206</integer>
+											<integer>254</integer>
+										</array>
+									</dict>
+									<dict>
+										<key>name</key>
+										<string>dimensions</string>
+										<key>type</key>
+										<string>Size</string>
+										<key>value</key>
+										<array>
+											<real>0.0</real>
+											<real>0.0</real>
+											<integer>0</integer>
+										</array>
+									</dict>
+									<dict>
+										<key>name</key>
+										<string>horizontalAlignment</string>
+										<key>type</key>
+										<string>IntegerLabeled</string>
+										<key>value</key>
+										<integer>0</integer>
+									</dict>
+									<dict>
+										<key>name</key>
+										<string>verticalAlignment</string>
+										<key>type</key>
+										<string>IntegerLabeled</string>
+										<key>value</key>
+										<integer>2</integer>
+									</dict>
+									<dict>
+										<key>name</key>
+										<string>string</string>
+										<key>type</key>
+										<string>Text</string>
+										<key>value</key>
+										<string>喂养你的龙能够让你的龙进行升级</string>
+									</dict>
+								</array>
+							</dict>
+							<dict>
+								<key>baseClass</key>
 								<string>CCScale9Sprite</string>
 								<key>children</key>
 								<array/>
@@ -18581,7 +18709,7 @@
 												<string>Position</string>
 												<key>value</key>
 												<array>
-													<real>121</real>
+													<real>138</real>
 													<real>-139</real>
 													<integer>0</integer>
 												</array>
@@ -18709,7 +18837,7 @@
 												<string>Position</string>
 												<key>value</key>
 												<array>
-													<real>251</real>
+													<real>268</real>
 													<real>-139</real>
 													<integer>0</integer>
 												</array>
@@ -18825,7 +18953,7 @@
 												<string>Position</string>
 												<key>value</key>
 												<array>
-													<real>277</real>
+													<real>294</real>
 													<real>-139</real>
 													<integer>0</integer>
 												</array>
