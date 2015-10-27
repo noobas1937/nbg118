@@ -287,6 +287,7 @@ bool ImperialScene::init()
         } else {
             m_viewPort->updatePosition(ccp(FunBuildController::getInstance()->oldx, FunBuildController::getInstance()->oldy));
         }
+
     }
 
     m_torchNode->setZOrder(2);
@@ -497,6 +498,10 @@ void ImperialScene::buildingCallBack(CCObject* params)
         }
 //        resumeSchedulerAndActions();
 //        m_bRunning = true;
+        
+        m_curBuildPosx = 1500;//fusheng 修改位置
+        m_curBuildPosy = 2106;//fusheng 修改位置
+        scale = 0.4315;//fusheng 修改放缩
         onMoveToPos(m_curBuildPosx, m_curBuildPosy, TYPE_POS_MID, dt, scale, true);
         if (newPlayerST) {
 //            onPlayBattle();
@@ -508,15 +513,16 @@ void ImperialScene::buildingCallBack(CCObject* params)
     {
         startGuide(0);
         if (PortActController::getInstance()->isCanRwd() && !(GuideController::share()->isInTutorial() || (GlobalData::shared()->playerInfo.level == 1 && GlobalData::shared()->playerInfo.exp == 0))) {
-            m_curBuildPosx = 2530;
-            m_curBuildPosy = 1430;
-            float scale = 0.8;
+            m_curBuildPosx = 1500;//fusheng 修改位置
+            m_curBuildPosy = 2106;//fusheng 修改位置
+            float scale = 0.8;//fusheng 修改放缩
             if(CCCommonUtils::isIosAndroidPad())
             {
                 scale = HD_SCALE;
             }
+            scale = 0.4315;//fusheng 修改放缩
             canMoveToRequest = false;
-            onMoveToPos(m_curBuildPosx, m_curBuildPosy, TYPE_POS_MID, 0, scale, true);
+            onMoveToPos(m_curBuildPosx, m_curBuildPosy, TYPE_POS_MID, 0, scale, true);//fusheng 这里是进入城里的屏幕的位置
         }
     }
 
@@ -1289,7 +1295,7 @@ void ImperialScene::retGuideEnd(float _time)
     {
         _scale = 1.3;
     }
-    onMoveToPos(tmp2Pt.x, tmp2Pt.y, TYPE_POS_MID, 0.5, _scale, true);
+//    onMoveToPos(tmp2Pt.x, tmp2Pt.y, TYPE_POS_MID, 0.5, _scale, true);//fusheng 不放缩
 }
 void ImperialScene::clearGuideState(float _time)
 {
