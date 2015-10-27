@@ -189,8 +189,8 @@
 										<string>ScaleLock</string>
 										<key>value</key>
 										<array>
-											<real>1</real>
-											<real>1</real>
+											<real>3</real>
+											<real>3</real>
 											<true/>
 											<integer>0</integer>
 										</array>
@@ -232,7 +232,7 @@
 										<key>value</key>
 										<array>
 											<integer>770</integer>
-											<integer>1</integer>
+											<integer>771</integer>
 										</array>
 									</dict>
 								</array>
@@ -396,8 +396,8 @@
 										<string>ScaleLock</string>
 										<key>value</key>
 										<array>
-											<real>1</real>
-											<real>1</real>
+											<real>3</real>
+											<real>3</real>
 											<true/>
 											<integer>0</integer>
 										</array>
@@ -447,7 +447,7 @@
 										<key>value</key>
 										<array>
 											<integer>770</integer>
-											<integer>1</integer>
+											<integer>771</integer>
 										</array>
 									</dict>
 								</array>
@@ -611,8 +611,8 @@
 										<string>ScaleLock</string>
 										<key>value</key>
 										<array>
-											<real>1</real>
-											<real>1</real>
+											<real>3</real>
+											<real>3</real>
 											<true/>
 											<integer>0</integer>
 										</array>
@@ -662,7 +662,7 @@
 										<key>value</key>
 										<array>
 											<integer>770</integer>
-											<integer>1</integer>
+											<integer>771</integer>
 										</array>
 									</dict>
 								</array>
@@ -876,8 +876,8 @@
 										<string>ScaleLock</string>
 										<key>value</key>
 										<array>
-											<real>1</real>
-											<real>1</real>
+											<real>3</real>
+											<real>3</real>
 											<true/>
 											<integer>0</integer>
 										</array>
@@ -919,7 +919,7 @@
 										<key>value</key>
 										<array>
 											<integer>770</integer>
-											<integer>1</integer>
+											<integer>771</integer>
 										</array>
 									</dict>
 								</array>
@@ -1083,8 +1083,8 @@
 										<string>ScaleLock</string>
 										<key>value</key>
 										<array>
-											<real>1</real>
-											<real>1</real>
+											<real>3</real>
+											<real>3</real>
 											<true/>
 											<integer>0</integer>
 										</array>
@@ -1134,7 +1134,7 @@
 										<key>value</key>
 										<array>
 											<integer>770</integer>
-											<integer>1</integer>
+											<integer>771</integer>
 										</array>
 									</dict>
 								</array>
@@ -1298,8 +1298,8 @@
 										<string>ScaleLock</string>
 										<key>value</key>
 										<array>
-											<real>1</real>
-											<real>1</real>
+											<real>3</real>
+											<real>3</real>
 											<true/>
 											<integer>0</integer>
 										</array>
@@ -1349,7 +1349,7 @@
 										<key>value</key>
 										<array>
 											<integer>770</integer>
-											<integer>1</integer>
+											<integer>771</integer>
 										</array>
 									</dict>
 								</array>
@@ -1553,7 +1553,7 @@
 										<key>value</key>
 										<array>
 											<integer>770</integer>
-											<integer>1</integer>
+											<integer>771</integer>
 										</array>
 									</dict>
 								</array>
@@ -1722,7 +1722,7 @@
 										<key>value</key>
 										<array>
 											<integer>770</integer>
-											<integer>1</integer>
+											<integer>771</integer>
 										</array>
 									</dict>
 								</array>
@@ -1876,7 +1876,7 @@
 										<key>value</key>
 										<array>
 											<integer>770</integer>
-											<integer>1</integer>
+											<integer>771</integer>
 										</array>
 									</dict>
 								</array>
@@ -2045,7 +2045,7 @@
 										<key>value</key>
 										<array>
 											<integer>770</integer>
-											<integer>1</integer>
+											<integer>771</integer>
 										</array>
 									</dict>
 								</array>
@@ -2199,7 +2199,7 @@
 										<key>value</key>
 										<array>
 											<integer>770</integer>
-											<integer>1</integer>
+											<integer>771</integer>
 										</array>
 									</dict>
 								</array>
@@ -2355,7 +2355,7 @@
 										<key>value</key>
 										<array>
 											<integer>770</integer>
-											<integer>1</integer>
+											<integer>771</integer>
 										</array>
 									</dict>
 								</array>
@@ -2526,7 +2526,7 @@
 										<key>value</key>
 										<array>
 											<integer>770</integer>
-											<integer>1</integer>
+											<integer>771</integer>
 										</array>
 									</dict>
 								</array>
@@ -3019,8 +3019,8 @@
 										<string>ScaleLock</string>
 										<key>value</key>
 										<array>
-											<real>6</real>
-											<real>6</real>
+											<real>1</real>
+											<real>1</real>
 											<true/>
 											<integer>0</integer>
 										</array>
@@ -3062,7 +3062,7 @@
 										<key>value</key>
 										<array>
 											<integer>770</integer>
-											<integer>1</integer>
+											<integer>771</integer>
 										</array>
 									</dict>
 								</array>
@@ -3500,6 +3500,17 @@
 						<key>value</key>
 						<string>particle/Effect_0033.png</string>
 					</dict>
+					<dict>
+						<key>name</key>
+						<string>displayFrame</string>
+						<key>type</key>
+						<string>SpriteFrame</string>
+						<key>value</key>
+						<array>
+							<string></string>
+							<string></string>
+						</array>
+					</dict>
 				</array>
 				<key>seqExpanded</key>
 				<true/>
@@ -3592,7 +3603,7 @@
 	<array>
 		<dict>
 			<key>autoPlay</key>
-			<false/>
+			<true/>
 			<key>callbackChannel</key>
 			<dict>
 				<key>keyframes</key>
@@ -3602,40 +3613,6 @@
 			</dict>
 			<key>chainedSequenceId</key>
 			<integer>-1</integer>
-			<key>length</key>
-			<real>1.5</real>
-			<key>name</key>
-			<string>Loop</string>
-			<key>offset</key>
-			<real>0.0</real>
-			<key>position</key>
-			<real>1.5</real>
-			<key>resolution</key>
-			<real>30</real>
-			<key>scale</key>
-			<real>32</real>
-			<key>sequenceId</key>
-			<integer>0</integer>
-			<key>soundChannel</key>
-			<dict>
-				<key>keyframes</key>
-				<array/>
-				<key>type</key>
-				<integer>9</integer>
-			</dict>
-		</dict>
-		<dict>
-			<key>autoPlay</key>
-			<false/>
-			<key>callbackChannel</key>
-			<dict>
-				<key>keyframes</key>
-				<array/>
-				<key>type</key>
-				<integer>10</integer>
-			</dict>
-			<key>chainedSequenceId</key>
-			<integer>0</integer>
 			<key>length</key>
 			<real>3.3333332538604736</real>
 			<key>name</key>
@@ -3643,47 +3620,13 @@
 			<key>offset</key>
 			<real>0.0</real>
 			<key>position</key>
-			<real>3.3333332538604736</real>
+			<real>0.0</real>
 			<key>resolution</key>
 			<real>30</real>
 			<key>scale</key>
 			<real>281.24859619140625</real>
 			<key>sequenceId</key>
 			<integer>1</integer>
-			<key>soundChannel</key>
-			<dict>
-				<key>keyframes</key>
-				<array/>
-				<key>type</key>
-				<integer>9</integer>
-			</dict>
-		</dict>
-		<dict>
-			<key>autoPlay</key>
-			<false/>
-			<key>callbackChannel</key>
-			<dict>
-				<key>keyframes</key>
-				<array/>
-				<key>type</key>
-				<integer>10</integer>
-			</dict>
-			<key>chainedSequenceId</key>
-			<integer>-1</integer>
-			<key>length</key>
-			<real>0.1666666716337204</real>
-			<key>name</key>
-			<string>FadeOut</string>
-			<key>offset</key>
-			<real>0.0</real>
-			<key>position</key>
-			<real>0.1666666716337204</real>
-			<key>resolution</key>
-			<real>30</real>
-			<key>scale</key>
-			<real>512</real>
-			<key>sequenceId</key>
-			<integer>2</integer>
 			<key>soundChannel</key>
 			<dict>
 				<key>keyframes</key>

@@ -7758,19 +7758,25 @@ void WorldMapView::update_water_shader(const Vec2& position)
     NBWaterSprite* m_pWaterSprite = dynamic_cast<NBWaterSprite*>(m_layers[WM_BG]->getChildByTag(WATER_SHADER_TAG + 0));
     if (!m_pWaterSprite)
     {
-        for (int i = 0; i < count_x; i++)
-        {
-            for (int j = 0; j < count_y; j++)
-            {
-                m_pWaterSprite = NBWaterSprite::create(WATER_NORMALS);
-                m_pWaterSprite->setTag(WATER_SHADER_TAG + i + j * count_x);
-                m_pWaterSprite->setScale(scale);
-                m_layers[WM_BG]->addChild(m_pWaterSprite);
-    
-                m_pWaterSprite->setPosition(451584 + i * offset, 275520 + j * offset);
-            }
-        }
+        m_pWaterSprite = NBWaterSprite::create(WATER_NORMALS);
+        m_pWaterSprite->setTag(WATER_SHADER_TAG);
+        m_pWaterSprite->setScale(scale);
+        m_layers[WM_BG]->addChild(m_pWaterSprite);
+        
+//        for (int i = 0; i < count_x; i++)
+//        {
+//            for (int j = 0; j < count_y; j++)
+//            {
+//                m_pWaterSprite = NBWaterSprite::create(WATER_NORMALS);
+//                m_pWaterSprite->setTag(WATER_SHADER_TAG + i + j * count_x);
+//                m_pWaterSprite->setScale(scale);
+//                m_layers[WM_BG]->addChild(m_pWaterSprite);
+//    
+//                m_pWaterSprite->setPosition(451584 + i * offset, 275520 + j * offset);
+//            }
+//        }
     }
+    m_pWaterSprite->setPosition(position.x + 256 * scale, position.y + 256 * scale);
     return;
     
     
