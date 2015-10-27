@@ -128,14 +128,14 @@ bool LoadingScene::init()
             this->addChild(fireParticle);
             addFireParticle(fireParticle, "LoadingMan_cloud", ccp(size.width / 2, size.height - 130));
 
-            auto kingSpine = IFLoadingSceneArmyNode::create("Loading/Loading_3.atlas", "Spine/Loading/loading.json", "loading", 0.5);
+//            auto kingSpine = IFLoadingSceneArmyNode::create("Loading/Loading_3.atlas", "Spine/Loading/loading.json", "loading", 0.5);
 //            this->addChild(kingSpine);
-            kingSpine->setPositionY(1050);
-            if(CCCommonUtils::isIosAndroidPad())
-            {
-                kingSpine->setScale(2.18);
-                kingSpine->setPosition(ccp(10,2050));
-            }
+//            kingSpine->setPositionY(1050);
+//            if(CCCommonUtils::isIosAndroidPad())
+//            {
+//                kingSpine->setScale(2.18);
+//                kingSpine->setPosition(ccp(10,2050));
+//            }
         }
 		addChild(label);
         
