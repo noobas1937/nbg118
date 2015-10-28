@@ -95,6 +95,44 @@ namespace NBCommonUtils {
         }
         
     }
+    inline Sprite* convertNodeToSprite(Node* node)
+    {
+        
+        Vec2 oldAP = node->getAnchorPoint();
+        
+        Vec2 oldPos = node->getPosition();
+        
+        node->setAnchorPoint(Vec2::ZERO);
+        
+        node->setPosition(Vec2::ZERO);
+        
+        auto renderTexture = RenderTexture::create(node->getContentSize().width, node->getContentSize().height, Texture2D::PixelFormat::RGBA8888);
+        
+        renderTexture->beginWithClear(0, 0, 0, 0);
+        
+        node->visit();
+        
+        renderTexture->end();
+        
+        Director::getInstance()->getRenderer()->render();
+        
+        auto image = renderTexture->newImage();
+        
+        
+        
+        auto tex =TextureCache::getInstance()->addImage(image, "10086");
+        
+        auto sp = Sprite::createWithTexture(tex);
+        
+        
+        node->setAnchorPoint(oldAP);
+        
+        node->setPosition(oldPos);
+        
+        return sp;
+        
+    }
+
     
 }
 

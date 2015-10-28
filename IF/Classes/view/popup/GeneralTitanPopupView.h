@@ -12,6 +12,7 @@
 //#include "CommonInclude.h"
 #include "PopupBaseView.h"
 #include "Titan.h"
+#include "NBProgressBar.h"
 //#include "DefaultTableViewDelegate.h"
 //
 //#define CHANGE_PIC_REMOVE "change.pic.remove"
@@ -49,7 +50,7 @@ public:
 protected:
 
 private:
-    GeneralTitanPopupView():m_titanId(""),feedCD(0),isUpdating(false),upgradeCD(0),isUpgrading(false),queue_id(-1){}
+    GeneralTitanPopupView():m_titanId(""),feedCD(0),isUpdating(false),upgradeCD(0),isUpgrading(false),queue_id(-1),nbpb(NULL),upgradeCDTotal(0){}
     virtual void onEnter();
     virtual void onExit();
     virtual bool init();
@@ -89,7 +90,7 @@ private:
     
     float feedCD ;
     float upgradeCD ;
-    
+    float upgradeCDTotal ;
     
     bool isUpgrading ;
     
@@ -173,7 +174,7 @@ private:
     CCSafeObject<CCLabelIF> m_toolSpeedUpTxt;
     CCSafeObject<CCLabelIF> m_dragonTip;
     
-    
+    CCSafeObject<CCScale9Sprite> m_titanUpgradePro;
     
     CCSafeObject<CCScale9Sprite> m_buildBG;
     CCSafeObject<CCNode>m_titanPosInView;
@@ -268,6 +269,8 @@ private:
     CCSafeObject<CCLabelIF> m_equipLabel6;
     CCSafeObject<CCLabelIF> m_equipLabel7;
     CCSafeObject<CCLabelIF> m_equipLabel8;
+    
+    NBProgressBar* nbpb;
     
 //
 //    CCSafeObject<CCNode> m_icon;
