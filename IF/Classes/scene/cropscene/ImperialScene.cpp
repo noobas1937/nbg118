@@ -628,6 +628,7 @@ void ImperialScene::onCreateVikingsShip()
 //    vikingsRootNode->setPosition(-200,-50);
     vikingsRootNode->addChild(m_vikings3D);
     vikingsRootNode->setPosition(m_touchLayer->convertToNodeSpace(m_vikingNode->convertToWorldSpace(Point(0, 0))));
+    
     m_node3d->addChild(vikingsRootNode);
     
 //    std::vector<std::string> stand;
@@ -645,7 +646,35 @@ void ImperialScene::onCreateVikingsShip()
     
     m_touchLayer->setCameraMask((unsigned short)CameraFlag::USER4, true);
     m_node3d->setCameraMask((unsigned short) CameraFlag::USER2, true);
+    
+    //begin a by ljf
+    onVikingsShipMove(m_vikings3D);
+    //end a by ljf
 }
+
+//begin a by ljf
+void ImperialScene::onVikingsShipMove(NBSprite3D * pSprite3d)
+{
+    if (pSprite3d)
+    {
+        //auto action = RotateBy::create(3, Vec3(0, 360, 0));
+        /*
+        auto action = MoveBy::create(3, Vec3(0, 1000, 0));
+        auto action_back = action->reverse();
+        auto seq = Sequence::create( action, action_back, nullptr );
+        
+        pSprite3d->runAction( RepeatForever::create(seq) );
+        */
+        
+        auto action1 = MoveBy::create(3, Vec3(0, 1000, 0));
+        auto action2 = MoveBy::create(3, Vec3(0, -1000, 0));
+        auto action3 = MoveBy::create(3, Vec3(0, 1000, 0));
+        auto action4 = MoveBy::create(3, Vec3(0, -1000, 0));
+        auto seq = Sequence::create( action1, action2, action3, action4, nullptr);
+        //pSprite3d->runAction( RepeatForever::create(seq) );
+    }
+}
+//end a by ljf
 
 void ImperialScene::wallCallBack(CCObject* params)
 {
@@ -1523,6 +1552,7 @@ void ImperialScene::onUpgradeNewBuild(int buildId)
         m_wallBuild->setNamePos(m_wallNode->getPositionX(), m_wallNode->getPositionY(), m_signLayer, &m_wallBatchs, 0);
         m_wallNode->addChild(m_wallBuild);
     }
+    
 }
 
 float ImperialScene::getTouchLayerScale(){
@@ -2351,6 +2381,12 @@ void ImperialScene::onEnterFrame(float dt)
                     QueueController::getInstance()->startFinishQueue(qid, false);
                     FunBuildController::getInstance()->clearUpBuildingInfo((it->second).itemId);
                 }
+                //begin a by ljf
+                //修改创建码头的时候未创建船的bug
+                if ((it->second).type == FUN_BUILD_TRAINFIELD) {
+                    onCreateVikingsShip();
+                }
+                //end a by ljf
             }
         }
         

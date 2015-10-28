@@ -54,6 +54,7 @@ void main()
 	//v_result = c4;//(c1 + c4 + c5) * 0.333;
 	//end d by ljf
 	//begin a by ljf
+	//v_result = 0.5 * sin(x * 50.0 * 3.1416 - u_time) + 0.5;
 	v_result = 0.5 * sin(x * 50.0 * 3.1416 - u_time) + 0.5;
 	//end a by ljf
 	//begin d by ljf
@@ -74,7 +75,7 @@ void main()
     v_normalCoord1 = v_texcoord0 * 25.0;
     v_normalCoord1.x -= 0.01 * u_time * 0.5;
 	v_normalCoord1.y += 0.02 * u_time * 0.5;
-	//v_normalCoord1 = vec2(v_normalCoord1.x + c1 * 0.01, v_normalCoord1.y + c1 * 0.01) * 1.5;
+	v_normalCoord1 = vec2(v_normalCoord1.x + c1 * 0.01, v_normalCoord1.y + c1 * 0.01) * 1.0;
     //end a by ljf
     v_lightVec = vec3(v_texcoord0.x * 3.0 + (v_position.x + 1.0), v_texcoord0.y, 0.0);
     v_lightVec = normalize(vec3(2.5, -1.0, 1.8) - v_lightVec);
@@ -83,11 +84,15 @@ void main()
 	v_dimmingFactor *= v_dimmingFactor;
 	v_dimmingFactor = min(v_dimmingFactor, 1.0);
     
-    v_waterLightSea = vec4(float(0x2A) / 255.0, float(0x74) / 255.0, float(0xB8) / 255.0, 1.0) * 1.3 * v_dimmingFactor;
-    v_waterLightShore = vec4(float(0xC0) / 255.0, float(0xF4) / 255.0, float(0xE3) / 255.0, 1.0) * v_dimmingFactor;
+    //v_waterLightSea = vec4(float(0x2A) / 255.0, float(0x74) / 255.0, float(0xB8) / 255.0, 1.0) * 1.3 * v_dimmingFactor; //d by ljf
+    v_waterLightSea = vec4(float(0) / 255.0, float(116) / 255.0, float(145) / 255.0, 1.0) * 1.3 * v_dimmingFactor; //a by ljf
+    //v_waterLightShore = vec4(float(0xC0) / 255.0, float(0xF4) / 255.0, float(0xE3) / 255.0, 1.0) * v_dimmingFactor; //d by ljf
+     v_waterLightShore = vec4(float(26) / 255.0, float(150) / 255.0, float(196) / 255.0, 1.0) ; //a by ljf
 
-    v_waterDarkSea = vec4(float(0x1D) / 255.0, float(0x36) / 255.0, float(0x5B) / 255.0, 1.0) * 1.3 * v_dimmingFactor;
-    v_waterDarkShore = vec4(float(0x0B) / 255.0, float(0xAC) / 255.0, float(0x88) / 255.0, 1.0) * v_dimmingFactor;
+    //v_waterDarkSea = vec4(float(0x1D) / 255.0, float(0x36) / 255.0, float(0x5B) / 255.0, 1.0) * 1.3 * v_dimmingFactor; //d by ljf
+    v_waterDarkSea = vec4(float(0) / 255.0, float(17) / 255.0, float(23) / 255.0, 1.0) * 1.3 * v_dimmingFactor; //a by ljf
+    //v_waterDarkShore = vec4(float(0x0B) / 255.0, float(0xAC) / 255.0, float(0x88) / 255.0, 1.0) * v_dimmingFactor; //d by ljf
+    v_waterDarkShore = vec4(float(0) / 255.0, float(90) / 255.0, float(177) / 255.0, 1.0) ; //a by ljf
 
 	#ifdef SIMPLE
 	float temppi = 0.5;

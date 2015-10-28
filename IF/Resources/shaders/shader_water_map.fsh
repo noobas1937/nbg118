@@ -30,7 +30,7 @@ void main()
     vec4 normalMapValue = texture2D(normal, v_normalCoord1.xy);
     gl_FragColor = mix(v_waterDarkSea, v_waterLightSea, (normalMapValue.y * v_result) + (normalMapValue.w + (-v_result * normalMapValue.w))); //d by ljf
     //gl_FragColor = mix(v_waterDarkSea, v_waterLightSea, (normalMapValue.y * 0.5) + (normalMapValue.w + (-0.5 * normalMapValue.w)));
-    //gl_FragColor = normalMapValue;
+    //gl_FragColor = v_waterDarkSea;
 //    gl_FragColor = mix(v_waterDarkSea, v_waterLightSea, (normalMapValue.y * v_result) + (normalMapValue.w * (1.0 - v_result)));
 #else
 	#ifdef MEDIUM
