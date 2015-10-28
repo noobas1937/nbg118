@@ -302,12 +302,12 @@ bool ImperialScene::init()
     //域名修复代码
     string s1IP = CCUserDefault::sharedUserDefault()->getStringForKey(ACCOUNT_IP, "");
     if (s1IP != "" && s1IP == "184.173.110.102") {
-        CCUserDefault::sharedUserDefault()->setStringForKey(ACCOUNT_IP, "s1.cok.elexapp.com");
+        CCUserDefault::sharedUserDefault()->setStringForKey(ACCOUNT_IP, "s1.nbg.elexapp.com");
         CCUserDefault::sharedUserDefault()->flush();
     }
     else if (s1IP != "" && s1IP == "184.173.110.99")
     {
-        CCUserDefault::sharedUserDefault()->setStringForKey(ACCOUNT_IP, "s2.cok.elexapp.com");
+        CCUserDefault::sharedUserDefault()->setStringForKey(ACCOUNT_IP, "s2.nbg.elexapp.com");
         CCUserDefault::sharedUserDefault()->flush();
     }
     if (!GlobalData::shared()->isXMLInitFlag) {
@@ -599,7 +599,7 @@ void ImperialScene::onCreateTitan()
     }
     m_Titan->turnFront();
 
-    auto titanRootNode = Node::create();
+    titanRootNode = Node::create();
     titanRootNode->setRotation3D(Vec3(32, 39, -24));
     titanRootNode->addChild(m_Titan);
     titanRootNode->setPosition(m_touchLayer->convertToNodeSpace(m_titanNode->convertToWorldSpace(Point(0, 0))));
@@ -925,13 +925,28 @@ void ImperialScene::titanChangeStatus(CCObject* obj){
 }
 void ImperialScene::handleTitanUpgrade(CCObject* obj)
 {
-    if(GlobalData::shared()->titanInfo.level == 2)//fusheng 龙需要重新设置状态
+    string evolution = CCCommonUtils::getPropById(CC_ITOA(GlobalData::shared()->titanInfo.tid), "evolution");
+    
+    if(evolution == "1")
     {
-        if (m_Titan){
-            m_Titan->resetDisplay(GlobalData::shared()->titanInfo.tid);
+//        if(GlobalData::shared()->titanInfo.level == 2)//fusheng 龙需要重新设置状态
+        {
+            
+            if (m_Titan){
+                
+                m_Titan->removeFromParent();
+                m_Titan = Titan::create(GlobalData::shared()->titanInfo.tid);
+                
+                if (!m_Titan) {
+                    CCLOG("Titan create error!!!!!!!!!!!!");
+                    return;
+                }
+                m_Titan->turnFront();
+                
+                titanRootNode->addChild(m_Titan);
+            }
         }
     }
-    
     CCLOG("ImperialScene titan sheng ji ");
 }
 void ImperialScene::titanUpgradeComplete(CCObject* obj){

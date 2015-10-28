@@ -767,6 +767,10 @@ void WorldMapView::openTilePanel(unsigned int index) {
         }
             break;
         case MonsterTile:{//探索
+            // guojiang
+            CCCommonUtils::flyHint("", "", _lang("E100008"));//fusheng 这个界面 美术没做
+            return;
+            
             // todo
             SoundController::sharedSound()->playEffects(Music_Sfx_city_castle);
             int index = info.parentCityIndex;
@@ -5569,7 +5573,8 @@ void WorldMapView::addUnderNode(unsigned int index) {
         }
             break;
         case MonsterTile:{
-            auto under = CCLoadSprite::createSprite(getSpriteName(info).c_str());
+            string picName = getSpriteName(info);
+            auto under = CCLoadSprite::createSprite(picName.c_str());
             under->setAnchorPoint(ccp(0, 0));
             under->setTag(index);
             under->setPosition(ccp(pos.x-_halfTileSize.width,pos.y-_halfTileSize.height)); // left-bottom corner
@@ -5581,6 +5586,10 @@ void WorldMapView::addUnderNode(unsigned int index) {
                 addBatchItem(Partical_fieldMonster, index);
             }
             
+            if (picName == "0013.png" || picName == "0014.png" || picName == "0015.png" || picName == "0016.png")
+            {
+                CCCommonUtils::setSpriteGray(under, true);
+            }
         }
             break;
         case FieldMonster: {

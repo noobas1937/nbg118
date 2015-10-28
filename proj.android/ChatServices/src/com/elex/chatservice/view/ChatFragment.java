@@ -660,22 +660,25 @@ public class ChatFragment extends ActionBarFragment
 		channelButton = new ArrayList<Button>();
 		channelButton.add(buttonCountry);
 		channelButton.add(buttonAlliance);
-
+		
 		buttonJoinAlliance = (Button) view.findViewById(ResUtil.getId(this.activity, "id", "joinAllianceBtn"));
-		buttonJoinAlliance.setText(LanguageManager.getLangByKey(LanguageKeys.MENU_JOIN));
-
-		buttonJoinAlliance.setOnClickListener(new View.OnClickListener()
-		{
-
-			@Override
-			public void onClick(View v)
-			{
-				ChatServiceController.doHostAction("joinAllianceBtnClick", "", "", "", true);
-			}
-		});
+		// guojiang
+		buttonJoinAlliance.setVisibility(Button.INVISIBLE);
+//		buttonJoinAlliance.setText(LanguageManager.getLangByKey(LanguageKeys.MENU_JOIN));
+//			
+//		buttonJoinAlliance.setOnClickListener(new View.OnClickListener()
+//		{
+//
+//			@Override
+//			public void onClick(View v)
+//			{			
+//				ChatServiceController.doHostAction("joinAllianceBtnClick", "", "", "", true);
+//			}
+//		});
 
 		noAllianceTipText = ((TextView) view.findViewById(ResUtil.getId(this.activity, "id", "joinAllianceTipText")));
-		noAllianceTipText.setText(LanguageManager.getLangByKey(LanguageKeys.TIP_JOIN_ALLIANCE));
+		noAllianceTipText.setText("Coming Soon!");
+//		noAllianceTipText.setText(LanguageManager.getLangByKey(LanguageKeys.TIP_JOIN_ALLIANCE));
 
 		refreshSendButton();
 
@@ -1634,7 +1637,8 @@ public class ChatFragment extends ActionBarFragment
 		{
 			try
 			{
-				showJoinAlliancePopup();
+				// guojiang
+//				showJoinAlliancePopup();
 			}
 			catch (Exception e)
 			{

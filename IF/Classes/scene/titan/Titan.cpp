@@ -201,6 +201,7 @@ void Titan::resetDisplay(int tid)
     bodyParam.textureName = "3d/" + CCCommonUtils::getPropById(CC_ITOA(tid), "texture") + ".jpg";
 
     if (_model) {
+        _model->stopAllActions();
         _model->removeFromParent();
     }
     

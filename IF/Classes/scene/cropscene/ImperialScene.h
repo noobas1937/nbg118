@@ -244,7 +244,7 @@ private:
     void changeDayOrNight(bool isNight, bool isAni);
     void addTorchToNode(CCNode *node, int index);
     CCSafeObject<CCNode> m_nodeBuildings[BUILD_COUNT];
-    
+    CCSafeObject<CCNode> titanRootNode;
     CCSafeObject<CCNode> m_flagNode;
     CCSafeObject<SpeBuild> m_flagBuild;
     CCSafeObject<CCNode> m_hdNode;
