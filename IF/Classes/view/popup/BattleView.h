@@ -27,7 +27,7 @@ class BattleView: public PopupBaseView
 {
 public:
     static BattleView* create(unsigned int startIndex,unsigned int targetIndex,unsigned int haveOwner,float slow=1.0,int rally=0,int bType=-1,int wtIndex=-1,std::string other="", int targetType=0);
-    BattleView():m_startIndex(0),m_targetIndex(0),m_haveOwner(0),m_rally(0),m_bType(-1),m_wtIndex(0),m_other(string()),m_targetType(0),m_slow(1.0){};
+    BattleView():m_startIndex(0),m_targetIndex(0),m_haveOwner(0),m_rally(0),m_bType(-1),m_wtIndex(0),m_other(string()),m_targetType(0),m_slow(1.0),isBegin(true){};
     virtual ~BattleView();
     CCNode* getGuideNode(string _key);
 protected:
@@ -110,6 +110,7 @@ private:
     unsigned int m_haveOwner;
     int m_index;
     float m_slow;
+    bool isBegin;
 };
 
 class SoldierCell :

@@ -121,7 +121,9 @@ std::string LocalController::getLanguageFileName()
     std::string preferredLanguage = CCUserDefault::sharedUserDefault()->getStringForKey(KEY_PREFERRED_LANGUAGE,"");
     std::string fileName="";
     if(preferredLanguage==""){
-        fileName = getLanguageFileNameBasedOnUserSystem();
+        // tao.yu 第一版只开放英文
+//        fileName = getLanguageFileNameBasedOnUserSystem();
+        fileName = "en";
     }else{
         fileName=preferredLanguage;
     }

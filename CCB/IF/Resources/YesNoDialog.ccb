@@ -2861,6 +2861,18 @@
 									</dict>
 									<dict>
 										<key>name</key>
+										<string>color</string>
+										<key>type</key>
+										<string>Color3</string>
+										<key>value</key>
+										<array>
+											<integer>0</integer>
+											<integer>0</integer>
+											<integer>0</integer>
+										</array>
+									</dict>
+									<dict>
+										<key>name</key>
 										<string>dimensions</string>
 										<key>type</key>
 										<string>Size</string>
@@ -2982,8 +2994,8 @@
 										<string>Color3</string>
 										<key>value</key>
 										<array>
-											<integer>255</integer>
-											<integer>225</integer>
+											<integer>0</integer>
+											<integer>0</integer>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -3302,9 +3314,9 @@
 										<string>Color3</string>
 										<key>value</key>
 										<array>
-											<integer>255</integer>
-											<integer>255</integer>
-											<integer>255</integer>
+											<integer>0</integer>
+											<integer>0</integer>
+											<integer>0</integer>
 										</array>
 									</dict>
 									<dict>
@@ -3325,9 +3337,9 @@
 										<string>Color3</string>
 										<key>value</key>
 										<array>
-											<integer>255</integer>
-											<integer>255</integer>
-											<integer>255</integer>
+											<integer>0</integer>
+											<integer>0</integer>
+											<integer>0</integer>
 										</array>
 									</dict>
 									<dict>
@@ -3348,9 +3360,9 @@
 										<string>Color3</string>
 										<key>value</key>
 										<array>
-											<integer>255</integer>
-											<integer>255</integer>
-											<integer>255</integer>
+											<integer>0</integer>
+											<integer>0</integer>
+											<integer>0</integer>
 										</array>
 									</dict>
 								</array>
@@ -4737,6 +4749,8 @@
 								<real>0.0</real>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>

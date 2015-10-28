@@ -1066,7 +1066,7 @@
 										<key>value</key>
 										<array>
 											<real>0.0</real>
-											<real>54</real>
+											<real>52</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -1090,7 +1090,7 @@
 										<array>
 											<real>1</real>
 											<real>1</real>
-											<false/>
+											<true/>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -1167,8 +1167,8 @@
 										<string>Size</string>
 										<key>value</key>
 										<array>
-											<real>128</real>
-											<real>133</real>
+											<real>98</real>
+											<real>111</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -1188,7 +1188,7 @@
 										<key>value</key>
 										<array>
 											<string>Common/Common_1.plist</string>
-											<string>but_03.png</string>
+											<string>bnt_02.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -1211,7 +1211,7 @@
 										<key>value</key>
 										<array>
 											<string>Common/Common_1.plist</string>
-											<string>but_03.png</string>
+											<string>bnt_02.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -1234,7 +1234,7 @@
 										<key>value</key>
 										<array>
 											<string>Common/Common_1.plist</string>
-											<string>but_03.png</string>
+											<string>bnt_02.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -1250,6 +1250,8 @@
 										</array>
 									</dict>
 								</array>
+								<key>selected</key>
+								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>
