@@ -677,7 +677,8 @@ public class ChatFragment extends ActionBarFragment
 //		});
 
 		noAllianceTipText = ((TextView) view.findViewById(ResUtil.getId(this.activity, "id", "joinAllianceTipText")));
-		noAllianceTipText.setText(LanguageManager.getLangByKey(LanguageKeys.TIP_JOIN_ALLIANCE));
+		noAllianceTipText.setText("Coming Soon!");
+//		noAllianceTipText.setText(LanguageManager.getLangByKey(LanguageKeys.TIP_JOIN_ALLIANCE));
 
 		refreshSendButton();
 
