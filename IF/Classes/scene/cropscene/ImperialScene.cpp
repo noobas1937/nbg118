@@ -881,7 +881,7 @@ void ImperialScene::titanChangeStatus(CCObject* obj){
     
     if (status == 0) {//fusheng 正常显示
         
-        if(!m_Titan->isVisible())
+        if(m_Titan&&!m_Titan->isVisible())
         {
             m_Titan->setVisible(true);
             m_Titan->reset();
@@ -889,7 +889,7 @@ void ImperialScene::titanChangeStatus(CCObject* obj){
         
     }else if(status == 1)//fusheng 出征
     {
-        if (m_Titan->isVisible()) {
+        if (m_Titan&&m_Titan->isVisible()) {
             m_Titan->setVisible(false);
         }
     }
