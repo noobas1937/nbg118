@@ -31,6 +31,7 @@ GlobalData* GlobalData::shared()
         _sharedInstance->replayTime = 100000;
         _sharedInstance->cnReplayFlag = 0;
         _sharedInstance->sceneResourceStepLoad = 0;
+        _sharedInstance->isChatOpen = true;
     }
     return _sharedInstance;
 }

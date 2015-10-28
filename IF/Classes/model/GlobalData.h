@@ -601,6 +601,10 @@ public:
     int serverMax;
     map<string, int> testSwitchMap;//留存功能测试开关
     int chinaSwitchFlag;//大陆显示国旗开关 0不变 1为将五星红旗显示为纯红色旗子 2为不显示国旗
+    
+    
+    // tao.yu
+    bool isChatOpen; // true 开
 private:
     GlobalData() = default;
     time_t worldTime;

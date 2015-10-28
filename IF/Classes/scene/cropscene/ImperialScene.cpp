@@ -528,7 +528,7 @@ void ImperialScene::buildingCallBack(CCObject* params)
 
 
     cocos2d::CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Battle/Battle_soldier.plist");
-    m_soldierBatchNode = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("a010_0_N_attack_0.png")->getTexture());
+    m_soldierBatchNode = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("a010_0_N_move_0.png")->getTexture());
     m_touchLayer->addChild(m_soldierBatchNode, 1999);
     
     refreshSoldiers(NULL);
@@ -4518,14 +4518,14 @@ void ImperialScene::reSetTalkTime()
 void ImperialScene::addDefenseFailEffect(){
     m_failEffectNode->removeAllChildrenWithCleanup(true);
     CCSpriteFrame* cf1 = CCLoadSprite::getSF("fireBomb.png");
-    CCSpriteFrame* cf2 = CCLoadSprite::getSF("a010_0_N_attack_0.png");
+    CCSpriteFrame* cf2 = CCLoadSprite::getSF("a010_0_N_move_0.png");
     if(cf1==NULL || cf2==NULL){
         return ;
     }
     CCSpriteBatchNode* bombBN = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("fireBomb.png")->getTexture());
     m_failEffectNode->addChild(bombBN);
     
-    CCSpriteBatchNode* soldierBN = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("a010_0_N_attack_0.png")->getTexture());
+    CCSpriteBatchNode* soldierBN = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("a010_0_N_move_0.png")->getTexture());
     m_failEffectNode->addChild(soldierBN);
     
     string fireName = "WarFire_";
