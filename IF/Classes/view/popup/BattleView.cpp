@@ -1250,18 +1250,36 @@ void SoldierCell::setData(string itemId, int num, int type, int rally)
     
     m_picNode->removeAllChildren();
     
+    int id = atoi(itemId.c_str());
     m_iconPath = picName;
-    auto pic = CCLoadSprite::createSprite(picName.c_str());
-    CCCommonUtils::setSpriteMaxSize(pic, 110);
-    m_picNode->addChild(pic);
-    pic->setPositionY(-10);
+    if (picName != "ico107401_small.png")
+    {
+        auto pic = CCLoadSprite::createSprite(picName.c_str());
+        CCCommonUtils::setSpriteMaxSize(pic, 110);
+        m_picNode->addChild(pic);
+        pic->setPositionY(-10);
+        
+        m_picBg0->setVisible(id % 4 == 0);
+        m_picBg1->setVisible(id % 4 == 1);
+        m_picBg2->setVisible(id % 4 == 2);
+        m_picBg3->setVisible(id % 4 == 3);
+    }
+    else
+    {
+        auto pic = CCLoadSprite::createSprite("cz_long1.png");
+        CCCommonUtils::setSpriteMaxSize(pic, 110);
+        m_picNode->addChild(pic);
+        pic->setPositionY(-10);
+        
+        m_picBg0->setVisible(false);
+        m_picBg1->setVisible(false);
+        m_picBg2->setVisible(false);
+        m_picBg3->setVisible(false);
+    }
+    
     this->m_levelNode->removeAllChildren();
     string num1 = m_soldierId.substr(m_soldierId.size()-2);
-    int id = atoi(itemId.c_str());
-    m_picBg0->setVisible(id % 4 == 0);
-    m_picBg1->setVisible(id % 4 == 1);
-    m_picBg2->setVisible(id % 4 == 2);
-    m_picBg3->setVisible(id % 4 == 3);
+    
     if (id>= 107401 && id<= 107430) {//fusheng 泰坦 计算罗马数字时不加一
         auto pic1= CCCommonUtils::getRomanSprite(atoi(num1.c_str()));
         m_levelNode->addChild(pic1);
