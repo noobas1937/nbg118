@@ -946,6 +946,7 @@
 		972666461BAC07D300D59BC2 /* TitanInView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 972666441BAC07D300D59BC2 /* TitanInView.cpp */; };
 		9737F0B31BD6188900E1B440 /* NBCommonUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9737F0B11BD6188900E1B440 /* NBCommonUtils.cpp */; };
 		974034461BAFDB3C00330AD3 /* TitanController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 974034441BAFDB3C00330AD3 /* TitanController.cpp */; };
+		97CF485F1BE10B9E003F3C67 /* NBProgressBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 97CF485D1BE10B9E003F3C67 /* NBProgressBar.cpp */; };
 		A817139A1B660629008DE4D4 /* ChatTestCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A81713941B660629008DE4D4 /* ChatTestCommand.cpp */; };
 		A817139B1B660629008DE4D4 /* GetNewMailMsgCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A81713961B660629008DE4D4 /* GetNewMailMsgCommand.cpp */; };
 		A817139C1B660629008DE4D4 /* GetUpdateMailCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A81713981B660629008DE4D4 /* GetUpdateMailCommand.cpp */; };
@@ -3065,6 +3066,8 @@
 		9737F0B21BD6188900E1B440 /* NBCommonUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBCommonUtils.h; sourceTree = "<group>"; };
 		974034441BAFDB3C00330AD3 /* TitanController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TitanController.cpp; sourceTree = "<group>"; };
 		974034451BAFDB3C00330AD3 /* TitanController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitanController.h; sourceTree = "<group>"; };
+		97CF485D1BE10B9E003F3C67 /* NBProgressBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBProgressBar.cpp; sourceTree = "<group>"; };
+		97CF485E1BE10B9E003F3C67 /* NBProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBProgressBar.h; sourceTree = "<group>"; };
 		A81713941B660629008DE4D4 /* ChatTestCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChatTestCommand.cpp; sourceTree = "<group>"; };
 		A81713951B660629008DE4D4 /* ChatTestCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatTestCommand.h; sourceTree = "<group>"; };
 		A81713961B660629008DE4D4 /* GetNewMailMsgCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GetNewMailMsgCommand.cpp; sourceTree = "<group>"; };
@@ -6559,6 +6562,8 @@
 		FD6F416017CDD218008FDB9C /* GUI */ = {
 			isa = PBXGroup;
 			children = (
+				97CF485D1BE10B9E003F3C67 /* NBProgressBar.cpp */,
+				97CF485E1BE10B9E003F3C67 /* NBProgressBar.h */,
 				9716CF281BD4A1BC00BC3D38 /* NBSlider.cpp */,
 				9716CF291BD4A1BC00BC3D38 /* NBSlider.h */,
 				36DA938E1BCE353D0091A48B /* NBGRenderTarget.cpp */,
@@ -7790,6 +7795,7 @@
 				FD1BA2631827883E00E2A12C /* ScienceCommand.cpp in Sources */,
 				366E307717D58D75006CCCBF /* LogoutCommand.cpp in Sources */,
 				366E307A17D591EE006CCCBF /* SFHFKeychainUtils.m in Sources */,
+				97CF485F1BE10B9E003F3C67 /* NBProgressBar.cpp in Sources */,
 				366E308C17D70557006CCCBF /* NetController.cpp in Sources */,
 				366E308D17D70557006CCCBF /* NetController.mm in Sources */,
 				DBB37B1517D71F1500C7AB15 /* ParticleController.cpp in Sources */,

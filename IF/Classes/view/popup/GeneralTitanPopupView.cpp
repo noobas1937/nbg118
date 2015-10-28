@@ -241,6 +241,28 @@ bool GeneralTitanPopupView::init()
     m_toolSpeedUpTxt->setString(_lang("500009"));
     
     m_dragonTip->setString(_lang("500017"));
+    
+    
+    Scale9Sprite* Mask = Scale9Sprite::createWithSpriteFrameName("nb_feedMask.png");//fusheng titan升级时间进度条
+    
+    Mask->setCapInsets(Rect(10,1,10,11));
+    
+    auto maskSize = Mask->getContentSize();
+    
+    maskSize.width += m_titanUpgradePro->getContentSize().width;
+    
+    Mask->setContentSize(maskSize);
+    
+    auto spMask =convertNodeToSprite(Mask);
+
+    
+    nbpb = NBProgressBar::create(m_titanUpgradePro,spMask,0.2,-10);
+    
+    nbpb->setPosition(75,-132);
+    
+    titanUpingNode->addChild(nbpb);
+    
+    nbpb->setVisible(false);
   
     return true;
 }
@@ -304,52 +326,105 @@ CCNode* GeneralTitanPopupView::getGuideNode(string _key)
 
 void GeneralTitanPopupView::handleTitanUpgrade(CCObject* obj)
 {
-    if(GlobalData::shared()->titanInfo.level == 2)
+    
+    
+    string evolution = CCCommonUtils::getPropById(CC_ITOA(GlobalData::shared()->titanInfo.tid), "evolution");
+    
+    if(evolution == "1")
     {
-        
-        
-        TitanInView* view = dynamic_cast<TitanInView*>(  m_titanPosInView->getChildByTag(10086));
-        view->m_Titan->changeTitanState(Titan::eActState::Idle);//fusheng 蛋破碎
-        if (view) {
+        if(GlobalData::shared()->titanInfo.level == 2)
+        {
             
-            CCLOG("GeneralTitanPopupView titan sheng ji ");
-//            view->setVisible(false);
+            
+            TitanInView* view = dynamic_cast<TitanInView*>(  m_titanPosInView->getChildByTag(10086));
+            view->m_Titan->changeTitanState(Titan::eActState::Idle);//fusheng 蛋破碎
+            if (view) {
+                
+                CCLOG("GeneralTitanPopupView titan sheng ji ");
+                //            view->setVisible(false);
+            }
+            
+            auto node =DragonUpgradeAniNode::create(GlobalData::shared()->titanInfo.tid);
+            
+            m_titanPosInView->addChild(node);
+            
+        }
+        else if(true)
+        {
+        
+//            TitanInView* view = dynamic_cast<TitanInView*>(  m_titanPosInView->getChildByTag(10086));
+//            if (view) {
+//                view->removeFromParent();
+//                
+//                auto tieanInView = TitanInView::create();
+//                
+//                tieanInView->setTag(10086);
+//                
+//                m_titanPosInView->addChild(tieanInView );
+//                
+//            }
+            auto node = Node::create();
+            node->setTag(10010);
+            auto particle = ParticleController::createParticle("SmithyFireLoop_2");//fusheng 添加粒子特效
+            for(int i =0 ;i<9;i++)
+            {
+                auto particle = ParticleController::createParticle(CCString::createWithFormat("DragonLv_%d",i)->getCString());
+                if(particle)
+                {
+                    node->addChild(particle);
+                    
+                    if (i<2) {
+                        particle->setPositionY(223);
+                    }
+                }
+                
+            }
+            node->setScale(1.5);
+            m_titanPosInView->addChild(node);
+            
+            
+            this->runAction(Sequence::create(DelayTime::create(1),CallFunc::create( CC_CALLBACK_0(GeneralTitanPopupView::aniCallBack, this )),nullptr));//fusheng 固定时间
+            
         }
         
-        auto node =DragonUpgradeAniNode::create(GlobalData::shared()->titanInfo.tid);
-        
-        m_titanPosInView->addChild(node);
-        
     }
- 
+    
+}
+void GeneralTitanPopupView::aniCallBack()
+{
+    handleTianUpgradeAnimationComplete(NULL);
 }
 
 void GeneralTitanPopupView::handleTianUpgradeAnimationComplete(CCObject* obj)
 {
-    if(GlobalData::shared()->titanInfo.level == 2)
-    {
+//    if(GlobalData::shared()->titanInfo.level == 2)
+//    {
+//        
+    
+    TitanInView* view = dynamic_cast<TitanInView*>(  m_titanPosInView->getChildByTag(10086));
+    
+    if (view) {
         
+        //            view->resetDisplay(GlobalData::shared()->titanInfo.tid);//fusheng 换成龙
+        view->removeFromParent();
         
-        TitanInView* view = dynamic_cast<TitanInView*>(  m_titanPosInView->getChildByTag(10086));
+        auto tieanInView = TitanInView::create();
         
-        if (view) {
-
-//            view->resetDisplay(GlobalData::shared()->titanInfo.tid);//fusheng 换成龙
-            view->removeFromParent();
-           
-            auto tieanInView = TitanInView::create();
-            
-            tieanInView->setTag(10086);
-            
-            m_titanPosInView->addChild(tieanInView );
-            
-            CCLOG("GeneralTitanPopupView titan sheng ji animation complete");
-//            view->setVisible(true);
-        }
+        tieanInView->setTag(10086);
         
+        m_titanPosInView->addChild(tieanInView );
         
-        
+        CCLOG("GeneralTitanPopupView titan sheng ji animation complete");
+        //            view->setVisible(true);
     }
+    CCParticleSystemQuad* particle = dynamic_cast<CCParticleSystemQuad*>(  m_titanPosInView->getChildByTag(10010));
+    
+    if(particle)
+    {
+        particle->removeFromParent();
+    }
+    
+//    }
     
 }
 
@@ -430,6 +505,11 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
             }
             
             
+        }
+        
+        if (GlobalData::shared()->allQueuesInfo.find(queue_id) != GlobalData::shared()->allQueuesInfo.end()) {
+            
+           upgradeCDTotal = GlobalData::shared()->allQueuesInfo[1101].finishTime - GlobalData::shared()->allQueuesInfo[1101].startTime;
         }
         
         
@@ -907,6 +987,8 @@ bool GeneralTitanPopupView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarge
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanFeedStatus_1", CCLabelIF*, this->m_titanFeedStatus_1);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanFeedStatus_2", CCLabelIF*, this->m_titanFeedStatus_2);
     
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanUpgradePro", CCScale9Sprite*, this->m_titanUpgradePro);
+    
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanFeedTxt", CCLabelIF*, this->m_titanFeedTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_feedCDBtnTxt", CCLabelIF*, this->m_feedCDBtnTxt);
@@ -1098,6 +1180,16 @@ void GeneralTitanPopupView::update(float time){
             string timeInfo = CC_SECTOA((int)this->upgradeCD);
             this->m_upgradeCDTxt->setString(timeInfo);
             
+            
+            if(upgradeCDTotal!=0&&upgradeCDTotal>0) //fusheng 进度条
+            {
+                float ratio = (upgradeCDTotal-upgradeCD)/upgradeCDTotal;
+                nbpb->setPercent(ratio);
+            }
+            else
+            {
+                nbpb->setPercent(1);
+            }
         }
         else
         {

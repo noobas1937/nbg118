@@ -121,4 +121,18 @@ private:
     CCSafeObject<CCLabelIF> m_trapNum;
 };
 
+class NewTroopsTitleNB: public CCNode
+, public CCBMemberVariableAssigner
+{
+public:
+    static NewTroopsTitleNB* create(string id,int num);
+    virtual bool init(string id,int num);
+    virtual bool onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode);
+protected:
+private:
+    CCSafeObject<CCLabelIF> m_soliderTypeTxt;
+    CCSafeObject<CCLabelIF> m_soliderTotalNumTxt;
+
+};
+
 #endif /* defined(__IF__NewTroopsView__) */

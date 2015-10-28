@@ -318,8 +318,6 @@
 								<false/>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -573,8 +571,8 @@
 								<string>Size</string>
 								<key>value</key>
 								<array>
-									<real>244</real>
-									<real>74</real>
+									<real>317</real>
+									<real>90</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -594,7 +592,7 @@
 								<key>value</key>
 								<array>
 									<string>Common/Common_1.plist</string>
-									<string>btn_green3.png</string>
+									<string>nb_but_2.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -604,9 +602,9 @@
 								<string>Color3</string>
 								<key>value</key>
 								<array>
-									<integer>255</integer>
-									<integer>255</integer>
-									<integer>255</integer>
+									<integer>137</integer>
+									<integer>83</integer>
+									<integer>2</integer>
 								</array>
 							</dict>
 							<dict>
@@ -617,7 +615,7 @@
 								<key>value</key>
 								<array>
 									<string>Common/Common_1.plist</string>
-									<string>btn_green3.png</string>
+									<string>nb_but_2.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -627,9 +625,9 @@
 								<string>Color3</string>
 								<key>value</key>
 								<array>
-									<integer>255</integer>
-									<integer>255</integer>
-									<integer>255</integer>
+									<integer>137</integer>
+									<integer>83</integer>
+									<integer>2</integer>
 								</array>
 							</dict>
 							<dict>
@@ -640,7 +638,7 @@
 								<key>value</key>
 								<array>
 									<string>Common/Common_1.plist</string>
-									<string>Btn_grey.png</string>
+									<string>nb_but_2.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -650,9 +648,9 @@
 								<string>Color3</string>
 								<key>value</key>
 								<array>
-									<integer>255</integer>
-									<integer>255</integer>
-									<integer>255</integer>
+									<integer>137</integer>
+									<integer>83</integer>
+									<integer>2</integer>
 								</array>
 							</dict>
 						</array>
@@ -1333,9 +1331,9 @@
 								<string>Color3</string>
 								<key>value</key>
 								<array>
-									<integer>213</integer>
-									<integer>213</integer>
-									<integer>213</integer>
+									<integer>137</integer>
+									<integer>83</integer>
+									<integer>2</integer>
 								</array>
 							</dict>
 							<dict>
@@ -1399,7 +1397,7 @@
 								<key>value</key>
 								<array>
 									<real>0.0</real>
-									<real>-111</real>
+									<real>-103</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -1452,6 +1450,18 @@
 								<array>
 									<real>20</real>
 									<integer>0</integer>
+								</array>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>color</string>
+								<key>type</key>
+								<string>Color3</string>
+								<key>value</key>
+								<array>
+									<integer>137</integer>
+									<integer>83</integer>
+									<integer>2</integer>
 								</array>
 							</dict>
 							<dict>
