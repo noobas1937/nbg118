@@ -304,52 +304,96 @@ CCNode* GeneralTitanPopupView::getGuideNode(string _key)
 
 void GeneralTitanPopupView::handleTitanUpgrade(CCObject* obj)
 {
-    if(GlobalData::shared()->titanInfo.level == 2)
+    
+    
+    string evolution = CCCommonUtils::getPropById(CC_ITOA(GlobalData::shared()->titanInfo.tid), "evolution");
+    
+    if(evolution == "1")
     {
-        
-        
-        TitanInView* view = dynamic_cast<TitanInView*>(  m_titanPosInView->getChildByTag(10086));
-        view->m_Titan->changeTitanState(Titan::eActState::Idle);//fusheng 蛋破碎
-        if (view) {
+        if(GlobalData::shared()->titanInfo.level == 2)
+        {
             
-            CCLOG("GeneralTitanPopupView titan sheng ji ");
-//            view->setVisible(false);
+            
+            TitanInView* view = dynamic_cast<TitanInView*>(  m_titanPosInView->getChildByTag(10086));
+            view->m_Titan->changeTitanState(Titan::eActState::Idle);//fusheng 蛋破碎
+            if (view) {
+                
+                CCLOG("GeneralTitanPopupView titan sheng ji ");
+                //            view->setVisible(false);
+            }
+            
+            auto node =DragonUpgradeAniNode::create(GlobalData::shared()->titanInfo.tid);
+            
+            m_titanPosInView->addChild(node);
+            
+        }
+        else if(true)
+        {
+        
+//            TitanInView* view = dynamic_cast<TitanInView*>(  m_titanPosInView->getChildByTag(10086));
+//            if (view) {
+//                view->removeFromParent();
+//                
+//                auto tieanInView = TitanInView::create();
+//                
+//                tieanInView->setTag(10086);
+//                
+//                m_titanPosInView->addChild(tieanInView );
+//                
+//            }
+            
+            auto particle = ParticleController::createParticle("SmithyFireLoop_2");//fusheng 添加粒子特效
+            
+            if(particle)
+            {
+                particle->setTag(10010);
+                m_titanPosInView->addChild(particle);
+            }
+            
+            
+            
+            this->runAction(Sequence::create(DelayTime::create(2),CallFunc::create( CC_CALLBACK_0(GeneralTitanPopupView::aniCallBack, this )),nullptr));//fusheng 固定时间
+            
         }
         
-        auto node =DragonUpgradeAniNode::create(GlobalData::shared()->titanInfo.tid);
-        
-        m_titanPosInView->addChild(node);
-        
     }
- 
+    
+}
+void GeneralTitanPopupView::aniCallBack()
+{
+    handleTianUpgradeAnimationComplete(NULL);
 }
 
 void GeneralTitanPopupView::handleTianUpgradeAnimationComplete(CCObject* obj)
 {
-    if(GlobalData::shared()->titanInfo.level == 2)
-    {
+//    if(GlobalData::shared()->titanInfo.level == 2)
+//    {
+//        
+    
+    TitanInView* view = dynamic_cast<TitanInView*>(  m_titanPosInView->getChildByTag(10086));
+    
+    if (view) {
         
+        //            view->resetDisplay(GlobalData::shared()->titanInfo.tid);//fusheng 换成龙
+        view->removeFromParent();
         
-        TitanInView* view = dynamic_cast<TitanInView*>(  m_titanPosInView->getChildByTag(10086));
+        auto tieanInView = TitanInView::create();
         
-        if (view) {
-
-//            view->resetDisplay(GlobalData::shared()->titanInfo.tid);//fusheng 换成龙
-            view->removeFromParent();
-           
-            auto tieanInView = TitanInView::create();
-            
-            tieanInView->setTag(10086);
-            
-            m_titanPosInView->addChild(tieanInView );
-            
-            CCLOG("GeneralTitanPopupView titan sheng ji animation complete");
-//            view->setVisible(true);
-        }
+        tieanInView->setTag(10086);
         
+        m_titanPosInView->addChild(tieanInView );
         
-        
+        CCLOG("GeneralTitanPopupView titan sheng ji animation complete");
+        //            view->setVisible(true);
     }
+    CCParticleSystemQuad* particle = dynamic_cast<CCParticleSystemQuad*>(  m_titanPosInView->getChildByTag(10010));
+    
+    if(particle)
+    {
+        particle->removeFromParent();
+    }
+    
+//    }
     
 }
 

@@ -49,8 +49,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>-314.54400634765625</real>
-									<real>-289.63201904296875</real>
+									<real>-393.54400634765625</real>
+									<real>-193.63201904296875</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -62,7 +62,7 @@
 								<key>value</key>
 								<array>
 									<real>400</real>
-									<real>120</real>
+									<real>180</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -92,14 +92,6 @@
 							</dict>
 							<dict>
 								<key>name</key>
-								<string>rotation</string>
-								<key>type</key>
-								<string>Degrees</string>
-								<key>value</key>
-								<real>-26</real>
-							</dict>
-							<dict>
-								<key>name</key>
 								<string>ignoreAnchorPointForPosition</string>
 								<key>type</key>
 								<string>Check</string>
@@ -107,6 +99,8 @@
 								<false/>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>

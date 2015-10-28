@@ -49,11 +49,11 @@ bool ConfirmDialogView::init()
         m_resNode->addChild(spr);
         CCLabelIF* label = CCLabelIF::create();
         label->setString(CC_ITOA_K(m_wood));
-        label->setColor(ccRED);
+        label->setColor(ccBLACK);
         label->setFontSize(22);
         label->setVerticalAlignment(kCCVerticalTextAlignmentTop);
         label->setHorizontalAlignment(kCCTextAlignmentLeft);
-        label->setPosition(ccp(offx+2, -40));
+        label->setPosition(ccp(offx+5+spr->getContentSize().width, 0));//fusheng
         if (CCCommonUtils::isIosAndroidPad())
         {
             label->setScale(0.5);
@@ -68,11 +68,11 @@ bool ConfirmDialogView::init()
         m_resNode->addChild(spr);
         CCLabelIF* label = CCLabelIF::create();
         label->setString(CC_ITOA_K(m_stone));
-        label->setColor(ccRED);
+        label->setColor(ccBLACK);
         label->setFontSize(22);
         label->setVerticalAlignment(kCCVerticalTextAlignmentTop);
         label->setHorizontalAlignment(kCCTextAlignmentLeft);
-        label->setPosition(ccp(offx+2, -40));
+        label->setPosition(ccp(offx+5+spr->getContentSize().width, 0));
         if (CCCommonUtils::isIosAndroidPad())
         {
             label->setScale(0.5);
@@ -87,11 +87,11 @@ bool ConfirmDialogView::init()
         m_resNode->addChild(spr);
         CCLabelIF* label = CCLabelIF::create();;
         label->setString(CC_ITOA_K(m_iron));
-        label->setColor(ccRED);
+        label->setColor(ccBLACK);
         label->setFontSize(22);
         label->setVerticalAlignment(kCCVerticalTextAlignmentTop);
         label->setHorizontalAlignment(kCCTextAlignmentLeft);
-        label->setPosition(ccp(offx+2, -40));
+        label->setPosition(ccp(offx+5+spr->getContentSize().width, 0));
         if (CCCommonUtils::isIosAndroidPad())
         {
             label->setScale(0.5);
@@ -106,11 +106,11 @@ bool ConfirmDialogView::init()
         m_resNode->addChild(spr);
         CCLabelIF* label = CCLabelIF::create();
         label->setString(CC_ITOA_K(m_food));
-        label->setColor(ccRED);
+        label->setColor(ccBLACK);
         label->setFontSize(22);
         label->setVerticalAlignment(kCCVerticalTextAlignmentTop);
         label->setHorizontalAlignment(kCCTextAlignmentLeft);
-        label->setPosition(ccp(offx+2, -40));
+        label->setPosition(ccp(offx+5+spr->getContentSize().width, 0));
         if (CCCommonUtils::isIosAndroidPad())
         {
             label->setScale(0.5);
@@ -125,11 +125,11 @@ bool ConfirmDialogView::init()
         m_resNode->addChild(spr);
         CCLabelIF* label = CCLabelIF::create();
         label->setString(CC_ITOA_K(m_money));
-        label->setColor(ccRED);
+        label->setColor(ccBLACK);
         label->setFontSize(22);
         label->setVerticalAlignment(kCCVerticalTextAlignmentTop);
         label->setHorizontalAlignment(kCCTextAlignmentLeft);
-        label->setPosition(ccp(offx+2, -40));
+        label->setPosition(ccp(offx+5+spr->getContentSize().width, 0));
         if (CCCommonUtils::isIosAndroidPad())
         {
             label->setScale(0.5);
