@@ -54,13 +54,11 @@ bool LoginServiceView::init(){
         string uuid = cocos2d::extension::CCDevice::getDeviceUid();
         string url;
 #if COCOS2D_DEBUG == 1
-        url = CCString::createWithFormat("http://%s/gameservice/getserverlist.php?uuid=%s&loginFlag=%d&loginFlag=%d",SERVERLIST_IP,uuid.c_str(),GlobalData::shared()->playerInfo.gmFlag,0)->getCString();
+        url = CCString::createWithFormat("http://%s/gameservice/getserverlist.php?uuid=%s&loginFlag=%d&loginFlag=%d",SERVERLIST_IP1,uuid.c_str(),GlobalData::shared()->playerInfo.gmFlag,0)->getCString();
+#elif COCOS2D_DEBUG == 2
+        url = CCString::createWithFormat("http://%s/gameservice/getserverlist.php?uuid=%s&loginFlag=%d&loginFlag=%d",SERVERLIST_IP1,uuid.c_str(),GlobalData::shared()->playerInfo.gmFlag,0)->getCString();
 #else
-#if COCOS2D_DEBUG == 2
-        url = CCString::createWithFormat("http://%s/gameservice/getserverlist.php?uuid=%s&loginFlag=%d&loginFlag=%d",SERVERLIST_IP,uuid.c_str(),GlobalData::shared()->playerInfo.gmFlag,0)->getCString();
-#else
-        url = CCString::createWithFormat("http://%s/gameservice/getserverlist.php?uuid=%s&loginFlag=%d&loginFlag=%d","p1.cok.elexapp.com",uuid.c_str(),GlobalData::shared()->playerInfo.gmFlag,0)->getCString();
-#endif
+        url = CCString::createWithFormat("http://%s/gameservice/getserverlist.php?uuid=%s&loginFlag=%d&loginFlag=%d",SERVERLIST_IP2,uuid.c_str(),GlobalData::shared()->playerInfo.gmFlag,0)->getCString();
 #endif
         CCLOG("change URL: %s",url.c_str());
         request->setUrl(url.c_str());

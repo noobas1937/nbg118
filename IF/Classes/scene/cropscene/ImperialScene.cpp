@@ -302,12 +302,12 @@ bool ImperialScene::init()
     //域名修复代码
     string s1IP = CCUserDefault::sharedUserDefault()->getStringForKey(ACCOUNT_IP, "");
     if (s1IP != "" && s1IP == "184.173.110.102") {
-        CCUserDefault::sharedUserDefault()->setStringForKey(ACCOUNT_IP, "s1.cok.elexapp.com");
+        CCUserDefault::sharedUserDefault()->setStringForKey(ACCOUNT_IP, "s1.nbg.elexapp.com");
         CCUserDefault::sharedUserDefault()->flush();
     }
     else if (s1IP != "" && s1IP == "184.173.110.99")
     {
-        CCUserDefault::sharedUserDefault()->setStringForKey(ACCOUNT_IP, "s2.cok.elexapp.com");
+        CCUserDefault::sharedUserDefault()->setStringForKey(ACCOUNT_IP, "s2.nbg.elexapp.com");
         CCUserDefault::sharedUserDefault()->flush();
     }
     if (!GlobalData::shared()->isXMLInitFlag) {

@@ -168,12 +168,13 @@
 const char * getServerIP_TypeDefinition();
 int getServerPort_TypeDefinition();
 const char * getServerZone_TypeDefinition();
-const char * getServerListIP_TypeDefinition();
+const char * getServerListIP_TypeDefinition(bool b);
 // Server连接信息
-#define SERVER_IP     getServerIP_TypeDefinition()
-#define SERVER_PORT   getServerPort_TypeDefinition()
-#define SERVER_ZONE   getServerZone_TypeDefinition()
-#define SERVERLIST_IP getServerListIP_TypeDefinition()
+#define SERVER_IP          getServerIP_TypeDefinition()
+#define SERVER_PORT        getServerPort_TypeDefinition()
+#define SERVER_ZONE        getServerZone_TypeDefinition()
+#define SERVERLIST_IP1     getServerListIP_TypeDefinition(true)
+#define SERVERLIST_IP2     getServerListIP_TypeDefinition(false)
 
 //xcpayId首先写死1服，跳服(处理login的错误信息)时或者切服(获取服务器列表选取的时候)时更改payId
 #ifdef Channel_91
