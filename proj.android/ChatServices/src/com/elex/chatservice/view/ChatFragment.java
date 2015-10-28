@@ -663,8 +663,7 @@ public class ChatFragment extends ActionBarFragment
 		
 		buttonJoinAlliance = (Button) view.findViewById(ResUtil.getId(this.activity, "id", "joinAllianceBtn"));
 		// guojiang
-		buttonJoinAlliance.setText("coming soon");
-		buttonJoinAlliance.setEnabled(false);
+		buttonJoinAlliance.setVisibility(Button.INVISIBLE);
 //		buttonJoinAlliance.setText(LanguageManager.getLangByKey(LanguageKeys.MENU_JOIN));
 //			
 //		buttonJoinAlliance.setOnClickListener(new View.OnClickListener()
@@ -1637,7 +1636,8 @@ public class ChatFragment extends ActionBarFragment
 		{
 			try
 			{
-				showJoinAlliancePopup();
+				// guojiang
+//				showJoinAlliancePopup();
 			}
 			catch (Exception e)
 			{

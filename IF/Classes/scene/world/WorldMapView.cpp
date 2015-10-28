@@ -764,6 +764,7 @@ void WorldMapView::openTilePanel(unsigned int index) {
             break;
         case MonsterTile:{//探索
             // guojiang
+            CCCommonUtils::flyHint("", "", _lang("E100008"));//fusheng 这个界面 美术没做
             return;
             
             // todo
@@ -5579,6 +5580,11 @@ void WorldMapView::addUnderNode(unsigned int index) {
             int index2 = info.cityIndex;
             if(index1 == index2){//&& info.mc_state==1
                 addBatchItem(Partical_fieldMonster, index);
+            }
+            
+            if (picName == "0013.png" || picName == "0014.png" || picName == "0015.png" || picName == "0016.png")
+            {
+                CCCommonUtils::setSpriteGray(under, true);
             }
         }
             break;

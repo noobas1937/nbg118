@@ -115,13 +115,13 @@ bool ActBossPopUp::init(){
             CCCommonUtils::setButtonTitle(m_btn, _lang("137447").c_str());
         }
         
-        for (int j=1; j<=4; j++) {
-            auto particle = ParticleController::createParticle(CCString::createWithFormat("UiFire_%d",j)->getCString());
-            m_fireNode1->addChild(particle);
-            
-            auto particle1 = ParticleController::createParticle(CCString::createWithFormat("UiFire_%d",j)->getCString());
-            m_fireNode2->addChild(particle1);
-        }
+//        for (int j=1; j<=4; j++) {
+//            auto particle = ParticleController::createParticle(CCString::createWithFormat("UiFire_%d",j)->getCString());
+//            m_fireNode1->addChild(particle);
+//            
+//            auto particle1 = ParticleController::createParticle(CCString::createWithFormat("UiFire_%d",j)->getCString());
+//            m_fireNode2->addChild(particle1);
+//        }
         
         ret = true;
     }
@@ -219,8 +219,8 @@ bool ActBossPopUp::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const 
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_hpLabel", CCLabelIF*, this->m_hpLabel);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bar", CCScale9Sprite*, this->m_bar);
     
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_fireNode1", CCNode*, this->m_fireNode1);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_fireNode2", CCNode*, this->m_fireNode2);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_fireNode1", CCNode*, this->m_fireNode1);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_fireNode2", CCNode*, this->m_fireNode2);
     return false;
 }
 

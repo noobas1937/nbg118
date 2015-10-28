@@ -67,7 +67,7 @@ Node * NBWorldMapMainCity::getMainCity(int island_index, int level, int nSpecial
         picStr = "lv1.png";
         // 美术给出的坐标为 x：-111，y：-51
         house_pos.x = 256 / 2 - 111;
-        house_pos.y = 51;
+        house_pos.y = 81;
     }
     
     auto house = CCLoadSprite::createSprite(picStr.c_str());
