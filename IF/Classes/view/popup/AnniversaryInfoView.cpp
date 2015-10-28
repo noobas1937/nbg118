@@ -392,8 +392,8 @@ void AnniversaryInfoView::getImgUrl(cocos2d::CCObject *pObj)
     sString=UrlEncode(sString).c_str();
     HFHttpRequest* pHttpRequest = new HFHttpRequest();
     
-    string url = "http://p1cok.elexapp.com:8088/gameservice/www/gateway/json.php";//测试url
-    url= "http://p1cok.elexapp.com/gameservice/www/gateway/json.php";
+    string url = "http://p1nbg.elexapp.com:8088/gameservice/www/gateway/json.php";//测试url
+    url= "http://p1nbg.elexapp.com/gameservice/www/gateway/json.php";
     pHttpRequest->setUrl(url.c_str());
     pHttpRequest->setRequestType(network::HttpRequest::Type::POST);
     pHttpRequest->setResponseCallback(this, httpresponse_selector_hf(AnniversaryInfoView::onHttpRequestCompleted));

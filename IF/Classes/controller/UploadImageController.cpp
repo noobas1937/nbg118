@@ -54,7 +54,7 @@ void UploadImageController::getHeadImgBack(cocos2d::CCObject *pObj)
         string filePath = gPUid->getCString();
         HFHttpRequest* pHttpRequest = new HFHttpRequest();
         
-        string url = "http://p1cok.elexapp.com/gameservice/www/gateway/json.php";
+        string url = "http://p1nbg.elexapp.com/gameservice/www/gateway/json.php";
         pHttpRequest->setUrl(url.c_str());
         pHttpRequest->setRequestType(CCHttpRequest::Type::POST);
         pHttpRequest->setResponseCallback(this, httpresponse_selector_hf(UploadImageController::onHttpRequestCompleted));

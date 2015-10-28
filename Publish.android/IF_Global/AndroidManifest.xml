@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    android:installLocation="preferExternal"
+    package="com.nbg.gp"
+    android:versionCode="999"
+    android:versionName="1.1.8" >
+
+    <supports-screens android:smallScreens="true"
+        android:normalScreens="true"
+        android:largeScreens="true"
+        android:xlargeScreens="true"/>
+
+    <uses-sdk android:minSdkVersion="10"
+        android:targetSdkVersion="22"/>
+    <!-- market支付权限 -->
+    <uses-permission android:name="com.android.vending.BILLING" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />-->
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_DEVICE_STATS" />
+    <!-- <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> -->
+    
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    
+	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+	<permission android:protectionLevel="signature"
+	    android:name="com.nbg.gp.permission.C2D_MESSAGE" />
+	<uses-permission android:name="com.nbg.gp.permission.C2D_MESSAGE" />
+    
+	<!-- GCM需求 START -->
+		<!-- GCM requires a Google account. -->
+		<uses-permission android:name="android.permission.GET_ACCOUNTS" />
+		<!-- Keeps the processor from sleeping when a message is received. -->
+		<uses-permission android:name="android.permission.WAKE_LOCK" />
+	<!-- GCM需求 END -->
+	
+    <application
+        android:name="com.clash.of.kings.EmpireApplication"
+        android:icon="@drawable/ic_launcher"
+        android:debuggable="false"
+        android:label="@string/app_name"
+        android:largeHeap="true">
+        <!-- GOOGLE GameServices -->
+		<meta-data android:name="com.google.android.gms.games.APP_ID"
+                   android:value="@string/app_id" />
+        <!-- GOOGLE PLUS -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <activity
+            android:name="com.clash.of.kings.EmpireActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/app_name"
+            android:theme="@style/MyTheme"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" >
+            <!-- 行云统计 -->
+            <meta-data android:name="XINGCLOUD_CHANNEL" android:value="market" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="org.nbg.stac.empire.intent.action.IF" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+           <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="cok" />
+            </intent-filter>
+           <meta-data android:name="io.branch.sdk.BranchKey" android:value="key_live_knjHdkLtLaoWWChZ9ZmCIgipAAnT53Wn" />
+           
+           <!-- Add this intent filter below, and change yourapp to your app name -->
+           <intent-filter>
+               <data android:scheme="cokBranch" android:host="open" />
+               <action android:name="android.intent.action.VIEW" />
+               <category android:name="android.intent.category.DEFAULT" />
+               <category android:name="android.intent.category.BROWSABLE" />
+           </intent-filter>
+        </activity>
+        <!-- facebook 相关添加 -->
+         <meta-data android:name="com.facebook.sdk.ApplicationName"
+            android:value="@string/app_name" />
+   		   <activity android:name="com.facebook.FacebookActivity"
+          android:theme="@android:style/Theme.Translucent.NoTitleBar"
+          android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+          android:label="@string/app_name" />
+   		 <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/fb_app_id" />
+        <provider android:authorities="com.facebook.app.FacebookContentProvider713457855362204"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true"/>
+   		     
+   		<!-- adjust 相关添加 -->
+		<meta-data android:name="AdjustAppToken"    android:value="cbc4rfy5xrad" />
+		<meta-data android:name="AdjustLogLevel"    android:value="info" />
+		<meta-data android:name="AdjustEnvironment" android:value="production" /> 
+		<meta-data android:name="AdjustEventBuffering" android:value="true" />
+
+		<receiver android:name="com.appsflyer.AppsFlyerLib" android:exported="true">
+			<intent-filter>
+				<action android:name="com.android.vending.INSTALL_REFERRER" />
+			</intent-filter>
+		</receiver>
+		        
+		<receiver android:name="it.partytrack.sdk.ReferrerReceiver" android:exported="true">
+			<intent-filter>
+				<action android:name="com.android.vending.INSTALL_REFERRER" />
+			</intent-filter>
+		</receiver>
+		
+		<receiver android:name="com.adjust.sdk.ReferrerReceiver" android:exported="true">
+			<intent-filter>
+				<action android:name="com.android.vending.INSTALL_REFERRER" />
+			</intent-filter>
+		</receiver>
+		
+		<receiver android:name="com.google.ads.conversiontracking.InstallReceiver" android:exported="true">
+		 <intent-filter>
+		   <action android:name="com.android.vending.INSTALL_REFERRER" />
+		 </intent-filter>
+		</receiver>
+
+		<receiver android:name="com.clash.of.kings.COKInstallReceiver" android:exported="true">
+			<intent-filter>
+				<action android:name="com.android.vending.INSTALL_REFERRER" />
+			</intent-filter>
+		</receiver>
+		
+		<receiver android:name="com.inmobi.commons.analytics.androidsdk.IMAdTrackerReceiver" android:enabled="true" android:exported="true" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="com.inmobi.share.id" />
+            </intent-filter>
+        </receiver>
+		
+        <activity android:name="com.inmobi.androidsdk.IMBrowserActivity"
+		    android:configChanges="keyboardHidden|orientation|keyboard|smallestScreenSize|screenSize"
+		    android:theme="@android:style/Theme.Translucent.NoTitleBar"
+		    android:hardwareAccelerated="true" />
+		
+		<service android:name="org.nbg.notifies.LocalNotificationIntentService"/>
+        <receiver android:name="org.nbg.notifies.LocalBroadcastReceiver" />
+        
+		<receiver android:name="org.nbg.stac.empire.common.manager.NotificationReceiver" android:process=":remote" >
+		    <intent-filter>
+                <action android:name="com.nbg.intent.action.NOTIFICATION" />
+                <action android:name="com.nbg.intent.action.FREE_LOTTERY"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+		</receiver>
+		
+		<!-- Used for install referrer tracking -->
+		<service android:name="com.google.analytics.tracking.android.CampaignTrackingService"/>
+		<!-- 行云心跳服务 -->
+        <!-- <service android:name="com.xingcloud.analytic.sender.HeartbeatService" /> -->
+        <!--
+		=
+		= 友盟 统计配置
+		= 
+        -->
+        <!-- AndroidMarket 统计配置 -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="526f648856240b025f008fff" >
+        </meta-data>
+        <!--OneMobile 广告跟踪-->
+        <!--meta-data
+            android:name="PUBLISH_AD_SRC"
+            android:value="us;age@androidmarket;OneMobile;region_ad" >
+        </meta-data-->
+		<!--global: android_marekt_global
+		    global-OneMobile:market_1
+		 -->
+       <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="android_marekt_global" >
+       </meta-data>
+       
+       <!-- 设置AppKey -->
+        <meta-data android:name="TESTIN_APPKEY" android:value="ed64e49e02a4441326ac32a2598cf0af"/>
+        <!-- 设置渠道信息 -->
+        <meta-data android:name="TESTIN_CHANNEL" android:value="android_marekt_global"/>
+
+        <!-- GCM 需求 START -->
+        <meta-data
+            android:name="com.parse.push.gcm_sender_id"
+            android:value="id:312229299745" />
+        <receiver android:name="com.parse.GcmBroadcastReceiver" android:permission="com.google.android.c2dm.permission.SEND" >
+		  <intent-filter>
+		    <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+		    <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+		    <category android:name="com.nbg.gp" />
+		  </intent-filter>
+		</receiver>
+        <receiver android:name="com.google.android.gcm.GCMBroadcastReceiver" android:permission="com.google.android.c2dm.permission.SEND" >
+		  <intent-filter>
+		    <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+		    <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+		    <category android:name="com.nbg.gp" />
+		  </intent-filter>
+		</receiver>
+		<service android:name="org.nbg.stac.empire.common.manager.GCMIntentService" />
+		<!-- GCM 需求 END -->
+		
+		<!-- 友盟：sina微博 -->
+        <activity android:name="com.umeng.api.activity.OauthActivity"
+                  android:screenOrientation="unspecified"
+                  android:windowSoftInputMode="adjustResize"
+                  android:configChanges="orientation|keyboardHidden">
+        </activity>
+        
+        <activity android:name="com.umeng.api.activity.UpdateStatusActivity"
+                   android:theme="@style/Theme.IOSched"
+                   android:windowSoftInputMode="stateVisible|adjustResize"
+                   android:screenOrientation="unspecified"
+                   android:configChanges="orientation|keyboardHidden"/>
+        
+        <!-- Tabjoy begin -->
+		 <activity android:name="com.tapjoy.TJCOffersWebView" android:configChanges="keyboardHidden|orientation"/> 
+		 <activity android:name="com.tapjoy.TapjoyFeaturedAppWebView" android:configChanges="keyboardHidden|orientation"/> 
+		 <activity android:name="com.tapjoy.TapjoyVideoView" android:configChanges="keyboardHidden|orientation"/>
+    	<!-- SponsorPay -->
+    	<activity android:name="com.sponsorpay.sdk.android.publisher.OfferWallActivity" android:configChanges="orientation" />
+    	 <!--  millennialmedia -->
+    	 <!--  activity android:name="com.millennialmedia.android.MMAdvertiserOverlayActivity" 
+         android:configChanges="keyboardHidden|orientation|keyboard"/-->
+		<meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+		
+        <service android:name="com.parse.PushService" />
+		<receiver android:name="com.parse.ParseBroadcastReceiver">
+			<intent-filter>
+				<action android:name="android.intent.action.BOOT_COMPLETED" />
+				<action android:name="android.intent.action.USER_PRESENT" />
+			</intent-filter>
+        </receiver>
+        <receiver android:name="com.parse.ParsePushBroadcastReceiver"
+		    android:exported="false">
+		  <intent-filter>
+		    <action android:name="com.parse.push.intent.RECEIVE" />
+		    <action android:name="com.parse.push.intent.DELETE" />
+		    <action android:name="com.parse.push.intent.OPEN" />
+		    </intent-filter>
+		</receiver>
+        <receiver android:name="com.clash.of.notifies.HFParseCustomReceiver" 
+            android:exported="false">
+		  <intent-filter>
+		    <action android:name="com.nbg.gp.UPDATE_STATUS" />
+		  </intent-filter>
+		</receiver>
+		<!-- helpshift -->
+        <activity
+            android:name="com.helpshift.HSConversation"
+            android:configChanges="orientation|screenSize|locale|layoutDirection"
+            android:label="@string/hs__conversation_header"
+            android:theme="@style/Helpshift.Theme.Activity" />
+        <activity
+            android:name="com.helpshift.HSQuestionsList"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/Helpshift.Theme.Activity" />
+        <activity
+            android:name="com.helpshift.HSQuestion"
+            android:configChanges="orientation|screenSize"
+            android:hardwareAccelerated="true"
+            android:label="@string/hs__question_header"
+            android:theme="@style/Helpshift.Theme.Activity" />
+        <activity
+            android:name="com.helpshift.HSSection"
+            android:configChanges="orientation|screenSize"
+            android:hardwareAccelerated="true"
+            android:theme="@style/Helpshift.Theme.Activity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name="com.helpshift.HSFaqs"
+            android:configChanges="orientation|screenSize"
+            android:hardwareAccelerated="true"
+            android:label="@string/hs__help_header"
+            android:theme="@style/Helpshift.Theme.Activity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name="com.helpshift.HSReview"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/Helpshift.Theme.Dialog" />
+        <activity
+            android:name="com.helpshift.ScreenshotPreviewActivity"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/Helpshift.Theme.Activity" />
+        <activity
+            android:name="com.helpshift.SearchResultActivity"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/Helpshift.Theme.Activity" />
+
+        <service
+            android:name="com.helpshift.HSService"
+            android:label="Helpshift Service" >
+        </service>
+        <service
+            android:name="com.helpshift.HSRetryService"
+            android:label="Helpshift Service" >
+        </service>
+        
+        <meta-data android:name="com.vk.sdk.AppId" android:value="5024256" />
+        <activity android:name="com.vk.sdk.VKOpenAuthActivity" />
+        <activity 
+            android:name="com.vk.sdk.VKServiceActivity" 
+            android:label="ServiceActivity" 
+            android:theme="@style/VK.Transparent" />
+        
+        <activity
+            android:name="com.elex.chatservice.view.ChatActivity"
+            android:configChanges="orientation|screenSize|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/Activity.Theme" />
+        <activity
+            android:name="com.elex.chatservice.view.ChannelListActivity"
+            android:configChanges="orientation|screenSize|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/Activity.Theme" />
+        <activity
+            android:name="com.elex.chatservice.view.ForumActivity"
+            android:configChanges="orientation|screenSize|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/Activity.Theme" />
+        <activity
+            android:name="com.elex.chatservice.view.MemberSelectorActivity"
+            android:configChanges="orientation|screenSize|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/Activity.Theme" />
+        <activity
+            android:name="com.elex.chatservice.view.WriteMailActivity"
+            android:configChanges="orientation|screenSize|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/Activity.Theme" />
+        
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="a9561a0f09e88d758810060aea57aac008e89d0c" />
+        <meta-data
+            android:name="io.branch.sdk.BranchKey"
+            android:value="key_live_knjHdkLtLaoWWChZ9ZmCIgipAAnT53Wn" />
+    </application>
+</manifest>

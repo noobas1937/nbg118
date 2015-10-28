@@ -184,7 +184,7 @@ public class NBG_CN1 extends CommonActivity implements IWeiboHandler.Response {
 //		IF.getInstance().displayWebView(0, 0, dm.widthPixels, dm.heightPixels);
 //		IF.getInstance().updateURL(url);
 		// 构建账单json对象
-		String serverUrl = "http://s1.cok.elexapp.com:8080/gameservice/paymentpingpprequest";
+		String serverUrl = "http://s1.nbg.elexapp.com:8080/gameservice/paymentpingpprequest";
 		JSONObject bill = new JSONObject();
 		try {
 			JSONObject displayItem = new JSONObject();

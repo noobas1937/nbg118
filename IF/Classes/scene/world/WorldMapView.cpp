@@ -763,6 +763,9 @@ void WorldMapView::openTilePanel(unsigned int index) {
         }
             break;
         case MonsterTile:{//探索
+            // guojiang
+            return;
+            
             // todo
             SoundController::sharedSound()->playEffects(Music_Sfx_city_castle);
             int index = info.parentCityIndex;
@@ -5565,7 +5568,8 @@ void WorldMapView::addUnderNode(unsigned int index) {
         }
             break;
         case MonsterTile:{
-            auto under = CCLoadSprite::createSprite(getSpriteName(info).c_str());
+            string picName = getSpriteName(info);
+            auto under = CCLoadSprite::createSprite(picName.c_str());
             under->setAnchorPoint(ccp(0, 0));
             under->setTag(index);
             under->setPosition(ccp(pos.x-_halfTileSize.width,pos.y-_halfTileSize.height)); // left-bottom corner
@@ -5576,7 +5580,6 @@ void WorldMapView::addUnderNode(unsigned int index) {
             if(index1 == index2){//&& info.mc_state==1
                 addBatchItem(Partical_fieldMonster, index);
             }
-            
         }
             break;
         case FieldMonster: {

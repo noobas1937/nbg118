@@ -622,7 +622,7 @@ void LoadingScene::onLoginTimeout(float t)
 #if COCOS2D_DEBUG == 2
     url = CCString::createWithFormat("http://10.1.4.121/probe.php?uuid=%s&loginFlag=%d&country=%s&gameuid=%s&lang=%s&serverId=%s&serverIp=%s",_uuid.c_str(),1,_Country.c_str(),_gameUid.c_str(),_lang.c_str(),_serverId.c_str(),_serverIp.c_str());
 #else
-    url = CCString::createWithFormat("http://p1.cok.elexapp.com/probe.php?uuid=%s&loginFlag=%d&country=%s&gameuid=%s&lang=%s&serverId=%s&serverIp=%s",_uuid.c_str(),1,_Country.c_str(),_gameUid.c_str(),_lang.c_str(),_serverId.c_str(),_serverIp.c_str());
+    url = CCString::createWithFormat("http://p1.nbg.elexapp.com/probe.php?uuid=%s&loginFlag=%d&country=%s&gameuid=%s&lang=%s&serverId=%s&serverIp=%s",_uuid.c_str(),1,_Country.c_str(),_gameUid.c_str(),_lang.c_str(),_serverId.c_str(),_serverIp.c_str());
 #endif
 #endif
     CCLOG("get_server_status list URL: %s",url->getCString());
@@ -762,39 +762,25 @@ void LoadingScene::sendCmdGetServerList(CCObject* p){
     if (_platformUID != "") {
         string _PublishRegion = cocos2d::extension::CCDevice::getPublishRegion();
         param = CCString::createWithFormat("uuid=%s&loginFlag=%d&pfId=%s&pf=%s&token=%s&country=%s&t=%s&sig=%s",_uuid.c_str(),1,_platformUID.c_str(),_PublishRegion.c_str(),_platformToken.c_str(),_Country.c_str(),timeStr.c_str(),md5Str.c_str())->getCString();
-#if COCOS2D_DEBUG == 1
-        url = CCString::createWithFormat("http://%s/gameservice/getserverlist.php?%s",SERVERLIST_IP,param.c_str());
-#else
-#if COCOS2D_DEBUG == 2
-        url = CCString::createWithFormat("http://%s/gameservice/getserverlist.php?%s",SERVERLIST_IP,param.c_str());
-#else
-        if(isChinaPhone && m_getServerListRetryTime % 2 == 0){
-            url = CCString::createWithFormat("http://%s/gameservice/getserverlist.php?%s","p3cok.elexapp.com",param.c_str());
-        }else{
-            url = CCString::createWithFormat("http://%s/gameservice/getserverlist.php?%s","p1cok.elexapp.com",param.c_str());
-        }
-#endif
-#endif
     }
     else
     {
         param = CCString::createWithFormat("uuid=%s&loginFlag=%d&country=%s&t=%s&sig=%s",_uuid.c_str(),1,_Country.c_str(),timeStr.c_str(),md5Str.c_str())->getCString();
-#if COCOS2D_DEBUG == 1
-        url = CCString::createWithFormat("http://%s/gameservice/getserverlist.php?%s",SERVERLIST_IP,param.c_str());
-#else
-#if COCOS2D_DEBUG == 2
-        url = CCString::createWithFormat("http://%s/gameservice/getserverlist.php?%s",SERVERLIST_IP,param.c_str());
-#else
-        if(isChinaPhone && m_getServerListRetryTime % 2 == 0){
-            url = CCString::createWithFormat("http://%s/gameservice/getserverlist.php?%s","p3cok.elexapp.com",param.c_str());
-        }else{
-            url = CCString::createWithFormat("http://%s/gameservice/getserverlist.php?%s","p1cok.elexapp.com",param.c_str());
-        }
-#endif
-#endif
     }
+#if COCOS2D_DEBUG == 1
+    url = CCString::createWithFormat("http://%s/gameservice/getserverlist.php?%s", SERVERLIST_IP1, param.c_str());
+#elif COCOS2D_DEBUG == 2
+    url = CCString::createWithFormat("http://%s/gameservice/getserverlist.php?%s", SERVERLIST_IP1, param.c_str());
+#else
+    if (isChinaPhone && m_getServerListRetryTime % 2 == 0) {
+        url = CCString::createWithFormat("http://%s/gameservice/getserverlist.php?%s", SERVERLIST_IP1, param.c_str());
+    } else {
+        url = CCString::createWithFormat("http://%s/gameservice/getserverlist.php?%s", SERVERLIST_IP2, param.c_str());
+    }
+#endif
+    
     CCLOG("COK server list URL: %s",url->getCString());
-//    url = CCString::createWithFormat("http://%s/gameservice/getserverlist.php?uuid=%s&loginFlag=%d&country=%s","p1.cok.elexapp.com",_uuid.c_str(),1,_Country.c_str());
+//    url = CCString::createWithFormat("http://%s/gameservice/getserverlist.php?uuid=%s&loginFlag=%d&country=%s","p1.nbg.elexapp.com",_uuid.c_str(),1,_Country.c_str());
     request->setUrl(url->getCString());
     request->setRequestType(CCHttpRequest::Type::POST);
     request->setResponseCallback(this, httpresponse_selector(LoadingScene::onGetServerList));
