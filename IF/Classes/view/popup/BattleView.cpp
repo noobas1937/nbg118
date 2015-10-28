@@ -944,6 +944,16 @@ void BattleView::selectAll(){
     
     for (int i = 0; i<m_tmpArray->count(); i++) {
         std::string m_soldierId = dynamic_cast<CCString*>(m_tmpArray->objectAtIndex(i))->getCString();
+        int sid = CCString::create(m_soldierId)->intValue();
+        
+        if(sid>=107401&&sid<=107430)
+        {
+            if(isBegin)
+            {
+                isBegin = false;
+                continue;
+            }
+        }
         int tmpCntNum = 0;
         tmpCntNum = TroopsController::getInstance()->m_tmpConfSoldiers[m_soldierId];
         tmpCntNum = totalNum + tmpCntNum >= maxForceNum ? maxForceNum - totalNum : tmpCntNum;
@@ -958,7 +968,7 @@ void BattleView::selectAll(){
         auto info = WorldController::getInstance()->getCityInfos().find(m_targetIndex);
         
         if(m_targetType==ActBossTile || (info != WorldController::getInstance()->getCityInfos().end() && (info->second.cityType == FieldMonster || info->second.cityType == MonsterTile || info->second.cityType == MonsterRange || info->second.cityType == ActBossTile))){
-            int sid = CCString::create(m_soldierId)->intValue();
+            
             if(sid>=107401&&sid<=107430&&GlobalData::shared()->titanInfo.currentManual<GlobalData::shared()->titanInfo.costmanual)
             {
                 this->m_marchBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::NORMAL)->setState(cocos2d::ui::Scale9Sprite::State::GRAY); //fusheng onEnter之后注册通知函数  第一次在这里还没注册

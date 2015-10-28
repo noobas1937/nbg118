@@ -391,12 +391,19 @@ bool NewTroopsCell::init()
 //            icon->setScale(0.85, 0.85);//fusheng
             m_iconNode->addChild(icon);
             m_numLabel->setString(CC_CMDITOA(info.free));
-            m_levelLabel->setString(troops_roman[info.armyLevel]);
+            
+            
+            auto pic1= CCCommonUtils::getRomanSprite(info.armyLevel+1);//fusheng 罗马数字
+            m_levelNode->addChild(pic1);
+            
+//            m_levelLabel->setString(troops_roman[info.armyLevel]);
             //fusheng begin 换背景图片
 //            m_soliderBG->setTexture(troops_BG[(id - 107000)/100]);
 //            m_soliderTypeSprite->setTexture(troops_typeSprite[(id - 107000)/100]);
             m_soliderBG->setSpriteFrame(troops_BG[(id - 107000)/100]);
             m_soliderTypeSprite->setSpriteFrame(troops_typeSprite[(id - 107000)/100]);
+            
+            m_soliderNameTxt->setString(info.getName());
             //fusheng end
 
         }
@@ -408,10 +415,14 @@ bool NewTroopsCell::init()
             m_iconNode->addChild(icon);
             m_numLabel->setString(CC_CMDITOA(info.free));
             int level = id % 10;
-            m_levelLabel->setString(troops_roman[level]);
+//            m_levelLabel->setString(troops_roman[level]);
+            auto pic1= CCCommonUtils::getRomanSprite(level+1);//fusheng 罗马数字
+            m_levelNode->addChild(pic1);
             //fusheng begin 换背景图片
             m_soliderBG->setSpriteFrame(troops_BG[3]);
             m_soliderTypeSprite->setSpriteFrame(troops_typeSprite[3]);
+           
+            m_soliderNameTxt->setString(info.getName());
             //fusheng end
         }
     }
@@ -434,6 +445,9 @@ bool NewTroopsCell::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_iconNode", CCNode*, this->m_iconNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_numLabel", CCLabelIF*, this->m_numLabel);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_levelLabel", CCLabelIF*, this->m_levelLabel);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_levelNode", CCNode*, this->m_levelNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_soliderNameTxt", CCLabelIF*, this->m_soliderNameTxt);
+
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_soliderTypeSprite", CCSprite*, this->m_soliderTypeSprite);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_soliderBG", CCSprite*, this->m_soliderBG);

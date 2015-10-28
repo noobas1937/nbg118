@@ -436,6 +436,7 @@ bool GeneralsPopupView::init()
     CCLoadSprite::doResourceByGeneralIndex(1, true);
     CCLoadSprite::doResourceByGeneralIndex(2, true);
     CCLoadSprite::doResourceByGeneralIndex(3, true);
+    
     //fusheng end
     
     
@@ -466,6 +467,7 @@ void GeneralsPopupView::refreshView(){
     auto sprite = CCLoadSprite::createSprite((pBust + "_bust.png").c_str());
     sprite->setTag(0);
     sprite->setOpacity(0);
+    sprite->setPositionX(-7);
     m_bustPic->addChild(sprite);
     sprite->runAction(CCFadeIn::create(0.5));
     

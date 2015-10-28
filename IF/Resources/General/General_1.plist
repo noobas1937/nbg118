@@ -7,7 +7,7 @@
             <key>g008_bust.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{510,510},{500,500}}</string>
+                <string>{{510,4},{500,500}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -20,7 +20,7 @@
             <key>g015_bust.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{510,4},{500,500}}</string>
+                <string>{{4,510},{500,500}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -33,7 +33,7 @@
             <key>g024_bust.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,510},{500,500}}</string>
+                <string>{{4,4},{500,500}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -46,15 +46,15 @@
             <key>g026_bust.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,4},{500,500}}</string>
+                <string>{{510,510},{425,444}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{500,500}}</string>
+                <string>{{0,0},{425,444}}</string>
                 <key>sourceSize</key>
-                <string>{500,500}</string>
+                <string>{425,444}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -66,7 +66,7 @@
             <key>size</key>
             <string>{1024,1024}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:45dcb49ca30a92aa302f35c8e3274e21:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:422c3ad803859561688ae86c68ce5c23:1/1$</string>
             <key>textureFileName</key>
             <string>General_1.pvr.ccz</string>
         </dict>

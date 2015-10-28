@@ -4634,10 +4634,10 @@ void UIComponent::onFaceClick(CCObject * pSender, Control::EventType pCCControlE
 {
     onCancelMoveBuild();
     //临时屏蔽这个面板
-    if (GuideController::share()->isInTutorial() && GuideController::share()->getCurGuideID()!="3150200") {//引导过程中不能打开
-        return;
-    }
-    
+//    if (GuideController::share()->isInTutorial() && GuideController::share()->getCurGuideID()!="3150200") {//引导过程中不能打开 //fusheng 一直可以点
+//        return;
+//    }
+//    
     SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
     
     //    PopupViewController::getInstance()->addPopupInView(RoleInfoView::create(&GlobalData::shared()->playerInfo));
