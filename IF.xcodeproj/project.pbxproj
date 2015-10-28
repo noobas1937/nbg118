@@ -1199,6 +1199,7 @@
 		E6FC9B27181E541900BAFCFF /* MailReadCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6FC9B26181E541900BAFCFF /* MailReadCommand.cpp */; };
 		E6FC9B2A181E957A00BAFCFF /* MailPush.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6FC9B29181E957900BAFCFF /* MailPush.cpp */; };
 		E6FE9EB7182738E3000020FA /* TipsView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6FE9EB5182738E3000020FA /* TipsView.cpp */; };
+		ED8509631BE07AFD002E1B2C /* NBWaterMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED8509611BE07AFD002E1B2C /* NBWaterMap.cpp */; };
 		F429408C1B67AE7000078155 /* ComposeView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F429408A1B67AE7000078155 /* ComposeView.cpp */; };
 		F45EFC621B6B63AA00B0C19F /* ComposeAni.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45EFC601B6B63AA00B0C19F /* ComposeAni.cpp */; };
 		F45EFC651B6B820E00B0C19F /* MatetialAni.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45EFC631B6B820E00B0C19F /* MatetialAni.cpp */; };
@@ -3529,6 +3530,8 @@
 		E6FC9B29181E957900BAFCFF /* MailPush.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MailPush.cpp; sourceTree = "<group>"; };
 		E6FE9EB5182738E3000020FA /* TipsView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TipsView.cpp; sourceTree = "<group>"; };
 		E6FE9EB6182738E3000020FA /* TipsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TipsView.h; sourceTree = "<group>"; };
+		ED8509611BE07AFD002E1B2C /* NBWaterMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBWaterMap.cpp; sourceTree = "<group>"; };
+		ED8509621BE07AFD002E1B2C /* NBWaterMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBWaterMap.h; sourceTree = "<group>"; };
 		F429408A1B67AE7000078155 /* ComposeView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ComposeView.cpp; sourceTree = "<group>"; };
 		F429408B1B67AE7000078155 /* ComposeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComposeView.h; sourceTree = "<group>"; };
 		F45EFC601B6B63AA00B0C19F /* ComposeAni.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ComposeAni.cpp; sourceTree = "<group>"; };
@@ -5664,6 +5667,8 @@
 		B86B5D181BCCA2900010EC71 /* map */ = {
 			isa = PBXGroup;
 			children = (
+				ED8509611BE07AFD002E1B2C /* NBWaterMap.cpp */,
+				ED8509621BE07AFD002E1B2C /* NBWaterMap.h */,
 				B86B5D3F1BCF422E0010EC71 /* CloudLayer.cpp */,
 				B86B5D401BCF422E0010EC71 /* CloudLayer.hpp */,
 				B86B5D191BCCA7340010EC71 /* NBWorldMapDecoration.cpp */,
@@ -7348,6 +7353,7 @@
 				57FAB7FA1A36CD64009E9907 /* EquipmentController.cpp in Sources */,
 				FDEE29A518D003BB0060CE56 /* CityCrashView.cpp in Sources */,
 				96E056011A5A84AF00FF4405 /* PushKingdomRes.cpp in Sources */,
+				ED8509631BE07AFD002E1B2C /* NBWaterMap.cpp in Sources */,
 				96E055FB1A5A216A00FF4405 /* PushKingdomThronePic.cpp in Sources */,
 				E6CE60361A7630CC002BB495 /* KingsGiftCommand.cpp in Sources */,
 				96E3C2501A3838470085423E /* KingdomAppointView.cpp in Sources */,

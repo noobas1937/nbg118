@@ -68,6 +68,10 @@
 #include "NBWorldMapMainCity.hpp"
 #include "NBWaterSprite.hpp"
 
+//begin a by ljf
+#include "NBWaterMap.h"
+//end a by ljf
+
 static WorldMapView* worldMapInstance = nullptr;
 static float FLAG_SCALE = 0.4;
 
@@ -7765,6 +7769,10 @@ void WorldMapView::testCastle(int level){
 
 void WorldMapView::update_water_shader(const Vec2& position)
 {
+    //begin a by ljf
+    auto sprite = NBWaterMap::create("shaders/spritemap.png");
+    sprite->setScale(25.0f);
+    //end a by ljf
     static const int WATER_SHADER_TAG = WM_BG_TAG + 1;
     static const int WATER_SHADER_X_CNT = 4;
     static const int WATER_SHADER_Y_CNT = 6;

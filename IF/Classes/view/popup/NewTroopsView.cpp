@@ -15,6 +15,10 @@
 
 static const char* troops_roman[30] =  {"I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","XIII","XIV","XV","XVI","XVII","XVIII","XIX","XX", "XXI","XXII","XXIII","XXIV","XXV","XXVI","XXVII","XXVIII","XXIX","XXX"};
 
+static const char* troops_typeSprite[4] =  {"bz_gjs.png","bz_js.png","bz_qb.png","bz_qb.png"};
+
+static const char* troops_BG[4] =  {"nb_cz_bzbg1.png","nb_cz_bzbg2.png","nb_cz_bzbg3.png","nb_cz_bzbg4.png"};
+
 NewTroopsView* NewTroopsView::create()
 {
     auto ret = new NewTroopsView();
@@ -37,13 +41,17 @@ bool NewTroopsView::init()
     CCLoadSprite::doResourceByCommonIndex(201, true);
     CCLoadSprite::doResourceByCommonIndex(202, true);
     CCLoadSprite::doResourceByCommonIndex(203, true);
+    CCLoadSprite::doResourceByCommonIndex(204, true);
     CCLoadSprite::doResourceByCommonIndex(504, true);
+    
+    CCLoadSprite::doResourceByCommonIndex(3, true);
     setCleanFunction([](){
 //        CCLoadSprite::doResourceByCommonIndex(8, false);
         CCLoadSprite::doResourceByCommonIndex(200, false);
         CCLoadSprite::doResourceByCommonIndex(201, false);
         CCLoadSprite::doResourceByCommonIndex(202, false);
         CCLoadSprite::doResourceByCommonIndex(203, false);
+        CCLoadSprite::doResourceByCommonIndex(204, false);
         CCLoadSprite::doResourceByCommonIndex(504, false);
     });
     auto frame = CCLoadSprite::loadResource("technology_09.png");
@@ -366,9 +374,7 @@ bool NewTroopsCell::init()
     }
     CCBLoadFile("NewTroopsCell", this, this);
     m_iconNode->removeAllChildrenWithCleanup(true);
-    m_levelLabel->setColor({160, 177, 200});
-    m_numLabel->setColor({160, 177, 200});
-    
+ 
     
     int id = atoi(m_id.c_str());
     if (id >= 107000 && id <107400)
@@ -376,24 +382,37 @@ bool NewTroopsCell::init()
         if (GlobalData::shared()->armyList.find(m_id) != GlobalData::shared()->armyList.end()) {
             auto& info = GlobalData::shared()->armyList[m_id];
             auto icon = CCLoadSprite::createSprite((info.getHeadIcon()).c_str());
-            CCCommonUtils::setSpriteMaxSize(icon, 222, true);
+//            CCCommonUtils::setSpriteMaxSize(icon, 222, true);//fusheng
             if (id >= 107300)
             {
                 CCCommonUtils::setSpriteMaxSize(icon, 200, true);
             }
+            
+//            icon->setScale(0.85, 0.85);//fusheng
             m_iconNode->addChild(icon);
             m_numLabel->setString(CC_CMDITOA(info.free));
             m_levelLabel->setString(troops_roman[info.armyLevel]);
+            //fusheng begin 换背景图片
+//            m_soliderBG->setTexture(troops_BG[(id - 107000)/100]);
+//            m_soliderTypeSprite->setTexture(troops_typeSprite[(id - 107000)/100]);
+            m_soliderBG->setSpriteFrame(troops_BG[(id - 107000)/100]);
+            m_soliderTypeSprite->setSpriteFrame(troops_typeSprite[(id - 107000)/100]);
+            //fusheng end
+
         }
     } else {
         if (GlobalData::shared()->fortList.find(m_id) != GlobalData::shared()->fortList.end()) {
             auto& info = GlobalData::shared()->fortList[m_id];
             auto icon = CCLoadSprite::createSprite((info.getHeadIcon()).c_str());
-            CCCommonUtils::setSpriteMaxSize(icon, 170, true);
+//            CCCommonUtils::setSpriteMaxSize(icon, 170, true);
             m_iconNode->addChild(icon);
             m_numLabel->setString(CC_CMDITOA(info.free));
             int level = id % 10;
             m_levelLabel->setString(troops_roman[level]);
+            //fusheng begin 换背景图片
+            m_soliderBG->setSpriteFrame(troops_BG[3]);
+            m_soliderTypeSprite->setSpriteFrame(troops_typeSprite[3]);
+            //fusheng end
         }
     }
     float w = m_numLabel->getContentSize().width * m_numLabel->getOriginScaleX();
@@ -415,6 +434,11 @@ bool NewTroopsCell::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_iconNode", CCNode*, this->m_iconNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_numLabel", CCLabelIF*, this->m_numLabel);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_levelLabel", CCLabelIF*, this->m_levelLabel);
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_soliderTypeSprite", CCSprite*, this->m_soliderTypeSprite);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_soliderBG", CCSprite*, this->m_soliderBG);
+    
+    
     return false;
 }
 
@@ -471,10 +495,10 @@ bool NewTroopsArmyTitle::init()
         dw = 20;
     }
     m_armyLabel->setString(_lang("102149"));
-    m_armyLabel->setColor({127, 127, 127});
+
     m_armyNum->setString(CC_CMDITOA(ArmyController::getInstance()->getTotalFree()));
     m_armyNum->setPositionX(m_armyLabel->getPositionX() + m_armyLabel->getContentSize().width * m_armyLabel->getOriginScaleX() + dw);
-    m_armyNum->setColor({160, 177, 202});
+
     
     m_marchLabel->setString(_lang("102141"));
     int maxMarchNum = WorldController::getInstance()->getMaxMarchCount();
@@ -484,8 +508,7 @@ bool NewTroopsArmyTitle::init()
     msg += CC_ITOA(maxMarchNum);
     m_marchNum->setString(msg);
     m_marchNum->setPositionX(m_marchLabel->getPositionX() + m_marchLabel->getContentSize().width * m_marchLabel->getOriginScaleX() + dw);
-    m_marchLabel->setColor({127, 127, 127});
-    m_marchNum->setColor({127, 127, 127});
+
     
     m_foodSpdLabel->setString(_lang("102125"));
     int upKeep = ArmyController::getInstance()->getTotalUpKeep();
@@ -493,8 +516,7 @@ bool NewTroopsArmyTitle::init()
     msg += "/h";
     m_foodSpd->setString(msg);
     m_foodSpd->setPositionX(m_foodSpdLabel->getPositionX() + m_foodSpdLabel->getContentSize().width * m_foodSpdLabel->getOriginScaleX() + dw);
-    m_foodSpdLabel->setColor({127, 127, 127});
-    m_foodSpd->setColor({127, 127, 127});
+
     
     m_woundedLabel->setString(_lang("102186"));
     int deadNum = 0;
@@ -504,8 +526,7 @@ bool NewTroopsArmyTitle::init()
     msg = CC_CMDITOA(deadNum) + "/" + CC_CMDITOA(ArmyController::getInstance()->getMaxNumByType(TREAT_ARMY));
     m_woundedNum->setString(msg);
     m_woundedNum->setPositionX(m_woundedLabel->getPositionX() + m_woundedLabel->getContentSize().width * m_woundedLabel->getOriginScaleX() + dw);
-    m_woundedLabel->setColor({127, 127, 127});
-    m_woundedNum->setColor({127, 127, 127});
+ 
     
     if (ArmyController::getInstance()->getTotalFree() > 0)
     {
@@ -514,7 +535,7 @@ bool NewTroopsArmyTitle::init()
         m_myTroopLabel->setString(_lang("103695"));
     }
     
-    m_myTroopLabel->setColor({72, 60, 44});
+  
     
     
     return true;
@@ -564,9 +585,8 @@ bool NewTroopsTrapTitle::init()
         dw = 20;
     }
     m_trapNum->setPositionX(m_trapLabel->getPositionX() + m_trapLabel->getContentSize().width * m_trapLabel->getOriginScaleX() + dw);
-    m_trapLabel->setColor({127, 127, 127});
-    m_trapNum->setColor({127, 127, 127});
-    m_tipLabel->setColor({72, 60, 44});
+
+  
     if (ArmyController::getInstance()->getTotalFortNum() <= 0)
     {
         m_tipLabel->setString(_lang("103696"));
