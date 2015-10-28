@@ -81,8 +81,8 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string>Common/Common_200.plist</string>
-									<string>Army_flag_03.png</string>
+									<string>Common/Common_201.plist</string>
+									<string>cz_bt_1.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -92,8 +92,8 @@
 								<string>Size</string>
 								<key>value</key>
 								<array>
-									<real>660</real>
-									<real>56</real>
+									<real>560</real>
+									<real>35</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -150,8 +150,6 @@
 								<real>0.0</real>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -175,7 +173,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>-306</real>
+									<real>-256</real>
 									<real>0.0</real>
 									<integer>0</integer>
 								</array>
@@ -322,7 +320,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>-143</real>
+									<real>-93</real>
 									<real>0.0</real>
 									<integer>0</integer>
 								</array>
