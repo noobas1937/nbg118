@@ -378,32 +378,79 @@ CCAnimate *Soldier::getAnimate(float direction, int state){
     
     Vector<SpriteFrame*> arr; //= CCArray::create();
     int totalFrame = 0;
-    if(state == 2){
-        totalFrame = 6;
+    if(state == eSoldierState::kDead){
         stateStr = "die";
-    }else if(state == 1){
-        totalFrame = 11;
+    }else if(state == eSoldierState::kAttack){
         stateStr = "attack";
-    }else{
-        totalFrame = 7;
+    }else if(state == eSoldierState::kWalk){
         stateStr = "move";
+    }else if(state == eSoldierState::kHurt){
+        stateStr = "hurt";
+    }else if(state == eSoldierState::kStand){
+        stateStr = "stand";
     }
+    
     std::string str = "a060_0_%s_%s_%d.png";
     if(m_type == BU){
         str = "a010_0_%s_%s_%d.png";
+        if(state == eSoldierState::kDead){
+            totalFrame = 6;
+        }else if(state == eSoldierState::kAttack){
+            totalFrame = 11;
+        }else if(state == eSoldierState::kWalk){
+            totalFrame = 7;
+        }else if(state == eSoldierState::kHurt){
+            totalFrame = 1;
+        }else if(state == eSoldierState::kStand){
+            totalFrame = 10;
+        }
     }
     else if(m_type == QI){
-        totalFrame = 7;
         str = "a020_0_%s_%s_%d.png";
-    }
-    else if (m_type == CHE){
-        str = "zhanche_0_%s_%s_%d.png";
-        if (stateStr == "attack") {
-            totalFrame = 6;
-        }else if (stateStr == "move") {
-            totalFrame = 4;
+        if(state == eSoldierState::kDead){
+            totalFrame = 7;
+        }else if(state == eSoldierState::kAttack){
+            totalFrame = 12;
+        }else if(state == eSoldierState::kWalk){
+            totalFrame = 7;
+        }else if(state == eSoldierState::kHurt){
+            totalFrame = 1;
+        }else if(state == eSoldierState::kStand){
+            totalFrame = 0;
         }
-    }else if (m_type == TITAN){ //fusheng 泰坦
+    }
+    else if (m_type == GONG)
+    {
+        str = "a060_0_%s_%s_%d.png";
+        if(state == eSoldierState::kDead){
+            totalFrame = 4;
+        }else if(state == eSoldierState::kAttack){
+            totalFrame = 10;
+        }else if(state == eSoldierState::kWalk){
+            totalFrame = 7;
+        }else if(state == eSoldierState::kHurt){
+            totalFrame = 1;
+        }else if(state == eSoldierState::kStand){
+            totalFrame = 7;
+        }
+    }
+    else if (m_type == CHE)
+    {
+        str = "zhanche_0_%s_%s_%d.png";
+        if(state == eSoldierState::kDead){
+            totalFrame = 1;
+        }else if(state == eSoldierState::kAttack){
+            totalFrame = 6;
+        }else if(state == eSoldierState::kWalk){
+            totalFrame = 4;
+        }else if(state == eSoldierState::kHurt){
+            totalFrame = 0;
+        }else if(state == eSoldierState::kStand){
+            totalFrame = 0;
+        }
+    }
+    else if (m_type == TITAN)
+    { //fusheng 泰坦
         str = "a010_0_%s_%s_%d.png";
     }
     
@@ -512,7 +559,7 @@ bool Soldier::init(){
         m_kingSprite1->setVisible(false);
     }
    
-    m_sprite = CCLoadSprite::createSprite("a030_0_S_attack_0.png");
+    m_sprite = CCLoadSprite::createSprite("a060_0_S_attack_0.png");
     m_sprite->setScale(0.6);
     m_parent->addChild(m_sprite, 1);
     m_sprite->setVisible(false);

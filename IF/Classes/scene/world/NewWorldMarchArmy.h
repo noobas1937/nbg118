@@ -45,6 +45,16 @@ private:
     CCSafeObject<CCSprite> m_arrow;
 };
 
+enum eSoldierState
+{
+    //0 walk 1 attack 2 dead 3 stand 4 hurt
+    kWalk = 0,
+    kAttack,
+    kDead,
+    kStand,
+    kHurt,
+};
+
 class Soldier : public CCObject
 {
 public:
@@ -100,7 +110,7 @@ private:
     CCSafeObject<CCSprite> m_parent;
     int m_type;
     float m_direction;
-    int m_currentState;//0 walk 1 attack 2 dead
+    int m_currentState;//0 walk 1 attack 2 dead 3 stand 5 hurt 4 die
     CCPoint m_pos;
     MarchInfo &m_info;
     int m_row;

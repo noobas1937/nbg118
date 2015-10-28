@@ -7,11 +7,11 @@
             <key>egg_0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{132,4},{116,110}}</string>
+                <string>{{4,132},{116,110}}</string>
                 <key>offset</key>
                 <string>{-2,1}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{4,8},{116,110}}</string>
                 <key>sourceSize</key>
@@ -24,102 +24,102 @@
                 <key>offset</key>
                 <string>{-6,-2}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{5,5},{106,122}}</string>
                 <key>sourceSize</key>
                 <string>{128,128}</string>
             </dict>
-            <key>egglh_1.png</key>
+            <key>egglh_0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{176,208},{74,48}}</string>
+                <string>{{120,204},{84,24}}</string>
                 <key>offset</key>
-                <string>{-27,-4}</string>
+                <string>{-52,-13}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,44},{74,48}}</string>
+                <string>{{6,101},{84,24}}</string>
                 <key>sourceSize</key>
-                <string>{128,128}</string>
+                <string>{200,200}</string>
+            </dict>
+            <key>egglh_1.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{198,106},{92,50}}</string>
+                <key>offset</key>
+                <string>{-48,-28}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{6,103},{92,50}}</string>
+                <key>sourceSize</key>
+                <string>{200,200}</string>
             </dict>
             <key>egglh_2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{102,120},{90,78}}</string>
+                <string>{{204,4},{36,48}}</string>
                 <key>offset</key>
-                <string>{-19,-25}</string>
+                <string>{-25,33}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{0,50},{90,78}}</string>
+                <string>{{57,43},{36,48}}</string>
                 <key>sourceSize</key>
-                <string>{128,128}</string>
+                <string>{200,200}</string>
             </dict>
             <key>egglh_3.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{94,204},{58,76}}</string>
+                <string>{{204,46},{30,44}}</string>
                 <key>offset</key>
-                <string>{-35,26}</string>
+                <string>{-17,27}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{58,76}}</string>
+                <string>{{68,51},{30,44}}</string>
                 <key>sourceSize</key>
-                <string>{128,128}</string>
+                <string>{200,200}</string>
             </dict>
             <key>egglh_4.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,198},{60,84}}</string>
+                <string>{{116,106},{76,18}}</string>
                 <key>offset</key>
-                <string>{-26,22}</string>
+                <string>{49,8}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{8,0},{60,84}}</string>
+                <string>{{111,83},{76,18}}</string>
                 <key>sourceSize</key>
-                <string>{128,128}</string>
+                <string>{200,200}</string>
             </dict>
             <key>egglh_5.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{176,262},{70,30}}</string>
+                <string>{{164,4},{96,34}}</string>
                 <key>offset</key>
-                <string>{29,5}</string>
+                <string>{52,1}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{58,44},{70,30}}</string>
+                <string>{{104,82},{96,34}}</string>
                 <key>sourceSize</key>
-                <string>{128,128}</string>
+                <string>{200,200}</string>
             </dict>
             <key>egglh_6.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{198,120},{82,52}}</string>
+                <string>{{116,4},{96,42}}</string>
                 <key>offset</key>
-                <string>{23,-7}</string>
+                <string>{47,-11}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{46,45},{82,52}}</string>
+                <string>{{99,90},{96,42}}</string>
                 <key>sourceSize</key>
-                <string>{128,128}</string>
-            </dict>
-            <key>egglh_7.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{4,116},{92,76}}</string>
-                <key>offset</key>
-                <string>{18,-26}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{36,52},{92,76}}</string>
-                <key>sourceSize</key>
-                <string>{128,128}</string>
+                <string>{200,200}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -129,9 +129,9 @@
             <key>realTextureFileName</key>
             <string>Common_513.pvr.ccz</string>
             <key>size</key>
-            <string>{256,512}</string>
+            <string>{256,256}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:d99b1141e69ab568522ff89e2fa9172f:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:8f268d6f69e21624ef7163475c6b531b:1/1$</string>
             <key>textureFileName</key>
             <string>Common_513.pvr.ccz</string>
         </dict>

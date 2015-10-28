@@ -333,7 +333,7 @@ void ChangeServeView::setData(){
 #elif COCOS2D_DEBUG == 2
         url = CCString::createWithFormat("http://10.1.4.121/gameservice/getserverlist.php?gmFlag=%d", GlobalData::shared()->playerInfo.gmFlag)->getCString();
 #else
-        url = CCString::createWithFormat("http://p1.cok.elexapp.com/gameservice/getserverlist.php?gmFlag=%d", GlobalData::shared()->playerInfo.gmFlag)->getCString();
+        url = CCString::createWithFormat("http://p1.nbg.elexapp.com/gameservice/getserverlist.php?gmFlag=%d", GlobalData::shared()->playerInfo.gmFlag)->getCString();
 #endif
     CCLOG("change URL: %s",url.c_str());
     request->setUrl(url.c_str());

@@ -56,7 +56,8 @@ bool ActBossPopUp::init(){
         
         m_iconNode->removeAllChildren();
         int picAddX = 0;
-        std::string icon = CCCommonUtils::getPropById(m_info.fieldMonsterInfo.monsterId, "monster") + "_bust.png";
+        std::string icon = (int)m_info.cityTilePoint.x % 2 ? "nb_octopus_01.png" : "nb_octopus_02.png";
+//        std::string icon = CCCommonUtils::getPropById(m_info.fieldMonsterInfo.monsterId, "monster") + "_bust.png";
         auto sprite  = CCLoadSprite::createSprite(icon.c_str(),true,CCLoadSpriteType_MONSTERLAYERBUST);
         m_iconNode->addChild(sprite);
         sprite->setPositionX(picAddX);
@@ -114,13 +115,13 @@ bool ActBossPopUp::init(){
             CCCommonUtils::setButtonTitle(m_btn, _lang("137447").c_str());
         }
         
-        for (int j=1; j<=4; j++) {
-            auto particle = ParticleController::createParticle(CCString::createWithFormat("UiFire_%d",j)->getCString());
-            m_fireNode1->addChild(particle);
-            
-            auto particle1 = ParticleController::createParticle(CCString::createWithFormat("UiFire_%d",j)->getCString());
-            m_fireNode2->addChild(particle1);
-        }
+//        for (int j=1; j<=4; j++) {
+//            auto particle = ParticleController::createParticle(CCString::createWithFormat("UiFire_%d",j)->getCString());
+//            m_fireNode1->addChild(particle);
+//            
+//            auto particle1 = ParticleController::createParticle(CCString::createWithFormat("UiFire_%d",j)->getCString());
+//            m_fireNode2->addChild(particle1);
+//        }
         
         ret = true;
     }
@@ -169,6 +170,10 @@ void ActBossPopUp::onDetailCallback(cocos2d::CCObject *obj)
 
 void ActBossPopUp::onAttackButton(CCObject * pSender, Control::EventType pCCControlEvent){
     
+    CCCommonUtils::flyHint("", "", _lang("E100008"));//fusheng 这个界面 美术没做
+    closeSelf();
+    return;
+    
     if(!GlobalData::shared()->playerInfo.isInAlliance())
     {//没有联盟，去加入联盟页
         PopupViewController::getInstance()->addPopupInView(JoinAllianceView::create(11));
@@ -214,8 +219,8 @@ bool ActBossPopUp::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const 
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_hpLabel", CCLabelIF*, this->m_hpLabel);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bar", CCScale9Sprite*, this->m_bar);
     
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_fireNode1", CCNode*, this->m_fireNode1);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_fireNode2", CCNode*, this->m_fireNode2);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_fireNode1", CCNode*, this->m_fireNode1);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_fireNode2", CCNode*, this->m_fireNode2);
     return false;
 }
 

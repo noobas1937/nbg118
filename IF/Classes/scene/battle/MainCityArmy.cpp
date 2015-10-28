@@ -187,7 +187,7 @@ bool MainCityArmy::MackSoldier(int type, int idx){
             m_icon = "a010";
             break;
         case 1://弓兵
-            m_icon = "a030";
+            m_icon = "a060";
             break;
         case 2://骑兵
             m_icon = "a020";

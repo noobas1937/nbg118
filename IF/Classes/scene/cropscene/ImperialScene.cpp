@@ -302,12 +302,12 @@ bool ImperialScene::init()
     //域名修复代码
     string s1IP = CCUserDefault::sharedUserDefault()->getStringForKey(ACCOUNT_IP, "");
     if (s1IP != "" && s1IP == "184.173.110.102") {
-        CCUserDefault::sharedUserDefault()->setStringForKey(ACCOUNT_IP, "s1.cok.elexapp.com");
+        CCUserDefault::sharedUserDefault()->setStringForKey(ACCOUNT_IP, "s1.nbg.elexapp.com");
         CCUserDefault::sharedUserDefault()->flush();
     }
     else if (s1IP != "" && s1IP == "184.173.110.99")
     {
-        CCUserDefault::sharedUserDefault()->setStringForKey(ACCOUNT_IP, "s2.cok.elexapp.com");
+        CCUserDefault::sharedUserDefault()->setStringForKey(ACCOUNT_IP, "s2.nbg.elexapp.com");
         CCUserDefault::sharedUserDefault()->flush();
     }
     if (!GlobalData::shared()->isXMLInitFlag) {
@@ -797,7 +797,8 @@ void ImperialScene::onEnter()
             
         }else if (GlobalData::shared()->contryResType == 2) {
             m_waterType = 1;
-            makeWater(0);
+            // tao.yu 第一版本去掉
+//            makeWater(0);
             
             m_dropNode = CCNode::create();
             m_dropNode->setPosition(ccp(CCDirector::sharedDirector()->getWinSize().width/2,CCDirector::sharedDirector()->getWinSize().height/2));
@@ -4115,7 +4116,7 @@ void ImperialScene::addSoldierToMap(int stype, int num, int ptx, int pty)
             m_icon = "a010";
             break;
         case 5://弓兵
-            m_icon = "a030";
+            m_icon = "a060";
             break;
         case 2://骑兵
             rowWidth = 30;
@@ -4599,7 +4600,7 @@ void ImperialScene::addDefenseFailEffect(){
     soldier2->setPosition(pos+ccp(40,-15));
     soldierBN->addChild(soldier2);
     
-    auto soldier2_1 = CCLoadSprite::createSprite("a030_1_N_die_5.png");
+    auto soldier2_1 = CCLoadSprite::createSprite("a060_0_N_die_5.png");
     soldier2_1->setPosition(pos+ccp(-50,-25));
     soldierBN->addChild(soldier2_1);
     
@@ -4636,7 +4637,7 @@ void ImperialScene::addDefenseFailEffect(){
     soldier3->setPosition(pos+ccp(-40, -40));
     soldierBN->addChild(soldier3);
     
-    auto soldier3_1 = CCLoadSprite::createSprite("a030_1_NW_die_5.png");
+    auto soldier3_1 = CCLoadSprite::createSprite("a060_0_NW_die_5.png");
     soldier3_1->setPosition(pos+ccp(80, 90));
     soldierBN->addChild(soldier3_1);
     
@@ -4666,7 +4667,7 @@ void ImperialScene::addDefenseFailEffect(){
     soldier4_1->setPosition(pos+ccp(-30,-30));
     soldierBN->addChild(soldier4_1);
     
-    auto soldier4_2 = CCLoadSprite::createSprite("a030_1_N_die_5.png");
+    auto soldier4_2 = CCLoadSprite::createSprite("a060_0_N_die_5.png");
     soldier4_2->setPosition(pos+ccp(90,-20));
     soldierBN->addChild(soldier4_2);
     
@@ -4711,7 +4712,7 @@ void ImperialScene::addDefenseFailEffect(){
     soldier6->setPosition(pos+ccp(30,-30));
     soldierBN->addChild(soldier6);
     
-    auto soldier6_1 = CCLoadSprite::createSprite("a030_1_NW_die_5.png");
+    auto soldier6_1 = CCLoadSprite::createSprite("a060_0_NW_die_5.png");
     soldier6_1->setPosition(pos+ccp(50,-10));
     soldierBN->addChild(soldier6_1);
     
@@ -4737,7 +4738,7 @@ void ImperialScene::addDefenseFailEffect(){
     soldier7->setPosition(pos+ccp(30,-40));
     soldierBN->addChild(soldier7);
     
-    auto soldier7_1 = CCLoadSprite::createSprite("a030_1_NW_die_5.png");
+    auto soldier7_1 = CCLoadSprite::createSprite("a060_0_NW_die_5.png");
     soldier7_1->setPosition(pos+ccp(-50,-10));
     soldierBN->addChild(soldier7_1);
     
@@ -4766,7 +4767,7 @@ void ImperialScene::addDefenseFailEffect(){
     soldier8->setPosition(pos+ccp(GlobalData::shared()->getRand(-30,-60), GlobalData::shared()->getRand(-30,-70)));
     soldierBN->addChild(soldier8);
     
-    auto soldier8_1 = CCLoadSprite::createSprite("a030_1_N_die_5.png");
+    auto soldier8_1 = CCLoadSprite::createSprite("a060_0_N_die_5.png");
     soldier8_1->setPosition(pos+ccp(GlobalData::shared()->getRand(-60,30), GlobalData::shared()->getRand(-50,50)));
     soldierBN->addChild(soldier8_1);
     

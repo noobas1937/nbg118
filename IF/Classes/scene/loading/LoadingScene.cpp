@@ -120,13 +120,13 @@ bool LoadingScene::init()
             
             this->addChild(loadingBG);
 
-            m_rollingCloud = RollingSprite::create("cloud_ani.png", 30.0);
-            this->addChild(m_rollingCloud);
-            m_rollingCloud->setPosition(loadingBG->getPosition());
+//            m_rollingCloud = RollingSprite::create("cloud_ani.png", 30.0);
+//            this->addChild(m_rollingCloud);
+//            m_rollingCloud->setPosition(loadingBG->getPosition());
             
-            auto fireParticle = CCNode::create();
-            this->addChild(fireParticle);
-            addFireParticle(fireParticle, "LoadingMan_cloud", ccp(size.width / 2, size.height - 130));
+//            auto fireParticle = CCNode::create();
+//            this->addChild(fireParticle);
+//            addFireParticle(fireParticle, "LoadingMan_cloud", ccp(size.width / 2, size.height - 130));
 
 //            auto kingSpine = IFLoadingSceneArmyNode::create("Loading/Loading_3.atlas", "Spine/Loading/loading.json", "loading", 0.5);
 //            this->addChild(kingSpine);
@@ -153,7 +153,7 @@ bool LoadingScene::init()
         float _tipX = CCDirector::sharedDirector()->getWinSize().width/2-40;
         m_loadtips = CCLabelIF::create(_lang("E100074").c_str());
         m_loadtips->setFntFile("Arial_Bold_Border.fnt");
-        m_loadtips->setColor({236, 186, 135});
+        m_loadtips->setColor({140, 200, 200});
         m_loadtips->setFontSize(20);
         m_loadtips->setHorizontalAlignment(kCCTextAlignmentCenter);
         m_loadtips->setVerticalAlignment(kCCVerticalTextAlignmentCenter);
@@ -289,30 +289,30 @@ bool LoadingScene::init()
             addFireParticle(logFireNode2, "LoadingLOGO_2", ccp(430, size.height - 240));
         }else{
             //logo
-            auto logo = CCLoadSprite::createSprite("logo.png");
-            logo->setAnchorPoint(ccp(0.5, 0));
-            
-            logo->setPosition(ccp(size.width/2, 150));//
-            logo->setTag(LOADING_LOGO_TAG);
+//            auto logo = CCLoadSprite::createSprite("logo.png");
+//            logo->setAnchorPoint(ccp(0.5, 0));
+//            
+//            logo->setPosition(ccp(size.width/2, 150));//
+//            logo->setTag(LOADING_LOGO_TAG);
 //            addChild(logo);
             
-            auto logFireNode1 = CCNode::create();
-            this->addChild(logFireNode1);
-            addFireParticle(logFireNode1, "LoadingMan_fire", ccp(320, 600));
-            if (CCCommonUtils::isIosAndroidPad())
-            {
-                logFireNode1->setScale(2.4);
-                logo->setScale(1.7f);
-                logo->setPositionY(600);
-            }
-
-            auto logFireNode2 = CCNode::create();
-            this->addChild(logFireNode2);
-            addFireParticle(logFireNode2, "LoadingMan_cold", ccp(200, logo->getPositionY() + logo->getContentSize().height / 4));
-            if (CCCommonUtils::isIosAndroidPad())
-            {
-                logFireNode2->setScale(2.4);
-            }
+//            auto logFireNode1 = CCNode::create();
+//            this->addChild(logFireNode1);
+//            addFireParticle(logFireNode1, "LoadingMan_fire", ccp(320, 600));
+//            if (CCCommonUtils::isIosAndroidPad())
+//            {
+//                logFireNode1->setScale(2.4);
+//                logo->setScale(1.7f);
+//                logo->setPositionY(600);
+//            }
+//
+//            auto logFireNode2 = CCNode::create();
+//            this->addChild(logFireNode2);
+//            addFireParticle(logFireNode2, "LoadingMan_cold", ccp(200, logo->getPositionY() + logo->getContentSize().height / 4));
+//            if (CCCommonUtils::isIosAndroidPad())
+//            {
+//                logFireNode2->setScale(2.4);
+//            }
         }
 //
         auto tipsBg = CCLoadSprite::createSprite("loading_tips_bg.png");
@@ -327,7 +327,8 @@ bool LoadingScene::init()
         auto tipsSize = CCSizeMake(tipsBg->getContentSize().width, tipsBg->getContentSize().height);
         
         m_loadingTips = CCLabelIF::create("loading...");
-        m_loadingTips->setColor({152,137,103});
+        m_loadingTips->setColor({220,187,111});
+        m_loadingTips->enableStroke(ccBLACK, 1.0);
         m_loadingTips->setFontSize(24);
         m_loadingTips->setDimensions(CCSizeMake(tipsSize.width*0.85, tipsSize.height*1.8));
         m_loadingTips->setHorizontalAlignment(kCCTextAlignmentCenter);
@@ -622,7 +623,7 @@ void LoadingScene::onLoginTimeout(float t)
 #if COCOS2D_DEBUG == 2
     url = CCString::createWithFormat("http://10.1.4.121/probe.php?uuid=%s&loginFlag=%d&country=%s&gameuid=%s&lang=%s&serverId=%s&serverIp=%s",_uuid.c_str(),1,_Country.c_str(),_gameUid.c_str(),_lang.c_str(),_serverId.c_str(),_serverIp.c_str());
 #else
-    url = CCString::createWithFormat("http://p1.cok.elexapp.com/probe.php?uuid=%s&loginFlag=%d&country=%s&gameuid=%s&lang=%s&serverId=%s&serverIp=%s",_uuid.c_str(),1,_Country.c_str(),_gameUid.c_str(),_lang.c_str(),_serverId.c_str(),_serverIp.c_str());
+    url = CCString::createWithFormat("http://p1.nbg.elexapp.com/probe.php?uuid=%s&loginFlag=%d&country=%s&gameuid=%s&lang=%s&serverId=%s&serverIp=%s",_uuid.c_str(),1,_Country.c_str(),_gameUid.c_str(),_lang.c_str(),_serverId.c_str(),_serverIp.c_str());
 #endif
 #endif
     CCLOG("get_server_status list URL: %s",url->getCString());
@@ -762,39 +763,25 @@ void LoadingScene::sendCmdGetServerList(CCObject* p){
     if (_platformUID != "") {
         string _PublishRegion = cocos2d::extension::CCDevice::getPublishRegion();
         param = CCString::createWithFormat("uuid=%s&loginFlag=%d&pfId=%s&pf=%s&token=%s&country=%s&t=%s&sig=%s",_uuid.c_str(),1,_platformUID.c_str(),_PublishRegion.c_str(),_platformToken.c_str(),_Country.c_str(),timeStr.c_str(),md5Str.c_str())->getCString();
-#if COCOS2D_DEBUG == 1
-        url = CCString::createWithFormat("http://%s/gameservice/getserverlist.php?%s",SERVERLIST_IP,param.c_str());
-#else
-#if COCOS2D_DEBUG == 2
-        url = CCString::createWithFormat("http://%s/gameservice/getserverlist.php?%s",SERVERLIST_IP,param.c_str());
-#else
-        if(isChinaPhone && m_getServerListRetryTime % 2 == 0){
-            url = CCString::createWithFormat("http://%s/gameservice/getserverlist.php?%s","p3cok.elexapp.com",param.c_str());
-        }else{
-            url = CCString::createWithFormat("http://%s/gameservice/getserverlist.php?%s","p1cok.elexapp.com",param.c_str());
-        }
-#endif
-#endif
     }
     else
     {
         param = CCString::createWithFormat("uuid=%s&loginFlag=%d&country=%s&t=%s&sig=%s",_uuid.c_str(),1,_Country.c_str(),timeStr.c_str(),md5Str.c_str())->getCString();
-#if COCOS2D_DEBUG == 1
-        url = CCString::createWithFormat("http://%s/gameservice/getserverlist.php?%s",SERVERLIST_IP,param.c_str());
-#else
-#if COCOS2D_DEBUG == 2
-        url = CCString::createWithFormat("http://%s/gameservice/getserverlist.php?%s",SERVERLIST_IP,param.c_str());
-#else
-        if(isChinaPhone && m_getServerListRetryTime % 2 == 0){
-            url = CCString::createWithFormat("http://%s/gameservice/getserverlist.php?%s","p3cok.elexapp.com",param.c_str());
-        }else{
-            url = CCString::createWithFormat("http://%s/gameservice/getserverlist.php?%s","p1cok.elexapp.com",param.c_str());
-        }
-#endif
-#endif
     }
+#if COCOS2D_DEBUG == 1
+    url = CCString::createWithFormat("http://%s/gameservice/getserverlist.php?%s", SERVERLIST_IP1, param.c_str());
+#elif COCOS2D_DEBUG == 2
+    url = CCString::createWithFormat("http://%s/gameservice/getserverlist.php?%s", SERVERLIST_IP1, param.c_str());
+#else
+    if (isChinaPhone && m_getServerListRetryTime % 2 == 0) {
+        url = CCString::createWithFormat("http://%s/gameservice/getserverlist.php?%s", SERVERLIST_IP1, param.c_str());
+    } else {
+        url = CCString::createWithFormat("http://%s/gameservice/getserverlist.php?%s", SERVERLIST_IP2, param.c_str());
+    }
+#endif
+    
     CCLOG("COK server list URL: %s",url->getCString());
-//    url = CCString::createWithFormat("http://%s/gameservice/getserverlist.php?uuid=%s&loginFlag=%d&country=%s","p1.cok.elexapp.com",_uuid.c_str(),1,_Country.c_str());
+//    url = CCString::createWithFormat("http://%s/gameservice/getserverlist.php?uuid=%s&loginFlag=%d&country=%s","p1.nbg.elexapp.com",_uuid.c_str(),1,_Country.c_str());
     request->setUrl(url->getCString());
     request->setRequestType(CCHttpRequest::Type::POST);
     request->setResponseCallback(this, httpresponse_selector(LoadingScene::onGetServerList));

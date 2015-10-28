@@ -38,7 +38,7 @@ import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.exceptions.SFSException;
 
 public class Net implements IEventListener {
-	private static String mIp = "s1.cok.elexapp.com";
+	private static String mIp = "s1.nbg.elexapp.com";
 	private static String mZone = "COK1";
 	private static int mPort = 80;
 	private static int mPort2 = 8088;// 备用登陆端口

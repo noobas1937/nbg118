@@ -93,7 +93,7 @@ private:
     int getFortCountByHour(int hourCount);
     void writeLastGoldBuyCount(int count);
     int getLastGoldBuyCount(int defCount);
-    
+    void showSoldierIcon(CCObject *obj);
     void refreshGalleryCells();
     
     void ClearCD();

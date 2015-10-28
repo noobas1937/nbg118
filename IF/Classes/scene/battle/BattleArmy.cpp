@@ -46,7 +46,7 @@ bool BattleArmy::init(){
             colHeight = 10;
             perX = 20;
             perY = 10;
-            m_icon = "a030";
+            m_icon = "a060";
             m_direct = "SE";
             break;
         case 2:
