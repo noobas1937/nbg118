@@ -15,7 +15,7 @@
 
 static const char* troops_roman[30] =  {"I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","XIII","XIV","XV","XVI","XVII","XVIII","XIX","XX", "XXI","XXII","XXIII","XXIV","XXV","XXVI","XXVII","XXVIII","XXIX","XXX"};
 
-static const char* troops_typeSprite[4] =  {"bz_gjs.png","bz_js.png","bz_qb.png","bz_qb.png"};
+static const char* troops_typeSprite[4] =  {"bz_js.png","bz_qb.png","bz_gjs.png","bz_js.png"};
 
 static const char* troops_BG[4] =  {"nb_cz_bzbg1.png","nb_cz_bzbg2.png","nb_cz_bzbg3.png","nb_cz_bzbg4.png"};
 
@@ -92,10 +92,12 @@ bool NewTroopsView::init()
 
 void NewTroopsView::refreshView(cocos2d::CCObject * obj)
 {
-    float troops_cell_width = 158;
-    float troops_cell_height = 280;
-    int cellCnt = 4;
-    if (CCCommonUtils::isIosAndroidPad())
+    float troops_cell_width = 180;
+    float troops_cell_height = 310;
+//    int cellCnt = 4;//fusheng 改为3个
+    int cellCnt = 3;
+    int gapX = 65;
+    if (CCCommonUtils::isIosAndroidPad())//fusheng pad需要适配
     {
         troops_cell_width = 1536 / 5.0;
         troops_cell_height = 552;
@@ -133,6 +135,10 @@ void NewTroopsView::refreshView(cocos2d::CCObject * obj)
     vector<string> qi;
     vector<string> gong;
     vector<string> che;
+    int buNum = 0;
+    int qiNum = 0;
+    int gongNum = 0;
+    int cheNum = 0;
     int id = 0;
     int type = 0;
     for (auto it = GlobalData::shared()->armyList.rbegin(); it != GlobalData::shared()->armyList.rend(); ++it)
@@ -143,15 +149,19 @@ void NewTroopsView::refreshView(cocos2d::CCObject * obj)
             switch (type) {
                 case 1070:
                     bu.push_back(it->first);
+                    buNum += it->second.free;
                     break;
                 case 1071:
                     qi.push_back(it->first);
+                    qiNum += it->second.free;
                     break;
                 case 1072:
                     gong.push_back(it->first);
+                    gongNum += it->second.free;
                     break;
                 case 1073:
                     che.push_back(it->first);
+                    cheNum += it->second.free;
                     break;
                     
                 default:
@@ -160,9 +170,15 @@ void NewTroopsView::refreshView(cocos2d::CCObject * obj)
         }
     }
     if (bu.size()) {
+        
+        auto nt = NewTroopsTitleNB::create(bu.at(0), buNum);
+        nt->setPosition(ccp(0, cury-10));
+        m_mainNode->addChild(nt);
+//        cury -= (25 + 50);
+        
         for (int i = 0; i < bu.size(); ++i) {
             auto cell = NewTroopsCell::create(bu.at(i));
-            cell->setPosition((i % cellCnt) * troops_cell_width + 4, cury - floor(i * 1.0 / cellCnt ) * troops_cell_height);
+            cell->setPosition((i % cellCnt) * troops_cell_width + 4 + gapX, cury - floor(i * 1.0 / cellCnt ) * troops_cell_height);
             m_mainNode->addChild(cell);
         }
         cury -= (ceil(bu.size() * 1.0 / cellCnt)) * troops_cell_height;
@@ -170,46 +186,56 @@ void NewTroopsView::refreshView(cocos2d::CCObject * obj)
     if (qi.size()) {
         if (bu.size())
         {
-            auto spr = CCLoadSprite::createScale9Sprite("Army_flag_04.png");
-            spr->setPreferredSize(CCSize(642, 6));
-            spr->setAnchorPoint(ccp(0, 1));
-            spr->setPosition(ccp(-1, cury-10));
-            if (CCCommonUtils::isIosAndroidPad()) {
-                spr->setPreferredSize(CCSize(1540, 12));
-                spr->setPosition(ccp(-2, cury - 20));
-            }
-            m_mainNode->addChild(spr);
-            cury -= (25 + spr->getPreferredSize().height);
+//            auto spr = CCLoadSprite::createScale9Sprite("Army_flag_04.png");
+//            spr->setPreferredSize(CCSize(642, 6));
+//            spr->setAnchorPoint(ccp(0, 1));
+//            spr->setPosition(ccp(-1, cury-10));
+//            if (CCCommonUtils::isIosAndroidPad()) {
+//                spr->setPreferredSize(CCSize(1540, 12));
+//                spr->setPosition(ccp(-2, cury - 20));
+//            }
+//            m_mainNode->addChild(spr);
+//            cury -= (25 + spr->getPreferredSize().height);
+            auto nt = NewTroopsTitleNB::create(qi.at(0), qiNum);
+            nt->setPosition(ccp(0, cury-10));
+            m_mainNode->addChild(nt);
+//            cury -= (25 + 50);
             if (CCCommonUtils::isIosAndroidPad()) {
                 cury -= 25;
             }
         }
         for (int i = 0; i < qi.size(); ++i) {
             auto cell = NewTroopsCell::create(qi.at(i));
-            cell->setPosition((i % cellCnt) * troops_cell_width + 4, cury - floor(i * 1.0 / cellCnt) * troops_cell_height);
+            cell->setPosition((i % cellCnt) * troops_cell_width + 4 + gapX, cury - floor(i * 1.0 / cellCnt) * troops_cell_height);
             m_mainNode->addChild(cell);
         }
         cury -= (ceil(qi.size() * 1.0 / cellCnt)) * troops_cell_height;
     }
     if (gong.size()) {
         if (bu.size() + qi.size()) {
-            auto spr = CCLoadSprite::createScale9Sprite("Army_flag_04.png");
-            spr->setPreferredSize(CCSize(642, 6));
-            spr->setAnchorPoint(ccp(0, 1));
-            spr->setPosition(ccp(-1, cury-10));
-            if (CCCommonUtils::isIosAndroidPad()) {
-                spr->setPreferredSize(CCSize(1540, 12));
-                spr->setPosition(ccp(-2, cury - 20));
-            }
-            m_mainNode->addChild(spr);
-            cury -= (25 + spr->getPreferredSize().height);
+//            auto spr = CCLoadSprite::createScale9Sprite("Army_flag_04.png");
+//            spr->setPreferredSize(CCSize(642, 6));
+//            spr->setAnchorPoint(ccp(0, 1));
+//            spr->setPosition(ccp(-1, cury-10));
+//            if (CCCommonUtils::isIosAndroidPad()) {
+//                spr->setPreferredSize(CCSize(1540, 12));
+//                spr->setPosition(ccp(-2, cury - 20));
+//            }
+//            m_mainNode->addChild(spr);
+//            cury -= (25 + spr->getPreferredSize().height);
+            
+            auto nt = NewTroopsTitleNB::create(gong.at(0), gongNum);
+            nt->setPosition(ccp(0, cury-10));
+            m_mainNode->addChild(nt);
+//            cury -= (25 + 50);
+            
             if (CCCommonUtils::isIosAndroidPad()) {
                 cury -= 25;
             }
         }
         for (int i = 0; i < gong.size(); ++i) {
             auto cell = NewTroopsCell::create(gong.at(i));
-            cell->setPosition((i % cellCnt) * troops_cell_width + 4, cury - floor(i * 1.0 / cellCnt) * troops_cell_height);
+            cell->setPosition((i % cellCnt) * troops_cell_width + 4 + gapX, cury - floor(i * 1.0 / cellCnt) * troops_cell_height);
             m_mainNode->addChild(cell);
         }
         cury -= (ceil(gong.size() * 1.0 / cellCnt)) * troops_cell_height;
@@ -217,30 +243,35 @@ void NewTroopsView::refreshView(cocos2d::CCObject * obj)
     if (che.size()) {
         if (bu.size() + qi.size() + gong.size())
         {
-            auto spr = CCLoadSprite::createScale9Sprite("Army_flag_04.png");
-            spr->setPreferredSize(CCSize(642, 6));
-            spr->setAnchorPoint(ccp(0, 1));
-            spr->setPosition(ccp(-1, cury-10));
-            if (CCCommonUtils::isIosAndroidPad()) {
-                spr->setPreferredSize(CCSize(1540, 12));
-                spr->setPosition(ccp(-2, cury - 20));
-            }
-            m_mainNode->addChild(spr);
-            cury -= (25 + spr->getPreferredSize().height);
+//            auto spr = CCLoadSprite::createScale9Sprite("Army_flag_04.png");
+//            spr->setPreferredSize(CCSize(642, 6));
+//            spr->setAnchorPoint(ccp(0, 1));
+//            spr->setPosition(ccp(-1, cury-10));
+//            if (CCCommonUtils::isIosAndroidPad()) {
+//                spr->setPreferredSize(CCSize(1540, 12));
+//                spr->setPosition(ccp(-2, cury - 20));
+//            }
+//            m_mainNode->addChild(spr);
+//            cury -= (25 + spr->getPreferredSize().height);
+            
+            auto nt = NewTroopsTitleNB::create(che.at(0), cheNum);
+            nt->setPosition(ccp(0, cury-10));
+            m_mainNode->addChild(nt);
+//            cury -= (25 + 50);
             if (CCCommonUtils::isIosAndroidPad()) {
                 cury -= 25;
             }
         }
         for (int i = 0; i < che.size(); ++i) {
             auto cell = NewTroopsCell::create(che.at(i));
-            cell->setPosition((i % cellCnt) * troops_cell_width + 4, cury - floor(i * 1.0 / cellCnt) * troops_cell_height);
+            cell->setPosition((i % cellCnt) * troops_cell_width + 4 + gapX, cury - floor(i * 1.0 / cellCnt) * troops_cell_height);
             m_mainNode->addChild(cell);
         }
         cury -= (ceil(che.size() * 1.0 / cellCnt)) * troops_cell_height;
     }
     
     if ((bu.size() + qi.size() + gong.size() + che.size()) == 0) {
-        cury -= 70;//两大类间隔一定距离
+//        cury -= 70;//两大类间隔一定距离//fusheng 太大
         if (CCCommonUtils::isIosAndroidPad())
         {
             cury -= 70;
@@ -278,22 +309,23 @@ void NewTroopsView::refreshView(cocos2d::CCObject * obj)
         if ((it->second).size() > 0)
         {
             if (st) {
-                auto spr = CCLoadSprite::createScale9Sprite("Army_flag_04.png");
-                spr->setPreferredSize(CCSize(642, 6));
-                spr->setAnchorPoint(ccp(0, 1));
-                spr->setPosition(ccp(-1, cury-10));
-                if (CCCommonUtils::isIosAndroidPad()) {
-                    spr->setPreferredSize(CCSize(1540, 12));
-                    spr->setPosition(ccp(-2, cury - 20));
-                }
-                m_mainNode->addChild(spr);
-                cury -= (25 + spr->getPreferredSize().height);
+//                auto spr = CCLoadSprite::createScale9Sprite("Army_flag_04.png");//fusheng
+//                spr->setPreferredSize(CCSize(642, 6));
+//                spr->setAnchorPoint(ccp(0, 1));
+//                spr->setPosition(ccp(-1, cury-10));
+//                if (CCCommonUtils::isIosAndroidPad()) {
+//                    spr->setPreferredSize(CCSize(1540, 12));
+//                    spr->setPosition(ccp(-2, cury - 20));
+//                }
+//                m_mainNode->addChild(spr);
+//                cury -= (25 + spr->getPreferredSize().height);
+                cury -= 25;
             }
             st = true;
             for (int i = 0; i < it->second.size(); ++i)
             {
                 auto cell = NewTroopsCell::create(it->second.at(i));
-                cell->setPosition(ccp((i % cellCnt) * troops_cell_width + 4, cury - ((int)(i / cellCnt)) * troops_cell_height));
+                cell->setPosition(ccp((i % cellCnt) * troops_cell_width + 4 + gapX, cury - ((int)(i / cellCnt)) * troops_cell_height));
                 m_mainNode->addChild(cell);
             }
             cury -= (ceil(it->second.size() * 1.0 / cellCnt)) * troops_cell_height;
@@ -403,7 +435,15 @@ bool NewTroopsCell::init()
             m_soliderBG->setSpriteFrame(troops_BG[(id - 107000)/100]);
             m_soliderTypeSprite->setSpriteFrame(troops_typeSprite[(id - 107000)/100]);
             
-            m_soliderNameTxt->setString(info.getName());
+            
+            std::string typeName = info.getName();
+            
+            vector<std::string> vector;
+            
+            CCCommonUtils::splitString(typeName, "Lv", vector);
+            
+            
+            m_soliderNameTxt->setString(vector.at(0));
             //fusheng end
 
         }
@@ -615,5 +655,74 @@ bool NewTroopsTrapTitle::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, 
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_tipLabel", CCLabelIF*, this->m_tipLabel);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_trapLabel", CCLabelIF*, this->m_trapLabel);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_trapNum", CCLabelIF*, this->m_trapNum);
+    return false;
+}
+
+
+/////-----------class NewTroopsTitleNB
+NewTroopsTitleNB* NewTroopsTitleNB::create(string id,int num)
+{
+    auto ret = new NewTroopsTitleNB();
+    if (ret && ret->init(id,num))
+    {
+        ret->autorelease();
+    } else {
+        CC_SAFE_DELETE(ret);
+    }
+    return ret;
+}
+
+bool NewTroopsTitleNB::init(string id,int num)
+{
+    CCNode::init();
+    CCBLoadFile("NewTroopsTitleNB", this, this);
+//    m_trapLabel->setString(_lang("102185"));
+//    string msg = CC_CMDITOA(ArmyController::getInstance()->getTotalFortNum()) +"/"+ CC_CMDITOA( ArmyController::getInstance()->getMaxNumByType(FORT));
+//    m_trapNum->setString(msg);
+//    float dw = 10;
+//    if (CCCommonUtils::isIosAndroidPad()) {
+//        dw = 20;
+//    }
+//    m_trapNum->setPositionX(m_trapLabel->getPositionX() + m_trapLabel->getContentSize().width * m_trapLabel->getOriginScaleX() + dw);
+//    
+//    
+//    if (ArmyController::getInstance()->getTotalFortNum() <= 0)
+//    {
+//        m_tipLabel->setString(_lang("103696"));
+//    } else {
+//        m_tipLabel->setString("");
+//    }
+    int sid = atoi(id.c_str());
+    if (sid >= 107000 && sid <107400)
+    {
+        if (GlobalData::shared()->armyList.find(id) != GlobalData::shared()->armyList.end()) {
+            auto& info = GlobalData::shared()->armyList[id];
+            
+            std::string typeName = info.getName();
+            
+            vector<std::string> vector;
+            
+            CCCommonUtils::splitString(typeName, "Lv", vector);
+            
+            
+            
+            m_soliderTypeTxt->setString(CCString::createWithFormat("%s ",vector.at(0).c_str())->getCString());
+            
+            m_soliderTotalNumTxt->setString(CC_CMDITOAL(num));
+        
+        }
+    }
+    
+    
+    
+    
+    return true;
+}
+
+bool NewTroopsTitleNB::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode)
+{
+
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_soliderTypeTxt", CCLabelIF*, this->m_soliderTypeTxt);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_soliderTotalNumTxt", CCLabelIF*, this->m_soliderTotalNumTxt);
     return false;
 }

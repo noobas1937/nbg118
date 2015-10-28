@@ -341,18 +341,27 @@ void GeneralTitanPopupView::handleTitanUpgrade(CCObject* obj)
 //                m_titanPosInView->addChild(tieanInView );
 //                
 //            }
-            
+            auto node = Node::create();
+            node->setTag(10010);
             auto particle = ParticleController::createParticle("SmithyFireLoop_2");//fusheng 添加粒子特效
-            
-            if(particle)
+            for(int i =0 ;i<9;i++)
             {
-                particle->setTag(10010);
-                m_titanPosInView->addChild(particle);
+                auto particle = ParticleController::createParticle(CCString::createWithFormat("DragonLv_%d",i)->getCString());
+                if(particle)
+                {
+                    node->addChild(particle);
+                    
+                    if (i<2) {
+                        particle->setPositionY(223);
+                    }
+                }
+                
             }
+            node->setScale(1.5);
+            m_titanPosInView->addChild(node);
             
             
-            
-            this->runAction(Sequence::create(DelayTime::create(2),CallFunc::create( CC_CALLBACK_0(GeneralTitanPopupView::aniCallBack, this )),nullptr));//fusheng 固定时间
+            this->runAction(Sequence::create(DelayTime::create(1),CallFunc::create( CC_CALLBACK_0(GeneralTitanPopupView::aniCallBack, this )),nullptr));//fusheng 固定时间
             
         }
         
