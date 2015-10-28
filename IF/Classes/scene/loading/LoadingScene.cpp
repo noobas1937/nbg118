@@ -153,7 +153,7 @@ bool LoadingScene::init()
         float _tipX = CCDirector::sharedDirector()->getWinSize().width/2-40;
         m_loadtips = CCLabelIF::create(_lang("E100074").c_str());
         m_loadtips->setFntFile("Arial_Bold_Border.fnt");
-        m_loadtips->setColor({236, 186, 135});
+        m_loadtips->setColor({140, 200, 200});
         m_loadtips->setFontSize(20);
         m_loadtips->setHorizontalAlignment(kCCTextAlignmentCenter);
         m_loadtips->setVerticalAlignment(kCCVerticalTextAlignmentCenter);
@@ -327,7 +327,8 @@ bool LoadingScene::init()
         auto tipsSize = CCSizeMake(tipsBg->getContentSize().width, tipsBg->getContentSize().height);
         
         m_loadingTips = CCLabelIF::create("loading...");
-        m_loadingTips->setColor({152,137,103});
+        m_loadingTips->setColor({220,187,111});
+        m_loadingTips->enableStroke(ccBLACK, 1.0);
         m_loadingTips->setFontSize(24);
         m_loadingTips->setDimensions(CCSizeMake(tipsSize.width*0.85, tipsSize.height*1.8));
         m_loadingTips->setHorizontalAlignment(kCCTextAlignmentCenter);
