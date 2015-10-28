@@ -120,13 +120,13 @@ bool LoadingScene::init()
             
             this->addChild(loadingBG);
 
-            m_rollingCloud = RollingSprite::create("cloud_ani.png", 30.0);
-            this->addChild(m_rollingCloud);
-            m_rollingCloud->setPosition(loadingBG->getPosition());
+//            m_rollingCloud = RollingSprite::create("cloud_ani.png", 30.0);
+//            this->addChild(m_rollingCloud);
+//            m_rollingCloud->setPosition(loadingBG->getPosition());
             
-            auto fireParticle = CCNode::create();
-            this->addChild(fireParticle);
-            addFireParticle(fireParticle, "LoadingMan_cloud", ccp(size.width / 2, size.height - 130));
+//            auto fireParticle = CCNode::create();
+//            this->addChild(fireParticle);
+//            addFireParticle(fireParticle, "LoadingMan_cloud", ccp(size.width / 2, size.height - 130));
 
 //            auto kingSpine = IFLoadingSceneArmyNode::create("Loading/Loading_3.atlas", "Spine/Loading/loading.json", "loading", 0.5);
 //            this->addChild(kingSpine);
@@ -289,30 +289,30 @@ bool LoadingScene::init()
             addFireParticle(logFireNode2, "LoadingLOGO_2", ccp(430, size.height - 240));
         }else{
             //logo
-            auto logo = CCLoadSprite::createSprite("logo.png");
-            logo->setAnchorPoint(ccp(0.5, 0));
-            
-            logo->setPosition(ccp(size.width/2, 150));//
-            logo->setTag(LOADING_LOGO_TAG);
+//            auto logo = CCLoadSprite::createSprite("logo.png");
+//            logo->setAnchorPoint(ccp(0.5, 0));
+//            
+//            logo->setPosition(ccp(size.width/2, 150));//
+//            logo->setTag(LOADING_LOGO_TAG);
 //            addChild(logo);
             
-            auto logFireNode1 = CCNode::create();
-            this->addChild(logFireNode1);
-            addFireParticle(logFireNode1, "LoadingMan_fire", ccp(320, 600));
-            if (CCCommonUtils::isIosAndroidPad())
-            {
-                logFireNode1->setScale(2.4);
-                logo->setScale(1.7f);
-                logo->setPositionY(600);
-            }
-
-            auto logFireNode2 = CCNode::create();
-            this->addChild(logFireNode2);
-            addFireParticle(logFireNode2, "LoadingMan_cold", ccp(200, logo->getPositionY() + logo->getContentSize().height / 4));
-            if (CCCommonUtils::isIosAndroidPad())
-            {
-                logFireNode2->setScale(2.4);
-            }
+//            auto logFireNode1 = CCNode::create();
+//            this->addChild(logFireNode1);
+//            addFireParticle(logFireNode1, "LoadingMan_fire", ccp(320, 600));
+//            if (CCCommonUtils::isIosAndroidPad())
+//            {
+//                logFireNode1->setScale(2.4);
+//                logo->setScale(1.7f);
+//                logo->setPositionY(600);
+//            }
+//
+//            auto logFireNode2 = CCNode::create();
+//            this->addChild(logFireNode2);
+//            addFireParticle(logFireNode2, "LoadingMan_cold", ccp(200, logo->getPositionY() + logo->getContentSize().height / 4));
+//            if (CCCommonUtils::isIosAndroidPad())
+//            {
+//                logFireNode2->setScale(2.4);
+//            }
         }
 //
         auto tipsBg = CCLoadSprite::createSprite("loading_tips_bg.png");

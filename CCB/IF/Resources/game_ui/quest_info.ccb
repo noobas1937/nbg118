@@ -13,7 +13,14 @@
 	<key>fileVersion</key>
 	<integer>4</integer>
 	<key>guides</key>
-	<array/>
+	<array>
+		<dict>
+			<key>orientation</key>
+			<integer>1</integer>
+			<key>position</key>
+			<real>5</real>
+		</dict>
+	</array>
 	<key>jsControlled</key>
 	<false/>
 	<key>nodeGraph</key>
@@ -49,8 +56,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>-203</real>
-									<real>119</real>
+									<real>55</real>
+									<real>112</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -104,7 +111,7 @@
 								<string>Size</string>
 								<key>value</key>
 								<array>
-									<real>355</real>
+									<real>300</real>
 									<real>66</real>
 									<integer>0</integer>
 								</array>
@@ -185,8 +192,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>-200</real>
-									<real>120</real>
+									<real>58</real>
+									<real>113</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -240,7 +247,7 @@
 								<string>Size</string>
 								<key>value</key>
 								<array>
-									<real>350</real>
+									<real>275</real>
 									<real>58</real>
 									<integer>0</integer>
 								</array>
@@ -298,6 +305,8 @@
 								<real>0.0</real>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -393,8 +402,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>-107</real>
-									<real>127</real>
+									<real>151</real>
+									<real>120</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -591,8 +600,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>-8</real>
-											<real>0.0</real>
+											<real>-1</real>
+											<real>-16</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -654,8 +663,8 @@
 										<string>Color3</string>
 										<key>value</key>
 										<array>
-											<integer>254</integer>
-											<integer>249</integer>
+											<integer>0</integer>
+											<integer>0</integer>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -715,8 +724,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>-227</real>
-									<real>121</real>
+									<real>31</real>
+									<real>114</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -776,8 +785,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>-185</real>
-									<real>122</real>
+									<real>73</real>
+									<real>115</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -837,8 +846,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>-273</real>
-									<real>80</real>
+									<real>-15</real>
+									<real>73</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -910,8 +919,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>-185</real>
-									<real>122</real>
+									<real>73</real>
+									<real>115</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -971,8 +980,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>-274</real>
-									<real>79</real>
+									<real>-16</real>
+									<real>72</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -1096,8 +1105,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>-250</real>
-									<real>80</real>
+									<real>8</real>
+									<real>73</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -1153,8 +1162,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>262.552001953125</real>
-							<real>98</real>
+							<real>0.0</real>
+							<real>76</real>
 							<integer>0</integer>
 						</array>
 					</dict>

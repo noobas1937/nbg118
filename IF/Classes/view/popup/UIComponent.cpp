@@ -6512,6 +6512,7 @@ void UIComponent::setTestFBFlame(CCObject* params)
 
 void UIComponent::refreshGoodsStatus(CCObject *ccObj){
     m_bagTipNode->setVisible(false);
+    
     return;
     if(ToolController::getInstance()->m_newGoodsList.size()>0){
         if(!m_bagTipNode->isVisible()){

@@ -320,6 +320,7 @@ void ProductionSoldiersView::arcButtonClick(){
 }
 
 void ProductionSoldiersView::addSoldierIcon(){
+    m_soldierIconNode->setVisible(false);
     int btype = m_buildingId/1000;
     CCPoint pos = ccp(0,172);
     if(btype == FUN_BUILD_FORT){
@@ -427,6 +428,15 @@ void ProductionSoldiersView::addSoldierIcon(){
 
     }
     
+
+    CCActionInterval * delT = CCDelayTime::create(0.3);
+    auto func = CCCallFuncO::create(this, callfuncO_selector(ProductionSoldiersView::showSoldierIcon), m_soldierIconNode);
+    m_soldierIconNode->runAction(CCSequence::create(delT, func, NULL));
+}
+
+void ProductionSoldiersView::showSoldierIcon(CCObject *obj)
+{
+    m_soldierIconNode->setVisible(true);
 }
 
 void ProductionSoldiersView::refreshResource(CCObject* p)
