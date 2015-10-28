@@ -1079,8 +1079,8 @@
 										<string>Color3</string>
 										<key>value</key>
 										<array>
-											<integer>254</integer>
-											<integer>255</integer>
+											<integer>0</integer>
+											<integer>77</integer>
 											<integer>255</integer>
 										</array>
 									</dict>
@@ -1207,8 +1207,8 @@
 										<string>Color3</string>
 										<key>value</key>
 										<array>
-											<integer>254</integer>
-											<integer>255</integer>
+											<integer>0</integer>
+											<integer>96</integer>
 											<integer>255</integer>
 										</array>
 									</dict>
@@ -1249,6 +1249,8 @@
 										<string>500</string>
 									</dict>
 								</array>
+								<key>selected</key>
+								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>
@@ -1344,14 +1346,6 @@
 						<integer>2</integer>
 						<key>properties</key>
 						<array>
-							<dict>
-								<key>name</key>
-								<string>visible</string>
-								<key>type</key>
-								<string>Check</string>
-								<key>value</key>
-								<false/>
-							</dict>
 							<dict>
 								<key>name</key>
 								<string>position</string>

@@ -1235,9 +1235,9 @@
 										<string>Color3</string>
 										<key>value</key>
 										<array>
-											<integer>55</integer>
-											<integer>116</integer>
-											<integer>83</integer>
+											<integer>0</integer>
+											<integer>0</integer>
+											<integer>0</integer>
 										</array>
 									</dict>
 									<dict>
@@ -1446,9 +1446,9 @@
 										<string>Color3</string>
 										<key>value</key>
 										<array>
-											<integer>55</integer>
-											<integer>116</integer>
-											<integer>83</integer>
+											<integer>2</integer>
+											<integer>59</integer>
+											<integer>238</integer>
 										</array>
 									</dict>
 									<dict>
@@ -1488,6 +1488,8 @@
 										<string>999</string>
 									</dict>
 								</array>
+								<key>selected</key>
+								<true/>
 							</dict>
 						</array>
 						<key>customClass</key>
