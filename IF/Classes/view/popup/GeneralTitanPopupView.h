@@ -114,6 +114,8 @@ private:
     void AccGrowthCallBack();
     
     void spdCallBack();
+    
+    void aniCallBack();
 //    void onChangeName(CCObject * pSender, Control::EventType pCCControlEvent);
 //    void onPicClick(CCObject * pSender, Control::EventType pCCControlEvent);
 //    void onResetPicClick(CCObject * pSender, Control::EventType pCCControlEvent);
@@ -170,6 +172,7 @@ private:
     CCSafeObject<CCLabelIF> m_nameLabel;
     CCSafeObject<CCLabelIF> m_toolSpeedUpTxt;
     CCSafeObject<CCLabelIF> m_dragonTip;
+    
     
     
     CCSafeObject<CCScale9Sprite> m_buildBG;

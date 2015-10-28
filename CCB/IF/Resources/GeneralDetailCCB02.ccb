@@ -1279,8 +1279,6 @@
 										<false/>
 									</dict>
 								</array>
-								<key>seqExpanded</key>
-								<true/>
 							</dict>
 							<dict>
 								<key>animatedProperties</key>
@@ -1568,8 +1566,6 @@
 										</array>
 									</dict>
 								</array>
-								<key>seqExpanded</key>
-								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>
@@ -10594,7 +10590,7 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>0.0</real>
+											<real>40</real>
 											<real>-447</real>
 											<integer>0</integer>
 										</array>
@@ -10632,6 +10628,8 @@
 										<false/>
 									</dict>
 								</array>
+								<key>selected</key>
+								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>

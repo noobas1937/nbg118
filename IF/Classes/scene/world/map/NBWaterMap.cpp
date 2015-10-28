@@ -57,7 +57,7 @@ bool NBWaterMap::initWithTexture(CCTexture2D* texture, const CCRect&  rect)
     if( CCSprite::initWithTexture(texture, rect) )
     {
         CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
-                                                                      callfuncO_selector(NBWaterMap::listenBackToForeground),
+                                                                       callfuncO_selector(NBWaterMap::listenBackToForeground),
                                                                       EVENT_COME_TO_FOREGROUND,
                                                                       NULL);
         //		m_pTexture0 = Director::getInstance()->getTextureCache()->addImage("map.png");

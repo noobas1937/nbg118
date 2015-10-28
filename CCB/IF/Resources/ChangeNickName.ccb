@@ -162,6 +162,8 @@
 								<real>0.0</real>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -318,8 +320,6 @@
 								<false/>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -573,8 +573,8 @@
 								<string>Size</string>
 								<key>value</key>
 								<array>
-									<real>244</real>
-									<real>74</real>
+									<real>317</real>
+									<real>90</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -594,7 +594,7 @@
 								<key>value</key>
 								<array>
 									<string>Common/Common_1.plist</string>
-									<string>btn_green3.png</string>
+									<string>nb_but_2.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -617,7 +617,7 @@
 								<key>value</key>
 								<array>
 									<string>Common/Common_1.plist</string>
-									<string>btn_green3.png</string>
+									<string>nb_but_2.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -640,7 +640,7 @@
 								<key>value</key>
 								<array>
 									<string>Common/Common_1.plist</string>
-									<string>Btn_grey.png</string>
+									<string>nb_but_2.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -1399,7 +1399,7 @@
 								<key>value</key>
 								<array>
 									<real>0.0</real>
-									<real>-111</real>
+									<real>-103</real>
 									<integer>0</integer>
 								</array>
 							</dict>
