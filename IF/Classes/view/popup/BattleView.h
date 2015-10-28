@@ -16,6 +16,7 @@
 #include "CCMultiColTableView.h"
 #include "CheckBox.h"
 #include "CCSliderBar.h"
+#include "NBSlider.h"
 
 const char * const MSG_TITAN_COUNT_CHANGE = "MSG_TITAN_COUNT_CHANGE"; //fusheng 泰坦数量变化
 
@@ -113,6 +114,8 @@ private:
     bool isBegin;
 };
 
+class NBSlider;
+
 class SoldierCell :
 public CCBSelectorResolver
 ,public CCBMemberVariableAssigner
@@ -135,7 +138,7 @@ private:
 	virtual SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName);
 	virtual bool onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode);
     
-    void valueChange(CCObject * pSender, Control::EventType pCCControlEvent);
+    void valueChange(Ref *pSender, NBSlider::EventType type);
     void onSubClick(CCObject * pSender, Control::EventType pCCControlEvent);
     void onAddClick(CCObject * pSender, Control::EventType pCCControlEvent);
     void editBoxReturn(CCEditBox *editBox);
@@ -146,10 +149,15 @@ private:
     CCSafeObject<CCNode> m_picNode;
     CCSafeObject<CCNode> m_levelNode;
     CCSafeObject<CCNode> m_sliderNode;
-    CCSafeObject<CCSliderBar> m_slider;
+    CCSafeObject<NBSlider> m_slider;
     CCSafeObject<CCNode> m_editNode;
     CCSafeObject<CCNode> m_headTouchNode;
     CCEditBox* m_editBox;
+    
+    CCSafeObject<Sprite> m_picBg0;
+    CCSafeObject<Sprite> m_picBg1;
+    CCSafeObject<Sprite> m_picBg2;
+    CCSafeObject<Sprite> m_picBg3;
     
     int m_num;
     int m_cntNum;

@@ -66,6 +66,9 @@ public:
     void onCreateTitan();
     // tao.yu vikings
     void onCreateVikingsShip();
+    //begin a by ljf
+    void onVikingsShipMove(NBSprite3D * pSprite3d);
+    //end a by ljf
     
     void onUpdateInfo();
     void onCreateBuild(int itemId);
