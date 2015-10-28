@@ -42,6 +42,8 @@ bool ConfirmDialogView::init()
     }
     
     //CCCommonUtils::setButtonTitle(m_btnOk, _lang("confirm").c_str());
+    int gapX = 2;
+    int gapY = -33;
     int offx = 0;
     if(m_wood>0){
         CCSprite* spr = CCLoadSprite::createSprite("ui_wood.png");
@@ -53,7 +55,7 @@ bool ConfirmDialogView::init()
         label->setFontSize(22);
         label->setVerticalAlignment(kCCVerticalTextAlignmentTop);
         label->setHorizontalAlignment(kCCTextAlignmentLeft);
-        label->setPosition(ccp(offx+5+spr->getContentSize().width, 0));//fusheng
+        label->setPosition(ccp(offx+gapX, gapY));//fusheng
         if (CCCommonUtils::isIosAndroidPad())
         {
             label->setScale(0.5);
@@ -72,7 +74,7 @@ bool ConfirmDialogView::init()
         label->setFontSize(22);
         label->setVerticalAlignment(kCCVerticalTextAlignmentTop);
         label->setHorizontalAlignment(kCCTextAlignmentLeft);
-        label->setPosition(ccp(offx+5+spr->getContentSize().width, 0));
+        label->setPosition(ccp(offx+gapX, gapY));
         if (CCCommonUtils::isIosAndroidPad())
         {
             label->setScale(0.5);
@@ -91,7 +93,7 @@ bool ConfirmDialogView::init()
         label->setFontSize(22);
         label->setVerticalAlignment(kCCVerticalTextAlignmentTop);
         label->setHorizontalAlignment(kCCTextAlignmentLeft);
-        label->setPosition(ccp(offx+5+spr->getContentSize().width, 0));
+        label->setPosition(ccp(offx+gapX, gapY));
         if (CCCommonUtils::isIosAndroidPad())
         {
             label->setScale(0.5);
@@ -110,7 +112,7 @@ bool ConfirmDialogView::init()
         label->setFontSize(22);
         label->setVerticalAlignment(kCCVerticalTextAlignmentTop);
         label->setHorizontalAlignment(kCCTextAlignmentLeft);
-        label->setPosition(ccp(offx+5+spr->getContentSize().width, 0));
+        label->setPosition(ccp(offx+gapX, gapY));
         if (CCCommonUtils::isIosAndroidPad())
         {
             label->setScale(0.5);
@@ -129,7 +131,7 @@ bool ConfirmDialogView::init()
         label->setFontSize(22);
         label->setVerticalAlignment(kCCVerticalTextAlignmentTop);
         label->setHorizontalAlignment(kCCTextAlignmentLeft);
-        label->setPosition(ccp(offx+5+spr->getContentSize().width, 0));
+        label->setPosition(ccp(offx+gapX, gapY));
         if (CCCommonUtils::isIosAndroidPad())
         {
             label->setScale(0.5);
