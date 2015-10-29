@@ -4373,7 +4373,7 @@ CCAnimate* WorldMapView::createMarchAni(MarchAniType type,int direction, float d
             break;
         case AniCollectCloth:{
             temp = "CJ_yifu_%s_%d.png";
-            frameCount = 8;
+            frameCount = 0;
         }
             break;
         case AniDeal:{
@@ -4382,17 +4382,17 @@ CCAnimate* WorldMapView::createMarchAni(MarchAniType type,int direction, float d
         }
             break;
         case AniDealCloth:{
-            frameCount = 8;
+            frameCount = 0;
             temp = "JY_yifu_%s_%d.png";
         }
             break;
         case AniScout:{
-            frameCount = 7;
+            frameCount = 8;
             temp = "ZC_body_%s_%d.png";
         }
             break;
         case AniScoutCloth:{
-            frameCount = 7;
+            frameCount = 0;
             temp = "ZC_yifu_%s_%d.png";
         }
             break;
