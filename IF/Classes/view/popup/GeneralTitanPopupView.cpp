@@ -443,9 +443,9 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         return;
     }
 //     this->feedCD =(float)(m_titanInfo.feedcd - GlobalData::shared()->getWorldTime());
-    CCCommonUtils::flyHint("", "", CCString::createWithFormat("feedcd : %ld , WorldTime : %ld",m_titanInfo.feedcd,GlobalData::shared()->getWorldTime())->getCString());
+//    CCCommonUtils::flyHint("", "", CCString::createWithFormat("feedcd : %ld , WorldTime : %ld",m_titanInfo.feedcd,GlobalData::shared()->getWorldTime())->getCString());
    
-    if(m_titanInfo.titanId!="")        
+    if(m_titanInfo.titanId!="")
     {
         m_titanId = m_titanInfo.titanId;
         ArmyInfo armTitanInfo = GlobalData::shared()->armyList[m_titanId]; //fusheng map中通过id获得泰坦属性
