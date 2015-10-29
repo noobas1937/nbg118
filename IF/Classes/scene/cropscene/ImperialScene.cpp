@@ -1100,7 +1100,7 @@ void ImperialScene::handleTitanUpgrade(CCObject* obj)
                     return;
                 }
                 m_Titan->turnFront();
-                
+                m_Titan->changeTitanState(Titan::eActState::Stand);
                 titanRootNode->addChild(m_Titan);
             }
         }

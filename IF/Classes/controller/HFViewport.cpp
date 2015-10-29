@@ -1044,6 +1044,7 @@ void HFViewport::onTouchesEnded(const std::vector<Touch*>& pTouches, Event *pEve
         //fusheng移动回来
         UIComponent::getInstance()->moveIn();
         isUIMove = false;
+//        CCLog("脉动回来");
     }
     
     switch(mFingerMap.size())
