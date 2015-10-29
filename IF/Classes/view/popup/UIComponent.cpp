@@ -5412,8 +5412,8 @@ CCNode* UIComponent::getNodeByIndex(string _key){
             }
         }
         //fusheng begin 添加限制 必须造过兵
-        int tmpQid1 = QueueController::getInstance()->getMinTimeQidByType(TYPE_FORCE);//步兵队列 待秒cd
-        int tmpQid2 = QueueController::getInstance()->getCanRecQidByType(TYPE_FORCE);//步兵队列 待收兵
+        int tmpQid1 = QueueController::getInstance()->getMinTimeQidByType(TYPE_RIDE_SOLDIER);//骑兵队列 待秒cd
+        int tmpQid2 = QueueController::getInstance()->getCanRecQidByType(TYPE_RIDE_SOLDIER);//步兵骑兵队 待收兵
         int totoalArmy = ArmyController::getInstance()->getTotalArmy();
         
         if (totoalArmy > 2 || tmpQid2 != QID_MAX || tmpQid1 != QID_MAX) {//士兵个数超过2个
@@ -7180,24 +7180,29 @@ void UIComponent::moveIn()
 
 void UIComponent::resetOriginPos()
 {
+
     if(main_ui_top)
     {
+        main_ui_top->stopActionByTag(89757);
         main_ui_top->setPosition(originPosTop);
 
     }
     if(m_leftNode)
     {
+        m_leftNode->stopActionByTag(89757);
         m_leftNode->setPosition(originPosLeft);
 
     }
     if(m_bottomRightNode)
     {
+        m_bottomRightNode->stopActionByTag(89757);
         m_bottomRightNode->setPosition(originPosRight);
         
         
     }
     if(m_bottomRootNode)
     {
+        m_bottomRootNode->stopActionByTag(89757);
         m_bottomRootNode->setPosition(originPosBottom);
     }
 }
