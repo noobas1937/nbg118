@@ -7180,24 +7180,29 @@ void UIComponent::moveIn()
 
 void UIComponent::resetOriginPos()
 {
+
     if(main_ui_top)
     {
+        main_ui_top->stopActionByTag(89757);
         main_ui_top->setPosition(originPosTop);
 
     }
     if(m_leftNode)
     {
+        m_leftNode->stopActionByTag(89757);
         m_leftNode->setPosition(originPosLeft);
 
     }
     if(m_bottomRightNode)
     {
+        m_bottomRightNode->stopActionByTag(89757);
         m_bottomRightNode->setPosition(originPosRight);
         
         
     }
     if(m_bottomRootNode)
     {
+        m_bottomRootNode->stopActionByTag(89757);
         m_bottomRootNode->setPosition(originPosBottom);
     }
 }
