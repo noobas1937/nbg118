@@ -5,15 +5,15 @@
 	<key>absolutePosition</key>
 	<false/>
 	<key>angle</key>
-	<real>0.0</real>
+	<real>90</real>
 	<key>angleVariance</key>
-	<real>0.0</real>
+	<real>10</real>
 	<key>blendFuncDestination</key>
 	<integer>1</integer>
 	<key>blendFuncSource</key>
 	<integer>1</integer>
 	<key>configName</key>
-	<string>Waterfall_water_z</string>
+	<string>CityBoat_spray</string>
 	<key>duration</key>
 	<integer>-1</integer>
 	<key>emitterType</key>
@@ -35,15 +35,15 @@
 	<key>finishColorVarianceRed</key>
 	<real>0.0</real>
 	<key>finishParticleSize</key>
-	<real>5</real>
+	<real>35</real>
 	<key>finishParticleSizeVariance</key>
-	<real>200</real>
+	<real>120</real>
 	<key>gravityx</key>
 	<real>0.0</real>
 	<key>gravityy</key>
-	<real>-75</real>
+	<real>-50</real>
 	<key>maxParticles</key>
-	<real>160</real>
+	<real>40</real>
 	<key>maxRadius</key>
 	<real>0.0</real>
 	<key>maxRadiusVariance</key>
@@ -53,7 +53,7 @@
 	<key>minRadiusVariance</key>
 	<real>0.0</real>
 	<key>particleLifespan</key>
-	<real>3</real>
+	<real>1</real>
 	<key>particleLifespanVariance</key>
 	<real>0.25</real>
 	<key>positionType</key>
@@ -75,21 +75,21 @@
 	<key>rotationStartVariance</key>
 	<real>0.0</real>
 	<key>sourcePositionVariancex</key>
-	<real>40</real>
+	<real>50</real>
 	<key>sourcePositionVariancey</key>
 	<real>20</real>
 	<key>speed</key>
-	<real>13</real>
+	<real>30</real>
 	<key>speedVariance</key>
-	<real>5</real>
+	<real>0.0</real>
 	<key>startColorAlpha</key>
 	<real>1</real>
 	<key>startColorBlue</key>
 	<real>1</real>
 	<key>startColorGreen</key>
-	<real>0.90344130992889404</real>
+	<real>0.8461230993270874</real>
 	<key>startColorRed</key>
-	<real>0.71635186672210693</real>
+	<real>0.66606646776199341</real>
 	<key>startColorVarianceAlpha</key>
 	<real>0.0</real>
 	<key>startColorVarianceBlue</key>
@@ -99,15 +99,15 @@
 	<key>startColorVarianceRed</key>
 	<real>0.0</real>
 	<key>startParticleSize</key>
-	<real>0.0</real>
+	<real>30</real>
 	<key>startParticleSizeVariance</key>
-	<real>5</real>
+	<real>10</real>
 	<key>tangentialAccelVariance</key>
 	<real>0.0</real>
 	<key>tangentialAcceleration</key>
 	<real>0.0</real>
 	<key>textureFileName</key>
-	<string>Effect_0206.png</string>
+	<string>Effect_0199.png</string>
 	<key>textureImageData</key>
 	<string></string>
 	<key>yCoordFlipped</key>

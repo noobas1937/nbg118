@@ -248,8 +248,9 @@ bool ImperialScene::init()
     m_node3d->setTag(JUST3D_NODE_TAG);
     
     float maxZoomScale = 1.2;
-    float minZoomScale = m_viewPort->getMinZoom() * 1.4;
-    float curZoomScale = 0.75;
+//    float minZoomScale = m_viewPort->getMinZoom() * 1.4;
+    float minZoomScale = 0.55;
+    float curZoomScale = 0.7;
     TargetPlatform target = CCApplication::sharedApplication()->getTargetPlatform();
     if(target == kTargetIpad || CCCommonUtils::isAdriodPad()){
         maxZoomScale = 1.1;
@@ -502,9 +503,9 @@ void ImperialScene::buildingCallBack(CCObject* params)
 //        resumeSchedulerAndActions();
 //        m_bRunning = true;
         
-        m_curBuildPosx = 1500;//fusheng 修改位置
+        m_curBuildPosx = 1400;//fusheng 修改位置
         m_curBuildPosy = 2106;//fusheng 修改位置
-        scale = 0.4315;//fusheng 修改放缩
+        scale = 0.7;//fusheng 修改放缩
         onMoveToPos(m_curBuildPosx, m_curBuildPosy, TYPE_POS_MID, dt, scale, true);
         if (newPlayerST) {
 //            onPlayBattle();
@@ -523,7 +524,7 @@ void ImperialScene::buildingCallBack(CCObject* params)
             {
                 scale = HD_SCALE;
             }
-            scale = 0.4315;//fusheng 修改放缩
+            scale = 0.7;//fusheng 修改放缩
             canMoveToRequest = false;
             onMoveToPos(m_curBuildPosx, m_curBuildPosy, TYPE_POS_MID, 0, scale, true);//fusheng 这里是进入城里的屏幕的位置
         }
@@ -635,6 +636,7 @@ void ImperialScene::onCreateVikingsShip()
     auto pVikingNode = Node::create();
     pVikingNode->addChild(vikingsRootNode);
     m_node3d->addChild(pVikingNode);
+    m_vikings3D->setScale(1.4);
     //end a by ljf
     // m_node3d->addChild(vikingsRootNode);//d by ljf
     
@@ -710,14 +712,55 @@ void ImperialScene::onVikingsShipMove(NBSprite3D * pSprite3d)
         m_isVikingShipMove = true;
         auto anim_stand = Animation3D::create("3d/ship/ship_3_move.c3b");
         if (anim_stand) {
-            auto pAnim = Animate3D::createWithFrames(anim_stand, 1, 9);
+            auto pAnim = Animate3D::createWithFrames(anim_stand, 1, 9, 8.f);
             if (pAnim) {
                 auto act = RepeatForever::create(pAnim);
                 pSprite3d->stopAllActions();
                 pSprite3d->runAction(act);
             }
         }
-        
+        auto viking3dPositon = m_vikings3D->getPosition3D();
+        auto particleNode = Node::create();
+        particleNode->setTag(233632);
+        pSprite3d->addChild(particleNode);
+        //船尾水花
+       for( int i = 0; i <= 1; i++)
+        {
+            auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d","CityBoat_back_",i)->getCString());
+            //particle->setPosition(ccp(pSprite3d->getContentSize().width/2, 0)); //左侧船桨位置
+            //particle->setPosition(ccp( 0, pSprite3d->getContentSize().height / 2)); //桅杆中央
+            //particle->setPosition3D(Vec3(0, 0, pSprite3d->getContentSize().height / 2)); //快到船头位置
+            particle->setPosition3D(Vec3(0, 0, 0 - pSprite3d->getContentSize().height / 2 ) );
+            particle->setRotation3D(Vec3(90, -60, 0));
+            particleNode->addChild(particle);
+            //pSprite3d->getParent()->addChild(particle);
+                
+        }
+        //船浆水花
+        for( int i = 0; i <= 1; i++)
+        {
+            auto particle = ParticleController::createParticle(CCString::createWithFormat("%s","CityBoat_spray")->getCString());
+            particle->setPosition(ccp(pSprite3d->getContentSize().width / 3 - i * (pSprite3d->getContentSize().width * 2 / 3), 0 ));
+            particle->setRotation3D(Vec3(90, 90, 0));
+            //particle->setRotation3D(Vec3(90, 180, 0)); //不对
+            //particle->setRotation3D(Vec3(180, 90, 0)); //不对
+            //particle->setRotation3D(Vec3(90, 90, 90)); //效果不佳
+            //particle->setRotation3D(Vec3(90, 90, 180)); //水花小
+            particleNode->addChild(particle);
+        }
+        //船侧水花
+        for(int i = 0; i <= 1; i++)
+        {
+            for(int j = 0; j <=1; j++)
+            {
+                auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d","CityBoat_water_",i)->getCString());
+                particle->setPosition3D(Vec3(pSprite3d->getContentSize().width/10 - j * (pSprite3d->getContentSize().width / 5) , 0, 20));
+                //particle->setRotation3D(Vec3(90, 180, 180 * j));
+                //particle->setRotation3D(Vec3(90 , 180 * j, 180 * j));
+                particle->setRotation3D(Vec3(90, 0, 180 * j));
+                particleNode->addChild(particle);
+            }
+        }
         /*
         auto action = RotateBy::create(3, Vec3(0, 360, 0));
         
@@ -728,14 +771,14 @@ void ImperialScene::onVikingsShipMove(NBSprite3D * pSprite3d)
         pSprite3d->runAction( RepeatForever::create(seq) );
         */
         float rotateTime = 0.2;
-        float moveTime = 5;
+        float moveTime = 8;
         auto move1 = MoveBy::create(moveTime, Vec3(m_vikingPath1->getPositionX() - m_vikingNode->getPositionX(), m_vikingPath1->getPositionY() - m_vikingNode->getPositionY(), 0));
         //auto move2 = MoveBy::create(3, Vec3(m_vikingPath2->getPositionX() - m_vikingPath1->getPositionX(), m_vikingPath2->getPositionY() - m_vikingPath1->getPositionY(), 0));
-        auto move2 = MoveBy::create(moveTime * 2, Vec3(m_vikingPath3->getPositionX() - m_vikingPath1->getPositionX(), m_vikingPath3->getPositionY() - m_vikingPath1->getPositionY(), 0));
-        //auto move3 = MoveBy::create(moveTime, Vec3(m_vikingPath3->getPositionX() - m_vikingPath2->getPositionX(), m_vikingPath3->getPositionY() - m_vikingPath2->getPositionY(), 0));
+        auto move2 = MoveBy::create(moveTime , Vec3(m_vikingPath2->getPositionX() - m_vikingPath1->getPositionX(), m_vikingPath2->getPositionY() - m_vikingPath1->getPositionY(), 0));
+        auto move3 = MoveBy::create(moveTime, Vec3(m_vikingPath3->getPositionX() - m_vikingPath2->getPositionX(), m_vikingPath3->getPositionY() - m_vikingPath2->getPositionY(), 0));
         auto moveDelay = DelayTime::create(rotateTime);
         //auto moveSeq = Sequence::create( move1, moveDelay, move2, moveDelay, move3,  moveDelay, move3->reverse(),  moveDelay, move2->reverse(), moveDelay, move1->reverse(),nullptr);
-        auto moveSeq = Sequence::create(moveDelay, move1, moveDelay, move2, moveDelay, move2->reverse(), moveDelay, move1->reverse(),nullptr); //0.2 + 3 + 0.2 + 6 + 0.2 + 6 + 0.2 + 3 = 18.8
+        auto moveSeq = Sequence::create(moveDelay, move1, moveDelay, move2, move3, moveDelay, move3->reverse(), move2->reverse(), moveDelay, move1->reverse(),nullptr); //0.2 + 3 + 0.2 + 6 + 0.2 + 6 + 0.2 + 3 = 18.8
         
         //pSprite3d->getParent()->getParent()->runAction( RepeatForever::create(moveSeq) );
         pSprite3d->getParent()->getParent()->runAction( moveSeq);
@@ -743,7 +786,7 @@ void ImperialScene::onVikingsShipMove(NBSprite3D * pSprite3d)
         auto rotate1 = RotateBy::create(rotateTime, Vec3(0, -10, 0));
         auto rotate2 = RotateBy::create(rotateTime, Vec3(0, 40, 0));
         auto rotate3 = RotateBy::create(rotateTime, Vec3(0, 180, 0));
-        auto rotate4 = RotateBy::create(rotateTime, Vec3(0, -170, 0));
+        auto rotate4 = RotateBy::create(rotateTime * 10, Vec3(0, -170, 0));
         
         auto rotateDelay = DelayTime::create(moveTime);
         auto callbackAction = CallFuncN::create([&](Node* sender){
@@ -755,9 +798,11 @@ void ImperialScene::onVikingsShipMove(NBSprite3D * pSprite3d)
                     auto act = RepeatForever::create(pAnim);
                     sender->stopAllActions();
                     sender->runAction(act);
-                    m_isVikingShipMove = false;
+                    
                 }
             }
+            sender->getChildByTag(233632)->removeFromParent();
+            m_isVikingShipMove = false;
         });
         auto rotateSeq = Sequence::create( rotate1, rotateDelay, rotate2, rotateDelay, rotateDelay, rotate3,   rotateDelay, rotateDelay,  rotate2->reverse(), rotateDelay, rotate4, callbackAction,  nullptr); //0.2 + 3 + 0.2 + 3 + 3 + 0.2  + 3 + 3 + 0.2 + 3 + 0.2 = 19
         //pSprite3d->runAction( RepeatForever::create(rotateSeq) );
