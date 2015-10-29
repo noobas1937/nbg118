@@ -5401,6 +5401,7 @@ CCNode* UIComponent::getNodeByIndex(string _key){
     //        }
     
     //    }else
+
     
     if(_key == "UI_world_go"){
         

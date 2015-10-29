@@ -180,6 +180,8 @@
 												<false/>
 											</dict>
 										</array>
+										<key>selected</key>
+										<true/>
 									</dict>
 									<dict>
 										<key>baseClass</key>
@@ -2217,8 +2219,6 @@
 										<real>20</real>
 									</dict>
 								</array>
-								<key>selected</key>
-								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>
@@ -2503,8 +2503,8 @@
 										<string>Color3</string>
 										<key>value</key>
 										<array>
-											<integer>255</integer>
-											<integer>255</integer>
+											<integer>23</integer>
+											<integer>50</integer>
 											<integer>255</integer>
 										</array>
 									</dict>
@@ -2526,8 +2526,8 @@
 										<string>Color3</string>
 										<key>value</key>
 										<array>
-											<integer>255</integer>
-											<integer>255</integer>
+											<integer>23</integer>
+											<integer>50</integer>
 											<integer>255</integer>
 										</array>
 									</dict>
@@ -2549,8 +2549,8 @@
 										<string>Color3</string>
 										<key>value</key>
 										<array>
-											<integer>255</integer>
-											<integer>255</integer>
+											<integer>23</integer>
+											<integer>50</integer>
 											<integer>255</integer>
 										</array>
 									</dict>
@@ -2702,9 +2702,9 @@
 										<string>Color3</string>
 										<key>value</key>
 										<array>
-											<integer>166</integer>
-											<integer>134</integer>
-											<integer>89</integer>
+											<integer>255</integer>
+											<integer>215</integer>
+											<integer>155</integer>
 										</array>
 									</dict>
 									<dict>
@@ -2911,8 +2911,8 @@
 												<string>Color3</string>
 												<key>value</key>
 												<array>
-													<integer>255</integer>
-													<integer>255</integer>
+													<integer>23</integer>
+													<integer>50</integer>
 													<integer>255</integer>
 												</array>
 											</dict>
@@ -2934,8 +2934,8 @@
 												<string>Color3</string>
 												<key>value</key>
 												<array>
-													<integer>255</integer>
-													<integer>255</integer>
+													<integer>23</integer>
+													<integer>50</integer>
 													<integer>255</integer>
 												</array>
 											</dict>
@@ -2957,8 +2957,8 @@
 												<string>Color3</string>
 												<key>value</key>
 												<array>
-													<integer>255</integer>
-													<integer>255</integer>
+													<integer>23</integer>
+													<integer>50</integer>
 													<integer>255</integer>
 												</array>
 											</dict>
