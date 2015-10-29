@@ -3,6 +3,7 @@
 
 //六个方向 SE S SW NW N NE 1为上，0为下
 //兵种图片命名 a010_1_NE_attack_0.png
+// tao.yu int armType 不知道是什么
 BattleSoldier2* BattleSoldier2::create(CCNode* batchNode,CCNode* pNode,int armType,int side,std::string icon,std::string direct,bool isHead){
     BattleSoldier2* ret = new BattleSoldier2(batchNode,pNode,armType,side,icon,direct,isHead);
     if(ret && ret->init()){
@@ -23,7 +24,7 @@ void BattleSoldier2::onExit(){
 
 bool BattleSoldier2::init(){
     // CCString* filePath = CCString::createWithFormat("%s_%d_%s_attack_0.png", m_icon.c_str(), m_side, "N");
-    CCString* filePath = CCString::createWithFormat("%s_%d_%s_attack_0.png", m_icon.c_str(), m_side, m_direct != "SW" ? "N" : "SW"); // guo.jiang
+    CCString* filePath = CCString::createWithFormat("%s_%d_%s_move_0.png", m_icon.c_str(), m_side, m_direct != "SW" ? "N" : "SW"); // guo.jiang
     if(CCLoadSprite::getSF(filePath->getCString())==NULL){
         CCLOG("filePath=%s",filePath->getCString());
     }
@@ -121,7 +122,7 @@ void BattleSoldier2::changeDirect(std::string direct,bool replay){
     m_direct = realDirect;
     if(m_iconSpr){
         if(direct=="NE" || direct=="SE" || direct=="E"){
-            CCString* filePath = CCString::createWithFormat("%s_%d_%s_attack_0.png",m_icon.c_str(),m_side,m_direct.c_str());
+            CCString* filePath = CCString::createWithFormat("%s_%d_%s_move_0.png",m_icon.c_str(),m_side,m_direct.c_str());
             CCSpriteFrame* cf = CCLoadSprite::getSF(filePath->getCString());
             if(cf==NULL){
                 CCLOG("filePath=%s",filePath->getCString());
@@ -207,6 +208,7 @@ std::string BattleSoldier2::getDirection(CCPoint from,CCPoint to){
     return direct;
 }
 
+
 void BattleSoldier2::delayPlayAnimation(){
     
     if (m_iconSpr == NULL||m_iconSpr->getReferenceCount()<=0) {
@@ -217,66 +219,85 @@ void BattleSoldier2::delayPlayAnimation(){
     int size = 12;
     Vector<SpriteFrame*> myArray;
     CCSpriteFrame *cf;
-    switch (m_status) {
-        case S_STAND:
-            for(int j=0;j<10;j++){
-                cf = CCLoadSprite::getSF(CCString::createWithFormat("%s_%d_%s_%s_%d.png",m_icon.c_str(),m_side,m_direct.c_str(),STAND,j)->getCString());
-                CC_BREAK_IF(!cf);
-                myArray.pushBack(cf);
-                m_iconSpr->setDisplayFrame(cf);
-            }
-            break;
-        case S_DEATH:
-            for(int j=0;j<size;j++){
-                cf = CCLoadSprite::getSF(CCString::createWithFormat("%s_%d_%s_%s_%d.png",m_icon.c_str(),m_side,m_direct.c_str(),DEATH,j)->getCString());
-                CC_BREAK_IF(!cf);
-                myArray.pushBack(cf);
-                if(j==0){
-                    m_iconSpr->setDisplayFrame(cf);
-                }
-            }
-            break;
-        case S_HURT:
-            for(int j=0;j<5;j++){
-                cf = CCLoadSprite::getSF(CCString::createWithFormat("%s_%d_%s_%s_%d.png",m_icon.c_str(),m_side,m_direct.c_str(),HURT,0)->getCString());
-                CC_BREAK_IF(!cf);
-                myArray.pushBack(cf);
-                if(j==0){
-                    m_iconSpr->setDisplayFrame(cf);
-                }
-            }
-            cf = CCLoadSprite::getSF(CCString::createWithFormat("%s_%d_%s_%s_%d.png",m_icon.c_str(),m_side,m_direct.c_str(),"attack",0)->getCString());
-            myArray.pushBack(cf);
-            break;
-        case S_MOVE:
-            for (int i=0; i<size; i++) {
-                int frameIdx = i;
-                if (m_icon == "zhanche") {
-                    frameIdx = i/2;
-                }
-                cf = CCLoadSprite::getSF(CCString::createWithFormat("%s_%d_%s_%s_%d.png",m_icon.c_str(),m_side,m_direct.c_str(),MOVE,frameIdx)->getCString());
-                CC_BREAK_IF(!cf);
-                myArray.pushBack(cf);
-                if(i==0){
-                    m_iconSpr->setDisplayFrame(cf);
-                }
-            }
-            break;
-        case S_ATTACK:
-            for (int i=0; i<size; i++) {
-                int frameIdx = i;
-                if (m_icon == "zhanche") {
-                    frameIdx = i/2;
-                }
-                cf = CCLoadSprite::getSF(CCString::createWithFormat("%s_%d_%s_%s_%d.png",m_icon.c_str(),m_side,m_direct.c_str(),ATTACK,frameIdx)->getCString());
-                CC_BREAK_IF(!cf);
-                myArray.pushBack(cf);
-                if(i==0){
-                    m_iconSpr->setDisplayFrame(cf);
-                }
-            }
-            break;
+    
+    int totalFrame = 0;
+    std::string actionName = MOVE;
+    if(m_status == S_DEATH){
+        actionName = DEATH;
+    }else if(m_status == S_ATTACK){
+        actionName = ATTACK;
+    }else if(m_status == S_MOVE){
+        actionName = MOVE;
+    }else if(m_status == S_HURT){
+        actionName = HURT;
+    }else if(m_status == S_STAND){
+        actionName = STAND;
     }
+    
+    if (m_icon == "a010")
+    { // 步兵
+        if(m_status == S_DEATH){
+            totalFrame = 0;
+        }else if(m_status == S_ATTACK){
+            totalFrame = 0;
+        }else if(m_status == S_MOVE){
+            totalFrame = 7;
+        }else if(m_status == S_HURT){
+            totalFrame = 0;
+        }else if(m_status == S_STAND){
+            totalFrame = 10;
+        }
+    }
+    else if (m_icon == "a020")
+    { // 骑兵
+        if(m_status == S_DEATH){
+            totalFrame = 0;
+        }else if(m_status == S_ATTACK){
+            totalFrame = 0;
+        }else if(m_status == S_MOVE){
+            totalFrame = 8;
+        }else if(m_status == S_HURT){
+            totalFrame = 0;
+        }else if(m_status == S_STAND){
+            totalFrame = 8;
+        }
+    }
+    else if (m_icon == "a060")
+    { // 弓兵
+        if(m_status == S_DEATH){
+            totalFrame = 0;
+        }else if(m_status == S_ATTACK){
+            totalFrame = 0;
+        }else if(m_status == S_MOVE){
+            totalFrame = 6;
+        }else if(m_status == S_HURT){
+            totalFrame = 0;
+        }else if(m_status == S_STAND){
+            totalFrame = 7;
+        }
+    }
+    else if (m_icon == "zhanche")
+    { // 法师
+        if(m_status == S_DEATH){
+            totalFrame = 1;
+        }else if(m_status == S_ATTACK){
+            totalFrame = 6;
+        }else if(m_status == S_MOVE){
+            totalFrame = 4;
+        }else if(m_status == S_HURT){
+            totalFrame = 0;
+        }else if(m_status == S_STAND){
+            totalFrame = 1;
+        }
+    }
+    
+    for(int j=0;j<totalFrame;j++){
+        cf = CCLoadSprite::getSF(CCString::createWithFormat("%s_%d_%s_%s_%d.png",m_icon.c_str(),m_side,m_direct.c_str(),actionName.c_str(),j)->getCString());
+        CC_BREAK_IF(!cf);
+        myArray.pushBack(cf);
+        m_iconSpr->setDisplayFrame(cf);
+    }
+    
     m_iconSpr->setColor(ccWHITE);
     float delayPerUnit = 0.1;
     if(m_status==ACTION_ATTACK){

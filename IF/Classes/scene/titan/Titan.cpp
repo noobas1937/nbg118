@@ -57,7 +57,7 @@ bool Titan::initWithFile(int tid)
     _tid = tid;
     int nModelScale = atoi(CCCommonUtils::getPropById(CC_ITOA(_tid), "scale").c_str());
     // 设置当前node的contentSize 用于点击事件
-    setContentSize(Size(500*nModelScale,550*nModelScale));
+    setContentSize(Size(500,550));
     setAnchorPoint(Vec2(0.5,0));
     
     sModelPram bodyParam;

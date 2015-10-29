@@ -36,7 +36,7 @@ bool MainCityArmy::init(CCLayer* parent, CCSpriteBatchNode* soldierBatch, int bu
             m_isInGuide = true;
         }
         
-        std::string path = CCString::createWithFormat("%s_%d_%s_attack_0.png","a010",0,"S")->getCString();
+        std::string path = CCString::createWithFormat("%s_%d_%s_move_0.png","a010",0,"S")->getCString();
         
         auto& bInfo = FunBuildController::getInstance()->getFunbuildById(buildId);
         if ( FunBuildController::getInstance()->posToPath.find(bInfo.pos) != FunBuildController::getInstance()->posToPath.end() ) {

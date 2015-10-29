@@ -56,7 +56,7 @@ bool BattlefieldScene::init(){
         m_battleGen = NULL;
         m_battleZhuan = NULL;
         
-        m_soldierNode = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("a010_0_N_attack_0.png")->getTexture());
+        m_soldierNode = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("a010_0_N_move_0.png")->getTexture());
         this->addChild(m_soldierNode, 10);
         
         m_wallDesAni = CCNode::create();
