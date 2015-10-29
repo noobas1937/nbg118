@@ -9,6 +9,7 @@
 #include "HFViewport.h"
 #include "ImperialScene.h"
 #include "WorldController.h"
+#include "UIComponent.h"
 
 USING_NS_CC;
 
@@ -63,6 +64,8 @@ bool HFViewport::init()
         
         isMove = false;
         notMove = false;
+        this->scheduleUpdate();
+        triggerTime = 1;//fusheng 两秒
         return true;
     }
     while(0);
@@ -77,7 +80,22 @@ void HFViewport::onEnter()
     CCNode::onEnter();
     //CCDirector::sharedDirector()->getTouchDispatcher()->addStandardDelegate(this, 0);
 }
-
+void HFViewport::update(float time)
+{
+    if (isBeginTouch&&isCanMoveAction) {
+        
+        touchSecond += time;
+        
+        if (touchSecond >= triggerTime) {
+            if (!isUIMove) {
+                isUIMove = true;
+                //fusheng 移动UI
+                UIComponent::getInstance()->moveOut();
+            }
+            
+        }
+    }
+}
 void HFViewport::onExit()
 {
     setTouchEnabled(false);
@@ -792,6 +810,12 @@ void HFViewport::onTouchesBegan(const std::vector<Touch*>& pTouches, Event *pEve
             
             CCTouch* ptouch =getAnyTouchObject(pTouches);
             mPreviewPos = ptouch->getLocation();
+            
+            if (!isBeginTouch) {
+                isBeginTouch = true;
+                touchSecond = 0.0;
+            }
+
         }
             break;
         case 2:
@@ -812,6 +836,9 @@ void HFViewport::onTouchesBegan(const std::vector<Touch*>& pTouches, Event *pEve
             }
             while(0);
             isMove = true;
+            
+            isBeginTouch = false;
+            touchSecond = 0.0;
             break;
         default:
             isMove = true;
@@ -837,6 +864,7 @@ void HFViewport::onTouchesMoved(const std::vector<Touch*>& pTouches, Event *pEve
     if (notMove) {
         return;
     }
+   
     CC_ASSERT(this->m_TargetNode);
     vector<CCTouch*> tmpTouches;
     auto tmpIt = pTouches.begin();
@@ -856,7 +884,23 @@ void HFViewport::onTouchesMoved(const std::vector<Touch*>& pTouches, Event *pEve
                 return;
             }
             
-            CC_BREAK_IF(this->mTouchMode != TouchMode_Scroll);
+//            CC_BREAK_IF(this->mTouchMode != TouchMode_Scroll);
+            
+            if (this->mTouchMode != TouchMode_Scroll) {
+                isBeginTouch = false;
+                touchSecond = 0.0;
+                break;
+            }
+//            if (isBeginTouch)
+//            {
+//                CCTouch* ptouch =getAnyTouchObject(pTouches);
+//                auto newPos = ptouch->getLocation();
+//                
+//                if (ccpSub(newPos, mPreviewPos).length()>10) {
+//                    isBeginTouch = false;
+//                    touchSecond = 0.0;
+//                }
+//            }
             
             if (!mForceStopScroll && mMovable) {
                 CCPoint newPoint, moveDistance;
@@ -989,6 +1033,15 @@ void HFViewport::onTouchesEnded(const std::vector<Touch*>& pTouches, Event *pEve
 {
     CC_ASSERT(this->m_TargetNode);
     m_doubleClicked = false;
+    
+    isBeginTouch = false;
+    touchSecond = 0;
+    
+    if (isUIMove) {
+        //fusheng移动回来
+        UIComponent::getInstance()->moveIn();
+        isUIMove = false;
+    }
     
     switch(mFingerMap.size())
     {

@@ -243,7 +243,9 @@ int PopupViewController::addPopupInView(PopupBaseView *view, bool needLayout, bo
     if (!view) {
         return -1;
     }
-
+    
+    UIComponent::getInstance()->resetOriginPos();
+    
     addGoBackStack(openAnimation);
     auto world = WorldMapView::instance();
     if (world && SceneController::getInstance()->currentSceneId == SCENE_ID_WORLD) {

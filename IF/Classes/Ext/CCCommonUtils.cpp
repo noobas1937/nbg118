@@ -2166,10 +2166,14 @@ void CCCommonUtils::initConfigData(CCDictionary *params){
         }
     }
     // tao.yu 第一版增加聊天开关
-    if(dataConfig->objectForKey("chat_status")){
-        GlobalData::shared()->isChatOpen = dataConfig->valueForKey("chat_status")->boolValue();
-    }else{
-        GlobalData::shared()->isChatOpen = false;
+    CCDictionary* chatConfig = dynamic_cast<CCDictionary*>(dataConfig->objectForKey("chat_status"));
+    if (chatConfig) {
+        if(chatConfig->objectForKey("k1")) {
+            GlobalData::shared()->isChatOpen = chatConfig->valueForKey("k1")->boolValue();
+        }
+        else {
+            GlobalData::shared()->isChatOpen = false;
+        }
     }
     
     if(dataConfig->objectForKey("pop_rate")){

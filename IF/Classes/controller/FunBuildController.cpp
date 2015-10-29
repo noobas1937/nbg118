@@ -318,7 +318,7 @@ void FunBuildController::retDataFromServer(CCDictionary* dict)
                     m_guideBuildMap[GuideBuildKey] = info;
                     continue;
                 }
-                else if (id==FUN_BUILD_BARRACK1 && pos==10 && level==1) {//步兵营
+                else if (id==FUN_BUILD_BARRACK2 && pos==10 && level==1) {//步兵营
                     GuideBuildKey = GuideBuildKey + CC_ITOA(id)+"_"+CC_ITOA(pos)+"_"+CC_ITOA(level);
                     m_guideBuildMap[GuideBuildKey] = info;
                     continue;
@@ -339,7 +339,7 @@ void FunBuildController::retDataFromServer(CCDictionary* dict)
                     m_guideBuildMap[GuideBuildKey] = info;
                     continue;
                 }
-                else if (id==FUN_BUILD_BARRACK1 && pos==10 && level==1) {//步兵营
+                else if (id==FUN_BUILD_BARRACK2 && pos==10 && level==1) {//步兵营
                     GuideBuildKey = GuideBuildKey + CC_ITOA(id)+"_"+CC_ITOA(pos)+"_"+CC_ITOA(level);
                     m_guideBuildMap[GuideBuildKey] = info;
                     continue;
@@ -355,7 +355,7 @@ void FunBuildController::retDataFromServer(CCDictionary* dict)
 //                    continue;
 //                }
 //                else if (id==FUN_BUILD_BARRACK1 && pos==10 && level==1) {//步兵营
-                if (id==FUN_BUILD_BARRACK1 && pos==10 && level==1) {//步兵营
+                if (id==FUN_BUILD_BARRACK2 && pos==10 && level==1) {//步兵营
                     GuideBuildKey = GuideBuildKey + CC_ITOA(id)+"_"+CC_ITOA(pos)+"_"+CC_ITOA(level);
                     m_guideBuildMap[GuideBuildKey] = info;
                     continue;
@@ -687,7 +687,7 @@ bool FunBuildController::startOpenFunBuild(int itemId, int pos, int gold, bool i
             gFakeState = true;
             CCUserDefault::sharedUserDefault()->setStringForKey("Guide_Fake","end_2");
         }
-        else if ((gFake=="end_2"||gFake=="start_3") && itemId==FUN_BUILD_BARRACK1 && pos==10) {
+        else if ((gFake=="end_2"||gFake=="start_3") && itemId==FUN_BUILD_BARRACK2 && pos==10) {//fusheng 引导切记修改这里
             gFakeState = true;
             CCUserDefault::sharedUserDefault()->setStringForKey("Guide_Fake","end_3");
         }

@@ -809,6 +809,32 @@ bool UIComponent::init(CCSize size)
 //    m_sprVip->setVisible(false);
     m_sprVipHui->setVisible(false);
     // ---------------
+    
+    
+    if(main_ui_top)
+    {
+        originPosTop = main_ui_top->getPosition();
+        movePosTop = ccpAdd(originPosTop, Vec2(0,500));
+    }
+    if(m_leftNode)
+    {
+        originPosLeft = m_leftNode->getPosition();
+        movePosLeft = ccpAdd(originPosLeft, Vec2(-200,0));
+
+    }
+    if(m_bottomRightNode)
+    {
+        originPosRight = m_bottomRightNode->getPosition();
+        movePosRight = ccpAdd(originPosRight, Vec2(200,0));
+
+    }
+    if(m_bottomRootNode)
+    {
+        originPosBottom = m_bottomRootNode->getPosition();
+        movePosBottom = ccpAdd(originPosBottom, Vec2(0,-300));
+
+    }
+    
     return bRet;
 }
 
@@ -1401,7 +1427,6 @@ void UIComponent::UIHide()
 }
 
 void UIComponent::UIMove(bool _bShow)
-
 {
 
     if (_bShow == m_bUIShowFlag) {
@@ -3080,6 +3105,12 @@ bool UIComponent::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const c
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_sprNode", CCNode*, this->m_sprNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_allianceTipNode", CCNode*, this->m_allianceTipNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_shakeGuideNode", CCNode*, this->m_shakeGuideNode);
+    
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bottomRootNode", CCNode*, this->m_bottomRootNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bottomRightNode", CCNode*, this->m_bottomRightNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "main_ui_top", CCNode*, this->main_ui_top);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_leftNode", CCNode*, this->m_leftNode);
     return false;
     
 }
@@ -5381,8 +5412,8 @@ CCNode* UIComponent::getNodeByIndex(string _key){
             }
         }
         //fusheng begin 添加限制 必须造过兵
-        int tmpQid1 = QueueController::getInstance()->getMinTimeQidByType(TYPE_FORCE);//步兵队列 待秒cd
-        int tmpQid2 = QueueController::getInstance()->getCanRecQidByType(TYPE_FORCE);//步兵队列 待收兵
+        int tmpQid1 = QueueController::getInstance()->getMinTimeQidByType(TYPE_RIDE_SOLDIER);//骑兵队列 待秒cd
+        int tmpQid2 = QueueController::getInstance()->getCanRecQidByType(TYPE_RIDE_SOLDIER);//步兵骑兵队 待收兵
         int totoalArmy = ArmyController::getInstance()->getTotalArmy();
         
         if (totoalArmy > 2 || tmpQid2 != QID_MAX || tmpQid1 != QID_MAX) {//士兵个数超过2个
@@ -6886,4 +6917,292 @@ void UIComponent::showShakeGuideLayer(){
 }
 void UIComponent::removeShakeGuide(){
     m_shakeGuideNode->removeAllChildrenWithCleanup(true);
+}
+
+
+bool UIComponent::isMoveAction()
+{
+    bool move = false;
+   
+    
+    do
+    {
+        if(main_ui_top)
+        {
+            
+            if (main_ui_top->getPosition() != originPosTop) {
+                move = true;
+                break;
+            }
+            
+        }
+        if(m_leftNode)
+        {
+            if (m_leftNode->getPosition() != originPosLeft) {
+                move = true;
+                break;
+            }
+            
+        }
+        if(m_bottomRightNode)
+        {
+            if (m_bottomRightNode->getPosition() != originPosRight) {
+                move = true;
+                break;
+            }
+            
+        }
+        if(m_bottomRootNode)
+        {
+            if (m_bottomRootNode->getPosition() != originPosBottom) {
+                move = true;
+                break;
+            }
+            
+        }
+    }while(0);
+    
+    return move;
+    
+}
+
+void UIComponent::moveOut()
+{
+    float totalSecend = 0.5;
+    
+    if(main_ui_top)
+    {
+
+        main_ui_top->stopActionByTag(89757);
+
+        Vec2 curPos = main_ui_top->getPosition();
+        
+        float maxLength = (originPosTop - movePosTop).length();
+        
+        if (maxLength != 0) {
+            
+            float dt = (curPos - movePosTop).length()/maxLength*totalSecend;
+            if (dt != 0) {
+                
+                auto mt = MoveTo::create(dt, movePosTop);
+                
+                mt->setTag(89757);
+                
+                main_ui_top->runAction(mt);
+            }
+            
+        }
+        
+    }
+    if(m_leftNode)
+    {
+
+        
+        m_leftNode->stopActionByTag(89757);
+        
+        Vec2 curPos = m_leftNode->getPosition();
+        
+        float maxLength = (originPosLeft - movePosLeft).length();
+        
+        if (maxLength != 0) {
+            
+            float dt = (curPos - movePosLeft).length()/maxLength*totalSecend;
+            if (dt != 0) {
+                
+                auto mt = MoveTo::create(dt, movePosLeft);
+                
+                mt->setTag(89757);
+                
+                m_leftNode->runAction(mt);
+            }
+            
+        }
+        
+    }
+    if(m_bottomRightNode)
+    {
+
+        
+        m_bottomRightNode->stopActionByTag(89757);
+        
+        Vec2 curPos = m_bottomRightNode->getPosition();
+        
+        float maxLength = (originPosRight - movePosRight).length();
+        
+        if (maxLength != 0) {
+            
+            float dt = (curPos - movePosRight).length()/maxLength*totalSecend;
+            if (dt != 0) {
+                
+                auto mt = MoveTo::create(dt, movePosRight);
+                
+                mt->setTag(89757);
+                
+                m_bottomRightNode->runAction(mt);
+            }
+            
+        }
+        
+        
+    }
+    if(m_bottomRootNode)
+    {
+
+        
+        m_bottomRootNode->stopActionByTag(89757);
+        
+        Vec2 curPos = m_bottomRootNode->getPosition();
+        
+        float maxLength = (originPosBottom - movePosBottom).length();
+        
+        if (maxLength != 0) {
+            
+            float dt = (curPos - movePosBottom).length()/maxLength*totalSecend;
+            if (dt != 0) {
+                
+                auto mt = MoveTo::create(dt, movePosBottom);
+                
+                mt->setTag(89757);
+                
+                m_bottomRootNode->runAction(mt);
+            }
+            
+        }
+    }
+}
+
+void UIComponent::moveIn()
+{
+    float totalSecend = 0.5;
+    if(isMoveAction())
+    {
+        if(main_ui_top)
+        {
+            
+            main_ui_top->stopActionByTag(89757);
+            
+            Vec2 curPos = main_ui_top->getPosition();
+            
+            float maxLength = (originPosTop - movePosTop).length();
+            
+            if (maxLength != 0) {
+                
+                float dt = (curPos - originPosTop).length()/maxLength*totalSecend;
+                if (dt != 0) {
+                    
+                    auto mt = MoveTo::create(dt, originPosTop);
+                    
+                    mt->setTag(89757);
+                    
+                    main_ui_top->runAction(mt);
+                }
+                
+            }
+            
+        }
+        if(m_leftNode)
+        {
+            
+            
+            m_leftNode->stopActionByTag(89757);
+            
+            Vec2 curPos = m_leftNode->getPosition();
+            
+            float maxLength = (originPosLeft - movePosLeft).length();
+            
+            if (maxLength != 0) {
+                
+                float dt = (curPos - originPosLeft).length()/maxLength*totalSecend;
+                if (dt != 0) {
+                    
+                    auto mt = MoveTo::create(dt, originPosLeft);
+                    
+                    mt->setTag(89757);
+                    
+                    m_leftNode->runAction(mt);
+                }
+                
+            }
+            
+        }
+        if(m_bottomRightNode)
+        {
+            
+            
+            m_bottomRightNode->stopActionByTag(89757);
+            
+            Vec2 curPos = m_bottomRightNode->getPosition();
+            
+            float maxLength = (originPosRight - movePosRight).length();
+            
+            if (maxLength != 0) {
+                
+                float dt = (curPos - originPosRight).length()/maxLength*totalSecend;
+                if (dt != 0) {
+                    
+                    auto mt = MoveTo::create(dt, originPosRight);
+                    
+                    mt->setTag(89757);
+                    
+                    m_bottomRightNode->runAction(mt);
+                }
+                
+            }
+            
+            
+        }
+        if(m_bottomRootNode)
+        {
+            
+            
+            m_bottomRootNode->stopActionByTag(89757);
+            
+            Vec2 curPos = m_bottomRootNode->getPosition();
+            
+            float maxLength = (originPosBottom - movePosBottom).length();
+            
+            if (maxLength != 0) {
+                
+                float dt = (curPos - originPosBottom).length()/maxLength*totalSecend;
+                if (dt != 0) {
+                    
+                    auto mt = MoveTo::create(dt, originPosBottom);
+                    
+                    mt->setTag(89757);
+                    
+                    m_bottomRootNode->runAction(mt);
+                }
+                
+            }
+        }
+    }
+}
+
+void UIComponent::resetOriginPos()
+{
+
+    if(main_ui_top)
+    {
+        main_ui_top->stopActionByTag(89757);
+        main_ui_top->setPosition(originPosTop);
+
+    }
+    if(m_leftNode)
+    {
+        m_leftNode->stopActionByTag(89757);
+        m_leftNode->setPosition(originPosLeft);
+
+    }
+    if(m_bottomRightNode)
+    {
+        m_bottomRightNode->stopActionByTag(89757);
+        m_bottomRightNode->setPosition(originPosRight);
+        
+        
+    }
+    if(m_bottomRootNode)
+    {
+        m_bottomRootNode->stopActionByTag(89757);
+        m_bottomRootNode->setPosition(originPosBottom);
+    }
 }
