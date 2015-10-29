@@ -6968,6 +6968,8 @@ bool UIComponent::isMoveAction()
 
 void UIComponent::moveOut()
 {
+    float totalSecend = 0.5;
+    
     if(main_ui_top)
     {
 
@@ -6979,7 +6981,7 @@ void UIComponent::moveOut()
         
         if (maxLength != 0) {
             
-            float dt = (curPos - movePosTop).length()/maxLength;
+            float dt = (curPos - movePosTop).length()/maxLength*totalSecend;
             if (dt != 0) {
                 
                 auto mt = MoveTo::create(dt, movePosTop);
@@ -7004,7 +7006,7 @@ void UIComponent::moveOut()
         
         if (maxLength != 0) {
             
-            float dt = (curPos - movePosLeft).length()/maxLength;
+            float dt = (curPos - movePosLeft).length()/maxLength*totalSecend;
             if (dt != 0) {
                 
                 auto mt = MoveTo::create(dt, movePosLeft);
@@ -7029,7 +7031,7 @@ void UIComponent::moveOut()
         
         if (maxLength != 0) {
             
-            float dt = (curPos - movePosRight).length()/maxLength;
+            float dt = (curPos - movePosRight).length()/maxLength*totalSecend;
             if (dt != 0) {
                 
                 auto mt = MoveTo::create(dt, movePosRight);
@@ -7055,7 +7057,7 @@ void UIComponent::moveOut()
         
         if (maxLength != 0) {
             
-            float dt = (curPos - movePosBottom).length()/maxLength;
+            float dt = (curPos - movePosBottom).length()/maxLength*totalSecend;
             if (dt != 0) {
                 
                 auto mt = MoveTo::create(dt, movePosBottom);
@@ -7071,6 +7073,7 @@ void UIComponent::moveOut()
 
 void UIComponent::moveIn()
 {
+    float totalSecend = 0.5;
     if(isMoveAction())
     {
         if(main_ui_top)
@@ -7084,7 +7087,7 @@ void UIComponent::moveIn()
             
             if (maxLength != 0) {
                 
-                float dt = (curPos - originPosTop).length()/maxLength;
+                float dt = (curPos - originPosTop).length()/maxLength*totalSecend;
                 if (dt != 0) {
                     
                     auto mt = MoveTo::create(dt, originPosTop);
@@ -7109,7 +7112,7 @@ void UIComponent::moveIn()
             
             if (maxLength != 0) {
                 
-                float dt = (curPos - originPosLeft).length()/maxLength;
+                float dt = (curPos - originPosLeft).length()/maxLength*totalSecend;
                 if (dt != 0) {
                     
                     auto mt = MoveTo::create(dt, originPosLeft);
@@ -7134,7 +7137,7 @@ void UIComponent::moveIn()
             
             if (maxLength != 0) {
                 
-                float dt = (curPos - originPosRight).length()/maxLength;
+                float dt = (curPos - originPosRight).length()/maxLength*totalSecend;
                 if (dt != 0) {
                     
                     auto mt = MoveTo::create(dt, originPosRight);
@@ -7160,7 +7163,7 @@ void UIComponent::moveIn()
             
             if (maxLength != 0) {
                 
-                float dt = (curPos - originPosBottom).length()/maxLength;
+                float dt = (curPos - originPosBottom).length()/maxLength*totalSecend;
                 if (dt != 0) {
                     
                     auto mt = MoveTo::create(dt, originPosBottom);
