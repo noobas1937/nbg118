@@ -65,7 +65,7 @@ bool HFViewport::init()
         isMove = false;
         notMove = false;
         this->scheduleUpdate();
-        triggerTime = 2;//fusheng 两秒
+        triggerTime = 1;//fusheng 两秒
         return true;
     }
     while(0);
