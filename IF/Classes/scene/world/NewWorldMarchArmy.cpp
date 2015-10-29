@@ -373,86 +373,100 @@ void Soldier::playRockAttackAnimation(float _time){
     rock->attack(m_startPoint, m_endPoint, 3.1, MarchArmy::getStartIndex(m_info), m_col + 1);
 }
 
+// tao.yu 下面的函数用来获取小兵的动画
 CCAnimate *Soldier::getAnimate(float direction, int state){
     std::string stateStr = "";
     
     Vector<SpriteFrame*> arr; //= CCArray::create();
-    int totalFrame = 0;
+    int totalFrame = 8;
+    
     if(state == eSoldierState::kDead){
-        stateStr = "die";
+        stateStr = "move";
     }else if(state == eSoldierState::kAttack){
-        stateStr = "attack";
+        stateStr = "move";
     }else if(state == eSoldierState::kWalk){
         stateStr = "move";
     }else if(state == eSoldierState::kHurt){
-        stateStr = "hurt";
+        stateStr = "move";
     }else if(state == eSoldierState::kStand){
-        stateStr = "stand";
+        stateStr = "move";
     }
+    std::string str = "vikings_0_%s_%s_%d.png";
     
-    std::string str = "a060_0_%s_%s_%d.png";
-    if(m_type == BU){
-        str = "a010_0_%s_%s_%d.png";
-        if(state == eSoldierState::kDead){
-            totalFrame = 6;
-        }else if(state == eSoldierState::kAttack){
-            totalFrame = 11;
-        }else if(state == eSoldierState::kWalk){
-            totalFrame = 7;
-        }else if(state == eSoldierState::kHurt){
-            totalFrame = 1;
-        }else if(state == eSoldierState::kStand){
-            totalFrame = 10;
-        }
-    }
-    else if(m_type == QI){
-        str = "a020_0_%s_%s_%d.png";
-        if(state == eSoldierState::kDead){
-            totalFrame = 7;
-        }else if(state == eSoldierState::kAttack){
-            totalFrame = 12;
-        }else if(state == eSoldierState::kWalk){
-            totalFrame = 7;
-        }else if(state == eSoldierState::kHurt){
-            totalFrame = 1;
-        }else if(state == eSoldierState::kStand){
-            totalFrame = 0;
-        }
-    }
-    else if (m_type == GONG)
-    {
-        str = "a060_0_%s_%s_%d.png";
-        if(state == eSoldierState::kDead){
-            totalFrame = 4;
-        }else if(state == eSoldierState::kAttack){
-            totalFrame = 10;
-        }else if(state == eSoldierState::kWalk){
-            totalFrame = 7;
-        }else if(state == eSoldierState::kHurt){
-            totalFrame = 1;
-        }else if(state == eSoldierState::kStand){
-            totalFrame = 7;
-        }
-    }
-    else if (m_type == CHE)
-    {
-        str = "zhanche_0_%s_%s_%d.png";
-        if(state == eSoldierState::kDead){
-            totalFrame = 1;
-        }else if(state == eSoldierState::kAttack){
-            totalFrame = 6;
-        }else if(state == eSoldierState::kWalk){
-            totalFrame = 4;
-        }else if(state == eSoldierState::kHurt){
-            totalFrame = 0;
-        }else if(state == eSoldierState::kStand){
-            totalFrame = 0;
-        }
-    }
-    else if (m_type == TITAN)
-    { //fusheng 泰坦
-        str = "a010_0_%s_%s_%d.png";
-    }
+//    if(state == eSoldierState::kDead){
+//        stateStr = "die";
+//    }else if(state == eSoldierState::kAttack){
+//        stateStr = "attack";
+//    }else if(state == eSoldierState::kWalk){
+//        stateStr = "move";
+//    }else if(state == eSoldierState::kHurt){
+//        stateStr = "hurt";
+//    }else if(state == eSoldierState::kStand){
+//        stateStr = "stand";
+//    }
+
+//    if(m_type == BU){
+//        str = "a010_0_%s_%s_%d.png";
+//        if(state == eSoldierState::kDead){
+//            totalFrame = 6;
+//        }else if(state == eSoldierState::kAttack){
+//            totalFrame = 11;
+//        }else if(state == eSoldierState::kWalk){
+//            totalFrame = 7;
+//        }else if(state == eSoldierState::kHurt){
+//            totalFrame = 1;
+//        }else if(state == eSoldierState::kStand){
+//            totalFrame = 10;
+//        }
+//    }
+//    else if(m_type == QI){
+//        str = "a020_0_%s_%s_%d.png";
+//        if(state == eSoldierState::kDead){
+//            totalFrame = 5;
+//        }else if(state == eSoldierState::kAttack){
+//            totalFrame = 10;
+//        }else if(state == eSoldierState::kWalk){
+//            totalFrame = 8;
+//        }else if(state == eSoldierState::kHurt){
+//            totalFrame = 1;
+//        }else if(state == eSoldierState::kStand){
+//            totalFrame = 8;
+//        }
+//    }
+//    else if (m_type == GONG)
+//    {
+//        str = "a060_0_%s_%s_%d.png";
+//        if(state == eSoldierState::kDead){
+//            totalFrame = 4;
+//        }else if(state == eSoldierState::kAttack){
+//            totalFrame = 10;
+//        }else if(state == eSoldierState::kWalk){
+//            totalFrame = 6;
+//        }else if(state == eSoldierState::kHurt){
+//            totalFrame = 1;
+//        }else if(state == eSoldierState::kStand){
+//            totalFrame = 7;
+//        }
+//    }
+//    else if (m_type == CHE)
+//    {
+//        str = "zhanche_0_%s_%s_%d.png";
+//        if(state == eSoldierState::kDead){
+//            totalFrame = 1;
+//        }else if(state == eSoldierState::kAttack){
+//            totalFrame = 6;
+//        }else if(state == eSoldierState::kWalk){
+//            totalFrame = 4;
+//        }else if(state == eSoldierState::kHurt){
+//            totalFrame = 0;
+//        }else if(state == eSoldierState::kStand){
+//            totalFrame = 0;
+//        }
+//    }
+//    else if (m_type == TITAN)
+//    { //fusheng 泰坦
+//        str = "a010_0_%s_%s_%d.png";
+//    }
     
     std::string directionStr = "";
     bool isFlipX = false;
@@ -559,7 +573,7 @@ bool Soldier::init(){
         m_kingSprite1->setVisible(false);
     }
    
-    m_sprite = CCLoadSprite::createSprite("a060_0_S_attack_0.png");
+    m_sprite = CCLoadSprite::createSprite("a060_0_S_move_0.png");
     m_sprite->setScale(0.6);
     m_parent->addChild(m_sprite, 1);
     m_sprite->setVisible(false);
@@ -1017,76 +1031,77 @@ CCPoint Phalanx::getSoldierPos(int x, int y, float direction, CCPoint startPt){
 bool Phalanx::init(){
     m_killed = 0;
     m_row = 1;
-    m_col = 3;
+    m_col = 1;
+    gapX = 50;
     std::vector<int> vector = {10000, 50000};
     //    std::vector<int> vector = {1, 2};
     auto &map = MarchArmy::getMap(m_info);
-    if(m_type == BU){
-        //1*4, 2 * 5, 3 * 6
-        m_row = 3;
-        m_col = 6;
-        int num = map[BU].total;
-        if(num < vector[0]){
-            m_row = 1;
-            m_col = 4;
-        }else if(num >= vector[0] && num <= vector[1]){
-            m_row = 2;
-            m_col = 5;
-        }
-        gapX = 30;
-    }else if(m_type == QI){
-        //1*3, 2 * 3, 2 * 5
-        m_row = 2;
-        m_col = 5;
-        int num = map[QI].total;
-        if(num < vector[0]){
-            m_row = 1;
-            m_col = 3;
-        }else if(num >= vector[0] && num <= vector[1]){
-            m_row = 2;
-            m_col = 3;
-        }
-        gapX = 30;
-    }else if(m_type == GONG){
-        //1*4, 2 * 5, 3 * 6
-        m_row = 3;
-        m_col = 6;
-        int num = map[GONG].total;
-        if(num < vector[0]){
-            m_row = 1;
-            m_col = 4;
-        }else if(num >= vector[0] && num <= vector[1]){
-            m_row = 2;
-            m_col = 5;
-        }
-        gapX = 30;
-    }else if(m_type == CHE){
-        //1*1, 1 * 2, 1 * 3
-        m_row = 1;
-        m_col = 3;
-        int num = map[CHE].total;
-        if(num < vector[0]){
-            m_row = 1;
-            m_col = 1;
-        }else if(num >= vector[0] && num <= vector[1]){
-            m_row = 1;
-            m_col = 2;
-        }
-        gapX = 50;
-    }else if(m_type == TITAN){ //fusheng 泰坦
-        //1*1, 1 * 1, 1 * 1
-        m_row = 1;
-        m_col = 1;
-        int num = map[TITAN].total;
-        if(num < vector[0]){
-            m_row = 1;
-            m_col = 1;
-        }else if(num >= vector[0] && num <= vector[1]){
-            m_row = 1;
-            m_col = 1;
-        }
-        gapX = 50;
-    }
+//    if(m_type == BU){
+//        //1*4, 2 * 5, 3 * 6
+//        m_row = 3;
+//        m_col = 6;
+//        int num = map[BU].total;
+//        if(num < vector[0]){
+//            m_row = 1;
+//            m_col = 4;
+//        }else if(num >= vector[0] && num <= vector[1]){
+//            m_row = 2;
+//            m_col = 5;
+//        }
+//        gapX = 30;
+//    }else if(m_type == QI){
+//        //1*3, 2 * 3, 2 * 5
+//        m_row = 2;
+//        m_col = 5;
+//        int num = map[QI].total;
+//        if(num < vector[0]){
+//            m_row = 1;
+//            m_col = 3;
+//        }else if(num >= vector[0] && num <= vector[1]){
+//            m_row = 2;
+//            m_col = 3;
+//        }
+//        gapX = 30;
+//    }else if(m_type == GONG){
+//        //1*4, 2 * 5, 3 * 6
+//        m_row = 3;
+//        m_col = 6;
+//        int num = map[GONG].total;
+//        if(num < vector[0]){
+//            m_row = 1;
+//            m_col = 4;
+//        }else if(num >= vector[0] && num <= vector[1]){
+//            m_row = 2;
+//            m_col = 5;
+//        }
+//        gapX = 30;
+//    }else if(m_type == CHE){
+//        //1*1, 1 * 2, 1 * 3
+//        m_row = 1;
+//        m_col = 3;
+//        int num = map[CHE].total;
+//        if(num < vector[0]){
+//            m_row = 1;
+//            m_col = 1;
+//        }else if(num >= vector[0] && num <= vector[1]){
+//            m_row = 1;
+//            m_col = 2;
+//        }
+//        gapX = 50;
+//    }else if(m_type == TITAN){ //fusheng 泰坦
+//        //1*1, 1 * 1, 1 * 1
+//        m_row = 1;
+//        m_col = 1;
+//        int num = map[TITAN].total;
+//        if(num < vector[0]){
+//            m_row = 1;
+//            m_col = 1;
+//        }else if(num >= vector[0] && num <= vector[1]){
+//            m_row = 1;
+//            m_col = 1;
+//        }
+//        gapX = 50;
+//    }
     int i = 0;
     int j = 0;
     while(i < m_row){

@@ -3563,6 +3563,10 @@ void UIComponent::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEven
             
             if(isTouchInside(this->m_chatBG, pTouch)) {
                 
+                if ( false == GlobalData::shared()->isChatOpen ) {
+                    CCCommonUtils::flyHint("", "", _lang("E100008"));
+                    return;
+                }
                 float tmpX = pTouch->getLocation().x;
                 
                 if (tmpX>m_curPt.x && (tmpX-m_curPt.x)>20) {

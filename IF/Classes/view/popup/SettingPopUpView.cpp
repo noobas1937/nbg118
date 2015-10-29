@@ -775,7 +775,9 @@ void SettingCell::touchEvent()
             break;
         case Setting_lang:
         {
-            PopupViewController::getInstance()->addPopupInView(LanguageSettingView::create());
+            // tao.yu 第一版本不开放更换语言，只支持英文
+            CCCommonUtils::flyHint("", "", _lang("E100008"));
+//            PopupViewController::getInstance()->addPopupInView(LanguageSettingView::create());
 //            std::string language = LocalController::shared()->getLanguageFileName();
 //            if (language.compare("en"))
 //            {

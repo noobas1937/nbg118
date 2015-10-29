@@ -267,7 +267,7 @@ bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType) {
     m_mapMarchNode = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("JY_body_-45_0.png")->getTexture(), 448);
     m_layers[WM_ROAD]->addChild(m_mapMarchNode, roadIndex++);
     
-    m_mapMarchNode1 = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("a010_0_N_attack_0.png")->getTexture(), 448);
+    m_mapMarchNode1 = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("a010_0_N_move_0.png")->getTexture(), 448);
     m_layers[WM_ROAD]->addChild(m_mapMarchNode1, roadIndex++);
     
     m_heiqishiShadowBachNode = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("building_level_overlay.png")->getTexture(), 448);
@@ -285,10 +285,10 @@ bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType) {
     m_spinLabelNode = CCNode::create();
     m_layers[WM_ROAD]->addChild(m_spinLabelNode, roadIndex++);
     
-    m_mapArrowSpNode = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("a010_0_N_attack_0.png")->getTexture(), 448);
+    m_mapArrowSpNode = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("a010_0_N_move_0.png")->getTexture(), 448);
     m_layers[WM_ROAD]->addChild(m_mapArrowSpNode, roadIndex++);
     
-    m_mapTowerBatchNode = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("a010_0_N_attack_0.png")->getTexture(), 448);
+    m_mapTowerBatchNode = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("a010_0_N_move_0.png")->getTexture(), 448);
     m_layers[WM_ROAD]->addChild(m_mapTowerBatchNode, roadIndex++);
     
     m_occupyPointerNode = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("world_occupy_self.png")->getTexture(), 448);
@@ -366,7 +366,7 @@ bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType) {
     m_throneNode = CCNode::create();
     m_layers[WM_CITY]->addChild(m_throneNode, 2);
     
-    m_cityAttackNode = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("a010_0_N_attack_0.png")->getTexture(), 448);
+    m_cityAttackNode = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("a010_0_N_move_0.png")->getTexture(), 448);
     m_layers[WM_CITY]->addChild(m_cityAttackNode, 3);
     
     m_towerNode = CCNode::create();
@@ -4206,7 +4206,7 @@ CCSprite* WorldMapView::createMarchSprite(MarchInfo& info) {
     auto sp = CCLoadSprite::createSprite(tmpName);
     sp->setTextureRect(CCRectZero);
     bool flag = false;
-    auto sp1 = CCLoadSprite::createSprite("a010_0_N_attack_0.png");
+    auto sp1 = CCLoadSprite::createSprite("a010_0_N_move_0.png");
     sp1->setTextureRect(CCRectZero);
     switch (info.marchType) {
         case MethodRally:
@@ -7513,7 +7513,7 @@ void WorldMapView::onTowerAttackAnimation(int startCityIndex,CCPoint endViewPos,
         sp1->setPosition(endViewPos);
     }
     else{
-        sp1 =CCLoadSprite::createSprite("a010_0_N_attack_0.png");
+        sp1 =CCLoadSprite::createSprite("a010_0_N_move_0.png");
         sp1->setTextureRect(CCRectZero);
         sp1->setPosition(endViewPos);
         sp1->setTag(marchTag);
@@ -7769,41 +7769,107 @@ void WorldMapView::testCastle(int level){
 
 void WorldMapView::update_water_shader(const Vec2& position)
 {
-    //begin a by ljf
-    auto sprite = NBWaterMap::create("shaders/spritemap.png");
-    sprite->setScale(25.0f);
-    //end a by ljf
     static const int WATER_SHADER_TAG = WM_BG_TAG + 1;
-    static const int WATER_SHADER_X_CNT = 4;
-    static const int WATER_SHADER_Y_CNT = 6;
-    
-    static const int count_x = 2;
-    static const int count_y = 2;
-    static const float scale = 5.0;
-    static const float offset = 512 * scale;
-    NBWaterSprite* m_pWaterSprite = dynamic_cast<NBWaterSprite*>(m_layers[WM_BG]->getChildByTag(WATER_SHADER_TAG + 0));
-    if (!m_pWaterSprite)
+    static const int OFFSET = 25 * 512;
+    NBWaterMap* m_pWaterSprite0 = dynamic_cast<NBWaterMap*>(m_layers[WM_BG]->getChildByTag(WATER_SHADER_TAG + 0));
+    NBWaterMap* m_pWaterSprite1 = dynamic_cast<NBWaterMap*>(m_layers[WM_BG]->getChildByTag(WATER_SHADER_TAG + 1));
+    NBWaterMap* m_pWaterSprite2 = dynamic_cast<NBWaterMap*>(m_layers[WM_BG]->getChildByTag(WATER_SHADER_TAG + 2));
+    NBWaterMap* m_pWaterSprite3 = dynamic_cast<NBWaterMap*>(m_layers[WM_BG]->getChildByTag(WATER_SHADER_TAG + 3));
+    if (!m_pWaterSprite0)
     {
-        m_pWaterSprite = NBWaterSprite::create(WATER_NORMALS);
-        m_pWaterSprite->setTag(WATER_SHADER_TAG);
-        m_pWaterSprite->setScale(scale);
-        m_layers[WM_BG]->addChild(m_pWaterSprite);
-        
-//        for (int i = 0; i < count_x; i++)
-//        {
-//            for (int j = 0; j < count_y; j++)
-//            {
-//                m_pWaterSprite = NBWaterSprite::create(WATER_NORMALS);
-//                m_pWaterSprite->setTag(WATER_SHADER_TAG + i + j * count_x);
-//                m_pWaterSprite->setScale(scale);
-//                m_layers[WM_BG]->addChild(m_pWaterSprite);
-//    
-//                m_pWaterSprite->setPosition(451584 + i * offset, 275520 + j * offset);
-//            }
-//        }
+        m_pWaterSprite0 = NBWaterMap::create("shaders/spritemap.png");
+        m_pWaterSprite0->setScale(25.0f);
+        m_pWaterSprite0->setTag(WATER_SHADER_TAG + 0);
+        m_pWaterSprite0->setPosition(0, 0);
+        m_layers[WM_BG]->addChild(m_pWaterSprite0);
     }
-    m_pWaterSprite->setPosition(position.x + 256 * scale, position.y + 256 * scale);
-    return;
+    if (!m_pWaterSprite1)
+    {
+        m_pWaterSprite1 = NBWaterMap::create("shaders/spritemap.png");
+        m_pWaterSprite1->setScale(25.0f);
+        m_pWaterSprite1->setTag(WATER_SHADER_TAG + 1);
+        m_pWaterSprite1->setPosition(OFFSET, 0);
+        m_layers[WM_BG]->addChild(m_pWaterSprite1);
+    }
+    if (!m_pWaterSprite2)
+    {
+        m_pWaterSprite2 = NBWaterMap::create("shaders/spritemap.png");
+        m_pWaterSprite2->setScale(25.0f);
+        m_pWaterSprite2->setTag(WATER_SHADER_TAG + 2);
+        m_pWaterSprite2->setPosition(0, OFFSET);
+        m_layers[WM_BG]->addChild(m_pWaterSprite2);
+    }
+    if (!m_pWaterSprite3)
+    {
+        m_pWaterSprite3 = NBWaterMap::create("shaders/spritemap.png");
+        m_pWaterSprite3->setScale(25.0f);
+        m_pWaterSprite3->setTag(WATER_SHADER_TAG + 3);
+        m_pWaterSprite3->setPosition(OFFSET, OFFSET);
+        m_layers[WM_BG]->addChild(m_pWaterSprite3);
+    }
+    
+    int xs = (int)position.x / OFFSET;
+    int ys = (int)position.y / OFFSET;
+    if (m_pWaterSprite0)
+    {
+        // 2 * OFFSET, 2 * OFFSET
+        int x = xs % 2 == 0 ? xs * OFFSET : (xs + 1) * OFFSET;
+        int y = ys % 2 == 0 ? ys * OFFSET : (ys + 1) * OFFSET;
+        m_pWaterSprite0->setPosition(x, y);
+    }
+    if (m_pWaterSprite1)
+    {
+        // 1 * OFFSET, 2 * OFFSET
+        int x = xs % 2 == 1 ? xs * OFFSET : (xs + 1) * OFFSET;
+        int y = ys % 2 == 0 ? ys * OFFSET : (ys + 1) * OFFSET;
+        m_pWaterSprite1->setPosition(x, y);
+    }
+    if (m_pWaterSprite2)
+    {
+        // 2 * OFFSET, 1 * OFFSET
+        int x = xs % 2 == 0 ? xs * OFFSET : (xs + 1) * OFFSET;
+        int y = ys % 2 == 1 ? ys * OFFSET : (ys + 1) * OFFSET;
+        m_pWaterSprite2->setPosition(x, y);
+    }
+    if (m_pWaterSprite3)
+    {
+        // 1 * OFFSET, 1 * OFFSET
+        int x = xs % 2 == 1 ? xs * OFFSET : (xs + 1) * OFFSET;
+        int y = ys % 2 == 1 ? ys * OFFSET : (ys + 1) * OFFSET;
+        m_pWaterSprite3->setPosition(x, y);
+    }
+    
+//    static const int WATER_SHADER_TAG = WM_BG_TAG + 1;
+//    static const int WATER_SHADER_X_CNT = 4;
+//    static const int WATER_SHADER_Y_CNT = 6;
+//    
+//    static const int count_x = 2;
+//    static const int count_y = 2;
+//    static const float scale = 5.0;
+//    static const float offset = 512 * scale;
+//    NBWaterSprite* m_pWaterSprite = dynamic_cast<NBWaterSprite*>(m_layers[WM_BG]->getChildByTag(WATER_SHADER_TAG + 0));
+//    if (!m_pWaterSprite)
+//    {
+//        m_pWaterSprite = NBWaterSprite::create(WATER_NORMALS);
+//        m_pWaterSprite->setTag(WATER_SHADER_TAG);
+//        m_pWaterSprite->setScale(scale);
+//        m_layers[WM_BG]->addChild(m_pWaterSprite);
+//        
+////        for (int i = 0; i < count_x; i++)
+////        {
+////            for (int j = 0; j < count_y; j++)
+////            {
+////                m_pWaterSprite = NBWaterSprite::create(WATER_NORMALS);
+////                m_pWaterSprite->setTag(WATER_SHADER_TAG + i + j * count_x);
+////                m_pWaterSprite->setScale(scale);
+////                m_layers[WM_BG]->addChild(m_pWaterSprite);
+////    
+////                m_pWaterSprite->setPosition(451584 + i * offset, 275520 + j * offset);
+////            }
+////        }
+//    }
+//    m_pWaterSprite->setPosition(position.x + 256 * scale, position.y + 256 * scale);
+//    return;
     
     
 //    for (int i = -WATER_SHADER_X_CNT / 2; i < WATER_SHADER_X_CNT / 2; i++)
