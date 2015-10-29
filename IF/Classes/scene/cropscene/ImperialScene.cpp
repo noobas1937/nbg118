@@ -248,8 +248,9 @@ bool ImperialScene::init()
     m_node3d->setTag(JUST3D_NODE_TAG);
     
     float maxZoomScale = 1.2;
-    float minZoomScale = m_viewPort->getMinZoom() * 1.4;
-    float curZoomScale = 0.75;
+//    float minZoomScale = m_viewPort->getMinZoom() * 1.4;
+    float minZoomScale = 0.55;
+    float curZoomScale = 0.7;
     TargetPlatform target = CCApplication::sharedApplication()->getTargetPlatform();
     if(target == kTargetIpad || CCCommonUtils::isAdriodPad()){
         maxZoomScale = 1.1;
@@ -502,9 +503,9 @@ void ImperialScene::buildingCallBack(CCObject* params)
 //        resumeSchedulerAndActions();
 //        m_bRunning = true;
         
-        m_curBuildPosx = 1500;//fusheng 修改位置
+        m_curBuildPosx = 1400;//fusheng 修改位置
         m_curBuildPosy = 2106;//fusheng 修改位置
-        scale = 0.4315;//fusheng 修改放缩
+        scale = 0.7;//fusheng 修改放缩
         onMoveToPos(m_curBuildPosx, m_curBuildPosy, TYPE_POS_MID, dt, scale, true);
         if (newPlayerST) {
 //            onPlayBattle();
@@ -523,7 +524,7 @@ void ImperialScene::buildingCallBack(CCObject* params)
             {
                 scale = HD_SCALE;
             }
-            scale = 0.4315;//fusheng 修改放缩
+            scale = 0.7;//fusheng 修改放缩
             canMoveToRequest = false;
             onMoveToPos(m_curBuildPosx, m_curBuildPosy, TYPE_POS_MID, 0, scale, true);//fusheng 这里是进入城里的屏幕的位置
         }

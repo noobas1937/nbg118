@@ -26,13 +26,13 @@
         <ItemSpec id="3072200" next="3072300" lag="4" mark="1"/>
         <ItemSpec id="3072300" next="3072400" plot="3072310" arrow="0" area="plot_continue" enforce="1" mark="1"/>
         <ItemSpec id="3072400" next="3072500" arrow="2" area="MC_10" enforce="1"/>
-        <ItemSpec id="3072500" next="3072600" arrow="2" area="LI_423000" enforce="1"/>
+        <ItemSpec id="3072500" next="3072600" arrow="2" area="LI_424000" enforce="1"/>
         <ItemSpec id="3072600" next="3072700" arrow="2" area="LI_build" enforce="1"/>
-        <ItemSpec id="3072700" next="3075000" arrow="2" area="BC_423000_build" enforce="1"/>
+        <ItemSpec id="3072700" next="3075000" arrow="2" area="BC_424000_build" enforce="1"/>
         <ItemSpec id="3075000" next="3072800" lag="4" mark="1"/>
         <ItemSpec id="3072800" next="3072900" plot="3072810" arrow="0" area="plot_continue" enforce="1" mark="1"/>
-        <ItemSpec id="3072900" next="3073000" arrow="3" area="MC_423000" enforce="1"/>
-        <ItemSpec id="3073000" next="3073100" arrow="1" area="BU_423000_soldier" enforce="1"/>
+        <ItemSpec id="3072900" next="3073000" arrow="3" area="MC_424000" enforce="1"/>
+        <ItemSpec id="3073000" next="3073100" arrow="1" area="BU_424000_soldier" enforce="1"/>
         <ItemSpec id="3073100" next="3073200" arrow="2" area="SO_train" enforce="1"/>
         <ItemSpec id="3073200" next="3073300" lag="4" mark="1"/>
         <ItemSpec id="3073300" next="3073400" plot="3073310" arrow="0" area="plot_continue" enforce="1" mark="1"/>
