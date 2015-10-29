@@ -593,11 +593,25 @@ void ScrollView::onAfterDraw()
 void ScrollView::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     // quick return if not visible
+    //begin d by ljf
+    /*
     if (!isVisible() || !isVisitableByVisitingCamera())
     {
         return;
     }
-
+    */
+    //end d by ljf
+    //begin a by ljf
+    if(!_visible)
+    {
+        return;
+    }
+    if(!isVisitableByVisitingCamera())
+    {
+        processParentFlags(parentTransform, parentFlags);
+        return;
+    }
+    //end a by ljf
     uint32_t flags = processParentFlags(parentTransform, parentFlags);
 
     // IMPORTANT:
