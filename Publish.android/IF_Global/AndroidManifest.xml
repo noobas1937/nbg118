@@ -46,7 +46,7 @@
 	<!-- GCM需求 END -->
 	
     <application
-        android:name="com.clash.of.kings.EmpireApplication"
+        android:name="com.clash.of.kings.NBGApplication"
         android:icon="@drawable/ic_launcher"
         android:debuggable="false"
         android:label="@string/app_name"
@@ -101,7 +101,7 @@
    		 <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/fb_app_id" />
-        <provider android:authorities="com.facebook.app.FacebookContentProvider713457855362204"
+        <provider android:authorities="com.facebook.app.FacebookContentProvider1670702669839400"
             android:name="com.facebook.FacebookContentProvider"
             android:exported="true"/>
    		     
