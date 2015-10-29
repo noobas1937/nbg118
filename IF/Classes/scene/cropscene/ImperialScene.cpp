@@ -784,7 +784,7 @@ void ImperialScene::onVikingsShipMove(NBSprite3D * pSprite3d)
         auto rotate1 = RotateBy::create(rotateTime, Vec3(0, -10, 0));
         auto rotate2 = RotateBy::create(rotateTime, Vec3(0, 40, 0));
         auto rotate3 = RotateBy::create(rotateTime, Vec3(0, 180, 0));
-        auto rotate4 = RotateBy::create(rotateTime * 4, Vec3(0, -170, 0));
+        auto rotate4 = RotateBy::create(rotateTime * 10, Vec3(0, -170, 0));
         
         auto rotateDelay = DelayTime::create(moveTime);
         auto callbackAction = CallFuncN::create([&](Node* sender){
