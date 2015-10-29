@@ -127,7 +127,7 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>315</real>
+											<real>301</real>
 											<real>0.0</real>
 											<integer>0</integer>
 										</array>
@@ -171,8 +171,8 @@
 										<string>SpriteFrame</string>
 										<key>value</key>
 										<array>
-											<string>Common/Common_504.plist</string>
-											<string>city_gain_bg.png</string>
+											<string>Common/Common_8.plist</string>
+											<string>cz_bgq1.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -182,8 +182,8 @@
 										<string>Size</string>
 										<key>value</key>
 										<array>
-											<real>308</real>
-											<real>155</real>
+											<real>286</real>
+											<real>150</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -213,7 +213,7 @@
 										<key>type</key>
 										<string>Float</string>
 										<key>value</key>
-										<real>0.0</real>
+										<real>60</real>
 									</dict>
 									<dict>
 										<key>name</key>
@@ -221,7 +221,7 @@
 										<key>type</key>
 										<string>Float</string>
 										<key>value</key>
-										<real>0.0</real>
+										<real>60</real>
 									</dict>
 									<dict>
 										<key>name</key>
@@ -229,7 +229,7 @@
 										<key>type</key>
 										<string>Float</string>
 										<key>value</key>
-										<real>0.0</real>
+										<real>60</real>
 									</dict>
 									<dict>
 										<key>name</key>
@@ -237,9 +237,11 @@
 										<key>type</key>
 										<string>Float</string>
 										<key>value</key>
-										<real>0.0</real>
+										<real>60</real>
 									</dict>
 								</array>
+								<key>selected</key>
+								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>
@@ -263,7 +265,7 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>314.5</real>
+											<real>614</real>
 											<real>0.0</real>
 											<integer>0</integer>
 										</array>
@@ -286,9 +288,9 @@
 										<string>ScaleLock</string>
 										<key>value</key>
 										<array>
-											<real>-1</real>
 											<real>1</real>
-											<false/>
+											<real>1</real>
+											<true/>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -307,8 +309,8 @@
 										<string>SpriteFrame</string>
 										<key>value</key>
 										<array>
-											<string>Common/Common_504.plist</string>
-											<string>city_gain_bg.png</string>
+											<string>Common/Common_8.plist</string>
+											<string>cz_bgq2.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -318,8 +320,8 @@
 										<string>Size</string>
 										<key>value</key>
 										<array>
-											<real>308</real>
-											<real>155</real>
+											<real>350</real>
+											<real>150</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -349,7 +351,7 @@
 										<key>type</key>
 										<string>Float</string>
 										<key>value</key>
-										<real>0.0</real>
+										<real>60</real>
 									</dict>
 									<dict>
 										<key>name</key>
@@ -357,7 +359,7 @@
 										<key>type</key>
 										<string>Float</string>
 										<key>value</key>
-										<real>0.0</real>
+										<real>60</real>
 									</dict>
 									<dict>
 										<key>name</key>
@@ -365,7 +367,7 @@
 										<key>type</key>
 										<string>Float</string>
 										<key>value</key>
-										<real>0.0</real>
+										<real>60</real>
 									</dict>
 									<dict>
 										<key>name</key>
@@ -373,7 +375,7 @@
 										<key>type</key>
 										<string>Float</string>
 										<key>value</key>
-										<real>0.0</real>
+										<real>60</real>
 									</dict>
 								</array>
 							</dict>
@@ -1158,8 +1160,6 @@
 										<string>Sample Text sadh sdajs d asd adhsd;.er  retert jjkkkkSample Text sadh sdajs d asd adhsd;.er  retert jjkkkk</string>
 									</dict>
 								</array>
-								<key>selected</key>
-								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>
@@ -7188,16 +7188,6 @@
 			</dict>
 			<dict>
 				<key>name</key>
-				<string>accelerometerEnabled</string>
-				<key>platform</key>
-				<string>iOS</string>
-				<key>type</key>
-				<string>Check</string>
-				<key>value</key>
-				<false/>
-			</dict>
-			<dict>
-				<key>name</key>
 				<string>mouseEnabled</string>
 				<key>platform</key>
 				<string>Mac</string>
@@ -7205,16 +7195,6 @@
 				<string>Check</string>
 				<key>value</key>
 				<true/>
-			</dict>
-			<dict>
-				<key>name</key>
-				<string>keyboardEnabled</string>
-				<key>platform</key>
-				<string>Mac</string>
-				<key>type</key>
-				<string>Check</string>
-				<key>value</key>
-				<false/>
 			</dict>
 		</array>
 	</dict>

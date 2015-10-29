@@ -27,6 +27,11 @@
 #include "AllianceManagerFunView.h"
 
 bool PlayerTile::init() {
+    CCLoadSprite::doResourceByCommonIndex(8, true);
+    setCleanFunction([](){
+        CCLoadSprite::doResourceByCommonIndex(8, false);
+    });
+
     NewBaseTileInfo::init();
     m_playerInfo = &WorldController::getInstance()->m_playerInfo[m_cityInfo.playerName];
     m_playerUid = "";
