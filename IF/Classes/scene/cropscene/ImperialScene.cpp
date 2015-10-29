@@ -664,18 +664,18 @@ void ImperialScene::onCreateVikingsShip()
 //begin a by ljf
 bool ImperialScene::onVikingsShipTouched(CCTouch* pTouch)
 {
-    if(m_vikings3D == nullptr)
+    if(m_vikings3D == nullptr || m_vikingTouchNode == nullptr)
     {
         return false;
     }
-    Vec2 touchPoint = m_vikings3D->convertToNodeSpace(pTouch->getLocation());
+    Vec2 touchPoint = m_vikingTouchNode->convertToNodeSpace(pTouch->getLocation());
     // 下面的touch点转换是为了让点击区域在模型内
-    float originX = -1 * m_vikings3D->getContentSize().width * m_vikings3D->getAnchorPoint().x;
-    float originY = -1 * m_vikings3D->getContentSize().height * m_vikings3D->getAnchorPoint().y;
+    float originX = -1 * m_vikingTouchNode->getContentSize().width * m_vikingTouchNode->getAnchorPoint().x;
+    float originY = -1 * m_vikingTouchNode->getContentSize().height * m_vikingTouchNode->getAnchorPoint().y;
     touchPoint.x = touchPoint.x + originX;
     touchPoint.y = touchPoint.y + originY;
     
-    Rect boundingBox(originX, originY, m_vikings3D->getContentSize().width, m_vikings3D->getContentSize().height);
+    Rect boundingBox(originX, originY, m_vikingTouchNode->getContentSize().width, m_vikingTouchNode->getContentSize().height);
     //    Rect boundingBox = this->getBoundingBox();
     bool isTouched = boundingBox.containsPoint(touchPoint);
     if (!isTouched) {
@@ -3625,6 +3625,8 @@ bool ImperialScene::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vikingPath2", CCNode*, this->m_vikingPath2);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vikingPath3", CCNode*, this->m_vikingPath3);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vikingPath4", CCNode*, this->m_vikingPath4);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vikingTouchNode", CCNode*, this->m_vikingTouchNode);
+    
     //end a by ljf
     
     return false;
