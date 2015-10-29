@@ -110,6 +110,10 @@ public:
     bool allowZoom;
     void applyZoom(float newZoom);
     CCPoint m_bgTouchPoint;
+    
+    void update(float time);
+    
+    
 protected:
     inline void teardown()
     {
@@ -130,7 +134,7 @@ protected:
     bool boundPos(cocos2d::CCPoint& pos);
     
     void applyPos(CCPoint position);
-    HFViewport():m_TargetNode(NULL),mTouchMode(TouchMode_None),mTouchDelegate(NULL),mIsScrollBegan(false),autoZoom(true),mForceStopScroll(false),isForDiamond(false),limitSpeedX(0),limitSpeedY(0),isAutoMove(true),isAutoZoom(true),isInAutoZoom(false),allowZoom(true)
+    HFViewport():m_TargetNode(NULL),mTouchMode(TouchMode_None),mTouchDelegate(NULL),mIsScrollBegan(false),autoZoom(true),mForceStopScroll(false),isForDiamond(false),limitSpeedX(0),limitSpeedY(0),isAutoMove(true),isAutoZoom(true),isInAutoZoom(false),allowZoom(true),touchSecond(0),isBeginTouch(false),triggerTime(3),isUIMove(false),isCanMoveAction(false)
     {
         teardown();
     };
@@ -187,12 +191,20 @@ private:
     bool isInAutoZoom;
     
     Touch* getAnyTouchObject(const std::vector<Touch*>& pTouches);
+    
+    
 public:
     // used for diamond shape map
     bool isForDiamond;
     int limitSpeedX;
     int limitSpeedY;
-
+    //fusheng end
+    bool isBeginTouch;
+    bool isUIMove;
+    float touchSecond;
+    float triggerTime;
+    bool isCanMoveAction;
+    //fusheng end
 private:
     int MAP_WIDTH;
     int MAP_HEIGHT;

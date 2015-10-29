@@ -383,7 +383,33 @@ public:
 
     CCSafeObject<CCNode> m_tileCoordinateNode;
     CCSafeObject<CCNode> m_faveNode;
+    //fusheng begin
+    CCSafeObject<CCNode> m_bottomRootNode;
+    CCSafeObject<CCNode> m_bottomRightNode;
+    CCSafeObject<CCNode> main_ui_top;
+    CCSafeObject<CCNode> m_leftNode;
+    
+    Vec2 originPosTop;
+    Vec2 originPosLeft;
+    Vec2 originPosRight;
+    Vec2 originPosBottom;
+    
+    
+    Vec2 movePosTop;
+    Vec2 movePosLeft;
+    Vec2 movePosRight;
+    Vec2 movePosBottom;
+    
+    bool isMoveAction();
+    
+    void moveOut();
+    
+    void moveIn();
+    
+    void resetOriginPos();
+    //fusheng end
     void showGoldBuyPanel();
+    
     CCSafeObject<CCControlButton> m_popupReturnBtn;
     
     CCSafeObject<CCNode> m_collectNode;
