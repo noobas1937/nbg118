@@ -662,6 +662,10 @@ void ImperialScene::onCreateVikingsShip()
 //begin a by ljf
 bool ImperialScene::onVikingsShipTouched(CCTouch* pTouch)
 {
+    if(m_vikings3D == nullptr)
+    {
+        return false;
+    }
     Vec2 touchPoint = m_vikings3D->convertToNodeSpace(pTouch->getLocation());
     // 下面的touch点转换是为了让点击区域在模型内
     float originX = -1 * m_vikings3D->getContentSize().width * m_vikings3D->getAnchorPoint().x;
