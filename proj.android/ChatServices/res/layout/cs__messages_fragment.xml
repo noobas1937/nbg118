@@ -33,7 +33,7 @@
                 android:background="@drawable/btn_qieye_01"
                 android:text="国家"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/hs__header_button_text_highlight_color"
+                android:textColor="#000000"
                 android:textSize="@dimen/cs__textButtonTitle" />
             <!-- android:textStyle="bold" -->
 
@@ -49,7 +49,7 @@
                 android:background="@drawable/btn_qieye_01"
                 android:text="联盟"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/hs__header_button_text_highlight_color"
+                android:textColor="#777777"
                 android:textSize="@dimen/cs__textButtonTitle" />
             <!-- android:textStyle="bold" -->
         </LinearLayout>

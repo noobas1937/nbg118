@@ -279,15 +279,15 @@ void BattleSoldier2::delayPlayAnimation(){
     else if (m_icon == "zhanche")
     { // 法师
         if(m_status == S_DEATH){
-            totalFrame = 1;
+            totalFrame = 0;
         }else if(m_status == S_ATTACK){
-            totalFrame = 6;
+            totalFrame = 0;
         }else if(m_status == S_MOVE){
-            totalFrame = 4;
+            totalFrame = 8;
         }else if(m_status == S_HURT){
             totalFrame = 0;
         }else if(m_status == S_STAND){
-            totalFrame = 1;
+            totalFrame = 8;
         }
     }
     

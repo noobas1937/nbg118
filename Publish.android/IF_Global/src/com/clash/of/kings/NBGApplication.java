@@ -32,7 +32,7 @@ import com.parse.ParseUser;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
-public class EmpireApplication extends MultiDexApplication {
+public class NBGApplication extends MultiDexApplication {
 
 	
 	@Override

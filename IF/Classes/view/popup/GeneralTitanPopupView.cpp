@@ -439,9 +439,11 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
     
     if(m_titanInfo.titanId=="")
     {
-         CCCommonUtils::flyText("数据初始化失败");
+//         CCCommonUtils::flyText("数据初始化失败");
         return;
     }
+//     this->feedCD =(float)(m_titanInfo.feedcd - GlobalData::shared()->getWorldTime());
+//    CCCommonUtils::flyHint("", "", CCString::createWithFormat("feedcd : %ld , WorldTime : %ld",m_titanInfo.feedcd,GlobalData::shared()->getWorldTime())->getCString());
    
     if(m_titanInfo.titanId!="")
     {
@@ -756,11 +758,23 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
     }
     else
     {
+//        if(m_titanInfo.feedcdfix!=0)//fusheng 修改 feedCD
         if(m_titanInfo.feedcd!=0)
         {
-            
             this->feedCD =(float)(m_titanInfo.feedcd - GlobalData::shared()->getWorldTime());
-            if (this->feedCD<0) {
+            
+
+//            this->feedCD = m_titanInfo.feedcdfix;
+//            
+//            if (m_titanInfo.feedcdfix>750*60*60) {
+//                this->feedCD = 0;
+//            }
+//            
+//            if (m_titanInfo.feedcdfix<0) {
+//                this->feedCD = 0;
+//            }
+
+            if (this->feedCD <= 0) {
                 this->feedCD=0;
                 isUpdating |= false;
                 
