@@ -412,6 +412,8 @@ private:
     CCSafeObject<CCNode> m_wallZOrder_4;
     
     CCSafeObject<CCNode> m_waterfallNode;
+    CCSafeObject<CCNode> m_waterfall_prt;
+    
     std::map<int, CCSpriteBatchNode*> m_wallBatchs;
     
     void addGuideParticleToBatch(cocos2d::CCParticleSystemQuad *particle);

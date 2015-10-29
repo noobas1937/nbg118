@@ -960,9 +960,32 @@ void ImperialScene::onEnter()
 
 void ImperialScene::showWaterfall()
 {
-//    auto waterfall = ParticleController::createParticle(CCString::createWithFormat("Drop_%d",i)->getCString());
     CCBLoadFile("waterfall",m_waterfallNode,this);
-//    m_waterfallNode->addChild(waterfall);
+    // add particle
+    auto prt1 = ParticleController::createParticle("Waterfall_water_z");
+    m_waterfall_prt->getChildByTag(1)->addChild(prt1);
+    
+    auto prt2 = ParticleController::createParticle("Waterfall_fall_z");
+    m_waterfall_prt->getChildByTag(2)->addChild(prt2);
+    
+    auto prt3 = ParticleController::createParticle("Waterfall_water_z");
+    m_waterfall_prt->getChildByTag(3)->addChild(prt3);
+    
+    auto prt4 = ParticleController::createParticle("Waterfall_fall_z");
+    m_waterfall_prt->getChildByTag(4)->addChild(prt4);
+    
+    auto prt5 = ParticleController::createParticle("Waterfall_water_z");
+    m_waterfall_prt->getChildByTag(5)->addChild(prt5);
+    
+    auto prt6 = ParticleController::createParticle("Waterfall_water_w");
+    m_waterfall_prt->getChildByTag(6)->addChild(prt6);
+    
+    auto prt7 = ParticleController::createParticle("Waterfall_fall_z");
+    m_waterfall_prt->getChildByTag(7)->addChild(prt7);
+    
+    auto prt8 = ParticleController::createParticle("Waterfall_fall_w");
+    m_waterfall_prt->getChildByTag(8)->addChild(prt8);
+
 }
 
 void ImperialScene::showRain()
@@ -3551,7 +3574,7 @@ bool ImperialScene::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_wallZOrder_4", CCNode*, this->m_wallZOrder_4);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_waterfallNode", CCNode*, this->m_waterfallNode);
-    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_waterfall_prt", CCNode*, this->m_waterfall_prt);
     //begin a by ljf
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vikingPath1", CCNode*, this->m_vikingPath1);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vikingPath2", CCNode*, this->m_vikingPath2);

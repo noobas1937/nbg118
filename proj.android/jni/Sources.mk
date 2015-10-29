@@ -100,6 +100,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../IF/Classes/Ext/GUI/FilterSprite.cpp \
 ../../IF/Classes/Ext/GUI/InputFieldMultiLine.cpp \
 ../../IF/Classes/Ext/GUI/NBGRenderTarget.cpp \
+../../IF/Classes/Ext/GUI/NBProgressBar.cpp \
 ../../IF/Classes/Ext/GUI/NBSlider.cpp \
 ../../IF/Classes/Ext/GUI/SaoGuangEffectSprite.cpp \
 ../../IF/Classes/Ext/GUI/ScrollTableView.cpp \
