@@ -664,18 +664,18 @@ void ImperialScene::onCreateVikingsShip()
 //begin a by ljf
 bool ImperialScene::onVikingsShipTouched(CCTouch* pTouch)
 {
-    if(m_vikings3D == nullptr)
+    if(m_vikings3D == nullptr || m_vikingTouchNode == nullptr)
     {
         return false;
     }
-    Vec2 touchPoint = m_vikings3D->convertToNodeSpace(pTouch->getLocation());
+    Vec2 touchPoint = m_vikingTouchNode->convertToNodeSpace(pTouch->getLocation());
     // 下面的touch点转换是为了让点击区域在模型内
-    float originX = -1 * m_vikings3D->getContentSize().width * m_vikings3D->getAnchorPoint().x;
-    float originY = -1 * m_vikings3D->getContentSize().height * m_vikings3D->getAnchorPoint().y;
+    float originX = -1 * m_vikingTouchNode->getContentSize().width * m_vikingTouchNode->getAnchorPoint().x;
+    float originY = -1 * m_vikingTouchNode->getContentSize().height * m_vikingTouchNode->getAnchorPoint().y;
     touchPoint.x = touchPoint.x + originX;
     touchPoint.y = touchPoint.y + originY;
     
-    Rect boundingBox(originX, originY, m_vikings3D->getContentSize().width, m_vikings3D->getContentSize().height);
+    Rect boundingBox(originX, originY, m_vikingTouchNode->getContentSize().width, m_vikingTouchNode->getContentSize().height);
     //    Rect boundingBox = this->getBoundingBox();
     bool isTouched = boundingBox.containsPoint(touchPoint);
     if (!isTouched) {
@@ -3625,6 +3625,8 @@ bool ImperialScene::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vikingPath2", CCNode*, this->m_vikingPath2);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vikingPath3", CCNode*, this->m_vikingPath3);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vikingPath4", CCNode*, this->m_vikingPath4);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vikingTouchNode", CCNode*, this->m_vikingTouchNode);
+    
     //end a by ljf
     
     return false;
@@ -4301,16 +4303,18 @@ void ImperialScene::refreshSoldiers(CCObject* obj)
 
 void ImperialScene::addSoldierToMap(int stype, int num, int ptx, int pty)
 {
+    float r_s = 1.5;
+    float c_s = 1.5;
     // tao.yu 场景中的兵阵
-    int rowWidth = 30;//不同行x偏移
-    int colHeight = 20;//不同行y偏移
-    int perX = 30;//同一行，每一个兵的x偏移
-    int perY = 20;//同一行，每一个兵的y偏移
-    int preNum = 200/10;
+    int rowWidth = 30 * r_s;//不同行x偏移
+    int colHeight = 20 * c_s;//不同行y偏移
+    int perX = 30 * r_s;//同一行，每一个兵的x偏移
+    int perY = 20 * c_s;//同一行，每一个兵的y偏移
+    int preNum = 3*200/10;
     int m_row = 6;
     int m_col = 3;
     string m_icon = "";
-    float scale = 1;
+    float scale = 2;
     
     int tX = 0;
     int tY = 0;
@@ -4318,20 +4322,22 @@ void ImperialScene::addSoldierToMap(int stype, int num, int ptx, int pty)
     switch (stype) {
         case 1://步兵
             m_icon = "a010";
+            preNum = 4*200/10;
             break;
         case 5://弓兵
             m_icon = "a060";
+            preNum = 4*700/10;
             break;
         case 2://骑兵
-            rowWidth = 30;
-            colHeight = 15;
+            rowWidth = 30 * r_s;
+            colHeight = 15 * c_s;
 //            perX = 15;
 //            perY = 7;
             m_row = 4;
             m_col = 2;
             m_icon = "a020";
-            preNum = 450/10;
-            scale = 1;
+            preNum = 3*450/10;
+//            scale = 1;
             break;
         case 4://战车
             m_row = 3;
@@ -4339,8 +4345,8 @@ void ImperialScene::addSoldierToMap(int stype, int num, int ptx, int pty)
 //            perX = 20;
 //            perY = 10;
             m_icon = "zhanche";
-            preNum = 1200/10;
-            scale = 1;
+            preNum = 4*300/10;
+//            scale = 1;
             tX = 0;
             tX = -20;
             break;

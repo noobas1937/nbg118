@@ -151,6 +151,7 @@ protected:
     
     //begin a by ljf
     CCSafeObject<CCNode> m_spineNode;
+    CCSafeObject<CCNode> m_particleNode;
     //end a by ljf
     
     CCSafeObject<CCNode> m_mainNode;
@@ -235,6 +236,7 @@ private:
     
     void initEffectState(); //a by ljf
     void initSpineNode(string picName); //a by ljf
+    void initParticle(int type); //a by ljf
 };
 
 class FunBuildState: public CCAniNode
