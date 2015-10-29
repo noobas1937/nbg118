@@ -12,6 +12,7 @@
 #include "IFFieldMonsterNode.h"
 #include "CCMathUtils.h"
 #include "ParticleController.h"
+#include "NBWorldNPC.hpp"
 
 #define WORLD_MAP_VIEW WorldMapView::instance()
 #define TILED_MAP WorldMapView::instance()->m_map
@@ -122,7 +123,7 @@ void WorldMapView::addAttackParticle(CCObject *obj){
 
 void NBWorldMonster::addFieldMonsterUnderNode(const WorldCityInfo& info, const Vec2& pos, unsigned int index)
 {
-    WORLD_MAP_VIEW->addBatchItem(Shadow, index);
+//    WORLD_MAP_VIEW->addBatchItem(Shadow, index);
     if(info.fieldMonsterInfo.isHpChange){
         if(info.fieldMonsterInfo.currentHp == 0){
             createMonsterBatchItem(MonsterDead, index);
@@ -154,7 +155,7 @@ void NBWorldMonster::addActBossTileUnderNode(const WorldCityInfo& info, const Ve
 {
     if(info.parentCityIndex != info.cityIndex) return;
     
-    WORLD_MAP_VIEW->addBatchItem(Shadow, index);
+//    WORLD_MAP_VIEW->addBatchItem(Shadow, index);
     if(info.fieldMonsterInfo.isHpChange){
         if(info.fieldMonsterInfo.currentHp == 0){
             createMonsterBatchItem(MonsterDead, index);
@@ -536,21 +537,38 @@ void NBWorldMonster::createMonsterBatchItem(BatchTagType type, unsigned int inde
     // guo.jiang todo
     if (monsterNode)
     {
-//        if (type == MonsterBreath)
-//        {
+        auto c = WORLD_MAP_VIEW->m_mapMonstersNode->getChildByTag(monsterNode->getTag());
+        if (c)
+        {
+            c->removeFromParent();
+        }
+        
+        if (type == MonsterAttack)
+        {
             monsterNode->setVisible(false);
-            auto octopus = CCLoadSprite::createSprite("waiting_0.png");
+        
+            auto octopus = Sprite::createWithSpriteFrameName("attack_0.png");
+            auto *ac1 = NBWorldNPC::createAnimation("World/World_5.plist", "attack_%d.png", 0, 7);
+            octopus->runAction(ac1);
+        
             octopus->setScaleX(monsterNode->getScaleX());
             octopus->setPosition(monsterNode->getPosition() + Vec2(octopus->getContentSize().width * 0, octopus->getContentSize().height / 4));
             octopus->setTag(monsterNode->getTag());
             WORLD_MAP_VIEW->m_mapMonstersNode->addChild(octopus, monsterNode->getZOrder());
-//        }
-//        else
-//        {
-//            auto octopus = WORLD_MAP_VIEW->m_mapMonstersNode->getChildByTag(monsterNode->getTag());
-//            if (octopus) octopus->setVisible(false);
-//            monsterNode->setVisible(true);
-//        }
+        }
+        else
+        {
+            monsterNode->setVisible(false);
+            
+            auto octopus = Sprite::createWithSpriteFrameName("waiting_0.png");
+            auto *ac1 = NBWorldNPC::createAnimation("World/World_5.plist", "waiting_%d.png", 0, 7);
+            octopus->runAction(ac1);
+            
+            octopus->setScaleX(monsterNode->getScaleX());
+            octopus->setPosition(monsterNode->getPosition() + Vec2(octopus->getContentSize().width * 0, octopus->getContentSize().height / 4));
+            octopus->setTag(monsterNode->getTag());
+            WORLD_MAP_VIEW->m_mapMonstersNode->addChild(octopus, monsterNode->getZOrder());
+        }
     }
     
     return;
