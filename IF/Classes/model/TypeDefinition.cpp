@@ -8,9 +8,9 @@
 
 #include "TypeDefinition.h"
 
-//#define CHANGE_SERVER COCOS2D_DEBUG
+#define CHANGE_SERVER COCOS2D_DEBUG
 //测试使用 不要提交
-#define CHANGE_SERVER 1
+//#define CHANGE_SERVER 1
 //#define CHANGE_SERVER 2
 
 #if CHANGE_SERVER == 1 // 本地服
@@ -34,15 +34,15 @@
     #define __SERVER__ZONE_2   __SERVER__ZONE
     #define __SERVERLIST__IP_2 __SERVERLIST__IP
 #else // 正式服
-    #define __SERVER__IP     "p3nbg.elexapp.com"
+    #define __SERVER__IP     "p1dc.elexapp.com"
     #define __SERVER__PORT   80
-    #define __SERVER__ZONE   "COK2"
-    #define __SERVERLIST__IP "p3nbg.elexapp.com"
+    #define __SERVER__ZONE   "COK1"
+    #define __SERVERLIST__IP "p1dc.elexapp.com"
 
-    #define __SERVER__IP_2     "p1.nbg.elexapp.com"
+    #define __SERVER__IP_2     "p1dc.elexapp.com"
     #define __SERVER__PORT_2   80
-    #define __SERVER__ZONE_2   "COK2"
-    #define __SERVERLIST__IP_2 "p1.nbg.elexapp.com"
+    #define __SERVER__ZONE_2   "COK1"
+    #define __SERVERLIST__IP_2 "p1dc.elexapp.com"
 #endif
 
 const char * getServerIP_TypeDefinition() {

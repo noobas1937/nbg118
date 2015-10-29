@@ -3046,7 +3046,7 @@
 										<key>type</key>
 										<string>Byte</string>
 										<key>value</key>
-										<integer>150</integer>
+										<integer>0</integer>
 									</dict>
 									<dict>
 										<key>name</key>
@@ -3232,7 +3232,7 @@
 						<key>type</key>
 						<string>Check</string>
 						<key>value</key>
-						<true/>
+						<false/>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -3492,9 +3492,18 @@
 						<key>value</key>
 						<string>particle/Effect_0033.png</string>
 					</dict>
+					<dict>
+						<key>name</key>
+						<string>displayFrame</string>
+						<key>type</key>
+						<string>SpriteFrame</string>
+						<key>value</key>
+						<array>
+							<string></string>
+							<string></string>
+						</array>
+					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>
@@ -3584,7 +3593,7 @@
 	<array>
 		<dict>
 			<key>autoPlay</key>
-			<false/>
+			<true/>
 			<key>callbackChannel</key>
 			<dict>
 				<key>keyframes</key>
@@ -3594,40 +3603,6 @@
 			</dict>
 			<key>chainedSequenceId</key>
 			<integer>-1</integer>
-			<key>length</key>
-			<real>1.5</real>
-			<key>name</key>
-			<string>Loop</string>
-			<key>offset</key>
-			<real>0.0</real>
-			<key>position</key>
-			<real>1.5</real>
-			<key>resolution</key>
-			<real>30</real>
-			<key>scale</key>
-			<real>32</real>
-			<key>sequenceId</key>
-			<integer>0</integer>
-			<key>soundChannel</key>
-			<dict>
-				<key>keyframes</key>
-				<array/>
-				<key>type</key>
-				<integer>9</integer>
-			</dict>
-		</dict>
-		<dict>
-			<key>autoPlay</key>
-			<false/>
-			<key>callbackChannel</key>
-			<dict>
-				<key>keyframes</key>
-				<array/>
-				<key>type</key>
-				<integer>10</integer>
-			</dict>
-			<key>chainedSequenceId</key>
-			<integer>0</integer>
 			<key>length</key>
 			<real>3.3333332538604736</real>
 			<key>name</key>
@@ -3635,47 +3610,13 @@
 			<key>offset</key>
 			<real>0.0</real>
 			<key>position</key>
-			<real>2.4000000953674316</real>
+			<real>3.3333332538604736</real>
 			<key>resolution</key>
 			<real>30</real>
 			<key>scale</key>
 			<real>281.24859619140625</real>
 			<key>sequenceId</key>
 			<integer>1</integer>
-			<key>soundChannel</key>
-			<dict>
-				<key>keyframes</key>
-				<array/>
-				<key>type</key>
-				<integer>9</integer>
-			</dict>
-		</dict>
-		<dict>
-			<key>autoPlay</key>
-			<false/>
-			<key>callbackChannel</key>
-			<dict>
-				<key>keyframes</key>
-				<array/>
-				<key>type</key>
-				<integer>10</integer>
-			</dict>
-			<key>chainedSequenceId</key>
-			<integer>-1</integer>
-			<key>length</key>
-			<real>0.1666666716337204</real>
-			<key>name</key>
-			<string>FadeOut</string>
-			<key>offset</key>
-			<real>0.0</real>
-			<key>position</key>
-			<real>0.1666666716337204</real>
-			<key>resolution</key>
-			<real>30</real>
-			<key>scale</key>
-			<real>512</real>
-			<key>sequenceId</key>
-			<integer>2</integer>
 			<key>soundChannel</key>
 			<dict>
 				<key>keyframes</key>

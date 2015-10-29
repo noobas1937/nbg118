@@ -4217,16 +4217,16 @@ CCSprite* WorldMapView::createMarchSprite(MarchInfo& info) {
             if (info.targetType == ResourceTile || info.targetType == tile_superMine) {
                 tmpName = CCString::createWithFormat("CJ_shadow_%s_0.png",CC_ITOA(direction))->getCString();
                 auto body = CCLoadSprite::createSprite(tmpName);
-                auto cloth = CCLoadSprite::createSprite(tmpName);
+//                auto cloth = CCLoadSprite::createSprite(tmpName);
                 auto shadow = CCLoadSprite::createSprite(tmpName);
                 auto bodyAni = createMarchAni(AniCollect,direction);
-                auto clothAni = createMarchAni(AniCollectCloth,direction);
+//                auto clothAni = createMarchAni(AniCollectCloth,direction);
                 body->runAction(bodyAni);
-                cloth->runAction(clothAni);
+//                cloth->runAction(clothAni);
                 sp->addChild(body);
-                sp->addChild(cloth);
+//                sp->addChild(cloth);
                 sp->addChild(shadow,-1);
-                cloth->setColor(info.getMarchColor());
+//                cloth->setColor(info.getMarchColor());
             }else{
                 bool inMapFlag = false;
                 MarchArmy *march = NULL;
@@ -4271,46 +4271,46 @@ CCSprite* WorldMapView::createMarchSprite(MarchInfo& info) {
         case MethodDeal:{
             tmpName = CCString::createWithFormat("ZC_shadow_%s_0.png",CC_ITOA(direction))->getCString();
             auto body = CCLoadSprite::createSprite(tmpName);
-            auto cloth = CCLoadSprite::createSprite(tmpName);
+//            auto cloth = CCLoadSprite::createSprite(tmpName);
             auto shadow = CCLoadSprite::createSprite(tmpName);
             auto bodyAni = createMarchAni(AniDeal,direction);
-            auto clothAni = createMarchAni(AniDealCloth,direction);
+//            auto clothAni = createMarchAni(AniDealCloth,direction);
             body->runAction(bodyAni);
-            cloth->runAction(clothAni);
-            cloth->setColor(info.getMarchColor());
+//            cloth->runAction(clothAni);
+//            cloth->setColor(info.getMarchColor());
             sp->addChild(body);
-            sp->addChild(cloth);
+//            sp->addChild(cloth);
             sp->addChild(shadow,-1);
         }
             break;
         case MethodWarehouse:{
             tmpName = CCString::createWithFormat("ZC_shadow_%s_0.png",CC_ITOA(direction))->getCString();
             auto body = CCLoadSprite::createSprite(tmpName);
-            auto cloth = CCLoadSprite::createSprite(tmpName);
+//            auto cloth = CCLoadSprite::createSprite(tmpName);
             auto shadow = CCLoadSprite::createSprite(tmpName);
             auto bodyAni = createMarchAni(AniDeal,direction);
-            auto clothAni = createMarchAni(AniDealCloth,direction);
+//            auto clothAni = createMarchAni(AniDealCloth,direction);
             body->runAction(bodyAni);
-            cloth->runAction(clothAni);
-            cloth->setColor(info.getMarchColor());
+//            cloth->runAction(clothAni);
+//            cloth->setColor(info.getMarchColor());
             sp->addChild(body);
-            sp->addChild(cloth);
+//            sp->addChild(cloth);
             sp->addChild(shadow,-1);
         }
             break;
         case MethodScout:{
             tmpName = CCString::createWithFormat("ZC_shadow_%s_0.png",CC_ITOA(direction))->getCString();
             auto body = CCLoadSprite::createSprite(tmpName);
-            auto cloth = CCLoadSprite::createSprite(tmpName);
+//            auto cloth = CCLoadSprite::createSprite(tmpName);
             auto shadow = CCLoadSprite::createSprite(tmpName);
             auto bodyAni = createMarchAni(AniScout,direction);
-            auto clothAni = createMarchAni(AniScoutCloth,direction);
+//            auto clothAni = createMarchAni(AniScoutCloth,direction);
             body->runAction(bodyAni);
-            cloth->runAction(clothAni);
+//            cloth->runAction(clothAni);
             sp->addChild(body);
-            sp->addChild(cloth);
+//            sp->addChild(cloth);
             sp->addChild(shadow,-1);
-            cloth->setColor(info.getMarchColor());
+//            cloth->setColor(info.getMarchColor());
         }
             break;
             
@@ -4373,7 +4373,7 @@ CCAnimate* WorldMapView::createMarchAni(MarchAniType type,int direction, float d
             break;
         case AniCollectCloth:{
             temp = "CJ_yifu_%s_%d.png";
-            frameCount = 8;
+            frameCount = 0;
         }
             break;
         case AniDeal:{
@@ -4382,17 +4382,17 @@ CCAnimate* WorldMapView::createMarchAni(MarchAniType type,int direction, float d
         }
             break;
         case AniDealCloth:{
-            frameCount = 8;
+            frameCount = 0;
             temp = "JY_yifu_%s_%d.png";
         }
             break;
         case AniScout:{
-            frameCount = 7;
+            frameCount = 8;
             temp = "ZC_body_%s_%d.png";
         }
             break;
         case AniScoutCloth:{
-            frameCount = 7;
+            frameCount = 0;
             temp = "ZC_yifu_%s_%d.png";
         }
             break;

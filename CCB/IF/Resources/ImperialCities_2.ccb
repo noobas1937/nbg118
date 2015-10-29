@@ -66,7 +66,7 @@
 			<key>orientation</key>
 			<integer>0</integer>
 			<key>position</key>
-			<real>1669</real>
+			<real>1654</real>
 		</dict>
 	</array>
 	<key>jsControlled</key>
@@ -1491,8 +1491,6 @@
 								<false/>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 				</array>
 				<key>customClass</key>
@@ -3901,7 +3899,91 @@
 				<key>baseClass</key>
 				<string>CCNode</string>
 				<key>children</key>
-				<array/>
+				<array>
+					<dict>
+						<key>baseClass</key>
+						<string>CCNode</string>
+						<key>children</key>
+						<array/>
+						<key>customClass</key>
+						<string></string>
+						<key>displayName</key>
+						<string>m_vikingTouchNode</string>
+						<key>memberVarAssignmentName</key>
+						<string>m_vikingTouchNode</string>
+						<key>memberVarAssignmentType</key>
+						<integer>2</integer>
+						<key>properties</key>
+						<array>
+							<dict>
+								<key>name</key>
+								<string>position</string>
+								<key>type</key>
+								<string>Position</string>
+								<key>value</key>
+								<array>
+									<real>-118.2449951171875</real>
+									<real>168.40953063964844</real>
+									<integer>0</integer>
+								</array>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>contentSize</string>
+								<key>type</key>
+								<string>Size</string>
+								<key>value</key>
+								<array>
+									<real>200</real>
+									<real>300</real>
+									<integer>0</integer>
+								</array>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>anchorPoint</string>
+								<key>type</key>
+								<string>Point</string>
+								<key>value</key>
+								<array>
+									<real>0.0</real>
+									<real>0.0</real>
+								</array>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>scale</string>
+								<key>type</key>
+								<string>ScaleLock</string>
+								<key>value</key>
+								<array>
+									<real>1</real>
+									<real>1</real>
+									<false/>
+									<integer>0</integer>
+								</array>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>rotation</string>
+								<key>type</key>
+								<string>Degrees</string>
+								<key>value</key>
+								<real>120</real>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>ignoreAnchorPointForPosition</string>
+								<key>type</key>
+								<string>Check</string>
+								<key>value</key>
+								<false/>
+							</dict>
+						</array>
+						<key>selected</key>
+						<true/>
+					</dict>
+				</array>
 				<key>customClass</key>
 				<string></string>
 				<key>displayName</key>
@@ -4031,8 +4113,6 @@
 								<false/>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -4125,8 +4205,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>4833.44189453125</real>
-									<real>1440.3187255859375</real>
+									<real>4461.9375</real>
+									<real>1564.153564453125</real>
 									<integer>0</integer>
 								</array>
 							</dict>

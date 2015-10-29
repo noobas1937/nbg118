@@ -176,6 +176,24 @@ const char * getServerListIP_TypeDefinition(bool b);
 #define SERVERLIST_IP1     getServerListIP_TypeDefinition(true)
 #define SERVERLIST_IP2     getServerListIP_TypeDefinition(false)
 
+#define GET_IP_BY_TYPE_MAIN ".dc.elexapp.com"
+#define GET_IP_BY_TYPE_BACKUP ".dc.elexdc.com"
+
+#define UPLOAD_IMAGE_URL "http://p1dc.elexapp.com/gameservice/www/gateway/json.php"
+#define PAYMENT_CALLBACK_URL "http://cnpay.dc.elexapp.com:8080/gameservice/paymentcallback"
+#define PAYMENT_CALLBACK_URL_TEST "http://184.173.110.107:8080/gameservice/paymentcallback"
+#define GET_ACCOUNT_URL "http://cnac.dc.elexapp.com/account"
+
+#define S1_IP_0 "184.173.110.102"
+#define S1_ACCOUNT_IP "s1.dc.elexapp.com"
+#define S2_IP_0 "184.173.110.99"
+#define S2_ACCOUNT_IP "s2.dc.elexapp.com"
+
+#define REAL_IP_TENCENT "tenp1.cok.elex.com"
+#define REAL_IP_HK "hkp1.dc.elexapp.com"
+
+#define ANNIVERSARY_IMAGE_URL "http://p1dc.elexapp.com/gameservice/www/gateway/json.php"
+
 //xcpayId首先写死1服，跳服(处理login的错误信息)时或者切服(获取服务器列表选取的时候)时更改payId
 #ifdef Channel_91
 //91用带age@337_en_android.market.sXXX标志的id
