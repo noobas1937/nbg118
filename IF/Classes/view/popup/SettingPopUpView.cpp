@@ -551,7 +551,7 @@ void SettingCell::setData(unsigned int index)
             break;
         case Setting_Help:{
             m_iconBG->removeAllChildren();
-            auto pic  = CCLoadSprite::createSprite("icon_help.png");
+            auto pic  = CCLoadSprite::createSprite("icon_help_old.png");
             if(pic){
                 this->m_iconBG->addChild(pic);
                 pic->setPosition(ccp(57,57));

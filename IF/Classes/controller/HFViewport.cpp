@@ -891,16 +891,16 @@ void HFViewport::onTouchesMoved(const std::vector<Touch*>& pTouches, Event *pEve
                 touchSecond = 0.0;
                 break;
             }
-            if (isBeginTouch)
-            {
-                CCTouch* ptouch =getAnyTouchObject(pTouches);
-                auto newPos = ptouch->getLocation();
-                
-                if (ccpSub(newPos, mPreviewPos).length()>10) {
-                    isBeginTouch = false;
-                    touchSecond = 0.0;
-                }
-            }
+//            if (isBeginTouch)
+//            {
+//                CCTouch* ptouch =getAnyTouchObject(pTouches);
+//                auto newPos = ptouch->getLocation();
+//                
+//                if (ccpSub(newPos, mPreviewPos).length()>10) {
+//                    isBeginTouch = false;
+//                    touchSecond = 0.0;
+//                }
+//            }
             
             if (!mForceStopScroll && mMovable) {
                 CCPoint newPoint, moveDistance;
