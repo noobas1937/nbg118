@@ -629,8 +629,6 @@
 										</array>
 									</dict>
 								</array>
-								<key>selected</key>
-								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>
@@ -7174,7 +7172,7 @@
 												<string>Position</string>
 												<key>value</key>
 												<array>
-													<real>107</real>
+													<real>67</real>
 													<real>15</real>
 													<integer>0</integer>
 												</array>
@@ -7186,7 +7184,7 @@
 												<string>Point</string>
 												<key>value</key>
 												<array>
-													<real>0.5</real>
+													<real>0.0</real>
 													<real>0.5</real>
 												</array>
 											</dict>
@@ -7248,7 +7246,7 @@
 												<key>type</key>
 												<string>IntegerLabeled</string>
 												<key>value</key>
-												<integer>1</integer>
+												<integer>0</integer>
 											</dict>
 											<dict>
 												<key>name</key>
@@ -9111,8 +9109,8 @@
 										<string>SpriteFrame</string>
 										<key>value</key>
 										<array>
-											<string>Common/Common_1.plist</string>
-											<string>btn_gold.png</string>
+											<string>Common/Common_3.plist</string>
+											<string>nb_btn_lt_fs.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -9122,9 +9120,9 @@
 										<string>Color3</string>
 										<key>value</key>
 										<array>
-											<integer>232</integer>
-											<integer>217</integer>
-											<integer>186</integer>
+											<integer>55</integer>
+											<integer>116</integer>
+											<integer>83</integer>
 										</array>
 									</dict>
 									<dict>
@@ -9134,8 +9132,8 @@
 										<string>SpriteFrame</string>
 										<key>value</key>
 										<array>
-											<string>Common/Common_1.plist</string>
-											<string>btn_gold.png</string>
+											<string>Common/Common_3.plist</string>
+											<string>nb_btn_lt_fs.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -9145,9 +9143,9 @@
 										<string>Color3</string>
 										<key>value</key>
 										<array>
-											<integer>232</integer>
-											<integer>217</integer>
-											<integer>186</integer>
+											<integer>55</integer>
+											<integer>116</integer>
+											<integer>83</integer>
 										</array>
 									</dict>
 									<dict>
@@ -9157,8 +9155,8 @@
 										<string>SpriteFrame</string>
 										<key>value</key>
 										<array>
-											<string>Common/Common_1.plist</string>
-											<string>btn_gold.png</string>
+											<string>Common/Common_3.plist</string>
+											<string>nb_btn_lt_fs.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -9168,9 +9166,9 @@
 										<string>Color3</string>
 										<key>value</key>
 										<array>
-											<integer>232</integer>
-											<integer>217</integer>
-											<integer>186</integer>
+											<integer>55</integer>
+											<integer>116</integer>
+											<integer>83</integer>
 										</array>
 									</dict>
 								</array>
@@ -9200,7 +9198,7 @@
 										<key>value</key>
 										<array>
 											<real>142</real>
-											<real>-45</real>
+											<real>-47</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -9222,8 +9220,8 @@
 										<string>ScaleLock</string>
 										<key>value</key>
 										<array>
-											<real>0.80000001192092896</real>
-											<real>0.80000001192092896</real>
+											<real>0.69999998807907104</real>
+											<real>0.69999998807907104</real>
 											<true/>
 											<integer>0</integer>
 										</array>
@@ -9283,7 +9281,7 @@
 										<key>value</key>
 										<array>
 											<real>197</real>
-											<real>-50</real>
+											<real>-46</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -9345,9 +9343,9 @@
 										<string>Color3</string>
 										<key>value</key>
 										<array>
-											<integer>255</integer>
-											<integer>225</integer>
-											<integer>0</integer>
+											<integer>55</integer>
+											<integer>116</integer>
+											<integer>83</integer>
 										</array>
 									</dict>
 									<dict>
@@ -9411,7 +9409,7 @@
 										<key>value</key>
 										<array>
 											<real>178</real>
-											<real>-22</real>
+											<real>-23</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -9473,9 +9471,9 @@
 										<string>Color3</string>
 										<key>value</key>
 										<array>
-											<integer>254</integer>
-											<integer>255</integer>
-											<integer>255</integer>
+											<integer>55</integer>
+											<integer>116</integer>
+											<integer>83</integer>
 										</array>
 									</dict>
 									<dict>

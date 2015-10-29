@@ -299,7 +299,7 @@ void IFHeiqishiNode::playAttackAnimation(){
         sp1 = dynamic_cast<CCSprite*>(arrowMapNode->getChildByTag(m_info.marchTag));
     }
     else{
-        sp1 =CCLoadSprite::createSprite("a010_0_N_attack_0.png");
+        sp1 =CCLoadSprite::createSprite("a010_0_N_move_0.png");
         sp1->setTextureRect(CCRectZero);
         sp1->setPosition(this->getPosition());
         sp1->setTag(m_info.marchTag);

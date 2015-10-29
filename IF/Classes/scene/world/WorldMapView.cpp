@@ -267,7 +267,7 @@ bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType) {
     m_mapMarchNode = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("JY_body_-45_0.png")->getTexture(), 448);
     m_layers[WM_ROAD]->addChild(m_mapMarchNode, roadIndex++);
     
-    m_mapMarchNode1 = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("a010_0_N_attack_0.png")->getTexture(), 448);
+    m_mapMarchNode1 = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("a010_0_N_move_0.png")->getTexture(), 448);
     m_layers[WM_ROAD]->addChild(m_mapMarchNode1, roadIndex++);
     
     m_heiqishiShadowBachNode = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("building_level_overlay.png")->getTexture(), 448);
@@ -285,10 +285,10 @@ bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType) {
     m_spinLabelNode = CCNode::create();
     m_layers[WM_ROAD]->addChild(m_spinLabelNode, roadIndex++);
     
-    m_mapArrowSpNode = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("a010_0_N_attack_0.png")->getTexture(), 448);
+    m_mapArrowSpNode = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("a010_0_N_move_0.png")->getTexture(), 448);
     m_layers[WM_ROAD]->addChild(m_mapArrowSpNode, roadIndex++);
     
-    m_mapTowerBatchNode = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("a010_0_N_attack_0.png")->getTexture(), 448);
+    m_mapTowerBatchNode = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("a010_0_N_move_0.png")->getTexture(), 448);
     m_layers[WM_ROAD]->addChild(m_mapTowerBatchNode, roadIndex++);
     
     m_occupyPointerNode = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("world_occupy_self.png")->getTexture(), 448);
@@ -366,7 +366,7 @@ bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType) {
     m_throneNode = CCNode::create();
     m_layers[WM_CITY]->addChild(m_throneNode, 2);
     
-    m_cityAttackNode = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("a010_0_N_attack_0.png")->getTexture(), 448);
+    m_cityAttackNode = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("a010_0_N_move_0.png")->getTexture(), 448);
     m_layers[WM_CITY]->addChild(m_cityAttackNode, 3);
     
     m_towerNode = CCNode::create();
@@ -4206,7 +4206,7 @@ CCSprite* WorldMapView::createMarchSprite(MarchInfo& info) {
     auto sp = CCLoadSprite::createSprite(tmpName);
     sp->setTextureRect(CCRectZero);
     bool flag = false;
-    auto sp1 = CCLoadSprite::createSprite("a010_0_N_attack_0.png");
+    auto sp1 = CCLoadSprite::createSprite("a010_0_N_move_0.png");
     sp1->setTextureRect(CCRectZero);
     switch (info.marchType) {
         case MethodRally:
@@ -7513,7 +7513,7 @@ void WorldMapView::onTowerAttackAnimation(int startCityIndex,CCPoint endViewPos,
         sp1->setPosition(endViewPos);
     }
     else{
-        sp1 =CCLoadSprite::createSprite("a010_0_N_attack_0.png");
+        sp1 =CCLoadSprite::createSprite("a010_0_N_move_0.png");
         sp1->setTextureRect(CCRectZero);
         sp1->setPosition(endViewPos);
         sp1->setTag(marchTag);

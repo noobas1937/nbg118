@@ -38,7 +38,6 @@
 #include "BuildUpgradeView.h"
 #include "TitanController.h"
 
-
 const float numPerRow = 1.0;
 BattleView* BattleView::create(unsigned int startIndex ,unsigned int targetIndex,unsigned int haveOwner,float slow,int rally,int bType,int wtIndex,std::string other, int targetType){
     BattleView* ret = new BattleView();
@@ -57,6 +56,7 @@ BattleView::~BattleView()
 void BattleView::loadResource(){
     CCLoadSprite::doResourceByCommonIndex(8, true);
     CCLoadSprite::doResourceByCommonIndex(7, true);
+    CCLoadSprite::doResourceByCommonIndex(6, true);
     CCLoadSprite::doResourceByCommonIndex(504, true);
     CCLoadSprite::doResourceByCommonIndex(105, true);
 }
@@ -70,6 +70,7 @@ bool BattleView::init(unsigned int startIndex,unsigned int targetIndex,unsigned 
     setCleanFunction([](){
         CCLoadSprite::doResourceByCommonIndex(8, false);
         CCLoadSprite::doResourceByCommonIndex(7, false);
+        CCLoadSprite::doResourceByCommonIndex(6, false);
         CCLoadSprite::doResourceByCommonIndex(504, false);
         CCLoadSprite::doResourceByCommonIndex(105, false);
     });
@@ -1177,32 +1178,47 @@ bool SoldierCell::init(string itemId, int num, int type, int rally)
     
 //    m_subBtn->setTouchPriority(Touch_Popup_Item);
 //    m_addBtn->setTouchPriority(Touch_Popup_Item);
-    auto m_sliderBg = CCLoadSprite::createScale9Sprite("huadongtiao3.png");
-    m_sliderBg->setInsetBottom(5);
-    m_sliderBg->setInsetLeft(5);
-    m_sliderBg->setInsetRight(5);
-    m_sliderBg->setInsetTop(5);
-    m_sliderBg->setAnchorPoint(ccp(0.5,0.5));
-    m_sliderBg->setPosition(ccp(252/2, 25));
-    m_sliderBg->setContentSize(CCSize(252,18));
     
-    auto bgSp = CCLoadSprite::createSprite("huadongtiao4.png");
-    bgSp->setVisible(false);
-    auto proSp = CCLoadSprite::createSprite("huadongtiao4.png");
-    auto thuSp = CCLoadSprite::createSprite("huadongtiao1.png");
+//    auto m_sliderBg = CCLoadSprite::createScale9Sprite("huadongtiao3.png");
+//    m_sliderBg->setInsetBottom(5);
+//    m_sliderBg->setInsetLeft(5);
+//    m_sliderBg->setInsetRight(5);
+//    m_sliderBg->setInsetTop(5);
+//    m_sliderBg->setAnchorPoint(ccp(0.5,0.5));
+//    m_sliderBg->setPosition(ccp(252/2, 20));
+//    m_sliderBg->setContentSize(CCSize(252,18));
+//    
+//    auto bgSp = CCLoadSprite::createSprite("huadongtiao4.png");
+//    bgSp->setVisible(false);
+//    auto proSp = CCLoadSprite::createSprite("huadongtiao4.png");
+//    auto thuSp = CCLoadSprite::createSprite("huadongtiao1.png");
+//    
+//    m_slider = CCSliderBar::createSlider(m_sliderBg, proSp, thuSp);
+//    m_slider->setMinimumValue(0.0f);
+//    m_slider->setMaximumValue(1.0f);
+//    m_slider->setProgressScaleX(248/proSp->getContentSize().width);
+//    m_slider->setTag(1);
+//    m_slider->setLimitMoveValue(25);
+////    m_slider->setTouchPriority(Touch_Popup);
+//    m_slider->addTargetWithActionForControlEvents(this, cccontrol_selector(SoldierCell::valueChange), CCControlEventValueChanged);
+//    m_sliderNode->addChild(m_slider, 1);
     
-    m_slider = CCSliderBar::createSlider(m_sliderBg, proSp, thuSp);
-    m_slider->setMinimumValue(0.0f);
-    m_slider->setMaximumValue(1.0f);
-    m_slider->setProgressScaleX(248/proSp->getContentSize().width);
-    m_slider->setTag(1);
-    m_slider->setLimitMoveValue(25);
-//    m_slider->setTouchPriority(Touch_Popup);
-    m_slider->addTargetWithActionForControlEvents(this, cccontrol_selector(SoldierCell::valueChange), CCControlEventValueChanged);
+    m_slider = NBSlider::create("nb_bar_bg.png", "nb_bar_pro.png", "nb_cursor_icon.png",NBSlider::TextureResType::PLIST);
+    m_slider->setCapInsets(Rect(8, 1, 30, 13));
+    m_slider->setContentSize(Size(230, 15));
+    //    m_slider->setPosition(ccp(-60, -59));//fusheng d
+    if (CCCommonUtils::isIosAndroidPad()) {
+        //        m_slider->setPosition(ccp(-137, -56));//fusheng d
+        m_slider->setScaleX(2.6);
+        m_slider->setScaleY(2.0);
+    }
+    //    m_slider->addTargetWithActionForControlEvents(this, cccontrol_selector(ProductionSoldiersView::moveSlider), CCControlEventValueChanged);//fusheng d
+    m_slider->addEventListener(CC_CALLBACK_2(SoldierCell::valueChange, this));
+    m_slider->setPosition(-230 / 2, -15 / 2);
     m_sliderNode->addChild(m_slider, 1);
     
     auto editSize = m_editNode->getContentSize();
-    m_editBox = CCEditBox::create(editSize, CCLoadSprite::createScale9Sprite("frame_3.png"));
+    m_editBox = CCEditBox::create(editSize, CCLoadSprite::createScale9Sprite("cz_bt_1.png"));
     m_editBox->setInputMode(kEditBoxInputModeNumeric);
     m_editBox->setText("0");
     m_editBox->setDelegate(this);
@@ -1229,19 +1245,41 @@ void SoldierCell::setData(string itemId, int num, int type, int rally)
     string name = CCCommonUtils::getNameById(m_soldierId);
     string picName = GlobalData::shared()->armyList[m_soldierId].getHeadIcon();
     m_cntNum = TroopsController::getInstance()->m_tmpConfSoldiers[m_soldierId];
-    m_slider->setEnabled(true);
+//    m_slider->setEnabled(true);
     m_nameLabel->setString(name.c_str());
     
     m_picNode->removeAllChildren();
     
+    int id = atoi(itemId.c_str());
     m_iconPath = picName;
-    auto pic = CCLoadSprite::createSprite(picName.c_str());
-    CCCommonUtils::setSpriteMaxSize(pic, 110);
-    m_picNode->addChild(pic);
-    pic->setPositionY(-10);
+    if (picName != "ico107401_small.png")
+    {
+        auto pic = CCLoadSprite::createSprite(picName.c_str());
+        CCCommonUtils::setSpriteMaxSize(pic, 110);
+        m_picNode->addChild(pic);
+        pic->setPositionY(-10);
+        
+        m_picBg0->setVisible(id % 4 == 0);
+        m_picBg1->setVisible(id % 4 == 1);
+        m_picBg2->setVisible(id % 4 == 2);
+        m_picBg3->setVisible(id % 4 == 3);
+    }
+    else
+    {
+        auto pic = CCLoadSprite::createSprite("cz_long1.png");
+        CCCommonUtils::setSpriteMaxSize(pic, 110);
+        m_picNode->addChild(pic);
+        pic->setPositionY(-10);
+        
+        m_picBg0->setVisible(false);
+        m_picBg1->setVisible(false);
+        m_picBg2->setVisible(false);
+        m_picBg3->setVisible(false);
+    }
+    
     this->m_levelNode->removeAllChildren();
     string num1 = m_soldierId.substr(m_soldierId.size()-2);
-    int id = atoi(itemId.c_str());
+    
     if (id>= 107401 && id<= 107430) {//fusheng 泰坦 计算罗马数字时不加一
         auto pic1= CCCommonUtils::getRomanSprite(atoi(num1.c_str()));
         m_levelNode->addChild(pic1);
@@ -1273,7 +1311,7 @@ void SoldierCell::refresh(){
     setData(m_soldierId, num, m_type, m_rally);
 }
 
-void SoldierCell::valueChange(CCObject * pSender, Control::EventType pCCControlEvent)
+void SoldierCell::valueChange(Ref *pSender, NBSlider::EventType type)
 {
     if (m_cntNum<=0) {
         return;
@@ -1387,6 +1425,11 @@ bool SoldierCell::onAssignCCBMemberVariable(cocos2d::CCObject *pTarget, const ch
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_subBtn", CCControlButton*, m_subBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_addBtn", CCControlButton*, m_addBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_headTouchNode", CCNode*, m_headTouchNode);
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_picBg0", Sprite*, m_picBg0);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_picBg1", Sprite*, m_picBg1);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_picBg2", Sprite*, m_picBg2);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_picBg3", Sprite*, m_picBg3);
 
     return false;
 }

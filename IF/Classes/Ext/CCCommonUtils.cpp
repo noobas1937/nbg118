@@ -2165,6 +2165,13 @@ void CCCommonUtils::initConfigData(CCDictionary *params){
             GlobalData::shared()->trans_res_limit = account->valueForKey("k6")->longValue();
         }
     }
+    // tao.yu 第一版增加聊天开关
+    if(dataConfig->objectForKey("chat_status")){
+        GlobalData::shared()->isChatOpen = dataConfig->valueForKey("chat_status")->boolValue();
+    }else{
+        GlobalData::shared()->isChatOpen = false;
+    }
+    
     if(dataConfig->objectForKey("pop_rate")){
         ActivityController::getInstance()->initViewConfig(_dict(dataConfig->objectForKey("pop_rate")));
     }else{
