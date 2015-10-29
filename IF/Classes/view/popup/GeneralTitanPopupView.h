@@ -13,6 +13,7 @@
 #include "PopupBaseView.h"
 #include "Titan.h"
 #include "NBProgressBar.h"
+
 //#include "DefaultTableViewDelegate.h"
 //
 //#define CHANGE_PIC_REMOVE "change.pic.remove"
@@ -46,11 +47,15 @@ public:
 //    void fadeOut();
 //    static void createInfoByUid(const string& uid);
     void update(float time);
+    
+    bool isGuideFeed;
+    
+    void setGuideFeed(bool guideFeed);
 //    CCNode* getGuideNode(string _key);
 protected:
 
 private:
-    GeneralTitanPopupView():m_titanId(""),feedCD(0),isUpdating(false),upgradeCD(0),isUpgrading(false),queue_id(-1),nbpb(NULL),upgradeCDTotal(0){}
+    GeneralTitanPopupView():m_titanId(""),feedCD(0),isUpdating(false),upgradeCD(0),isUpgrading(false),queue_id(-1),nbpb(NULL),upgradeCDTotal(0),isGuideFeed(false),m_arrow(NULL){}
     virtual void onEnter();
     virtual void onExit();
     virtual bool init();
@@ -66,7 +71,9 @@ private:
     virtual void onTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
     virtual void onTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
     
-    bool isUpdating = false;
+    bool isUpdating;
+    
+   
     
 //    Vec2 m_TouchPoint;
 //    bool m_TouchMoved;
@@ -221,6 +228,8 @@ private:
     CCSafeObject<CCScale9Sprite> m_ProTitanExt;
     CCSafeObject<CCScale9Sprite> m_ProTiTanAP;
     
+    CCSafeObject<CCSprite> m_arrow;
+    
 ////    CCSafeObject<CCControlButton> m_skillBtn;
 //    
     CCSafeObject<CCNode> m_equipNode1;
@@ -271,6 +280,8 @@ private:
     CCSafeObject<CCLabelIF> m_equipLabel8;
     
     NBProgressBar* nbpb;
+    
+
     
 //
 //    CCSafeObject<CCNode> m_icon;

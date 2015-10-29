@@ -30,6 +30,7 @@
 #include "DragonScene.h"
 #include "ArmyInfo.h"
 #include "WorldMapView.h"
+#include "GeneralTitanPopupView.h"
 
 #define MSG_BUILD_CELL "msg_build_cell"
 
@@ -1483,10 +1484,12 @@ void UpgradeCell::refresh()
         }
         if (!m_isOk) {
             m_nameLabel->setColor(ccRED);
+       
         }
         else
         {
             m_nameLabel->setColor(ccWHITE);
+
         }
 
         m_valueLabel->setString("");
@@ -1545,6 +1548,10 @@ void UpgradeCell::refresh()
                 m_btn->setVisible(false);
                 m_btnLabel->setString("");
             }
+        }
+        else if (m_type == 8) {
+            m_btn->setVisible(true);
+            m_btnLabel->setString(_lang("500002"));
         }
         if (CCCommonUtils::isIosAndroidPad())
         {
@@ -1652,7 +1659,7 @@ void UpgradeCell::onEnterFrame(float dt)
 
 bool UpgradeCell::onTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
-    if (m_btn->isVisible() && (m_type==0||m_type==1||m_type==2||m_type==3 || m_type == 6 || m_type == 7) && m_touchNode && isTouchInside(m_touchNode,pTouch) && isTouchInside(m_touchBtn,pTouch)) {
+    if (m_btn->isVisible() && (m_type==0||m_type==1||m_type==2||m_type==3 || m_type == 6 || m_type == 7 || m_type == 8) && m_touchNode && isTouchInside(m_touchNode,pTouch) && isTouchInside(m_touchBtn,pTouch)) {
         m_btn->setScale(1.1);
         SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
         return true;
@@ -1734,6 +1741,21 @@ void UpgradeCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEven
                 int tmpTime = GlobalData::shared()->allQueuesInfo[qid].finishTime - GlobalData::shared()->getWorldTime();
                 YesNoDialog::showTime( _lang("102120").c_str() , CCCallFunc::create(this, callfunc_selector(UpgradeCell::spdCallBackDragon)), tmpTime, _lang("104903").c_str());
             }
+        }
+        else if (m_type == 8) {
+            
+            PopupViewController::getInstance()->goBackPopupView();
+            
+            auto view = PopupViewController::getInstance()->getCurrentPopupView();
+            
+            GeneralTitanPopupView*  generalTitanPopupView = dynamic_cast<GeneralTitanPopupView*>(view);
+            
+            if (generalTitanPopupView) {
+                
+                generalTitanPopupView->setGuideFeed(true);
+            }
+            
+            
         }
         else {
             if(m_buildId!=0){

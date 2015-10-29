@@ -102,6 +102,13 @@ void BillBoard::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t 
     {
         return;
     }
+    //begin a by ljf
+    if(!isVisitableByVisitingCamera())
+    {
+        processParentFlags(parentTransform, parentFlags);
+        return;
+    }
+    //end a by ljf
     bool visibleByCamera = isVisitableByVisitingCamera();
     if (!visibleByCamera && _children.empty())
         return;

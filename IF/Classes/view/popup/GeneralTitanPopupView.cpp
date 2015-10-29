@@ -150,12 +150,43 @@ bool GeneralTitanPopupView::init()
         return false;
     }
     
-    
+   
     
     CCLoadSprite::doResourceByCommonIndex(305, true);
     CCLoadSprite::doResourceByCommonIndex(3, true);
     
     auto bg = CCBLoadFile("GeneralTitanDetail",this,this);
+    
+    
+    if(m_arrow == NULL)
+    {
+        m_arrow = CCLoadSprite::createSprite("guide_arrow_new.png");
+        
+        m_arrow->setAnchorPoint(Vec2(0.5,0));
+        
+        m_arrow->setRotation(180);
+        
+        m_arrow->setPosition( m_titanFeedBtn->getPosition()+Vec2(0,m_titanFeedBtn->getContentSize().height/2+m_arrow->getContentSize().height));
+        
+        m_titanExtNode->addChild(m_arrow);
+        
+        auto move1 = MoveBy::create(0.25, Vec2(0,-m_titanFeedBtn->getContentSize().height/4));
+        
+        auto move2 = MoveBy::create(0.25, Vec2(0,m_titanFeedBtn->getContentSize().height/4));
+        
+        auto seq = Sequence::create(move1,move2, NULL);
+        
+        auto rep = RepeatForever::create(seq);
+
+        rep->setTag(89757);
+        
+        m_arrow->setVisible(false);
+        
+        m_arrow->runAction(rep);
+    }
+        
+    
+
    
     setContentSize(bg->getContentSize());
     
@@ -834,7 +865,7 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         
         m_titanFeedStatus_1->setVisible(true);
         m_titanFeedStatus_2->setVisible(true);
-        
+        m_titanFeedStatus_0->setPosition(138,-139);
         vector<cocos2d::CCLabelIF *> labels;
         labels.push_back(m_titanFeedStatus_0);
         labels.push_back(m_titanFeedStatus_1);
@@ -934,6 +965,35 @@ void GeneralTitanPopupView::loadResource(){
 //    CCLoadSprite::doResourceByCommonIndex(7, true);
 }
 //
+
+void GeneralTitanPopupView::setGuideFeed(bool guideFeed)
+{
+    isGuideFeed = guideFeed;
+    
+    if(isGuideFeed)
+    {
+        if (m_arrow) {
+            m_arrow->setVisible(true);
+        }
+        
+        
+        auto seq = Sequence::createWithTwoActions( DelayTime::create(1),CCCallFunc::create([this](){
+            if (this->m_arrow) {
+                this->m_arrow->setVisible(false);
+            }
+            
+        } ));
+        seq->setTag(888888);
+        this->runAction(seq);
+    }
+    else
+    {
+        if (m_arrow) {
+            m_arrow->setVisible(false);
+        }
+    }
+
+}
 void GeneralTitanPopupView::onEnter(){
     PopupBaseView::onEnter();
 
@@ -951,8 +1011,7 @@ void GeneralTitanPopupView::onEnter(){
 //    
     onRefreshEquip();
     
-
-    resetAttribute(nullptr);//fusheng onEnter时刷新数据
+   resetAttribute(nullptr);//fusheng onEnter时刷新数据
     
     
 
@@ -968,7 +1027,13 @@ void GeneralTitanPopupView::onExit(){
     
 
 //    CCLoadSprite::doResourceByGeneralIndex(3, false);
-
+    this->stopAllActionsByTag(888888);
+    
+    isGuideFeed = false;//fusheng 遗留代码
+    
+    if (m_arrow) {
+        m_arrow->setVisible(false);
+    }
     
     PopupBaseView::onExit();
 }
