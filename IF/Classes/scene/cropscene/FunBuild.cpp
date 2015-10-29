@@ -2239,14 +2239,20 @@ void FunBuild::initParticle(int type)
             auto workingParticleNode = Node::create();
             workingParticleNode->setTag(WORKING_PARTICLE_NODE_TAG);
             m_particleNode->addChild(workingParticleNode);
+            workingParticleNode->setZOrder(900000000);
             workingParticleNode->setVisible(true);
-            m_particleNode->setZOrder(m_spr->getZOrder() + 5);
+            //m_particleNode->setZOrder(m_spr->getZOrder() + 5);
             for(int i = 0; i <= 2; i++)
             {
                 auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d","Medicalsp_",i)->getCString());
                 particle->setPosition(Vec2(0 , 0));
                 //particle->setRotation3D(Vec3(90, 0, 180 * j));
                 workingParticleNode->addChild(particle);
+                
+                
+                
+                //particle->setPosition(ccp(parentX+mainWidth/2, parentY+0));
+                //addParticleToBatch(particle);
             }
             
         }
