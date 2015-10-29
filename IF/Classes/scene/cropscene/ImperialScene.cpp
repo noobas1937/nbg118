@@ -320,7 +320,9 @@ bool ImperialScene::init()
         CCDirector::sharedDirector()->getRunningScene()->addChild(CityCrashView::create());
     }
     
-   
+    //begin a by ljf
+    m_isVikingShipMove = false;
+    //end a by ljf
     return true;
 }
 void ImperialScene::downloadXML(float _time)
@@ -621,15 +623,19 @@ void ImperialScene::onCreateTitan()
 
 void ImperialScene::onCreateVikingsShip()
 {
-    auto m_vikings3D = NBSprite3D::create("3d/ship/ship_3_skin.c3b");
+    m_vikings3D = NBSprite3D::create("3d/ship/ship_3_skin.c3b");
     m_vikings3D->setTexture("3d/ship/ship_3.jpg");
     auto vikingsRootNode = CCNode::create();
     vikingsRootNode->setRotation3D(Vec3(32, 39, -24));
 //    vikingsRootNode->setPosition(-200,-50);
     vikingsRootNode->addChild(m_vikings3D);
     vikingsRootNode->setPosition(m_touchLayer->convertToNodeSpace(m_vikingNode->convertToWorldSpace(Point(0, 0))));
-    
-    m_node3d->addChild(vikingsRootNode);
+    //begin a by ljf
+    auto pVikingNode = Node::create();
+    pVikingNode->addChild(vikingsRootNode);
+    m_node3d->addChild(pVikingNode);
+    //end a by ljf
+    // m_node3d->addChild(vikingsRootNode);//d by ljf
     
 //    std::vector<std::string> stand;
 //    int standActIndex = 0;
@@ -648,30 +654,109 @@ void ImperialScene::onCreateVikingsShip()
     m_node3d->setCameraMask((unsigned short) CameraFlag::USER2, true);
     
     //begin a by ljf
-    onVikingsShipMove(m_vikings3D);
+    //onVikingsShipMove(m_vikings3D);
     //end a by ljf
 }
 
 //begin a by ljf
-void ImperialScene::onVikingsShipMove(NBSprite3D * pSprite3d)
+bool ImperialScene::onVikingsShipTouched(CCTouch* pTouch)
+{
+    Vec2 touchPoint = m_vikings3D->convertToNodeSpace(pTouch->getLocation());
+    // 下面的touch点转换是为了让点击区域在模型内
+    float originX = -1 * m_vikings3D->getContentSize().width * m_vikings3D->getAnchorPoint().x;
+    float originY = -1 * m_vikings3D->getContentSize().height * m_vikings3D->getAnchorPoint().y;
+    touchPoint.x = touchPoint.x + originX;
+    touchPoint.y = touchPoint.y + originY;
+    
+    Rect boundingBox(originX, originY, m_vikings3D->getContentSize().width, m_vikings3D->getContentSize().height);
+    //    Rect boundingBox = this->getBoundingBox();
+    bool isTouched = boundingBox.containsPoint(touchPoint);
+    if (!isTouched) {
+        return false;
+    }
+    onVikingsShipMove(m_vikings3D);
+    return true;
+}
+
+void ImperialScene::onVikingsShipIdle(NBSprite3D * pSprite3d)
 {
     if (pSprite3d)
     {
-        //auto action = RotateBy::create(3, Vec3(0, 360, 0));
+        auto anim_stand = Animation3D::create("3d/ship/ship_3_stand.c3b");
+        if (anim_stand) {
+            auto pAnim = Animate3D::createWithFrames(anim_stand, 1, 100);
+            if (pAnim) {
+                auto act = RepeatForever::create(pAnim);
+                pSprite3d->stopAllActions();
+                pSprite3d->runAction(act);
+            }
+        }
+    }
+}
+
+void ImperialScene::onVikingsShipMove(NBSprite3D * pSprite3d)
+{
+    if(m_isVikingShipMove)
+    {
+        return;
+    }
+    if (pSprite3d)
+    {
+        m_isVikingShipMove = true;
+        auto anim_stand = Animation3D::create("3d/ship/ship_3_move.c3b");
+        if (anim_stand) {
+            auto pAnim = Animate3D::createWithFrames(anim_stand, 1, 9);
+            if (pAnim) {
+                auto act = RepeatForever::create(pAnim);
+                pSprite3d->stopAllActions();
+                pSprite3d->runAction(act);
+            }
+        }
+        
         /*
-        auto action = MoveBy::create(3, Vec3(0, 1000, 0));
+        auto action = RotateBy::create(3, Vec3(0, 360, 0));
+        
+        //auto action = MoveBy::create(3, Vec3(0, 1000, 0));
         auto action_back = action->reverse();
         auto seq = Sequence::create( action, action_back, nullptr );
         
         pSprite3d->runAction( RepeatForever::create(seq) );
         */
+        float rotateTime = 0.2;
+        float moveTime = 5;
+        auto move1 = MoveBy::create(moveTime, Vec3(m_vikingPath1->getPositionX() - m_vikingNode->getPositionX(), m_vikingPath1->getPositionY() - m_vikingNode->getPositionY(), 0));
+        //auto move2 = MoveBy::create(3, Vec3(m_vikingPath2->getPositionX() - m_vikingPath1->getPositionX(), m_vikingPath2->getPositionY() - m_vikingPath1->getPositionY(), 0));
+        auto move2 = MoveBy::create(moveTime * 2, Vec3(m_vikingPath3->getPositionX() - m_vikingPath1->getPositionX(), m_vikingPath3->getPositionY() - m_vikingPath1->getPositionY(), 0));
+        //auto move3 = MoveBy::create(moveTime, Vec3(m_vikingPath3->getPositionX() - m_vikingPath2->getPositionX(), m_vikingPath3->getPositionY() - m_vikingPath2->getPositionY(), 0));
+        auto moveDelay = DelayTime::create(rotateTime);
+        //auto moveSeq = Sequence::create( move1, moveDelay, move2, moveDelay, move3,  moveDelay, move3->reverse(),  moveDelay, move2->reverse(), moveDelay, move1->reverse(),nullptr);
+        auto moveSeq = Sequence::create(moveDelay, move1, moveDelay, move2, moveDelay, move2->reverse(), moveDelay, move1->reverse(),nullptr); //0.2 + 3 + 0.2 + 6 + 0.2 + 6 + 0.2 + 3 = 18.8
         
-        auto action1 = MoveBy::create(3, Vec3(0, 1000, 0));
-        auto action2 = MoveBy::create(3, Vec3(0, -1000, 0));
-        auto action3 = MoveBy::create(3, Vec3(0, 1000, 0));
-        auto action4 = MoveBy::create(3, Vec3(0, -1000, 0));
-        auto seq = Sequence::create( action1, action2, action3, action4, nullptr);
-        //pSprite3d->runAction( RepeatForever::create(seq) );
+        //pSprite3d->getParent()->getParent()->runAction( RepeatForever::create(moveSeq) );
+        pSprite3d->getParent()->getParent()->runAction( moveSeq);
+        
+        auto rotate1 = RotateBy::create(rotateTime, Vec3(0, -10, 0));
+        auto rotate2 = RotateBy::create(rotateTime, Vec3(0, 40, 0));
+        auto rotate3 = RotateBy::create(rotateTime, Vec3(0, 180, 0));
+        auto rotate4 = RotateBy::create(rotateTime, Vec3(0, -170, 0));
+        
+        auto rotateDelay = DelayTime::create(moveTime);
+        auto callbackAction = CallFuncN::create([&](Node* sender){
+            //回调动作代码
+            auto anim_stand = Animation3D::create("3d/ship/ship_3_stand.c3b");
+            if (anim_stand) {
+                auto pAnim = Animate3D::createWithFrames(anim_stand, 1, 100);
+                if (pAnim) {
+                    auto act = RepeatForever::create(pAnim);
+                    sender->stopAllActions();
+                    sender->runAction(act);
+                    m_isVikingShipMove = false;
+                }
+            }
+        });
+        auto rotateSeq = Sequence::create( rotate1, rotateDelay, rotate2, rotateDelay, rotateDelay, rotate3,   rotateDelay, rotateDelay,  rotate2->reverse(), rotateDelay, rotate4, callbackAction,  nullptr); //0.2 + 3 + 0.2 + 3 + 3 + 0.2  + 3 + 3 + 0.2 + 3 + 0.2 = 19
+        //pSprite3d->runAction( RepeatForever::create(rotateSeq) );
+        pSprite3d->runAction( rotateSeq);
     }
 }
 //end a by ljf
@@ -2041,7 +2126,12 @@ void ImperialScene::onSingleTouchEnd(CCTouch* pTouch)
     if (m_Titan && m_Titan->onTouched(pTouch)) {
         return;
     }
-    
+    //begin a by ljf
+    if(onVikingsShipTouched(pTouch))
+    {
+        return;
+    }
+    //end a by ljf
     if (curTouchBuildId > -1) {
         if(lastTouchBuildId != curTouchBuildId)
         {
@@ -3457,7 +3547,12 @@ bool ImperialScene::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_waterfallNode", CCNode*, this->m_waterfallNode);
     
-    
+    //begin a by ljf
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vikingPath1", CCNode*, this->m_vikingPath1);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vikingPath2", CCNode*, this->m_vikingPath2);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vikingPath3", CCNode*, this->m_vikingPath3);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vikingPath4", CCNode*, this->m_vikingPath4);
+    //end a by ljf
     
     return false;
 }
