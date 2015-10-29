@@ -41,6 +41,9 @@
 
 //begin a by ljf
 #include "TileOpenView.h"
+
+#define WORKING_PARTICLE_NODE_TAG 23346
+#define FINISH_PARTICLE_NODE_TAG 32363
 //end a by ljf
 
 using namespace cocos2d;
@@ -156,6 +159,7 @@ bool FunBuild::initTmpBuild(int itemId, int x, int y, CCSpriteBatchNode* batchNo
     
     //begin a by ljf
     initSpineNode(pic + "_" + CC_ITOA(GlobalData::shared()->contryResType) + "_1");
+    initParticle(itemId);
     //end a by ljf
     
     return true;
@@ -254,6 +258,7 @@ bool FunBuild::initFunBuild(int itemId, CCLabelBatchNode* nameLayer)
             
         }
         //begin a by ljf
+        
         if (m_info->open>0 && m_info->type == FUN_BUILD_SACRIFICE && m_info->open <= FunBuildController::getInstance()->getMainCityLv())
         {
             string key = "user_manual_unlock_funbuild_wishing_well";
@@ -292,6 +297,8 @@ bool FunBuild::initFunBuild(int itemId, CCLabelBatchNode* nameLayer)
         //begin a by ljf
         initEffectState();
         initSpineNode(m_info->pic + "_" + CC_ITOA(GlobalData::shared()->contryResType) + "_1");
+        initParticle(m_info->type);
+        
         //end a by ljf
     }
     else   //ljf, 这代表没有创建的空块，itemId对应的是position字段
@@ -1887,6 +1894,12 @@ void FunBuild::canShowState()
         }
     }
     else if (m_info->type == FUN_BUILD_HOSPITAL) {
+        //begin a by ljf
+        if(m_particleNode)
+        {
+            m_particleNode->setZOrder(m_spr->getZOrder() + 1);
+        }
+        //end a by ljf
         if (!isEffectRunning && QueueController::getInstance()->getQueueNumByType(TYPE_HOSPITAL)>0) {
             addFunBuildState();
             isEffectRunning = true;
@@ -2052,9 +2065,13 @@ void FunBuild::canShowState()
         //begin a by ljf
         //未长出状态未显示0，未长出状态已显示1， 长出过程未显示2， 长出过程已显示3， 等收割未显示4， 等收割已显示5， 收割未显示6， 收割已显示7
         //m_spineAni->setAnimation(0, "GrowthProcess", true);
-        
+        if(m_particleNode)
+        {
+            m_particleNode->setZOrder(m_spineNode->getZOrder() + 1);
+        }
         if(!FunBuildController::getInstance()->canShowOutPut(m_info->itemId))
         {
+            
             if(m_effectState == 0)
             {
                 if(m_info->type == FUN_BUILD_FOOD) {
@@ -2066,6 +2083,17 @@ void FunBuild::canShowState()
                     m_spineAni->setToSetupPose();
                     m_spineAni->setAnimation(0, "Working", true);
                     m_spineAni->update(0.00001);
+                    if(m_info->type == FUN_BUILD_STONE && m_particleNode)
+                    {
+                        if(m_particleNode->getChildByTag(WORKING_PARTICLE_NODE_TAG))
+                        {
+                            m_particleNode->getChildByTag(WORKING_PARTICLE_NODE_TAG)->setVisible(true);
+                        }
+                        if(m_particleNode->getChildByTag(FINISH_PARTICLE_NODE_TAG))
+                        {
+                            m_particleNode->getChildByTag(FINISH_PARTICLE_NODE_TAG)->setVisible(false);
+                        }
+                    }
                 }
                 m_effectState = 2;
 
@@ -2085,6 +2113,17 @@ void FunBuild::canShowState()
                         m_spineAni->setToSetupPose();
                         m_spineAni->setAnimation(0, "Working", true);
                         m_spineAni->update(0.00001);
+                        if(m_info->type == FUN_BUILD_STONE && m_particleNode)
+                        {
+                            if(m_particleNode->getChildByTag(WORKING_PARTICLE_NODE_TAG))
+                            {
+                                m_particleNode->getChildByTag(WORKING_PARTICLE_NODE_TAG)->setVisible(true);
+                            }
+                            if(m_particleNode->getChildByTag(FINISH_PARTICLE_NODE_TAG))
+                            {
+                                m_particleNode->getChildByTag(FINISH_PARTICLE_NODE_TAG)->setVisible(false);
+                            }
+                        }
                     }
                     m_effectState = 2;
                 }
@@ -2105,6 +2144,17 @@ void FunBuild::canShowState()
                     m_spineAni->setToSetupPose();
                     m_spineAni->setAnimation(0, "Finish", true);
                     m_spineAni->update(0.00001);
+                    if(m_info->type == FUN_BUILD_STONE && m_particleNode)
+                    {
+                        if(m_particleNode->getChildByTag(WORKING_PARTICLE_NODE_TAG))
+                        {
+                            m_particleNode->getChildByTag(WORKING_PARTICLE_NODE_TAG)->setVisible(false);
+                        }
+                        if(m_particleNode->getChildByTag(FINISH_PARTICLE_NODE_TAG))
+                        {
+                            m_particleNode->getChildByTag(FINISH_PARTICLE_NODE_TAG)->setVisible(true);
+                        }
+                    }
                 }
                 if(m_info->type == FUN_BUILD_WOOD)
                 {
@@ -2149,6 +2199,60 @@ void FunBuild::initEffectState()
          }
      }
 }
+
+void FunBuild::initParticle(int type)
+{
+    if(m_particleNode)
+    {
+        if(type == FUN_BUILD_STONE) //12, 魔晶矿
+        {
+            //添加working粒子特效
+            auto workingParticleNode = Node::create();
+            workingParticleNode->setTag(WORKING_PARTICLE_NODE_TAG);
+            m_particleNode->addChild(workingParticleNode);
+            workingParticleNode->setVisible(true);
+            workingParticleNode->setScale(0.5);
+            for(int i = 0; i <= 1; i++)
+            {
+                auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d","MagicSprings_work_",i)->getCString());
+                particle->setPosition(Vec2(m_spineAni->getContentSize().width / 2  , m_spineAni->getContentSize().height));
+                //particle->setRotation3D(Vec3(90, 0, 180 * j));
+                particle->setPosition(Vec2(0 , 70));
+                workingParticleNode->addChild(particle);
+            }
+            //添加ready粒子特效
+            auto readyParticleNode = Node::create();
+            readyParticleNode->setTag(FINISH_PARTICLE_NODE_TAG);
+            m_particleNode->addChild(readyParticleNode);
+            readyParticleNode->setVisible(false);
+            for(int i = 0; i <= 1; i++)
+            {
+                auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d","MagicSprings_ready_",i)->getCString());
+                //particle->setPosition(Vec2(0 , -10));
+                particle->setPosition(Vec2(-5 , 120));
+                //particle->setRotation3D(Vec3(90, 0, 180 * j));
+                readyParticleNode->addChild(particle);
+            }
+        }
+        if(type == FUN_BUILD_HOSPITAL) //11，月亮井,以后要改成有伤兵才有效果
+        {
+            auto workingParticleNode = Node::create();
+            workingParticleNode->setTag(WORKING_PARTICLE_NODE_TAG);
+            m_particleNode->addChild(workingParticleNode);
+            workingParticleNode->setVisible(true);
+            m_particleNode->setZOrder(m_spr->getZOrder() + 5);
+            for(int i = 0; i <= 2; i++)
+            {
+                auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d","Medicalsp_",i)->getCString());
+                particle->setPosition(Vec2(0 , 0));
+                //particle->setRotation3D(Vec3(90, 0, 180 * j));
+                workingParticleNode->addChild(particle);
+            }
+            
+        }
+    }
+}
+
 //end a by ljf
 void FunBuild::retTouch(CCTouch *pTouch, CCEvent *pEvent)
 {
@@ -2449,6 +2553,7 @@ bool FunBuild::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_lvBG", CCSprite*, this->m_lvBG);
     //begin a by ljf
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_spineNode", CCNode*, this->m_spineNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_particleNode", CCNode*, this->m_particleNode);
     //end a by ljf
     return false;
 }
