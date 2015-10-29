@@ -235,6 +235,7 @@ bool ImperialScene::init()
     m_touchLayer->addChild(m_cludeBatchNode, 2010);
     
     m_viewPort = HFViewport::create();
+    m_viewPort->isCanMoveAction = true;//fusheng 开启update
     m_viewPort->setViewPortTarget(m_touchLayer);
     m_viewPort->setSceneSize(sumWidth, sumHight);
     m_viewPort->setTouchDelegate(this);
