@@ -6963,6 +6963,7 @@ bool UIComponent::isMoveAction()
         }
     }while(0);
     
+    CCLog("脉动移动 %d",move);
     return move;
     
 }
@@ -7075,7 +7076,8 @@ void UIComponent::moveOut()
 void UIComponent::moveIn()
 {
     float totalSecend = 0.5;
-    if(isMoveAction())
+//    if(isMoveAction())
+    if(true)
     {
         if(main_ui_top)
         {
