@@ -20,6 +20,7 @@ USING_NS_CC;
 #define LONG_CLICK_DURATION 0.9
 #define SPEED_TRACKING_DURATION 0.05
 #define ZOOM_BOUND_LIMIT_PERCENT 0.2
+#define ZOOM_MIN_SCALE_RALLY 0.2
 #define FLING_DURATION 0.4
 #define SCROLL_DEACCEL_RATE  0.96f
 #define SCROLL_DEACCEL_DIST  0.5f
@@ -628,9 +629,11 @@ void HFViewport::endZoom()
         moreThanMax = true;
         targetZoom = mZoomLimitationMax * (1 - ZOOM_BOUND_LIMIT_PERCENT);
     }
-    else if (curScale < mZoomLimitationMin * (1 + ZOOM_BOUND_LIMIT_PERCENT)) {
+    // tao.yu curScale < mZoomLimitationMin * (1 + ZOOM_BOUND_LIMIT_PERCENT)
+    // 将ZOOM_BOUND_LIMIT_PERCENT * 0.25 是为了让最小缩放后可以让场景恢复的更大一些
+    else if (curScale < mZoomLimitationMin * (1 + ZOOM_MIN_SCALE_RALLY)) {
         lessThanMin = true;
-        targetZoom = mZoomLimitationMin * (1 + ZOOM_BOUND_LIMIT_PERCENT);
+        targetZoom = mZoomLimitationMin * (1 + ZOOM_MIN_SCALE_RALLY);
     }
     else{
         targetZoom = curScale;
@@ -651,7 +654,7 @@ void HFViewport::endZoom()
         else if (lessThanMin) {
             //计算指数递减初始值 sum = 1 / (1 - q), q为比值
 //            zoomDelta = (mZoomLimitationMin - this->m_TargetNode->getScale()) / ((1/(1-ZOOM_DEACCEL_RATE))*0.95);
-            zoomDelta = (mZoomLimitationMin * (1 + ZOOM_BOUND_LIMIT_PERCENT) - this->m_TargetNode->getScale()) / ((1/(1-ZOOM_DEACCEL_RATE))*0.95);
+            zoomDelta = (mZoomLimitationMin * (1 + ZOOM_MIN_SCALE_RALLY) - this->m_TargetNode->getScale()) / ((1/(1-ZOOM_DEACCEL_RATE))*0.95);
             this->mTouchMode = TouchMode_ZoomFling;
             this->schedule(schedule_selector(HFViewport::intervalZoom));
         }
@@ -702,10 +705,10 @@ void HFViewport::intervalZoom(float dt){
             zoomDelta *= ZOOM_DEACCEL_RATE;
         }
     }
-    else if (curScale <= mZoomLimitationMin * (1 + ZOOM_BOUND_LIMIT_PERCENT)) {
+    else if (curScale <= mZoomLimitationMin * (1 + ZOOM_MIN_SCALE_RALLY)) {
         targetZoom=curScale+zoomDelta;
-        if(targetZoom > mZoomLimitationMin * (1 + ZOOM_BOUND_LIMIT_PERCENT)){
-            targetZoom = mZoomLimitationMin * (1 + ZOOM_BOUND_LIMIT_PERCENT);
+        if(targetZoom > mZoomLimitationMin * (1 + ZOOM_MIN_SCALE_RALLY)){
+            targetZoom = mZoomLimitationMin * (1 + ZOOM_MIN_SCALE_RALLY);
         }
         
         if( targetZoom != curScale )
