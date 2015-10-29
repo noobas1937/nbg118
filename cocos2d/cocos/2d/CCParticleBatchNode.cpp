@@ -129,11 +129,25 @@ void ParticleBatchNode::visit(Renderer *renderer, const Mat4 &parentTransform, u
     // The alternative is to have a void Sprite#visit, but
     // although this is less maintainable, is faster
     //
+    //begin d by ljf
+    /*
     if (!_visible || !isVisitableByVisitingCamera())
     {
         return;
     }
-
+    */
+    //end d by ljf
+    //begin a by ljf
+    if(!_visible)
+    {
+        return;
+    }
+    if(!isVisitableByVisitingCamera())
+    {
+        processParentFlags(parentTransform, parentFlags);
+        return;
+    }
+    //end a by ljf
     uint32_t flags = processParentFlags(parentTransform, parentFlags);
 
     // IMPORTANT:
