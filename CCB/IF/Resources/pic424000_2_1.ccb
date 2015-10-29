@@ -54,8 +54,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>38.842594146728516</real>
-									<real>26.527778625488281</real>
+									<real>7.8425941467285156</real>
+									<real>12.527778625488281</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -66,8 +66,8 @@
 								<string>Size</string>
 								<key>value</key>
 								<array>
-									<real>100</real>
-									<real>70</real>
+									<real>230</real>
+									<real>200</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -89,9 +89,9 @@
 								<string>ScaleLock</string>
 								<key>value</key>
 								<array>
-									<real>1.9621948003768921</real>
-									<real>1.9001840353012085</real>
-									<false/>
+									<real>1</real>
+									<real>1</real>
+									<true/>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -104,6 +104,8 @@
 								<false/>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
