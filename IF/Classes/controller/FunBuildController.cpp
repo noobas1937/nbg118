@@ -1977,421 +1977,108 @@ string FunBuildController::orderBuild(string buildings)
 
 void FunBuildController::initPosPath()
 {
-    if (1) {//pos == 6
-        vector<cocos2d::CCPoint> path;
-//        path.push_back(ccp(1065,1461));
-//        path.push_back(ccp(1020,615));
-//        path.push_back(ccp(720,570));
+    if (9) { int pos_idx = 9; vector<cocos2d::CCPoint> path;
+        path.push_back(Vec2(2479, 1935)); // p6
+        path.push_back(Vec2(2514, 2206)); // p7
+        path.push_back(Vec2(2806, 2370)); // p8
+        vector<int> zorders; zorders.push_back(700); posToPath[pos_idx] = path; posToZorders[pos_idx] = zorders; }
+    if (15) { int pos_idx = 15; vector<cocos2d::CCPoint> path;
+        path.push_back(Vec2(2325, 2271)); // p6
+        path.push_back(Vec2(2514, 2206)); // p7
+        path.push_back(Vec2(2806, 2370)); // p8
+        vector<int> zorders; zorders.push_back(700); posToPath[pos_idx] = path; posToZorders[pos_idx] = zorders; }
+    if (11) { int pos_idx = 11; vector<cocos2d::CCPoint> path;
+        path.push_back(Vec2(2109, 2121)); // p4
+        path.push_back(Vec2(2189, 2206)); // p5
+        path.push_back(Vec2(2325, 2271)); // p6
+        path.push_back(Vec2(2514, 2206)); // p7
+        path.push_back(Vec2(2806, 2370)); // p8
+        vector<int> zorders; zorders.push_back(700); posToPath[pos_idx] = path; posToZorders[pos_idx] = zorders; }
+    if (10) { int pos_idx = 10; vector<cocos2d::CCPoint> path;
+        path.push_back(Vec2(1773, 1966)); // p2
+        path.push_back(Vec2(1901, 2030)); // p3
+        path.push_back(Vec2(2109, 2121)); // p4
+        path.push_back(Vec2(2189, 2206)); // p5
+        path.push_back(Vec2(2325, 2271)); // p6
+        path.push_back(Vec2(2514, 2206)); // p7
+        path.push_back(Vec2(2806, 2370)); // p8
+        vector<int> zorders; zorders.push_back(700); posToPath[pos_idx] = path; posToZorders[pos_idx] = zorders; }
+    if (13) { int pos_idx = 13; vector<cocos2d::CCPoint> path;
+        path.push_back(Vec2(1729, 2246)); // p1
+        path.push_back(Vec2(1837, 2102)); // p2
+        path.push_back(Vec2(1901, 2030)); // p3
+        path.push_back(Vec2(2109, 2121)); // p4
+        path.push_back(Vec2(2189, 2206)); // p5
+        path.push_back(Vec2(2325, 2271)); // p6
+        path.push_back(Vec2(2514, 2206)); // p7
+        path.push_back(Vec2(2806, 2370)); // p8
+        vector<int> zorders; zorders.push_back(700); posToPath[pos_idx] = path; posToZorders[pos_idx] = zorders; }
+    if (12) { int pos_idx = 12; vector<cocos2d::CCPoint> path;
+        path.push_back(Vec2(1521, 2146)); // p0
+        path.push_back(Vec2(1729, 2246)); // p1
+        path.push_back(Vec2(1837, 2102)); // p2
+        path.push_back(Vec2(1901, 2030)); // p3
+        path.push_back(Vec2(2109, 2121)); // p4
+        path.push_back(Vec2(2189, 2206)); // p5
+        path.push_back(Vec2(2325, 2271)); // p6
+        path.push_back(Vec2(2514, 2206)); // p7
+        path.push_back(Vec2(2806, 2370)); // p8
+        vector<int> zorders; zorders.push_back(700); posToPath[pos_idx] = path; posToZorders[pos_idx] = zorders; }
+    if (16) { int pos_idx = 16; vector<cocos2d::CCPoint> path;
+        path.push_back(Vec2(1421, 1881)); // p3
+        path.push_back(Vec2(1597, 1659)); // p4
+        path.push_back(Vec2(1737, 1497)); // p5
+        path.push_back(Vec2(1869, 1341)); // p6
+        path.push_back(Vec2(2538, 1659)); // p7
+        path.push_back(Vec2(2822, 1906)); // p8
+        path.push_back(Vec2(2513, 2194)); // p9
+        path.push_back(Vec2(2758, 2342)); // p10
         
-        path.push_back(ccp(1319, 1499)); // p6_0
-        path.push_back(ccp(1498, 1404)); // p6_1
-        path.push_back(ccp(1734, 1506)); // p6_2
-        path.push_back(ccp(1870, 1346)); // p6_3
-        path.push_back(ccp(2822, 1860)); // p6_4
-        path.push_back(ccp(2784, 2075)); // p6_5
-        path.push_back(ccp(2492, 2179)); // p6_6
-        path.push_back(ccp(2797, 2353)); // p6_7
+        vector<int> zorders; zorders.push_back(700); posToPath[pos_idx] = path; posToZorders[pos_idx] = zorders; }
+    if (14) { int pos_idx = 14; vector<cocos2d::CCPoint> path;
         
-        vector<int> zorders;
-        zorders.push_back(1010);
-        posToPath[6] = path;
-        posToZorders[6] = zorders;
-    }
-    
-    if (1) {//pos == 7
-        vector<cocos2d::CCPoint> path;
-//        path.push_back(ccp(1453,1484));
-//        path.push_back(ccp(490,1210));
-//        path.push_back(ccp(670,1120));
-//        
-//        path.push_back(ccp(700,1020));
-//        path.push_back(ccp(540,920));
-//        path.push_back(ccp(320,900));
-//        path.push_back(ccp(220,790));
-        
-        path.push_back(ccp(1620, 1453)); // p7_0
-        
-        path.push_back(ccp(1734, 1506)); // p6_2
-        path.push_back(ccp(1870, 1346)); // p6_3
-        path.push_back(ccp(2822, 1860)); // p6_4
-        path.push_back(ccp(2784, 2075)); // p6_5
-        path.push_back(ccp(2492, 2179)); // p6_6
-        path.push_back(ccp(2797, 2353)); // p6_7
-        
-        vector<int> zorders;
-        zorders.push_back(600);
-//        zorders.push_back(600);
-//        zorders.push_back(600);
-//        zorders.push_back(900);
-        posToPath[7] = path;
-        posToZorders[7] = zorders;
-    }
-    
-    if (1) {//pos == 8
-        vector<cocos2d::CCPoint> path;
-//        path.push_back(ccp(1994,1861));
-//        path.push_back(ccp(540,920));
-//        path.push_back(ccp(320,900));
-//        path.push_back(ccp(220,790));
-        
-        path.push_back(ccp(2274, 1913)); // p8_0
-        path.push_back(ccp(2467, 2038)); // p8_1
-        
-        path.push_back(ccp(2492, 2179)); // p6_6
-        path.push_back(ccp(2797, 2353)); // p6_7
-        
-        vector<int> zorders;
-        zorders.push_back(900);
-        posToPath[8] = path;
-        posToZorders[8] = zorders;
-    }
-    if (1) {//pos == 9
-        vector<cocos2d::CCPoint> path;
-//        path.push_back(ccp(2210,2033));
-//        path.push_back(ccp(720,1150));
-//        
-//        path.push_back(ccp(700,1020));
-//        path.push_back(ccp(540,920));
-//        path.push_back(ccp(320,900));
-//        path.push_back(ccp(220,790));
-        
-        path.push_back(ccp(2467, 2038)); // p8_1
-        
-        path.push_back(ccp(2492, 2179)); // p6_6
-        path.push_back(ccp(2797, 2353)); // p6_7
-        
-        vector<int> zorders;
-        zorders.push_back(700);
-//        zorders.push_back(700);
-//        zorders.push_back(900);
-        posToPath[9] = path;
-        posToZorders[9] = zorders;
-    }
-    if (1) {//pos == 10
-        vector<cocos2d::CCPoint> path;
-//        path.push_back(ccp(2339,1827));
-//        path.push_back(ccp(800,850));
-//        path.push_back(ccp(320,900));
-//        path.push_back(ccp(250,800));
-        
-        path.push_back(ccp(2467, 2038)); // p8_1
-        
-        path.push_back(ccp(2492, 2179)); // p6_6
-        path.push_back(ccp(2797, 2353)); // p6_7
-        
-        vector<int> zorders;
-        zorders.push_back(1000);
-        posToPath[10] = path;
-        posToZorders[10] = zorders;
-    }
-    if (1) {//pos == 11
-        vector<cocos2d::CCPoint> path;
-//        path.push_back(ccp(2006,2254));
-//        path.push_back(ccp(1000,990));
-//        path.push_back(ccp(920,930));
-//        
-//        path.push_back(ccp(700,1020));
-//        path.push_back(ccp(540,920));
-//        path.push_back(ccp(320,900));
-//        path.push_back(ccp(220,790));
-        
-        path.push_back(ccp(2310, 2213)); // p13_2
-        
-        path.push_back(ccp(2492, 2179)); // p6_6
-        path.push_back(ccp(2797, 2353)); // p6_7
-        
-        vector<int> zorders;
-        zorders.push_back(800);
-//        zorders.push_back(800);
-//        zorders.push_back(800);
-//        zorders.push_back(900);
-        posToPath[11] = path;
-        posToZorders[11] = zorders;
-    }
-    if (1) {//pos == 12
-        vector<cocos2d::CCPoint> path;
-//        path.push_back(ccp(1804,2120));
-//        path.push_back(ccp(1280,1600));
-//        path.push_back(ccp(1080,1480));
-//        path.push_back(ccp(1090,1270));
-//        path.push_back(ccp(970,1210));
-//        path.push_back(ccp(970,1150));
-//        
-//        path.push_back(ccp(700,1020));
-//        path.push_back(ccp(540,920));
-//        path.push_back(ccp(320,900));
-//        path.push_back(ccp(220,790));
-        
-        path.push_back(ccp(2310, 2213)); // p13_2
-        
-        path.push_back(ccp(2492, 2179)); // p6_6
-        path.push_back(ccp(2797, 2353)); // p6_7
-        
-        vector<int> zorders;
-        zorders.push_back(300);
-//        zorders.push_back(300);
-//        zorders.push_back(300);
-//        zorders.push_back(500);
-//        zorders.push_back(500);
-//        zorders.push_back(500);
-//        zorders.push_back(500);
-//        zorders.push_back(900);
-        posToPath[12] = path;
-        posToZorders[12] = zorders;
-    }
-    if (1) {//pos == 13
-        vector<cocos2d::CCPoint> path;
-//        path.push_back(ccp(1536,2273));
-//        path.push_back(ccp(1510,1410));
-//        path.push_back(ccp(1450,1380));
-//        path.push_back(ccp(1310,1380));
-//        path.push_back(ccp(970,1210));
-//        path.push_back(ccp(970,1150));
-//        
-//        path.push_back(ccp(700,1020));
-//        path.push_back(ccp(540,920));
-//        path.push_back(ccp(320,900));
-//        path.push_back(ccp(220,790));
-        
-        path.push_back(ccp(1744, 2252)); // p13_0
-        path.push_back(ccp(1940, 2050)); // p13_1
-        path.push_back(ccp(2310, 2213)); // p13_2
-        
-        path.push_back(ccp(2492, 2179)); // p6_6
-        path.push_back(ccp(2797, 2353)); // p6_7
-        
-        vector<int> zorders;
-        zorders.push_back(400);
-//        zorders.push_back(400);
-//        zorders.push_back(400);
-//        zorders.push_back(400);
-//        zorders.push_back(400);
-//        zorders.push_back(400);
-//        zorders.push_back(400);
-//        zorders.push_back(900);
-        posToPath[13] = path;
-        posToZorders[13] = zorders;
-    }
-    if (1) {//pos == 14
-        vector<cocos2d::CCPoint> path;
-//        path.push_back(ccp(805,2116));
-//        path.push_back(ccp(1730,1520));
-//        path.push_back(ccp(1450,1380));
-//        path.push_back(ccp(1310,1380));
-//        path.push_back(ccp(970,1210));
-//        path.push_back(ccp(970,1150));
-//        
-//        path.push_back(ccp(700,1020));
-//        path.push_back(ccp(540,920));
-//        path.push_back(ccp(320,900));
-//        path.push_back(ccp(220,790));
-        
-        path.push_back(ccp(1111, 2154)); // p15_2
-        path.push_back(ccp(1259, 1976)); // p15_3
-        path.push_back(ccp(1103, 1885)); // p15_4
-        path.push_back(ccp(1205, 1808)); // p15_5
-        path.push_back(ccp(1015, 1582)); // p15_6
-        path.push_back(ccp(1234, 1438)); // p15_7
-        
-        path.push_back(ccp(1319, 1499)); // p6_0
-        path.push_back(ccp(1498, 1404)); // p6_1
-        path.push_back(ccp(1734, 1506)); // p6_2
-        path.push_back(ccp(1870, 1346)); // p6_3
-        path.push_back(ccp(2822, 1860)); // p6_4
-        path.push_back(ccp(2784, 2075)); // p6_5
-        path.push_back(ccp(2492, 2179)); // p6_6
-        path.push_back(ccp(2797, 2353)); // p6_7
-        
-        vector<int> zorders;
-        zorders.push_back(300);
-//        zorders.push_back(300);
-//        zorders.push_back(300);
-//        zorders.push_back(300);
-//        zorders.push_back(300);
-//        zorders.push_back(300);
-//        zorders.push_back(400);
-//        zorders.push_back(900);
-        posToPath[14] = path;
-        posToZorders[14] = zorders;
-    }
-    if (1) {//pos == 15
-        vector<cocos2d::CCPoint> path;
-//        path.push_back(ccp(479,2152));
-//        path.push_back(ccp(1690,1320));
-//        path.push_back(ccp(1630,1290));
-//        path.push_back(ccp(1450,1380));
-//        path.push_back(ccp(1310,1380));
-//        path.push_back(ccp(970,1210));
-//        path.push_back(ccp(970,1150));
-        
-//        path.push_back(ccp(700,1020));
-//        path.push_back(ccp(540,920));
-//        path.push_back(ccp(320,900));
-//        path.push_back(ccp(220,790));
-        
-        path.push_back(ccp(763, 2174)); // p15_0
-        path.push_back(ccp(919, 2075)); // p15_1
-        path.push_back(ccp(1111, 2154)); // p15_2
-        path.push_back(ccp(1259, 1976)); // p15_3
-        path.push_back(ccp(1103, 1885)); // p15_4
-        path.push_back(ccp(1205, 1808)); // p15_5
-        path.push_back(ccp(1015, 1582)); // p15_6
-        path.push_back(ccp(1234, 1438)); // p15_7
-        
-        path.push_back(ccp(1319, 1499)); // p6_0
-        path.push_back(ccp(1498, 1404)); // p6_1
-        path.push_back(ccp(1734, 1506)); // p6_2
-        path.push_back(ccp(1870, 1346)); // p6_3
-        path.push_back(ccp(2822, 1860)); // p6_4
-        path.push_back(ccp(2784, 2075)); // p6_5
-        path.push_back(ccp(2492, 2179)); // p6_6
-        path.push_back(ccp(2797, 2353)); // p6_7
-        
-        vector<int> zorders;
-        zorders.push_back(500);
-//        zorders.push_back(500);
-//        zorders.push_back(500);
-//        zorders.push_back(500);
-//        zorders.push_back(500);
-//        zorders.push_back(500);
-//        zorders.push_back(500);
-//        zorders.push_back(500);
-//        zorders.push_back(900);
-        posToPath[15] = path;
-        posToZorders[15] = zorders;
-    }
-    if (1) {//pos == 16
-        vector<cocos2d::CCPoint> path;
-//        path.push_back(ccp(1870,1470));
-//        path.push_back(ccp(1900,1410));
-//        path.push_back(ccp(1810,1380));
-//        path.push_back(ccp(1630,1470));
-//        path.push_back(ccp(1450,1380));
-//        path.push_back(ccp(1310,1380));
-//        path.push_back(ccp(970,1210));
-//        path.push_back(ccp(970,1150));
-//        
-//        path.push_back(ccp(700,1020));
-//        path.push_back(ccp(540,920));
-//        path.push_back(ccp(320,900));
-//        path.push_back(ccp(220,790));
-        
-        path.push_back(ccp(1205, 1808)); // p15_5
-        path.push_back(ccp(1015, 1582)); // p15_6
-        path.push_back(ccp(1234, 1438)); // p15_7
-        
-        path.push_back(ccp(1319, 1499)); // p6_0
-        path.push_back(ccp(1498, 1404)); // p6_1
-        path.push_back(ccp(1734, 1506)); // p6_2
-        path.push_back(ccp(1870, 1346)); // p6_3
-        path.push_back(ccp(2822, 1860)); // p6_4
-        path.push_back(ccp(2784, 2075)); // p6_5
-        path.push_back(ccp(2492, 2179)); // p6_6
-        path.push_back(ccp(2797, 2353)); // p6_7
-        
-        vector<int> zorders;
-        zorders.push_back(400);
-        zorders.push_back(400);
-        zorders.push_back(400);
-        zorders.push_back(400);
-        zorders.push_back(400);
-        zorders.push_back(400);
-        zorders.push_back(400);
-        zorders.push_back(400);
-        zorders.push_back(400);
-        zorders.push_back(900);
-        posToPath[16] = path;
-        posToZorders[16] = zorders;
-    }
-    
-    
-
-    if (1) {//pos == 52
-        vector<cocos2d::CCPoint> path;
-//        path.push_back(ccp(1020,650));
-//        path.push_back(ccp(720,570));
-        
-        path.push_back(ccp(1015, 1582)); // p15_6
-        path.push_back(ccp(1234, 1438)); // p15_7
-        
-        path.push_back(ccp(1319, 1499)); // p6_0
-        path.push_back(ccp(1498, 1404)); // p6_1
-        path.push_back(ccp(1734, 1506)); // p6_2
-        path.push_back(ccp(1870, 1346)); // p6_3
-        path.push_back(ccp(2822, 1860)); // p6_4
-        path.push_back(ccp(2784, 2075)); // p6_5
-        path.push_back(ccp(2492, 2179)); // p6_6
-        path.push_back(ccp(2797, 2353)); // p6_7
-        
-        vector<int> zorders;
-        zorders.push_back(1010);
-        posToPath[52] = path;
-        posToZorders[52] = zorders;
-    }
-    if (1) {//pos == 53
-        vector<cocos2d::CCPoint> path;
-//        path.push_back(ccp(1300,805));
-//        path.push_back(ccp(1020,615));
-//        path.push_back(ccp(720,570));
-        
-        path.push_back(ccp(513, 1773)); // p53_0
-        path.push_back(ccp(775, 1668)); // p_53_1
-        
-        path.push_back(ccp(1015, 1582)); // p15_6
-        path.push_back(ccp(1234, 1438)); // p15_7
-        
-        path.push_back(ccp(1319, 1499)); // p6_0
-        path.push_back(ccp(1498, 1404)); // p6_1
-        path.push_back(ccp(1734, 1506)); // p6_2
-        path.push_back(ccp(1870, 1346)); // p6_3
-        path.push_back(ccp(2822, 1860)); // p6_4
-        path.push_back(ccp(2784, 2075)); // p6_5
-        path.push_back(ccp(2492, 2179)); // p6_6
-        path.push_back(ccp(2797, 2353)); // p6_7
-        
-        vector<int> zorders;
-        zorders.push_back(1010);
-        posToPath[53] = path;
-        posToZorders[53] = zorders;
-    }
-    
-//    int offset_x = 2900; // guo.jiang
-//    int offset_y = 2600; // guo.jiang
-//    
-//    sqerPoints.push_back(ccp(290 + 125 + offset_x, 560 - 320 + offset_y));
-//    sqerPoints.push_back(ccp(380 + 175 + offset_x, 515 - 370 + offset_y));
-//    sqerPoints.push_back(ccp(470 + 255 + offset_x, 470 - 450 + offset_y));
-//    sqerPoints.push_back(ccp(560 + 365 + offset_x, 425 - 560 + offset_y));
-//    sqerPoints.push_back(ccp(650 + 365 + offset_x, 380 - 560 + offset_y));
-//    sqerPoints.push_back(ccp(740 + 365 + offset_x, 335 - 560 + offset_y));
-//    
-//    sqerPoints.push_back(ccp(190 + offset_x, 515 + offset_y));
-//    sqerPoints.push_back(ccp(280 + offset_x, 470 + offset_y));
-//    sqerPoints.push_back(ccp(370 + offset_x, 425 + offset_y));
-//    sqerPoints.push_back(ccp(460 + offset_x, 380 + offset_y));
-//    sqerPoints.push_back(ccp(550 + offset_x, 335 + offset_y));
-//    sqerPoints.push_back(ccp(640 + offset_x, 290 + offset_y));
-//    sqerPoints.push_back(ccp(730 + offset_x, 245 + offset_y));
-//    
-//    sqerPoints.push_back(ccp(90 + offset_x, 470 + offset_y));
-//    sqerPoints.push_back(ccp(180 + offset_x, 425 + offset_y));
-//    sqerPoints.push_back(ccp(270 + offset_x, 380 + offset_y));
-//    sqerPoints.push_back(ccp(360 + offset_x, 335 + offset_y));
-//    sqerPoints.push_back(ccp(450 + offset_x, 290 + offset_y));
-//    sqerPoints.push_back(ccp(540 + offset_x, 245 + offset_y));
-//    sqerPoints.push_back(ccp(630 + offset_x, 200 + offset_y));
-//    
-//    sqerPoints.push_back(ccp(80 + offset_x, 380 + offset_y));
-//    sqerPoints.push_back(ccp(170 + offset_x, 335 + offset_y));
-//    sqerPoints.push_back(ccp(260 + offset_x, 290 + offset_y));
-//    sqerPoints.push_back(ccp(350 + offset_x, 245 + offset_y));
-//    sqerPoints.push_back(ccp(440 + offset_x, 200 + offset_y));
-//    sqerPoints.push_back(ccp(530 + offset_x, 155 + offset_y));
-//    
-//    sqerPoints.push_back(ccp(70 + offset_x, 290 + offset_y));
-//    sqerPoints.push_back(ccp(160 + offset_x, 245 + offset_y));
-//    sqerPoints.push_back(ccp(250 + offset_x, 200 + offset_y));
-//    sqerPoints.push_back(ccp(340 + offset_x, 155 + offset_y));
+        path.push_back(Vec2(929, 2122)); // p1
+        path.push_back(Vec2(1125, 2169)); // p2
+        path.push_back(Vec2(1421, 1881)); // p3
+        path.push_back(Vec2(1597, 1659)); // p4
+        path.push_back(Vec2(1737, 1497)); // p5
+        path.push_back(Vec2(1869, 1341)); // p6
+        path.push_back(Vec2(2538, 1659)); // p7
+        path.push_back(Vec2(2822, 1906)); // p8
+        path.push_back(Vec2(2513, 2194)); // p9
+        path.push_back(Vec2(2758, 2342)); // p10
+        vector<int> zorders; zorders.push_back(700); posToPath[pos_idx] = path; posToZorders[pos_idx] = zorders; }
+    if (7) { int pos_idx = 7; vector<cocos2d::CCPoint> path;
+        path.push_back(Vec2(1737, 1497)); // p5
+        path.push_back(Vec2(1869, 1341)); // p6
+        path.push_back(Vec2(2538, 1659)); // p7
+        path.push_back(Vec2(2822, 1906)); // p8
+        path.push_back(Vec2(2513, 2194)); // p9
+        path.push_back(Vec2(2758, 2342)); // p10
+        vector<int> zorders; zorders.push_back(700); posToPath[pos_idx] = path; posToZorders[pos_idx] = zorders; }
+    if (6) { int pos_idx = 6; vector<cocos2d::CCPoint> path;
+        path.push_back(Vec2(1301, 1497)); // p3
+        path.push_back(Vec2(1473, 1424)); // p4
+        path.push_back(Vec2(1737, 1497)); // p5
+        path.push_back(Vec2(1869, 1341)); // p6
+        path.push_back(Vec2(2538, 1659)); // p7
+        path.push_back(Vec2(2822, 1906)); // p8
+        path.push_back(Vec2(2513, 2194)); // p9
+        path.push_back(Vec2(2758, 2342)); // p10
+        vector<int> zorders; zorders.push_back(700); posToPath[pos_idx] = path; posToZorders[pos_idx] = zorders; }
+    if (8) { int pos_idx = 8; vector<cocos2d::CCPoint> path;
+        path.push_back(Vec2(925, 1634)); // p0
+        path.push_back(Vec2(1005, 1554)); // p1
+        path.push_back(Vec2(1213, 1449)); // p2
+        path.push_back(Vec2(1301, 1497)); // p3
+        path.push_back(Vec2(1473, 1424)); // p4
+        path.push_back(Vec2(1737, 1497)); // p5
+        path.push_back(Vec2(1869, 1341)); // p6
+        path.push_back(Vec2(2538, 1659)); // p7
+        path.push_back(Vec2(2822, 1906)); // p8
+        path.push_back(Vec2(2513, 2194)); // p9
+        path.push_back(Vec2(2758, 2342)); // p10
+        vector<int> zorders; zorders.push_back(700); posToPath[pos_idx] = path; posToZorders[pos_idx] = zorders; }
     
     sqerPoints.push_back(Vec2(3171, 2657)); // troop0
     sqerPoints.push_back(Vec2(3386, 2515)); // troop1

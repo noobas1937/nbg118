@@ -4841,6 +4841,10 @@ void WorldMapView::addUnderNode(unsigned int index) {
             {
                 house->setPositionY(6);
             }
+            else if (house_img == "0021.png")
+            {
+                house->setPositionY(19);
+            }
             under->addChild(house);
             under->setContentSize(house->getContentSize());
             

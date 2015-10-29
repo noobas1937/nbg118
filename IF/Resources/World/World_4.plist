@@ -111,15 +111,15 @@
             <key>0021.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{267,138},{256,140}}</string>
+                <string>{{267,138},{256,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{256,140}}</string>
+                <string>{{0,0},{256,128}}</string>
                 <key>sourceSize</key>
-                <string>{256,140}</string>
+                <string>{256,128}</string>
             </dict>
             <key>0022.png</key>
             <dict>
@@ -3433,7 +3433,7 @@
             <key>size</key>
             <string>{2048,2048}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:cbb17b904f7c24b412b1673ac6c0ce8a:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:0aa7e7ec8ad8ce713cc65faaeb0a1a33:1/1$</string>
             <key>textureFileName</key>
             <string>World_4.pvr.ccz</string>
         </dict>

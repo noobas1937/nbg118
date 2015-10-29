@@ -59,7 +59,8 @@ public:
     recoverymanual(0),
     costmanual(0),
     recoverInterval(0),
-    recoverPerInterval(-1)
+    recoverPerInterval(-1),
+    feedcdfix(-1)
     {}
     
     int resetTitanInfo(CCDictionary* dict);// 0没有改变 1数值改变(页面需要刷新的数值) 2状态改变
@@ -71,6 +72,7 @@ public:
     std::string titanId;//对应士兵ID
     int status;//泰坦状态 0在家 1出征
     long feedcd;
+    long feedcdfix;
     int nextExp;//升级所需经验值
     int feedMaxNum;//每天最多喂食几次
     int feedFoodNum; //每次喂食的粮食个数

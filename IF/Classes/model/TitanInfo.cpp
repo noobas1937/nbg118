@@ -171,10 +171,7 @@ int TitanInfo::resetTitanInfo(CCDictionary* dict)//0没有改变 1数值改变(�
         GlobalData::shared()->allQueuesInfo[info.qid] = info;
     }
     
-    if(feedNum>=feedMaxNum)//fusheng 免费次数已用光
-    {
-        feedcd = 0;//fusheng 不用CD了
-    }
+
     
     if (dict->objectForKey("remainGold")) {
         
@@ -186,6 +183,21 @@ int TitanInfo::resetTitanInfo(CCDictionary* dict)//0没有改变 1数值改变(�
     }
     
     
+    if (dict->objectForKey("feedcdfix")) {
+        
+        long newData =  dict->valueForKey("feedcdfix")->longValue();
+        
+        if (newData != feedcdfix) { //fusheng 使用秒数
+            dataStatus |= TITANVALUECHANGE;
+            feedcdfix = newData;
+        }
+    }
+    
+    if(feedNum>=feedMaxNum)//fusheng 免费次数已用光
+    {
+        feedcd = 0;//fusheng 不用CD了
+        feedcdfix = 0;
+    }
     
     return dataStatus;
 }

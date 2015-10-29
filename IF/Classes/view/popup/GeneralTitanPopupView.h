@@ -88,9 +88,9 @@ private:
     int queue_id ;
     
     
-    float feedCD ;
-    float upgradeCD ;
-    float upgradeCDTotal ;
+    double feedCD ;
+    double upgradeCD ;
+    double upgradeCDTotal ;
     
     bool isUpgrading ;
     
