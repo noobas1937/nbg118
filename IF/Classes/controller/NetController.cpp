@@ -87,8 +87,8 @@ std::string NetController::getIpByType(int type){//0 正常 1 备用
     std::string ip = CCUserDefault::sharedUserDefault()->getStringForKey(ACCOUNT_IP);
     std::string resultStr = ip;
     if(ip != "" && ip.find(".com") != -1){
-        std::string main = ".nbg.elexapp.com";
-        std::string backup = ".nbg.elexnbg.com";
+        std::string main = GET_IP_BY_TYPE_MAIN;
+        std::string backup = GET_IP_BY_TYPE_BACKUP;
         std::string ipstr = ip.substr(0, ip.find("."));
         if(type == 0){
             resultStr = ipstr + main;
@@ -110,7 +110,7 @@ void NetController::getServerStatus(){
     string _lang = LocalController::shared()->getLanguageFileName();
     string _serverId = CCUserDefault::sharedUserDefault()->getStringForKey(SERVER_ID, "");
     string _serverIp = CCUserDefault::sharedUserDefault()->getStringForKey(ACCOUNT_IP, "");
-    url = CCString::createWithFormat("http://p1.nbg.elexapp.com/probe.php?uuid=%s&loginFlag=%d&country=%s&gameuid=%s&lang=%s&serverId=%s&serverIp=%s",_uuid.c_str(),1,_Country.c_str(),_gameUid.c_str(),_lang.c_str(),_serverId.c_str(),_serverIp.c_str());
+    url = CCString::createWithFormat("http://%s/probe.php?uuid=%s&loginFlag=%d&country=%s&gameuid=%s&lang=%s&serverId=%s&serverIp=%s",SERVERLIST_IP2,_uuid.c_str(),1,_Country.c_str(),_gameUid.c_str(),_lang.c_str(),_serverId.c_str(),_serverIp.c_str());
     
     CCLOG("server list URL: %s",url->getCString());
     
@@ -444,9 +444,9 @@ std::string NetController::getRealIp(){
             serverId = atoi(subStr.c_str());
         }
         if(isTecentConnectionInUse){
-            return "tenp1.cok.elex.com";
+            return REAL_IP_TENCENT;
         }else if(isHKConnectionInUse){
-            return "hkp1.nbg.elexapp.com";
+            return REAL_IP_HK;
         }else if(isUSConnectionInUse){
             return getIp();
         }
@@ -1564,18 +1564,17 @@ extern "C" {
     
     jstring Java_org_cocos2dx_ext_Native_nativeGetPaymentCallbackUrl(JNIEnv* env, jobject thiz)
     {
-        return env->NewStringUTF("http://cnpay.nbg.elexapp.com:8080/gameservice/paymentcallback");
+        return env->NewStringUTF(PAYMENT_CALLBACK_URL);
     }
     
     jstring Java_org_cocos2dx_ext_Native_nativeGetPaymentCallbackUrlTest(JNIEnv* env, jobject thiz)
     {
-        return env->NewStringUTF("http://184.173.110.107:8080/gameservice/paymentcallback");
+        return env->NewStringUTF(PAYMENT_CALLBACK_URL_TEST);
     }
 
     jstring Java_org_cocos2dx_ext_Native_nativeGetAccountUrl(JNIEnv* env, jobject thiz)
     {
-        return env->NewStringUTF("http://cnac.nbg.elexapp.com/account");
-//        return env->NewStringUTF("http://p1nbg.elexapp.com/account");
+        return env->NewStringUTF(GET_ACCOUNT_URL);
     }
 
     // 提供对外的native方法便于预先设置用户的ab test值
