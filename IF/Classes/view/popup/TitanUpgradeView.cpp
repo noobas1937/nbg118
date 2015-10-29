@@ -31,6 +31,8 @@
 #include "DragonScene.h"
 #include "ArmyInfo.h"
 #include "TitanInView.h"
+
+
 #define MSG_BUILD_CELL "msg_build_cell"
 
 #include "NBCommonUtils.h"
@@ -784,10 +786,12 @@ void TitanUpgradeView::onLastUp()
         if (m_info.state == FUN_BUILD_NORMAL && FunBuildController::getInstance()->startUpFunBuild(m_buildId, _resGold, isForce))
         {
             m_isReturn = false;
-            PopupViewController::getInstance()->removeAllPopupView();
-            auto layer = dynamic_cast<ImperialScene*>(SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE));
-            if(layer)
-                layer->showBuildBtns(m_buildId);
+//            PopupViewController::getInstance()->removeAllPopupView();
+//            auto layer = dynamic_cast<ImperialScene*>(SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE));
+//            if(layer)
+//                layer->showBuildBtns(m_buildId);
+            PopupViewController::getInstance()->goBackPopupView();
+            
         }
     }
     else {
