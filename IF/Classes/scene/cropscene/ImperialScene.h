@@ -68,6 +68,8 @@ public:
     void onCreateVikingsShip();
     //begin a by ljf
     void onVikingsShipMove(NBSprite3D * pSprite3d);
+    void onVikingsShipIdle(NBSprite3D * pSprite3d);
+    bool onVikingsShipTouched(CCTouch* pTouch);
     //end a by ljf
     
     void onUpdateInfo();
@@ -387,8 +389,14 @@ private:
     CCSafeObject<CCNode> m_titanNode;
     // tao.yu 维京船
     CCSafeObject<CCNode> m_vikingNode;
+    bool m_isVikingShipMove;
     //begin a by ljf
     CCSafeObject<CCNode> m_Node0;
+    CCSafeObject<CCNode> m_vikingPath1;
+    CCSafeObject<CCNode> m_vikingPath2;
+    CCSafeObject<CCNode> m_vikingPath3;
+    CCSafeObject<CCNode> m_vikingPath4;
+    CCSafeObject<NBSprite3D> m_vikings3D;
     //end a by ljf
     // tao.yu titan move path
     CCSafeObject<CCNode> m_tpath_1;
