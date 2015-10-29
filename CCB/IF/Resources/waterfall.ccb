@@ -1894,6 +1894,18 @@
 								<array>
 									<dict>
 										<key>name</key>
+										<string>position</string>
+										<key>type</key>
+										<string>Position</string>
+										<key>value</key>
+										<array>
+											<real>97.044502258300781</real>
+											<real>-1057.5362548828125</real>
+											<integer>0</integer>
+										</array>
+									</dict>
+									<dict>
+										<key>name</key>
 										<string>anchorPoint</string>
 										<key>type</key>
 										<string>Point</string>
@@ -3717,8 +3729,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>1057.5361328125</real>
-											<real>354.58566284179688</real>
+											<real>1154.5806884765625</real>
+											<real>-702.9505615234375</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -5299,8 +5311,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>1057.5361328125</real>
-											<real>354.58566284179688</real>
+											<real>1154.5806884765625</real>
+											<real>-702.9505615234375</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -7119,8 +7131,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>1573.5142822265625</real>
-											<real>401.8836669921875</real>
+											<real>1670.558837890625</real>
+											<real>-655.65252685546875</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -8962,8 +8974,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>1754.106689453125</real>
-											<real>388.98422241210938</real>
+											<real>1851.1512451171875</real>
+											<real>-668.552001953125</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -9019,8 +9031,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>3.139918327331543</real>
-									<real>-14.354938507080078</real>
+									<real>-274.44244384765625</real>
+									<real>2488.520751953125</real>
 									<integer>0</integer>
 								</array>
 							</dict>
