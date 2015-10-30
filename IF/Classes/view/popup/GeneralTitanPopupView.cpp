@@ -155,6 +155,8 @@ bool GeneralTitanPopupView::init()
     CCLoadSprite::doResourceByCommonIndex(305, true);
     CCLoadSprite::doResourceByCommonIndex(3, true);
     
+     CCLoadSprite::doResourceByCommonIndex(513, true);
+    
     auto bg = CCBLoadFile("GeneralTitanDetail",this,this);
     
     
@@ -2070,7 +2072,7 @@ void DragonUpgradeAniNode::onEnter()
     
     auto bg = CCBLoadFile("Titan_eggfx",this,this);
     
-    CCLoadSprite::doResourceByCommonIndex(513, true);
+   
     getAnimationManager()->runAnimations("FadeIn");
     
     getAnimationManager()->setAnimationCompletedCallback(this, CC_CALLFUNC_SELECTOR(DragonUpgradeAniNode::animationCallBack));
@@ -2082,7 +2084,7 @@ void DragonUpgradeAniNode::onEnter()
 
 void DragonUpgradeAniNode::onExit()
 {
-    CCLoadSprite::doResourceByCommonIndex(513, false);
+//    CCLoadSprite::doResourceByCommonIndex(513, false);
     Node::onExit();
 };
 

@@ -234,6 +234,9 @@ void Widget::onExit()
 
 void Widget::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
+    //begin a by ljf
+    //下面这个判断有bug,如果visible为false,可能会出现多相机时，子结点不跟着场景移动的问题。平时如果无此情况则先不管这个bug。
+    //end a by ljf
     if (_visible || !isVisitableByVisitingCamera())
     {
         adaptRenderers();
