@@ -1121,6 +1121,15 @@ void QueueController::endCCDQueue(CCDictionary* dict)
             
             CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_SPEED_UP_COMPLETE,CCString::create("feed"));
             
+            //fusheng android 没办法
+            GlobalData::shared()->titanInfo.feedcdfix = 0;
+            
+            string puid = GlobalData::shared()->playerInfo.uid;
+            
+            CCUserDefault::sharedUserDefault()->setIntegerForKey((puid+"feedcdfix").c_str(), 0);
+            
+
+            
         }
         if(GlobalData::shared()->allQueuesInfo[qid].itemId == 400000)
         {
@@ -1378,7 +1387,15 @@ void QueueController::endFinishQueue(CCDictionary* dict)
     }
     if(type == 15)
     {
-        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_SPEED_UP_COMPLETE,CCString::create("feed"));//fusheng feedCD完成 
+        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_SPEED_UP_COMPLETE,CCString::create("feed"));//fusheng feedCD完成
+        
+        //fusheng android 没办法
+        GlobalData::shared()->titanInfo.feedcdfix = 0;
+        
+        string puid = GlobalData::shared()->playerInfo.uid;
+        
+        CCUserDefault::sharedUserDefault()->setIntegerForKey((puid+"feedcdfix").c_str(), 0);
+        
     }
     
     if(GlobalData::shared()->allQueuesInfo[qid].itemId == 400000)

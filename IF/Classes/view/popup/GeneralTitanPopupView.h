@@ -55,7 +55,7 @@ public:
 protected:
 
 private:
-    GeneralTitanPopupView():m_titanId(""),feedCD(0),isUpdating(false),upgradeCD(0),isUpgrading(false),queue_id(-1),nbpb(NULL),upgradeCDTotal(0),isGuideFeed(false),m_arrow(NULL){}
+    GeneralTitanPopupView():m_titanId(""),feedCD(0),isUpdating(false),upgradeCD(0),isUpgrading(false),queue_id(-1),nbpb(NULL),upgradeCDTotal(0),isGuideFeed(false),m_arrow(NULL),perTimeForFeedCD(0),perTimeForUpgradeCD(0){}
     virtual void onEnter();
     virtual void onExit();
     virtual bool init();
@@ -95,14 +95,23 @@ private:
     int queue_id ;
     
     
-    double feedCD ;
-    double upgradeCD ;
-    double upgradeCDTotal ;
+    long feedCD ;
+    
+    float perTimeForFeedCD;
+    
+    long  upgradeCD ;
+    
+    float perTimeForUpgradeCD;
+    
+    double upgradeCDTotal;
     
     bool isUpgrading ;
     
     bool isFoodEnough;
     
+    void calFeedCD(float ChangeTime = -1);
+    
+    void calUpgradeCD(float ChangeTime = -1);
     
     TitanInfo m_titanInfo;
 

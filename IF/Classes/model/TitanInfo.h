@@ -38,31 +38,11 @@ class TitanInfo:
 public cocos2d::CCObject
 {
 public:
-    CREATE_FUNC(TitanInfo);
+//    CREATE_FUNC(TitanInfo);
     
     TitanInfo(CCDictionary* dict);
     
-    TitanInfo():
-    tid(0),
-    feedNum(0),
-    level(0),
-    currentManual(-1),
-    exp(0),
-    titanId(""),
-    status(0),
-    feedcd(0),
-    nextExp(0),
-    feedMaxNum(0),
-    feedFoodNum(0),
-    uuid(""),
-    lastCalTime(-1),
-    recoverymanual(0),
-    costmanual(0),
-    recoverInterval(0),
-    recoverPerInterval(-1),
-    feedcdfix(-1)
-    {}
-    
+    TitanInfo();    
     int resetTitanInfo(CCDictionary* dict);// 0没有改变 1数值改变(页面需要刷新的数值) 2状态改变
     int tid;
     int feedNum;

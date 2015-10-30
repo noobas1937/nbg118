@@ -507,8 +507,12 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         this->m_titanFeedBtn->setEnabled(false);//fusheng 泰坦升级时
         
         titanFeedNode->setVisible(false);
+        
         titanUpingNode->setVisible(true);
-        this->upgradeCD =(float)(fbiInfo.updateTime - GlobalData::shared()->getWorldTime());
+        
+        this->upgradeCD = (fbiInfo.updateTime - GlobalData::shared()->getWorldTime());
+        
+        perTimeForUpgradeCD = 0;//fusheng 重0计算
         
         isUpgrading = true;
         
@@ -579,6 +583,24 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         }
         
         
+        
+        if (upgradeCD>=0) {
+            
+            string timeInfo = CC_SECTOA((int)this->upgradeCD);
+            this->m_upgradeCDTxt->setString(timeInfo);
+            
+            
+            //        if(upgradeCDTotal!=0&&upgradeCDTotal>0) //fusheng 进度条
+            //        {
+            //            float ratio = (upgradeCDTotal-upgradeCD)/upgradeCDTotal;
+            //            nbpb->setPercent(ratio);
+            //        }
+            //        else
+            //        {
+            //            nbpb->setPercent(1);
+            //        }
+            
+        }
 
     }
     else
@@ -789,11 +811,10 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
     }
     else
     {
-//        if(m_titanInfo.feedcdfix!=0)//fusheng 修改 feedCD
-        if(m_titanInfo.feedcd!=0)
+        if(m_titanInfo.feedcdfix!=0)//fusheng 修改 feedCD
+//        if(m_titanInfo.feedcd!=0)
         {
-            this->feedCD =(float)(m_titanInfo.feedcd - GlobalData::shared()->getWorldTime());
-            
+//            this->feedCD =(m_titanInfo.feedcd - GlobalData::shared()->getWorldTime());
 
 //            this->feedCD = m_titanInfo.feedcdfix;
 //            
@@ -804,6 +825,10 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
 //            if (m_titanInfo.feedcdfix<0) {
 //                this->feedCD = 0;
 //            }
+            
+            this->feedCD = m_titanInfo.feedcdfix - GlobalData::shared()->getWorldTime();
+            
+            perTimeForFeedCD = 0;//fusheng 重0计算
 
             if (this->feedCD <= 0) {
                 this->feedCD=0;
@@ -828,6 +853,15 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
                 
                 this->m_titanFeedBtn->setEnabled(false);
                 m_titanFeedBtnNode->setVisible(false);
+                
+                if (feedCD>=0) {
+                    
+                    
+                    string timeInfo = CC_SECTOA((int)this->feedCD);
+                    this->m_feedCDTxt->setString(timeInfo);
+                    m_feedCDGoldTxt->setString(CC_CMDITOAL(CCCommonUtils::getGoldByTime((int)this->feedCD)));
+                    
+                }
                 
                 
             }
@@ -977,7 +1011,7 @@ void GeneralTitanPopupView::setGuideFeed(bool guideFeed)
         }
         
         
-        auto seq = Sequence::createWithTwoActions( DelayTime::create(1),CCCallFunc::create([this](){
+        auto seq = Sequence::createWithTwoActions( DelayTime::create(4),CCCallFunc::create([this](){
             if (this->m_arrow) {
                 this->m_arrow->setVisible(false);
             }
@@ -1247,28 +1281,26 @@ void GeneralTitanPopupView::update(float time){
 //    m_staminePro->setScaleX(s);
 //    m_tip->update(time);
     
-    if(!isUpdating)
+    if(!isUpdating)//fusheng 有时间改变
     {
         return;
     }
     
-    if (isUpgrading)
+    if (isUpgrading)//fusheng 计算升级时间
     {
         if (this->upgradeCD>0) {
-            this->upgradeCD -= time;
-            string timeInfo = CC_SECTOA((int)this->upgradeCD);
-            this->m_upgradeCDTxt->setString(timeInfo);
             
+            this->perTimeForUpgradeCD += time;
             
-            if(upgradeCDTotal!=0&&upgradeCDTotal>0) //fusheng 进度条
-            {
-                float ratio = (upgradeCDTotal-upgradeCD)/upgradeCDTotal;
-                nbpb->setPercent(ratio);
+            if (this->perTimeForUpgradeCD > 1) {
+                
+                this->perTimeForUpgradeCD -= 1;
+                
+                this->calUpgradeCD();
+                
             }
-            else
-            {
-                nbpb->setPercent(1);
-            }
+            
+           
         }
         else
         {
@@ -1278,11 +1310,20 @@ void GeneralTitanPopupView::update(float time){
     }
     else
     {
-        if (this->feedCD>0) {
-            this->feedCD -= time;
-            string timeInfo = CC_SECTOA((int)this->feedCD);
-            this->m_feedCDTxt->setString(timeInfo);
-            m_feedCDGoldTxt->setString(CC_CMDITOAL(CCCommonUtils::getGoldByTime((int)this->feedCD)));
+        if (this->feedCD>0) { //fusheng 计算喂食CD时间
+            
+            
+            
+            this->perTimeForFeedCD += time;
+            
+            if (this->perTimeForFeedCD > 1) {
+                
+                this->perTimeForFeedCD -= 1;
+                
+                this->calFeedCD();
+                
+            }
+
             
         }
         else
@@ -1602,6 +1643,53 @@ void GeneralTitanPopupView::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 {
 
 }
+
+void GeneralTitanPopupView::calFeedCD(float ChangeTime )
+{
+    feedCD += ChangeTime;
+    
+    if (feedCD>=0) {
+        
+        
+        string timeInfo = CC_SECTOA((int)this->feedCD);
+        this->m_feedCDTxt->setString(timeInfo);
+        m_feedCDGoldTxt->setString(CC_CMDITOAL(CCCommonUtils::getGoldByTime((int)this->feedCD)));
+       
+    }
+//    else
+//    {
+//        resetAttribute(nullptr);
+//    }
+}
+
+void GeneralTitanPopupView::calUpgradeCD(float ChangeTime )
+{
+    upgradeCD += ChangeTime;
+    
+    if (upgradeCD>=0) {
+       
+        string timeInfo = CC_SECTOA((int)this->upgradeCD);
+        this->m_upgradeCDTxt->setString(timeInfo);
+        
+        
+        //        if(upgradeCDTotal!=0&&upgradeCDTotal>0) //fusheng 进度条
+        //        {
+        //            float ratio = (upgradeCDTotal-upgradeCD)/upgradeCDTotal;
+        //            nbpb->setPercent(ratio);
+        //        }
+        //        else
+        //        {
+        //            nbpb->setPercent(1);
+        //        }
+
+    }
+//    else
+//    {
+//        resetAttribute(nullptr);
+//    }
+}
+
+
 //void GeneralsPopupView::resetRankPop(CCObject *obj){
 //    CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_POPUP_VIEW_IN);
 //    m_addPopup = false;
@@ -2016,3 +2104,5 @@ bool DragonUpgradeAniNode::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget
     
     return false;
 }
+
+

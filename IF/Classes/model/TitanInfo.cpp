@@ -43,6 +43,15 @@ int TitanInfo::resetTitanInfo(CCDictionary* dict)//0没有改变 1数值改变(�
     if (dict->objectForKey("feednum")) {
         feedNum = dict->valueForKey("feednum")->intValue();
     }
+    
+    if (feedcdfix == 0) {//fusheng 等于0的时候尝试取本地数据
+        
+        string puid = GlobalData::shared()->playerInfo.uid;
+        
+        
+        feedcdfix = CCUserDefault::sharedUserDefault()->getIntegerForKey((puid+"feedcdfix").c_str(), 0);
+    }
+    
     if (dict->objectForKey("level")) {
         int newLevel = dict->valueForKey("level")->intValue();
         if (newLevel != level) {
@@ -166,11 +175,57 @@ int TitanInfo::resetTitanInfo(CCDictionary* dict)//0没有改变 1数值改变(�
         }
         
         
+        
+        
         QueueInfo info = QueueInfo(temp222);
 
         GlobalData::shared()->allQueuesInfo[info.qid] = info;
+        
+        
+        if (dict->objectForKey("feedcdfix")) {//fusheng 逼我存本地
+            
+            
+            
+            long newData =  dict->valueForKey("feedcdfix")->longValue();
+            
+            if (newData<750*60*60 && newData>0) {//fusheng 临时
+                
+                newData = newData*60+GlobalData::shared()->getWorldTime();//fusheng andriod 竟然是分钟
+                
+                if (newData != feedcdfix) { //fusheng
+                    dataStatus |= TITANVALUECHANGE;
+                    feedcdfix = newData;
+                    
+                    //                CCUserDefault::sharedUserDefault()->setIntegerForKey("feedcdfix", feedcdfix);
+                    
+                    string puid = GlobalData::shared()->playerInfo.uid;
+                    
+                    CCUserDefault::sharedUserDefault()->setIntegerForKey((puid+"feedcdfix").c_str(), feedcdfix);
+                }
+                
+                
+            }
+            
+            
+            if (newData < 0) {
+                feedcdfix = GlobalData::shared()->getWorldTime();
+                
+                //            CCUserDefault::sharedUserDefault()->setIntegerForKey("feedcdfix", feedcdfix);
+                
+                string puid = GlobalData::shared()->playerInfo.uid;
+                
+                CCUserDefault::sharedUserDefault()->setIntegerForKey((puid+"feedcdfix").c_str(), feedcdfix);
+                
+            }
+            
+            
+            
+        }
     }
     
+    
+    
+
 
     
     if (dict->objectForKey("remainGold")) {
@@ -183,15 +238,6 @@ int TitanInfo::resetTitanInfo(CCDictionary* dict)//0没有改变 1数值改变(�
     }
     
     
-    if (dict->objectForKey("feedcdfix")) {
-        
-        long newData =  dict->valueForKey("feedcdfix")->longValue();
-        
-        if (newData != feedcdfix) { //fusheng 使用秒数
-            dataStatus |= TITANVALUECHANGE;
-            feedcdfix = newData;
-        }
-    }
     
     if(feedNum>=feedMaxNum)//fusheng 免费次数已用光
     {
@@ -215,5 +261,28 @@ void TitanInfo::resetLastCalTime(long time)
     
 }
 
+TitanInfo::TitanInfo():
+tid(0),
+feedNum(0),
+level(0),
+currentManual(-1),
+exp(0),
+titanId(""),
+status(0),
+feedcd(0),
+nextExp(0),
+feedMaxNum(0),
+feedFoodNum(0),
+uuid(""),
+lastCalTime(-1),
+recoverymanual(0),
+costmanual(0),
+recoverInterval(0),
+recoverPerInterval(-1),
+feedcdfix(0)
+{
+    
+
+}
 
 

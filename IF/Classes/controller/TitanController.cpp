@@ -50,6 +50,8 @@ void TitanController::TitanComplete(CCObject *obj){
 
         GlobalData::shared()->titanInfo.feedcd = 0;
         
+        GlobalData::shared()->titanInfo.feedcdfix = 0;
+        
         CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_INFORMATION_RESET,NULL );
     }
     else
