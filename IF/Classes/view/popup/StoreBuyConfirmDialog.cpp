@@ -156,7 +156,7 @@ bool StoreBuyConfirmDialog::init(const char* url, const char* title,const char* 
         } else {
             m_lblEffect->setString(_lang("104901").c_str());
         }
-        m_lblEffect->setVisible(false);
+//        m_lblEffect->setVisible(false);
         m_sprEffect->setOpacity(0);
         m_sprEffect1->setOpacity(0);
         
@@ -452,7 +452,7 @@ void StoreBuyConfirmDialog::showEffect(){
     m_sprBG->getParent()->addChild(particle2,m_nodeIcon->getZOrder()-1);
     particle2->setPosition(centrePos);
     if(m_effNodeSize.equals(CCSizeZero)==false || m_effNodePos.equals(CCPointZero)==false){
-        m_lblEffect->setVisible(true);
+//        m_lblEffect->setVisible(true);
         m_sprEffect->runAction(CCSequence::create(CCFadeIn::create(1),NULL));
         m_sprEffect1->runAction(CCSequence::create(CCFadeIn::create(1),NULL));
 //        m_nodeIcon->setZOrder(m_sprEffect1->getZOrder()+1);
@@ -484,7 +484,7 @@ void StoreBuyConfirmDialog::flyIcon1(){
 }
 void StoreBuyConfirmDialog::hideEffect(){
     if((m_effNodeSize.equals(CCSizeZero)==false || m_effNodePos.equals(CCPointZero)==false) && m_lblEffect && m_sprEffect && m_sprEffect1){
-        m_lblEffect->setVisible(false);
+//        m_lblEffect->setVisible(false);
         m_sprEffect->runAction(CCSequence::create(CCFadeOut::create(1),CCCallFunc::create(this, callfunc_selector(StoreBuyConfirmDialog::closeDialog)),NULL));
         m_sprEffect1->runAction(CCSequence::create(CCFadeOut::create(1),CCCallFunc::create(this, callfunc_selector(StoreBuyConfirmDialog::closeDialog)),NULL));
     }else{
@@ -523,7 +523,7 @@ void StoreBuyConfirmDialog::showSliderBar(int max){
     m_slider->setProgressScaleX(size.width/proSp->getContentSize().width);
     m_slider->setTag(1);
     m_slider->setLimitMoveValue(20);
-    m_slider->setPosition(ccp(size.width*0.5,size.height*0.5));
+    m_slider->setPosition(ccp(size.width*0.5,size.height*0.5+10));
     m_slider->addTargetWithActionForControlEvents(this, cccontrol_selector(StoreBuyConfirmDialog::moveSlider), CCControlEventValueChanged);
     m_barNode->addChild(m_slider);
     
