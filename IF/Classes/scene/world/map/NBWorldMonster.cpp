@@ -537,7 +537,8 @@ void NBWorldMonster::createMonsterBatchItem(BatchTagType type, unsigned int inde
     // guo.jiang todo
     if (monsterNode)
     {
-        auto c = WORLD_MAP_VIEW->m_mapMonstersNode->getChildByTag(monsterNode->getTag());
+        int tag = 1000000 * 100 + monsterNode->getTag();
+        auto c = WORLD_MAP_VIEW->m_mapMonstersNode->getChildByTag(tag);
         if (c)
         {
             c->removeFromParent();
@@ -553,10 +554,10 @@ void NBWorldMonster::createMonsterBatchItem(BatchTagType type, unsigned int inde
         
             octopus->setScaleX(monsterNode->getScaleX());
             octopus->setPosition(monsterNode->getPosition() + Vec2(octopus->getContentSize().width * 0, octopus->getContentSize().height / 4));
-            octopus->setTag(monsterNode->getTag());
+            octopus->setTag(tag);
             WORLD_MAP_VIEW->m_mapMonstersNode->addChild(octopus, monsterNode->getZOrder());
         }
-        else
+        else if (type != MonsterDead)
         {
             monsterNode->setVisible(false);
             
@@ -566,7 +567,7 @@ void NBWorldMonster::createMonsterBatchItem(BatchTagType type, unsigned int inde
             
             octopus->setScaleX(monsterNode->getScaleX());
             octopus->setPosition(monsterNode->getPosition() + Vec2(octopus->getContentSize().width * 0, octopus->getContentSize().height / 4));
-            octopus->setTag(monsterNode->getTag());
+            octopus->setTag(tag);
             WORLD_MAP_VIEW->m_mapMonstersNode->addChild(octopus, monsterNode->getZOrder());
         }
     }

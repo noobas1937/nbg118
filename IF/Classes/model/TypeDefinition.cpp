@@ -45,19 +45,39 @@
     #define __SERVERLIST__IP_2 "p1dc.elexapp.com"
 #endif
 
-const char * getServerIP_TypeDefinition() {
+const char * getServerIP_TypeDefinition()
+{
     return __SERVER__IP;
 }
 
-int getServerPort_TypeDefinition() {
+int getServerPort_TypeDefinition()
+{
     return __SERVER__PORT;
 }
 
-const char * getServerZone_TypeDefinition() {
+const char * getServerZone_TypeDefinition()
+{
     return __SERVER__ZONE;
 }
 
-const char * getServerListIP_TypeDefinition(bool b) {
+const char * getServerListIP_TypeDefinition(bool b)
+{
     if (b) return __SERVERLIST__IP;
     else  return __SERVERLIST__IP_2;
+}
+
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    #define isdown true
+#else
+    #if COCOS2D_DEBUG == 1
+        #define isdown false
+    #else
+        #define isdown true
+    #endif
+#endif
+bool get_is_download_flag()
+{
+//    return isdown;
+    return false;
 }
