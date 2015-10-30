@@ -159,7 +159,7 @@ bool FunBuild::initTmpBuild(int itemId, int x, int y, CCSpriteBatchNode* batchNo
     
     //begin a by ljf
     initSpineNode(pic + "_" + CC_ITOA(GlobalData::shared()->contryResType) + "_1");
-    initParticle(itemId);
+    //initParticle(itemId);
     //end a by ljf
     
     return true;
@@ -1894,12 +1894,7 @@ void FunBuild::canShowState()
         }
     }
     else if (m_info->type == FUN_BUILD_HOSPITAL) {
-        //begin a by ljf
-        if(m_particleNode)
-        {
-            m_particleNode->setZOrder(m_spr->getZOrder() + 1);
-        }
-        //end a by ljf
+       
         if (!isEffectRunning && QueueController::getInstance()->getQueueNumByType(TYPE_HOSPITAL)>0) {
             addFunBuildState();
             isEffectRunning = true;
@@ -2065,10 +2060,7 @@ void FunBuild::canShowState()
         //begin a by ljf
         //未长出状态未显示0，未长出状态已显示1， 长出过程未显示2， 长出过程已显示3， 等收割未显示4， 等收割已显示5， 收割未显示6， 收割已显示7
         //m_spineAni->setAnimation(0, "GrowthProcess", true);
-        if(m_particleNode)
-        {
-            m_particleNode->setZOrder(m_spineNode->getZOrder() + 1);
-        }
+        
         if(!FunBuildController::getInstance()->canShowOutPut(m_info->itemId))
         {
             
@@ -2202,15 +2194,19 @@ void FunBuild::initEffectState()
 
 void FunBuild::initParticle(int type)
 {
-    if(m_particleNode)
+    
+    
+    if(m_upEffectNode)
     {
+        m_particleNode = Node::create();
+        m_upEffectNode->addChild(m_particleNode);
         if(type == FUN_BUILD_STONE) //12, 魔晶矿
         {
             //添加working粒子特效
             auto workingParticleNode = Node::create();
             workingParticleNode->setTag(WORKING_PARTICLE_NODE_TAG);
             m_particleNode->addChild(workingParticleNode);
-            workingParticleNode->setVisible(true);
+            workingParticleNode->setVisible(false);
             workingParticleNode->setScale(0.5);
             for(int i = 0; i <= 1; i++)
             {
@@ -2236,11 +2232,13 @@ void FunBuild::initParticle(int type)
         }
         if(type == FUN_BUILD_HOSPITAL) //11，月亮井,以后要改成有伤兵才有效果
         {
+            
             auto workingParticleNode = Node::create();
             workingParticleNode->setTag(WORKING_PARTICLE_NODE_TAG);
             m_particleNode->addChild(workingParticleNode);
             workingParticleNode->setZOrder(900000000);
             workingParticleNode->setVisible(true);
+            
             //m_particleNode->setZOrder(m_spr->getZOrder() + 5);
             for(int i = 0; i <= 2; i++)
             {
@@ -2250,9 +2248,10 @@ void FunBuild::initParticle(int type)
                 workingParticleNode->addChild(particle);
                 
                 
-                
                 //particle->setPosition(ccp(parentX+mainWidth/2, parentY+0));
                 //addParticleToBatch(particle);
+                
+                //m_upEffectNode->addChild(particle);
             }
             
         }
@@ -2559,7 +2558,7 @@ bool FunBuild::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_lvBG", CCSprite*, this->m_lvBG);
     //begin a by ljf
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_spineNode", CCNode*, this->m_spineNode);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_particleNode", CCNode*, this->m_particleNode);
+    //CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_particleNode", CCNode*, this->m_particleNode);
     //end a by ljf
     return false;
 }
