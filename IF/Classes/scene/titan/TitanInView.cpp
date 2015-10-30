@@ -39,7 +39,13 @@ bool TitanInView::init()
     titanParent->addChild(m_Titan);
     renderTexture->addChild(titanParent);
     titanParent->setRotation3D(Vec3(15, 0, 0));
-    m_Titan->onRotationY(40);
+    if (GlobalData::shared()->titanInfo.level == 1) {
+        m_Titan->onRotationY(40);
+    }
+    else
+    {
+        m_Titan->onRotationY(40);
+    }
     m_titanPos->addChild(renderTexture);
     //end a by ljf
     return true;
