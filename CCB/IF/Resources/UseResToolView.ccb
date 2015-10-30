@@ -681,7 +681,7 @@
 												<key>value</key>
 												<array>
 													<string>Common/Common_3.plist</string>
-													<string>nb_btn_tap_01.png</string>
+													<string>nb_btn_tap_01_gray.png</string>
 												</array>
 											</dict>
 											<dict>
@@ -902,6 +902,18 @@
 												<key>value</key>
 												<array>
 													<real>40</real>
+													<integer>0</integer>
+												</array>
+											</dict>
+											<dict>
+												<key>name</key>
+												<string>color</string>
+												<key>type</key>
+												<string>Color3</string>
+												<key>value</key>
+												<array>
+													<integer>0</integer>
+													<integer>0</integer>
 													<integer>0</integer>
 												</array>
 											</dict>
@@ -1138,7 +1150,7 @@
 												<key>value</key>
 												<array>
 													<string>Common/Common_3.plist</string>
-													<string>nb_btn_tap_01.png</string>
+													<string>nb_btn_tap_01_gray.png</string>
 												</array>
 											</dict>
 											<dict>
@@ -1359,6 +1371,18 @@
 												<key>value</key>
 												<array>
 													<real>40</real>
+													<integer>0</integer>
+												</array>
+											</dict>
+											<dict>
+												<key>name</key>
+												<string>color</string>
+												<key>type</key>
+												<string>Color3</string>
+												<key>value</key>
+												<array>
+													<integer>0</integer>
+													<integer>0</integer>
 													<integer>0</integer>
 												</array>
 											</dict>
@@ -1595,7 +1619,7 @@
 												<key>value</key>
 												<array>
 													<string>Common/Common_3.plist</string>
-													<string>nb_btn_tap_01.png</string>
+													<string>nb_btn_tap_01_gray.png</string>
 												</array>
 											</dict>
 											<dict>
@@ -1816,6 +1840,18 @@
 												<key>value</key>
 												<array>
 													<real>40</real>
+													<integer>0</integer>
+												</array>
+											</dict>
+											<dict>
+												<key>name</key>
+												<string>color</string>
+												<key>type</key>
+												<string>Color3</string>
+												<key>value</key>
+												<array>
+													<integer>0</integer>
+													<integer>0</integer>
 													<integer>0</integer>
 												</array>
 											</dict>
@@ -2052,7 +2088,7 @@
 												<key>value</key>
 												<array>
 													<string>Common/Common_3.plist</string>
-													<string>nb_btn_tap_01.png</string>
+													<string>nb_btn_tap_01_gray.png</string>
 												</array>
 											</dict>
 											<dict>
@@ -2273,6 +2309,18 @@
 												<key>value</key>
 												<array>
 													<real>40</real>
+													<integer>0</integer>
+												</array>
+											</dict>
+											<dict>
+												<key>name</key>
+												<string>color</string>
+												<key>type</key>
+												<string>Color3</string>
+												<key>value</key>
+												<array>
+													<integer>0</integer>
+													<integer>0</integer>
 													<integer>0</integer>
 												</array>
 											</dict>
