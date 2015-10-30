@@ -1559,7 +1559,8 @@ extern "C" {
     // google key
     jstring Java_org_cocos2dx_ext_Native_nativeGetGoogleEncodedPublickey(JNIEnv* env, jobject thiz)
     {
-        return env->NewStringUTF("MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwxJpn2qYaxLCj4xnmQpk0oZNupxxEaAEiebnV8YE2TNsDEPmPvbqv57GcE4iVAdbYvWCW7gb+ruasgISMzASTpWPMrjjjbIDEH+x7NlA67oaokhSPfPAogo6oOypW1TTazraIKkWRogiLES//YH5//NO/WX9rxhx4Tr76ZUwmfdN8ENC/Zz6I/puMzFfwY8NkGc/nTcU0HcDJssIk/ADUtEm+tuy2ZLHJerqR3vz3KtMVa57fFEwMcxN6cR0mJJ4IvsRBGlUAAjF4UM0VFQsIg8kIgn5zuFCqaeqVQpNRxDKCHaF6zllN6R+su93z8orlAXjvAntj+P66olkgO0TlQIDAQAB");
+        return env->NewStringUTF("MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgGKgG6Vm0VBg5FDi+CW9Tyc8yFVHIweANvdv+3pBwudwLGU8lc/zV4it6KRJw5qqUIY75JkJ1/tIK7gxGGp39wkPaqUYvYA0QfP2ZOaXP1+BoXwFMpEVG4usSst78MvMYp5Jqc7ziXigKkgmsC9zUzvvaunMRTRFikNPXXYmSdqpVLAxpEKhct3zwP+lzfmAWCdQDK3uL/tqEAbb2OGK3catlItWg8xfVVLvg12aziZoJiYdm0KpE6XUi0W5/iOH9eQNuTlufwhcFRwoTm2NUzbvzwEHvWRzq49IL6t9HDLyyde7G1VYNscDd/H0qc8//SWCal4ewBnLiiuq3C4sfwIDAQAB");
+        
     }
     
     jstring Java_org_cocos2dx_ext_Native_nativeGetPaymentCallbackUrl(JNIEnv* env, jobject thiz)
