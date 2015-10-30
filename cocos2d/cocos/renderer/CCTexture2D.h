@@ -179,6 +179,7 @@ public:
 
      @since v0.8
      */
+    static void setSmallFlag(bool small);
     static void setDownloadFlag(bool down);
     static bool useDownloadResource();
     static void setDefaultAlphaPixelFormat(Texture2D::PixelFormat format);
@@ -565,6 +566,7 @@ public:
     // Added by ChenFei 2014-12-16 V3.2 support
     friend class TextureCache;
     static bool m_useDownload;
+    static bool m_useSmallFlag;
 };
 
 

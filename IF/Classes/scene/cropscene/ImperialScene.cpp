@@ -461,12 +461,14 @@ void ImperialScene::buildingCallBack(CCObject* params)
     
     initMc2();
     
+    showWaterfall();
+    
     m_buildingInitState = true;
     onCreateTitan();
     this->titanChangeStatus(NULL);
     onEnterFrame(0);
     initBigTile();
-    showWaterfall();
+
     onOpenNewBuild(NULL);
     //发生 22资源释放不掉的 区域 end end end end end end
     
@@ -1109,6 +1111,8 @@ void ImperialScene::handleTitanUpgrade(CCObject* obj)
                 m_Titan->turnFront();
                 m_Titan->changeTitanState(Titan::eActState::Stand);
                 titanRootNode->addChild(m_Titan);
+                
+                m_node3d->setCameraMask((unsigned short) CameraFlag::USER2, true);
             }
         }
     }

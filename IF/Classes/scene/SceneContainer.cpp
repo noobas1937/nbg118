@@ -83,17 +83,8 @@ bool SceneContainer::init() {
             
         }
         
-        bool isdown=true;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-        isdown=true;
-#else
-#if COCOS2D_DEBUG == 1
-        isdown=false;
-#else
-        isdown=true;
-#endif
-#endif
-        CCTexture2D::setDownloadFlag(isdown);
+        Texture2D::setSmallFlag(USE_SMALL_IMAGE);
+        CCTexture2D::setDownloadFlag(IS_DOWNLOAD_FLAG);
         ret = true;
     }
     return ret;

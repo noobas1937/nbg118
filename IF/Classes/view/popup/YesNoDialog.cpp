@@ -891,7 +891,8 @@ void YesNoDialog::onEnterFrame(float dt)
         return;
     }
     if (m_time>0) {
-        if (m_isBuild && m_time <=GlobalData::shared()->freeSpdT) {
+        int freeSpdT = GlobalData::shared()->freeSpdT;
+        if (m_isBuild && m_time <=freeSpdT) {
             if(m_goldIcon->isVisible()) {
                 m_goldNum->setString("");
                 m_goldIcon->setVisible(false);
