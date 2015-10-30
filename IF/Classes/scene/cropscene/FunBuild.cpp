@@ -159,6 +159,7 @@ bool FunBuild::initTmpBuild(int itemId, int x, int y, CCSpriteBatchNode* batchNo
     
     //begin a by ljf
     initSpineNode(pic + "_" + CC_ITOA(GlobalData::shared()->contryResType) + "_1");
+    
     //initParticle(itemId);
     //end a by ljf
     
@@ -2213,7 +2214,7 @@ void FunBuild::initParticle(int type)
                 auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d","MagicSprings_work_",i)->getCString());
                 particle->setPosition(Vec2(m_spineAni->getContentSize().width / 2  , m_spineAni->getContentSize().height));
                 //particle->setRotation3D(Vec3(90, 0, 180 * j));
-                particle->setPosition(Vec2(0 , 70));
+                particle->setPosition(Vec2(-10 , 60));
                 workingParticleNode->addChild(particle);
             }
             //添加ready粒子特效
@@ -2225,7 +2226,7 @@ void FunBuild::initParticle(int type)
             {
                 auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d","MagicSprings_ready_",i)->getCString());
                 //particle->setPosition(Vec2(0 , -10));
-                particle->setPosition(Vec2(-5 , 120));
+                particle->setPosition(Vec2(-10  , 100));
                 //particle->setRotation3D(Vec3(90, 0, 180 * j));
                 readyParticleNode->addChild(particle);
             }
@@ -2236,7 +2237,7 @@ void FunBuild::initParticle(int type)
             auto workingParticleNode = Node::create();
             workingParticleNode->setTag(WORKING_PARTICLE_NODE_TAG);
             m_particleNode->addChild(workingParticleNode);
-            workingParticleNode->setZOrder(900000000);
+            
             workingParticleNode->setVisible(true);
             
             //m_particleNode->setZOrder(m_spr->getZOrder() + 5);
@@ -3427,6 +3428,7 @@ void FunBuildState::onEnterFrame(float dt)
             isChange = false;
             m_getIconNode->removeAllChildren();
             int resType = Wood;
+            Vec2 position(0, 0); //a by ljf
             if(m_info->type==FUN_BUILD_WOOD){
                 resType = Wood;
             }
@@ -3438,11 +3440,17 @@ void FunBuildState::onEnterFrame(float dt)
             }
             else if(m_info->type==FUN_BUILD_STONE){
                 resType = Stone;
+                //begin a by ljf
+                position.y = -10;
+                //end a by ljf
             }
             string picStr = CCCommonUtils::getResourceIconByType(resType);
             auto pic = CCLoadSprite::createSprite(picStr.c_str());
 //            CCCommonUtils::setSpriteMaxSize(pic, 80, true);
             m_getIconNode->addChild(pic);
+            //begin a by ljf
+            pic->setPosition(position);
+            //end a by ljf
             m_getNode->setVisible(true);
         }
         return;

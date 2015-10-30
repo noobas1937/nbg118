@@ -157,8 +157,15 @@ bool ImperialScene::init()
     node->setZOrder(90);
     
     for (int i=0; i<BUILD_COUNT; i++) {
-        int od = m_nodeBuildings[i]->getOrderOfArrival();
-        m_nodeBuildings[i]->setZOrder(od);
+        int tag = m_nodeBuildings[i]->getTag();
+        if (tag != -1) {
+            m_nodeBuildings[i]->setZOrder(tag*200);
+        }
+        else
+        {
+            int od = m_nodeBuildings[i]->getOrderOfArrival();
+            m_nodeBuildings[i]->setZOrder(od);
+        }
     }
     
     m_mcNode1->setZOrder(m_mcNode1->getOrderOfArrival());
