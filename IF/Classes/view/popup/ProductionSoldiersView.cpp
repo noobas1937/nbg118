@@ -161,7 +161,7 @@ bool ProductionSoldiersView::init()
         open_arms = tmpBuild.open_arms;
         CCLOG("error m_buildingId=%d",m_buildingId);
     }
-    m_resIndex = m_buildingId/1000000 - 423 + 200;
+    m_resIndex = 204;
     
     ///////////
     m_pos=0;
@@ -792,7 +792,7 @@ void ProductionSoldiersView::onEnter(){
 }
 
 void ProductionSoldiersView::AsyLoadRes2(CCObject* p){
-    if(m_arcScroll==NULL){
+    if(m_ArcGallery==NULL){
         
         m_ArcGallery = CCGallery::create(Size(200,215),Size(640,230));
         m_ArcGallery->setBackScale(0.9);
