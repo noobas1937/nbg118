@@ -352,4 +352,7 @@ enum PUSH_STATUS
 // for overlay transition
 #define TRANSITION_SPEC_TAG 3479
 
+bool get_is_download_flag();
+#define IS_DOWNLOAD_FLAG get_is_download_flag()
+
 #endif
