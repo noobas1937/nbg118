@@ -454,12 +454,14 @@ void ImperialScene::buildingCallBack(CCObject* params)
     
     initMc2();
     
+    showWaterfall();
+    
     m_buildingInitState = true;
     onCreateTitan();
     this->titanChangeStatus(NULL);
     onEnterFrame(0);
     initBigTile();
-    showWaterfall();
+
     onOpenNewBuild(NULL);
     //发生 22资源释放不掉的 区域 end end end end end end
     
