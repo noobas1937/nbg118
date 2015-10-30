@@ -6997,11 +6997,6 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0700;
-				TargetAttributes = {
-					DB9F58F217CD9A520037F7E5 = {
-						DevelopmentTeam = YZAJNXU8QK;
-					};
-				};
 			};
 			buildConfigurationList = DB9F58EE17CD9A520037F7E5 /* Build configuration list for PBXProject "IF" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -8531,7 +8526,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.guojiang.nbg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "2baf0b76-82a7-461a-ac97-125285dd3717";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "\"IF/libs/Chipmunk/include/chipmunk\"";
 				VALIDATE_PRODUCT = NO;
@@ -8607,8 +8602,9 @@
 					"-lsqlite3",
 					"-ObjC",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.guojiang.nbg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "2baf0b76-82a7-461a-ac97-125285dd3717";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "\"IF/libs/Chipmunk/include/chipmunk\"";
 				VALIDATE_PRODUCT = NO;

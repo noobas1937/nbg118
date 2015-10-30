@@ -13,7 +13,32 @@
 	<key>fileVersion</key>
 	<integer>4</integer>
 	<key>guides</key>
-	<array/>
+	<array>
+		<dict>
+			<key>orientation</key>
+			<integer>1</integer>
+			<key>position</key>
+			<real>-48</real>
+		</dict>
+		<dict>
+			<key>orientation</key>
+			<integer>1</integer>
+			<key>position</key>
+			<real>321</real>
+		</dict>
+		<dict>
+			<key>orientation</key>
+			<integer>0</integer>
+			<key>position</key>
+			<real>232</real>
+		</dict>
+		<dict>
+			<key>orientation</key>
+			<integer>0</integer>
+			<key>position</key>
+			<real>-40</real>
+		</dict>
+	</array>
 	<key>jsControlled</key>
 	<false/>
 	<key>nodeGraph</key>
@@ -145,8 +170,8 @@
 								<string>ScaleLock</string>
 								<key>value</key>
 								<array>
-									<real>1.2000000476837158</real>
-									<real>1.2000000476837158</real>
+									<real>1.1000000238418579</real>
+									<real>1.1000000238418579</real>
 									<true/>
 									<integer>1</integer>
 								</array>
@@ -182,6 +207,8 @@
 								</array>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -205,8 +232,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>274.1273193359375</real>
-									<real>34.873458862304688</real>
+									<real>157.1273193359375</real>
+									<real>-18.126541137695312</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -265,8 +292,6 @@
 								</array>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -290,8 +315,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>303</real>
-									<real>47</real>
+									<real>186</real>
+									<real>-6</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -350,8 +375,6 @@
 								</array>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -375,8 +398,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>303</real>
-									<real>47</real>
+									<real>186</real>
+									<real>-6</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -398,8 +421,8 @@
 								<string>ScaleLock</string>
 								<key>value</key>
 								<array>
-									<real>1</real>
-									<real>1</real>
+									<real>6.5298442840576172</real>
+									<real>3.3607645034790039</real>
 									<false/>
 									<integer>0</integer>
 								</array>
@@ -413,8 +436,6 @@
 								<false/>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -438,8 +459,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>279.10000610351562</real>
-									<real>38.900001525878906</real>
+									<real>162.10000610351562</real>
+									<real>-14.099998474121094</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -476,8 +497,6 @@
 								<false/>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>animatedProperties</key>

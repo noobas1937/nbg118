@@ -95,7 +95,7 @@ private:
     int getLastGoldBuyCount(int defCount);
     void showSoldierIcon(CCObject *obj);
     void refreshGalleryCells();
-    
+    void showChangePrt();
     void ClearCD();
     
     ArmyInfo* getCurArmy();
@@ -157,6 +157,8 @@ private:
     CCSafeObject<CCNode> m_stoneNode;
     CCSafeObject<CCNode> m_sliderNode;
     CCSafeObject<CCNode> m_particleNode;
+    CCSafeObject<CCNode> m_soldierPrtNode;
+    
     CCSafeObject<CCControlButton> m_fortHelpBtn;
     
     CCSafeObject<CCNode> m_cdBarNode;

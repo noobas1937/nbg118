@@ -540,7 +540,7 @@
             <key>ico107900_small.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{308,764},{146,138}}</string>
+                <string>{{460,756},{146,138}}</string>
                 <key>offset</key>
                 <string>{0,-2}</string>
                 <key>rotated</key>
@@ -761,11 +761,11 @@
             <key>ico410000_2_small.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{156,612},{146,168}}</string>
+                <string>{{156,764},{146,168}}</string>
                 <key>offset</key>
                 <string>{0,-2}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,15},{146,168}}</string>
                 <key>sourceSize</key>
@@ -774,7 +774,7 @@
             <key>ico411000_2_small.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{452,756},{146,136}}</string>
+                <string>{{604,746},{146,136}}</string>
                 <key>offset</key>
                 <string>{0,-2}</string>
                 <key>rotated</key>
@@ -813,7 +813,7 @@
             <key>ico414000_2_small.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{156,764},{146,152}}</string>
+                <string>{{308,764},{146,152}}</string>
                 <key>offset</key>
                 <string>{0,-2}</string>
                 <key>rotated</key>
@@ -839,7 +839,7 @@
             <key>ico416000_2_small.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{334,604},{146,168}}</string>
+                <string>{{156,612},{146,168}}</string>
                 <key>offset</key>
                 <string>{0,1}</string>
                 <key>rotated</key>
@@ -901,6 +901,19 @@
                 <key>sourceSize</key>
                 <string>{146,194}</string>
             </dict>
+            <key>ico427000_2_small.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{334,604},{146,168}}</string>
+                <key>offset</key>
+                <string>{0,4}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{0,9},{146,168}}</string>
+                <key>sourceSize</key>
+                <string>{146,194}</string>
+            </dict>
             <key>pic403000_2_small.png</key>
             <dict>
                 <key>frame</key>
@@ -930,11 +943,11 @@
             <key>pic410000_2_small.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{156,612},{146,168}}</string>
+                <string>{{156,764},{146,168}}</string>
                 <key>offset</key>
                 <string>{0,-2}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,15},{146,168}}</string>
                 <key>sourceSize</key>
@@ -943,7 +956,7 @@
             <key>pic411000_2_small.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{452,756},{146,136}}</string>
+                <string>{{604,746},{146,136}}</string>
                 <key>offset</key>
                 <string>{0,-2}</string>
                 <key>rotated</key>
@@ -982,7 +995,7 @@
             <key>pic414000_2_small.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{156,764},{146,152}}</string>
+                <string>{{308,764},{146,152}}</string>
                 <key>offset</key>
                 <string>{0,-2}</string>
                 <key>rotated</key>
@@ -1008,7 +1021,7 @@
             <key>pic416000_2_small.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{334,604},{146,168}}</string>
+                <string>{{156,612},{146,168}}</string>
                 <key>offset</key>
                 <string>{0,1}</string>
                 <key>rotated</key>
@@ -1080,7 +1093,7 @@
             <key>size</key>
             <string>{1024,1024}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:954a4674a65c55ce9e69fa96b2601b24:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:3ecd6160a3c6024a1818f622109d59cc:1/1$</string>
             <key>textureFileName</key>
             <string>Common_204.pvr.ccz</string>
         </dict>

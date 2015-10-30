@@ -414,12 +414,12 @@ void ProductionSoldiersView::addSoldierIcon(){
     if(m_info!=NULL && m_buildingLevel<m_info->unlockLevel){
         CCCommonUtils::setSprite3DGray(dynamic_cast<Sprite3D*>(pic),true);
     }
-    if(btype==FUN_BUILD_BARRACK4){
-        pic->setScale(0.85);
-        m_soldierBg->setVisible(false);
-    }else{
-         m_soldierBg->setVisible(true);
-    }
+//    if(btype==FUN_BUILD_BARRACK4){
+//        pic->setScale(0.85);
+//        m_soldierBg->setVisible(false);
+//    }else{
+//         m_soldierBg->setVisible(true);
+//    }
     m_soldierBg->setVisible(false);
     
     if (CCCommonUtils::isPad())
@@ -772,12 +772,15 @@ void ProductionSoldiersView::moveSlider(Ref *pSender, NBSlider::EventType type){
 void ProductionSoldiersView::onEnter(){
     CCNode::onEnter();
     UIComponent::getInstance()->showResourceBar(true);
-    if(!m_isFort){
-        CCLoadSprite::doLoadResourceAsync(COMMON_PATH, CCCallFuncO::create(this, callfuncO_selector(ProductionSoldiersView::AsyLoadRes2), NULL), m_resIndex);
-    }else{
+//    if(!m_isFort){
+//        CCLoadSprite::doLoadResourceAsync(COMMON_PATH, CCCallFuncO::create(this, callfuncO_selector(ProductionSoldiersView::AsyLoadRes2), NULL), m_resIndex);
+//    }else{
         this->AsyLoadRes2(NULL);
+//    }
+    if (m_ArcGallery) {
+        m_ArcGallery->setTargetIndexItem(m_pos);
     }
-    this->refresh();
+//    this->refresh();
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ProductionSoldiersView::refresh), MSG_UPDATE_ARMY_DATA, NULL);
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ProductionSoldiersView::refreshResource), MSG_CITY_RESOURCES_UPDATE, NULL);
     
@@ -811,6 +814,7 @@ void ProductionSoldiersView::AsyLoadRes2(CCObject* p){
         m_arcLayer->getChildByTag(9992)->setZOrder(9992);
         
         refreshGalleryCells();
+        refresh();
 //        m_arcScroll = ArcScrollView::create(m_arcArmys,2,m_pos);
 //        m_arcScroll->setCallback(this, callfunc_selector(ProductionSoldiersView::arcButtonClick));
 //        m_arcNode->addChild(m_arcScroll);
@@ -1372,6 +1376,8 @@ bool ProductionSoldiersView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarg
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_newIcon", CCSprite*, this->m_newIcon);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_soldierLight", CCNode*, this->m_soldierLight);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_soldier_light_star", CCNode*, this->m_soldier_light_star);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_soldierPrtNode", CCNode*, this->m_soldierPrtNode);
+    
     return false;
 }
 
@@ -1542,11 +1548,34 @@ void ProductionSoldiersView::selectionChanged(CCGallery *gallery, CCGalleryItem 
     {
         return;
     }
+    showChangePrt();
     refreshGalleryCells();
     refresh();
 }
 
 void ProductionSoldiersView::selectionDecided(CCGallery *gallery, CCGalleryItem *pGItem)
 {
+    
+}
+
+void ProductionSoldiersView::showChangePrt()
+{
+    m_soldierPrtNode->setVisible(false);
+    if (m_soldierPrtNode->getChildrenCount() <= 0) {
+        auto prt1 = ParticleController::createParticle("soldierView_change_0");
+        m_soldierPrtNode->addChild(prt1);
+        prt1->setTag(0);
+        
+        auto prt2 = ParticleController::createParticle("soldierView_change_1");
+        m_soldierPrtNode->addChild(prt2);
+        prt2->setTag(1);
+    }
+    for (int i = 0; i < m_soldierPrtNode->getChildrenCount(); i++) {
+        auto prt = (CCParticleSystemQuad*)(m_soldierPrtNode->getChildByTag(i));
+        if (prt) {
+            prt->resetSystem();
+        }
+    }
+    m_soldierPrtNode->setVisible(true);
     
 }
