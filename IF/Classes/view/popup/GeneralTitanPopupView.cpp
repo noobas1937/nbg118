@@ -1530,23 +1530,23 @@ bool GeneralTitanPopupView::onTouchBegan(CCTouch *pTouch, CCEvent *pEvent){
 //    m_x = 1000;
 //    m_startY = pTouch->getLocation().y;
 //    return true;
-            if(isTouchInside(m_eBgSpr1, pTouch)){
-                CCCommonUtils::flyHint("", "", _lang("E100008"));
-            }else if(isTouchInside(m_eBgSpr2, pTouch)){
-                CCCommonUtils::flyHint("", "", _lang("E100008"));
-            }else if(isTouchInside(m_eBgSpr3, pTouch)){
-                CCCommonUtils::flyHint("", "", _lang("E100008"));
-            }else if(isTouchInside(m_eBgSpr4, pTouch)){
-                CCCommonUtils::flyHint("", "", _lang("E100008"));
-            }else if(isTouchInside(m_eBgSpr5, pTouch)){
-                CCCommonUtils::flyHint("", "", _lang("E100008"));
-            }else if(isTouchInside(m_eBgSpr6, pTouch)){
-                CCCommonUtils::flyHint("", "", _lang("E100008"));
-            }else if(isTouchInside(m_eBgSpr7, pTouch)){
-                CCCommonUtils::flyHint("", "", _lang("E100008"));
-            }else if(isTouchInside(m_eBgSpr8, pTouch)){
-                CCCommonUtils::flyHint("", "", _lang("E100008"));
-            }
+//            if(isTouchInside(m_eBgSpr1, pTouch)){//fusheng 不提示装备未开放
+//                CCCommonUtils::flyHint("", "", _lang("E100008"));
+//            }else if(isTouchInside(m_eBgSpr2, pTouch)){
+//                CCCommonUtils::flyHint("", "", _lang("E100008"));
+//            }else if(isTouchInside(m_eBgSpr3, pTouch)){
+//                CCCommonUtils::flyHint("", "", _lang("E100008"));
+//            }else if(isTouchInside(m_eBgSpr4, pTouch)){
+//                CCCommonUtils::flyHint("", "", _lang("E100008"));
+//            }else if(isTouchInside(m_eBgSpr5, pTouch)){
+//                CCCommonUtils::flyHint("", "", _lang("E100008"));
+//            }else if(isTouchInside(m_eBgSpr6, pTouch)){
+//                CCCommonUtils::flyHint("", "", _lang("E100008"));
+//            }else if(isTouchInside(m_eBgSpr7, pTouch)){
+//                CCCommonUtils::flyHint("", "", _lang("E100008"));
+//            }else if(isTouchInside(m_eBgSpr8, pTouch)){
+//                CCCommonUtils::flyHint("", "", _lang("E100008"));
+//            }
     
 //    if(isTouchInside(m_titanFeed, pTouch))
 //    {
@@ -1737,7 +1737,9 @@ void GeneralTitanPopupView::onRefreshEquip()
     m_equipLabel7->setString("");
     m_equipLabel8->setString("");
     
-//    return;
+
+    
+    return;//fusheng
     
     //打开屏蔽装备
 //    if(m_info&&(!m_info->showEquip)){

@@ -1102,6 +1102,8 @@ void ImperialScene::handleTitanUpgrade(CCObject* obj)
                 m_Titan->turnFront();
                 m_Titan->changeTitanState(Titan::eActState::Stand);
                 titanRootNode->addChild(m_Titan);
+                
+                m_node3d->setCameraMask((unsigned short) CameraFlag::USER2, true);
             }
         }
     }
