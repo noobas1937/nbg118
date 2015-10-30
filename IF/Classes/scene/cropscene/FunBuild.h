@@ -46,8 +46,8 @@ public:
     CCNode* getGuideNode(string _key);
     void showTmpBuild(int itemId);
     void hideTmpBuild();
-    static FunBuild* createTmpBuild(int itemId, int x, int y, CCSpriteBatchNode* batchNode, int zOrder, CCSpriteBatchNode* blentbatch=NULL);
-    bool initTmpBuild(int itemId, int x, int y, CCSpriteBatchNode* batchNode, int zOrder, CCSpriteBatchNode* blentbatch=NULL);
+    static FunBuild* createTmpBuild(int itemId, int x, int y, CCSpriteBatchNode* batchNode, int zOrder, CCSpriteBatchNode* blentbatch=NULL, Node * pSpineLayer = NULL);
+    bool initTmpBuild(int itemId, int x, int y, CCSpriteBatchNode* batchNode, int zOrder, CCSpriteBatchNode* blentbatch=NULL, Node * pSpineLayer = NULL);
     
     void setTime(int times, bool updateLv=false);
     void changeBg();
@@ -235,7 +235,7 @@ private:
     string STClickName;
     
     void initEffectState(); //a by ljf
-    void initSpineNode(string picName); //a by ljf
+    void initSpineNode(string picName, Node * spineParent); //a by ljf
     void initParticle(int type); //a by ljf
 };
 

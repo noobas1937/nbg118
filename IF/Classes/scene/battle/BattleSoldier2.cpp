@@ -31,6 +31,9 @@ bool BattleSoldier2::init(){
     m_iconSpr = CCLoadSprite::createSprite(filePath->getCString());
     m_iconSpr->setAnchorPoint(ccp(0.5,0.5));
     m_batchNode->addChild(m_iconSpr);
+    //begin a by ljf  //解决造出兵时的遮挡问题
+    m_iconSpr->setCameraMask(m_batchNode->getCameraMask(), true);
+    //end a by ljf
     changeDirect(m_direct);
     float scale = 0.5;
     if(m_isHead){

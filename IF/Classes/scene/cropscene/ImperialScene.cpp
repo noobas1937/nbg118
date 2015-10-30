@@ -2960,6 +2960,11 @@ void ImperialScene::onUpdateInfo()
                 
                 build->setTileBatch(m_nodeBuildings[i]->getPositionX(), m_nodeBuildings[i]->getPositionY(), m_resbatchNode, od);
                 build->m_key = 1000-od;
+                //begin a by ljf
+                if (m_buildSpineMap.find(i) != m_buildSpineMap.end()) {
+                    build->setSpineLayer( m_buildSpineMap[(it->second).pos] ); //a by ljf
+                }
+                //end a by ljf
             }
         }
     }
