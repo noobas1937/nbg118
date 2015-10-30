@@ -7811,7 +7811,19 @@ void WorldMapView::update_water_shader(const Vec2& position)
         m_pWaterSprite3->setPosition(OFFSET, OFFSET);
         m_layers[WM_BG]->addChild(m_pWaterSprite3);
     }
-    
+    //begin a by ljf
+    /*
+    CCSprite* pWaterHighLight = dynamic_cast<CCSprite*>(m_layers[WM_BG]->getChildByTag(WATER_SHADER_TAG + 4));
+    if(!pWaterHighLight)
+    {
+        auto pWaterHighLight = CCLoadSprite::createSprite("water_center_high_light.png");
+        pWaterHighLight->setTag(WATER_SHADER_TAG + 4);
+        pWaterHighLight->setZOrder(m_pWaterSprite3->getZOrder() + 1);
+        pWaterHighLight->setScale(2.0f);
+        m_layers[WM_BG]->addChild(pWaterHighLight);
+    }
+    */
+    //end a by ljf
     int xs = (int)position.x / OFFSET;
     int ys = (int)position.y / OFFSET;
     if (m_pWaterSprite0)
