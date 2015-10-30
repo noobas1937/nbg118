@@ -83,6 +83,7 @@ bool SceneContainer::init() {
             
         }
         
+        Texture2D::setSmallFlag(USE_SMALL_IMAGE);
         CCTexture2D::setDownloadFlag(IS_DOWNLOAD_FLAG);
         ret = true;
     }

@@ -354,5 +354,6 @@ enum PUSH_STATUS
 
 bool get_is_download_flag();
 #define IS_DOWNLOAD_FLAG get_is_download_flag()
+#define USE_SMALL_IMAGE false
 
 #endif
