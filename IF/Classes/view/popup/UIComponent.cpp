@@ -2009,7 +2009,9 @@ void UIComponent::onSceneChanged(CCObject* params){
         if(FunBuildController::getInstance()->getMainCityLv() < 10){
             std::string key = NEW_USER_HELP_ON + CCUserDefault::sharedUserDefault()->getStringForKey(GAME_UID);
             if(CCUserDefault::sharedUserDefault()->getBoolForKey(key.c_str())==false){
-                m_newuserHelpNode->setVisible(true);
+                // 第一版本不开放feedback，在CCB中已经将m_newuserHelpNode设置隐藏
+//                m_newuserHelpNode->setVisible(true);
+                m_newuserHelpNode->setVisible(false);
                 m_newuserHelpNode->setPositionY(CCDirector::sharedDirector()->getWinSize().height*0.5);
             }
         }
@@ -2694,7 +2696,10 @@ bool UIComponent::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const c
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_store", CCSprite*, this->m_store);
     
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_homeBG", CCSprite*, this->m_homeBG);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_homeBG", CCNode*, this->m_homeBG);
+    
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_homeBG_NB", CCSprite*, this->m_homeBG_NB);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_upNode", CCNode*, this->m_upNode);
     
@@ -3350,7 +3355,7 @@ bool UIComponent::onTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEven
     
     //    }
     
-    else if(m_mainControlNode->isVisible() && isTouchInside(this->m_homeBG, pTouch))
+    else if(m_mainControlNode->isVisible() && isTouchInside(this->m_homeBG_NB, pTouch))//fusheng 修改未NB
         
     {
         
@@ -3472,6 +3477,7 @@ bool UIComponent::onTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEven
         hintType = 27;
         return true;
 	}else if(m_newuserHelpNode->isVisible() && isTouchInside(m_newuserHelpBG,pTouch)){
+        // 第一版本不开放feedback，在CCB中已经将m_newuserHelpNode设置隐藏
         hintType = 28; //新手help信息
         return true;
     }else if(m_mainControlNode->isVisible() && m_watchNode->isVisible() && isTouchInside(this->m_watchNode, pTouch)){
@@ -3868,10 +3874,10 @@ void UIComponent::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEven
             break;
         }
         case 28:{
-//            HelpshiftCocos2dx::showFAQSection("8");
-            HelpshiftCocos2dx::showFAQs();
-            CCDelayTime *delayTime = CCDelayTime::create(0.5);
-            m_newuserHelpNode->runAction(CCSequence::create(delayTime,CCCallFunc::create(this, callfunc_selector(UIComponent::showHideNewUserHelpDialog)),NULL));
+            // tao.yu 第一版本不开放feedback
+//            HelpshiftCocos2dx::showFAQs();
+//            CCDelayTime *delayTime = CCDelayTime::create(0.5);
+//            m_newuserHelpNode->runAction(CCSequence::create(delayTime,CCCallFunc::create(this, callfunc_selector(UIComponent::showHideNewUserHelpDialog)),NULL));
             break;
         }
         case 29:{
@@ -6226,9 +6232,11 @@ void UIComponent::playQuestRect()
         if (m_recommandQuest->isShow==2) {
             m_questTipNpcNode->setVisible(true);
             m_questTipNpcNode->stopAllActions();
-            m_questTipNpcNode->setPosition(ccp(-77, 127));
-            CCActionInterval * moveTo1 = CCMoveTo::create(0.5, ccp(-93, 118));
-            CCActionInterval * moveTo2 = CCMoveTo::create(0.5, ccp(-77, 127));
+//            fusheng begin
+            m_questTipNpcNode->setPosition(ccp(30, 127));
+            CCActionInterval * moveTo1 = CCMoveTo::create(0.5, ccp(30, 118));
+            CCActionInterval * moveTo2 = CCMoveTo::create(0.5, ccp(30, 127));
+//            fusheng end
             CCActionInterval * repeat = CCRepeat::create(CCSequence::create(moveTo1, moveTo2, NULL), 7);
             m_questTipNpcNode->runAction(repeat);
         }

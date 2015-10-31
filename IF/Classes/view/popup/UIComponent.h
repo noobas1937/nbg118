@@ -613,7 +613,8 @@ private:
     CCSafeObject<CCSprite> m_homeBack;
     CCSafeObject<CCSprite> m_configSet;
 
-    CCSafeObject<CCSprite> m_homeBG;
+    CCSafeObject<CCNode> m_homeBG;
+    CCSafeObject<CCSprite> m_homeBG_NB;//fusheng 添加一个新的回城按钮
     CCSafeObject<CCSprite> m_storeBG;
     CCSafeObject<CCSprite> m_allianceBG;
     
