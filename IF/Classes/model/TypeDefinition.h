@@ -189,8 +189,8 @@ const char * getServerListIP_TypeDefinition(bool b);
 #define S2_IP_0 "184.173.110.99"
 #define S2_ACCOUNT_IP "s2.dc.elexapp.com"
 
-#define REAL_IP_TENCENT "tenp1.cok.elex.com"
-#define REAL_IP_HK "hkp1.dc.elexapp.com"
+#define REAL_IP_TENCENT SERVER_IP//"tenp1.cok.elex.com"
+#define REAL_IP_HK SERVER_IP//"hkp1.dc.elexapp.com"
 
 #define ANNIVERSARY_IMAGE_URL "http://p1dc.elexapp.com/gameservice/www/gateway/json.php"
 

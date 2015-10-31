@@ -3511,7 +3511,7 @@ void ImperialScene::initMc2()
     }
     
     // tao.yu 暂时不开放feedback功能
-    if (1) {
+    if (0) {
         int zOrder = m_desNode1->getZOrder();
         m_mailBuild = SpeBuild::create(SPE_BUILD_MAIL);
         m_desNode1->addChild(m_mailBuild);

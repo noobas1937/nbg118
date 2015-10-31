@@ -505,7 +505,7 @@ void BuildListView::showHand()
     if(!m_npcNode->isVisible()) {
         m_npcNode->setPosition(ccp(-650, 30));
         m_npcNode->setVisible(true);
-        m_npcNode->runAction(CCMoveTo::create(0.3, ccp(-38, -140)));
+        m_npcNode->runAction(CCMoveTo::create(0.3, ccp(-38, 30)));
     }
 }
 
