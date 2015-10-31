@@ -403,7 +403,7 @@ void DynamicResourceController::checkSoundResource(){
             }else{
                 if((*iter).name.compare(DynamicSound_BG) == 0){
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-                    string file1 = m_writeablePath + DynamicSound_Folder + "background/m_city.ogg";
+                    string file1 = m_writeablePath + DynamicSound_Folder + "background/m_city_0.ogg";
                     string file2 = m_writeablePath + DynamicSound_Folder + "background/m_field.ogg";
                     if(CCFileUtils::sharedFileUtils()->isFileExist(file1) &&CCFileUtils::sharedFileUtils()->isFileExist(file2)){
                         ++iter;
