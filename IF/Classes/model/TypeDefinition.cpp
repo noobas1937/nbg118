@@ -34,12 +34,12 @@
     #define __SERVER__ZONE_2   __SERVER__ZONE
     #define __SERVERLIST__IP_2 __SERVERLIST__IP
 #else // 正式服
-    #define __SERVER__IP     "p1dc.elexapp.com"
+    #define __SERVER__IP     "s1.dc.elexapp.com"
     #define __SERVER__PORT   80
     #define __SERVER__ZONE   "COK1"
     #define __SERVERLIST__IP "p1dc.elexapp.com"
 
-    #define __SERVER__IP_2     "p1dc.elexapp.com"
+    #define __SERVER__IP_2     "s1.dc.elexapp.com"
     #define __SERVER__PORT_2   80
     #define __SERVER__ZONE_2   "COK1"
     #define __SERVERLIST__IP_2 "p1dc.elexapp.com"
