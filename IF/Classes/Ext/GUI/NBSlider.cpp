@@ -10,6 +10,30 @@
 #include "ui/UIHelper.h"
 #include "CCTypesExt.h"
 
+
+bool NBSlider::myNBisTouchInside(Touch *touch)
+{
+    Vec2 pos= _progressBarRenderer->convertToNodeSpace(touch->getLocation());
+    
+    Vec2 pos1= _thumbRenderer->convertToNodeSpace(touch->getLocation());
+    
+    Rect rect = _progressBarRenderer->getBoundingBox();
+    float width = rect.size.width * this->getScaleX();
+    
+    
+    
+    Rect rect1 = _thumbRenderer->getBoundingBox();
+    
+    float height = rect1.size.height * this->getScaleY();
+    
+    if (pos.x > 0 && pos.x < width) {//fusheng 以进度条为宽  2倍thumb为高
+        if (pos1.y < height*3/2 && pos1.y > -height/2) {
+            return true;
+        }
+    }
+    
+    return false;
+}
 float NBSlider::getValue()
 {
     return _value;
@@ -171,7 +195,7 @@ bool NBSlider::onTouchBegan(Touch *touch, Event *unusedEvent)
     if (isMoved) {
         return false;
     }
-    if(isTouchInside(_progressBarRenderer,touch))
+    if(myNBisTouchInside(touch))
     {
         float tryX = _progressBarRenderer->convertToNodeSpace(touch->getLocation()).x;
         

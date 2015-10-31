@@ -65,10 +65,10 @@ FunBuild* FunBuild::create(int itemId, CCLabelBatchNode* nameLayer)
     return pRet;
 }
 
-FunBuild* FunBuild::createTmpBuild(int itemId, int x, int y, CCSpriteBatchNode* batchNode, int zOrder, CCSpriteBatchNode* blentbatch)
+FunBuild* FunBuild::createTmpBuild(int itemId, int x, int y, CCSpriteBatchNode* batchNode, int zOrder, CCSpriteBatchNode* blentbatch, Node * pSpineLayer)
 {
     FunBuild *pRet = new FunBuild();
-    if (pRet && pRet->initTmpBuild(itemId,x,y,batchNode,zOrder,blentbatch))
+    if (pRet && pRet->initTmpBuild(itemId,x,y,batchNode,zOrder,blentbatch, pSpineLayer))
     {
         pRet->autorelease();
     }
@@ -79,7 +79,7 @@ FunBuild* FunBuild::createTmpBuild(int itemId, int x, int y, CCSpriteBatchNode* 
     return pRet;
 }
 
-bool FunBuild::initTmpBuild(int itemId, int x, int y, CCSpriteBatchNode* batchNode, int zOrder, CCSpriteBatchNode* blentbatch)
+bool FunBuild::initTmpBuild(int itemId, int x, int y, CCSpriteBatchNode* batchNode, int zOrder, CCSpriteBatchNode* blentbatch, Node * pSpineLayer)
 {
     if(m_sprArray) {
         m_sprArray->removeAllObjects();
@@ -158,8 +158,7 @@ bool FunBuild::initTmpBuild(int itemId, int x, int y, CCSpriteBatchNode* batchNo
     }
     
     //begin a by ljf
-    initSpineNode(pic + "_" + CC_ITOA(GlobalData::shared()->contryResType) + "_1");
-    
+    initSpineNode(pic + "_" + CC_ITOA(GlobalData::shared()->contryResType) + "_1", pSpineLayer);
     //initParticle(itemId);
     //end a by ljf
     
@@ -297,9 +296,12 @@ bool FunBuild::initFunBuild(int itemId, CCLabelBatchNode* nameLayer)
         
         //begin a by ljf
         initEffectState();
-        initSpineNode(m_info->pic + "_" + CC_ITOA(GlobalData::shared()->contryResType) + "_1");
+        initSpineNode(m_info->pic + "_" + CC_ITOA(GlobalData::shared()->contryResType) + "_1", nullptr);
         initParticle(m_info->type);
-        
+        if(m_spineNode and m_nameLayer)
+        {
+            m_spineNode->setCameraMask(m_nameLayer->getCameraMask(), true);
+        }
         //end a by ljf
     }
     else   //ljf, 这代表没有创建的空块，itemId对应的是position字段
@@ -706,7 +708,7 @@ void FunBuild::setSpineLayer(CCLayer* spineLayer)
     //end a by ljf
 }
 //begin a by ljf
-void FunBuild::initSpineNode(string picName)
+void FunBuild::initSpineNode(string picName, Node * spineParent)
 {
     if(m_spineNode)
     {
@@ -724,8 +726,17 @@ void FunBuild::initSpineNode(string picName)
         {
             m_spineAni = new IFSkeletonAnimation(spineJsonName.c_str(), spineAtlasName.c_str());
             if (m_spineAni) {
-                m_spineNode->addChild(m_spineAni);
-                
+                /*
+                if(spineParent)
+                {
+                    m_spineAni->setPosition(Vec2(m_spineNode->getPositionX() + parentX, m_spineNode->getPositionY() + parentY));
+                    spineParent->addChild(m_spineAni);
+                }
+                else
+                    */
+                {
+                    m_spineNode->addChild(m_spineAni);
+                }
                 //m_spr->setVisible(false);
                 //spTrackEntry* entry = m_spineAni->setAnimation(0, "gongzuo", true);
                 //spTrackEntry* entry = m_spineAni->setAnimation(0, "BeforeHarvestWait", true);
@@ -2866,7 +2877,7 @@ void FunBuild::showTmpBuild(int itemId)
 {
     hideTmpBuild();
     
-    auto build = FunBuild::createTmpBuild(itemId, parentX, parentY, m_batchNode, m_zOrder, m_blentBatchNode);
+    auto build = FunBuild::createTmpBuild(itemId, parentX, parentY, m_batchNode, m_zOrder, m_blentBatchNode, m_spineLayer);
     build->setTag(9);
 //    build->playShadow();
     this->addChild(build);

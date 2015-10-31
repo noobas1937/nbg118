@@ -70,6 +70,8 @@ public:
     void setCapInsetsBarRenderer(const Rect &capInsets);
     
     void setCapInsetProgressBarRebderer(const Rect &capInsets);
+    
+    bool myNBisTouchInside(Touch *touch);
 private:
     
     float m_minValue;

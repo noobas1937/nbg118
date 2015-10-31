@@ -73,6 +73,10 @@ Node * NBWorldMapMainCity::getMainCity(int island_index, int level, int nSpecial
     auto house = CCLoadSprite::createSprite(picStr.c_str());
     house->setAnchorPoint(Vec2(0, 0));
     house->setPosition(house_pos);
+    if (island_index != 0)
+    {
+        house->setOpacity(0);
+    }
     return house;
 }
 
