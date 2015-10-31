@@ -2694,7 +2694,10 @@ bool UIComponent::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const c
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_store", CCSprite*, this->m_store);
     
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_homeBG", CCSprite*, this->m_homeBG);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_homeBG", CCNode*, this->m_homeBG);
+    
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_homeBG_NB", CCSprite*, this->m_homeBG_NB);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_upNode", CCNode*, this->m_upNode);
     
@@ -3350,7 +3353,7 @@ bool UIComponent::onTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEven
     
     //    }
     
-    else if(m_mainControlNode->isVisible() && isTouchInside(this->m_homeBG, pTouch))
+    else if(m_mainControlNode->isVisible() && isTouchInside(this->m_homeBG_NB, pTouch))//fusheng 修改未NB
         
     {
         
@@ -6226,9 +6229,11 @@ void UIComponent::playQuestRect()
         if (m_recommandQuest->isShow==2) {
             m_questTipNpcNode->setVisible(true);
             m_questTipNpcNode->stopAllActions();
-            m_questTipNpcNode->setPosition(ccp(-77, 127));
-            CCActionInterval * moveTo1 = CCMoveTo::create(0.5, ccp(-93, 118));
-            CCActionInterval * moveTo2 = CCMoveTo::create(0.5, ccp(-77, 127));
+//            fusheng begin
+            m_questTipNpcNode->setPosition(ccp(30, 127));
+            CCActionInterval * moveTo1 = CCMoveTo::create(0.5, ccp(30, 118));
+            CCActionInterval * moveTo2 = CCMoveTo::create(0.5, ccp(30, 127));
+//            fusheng end
             CCActionInterval * repeat = CCRepeat::create(CCSequence::create(moveTo1, moveTo2, NULL), 7);
             m_questTipNpcNode->runAction(repeat);
         }
