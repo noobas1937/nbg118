@@ -790,8 +790,11 @@ void TitanUpgradeView::onLastUp()
 //            auto layer = dynamic_cast<ImperialScene*>(SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE));
 //            if(layer)
 //                layer->showBuildBtns(m_buildId);
-            PopupViewController::getInstance()->goBackPopupView();
             
+            if(isForce)//fusheng 如果是强制建立  退出所有弹出窗
+                PopupViewController::getInstance()->removeAllPopupView();
+            else
+                PopupViewController::getInstance()->goBackPopupView();
         }
     }
     else {
