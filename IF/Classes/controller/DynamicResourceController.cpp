@@ -889,6 +889,11 @@ bool DynamicResourceController::checkResourceFile(std::string name,bool platform
     return true;
 }
 void DynamicResourceController::popFromQueue(){
+    if (false == get_is_download_flag())
+    {
+        mQueue.clear();
+        return;
+    }
     if(m_isDownloading==false && mQueue.size()>0){
         mDownLoadDR = mQueue.at(0);
 //        m_zipFile = m_writeablePath +mDownLoadDR.name+"tmp.zip";
