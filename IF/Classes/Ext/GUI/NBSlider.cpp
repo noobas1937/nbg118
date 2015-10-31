@@ -26,8 +26,8 @@ bool NBSlider::myNBisTouchInside(Touch *touch)
     
     float height = rect1.size.height * this->getScaleY();
     
-    if (pos.x > 0 && pos.x < width) {//fusheng 以进度条为宽  thumb为高
-        if (pos1.y < height && pos1.y > 0) {
+    if (pos.x > 0 && pos.x < width) {//fusheng 以进度条为宽  2倍thumb为高
+        if (pos1.y < height*3/2 && pos1.y > -height/2) {
             return true;
         }
     }

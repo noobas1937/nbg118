@@ -58,6 +58,8 @@ private:
     int _tmpGold;
     CCSafeObject<CCScrollView> m_scrollView;
     int m_openNum;
+    
+    virtual bool onTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent);//事件吞噬
 };
 
 #endif

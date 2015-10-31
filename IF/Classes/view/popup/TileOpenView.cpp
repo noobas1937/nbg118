@@ -3,6 +3,7 @@
 //  IF
 //
 //  Created by fubin on 14-5-23.
+//  Edited  by fusheng on 15-10-30.
 //
 //
 
@@ -38,8 +39,6 @@ bool TileOpenView::init(int tileId)
     this->setContentSize(tmpCCB->getContentSize());
     
     m_upBtnMsgLabel->setString(_lang("102113").c_str());
-//    m_btnMsgLabel->setString(_lang("102127").c_str());
-//    m_inBtnGoldNum->setString("1");
     
     m_scrollView = CCScrollView::create(m_infoList->getContentSize());
     m_scrollView->setDirection(kCCScrollViewDirectionVertical);
@@ -49,9 +48,9 @@ bool TileOpenView::init(int tileId)
     m_openNum=0;
     
     m_mainNode->setPositionY(m_mainNode->getPositionY()-200);
-    CCActionInterval * moveBy2 = CCMoveBy::create(0.25, ccp(0,200));
-    m_mainNode->runAction(CCSequence::create(moveBy2, NULL));
-    
+//    CCActionInterval * moveBy2 = CCMoveBy::create(0.25, ccp(0,200));
+//    m_mainNode->runAction(CCSequence::create(moveBy2, NULL));
+//    
     return true;
 }
 
@@ -189,7 +188,6 @@ void TileOpenView::updateInfo(CCObject* p)
         curY -= 46;
     } else {
         curY -= 23;
-        curY -= 46;//fusheng 原本显示少一个
     }
     m_scrollView->setContentSize(CCSize(m_infoList->getContentSize().width,curY));
     m_scrollView->setContentOffset(ccp(0, m_infoList->getContentSize().height - curY));
@@ -248,4 +246,9 @@ void TileOpenView::onCreateOrUpClick(cocos2d::CCObject * pSender, Control::Event
 
 void TileOpenView::onOkUp()
 {
+}
+
+bool TileOpenView::onTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
+{
+    return true;
 }
