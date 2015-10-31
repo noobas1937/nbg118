@@ -34,6 +34,11 @@ NetController::NetController()
 , m_ipConnectTime(0)
 , m_isSending(false)
 {
+    // NBTODO
+    isTecentConnectionInUse = false;
+    isHKConnectionInUse = false;
+    isUSConnectionInUse = true;
+    
     resetConnectionUse(true);
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(NetController::onConnectionLost), NET_CONNECTION_LOST, NULL);
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(NetController::onLoginFinish), MSG_LoginInit, NULL);
@@ -455,26 +460,31 @@ std::string NetController::getRealIp(){
     return getIp();
 }
 
+// NBTODO
 void NetController::resetConnectionUse(bool reset){
-    if(reset){
-        isTecentConnectionInUse = false;
-        isHKConnectionInUse = true;
-        isUSConnectionInUse = false;
-    }else{
-        if(isTecentConnectionInUse){
-            isTecentConnectionInUse = false;
-            isHKConnectionInUse = false;
-            isUSConnectionInUse = true;
-        }else if(isHKConnectionInUse){
-            isTecentConnectionInUse = true;
-            isHKConnectionInUse = false;
-            isUSConnectionInUse = false;
-        }else if(isUSConnectionInUse){
-            isTecentConnectionInUse = false;
-            isHKConnectionInUse = true;
-            isUSConnectionInUse = false;
-        }
-    }
+//    if(reset){
+//        isTecentConnectionInUse = false;
+//        isHKConnectionInUse = true;
+//        isUSConnectionInUse = false;
+//    }else{
+//        if(isTecentConnectionInUse){
+//            isTecentConnectionInUse = false;
+//            isHKConnectionInUse = false;
+//            isUSConnectionInUse = true;
+//        }else if(isHKConnectionInUse){
+//            isTecentConnectionInUse = true;
+//            isHKConnectionInUse = false;
+//            isUSConnectionInUse = false;
+//        }else if(isUSConnectionInUse){
+//            isTecentConnectionInUse = false;
+//            isHKConnectionInUse = true;
+//            isUSConnectionInUse = false;
+//        }
+//    }
+    
+    isTecentConnectionInUse = false;
+    isHKConnectionInUse = false;
+    isUSConnectionInUse = true;
 }
 
 void NetController::onConnectionLost(CCObject* p)
