@@ -44,10 +44,12 @@ bool TileOpenView::init(int tileId)
     m_scrollView->setDirection(kCCScrollViewDirectionVertical);
     m_infoList->addChild(m_scrollView);
     
+    this->changeBGMaxHeight(this);
+    
     updateInfo();
     m_openNum=0;
     
-    m_mainNode->setPositionY(m_mainNode->getPositionY()-200);
+  //  m_mainNode->setPositionY(m_mainNode->getPositionY()-200);
 //    CCActionInterval * moveBy2 = CCMoveBy::create(0.25, ccp(0,200));
 //    m_mainNode->runAction(CCSequence::create(moveBy2, NULL));
 //    
@@ -201,7 +203,7 @@ void TileOpenView::onEnter()
     if (m_openNum>0) {
         updateInfo();
     }
-    
+        setTouchEnabled(true);
     m_openNum++;
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(TileOpenView::updateInfo), MSG_REFREASH_BUILD_UPGRADE, NULL);
 }
@@ -211,6 +213,8 @@ void TileOpenView::onExit()
     UIComponent::getInstance()->showResourceBar(false);
     
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_REFREASH_BUILD_UPGRADE);
+    
+     setTouchEnabled(false);
     CCNode::onExit();
 }
 
