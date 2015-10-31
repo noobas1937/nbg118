@@ -6233,9 +6233,9 @@ void UIComponent::playQuestRect()
             m_questTipNpcNode->setVisible(true);
             m_questTipNpcNode->stopAllActions();
 //            fusheng begin
-            m_questTipNpcNode->setPosition(ccp(30, 127));
-            CCActionInterval * moveTo1 = CCMoveTo::create(0.5, ccp(30, 118));
-            CCActionInterval * moveTo2 = CCMoveTo::create(0.5, ccp(30, 127));
+            m_questTipNpcNode->setPosition(ccp(23, 127));
+            CCActionInterval * moveTo1 = CCMoveTo::create(0.5, ccp(23, 118));
+            CCActionInterval * moveTo2 = CCMoveTo::create(0.5, ccp(23, 127));
 //            fusheng end
             CCActionInterval * repeat = CCRepeat::create(CCSequence::create(moveTo1, moveTo2, NULL), 7);
             m_questTipNpcNode->runAction(repeat);
