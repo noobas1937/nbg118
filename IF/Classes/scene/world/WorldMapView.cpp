@@ -6641,12 +6641,15 @@ void WorldMapView::delBatchItem(BatchTagType type, unsigned int index) {
     if (item) {
         item->removeFromParentAndCleanup(true);
     }
-    auto monster = m_mapMonsterNode->getChildByTag(getBatchTag(type, index));
+    
+    int monsterTag = getBatchTag(type, index);
+    auto monster = m_mapMonsterNode->getChildByTag(monsterTag);
     if (monster) {
         monster->removeFromParentAndCleanup(true);
     }
     // guo.jiang
-    monster = m_mapMonstersNode->getChildByTag(getBatchTag(type, index));
+    int tag = 1000000 * 100 + monsterTag;
+    monster = m_mapMonstersNode->getChildByTag(tag);
     if (monster) {
         monster->removeFromParentAndCleanup(true);
     }
