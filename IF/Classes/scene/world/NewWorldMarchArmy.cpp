@@ -966,6 +966,7 @@ void Phalanx::spreadTo(CCArray *data){
             pt2 = getSoldierPosByRowAndCol(row, col, direction, m_row, m_col, startPt, 130, 130);
         }else if(m_type == GONG){
             int numPerLine = (m_col * m_row) / 2;
+            if (numPerLine == 0) numPerLine = 1;
             row = it->first / numPerLine;
             col = it->first % numPerLine;
             

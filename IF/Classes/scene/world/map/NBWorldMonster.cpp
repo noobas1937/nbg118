@@ -537,6 +537,8 @@ void NBWorldMonster::createMonsterBatchItem(BatchTagType type, unsigned int inde
     // guo.jiang todo
     if (monsterNode)
     {
+        monsterNode->setVisible(false);
+        
         int tag = 1000000 * 100 + monsterNode->getTag();
         auto c = WORLD_MAP_VIEW->m_mapMonstersNode->getChildByTag(tag);
         if (c)
@@ -546,8 +548,6 @@ void NBWorldMonster::createMonsterBatchItem(BatchTagType type, unsigned int inde
         
         if (type == MonsterAttack)
         {
-            monsterNode->setVisible(false);
-        
             auto octopus = Sprite::createWithSpriteFrameName("attack_0.png");
             auto *ac1 = NBWorldNPC::createAnimation("World/World_5.plist", "attack_%d.png", 0, 7);
             octopus->runAction(ac1);
@@ -559,8 +559,6 @@ void NBWorldMonster::createMonsterBatchItem(BatchTagType type, unsigned int inde
         }
         else if (type != MonsterDead)
         {
-            monsterNode->setVisible(false);
-            
             auto octopus = Sprite::createWithSpriteFrameName("waiting_0.png");
             auto *ac1 = NBWorldNPC::createAnimation("World/World_5.plist", "waiting_%d.png", 0, 7);
             octopus->runAction(ac1);
