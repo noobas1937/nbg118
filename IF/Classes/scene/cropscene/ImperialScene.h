@@ -398,6 +398,7 @@ private:
     CCSafeObject<CCNode> m_vikingPath4;
     CCSafeObject<NBSprite3D> m_vikings3D;
     CCSafeObject<CCNode> m_vikingTouchNode;
+    CCSafeObject<CCNode> m_vikingsParticleNode;
     //end a by ljf
     // tao.yu titan move path
     CCSafeObject<CCNode> m_tpath_1;
