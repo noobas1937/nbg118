@@ -29,7 +29,7 @@
 //场景音乐
 #define Music_M_city_1          "m_city"//播放背景主界面声音
 #define Music_M_city_3          "m_field"//播放背景地图声音
-#define Music_Sfx_logo_loading  "sfx_logo_loading"//播放登录LOGO背景音乐
+#define Music_Sfx_logo_loading  Music_M_city_1// NBTODO "sfx_logo_loading"//播放登录LOGO背景音乐
 //#define Music_M_battle_1        "m_battle_1"//战斗场景背景音乐(野地，竞技场，藏宝图)
 //#define Music_Begin_Music       "Begin_music"//开场动画音乐
 #define Music_M_battle_1        "m_city"//战斗场景背景音乐(野地，竞技场，藏宝图)

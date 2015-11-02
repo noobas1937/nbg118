@@ -2240,6 +2240,19 @@
                 <key>sourceSize</key>
                 <string>{96,96}</string>
             </dict>
+            <key>common1_world_bg.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{4,857},{147,147}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{147,147}}</string>
+                <key>sourceSize</key>
+                <string>{147,147}</string>
+            </dict>
             <key>copy_icon.png</key>
             <dict>
                 <key>frame</key>
@@ -6777,19 +6790,6 @@
                 <key>sourceSize</key>
                 <string>{147,119}</string>
             </dict>
-            <key>world_bg.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{4,857},{147,147}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{147,147}}</string>
-                <key>sourceSize</key>
-                <string>{147,147}</string>
-            </dict>
             <key>world_coordinate_bg.png</key>
             <dict>
                 <key>frame</key>
@@ -6943,7 +6943,7 @@
             <key>size</key>
             <string>{2048,2048}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:a47f57eb645d80866d23073215b1c32d:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:27bfce8ebd4fb116c4de4baf71e3d473:1/1$</string>
             <key>textureFileName</key>
             <string>Common_1.pvr.ccz</string>
         </dict>
