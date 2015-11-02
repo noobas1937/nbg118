@@ -248,7 +248,8 @@ void BattleSoldier2::delayPlayAnimation(){
         }else if(m_status == S_HURT){
             totalFrame = 0;
         }else if(m_status == S_STAND){
-            totalFrame = 10;
+//            totalFrame = 10;
+            totalFrame = 1;
         }
     }
     else if (m_icon == "a020")
@@ -262,7 +263,8 @@ void BattleSoldier2::delayPlayAnimation(){
         }else if(m_status == S_HURT){
             totalFrame = 0;
         }else if(m_status == S_STAND){
-            totalFrame = 8;
+//            totalFrame = 8;
+            totalFrame = 1;
         }
     }
     else if (m_icon == "a060")
@@ -276,7 +278,8 @@ void BattleSoldier2::delayPlayAnimation(){
         }else if(m_status == S_HURT){
             totalFrame = 0;
         }else if(m_status == S_STAND){
-            totalFrame = 7;
+//            totalFrame = 7;
+            totalFrame = 1;
         }
     }
     else if (m_icon == "zhanche")
@@ -290,7 +293,8 @@ void BattleSoldier2::delayPlayAnimation(){
         }else if(m_status == S_HURT){
             totalFrame = 0;
         }else if(m_status == S_STAND){
-            totalFrame = 8;
+//            totalFrame = 8;
+            totalFrame = 1;
         }
     }
     
