@@ -2206,8 +2206,8 @@
 								<string>Size</string>
 								<key>value</key>
 								<array>
-									<real>200</real>
-									<real>74</real>
+									<real>160</real>
+									<real>70</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -2226,8 +2226,8 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string>Common/Common_1.plist</string>
-									<string>btn_gold.png</string>
+									<string>Common/Common_3.plist</string>
+									<string>nb_tool_use_btn.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -2249,8 +2249,8 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string>Common/Common_1.plist</string>
-									<string>btn_yellow.png</string>
+									<string>Common/Common_3.plist</string>
+									<string>nb_tool_use_btn.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -2272,8 +2272,8 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string>Common/Common_1.plist</string>
-									<string>btn_yellow.png</string>
+									<string>Common/Common_3.plist</string>
+									<string>nb_tool_use_btn.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -2313,7 +2313,7 @@
 								<key>value</key>
 								<array>
 									<real>-90</real>
-									<real>-40</real>
+									<real>-33</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -2362,6 +2362,8 @@
 								<false/>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>

@@ -34,7 +34,7 @@ public:
     };
     typedef std::function<void(Ref*,EventType)> nbSliderCallBack;
     
-    NBSlider():m_minValue(0),m_maxValue(100),_eventCallback(nullptr),_textureResType(TextureResType::LOCAL),isMoved(false){}
+    NBSlider():m_minValue(0),m_maxValue(1),_eventCallback(nullptr),_textureResType(TextureResType::LOCAL),isMoved(false){}
     float getValue();
     
     void setValue(float value);
@@ -43,7 +43,9 @@ public:
     
     void setMaximumValue(float maxValue);
     
+    float getMinimumValue();
     
+    float getMaximumValue();
     bool onTouchBegan(Touch *touch, Event *unusedEvent) ;
     void onTouchMoved(Touch *touch, Event *unusedEvent) ;
     void onTouchEnded(Touch *touch, Event *unusedEvent) ;

@@ -999,18 +999,19 @@ void GeneralsPopupView::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
             PopupViewController::getInstance()->addPopupInView(SettingPopUpView::create());
             CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("General_set"));
         }else if(isTouchInside(m_clickNode5, pTouch)){
-            int configLv = GlobalData::shared()->userLvAboutInfo.ranking_k3;
-            int dabenLv = FunBuildController::getInstance()->getMainCityLv();
-            SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
-            if(dabenLv>=configLv){
-                if(m_addPopup == true)
-                    return;
-                m_addPopup = true;
-                CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GeneralsPopupView::resetRankPop),MSG_POPUP_VIEW_IN, NULL);
-                PopupViewController::getInstance()->addPopupInView(AllRankListPopUpView::create());
-            }else{
-                CCCommonUtils::flyHint("quest_icon_1.png", "", _lang_1("108111",CC_ITOA(configLv)));
-            }
+            CCCommonUtils::flyHint("", "", _lang("E100008"));//fusheng 屏蔽掉
+//            int configLv = GlobalData::shared()->userLvAboutInfo.ranking_k3;
+//            int dabenLv = FunBuildController::getInstance()->getMainCityLv();
+//            SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
+//            if(dabenLv>=configLv){
+//                if(m_addPopup == true)
+//                    return;
+//                m_addPopup = true;
+//                CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GeneralsPopupView::resetRankPop),MSG_POPUP_VIEW_IN, NULL);
+//                PopupViewController::getInstance()->addPopupInView(AllRankListPopUpView::create());
+//            }else{
+//                CCCommonUtils::flyHint("quest_icon_1.png", "", _lang_1("108111",CC_ITOA(configLv)));
+//            }
         }else if(isTouchInside(m_clickNode6, pTouch)){
             // tao.yu 第一版本不开放成就功能
             CCCommonUtils::flyHint("", "", _lang("E100008"));
