@@ -34,7 +34,7 @@ public:
     };
     typedef std::function<void(Ref*,EventType)> nbSliderCallBack;
     
-    NBSlider():m_minValue(0),m_maxValue(1),_eventCallback(nullptr),_textureResType(TextureResType::LOCAL),isMoved(false){}
+    NBSlider():m_minValue(0),m_maxValue(1),_eventCallback(nullptr),_textureResType(TextureResType::LOCAL),isMoved(false),m_enabled(true){}
     float getValue();
     
     void setValue(float value);
@@ -57,12 +57,14 @@ public:
     static NBSlider* create(const std::string& backGroundTextureName,
                             const std::string& barTextureName,
                             const std::string& thumbTextureName,
-                          TextureResType resType = TextureResType::LOCAL);
+                            TextureResType resType = TextureResType::LOCAL,
+                            float value = 0);
     
     bool init(const std::string& backGroundTextureName,
                     const std::string& barTextureName,
                     const std::string& thumbTextureName,
-                    TextureResType resType = TextureResType::LOCAL
+                    TextureResType resType = TextureResType::LOCAL,
+                    float value = 0
                     );
 
     virtual void setContentSize(const Size & var) override;
@@ -74,6 +76,12 @@ public:
     void setCapInsetProgressBarRebderer(const Rect &capInsets);
     
     bool myNBisTouchInside(Touch *touch);
+    
+    virtual void setEnabled(bool enabled) ;
+    
+    virtual bool getEnabled() ;
+    
+    void setLimitMoveValue(float value);
 private:
     
     float m_minValue;
@@ -99,6 +107,8 @@ private:
     float _thumbMaxLength;
     
     bool isMoved;
+    
+    bool m_enabled;
 
 };
 

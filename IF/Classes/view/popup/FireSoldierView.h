@@ -15,6 +15,7 @@
 #include "PopupBaseView.h"
 //#include "ArcPopupBaseView.h"
 #include "CCSliderBar.h"
+#include "NBSlider.h"
 		
 class FireSoldierView :
 public PopupBaseView,
@@ -50,7 +51,7 @@ protected:
     void editBoxTextChanged(CCEditBox* editBox, const std::string& text);
     void editBoxReturn(CCEditBox *editBox);
     
-    void sliderCallBack(CCObject*sender,CCControlEvent even);
+    void sliderCallBack(Ref *pSender, NBSlider::EventType type);
     
     void refreshNum(CCObject* p = NULL);
     void goToDismissAction();
@@ -65,7 +66,7 @@ protected:
     CCSafeObject<CCControlButton> m_fireBtn;
     CCSafeObject<CCLabelIF> m_fireLabel;
     
-    CCSafeObject<CCSliderBar> m_fireSlider;
+    CCSafeObject<NBSlider> m_fireSlider;
     CCSafeObject<CCEditBox> m_editBox;
     CCSafeObject<TreatInfo> m_info;
     
