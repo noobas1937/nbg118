@@ -40,6 +40,15 @@ float NBSlider::getValue()
 }
 void NBSlider::setValue(float value)
 {
+    if (value < m_minValue)
+    {
+        value = m_minValue;
+    }
+    
+    if (value > m_maxValue)
+    {
+        value = m_maxValue;
+    }
     
     float x = value * _thumbMaxLength;
     
@@ -70,6 +79,15 @@ void NBSlider::setMaximumValue(float maxValue)
     this->m_maxValue = maxValue;
 }
 
+float NBSlider::getMinimumValue()
+{
+    return this->m_minValue ;
+}
+
+float NBSlider::getMaximumValue()
+{
+    return this->m_maxValue ;
+}
 
 NBSlider* NBSlider::create(const std::string& backGroundTextureName,
                            const std::string& barTextureName,

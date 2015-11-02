@@ -13,6 +13,8 @@
 #include "DefaultTableViewDelegate.h"
 #include "CCSliderBar.h"
 #include "CCTableViewTouchIFCell.h"
+#include "NBSlider.h"
+
 #define  STORE_BAG_SHOW_DES "store.bag.show.des"
 
 class StoreBagView: public Layer
@@ -188,11 +190,13 @@ private:
     void onAddClick(CCObject *pSender, CCControlEvent event);
     void onSubClick(CCObject *pSender, CCControlEvent event);
     void onUseClick(CCObject *pSender, CCControlEvent event);
-    void moveSlider(CCObject * pSender, Control::EventType pCCControlEvent);
+//    void moveSlider(CCObject * pSender, Control::EventType pCCControlEvent);//fusheng d
+    void moveSlider(Ref *pSender, NBSlider::EventType type);
+    CCSafeObject<NBSlider> m_slider;
 //    void refreshNumLabel(int);
     void setNumString();
     CCSafeObject<CCLabelIF> m_infoLabel;
-    CCSafeObject<CCSliderBar> m_slider;
+//    CCSafeObject<CCSliderBar> m_slider;
     CCSafeObject<CCControlButton> m_useBtn;
     CCSafeObject<CCNode> m_touchNode;
     CCSafeObject<CCNode> m_infoNode;
@@ -206,6 +210,7 @@ private:
     int m_itemId;
     int m_numAll;
     int m_numCurrent;
+    
     
     int m_opFrom;  // 0- store cell  1-gift cell
 };
