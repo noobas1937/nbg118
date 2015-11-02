@@ -66,7 +66,7 @@ void NBWorldNPC::updateOctopus(const Vec2& currentTilePoint, Node* animation_lay
     
     srand((unsigned int)time(0));
     int random_variable = rand() % 100;
-    if (random_variable > 75) return;
+    if (random_variable > 50) return;
     
     bool isX = abs(currentTilePoint.x - _tile_count_x) <= SEA_MONSTER_AREA_X;
     bool isY = abs(currentTilePoint.y - _tile_count_y) <= SEA_MONSTER_AREA_Y;
@@ -160,14 +160,16 @@ void NBWorldNPC::updateOctopus(const Vec2& currentTilePoint, Node* animation_lay
         mSprite->setPositionX(mSprite->getPositionX() + dt * speedx);
         mSprite->setPositionY(mSprite->getPositionY() + dt * speedy);
         
+        // 慢慢消失
         if (mSprite->show_time <= 2.0)
         {
-            int o = 255.0 * mSprite->show_time / 2.0;
+            int o = 255.0  * 30 / 100 * mSprite->show_time / 2.0;
             mSprite->octopus->setOpacity(o);
         }
-        else if (mSprite->octopus->getOpacity() <= 245)
+        // 慢慢出现
+        else if (mSprite->octopus->getOpacity() <= 255 * 30 / 100)
         {
-            mSprite->octopus->setOpacity(mSprite->octopus->getOpacity() + 10);
+            mSprite->octopus->setOpacity(mSprite->octopus->getOpacity() + 3);
         }
         mSprite->show_time -= dt;
     }, "move");
