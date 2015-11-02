@@ -14,6 +14,7 @@
 #include "CCMultiColTableView.h"
 #include "TreatInfo.h"
 #include "CCSliderBar.h"
+#include "NBSlider.h"
 
 #define TREAT_NUM_CHANGE "treatNumChange"
 #define TREAT_ALL "treatAll"
@@ -165,7 +166,7 @@ private:
 	virtual SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName);
     
     void refreshView();
-    void sliderCallBack(CCObject*sender,CCControlEvent even);
+    void sliderCallBack(Ref *pSender, NBSlider::EventType type);
     void onAddClick(CCObject *pSender, CCControlEvent event);
     void onSubClick(CCObject *pSender, CCControlEvent event);
     void onInfoClick(CCObject *pSender, CCControlEvent event);
@@ -182,7 +183,7 @@ private:
     CCSafeObject<CCLabelIF> m_numText;
     CCSafeObject<CCLabelIF> m_numMaxText;
     CCSafeObject<CCLabelIF> m_nameText;
-    CCSafeObject<CCSliderBar> m_trainSlider;
+    CCSafeObject<NBSlider> m_trainSlider;
     CCSafeObject<CCNode> m_bg;
     CCSafeObject<CCNode> m_editBoxNode;
     CCEditBox* m_editBox;

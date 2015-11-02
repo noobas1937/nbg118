@@ -654,8 +654,20 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>353</real>
-									<real>30</real>
+									<real>181</real>
+									<real>24</real>
+									<integer>0</integer>
+								</array>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>contentSize</string>
+								<key>type</key>
+								<string>Size</string>
+								<key>value</key>
+								<array>
+									<real>340</real>
+									<real>15</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -692,6 +704,8 @@
 								<false/>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>

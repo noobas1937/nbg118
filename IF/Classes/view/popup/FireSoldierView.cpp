@@ -54,26 +54,33 @@ bool FireSoldierView::init()
         m_fireBtn->setTitleForState(_lang("102135"), CCControlStateNormal);
         
         //滑动条
-        auto m_sliderBg = CCLoadSprite::createScale9Sprite("huadongtiao3.png");
-        m_sliderBg->setInsetBottom(5);
-        m_sliderBg->setInsetLeft(5);
-        m_sliderBg->setInsetRight(5);
-        m_sliderBg->setInsetTop(5);
-        m_sliderBg->setAnchorPoint(ccp(0.5,0.5));
-        m_sliderBg->setPosition(ccp(304/2, 25));
-        m_sliderBg->setContentSize(CCSize(304,18));
+        //fusheng d
+//        auto m_sliderBg = CCLoadSprite::createScale9Sprite("huadongtiao3.png");
+//        m_sliderBg->setInsetBottom(5);
+//        m_sliderBg->setInsetLeft(5);
+//        m_sliderBg->setInsetRight(5);
+//        m_sliderBg->setInsetTop(5);
+//        m_sliderBg->setAnchorPoint(ccp(0.5,0.5));
+//        m_sliderBg->setPosition(ccp(304/2, 25));
+//        m_sliderBg->setContentSize(CCSize(304,18));
         
-        auto proSp = CCLoadSprite::createSprite("huadongtiao4.png");
-        auto thuSp = CCLoadSprite::createSprite("huadongtiao1.png");
-        
-        m_fireSlider = CCSliderBar::createSlider(m_sliderBg, proSp, thuSp);
+//        auto proSp = CCLoadSprite::createSprite("huadongtiao4.png");
+//        auto thuSp = CCLoadSprite::createSprite("huadongtiao1.png");
+//        
+//        m_fireSlider = CCSliderBar::createSlider(m_sliderBg, proSp, thuSp);
+        m_fireSlider = NBSlider::create("nb_bar_bg.png", "nb_bar_pro.png", "nb_cursor_icon.png",NBSlider::TextureResType::PLIST);
+        m_fireSlider->setCapInsets(Rect(8, 1, 30, 13));
+        float sw = m_sliderContainer->getContentSize().width;
+        m_fireSlider->setContentSize(Size(sw,15));
         m_fireSlider->setMinimumValue(0.0f);
         m_fireSlider->setMaximumValue(1.0f);
-        m_fireSlider->setProgressScaleX(300/proSp->getContentSize().width);
+        m_fireSlider->setValue(0);
+//        m_fireSlider->setProgressScaleX(300/proSp->getContentSize().width);
         m_fireSlider->setTag(1);
         m_fireSlider->setLimitMoveValue(25);
-        m_fireSlider->setTouchPriority(Touch_Default);//Touch_Popup
-        m_fireSlider->addTargetWithActionForControlEvents(this, cccontrol_selector(FireSoldierView::sliderCallBack), CCControlEventValueChanged);
+//        m_fireSlider->setTouchPriority(Touch_Default);//Touch_Popup//fusheng d
+//        m_fireSlider->addTargetWithActionForControlEvents(this, cccontrol_selector(FireSoldierView::sliderCallBack), CCControlEventValueChanged);
+        m_fireSlider->addEventListener(CC_CALLBACK_2(FireSoldierView::sliderCallBack, this));
         m_sliderContainer->addChild(m_fireSlider);
         
         auto editSize = m_editBoxNode->getContentSize();
@@ -183,7 +190,7 @@ void FireSoldierView::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
     
 }
 //slider
-void FireSoldierView::sliderCallBack(CCObject*sender,CCControlEvent even){
+void FireSoldierView::sliderCallBack(Ref *pSender, NBSlider::EventType type){
     m_fireNum = m_fireSlider->getValue() * m_totalNum;
     CCLOG("%d",m_fireNum);
     refreshNum();
@@ -222,9 +229,11 @@ void FireSoldierView::editBoxReturn(CCEditBox *editBox){
     }else
         m_fireSlider->setValue(1.0f * num / m_totalNum);
     if(m_totalNum<=0){
-        m_fireSlider->setTouchEnabled(false);
+//        m_fireSlider->setTouchEnabled(false);//fusheng edit
+        m_fireSlider->setEnabled(false);
     }else{
-        m_fireSlider->setTouchEnabled(true);
+//        m_fireSlider->setTouchEnabled(true);//fusheng edit
+         m_fireSlider->setEnabled(true);
     }
 }
 #pragma mark UI-end
@@ -244,9 +253,12 @@ void FireSoldierView::refreshNum(CCObject* p){
     string maxStr = "/"+CC_CMDITOA(m_totalNum);
     m_numMaxText->setString(maxStr);
     if(m_totalNum<=0){
-        m_fireSlider->setTouchEnabled(false);
+//        m_fireSlider->setTouchEnabled(false);//fusheng edit
+         m_fireSlider->setEnabled(false);
     }else{
-        m_fireSlider->setTouchEnabled(true);
+//        m_fireSlider->setTouchEnabled(true);//fusheng edit
+        m_fireSlider->setEnabled(true);
+
     }
 }
 

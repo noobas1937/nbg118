@@ -690,14 +690,21 @@ bool BuildingHospitalCell::init(){
     auto proSp = CCLoadSprite::createSprite("huadongtiao4.png");
     auto thuSp = CCLoadSprite::createSprite("huadongtiao1.png");
 
-    m_trainSlider = CCSliderBar::createSlider(m_sliderBg, proSp, thuSp);
+    m_trainSlider = NBSlider::create("nb_bar_bg.png", "nb_bar_pro.png", "nb_cursor_icon.png",NBSlider::TextureResType::PLIST);
+    m_trainSlider->setCapInsets(Rect(8, 1, 30, 13));
+    float sw = m_sliderContainer->getContentSize().width;
+    m_trainSlider->setContentSize(Size(sw,15));
+
+
+//    m_trainSlider = CCSliderBar::createSlider(m_sliderBg, proSp, thuSp);
     m_trainSlider->setMinimumValue(0.0f);
     m_trainSlider->setMaximumValue(1.0f);
-    m_trainSlider->setProgressScaleX(350/proSp->getContentSize().width);
+//    m_trainSlider->setProgressScaleX(350/proSp->getContentSize().width);
     m_trainSlider->setTag(1);
-    m_trainSlider->setLimitMoveValue(25);
-    m_trainSlider->setTouchPriority(Touch_Popup);
-    m_trainSlider->addTargetWithActionForControlEvents(this, cccontrol_selector(BuildingHospitalCell::sliderCallBack), CCControlEventValueChanged);
+//    m_trainSlider->setLimitMoveValue(25);//fusheng d 感觉用不上这个
+//    m_trainSlider->setTouchPriority(Touch_Popup);//fusheng 同上
+//    m_trainSlider->addTargetWithActionForControlEvents(this, cccontrol_selector(BuildingHospitalCell::sliderCallBack), CCControlEventValueChanged);
+     m_trainSlider->addEventListener(CC_CALLBACK_2(BuildingHospitalCell::sliderCallBack, this));
     m_sliderContainer->addChild(m_trainSlider, 1);
 
     auto editSize = m_editBoxNode->getContentSize();
@@ -741,7 +748,7 @@ void BuildingHospitalCell::refreshView(){
         float percent = 1.0 * m_info->prepareToTreat / m_info->dead;
         m_trainSlider->setValue(percent);
         m_trainSlider->setEnabled(true);
-        m_trainSlider->setLimitMoveValue(25);
+//        m_trainSlider->setLimitMoveValue(25);//fusheng d
     }
     this->m_levelNode->removeAllChildren();
     string num1 = m_info->armyId.substr(m_info->armyId.size()-2);
@@ -766,7 +773,7 @@ void BuildingHospitalCell::setData(TreatInfo *info){
     refreshView();
 }
 
-void BuildingHospitalCell::sliderCallBack(CCObject*sender,CCControlEvent even){
+void BuildingHospitalCell::sliderCallBack(Ref *pSender, NBSlider::EventType type){
     m_info->prepareToTreat = m_trainSlider->getValue() * m_info->dead;
     refreshNum();
 }
