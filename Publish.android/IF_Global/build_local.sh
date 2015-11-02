@@ -1,4 +1,7 @@
 #!/bin/sh
+
+BUILD_NUMBER=1000
+
 sourceroot=../
 packageroot=../../package
 soRootPath=../../package-so
@@ -44,7 +47,7 @@ echo "building start with log:$logfileName"
 echo "*************************************************"
 oldBuildNumber=999
 # guo jiang local
-# sed -i.bak 's/'$oldBuildNumber'/'$BUILD_NUMBER'/g' AndroidManifest.xml
+sed -i.bak 's/'$oldBuildNumber'/'$BUILD_NUMBER'/g' AndroidManifest.xml
 rm -rf *.bak
 
 cd ../../Android_Resource >/dev/null 2>/dev/null
