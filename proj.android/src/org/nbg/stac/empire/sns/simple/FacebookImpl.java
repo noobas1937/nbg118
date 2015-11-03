@@ -10,8 +10,8 @@ import com.nostra13.socialsharing.common.AuthListener;
 import com.nostra13.socialsharing.facebook.FacebookFacade;
 
 public class FacebookImpl implements ISimpleSocial {
-	public static final String FACEBOOK_APP_ID = "713457855362204";
-	private static final String FACEBOOK_APP_SECRET = "a0be14df733b0579f5a2ecf6fb522723";
+	public static final String FACEBOOK_APP_ID = "1670702669839400";
+	private static final String FACEBOOK_APP_SECRET = "5e5dc4c34e5d0cd97442122478ba72eb";
 	private FacebookFacade facebook;
 	private FacebookEventObserver facebookEventObserver;
 	private SNSCallbackListener listener;
