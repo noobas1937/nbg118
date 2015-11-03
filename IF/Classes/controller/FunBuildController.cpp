@@ -1977,23 +1977,24 @@ string FunBuildController::orderBuild(string buildings)
 
 void FunBuildController::initPosPath()
 {
+    int soliderZorder = 1999 - 10;  //主场景中solider所在batch node的zorder为1999
     if (9) { int pos_idx = 9; vector<cocos2d::CCPoint> path;
         path.push_back(Vec2(2479, 1935)); // p6
         path.push_back(Vec2(2514, 2206)); // p7
         path.push_back(Vec2(2806, 2370)); // p8
-        vector<int> zorders; zorders.push_back(700); posToPath[pos_idx] = path; posToZorders[pos_idx] = zorders; }
+        vector<int> zorders; zorders.push_back(soliderZorder); posToPath[pos_idx] = path; posToZorders[pos_idx] = zorders; }
     if (15) { int pos_idx = 15; vector<cocos2d::CCPoint> path;
         path.push_back(Vec2(2325, 2271)); // p6
         path.push_back(Vec2(2514, 2206)); // p7
         path.push_back(Vec2(2806, 2370)); // p8
-        vector<int> zorders; zorders.push_back(700); posToPath[pos_idx] = path; posToZorders[pos_idx] = zorders; }
+        vector<int> zorders; zorders.push_back(soliderZorder); posToPath[pos_idx] = path; posToZorders[pos_idx] = zorders; }
     if (11) { int pos_idx = 11; vector<cocos2d::CCPoint> path;
         path.push_back(Vec2(2109, 2121)); // p4
         path.push_back(Vec2(2189, 2206)); // p5
         path.push_back(Vec2(2325, 2271)); // p6
         path.push_back(Vec2(2514, 2206)); // p7
         path.push_back(Vec2(2806, 2370)); // p8
-        vector<int> zorders; zorders.push_back(700); posToPath[pos_idx] = path; posToZorders[pos_idx] = zorders; }
+        vector<int> zorders; zorders.push_back(soliderZorder); posToPath[pos_idx] = path; posToZorders[pos_idx] = zorders; }
     if (10) { int pos_idx = 10; vector<cocos2d::CCPoint> path;
         path.push_back(Vec2(1773, 1966)); // p2
         path.push_back(Vec2(1901, 2030)); // p3
@@ -2002,7 +2003,7 @@ void FunBuildController::initPosPath()
         path.push_back(Vec2(2325, 2271)); // p6
         path.push_back(Vec2(2514, 2206)); // p7
         path.push_back(Vec2(2806, 2370)); // p8
-        vector<int> zorders; zorders.push_back(700); posToPath[pos_idx] = path; posToZorders[pos_idx] = zorders; }
+        vector<int> zorders; zorders.push_back(soliderZorder); posToPath[pos_idx] = path; posToZorders[pos_idx] = zorders; }
     if (13) { int pos_idx = 13; vector<cocos2d::CCPoint> path;
         path.push_back(Vec2(1729, 2246)); // p1
         path.push_back(Vec2(1837, 2102)); // p2
@@ -2012,7 +2013,7 @@ void FunBuildController::initPosPath()
         path.push_back(Vec2(2325, 2271)); // p6
         path.push_back(Vec2(2514, 2206)); // p7
         path.push_back(Vec2(2806, 2370)); // p8
-        vector<int> zorders; zorders.push_back(700); posToPath[pos_idx] = path; posToZorders[pos_idx] = zorders; }
+        vector<int> zorders; zorders.push_back(soliderZorder); posToPath[pos_idx] = path; posToZorders[pos_idx] = zorders; }
     if (12) { int pos_idx = 12; vector<cocos2d::CCPoint> path;
         path.push_back(Vec2(1521, 2146)); // p0
         path.push_back(Vec2(1729, 2246)); // p1
@@ -2023,7 +2024,7 @@ void FunBuildController::initPosPath()
         path.push_back(Vec2(2325, 2271)); // p6
         path.push_back(Vec2(2514, 2206)); // p7
         path.push_back(Vec2(2806, 2370)); // p8
-        vector<int> zorders; zorders.push_back(700); posToPath[pos_idx] = path; posToZorders[pos_idx] = zorders; }
+        vector<int> zorders; zorders.push_back(soliderZorder); posToPath[pos_idx] = path; posToZorders[pos_idx] = zorders; }
     if (16) { int pos_idx = 16; vector<cocos2d::CCPoint> path;
         path.push_back(Vec2(1421, 1881)); // p3
         path.push_back(Vec2(1597, 1659)); // p4
@@ -2034,7 +2035,7 @@ void FunBuildController::initPosPath()
         path.push_back(Vec2(2513, 2194)); // p9
         path.push_back(Vec2(2758, 2342)); // p10
         
-        vector<int> zorders; zorders.push_back(700); posToPath[pos_idx] = path; posToZorders[pos_idx] = zorders; }
+        vector<int> zorders; zorders.push_back(soliderZorder); posToPath[pos_idx] = path; posToZorders[pos_idx] = zorders; }
     if (14) { int pos_idx = 14; vector<cocos2d::CCPoint> path;
         
         path.push_back(Vec2(929, 2122)); // p1
@@ -2047,7 +2048,7 @@ void FunBuildController::initPosPath()
         path.push_back(Vec2(2822, 1906)); // p8
         path.push_back(Vec2(2513, 2194)); // p9
         path.push_back(Vec2(2758, 2342)); // p10
-        vector<int> zorders; zorders.push_back(700); posToPath[pos_idx] = path; posToZorders[pos_idx] = zorders; }
+        vector<int> zorders; zorders.push_back(soliderZorder); posToPath[pos_idx] = path; posToZorders[pos_idx] = zorders; }
     if (7) { int pos_idx = 7; vector<cocos2d::CCPoint> path;
         path.push_back(Vec2(1737, 1497)); // p5
         path.push_back(Vec2(1869, 1341)); // p6
@@ -2055,7 +2056,7 @@ void FunBuildController::initPosPath()
         path.push_back(Vec2(2822, 1906)); // p8
         path.push_back(Vec2(2513, 2194)); // p9
         path.push_back(Vec2(2758, 2342)); // p10
-        vector<int> zorders; zorders.push_back(700); posToPath[pos_idx] = path; posToZorders[pos_idx] = zorders; }
+        vector<int> zorders; zorders.push_back(soliderZorder); posToPath[pos_idx] = path; posToZorders[pos_idx] = zorders; }
     if (6) { int pos_idx = 6; vector<cocos2d::CCPoint> path;
         path.push_back(Vec2(1301, 1497)); // p3
         path.push_back(Vec2(1473, 1424)); // p4
@@ -2065,7 +2066,7 @@ void FunBuildController::initPosPath()
         path.push_back(Vec2(2822, 1906)); // p8
         path.push_back(Vec2(2513, 2194)); // p9
         path.push_back(Vec2(2758, 2342)); // p10
-        vector<int> zorders; zorders.push_back(700); posToPath[pos_idx] = path; posToZorders[pos_idx] = zorders; }
+        vector<int> zorders; zorders.push_back(soliderZorder); posToPath[pos_idx] = path; posToZorders[pos_idx] = zorders; }
     if (8) { int pos_idx = 8; vector<cocos2d::CCPoint> path;
         path.push_back(Vec2(925, 1634)); // p0
         path.push_back(Vec2(1005, 1554)); // p1
@@ -2078,7 +2079,7 @@ void FunBuildController::initPosPath()
         path.push_back(Vec2(2822, 1906)); // p8
         path.push_back(Vec2(2513, 2194)); // p9
         path.push_back(Vec2(2758, 2342)); // p10
-        vector<int> zorders; zorders.push_back(700); posToPath[pos_idx] = path; posToZorders[pos_idx] = zorders; }
+        vector<int> zorders; zorders.push_back(soliderZorder); posToPath[pos_idx] = path; posToZorders[pos_idx] = zorders; }
     
     sqerPoints.push_back(Vec2(3171, 2657)); // troop0
     sqerPoints.push_back(Vec2(3386, 2515)); // troop1
