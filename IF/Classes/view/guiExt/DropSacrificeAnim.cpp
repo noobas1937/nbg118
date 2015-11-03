@@ -51,24 +51,31 @@ bool DropSacrificeAnim::initDropRdCCB(int type,int hintType)
     int sprCnt = 5;
     float dt = 0.1;
     if (type == Wood) {
-        picName = "The-fountain_icon1.png";
+//       picName = "The-fountain_icon1.png";//fusheng e
+        picName = "ui_wood.png";
         sprCnt = 7;
         musicName = Music_Sfx_city_harvest_wood;
         dt = 0.05;
     }
     else if (type == Food) {
-        picName = "The-fountain_icon2.png";
+//        picName = "The-fountain_icon2.png";//fusheng e
+        picName = "ui_food.png";
+        
         musicName = Music_Sfx_city_harvest_farm;
     }
     else if (type == Stone) {
-        picName = "The-fountain_icon4.png";
+//        picName = "The-fountain_icon4.png";//fusheng e
+        picName = "ui_stone.png";//fusheng 这图片是错的
         musicName = Music_Sfx_city_harvest_mithril;
     }
     else if (type == Iron) {
-        picName = "The-fountain_icon3.png";
+        
+//        picName = "The-fountain_icon3.png";//fusheng e
+        picName = "ui_food.png";
         musicName = Music_Sfx_city_harvest_iron;
     }else if(type == Silver){
-        picName = "The-fountain_icon5.png";
+//        picName = "The-fountain_icon5.png";//fusheng e
+        picName = "ui_silver.png";
         musicName = Music_Sfx_city_harvest_mithril;
     }
 
@@ -84,7 +91,7 @@ bool DropSacrificeAnim::initDropRdCCB(int type,int hintType)
 //        CCCommonUtils::setSpriteMaxSize(pic, 70, true);
         auto pic = CCLoadSprite::createSprite(picName.c_str());
         m_dropSprs->addObject(pic);
-        pic->setScale(0.5);
+//        pic->setScale(0.5);//fusheng d
         curNode->addChild(pic);
     }
     

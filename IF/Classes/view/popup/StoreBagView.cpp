@@ -1427,30 +1427,48 @@ bool ToolNumSelectView::init() {
         }
         
         CCSize barSize = m_barNode->getContentSize();
-        auto m_sliderBg = CCLoadSprite::createScale9Sprite("huadongtiao3.png");
-        m_sliderBg->setInsetBottom(5);
-        m_sliderBg->setInsetLeft(5);
-        m_sliderBg->setInsetRight(5);
-        m_sliderBg->setInsetTop(5);
-        m_sliderBg->setAnchorPoint(ccp(0.5,0.5));
-        m_sliderBg->setContentSize(CCSize(barSize.width,18));
-        m_sliderBg->setPosition(ccp(barSize.width*0.5,barSize.height*0.5+9));
+//        auto m_sliderBg = CCLoadSprite::createScale9Sprite("huadongtiao3.png");
+//        m_sliderBg->setInsetBottom(5);
+//        m_sliderBg->setInsetLeft(5);
+//        m_sliderBg->setInsetRight(5);
+//        m_sliderBg->setInsetTop(5);
+//        m_sliderBg->setAnchorPoint(ccp(0.5,0.5));
+//        m_sliderBg->setContentSize(CCSize(barSize.width,18));
+//        m_sliderBg->setPosition(ccp(barSize.width*0.5,barSize.height*0.5+9));
+//        
+//        auto proSp = CCLoadSprite::createSprite("huadongtiao2.png");
+//        auto thuSp = CCLoadSprite::createSprite("huadongtiao1.png");
+//    
+//        
+//        m_slider = CCSliderBar::createSlider(m_sliderBg, proSp, thuSp);
+
+//        m_slider->setValue(minVal);
+//        m_slider->setProgressScaleX(barSize.width/proSp->getContentSize().width);
+//        m_slider->setTag(1);
+//        m_slider->setLimitMoveValue(20);
+//        m_slider->setPosition(ccp(barSize.width*0.5,barSize.height*0.5));
+//        m_slider->addTargetWithActionForControlEvents(this, cccontrol_selector(ToolNumSelectView::moveSlider), CCControlEventValueChanged);
+//        m_barNode->addChild(m_slider);
         
-        auto proSp = CCLoadSprite::createSprite("huadongtiao2.png");
-        auto thuSp = CCLoadSprite::createSprite("huadongtiao1.png");
-    
+        m_slider = NBSlider::create("nb_bar_bg.png", "nb_bar_pro.png", "nb_cursor_icon.png",NBSlider::TextureResType::PLIST);
+        m_slider->setCapInsets(Rect(8, 1, 30, 13));
+        m_slider->setContentSize(Size(barSize.width,15));
         
-        m_slider = CCSliderBar::createSlider(m_sliderBg, proSp, thuSp);
         float minVal = m_numCurrent*1.0/m_numAll;
         m_slider->setMinimumValue(minVal);
         m_slider->setMaximumValue(1.0f);
         m_slider->setValue(minVal);
-        m_slider->setProgressScaleX(barSize.width/proSp->getContentSize().width);
-        m_slider->setTag(1);
-        m_slider->setLimitMoveValue(20);
-        m_slider->setPosition(ccp(barSize.width*0.5,barSize.height*0.5));
-        m_slider->addTargetWithActionForControlEvents(this, cccontrol_selector(ToolNumSelectView::moveSlider), CCControlEventValueChanged);
-        m_barNode->addChild(m_slider);
+        //    m_slider->setPosition(ccp(-60, -59));//fusheng d
+        if (CCCommonUtils::isIosAndroidPad()) {
+            //        m_slider->setPosition(ccp(-137, -56));//fusheng d
+            m_slider->setScaleX(2.6);
+            m_slider->setScaleY(2.0);
+        }
+        //    m_slider->addTargetWithActionForControlEvents(this, cccontrol_selector(ProductionSoldiersView::moveSlider), CCControlEventValueChanged);//fusheng d
+        m_slider->addEventListener(CC_CALLBACK_2(ToolNumSelectView::moveSlider, this));
+        m_barNode->addChild(m_slider, 1);
+        
+        
         m_invalidSlider = false;
         
         auto editSize = m_editNode->getContentSize();
@@ -1560,7 +1578,7 @@ void ToolNumSelectView::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent 
     this->closeSelf();
 }
 
-void ToolNumSelectView::moveSlider(CCObject * pSender, Control::EventType pCCControlEvent) {
+void ToolNumSelectView::moveSlider(Ref *pSender, NBSlider::EventType type) {
     if (m_invalidSlider) {
         m_invalidSlider = false;
         return;

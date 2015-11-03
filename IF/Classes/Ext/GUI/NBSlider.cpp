@@ -40,6 +40,15 @@ float NBSlider::getValue()
 }
 void NBSlider::setValue(float value)
 {
+    if (value < m_minValue)
+    {
+        value = m_minValue;
+    }
+    
+    if (value > m_maxValue)
+    {
+        value = m_maxValue;
+    }
     
     float x = value * _thumbMaxLength;
     
@@ -70,15 +79,25 @@ void NBSlider::setMaximumValue(float maxValue)
     this->m_maxValue = maxValue;
 }
 
+float NBSlider::getMinimumValue()
+{
+    return this->m_minValue ;
+}
+
+float NBSlider::getMaximumValue()
+{
+    return this->m_maxValue ;
+}
 
 NBSlider* NBSlider::create(const std::string& backGroundTextureName,
                            const std::string& barTextureName,
                            const std::string& thumbTextureName,
-                           TextureResType resType
+                           TextureResType resType,
+                           float value
                            )
 {
     NBSlider* widget = new (std::nothrow) NBSlider();
-    if (widget && widget->init(backGroundTextureName,barTextureName,thumbTextureName,resType))
+    if (widget && widget->init(backGroundTextureName,barTextureName,thumbTextureName,resType,value))
     {
         widget->autorelease();
         return widget;
@@ -92,7 +111,7 @@ NBSlider* NBSlider::create(const std::string& backGroundTextureName,
 
 
 bool NBSlider::init(const std::string &backGroundTextureName, const std::string &barTextureName, const std::string &thumbTextureName,
-                    TextureResType resType)
+                    TextureResType resType,float value)
 {
     if(!Node::init())
     {
@@ -146,6 +165,9 @@ bool NBSlider::init(const std::string &backGroundTextureName, const std::string 
     
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
     
+    this->_value = value;
+    
+//    setValue(_value);
     
     return true;
     
@@ -156,6 +178,8 @@ void NBSlider::setCapInsets(const Rect &capInsets)
 {
     setCapInsetsBarRenderer(capInsets);
     setCapInsetProgressBarRebderer(capInsets);
+    
+//    setValue(_value);
 }
 
 void NBSlider::setCapInsetsBarRenderer(const Rect &capInsets)
@@ -192,7 +216,7 @@ void NBSlider::setContentSize(const Size & var)
 
 bool NBSlider::onTouchBegan(Touch *touch, Event *unusedEvent)
 {
-    if (isMoved) {
+    if (isMoved||!m_enabled) {
         return false;
     }
     if(myNBisTouchInside(touch))
@@ -245,4 +269,20 @@ void NBSlider::onTouchEnded(Touch *touch, Event *unusedEvent)
 void NBSlider::onTouchCancelled(Touch *touch, Event *unusedEvent)
 {
     isMoved = false;
+}
+
+bool NBSlider::getEnabled()
+{
+    return m_enabled;
+}
+
+
+void NBSlider::setEnabled(bool enabled)
+{
+    m_enabled = enabled;
+}
+
+void NBSlider::setLimitMoveValue(float value)
+{
+    
 }

@@ -2417,7 +2417,7 @@
 										<key>value</key>
 										<array>
 											<string>Common/Common_1.plist</string>
-											<string>world_bg.png</string>
+											<string>common1_world_bg.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -2432,6 +2432,8 @@
 										</array>
 									</dict>
 								</array>
+								<key>selected</key>
+								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>

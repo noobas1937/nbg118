@@ -72,7 +72,7 @@ public class Device {
 			PackageInfo pinfo = null;
 			pinfo = Jni.getGameActivity().getPackageManager()
 					.getPackageInfo(pName, PackageManager.GET_CONFIGURATIONS);
-			String versionName = pinfo.versionName;
+			String versionName = "1.1.8"; // pinfo.versionName;
 			Log.i(Jni.LOG_TAG, "-------versionName:" + versionName);
 			return versionName;
 		} catch (Exception e) {

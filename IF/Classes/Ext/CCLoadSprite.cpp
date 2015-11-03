@@ -271,7 +271,6 @@ void CCLoadSprite::parseLoadOrRelease(bool isLoad,int sceneId, CCDictionary *dic
                 for (int i=1; i<=WORLD_COUNT; i++) {
                     actor(path,i);
                 }
-                actor("World/decoration.plist", 0); // guo.jiang
                 actor("World/nb_ocean.plist", 0); // guo.jiang
                 actor("World/World_5.plist", 0); // guo.jiang
                 DynamicResourceController::getInstance()->loadNameTypeResource(DynamicResource_SERVERFIGHT_TEXTURE,isLoad);
