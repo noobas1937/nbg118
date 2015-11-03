@@ -16,6 +16,7 @@ BattleSoldier2* BattleSoldier2::create(CCNode* batchNode,CCNode* pNode,int armTy
 
 void BattleSoldier2::onEnter(){
     CCNode::onEnter();
+    scheduleUpdate();
 }
 
 void BattleSoldier2::onExit(){
@@ -28,6 +29,10 @@ bool BattleSoldier2::init(){
     if(CCLoadSprite::getSF(filePath->getCString())==NULL){
         CCLOG("filePath=%s",filePath->getCString());
     }
+    m_shadow = CCLoadSprite::createSprite("shadow.png");
+    m_shadow->setAnchorPoint(ccp(0.5, 0.5));
+    m_batchNode->addChild(m_shadow);
+    
     m_iconSpr = CCLoadSprite::createSprite(filePath->getCString());
     m_iconSpr->setAnchorPoint(ccp(0.5,0.5));
     m_batchNode->addChild(m_iconSpr);
@@ -67,6 +72,7 @@ void BattleSoldier2::setSoldierPosition(CCPoint p)
 {
     m_point = p;
     m_iconSpr->setPosition(m_point);
+    update(0);
 }
 
 CCPoint BattleSoldier2::getSoldierPosition()
@@ -362,3 +368,10 @@ void BattleSoldier2::setSprScale(float sc)
     m_iconSpr->setScale(sc);
 }
 
+void BattleSoldier2::update(float delta)
+{
+    if (m_shadow && m_iconSpr)
+    {
+        m_shadow->setPosition(m_iconSpr->getPosition() + Vec2(0, -10));
+    }
+}

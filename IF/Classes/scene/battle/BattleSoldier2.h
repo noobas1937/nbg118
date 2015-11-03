@@ -63,12 +63,12 @@ public:
     {};
     
     static BattleSoldier2* create(CCNode* batchNode,CCNode* pNode,int armType,int side,std::string icon,std::string direct,bool isHead=false);
-    virtual void onEnter();
-    virtual void onExit();
+    virtual void onEnter() override;
+    virtual void onExit() override;
     
     void playAnimation(ActionStatus status,float delayTime=0.0,CCCallFunc* completeFunc=NULL,int loopTimes=0);
     void delayPlayAnimation();
-    bool init();
+    bool init() override;
     void changeDirect(std::string direct,bool replay=false);
     void setSoldierPosition(CCPoint p);
     CCPoint getSoldierPosition();
@@ -99,6 +99,8 @@ public:
     int m_moveIndex;
     float m_moveSpd;
     
+    virtual void update(float delta) override;
+    
 private:
     CC_SAFE_CALLFUNC(m_completeTarget, m_completeFunc, CompleteFun);
     CC_SYNTHESIZE(int, m_loopTimes, LoopTimes);
@@ -106,5 +108,6 @@ private:
     CC_SYNTHESIZE(CCNode*, m_container, Container);
     CC_SYNTHESIZE(CCSprite*, m_iconSpr, IconSpr);
     CC_SYNTHESIZE(CCNode*, m_pNode, PNode);
+    CC_SYNTHESIZE(CCSprite*, m_shadow, Shadow);
 };
 #endif /* defined(__IF__BattleSoldier2__) */
