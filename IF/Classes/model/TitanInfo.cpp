@@ -70,6 +70,7 @@ int TitanInfo::resetTitanInfo(CCDictionary* dict)//0没有改变 1数值改变(�
                 maxManual= temp->valueForKey("maxmanual")->intValue();
                 std::vector<std::string> tmpVec;
                 splitString(temp->valueForKey("feedcdtime")->getCString(), ",", tmpVec);
+                maxFeedIntervalTime = atoi(tmpVec[tmpVec.size()-1].c_str())*60;//fusheng 最后一次喂食时间间隔（秒数）
                 feedMaxNum = tmpVec.size()+1;
                 recoverymanual = temp->valueForKey("recoverymanual")->intValue();
                 costmanual = temp->valueForKey("costmanual")->intValue();
@@ -182,49 +183,46 @@ int TitanInfo::resetTitanInfo(CCDictionary* dict)//0没有改变 1数值改变(�
         GlobalData::shared()->allQueuesInfo[info.qid] = info;
         
         
-        if (dict->objectForKey("feedcdfix")) {//fusheng 逼我存本地
+        
+    }
+    
+    
+    if (dict->objectForKey("feedcdfix")) {//fusheng 逼我存本地
+        
+        long WorldTime =  GlobalData::shared()->getWorldTime();
+        
+        long newData =  dict->valueForKey("feedcdfix")->longValue();
+        
+        if (newData-GlobalData::shared()->getWorldTime()<=maxFeedIntervalTime *1.2 && newData-GlobalData::shared()->getWorldTime()>0) {//fusheng 临时
             
             
-            
-            long newData =  dict->valueForKey("feedcdfix")->longValue();
-            
-            if (newData<750*60*60 && newData>0) {//fusheng 临时
-                
-                newData = newData*60+GlobalData::shared()->getWorldTime();//fusheng andriod 竟然是分钟
-                
-                if (newData != feedcdfix) { //fusheng
-                    dataStatus |= TITANVALUECHANGE;
-                    feedcdfix = newData;
-                    
-                    //                CCUserDefault::sharedUserDefault()->setIntegerForKey("feedcdfix", feedcdfix);
-                    
-                    string puid = GlobalData::shared()->playerInfo.uid;
-                    
-                    CCUserDefault::sharedUserDefault()->setIntegerForKey((puid+"feedcdfix").c_str(), feedcdfix);
-                }
-                
-                
-            }
-            
-            
-            if (newData < 0) {
-                feedcdfix = GlobalData::shared()->getWorldTime();
-                
-                //            CCUserDefault::sharedUserDefault()->setIntegerForKey("feedcdfix", feedcdfix);
+            if (newData != feedcdfix) { //fusheng
+                dataStatus |= TITANVALUECHANGE;
+                feedcdfix = newData;
                 
                 string puid = GlobalData::shared()->playerInfo.uid;
                 
                 CCUserDefault::sharedUserDefault()->setIntegerForKey((puid+"feedcdfix").c_str(), feedcdfix);
-                
             }
             
             
+        }
+        
+        
+        if (newData-GlobalData::shared()->getWorldTime() <= 0) {//可以喂食
+//            feedcdfix = GlobalData::shared()->getWorldTime();
+            feedcdfix = 0;
+            //            CCUserDefault::sharedUserDefault()->setIntegerForKey("feedcdfix", feedcdfix);
+            
+            string puid = GlobalData::shared()->playerInfo.uid;
+            
+            CCUserDefault::sharedUserDefault()->setIntegerForKey((puid+"feedcdfix").c_str(), feedcdfix);
             
         }
+        
+        
+        
     }
-    
-    
-    
 
 
     
@@ -243,6 +241,9 @@ int TitanInfo::resetTitanInfo(CCDictionary* dict)//0没有改变 1数值改变(�
     {
         feedcd = 0;//fusheng 不用CD了
         feedcdfix = 0;
+        string puid = GlobalData::shared()->playerInfo.uid;
+        
+        CCUserDefault::sharedUserDefault()->setIntegerForKey((puid+"feedcdfix").c_str(), feedcdfix);
     }
     
     return dataStatus;
@@ -279,7 +280,8 @@ recoverymanual(0),
 costmanual(0),
 recoverInterval(0),
 recoverPerInterval(-1),
-feedcdfix(0)
+feedcdfix(0),
+maxFeedIntervalTime(60*60)
 {
     
 
