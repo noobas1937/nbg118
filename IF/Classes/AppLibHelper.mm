@@ -67,7 +67,7 @@ void AppLibHelper::initLibs(){
 //    [Fabric with:@[[Twitter sharedInstance]]];
     
     //nanigans
-    [NANTracking setNanigansAppId:@"217314" fbAppId:@"713457855362204"];
+    [NANTracking setNanigansAppId:@"217314" fbAppId:@"1670702669839400"];
     string deviceUid = cocos2d::extension::CCDevice::getDeviceUid();
     [NANTracking setUserId:[NSString stringWithUTF8String:deviceUid.c_str()]];
     [NANTracking trackAppLaunch: nil];

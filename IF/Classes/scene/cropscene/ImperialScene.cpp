@@ -301,6 +301,14 @@ bool ImperialScene::init()
 
     m_torchNode->setZOrder(2);
     
+    // 设置背景图抗锯齿
+    for (auto child : m_cityBgNode->getChildren()) {
+        if (child) {
+            auto tex = ((Sprite*)child)->getTexture();
+            if (tex) tex->setAliasTexParameters();
+        }
+    }
+    
     setCleanFunction([](){
         CCLoadSprite::doResourceByImperialIndex(22, false);
         CCLoadSprite::doResourceByImperialIndex(28, false);
@@ -3662,6 +3670,8 @@ bool ImperialScene::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vikingTouchNode", CCNode*, this->m_vikingTouchNode);
     
     //end a by ljf
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_cityBgNode", CCNode*, this->m_cityBgNode);
+    
     
     return false;
 }
@@ -4349,6 +4359,7 @@ void ImperialScene::addSoldierToMap(int stype, int num, int ptx, int pty)
     int m_col = 3;
     string m_icon = "";
     float scale = 2;
+    float shadow_scale = 1;
     
     int tX = 0;
     int tY = 0;
@@ -4361,6 +4372,7 @@ void ImperialScene::addSoldierToMap(int stype, int num, int ptx, int pty)
         case 5://弓兵
             m_icon = "a060";
             preNum = 4*700/10;
+//            shadow_scale = 0.5;
             break;
         case 2://骑兵
             rowWidth = 30 * r_s;
@@ -4386,6 +4398,7 @@ void ImperialScene::addSoldierToMap(int stype, int num, int ptx, int pty)
             break;
         case 3://长弓兵
             m_icon = "a060";
+            shadow_scale = 0.75;
             break;
         default:
             m_icon = "a020";
@@ -4411,6 +4424,7 @@ void ImperialScene::addSoldierToMap(int stype, int num, int ptx, int pty)
         soldier->setSoldierPosition(endPos+ccp(tX, tY));
         soldier->setAnchorPoint(ccp(0.5, 0.5));
         soldier->setSprScale(scale);
+        soldier->getShadow()->setScale(shadow_scale);
         soldier->playAnimation(ActionStatus::ACTION_STAND);
         m_soldierArray->addObject(soldier);
     }

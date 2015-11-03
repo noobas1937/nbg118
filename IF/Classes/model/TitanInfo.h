@@ -64,6 +64,7 @@ public:
     int recoverInterval;
     float recoverPerInterval;//每点体力回复间隔 毫秒
     void resetLastCalTime(long time = -1);
+    long maxFeedIntervalTime;
 private:
     virtual bool init(){return true;};
     
