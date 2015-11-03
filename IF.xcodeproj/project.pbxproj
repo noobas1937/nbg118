@@ -8497,7 +8497,7 @@
 					"$(SRCROOT)/cocos2d/cocos/platform/ios",
 				);
 				INFOPLIST_FILE = IF/Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/IF/libs/cocos2dx/platform/third_party/ios/libraries\"",
@@ -8558,7 +8558,7 @@
 				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_BITCODE = YES;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/IF/libs",
@@ -8576,7 +8576,7 @@
 					"$(SRCROOT)/cocos2d/cocos/platform/ios",
 				);
 				INFOPLIST_FILE = IF/Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/IF/libs/cocos2dx/platform/third_party/ios/libraries\"",
