@@ -3421,12 +3421,13 @@ bool WorldMapView::updateMarchTarget(MarchInfo &info, double now, float delta) {
                     lvBg->setPosition(nextPos+ccp(-45, -55));
                 }
             }
-            if (m_heiqishiShadowBachNode->getChildByTag(info.marchTag)) {
-                CCSprite* shadowBg = dynamic_cast<CCSprite*>(m_heiqishiShadowBachNode->getChildByTag(info.marchTag));
-                if (shadowBg) {
-                    shadowBg->setPosition(nextPos+ccp(0, 0));
-                }
-            }
+            // guojiang
+//            if (m_heiqishiShadowBachNode->getChildByTag(info.marchTag)) {
+//                CCSprite* shadowBg = dynamic_cast<CCSprite*>(m_heiqishiShadowBachNode->getChildByTag(info.marchTag));
+//                if (shadowBg) {
+//                    shadowBg->setPosition(nextPos+ccp(0, 0));
+//                }
+//            }
             if (m_heiqishiLvLbNode->getChildByTag(info.marchTag)) {
                 m_heiqishiLvLbNode->getChildByTag(info.marchTag)->setPosition(nextPos+ccp(-45, -55));
                 
@@ -4129,16 +4130,17 @@ IFHeiqishiNode* WorldMapView::createHeiqishiSoldier(MarchInfo& info){//default i
         lvBg->setTag(info.marchTag);
         m_heiqishiLvBgBachNode->addChild(lvBg);
     }
-    
-    CCSprite* shadowBg = NULL;
-    if (m_heiqishiShadowBachNode->getChildByTag(info.marchTag)) {
-        shadowBg = dynamic_cast<CCSprite*>(m_heiqishiShadowBachNode->getChildByTag(info.marchTag));
-    }
-    else{
-        shadowBg =  CCLoadSprite::createSprite("shadow.png");
-        shadowBg->setTag(info.marchTag);
-        m_heiqishiShadowBachNode->addChild(shadowBg);
-    }
+
+    // guojiang
+//    CCSprite* shadowBg = NULL;
+//    if (m_heiqishiShadowBachNode->getChildByTag(info.marchTag)) {
+//        shadowBg = dynamic_cast<CCSprite*>(m_heiqishiShadowBachNode->getChildByTag(info.marchTag));
+//    }
+//    else{
+//        shadowBg =  CCLoadSprite::createSprite("shadow.png");
+//        shadowBg->setTag(info.marchTag);
+//        m_heiqishiShadowBachNode->addChild(shadowBg);
+//    }
     
     CCLabelBatch* bachLvLb = NULL;
     if (m_heiqishiLvLbNode->getChildByTag(info.marchTag)) {
@@ -6185,10 +6187,11 @@ void WorldMapView::addBatchItem(BatchTagType type, unsigned int index,CCObject* 
             break;
             
         case Shadow:{
-            auto shadow = CCLoadSprite::createSprite("shadow.png");
-            shadow->setPosition(ccp(pos.x, pos.y + 15));
-            m_mapMonsterShadowNode->addChild(shadow);
-            m_cityItem[index].push_back(shadow);
+            // guojiang
+//            auto shadow = CCLoadSprite::createSprite("shadow.png");
+//            shadow->setPosition(ccp(pos.x, pos.y + 15));
+//            m_mapMonsterShadowNode->addChild(shadow);
+//            m_cityItem[index].push_back(shadow);
         }
             break;
         case MonsterProBG1:{
