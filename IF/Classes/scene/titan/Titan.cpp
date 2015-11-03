@@ -62,7 +62,8 @@ bool Titan::initWithFile(int tid)
     
     sModelPram bodyParam;
     bodyParam.modelName = "3d/" + CCCommonUtils::getPropById(CC_ITOA(tid), "model") + ".c3b";
-    bodyParam.textureName = "3d/" + CCCommonUtils::getPropById(CC_ITOA(tid), "texture") + ".jpg";
+    //bodyParam.textureName = "3d/" + CCCommonUtils::getPropById(CC_ITOA(tid), "texture") + ".jpg"; //d by ljf
+    bodyParam.textureName = "3d/" + CCCommonUtils::getPropById(CC_ITOA(tid), "texture") + ".png"; //a by ljf
 //    bodyParam.textureShaderName = "3d/titan_1_shader.jpg";
 //    bodyParam.vShaderFileName = "shaders/titan.vsh";
 //    bodyParam.fShaderFileName = "shaders/titan.fsh";
@@ -198,7 +199,8 @@ void Titan::resetDisplay(int tid)
     
     sModelPram bodyParam;
     bodyParam.modelName = "3d/" + CCCommonUtils::getPropById(CC_ITOA(tid), "model") + ".c3b";
-    bodyParam.textureName = "3d/" + CCCommonUtils::getPropById(CC_ITOA(tid), "texture") + ".jpg";
+    //bodyParam.textureName = "3d/" + CCCommonUtils::getPropById(CC_ITOA(tid), "texture") + ".jpg"; //d by ljf
+    bodyParam.textureName = "3d/" + CCCommonUtils::getPropById(CC_ITOA(tid), "texture") + ".png"; //a by ljf
 
     if (_model) {
         _model->stopAllActions();
@@ -435,7 +437,7 @@ void Titan::stand()
         Action* act = RepeatForever::create(pAnim);
         act->setTag(1);
         _model->stopAllActions();
-        _model->runAction(act);
+        //_model->runAction(act);  //d by ljf
     }
 }
 
