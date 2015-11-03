@@ -73,7 +73,9 @@ bool Titan::initWithFile(int tid)
 //    bodyParam.max = 3;
 
     _model = NBSprite3D::create(bodyParam.modelName);
-    
+    //begina by ljf
+    _model->setGlobalZOrder(1);
+    //end a by ljf
     if (!_model) {
         return false;
     }

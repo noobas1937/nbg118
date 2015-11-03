@@ -748,7 +748,8 @@ void HFViewport::onTouchesBegan(const std::vector<Touch*>& pTouches, Event *pEve
     unscheduleAll();
     CC_ASSERT(this->m_TargetNode);
     //tao.yu 为解决batch不跟随自定义摄像机走的问题，增加此行代码
-    if (m_TargetNode->getTag() == IMPERIAL_SCENE_TOUCH_LAYER_TAG)
+    //if (m_TargetNode->getTag() == IMPERIAL_SCENE_TOUCH_LAYER_TAG)
+    if(false)
     {
         m_TargetNode->setCameraMask((unsigned short)CameraFlag::USER4, true);
         auto node3d = m_TargetNode->getChildByTag(JUST3D_NODE_TAG);
