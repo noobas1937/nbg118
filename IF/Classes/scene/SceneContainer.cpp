@@ -47,11 +47,11 @@ bool SceneContainer::init() {
         Vec3 eye(0.0f, 0.0f, zeye);
         Vec3 center(0.0f , 0.0f , 0.0f);
         Vec3 up(0.0f, 1.0f, 0.0f);
-        just3DCamera->setPosition3D(eye);
-        just3DCamera->lookAt(center, up);
-        float eyex = eye.x;
-        float eyey = eye.y;
-        float eyez = eye.z;
+        //just3DCamera->setPosition3D(eye);
+        //just3DCamera->lookAt(center, up);
+        just3DCamera->setPosition3D(Vec3(0.0f, 0.0f, 0.0f));
+        just3DCamera->setRotation3D(Vec3(0.f, 0.f, 0.f));
+        
         //just3DCamera->setRotation3D(Vec3(32, 39, -24));
         
         /*

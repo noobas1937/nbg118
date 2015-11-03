@@ -618,10 +618,10 @@ void ImperialScene::onCreateTitan()
     titanRootNode->setPosition(m_touchLayer->convertToNodeSpace(m_titanNode->convertToWorldSpace(Point(0, 0))));
     m_node3d->addChild(titanRootNode);
 
-    /*
+    
     m_touchLayer->setCameraMask((unsigned short)CameraFlag::USER4, true);
     m_node3d->setCameraMask((unsigned short) CameraFlag::USER2, true);
-    */
+    
     
 //    //end a by ljf
 //    std::vector<Vec2> movePoint;
@@ -665,10 +665,10 @@ void ImperialScene::onCreateVikingsShip()
             m_vikings3D->runAction(act);
         }
     }
-    /*
+    
     m_touchLayer->setCameraMask((unsigned short)CameraFlag::USER4, true);
     m_node3d->setCameraMask((unsigned short) CameraFlag::USER2, true);
-    */
+    
     //begin a by ljf
     //onVikingsShipMove(m_vikings3D);
     //end a by ljf
@@ -1129,7 +1129,7 @@ void ImperialScene::handleTitanUpgrade(CCObject* obj)
                 m_Titan->changeTitanState(Titan::eActState::Stand);
                 titanRootNode->addChild(m_Titan);
                 
-                //m_node3d->setCameraMask((unsigned short) CameraFlag::USER2, true); //d by ljf
+                m_node3d->setCameraMask((unsigned short) CameraFlag::USER2, true);
                
             }
         }
