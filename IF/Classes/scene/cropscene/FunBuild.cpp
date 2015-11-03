@@ -473,8 +473,8 @@ void FunBuild::playOpenLock()
         m_spr->getTexture()->setAntiAliasTexParameters();
         
         //m_spr->setVisible(true);
-        auto delate = CCDelayTime::create(0.5);
-        auto fadeIn = CCFadeIn::create(1.0);
+        auto delate = CCDelayTime::create(0.1); //太慢的话，用户再点击此建筑时，会停止播放fade in 动画
+        auto fadeIn = CCFadeIn::create(0.2);
         m_spr->runAction(CCSequence::create(delate,fadeIn,NULL));
         
         
@@ -574,7 +574,12 @@ void FunBuild::setNamePos(int x, int y, CCLayer* sginLayer, CCLayer* popLayer, C
     m_sprArray->addObject(m_moveFrame);
     m_moveFrame->setZOrder(zOrder*1000+tmpOrd);
     tmpOrd ++;
-    
+    //begin a by ljf
+    if(m_info->type == FUN_BUILD_BARRACK2)
+    {
+        
+    }
+    //end a by ljf
     if(m_mainNode) {
         auto& array = m_mainNode->getChildren();
         if (array.size()>0) {

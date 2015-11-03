@@ -301,6 +301,14 @@ bool ImperialScene::init()
 
     m_torchNode->setZOrder(2);
     
+    // 设置背景图抗锯齿
+    for (auto child : m_cityBgNode->getChildren()) {
+        if (child) {
+            auto tex = ((Sprite*)child)->getTexture();
+            if (tex) tex->setAliasTexParameters();
+        }
+    }
+    
     setCleanFunction([](){
         CCLoadSprite::doResourceByImperialIndex(22, false);
         CCLoadSprite::doResourceByImperialIndex(28, false);
@@ -3660,6 +3668,8 @@ bool ImperialScene::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vikingTouchNode", CCNode*, this->m_vikingTouchNode);
     
     //end a by ljf
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_cityBgNode", CCNode*, this->m_cityBgNode);
+    
     
     return false;
 }

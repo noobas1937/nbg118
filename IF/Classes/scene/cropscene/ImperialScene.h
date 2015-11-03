@@ -416,6 +416,9 @@ private:
     CCSafeObject<CCNode> m_waterfallNode;
     CCSafeObject<CCNode> m_waterfall_prt;
     
+    // tao.yu
+    CCSafeObject<CCNode> m_cityBgNode;
+    
     std::map<int, CCSpriteBatchNode*> m_wallBatchs;
     
     void addGuideParticleToBatch(cocos2d::CCParticleSystemQuad *particle);
