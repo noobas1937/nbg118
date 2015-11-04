@@ -619,12 +619,31 @@ void ImperialScene::onCreateTitan()
         return;
     }
     m_Titan->turnFront();
-
+    
+//    auto node = Node::create();
     titanRootNode = Node::create();
     titanRootNode->setRotation3D(Vec3(32, 39, -24));
     titanRootNode->addChild(m_Titan);
     titanRootNode->setPosition(m_touchLayer->convertToNodeSpace(m_titanNode->convertToWorldSpace(Point(0, 0))));
+    
+
     m_node3d->addChild(titanRootNode);
+    auto listener = EventListenerCustom::create(Animate3DDisplayedNotification,[this](EventCustom* ev)
+    {
+
+        auto particle = ParticleController::createParticle("Dragon_landing");
+        
+
+        m_titanNode->addChild(particle);
+        
+        particle->setScaleY(0.7);
+        
+
+        particle->setCameraMask(m_touchLayer->getCameraMask(), true);
+    }
+                                                );
+    
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, titanRootNode);
 
     m_touchLayer->setCameraMask((unsigned short)CameraFlag::USER4, true);
     m_node3d->setCameraMask((unsigned short) CameraFlag::USER2, true);
