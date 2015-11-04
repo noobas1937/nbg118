@@ -238,7 +238,7 @@
 				<key>displayName</key>
 				<string>node0</string>
 				<key>memberVarAssignmentName</key>
-				<string>m_wallNode_4</string>
+				<string>m_wallNode_0</string>
 				<key>memberVarAssignmentType</key>
 				<integer>0</integer>
 				<key>properties</key>
@@ -1387,11 +1387,11 @@
 						<key>customClass</key>
 						<string></string>
 						<key>displayName</key>
-						<string>CCSprite</string>
+						<string>m_wall_1_2</string>
 						<key>memberVarAssignmentName</key>
-						<string></string>
+						<string>m_wall_1_2</string>
 						<key>memberVarAssignmentType</key>
-						<integer>0</integer>
+						<integer>2</integer>
 						<key>properties</key>
 						<array>
 							<dict>
@@ -1541,9 +1541,9 @@
 				<key>displayName</key>
 				<string>node1</string>
 				<key>memberVarAssignmentName</key>
-				<string></string>
+				<string>m_wallNode_1</string>
 				<key>memberVarAssignmentType</key>
-				<integer>0</integer>
+				<integer>2</integer>
 				<key>properties</key>
 				<array>
 					<dict>
@@ -1676,11 +1676,11 @@
 						<key>customClass</key>
 						<string></string>
 						<key>displayName</key>
-						<string>CCSprite</string>
+						<string>m_wall_2_2</string>
 						<key>memberVarAssignmentName</key>
-						<string></string>
+						<string>m_wall_2_2</string>
 						<key>memberVarAssignmentType</key>
-						<integer>0</integer>
+						<integer>2</integer>
 						<key>properties</key>
 						<array>
 							<dict>
@@ -1965,11 +1965,11 @@
 						<key>customClass</key>
 						<string></string>
 						<key>displayName</key>
-						<string>m_wall_3_001</string>
+						<string>m_wall_3_6</string>
 						<key>memberVarAssignmentName</key>
-						<string></string>
+						<string>m_wall_3_6</string>
 						<key>memberVarAssignmentType</key>
-						<integer>0</integer>
+						<integer>2</integer>
 						<key>properties</key>
 						<array>
 							<dict>
@@ -2131,11 +2131,11 @@
 						<key>customClass</key>
 						<string></string>
 						<key>displayName</key>
-						<string>m_wall_3_002</string>
+						<string>m_wall_3_7</string>
 						<key>memberVarAssignmentName</key>
-						<string></string>
+						<string>m_wall_3_7</string>
 						<key>memberVarAssignmentType</key>
-						<integer>0</integer>
+						<integer>2</integer>
 						<key>properties</key>
 						<array>
 							<dict>
@@ -2297,11 +2297,11 @@
 						<key>customClass</key>
 						<string></string>
 						<key>displayName</key>
-						<string>m_wall_3_003</string>
+						<string>m_wall_3_8</string>
 						<key>memberVarAssignmentName</key>
-						<string></string>
+						<string>m_wall_3_8</string>
 						<key>memberVarAssignmentType</key>
-						<integer>0</integer>
+						<integer>2</integer>
 						<key>properties</key>
 						<array>
 							<dict>
@@ -2463,11 +2463,11 @@
 						<key>customClass</key>
 						<string></string>
 						<key>displayName</key>
-						<string>m_wall_3_004</string>
+						<string>m_wall_3_9</string>
 						<key>memberVarAssignmentName</key>
-						<string></string>
+						<string>m_wall_3_9</string>
 						<key>memberVarAssignmentType</key>
-						<integer>0</integer>
+						<integer>2</integer>
 						<key>properties</key>
 						<array>
 							<dict>
@@ -2693,6 +2693,8 @@
 								<false/>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -3065,9 +3067,9 @@
 				<key>displayName</key>
 				<string>node3</string>
 				<key>memberVarAssignmentName</key>
-				<string></string>
+				<string>m_wallNode_3</string>
 				<key>memberVarAssignmentType</key>
-				<integer>0</integer>
+				<integer>2</integer>
 				<key>properties</key>
 				<array>
 					<dict>
@@ -3117,11 +3119,11 @@
 						<key>customClass</key>
 						<string></string>
 						<key>displayName</key>
-						<string>m_wall_4_001</string>
+						<string>m_wall_4_4</string>
 						<key>memberVarAssignmentName</key>
-						<string></string>
+						<string>m_wall_4_4</string>
 						<key>memberVarAssignmentType</key>
-						<integer>0</integer>
+						<integer>2</integer>
 						<key>properties</key>
 						<array>
 							<dict>
@@ -3283,11 +3285,11 @@
 						<key>customClass</key>
 						<string></string>
 						<key>displayName</key>
-						<string>m_wall_4_002</string>
+						<string>m_wall_4_5</string>
 						<key>memberVarAssignmentName</key>
-						<string></string>
+						<string>m_wall_4_5</string>
 						<key>memberVarAssignmentType</key>
-						<integer>0</integer>
+						<integer>2</integer>
 						<key>properties</key>
 						<array>
 							<dict>
@@ -3449,11 +3451,11 @@
 						<key>customClass</key>
 						<string></string>
 						<key>displayName</key>
-						<string>m_wall_4_003</string>
+						<string>m_wall_4_6</string>
 						<key>memberVarAssignmentName</key>
-						<string></string>
+						<string>m_wall_4_6</string>
 						<key>memberVarAssignmentType</key>
-						<integer>0</integer>
+						<integer>2</integer>
 						<key>properties</key>
 						<array>
 							<dict>
