@@ -643,10 +643,9 @@ void ImperialScene::onCreateTitan()
 
 void ImperialScene::onCreateVikingsShip()
 {
-    //m_vikings3D = NBSprite3D::create("3d/ship/ship_3_skin.c3b");
-    //m_vikings3D->setTexture("3d/ship/ship_3.jpg");
-    m_vikings3D = NBSprite3D::create("3d/dragon_1_skin.c3b");
-    m_vikings3D->setTexture("3d/dragon_1.png");
+    m_vikings3D = NBSprite3D::create("3d/ship/ship_3_skin.c3b");
+    m_vikings3D->setTexture("3d/ship/ship_3.jpg");
+    
     m_vikings3D->setGlobalZOrder(1);
     auto vikingsRootNode = CCNode::create();
     vikingsRootNode->setRotation3D(Vec3(32, 39, -24));
@@ -674,7 +673,7 @@ void ImperialScene::onCreateVikingsShip()
         auto pAnim = Animate3D::createWithFrames(anim_stand, 1, 100);
         if (pAnim) {
             auto act = RepeatForever::create(pAnim);
-            //m_vikings3D->runAction(act);
+            m_vikings3D->runAction(act);
         }
     }
     
@@ -741,7 +740,7 @@ void ImperialScene::onVikingsShipMove(NBSprite3D * pSprite3d)
             if (pAnim) {
                 auto act = RepeatForever::create(pAnim);
                 pSprite3d->stopAllActions();
-                //pSprite3d->runAction(act);
+                pSprite3d->runAction(act);
             }
         }
         auto viking3dPositon = m_vikings3D->getPosition3D();
@@ -829,7 +828,7 @@ void ImperialScene::onVikingsShipMove(NBSprite3D * pSprite3d)
                     //if(sender == pSprite3d)
                     {
                         sender->stopAllActions();
-                        //sender->runAction(act);
+                        sender->runAction(act);
                     }
                     
                 }
