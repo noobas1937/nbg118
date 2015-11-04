@@ -14,14 +14,14 @@ logfileName=$logRoot/$curDate/$BUILD_NUMBER-$curDate-$curTime
 #echo $logfileName
 mkdir $logRoot/$curDate >/dev/null 2>/dev/null
 
-apkSrcPath=./bin/NBG_Global-release.apk
+apkSrcPath=./bin/DragonClans_Global-release.apk
 soPath=./libs/armeabi/libgame.so
 apkTargetDir=$packageroot/$curDate
 soTargetDir=$soRootPath/$curDate
 mkdir $soTargetDir >/dev/null 2>/dev/null
 
-apkTargetPath=$apkTargetDir/$BUILD_NUMBER-NBG_google-$curDate-$curTime.apk
-apkTargetLastPath=$apkTargetDir/NBG_google.apk
+apkTargetPath=$apkTargetDir/$BUILD_NUMBER-DragonClans_google-$curDate-$curTime.apk
+apkTargetLastPath=$apkTargetDir/DragonClans_google.apk
 
 if [ ! -n "$ANDROID_HOME" ]; then
 echo "Error:Need to specify ANDROID_HOME first"
