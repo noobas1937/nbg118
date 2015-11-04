@@ -14,14 +14,14 @@ logfileName=$logRoot/$curDate/$BUILD_NUMBER-$curDate-$curTime
 #echo $logfileName
 mkdir $logRoot/$curDate >/dev/null 2>/dev/null
 
-apkSrcPath=./bin/NBG_CN1-debug.apk
+apkSrcPath=./bin/DragonClans_CN1-debug.apk
 soPath=./libs/armeabi/libgame.so
 apkTargetDir=$packageroot/$curDate
 soTargetDir=$soRootPath/$curDate
 mkdir $soTargetDir >/dev/null 2>/dev/null
 
-apkTargetPath=$apkTargetDir/$BUILD_NUMBER-NBG_CN1-$curDate-$curTime.apk
-apkTargetLastPath=$apkTargetDir/NBG_CN1.apk
+apkTargetPath=$apkTargetDir/$BUILD_NUMBER-DragonClans_CN1-$curDate-$curTime.apk
+apkTargetLastPath=$apkTargetDir/DragonClans_CN1.apk
 
 if [ ! -n "$ANDROID_HOME" ]; then
 echo "Error:Need to specify ANDROID_HOME first"
@@ -84,7 +84,7 @@ else
 	exit -1
 fi
 
-cd ../Publish.android/NBG_CN1/assets
+cd ../Publish.android/DragonClans_CN1/assets
 cp -rf libs/local/ assets >/dev/null
 
 rm -rf Battle/_alpha_Battle_a034_alpha.pkm
