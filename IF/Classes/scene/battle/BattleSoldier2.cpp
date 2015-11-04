@@ -254,8 +254,7 @@ void BattleSoldier2::delayPlayAnimation(){
         }else if(m_status == S_HURT){
             totalFrame = 0;
         }else if(m_status == S_STAND){
-//            totalFrame = 10;
-            totalFrame = 1;
+            totalFrame = 10;
         }
     }
     else if (m_icon == "a020")
@@ -269,8 +268,7 @@ void BattleSoldier2::delayPlayAnimation(){
         }else if(m_status == S_HURT){
             totalFrame = 0;
         }else if(m_status == S_STAND){
-//            totalFrame = 8;
-            totalFrame = 1;
+            totalFrame = 8;
         }
     }
     else if (m_icon == "a060")
@@ -284,8 +282,7 @@ void BattleSoldier2::delayPlayAnimation(){
         }else if(m_status == S_HURT){
             totalFrame = 0;
         }else if(m_status == S_STAND){
-//            totalFrame = 7;
-            totalFrame = 1;
+            totalFrame = 7;
         }
     }
     else if (m_icon == "zhanche")
@@ -299,8 +296,7 @@ void BattleSoldier2::delayPlayAnimation(){
         }else if(m_status == S_HURT){
             totalFrame = 0;
         }else if(m_status == S_STAND){
-//            totalFrame = 8;
-            totalFrame = 1;
+            totalFrame = 8;
         }
     }
     
@@ -321,6 +317,9 @@ void BattleSoldier2::delayPlayAnimation(){
         delayPerUnit = HURT_SOLDIER_DELAY_PER_UNIT;
     }else if(m_status == ACTION_DEATH){
         delayPerUnit = 0.13;
+    }else if(m_status == S_STAND){
+        float random_variable = rand() % 10 + 5.0;
+        delayPerUnit = 0.1 + 1.0 / random_variable;
     }else{
         delayPerUnit = SOLDIER_DELAY_PER_UNIT;
     }
@@ -337,7 +336,8 @@ void BattleSoldier2::delayPlayAnimation(){
         if (m_completeTarget && m_completeFunc) {
             m_iconSpr->runAction(CCSequence::create(CCAnimate::create(animation), getCompleteFun(), NULL));
         } else {
-            m_iconSpr->runAction(CCSequence::create(CCAnimate::create(animation), NULL));
+            float random_variable = rand() % 5 + 0.1;
+            m_iconSpr->runAction(CCSequence::create(DelayTime::create(random_variable), CCAnimate::create(animation), NULL));
         }
     }else if(m_status!=ACTION_DEATH){
         CCSequence* s2;
@@ -372,6 +372,6 @@ void BattleSoldier2::update(float delta)
 {
     if (m_shadow && m_iconSpr)
     {
-        m_shadow->setPosition(m_iconSpr->getPosition() + Vec2(0, -10));
+        m_shadow->setPosition(m_iconSpr->getPosition() + Vec2(-5, -14));
     }
 }

@@ -219,10 +219,10 @@ void NBWorldNPC::updateBirds(const Vec2& currentTilePoint, Node* animation_layer
     int flipX = rand() % 2 == 0 ? 1 : -1;
     int flipY = rand() % 2 == 0 ? 1 : -1;
     auto *ac1 = createAnimation("World/World_5.plist", "anima_bird_0%d.png", 1, 8);
-    int is = rand() % 5 + 1;
-    int js = rand() % 5 + 1;
-    int ii = rand() % 5 + 1 + is;
-    int jj = rand() % 5 + 1 + js;
+    int is = 0; // rand() % 2 + 1;
+    int js = rand() % 2 + 1;
+    int ii = 1; // rand() % 2 + 1 + is;
+    int jj = rand() % 2 + 1 + js;
 //    int kk = rand() % 3;
 //    int ll = rand() % 3;
     for (int i = is; i < ii; i++)
