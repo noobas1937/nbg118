@@ -6997,6 +6997,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0700;
+				TargetAttributes = {
+					DB9F58F217CD9A520037F7E5 = {
+						DevelopmentTeam = N6JW9AVXL5;
+					};
+				};
 			};
 			buildConfigurationList = DB9F58EE17CD9A520037F7E5 /* Build configuration list for PBXProject "IF" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -8367,8 +8372,8 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 凌江 lingjiang (4Z9Q344992)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -8404,7 +8409,7 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "bd9ef96e-b0fe-4a79-90e3-cb1d4c4ffb22";
+				PROVISIONING_PROFILE = "fa8083a7-f9e2-442b-892e-e00be1f50408";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -8415,7 +8420,8 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ELEX Technology Holdings Co., Ltd. (N6JW9AVXL5)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
@@ -8448,7 +8454,7 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "f2e098aa-8412-497b-81ab-b608d4249177";
+				PROVISIONING_PROFILE = "1e35453d-2b79-4f0c-b257-4f17f29ecbdc";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -8524,9 +8530,9 @@
 					"-lsqlite3",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.guojiang.nbg;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.elex-tech.DragonClans";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2baf0b76-82a7-461a-ac97-125285dd3717";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "\"IF/libs/Chipmunk/include/chipmunk\"";
 				VALIDATE_PRODUCT = NO;
@@ -8602,9 +8608,9 @@
 					"-lsqlite3",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.guojiang.nbg;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.elex-tech.DragonClans";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2baf0b76-82a7-461a-ac97-125285dd3717";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "\"IF/libs/Chipmunk/include/chipmunk\"";
 				VALIDATE_PRODUCT = NO;
