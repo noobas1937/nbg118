@@ -631,7 +631,7 @@ void ImperialScene::onCreateTitan()
     auto listener = EventListenerCustom::create(Animate3DDisplayedNotification,[this](EventCustom* ev)
     {
 
-        auto particle = ParticleController::createParticle("Dragon_landing");
+        auto particle = ParticleController::createFightingParticle("Dragon_landing",0.1);
         
 
         m_titanNode->addChild(particle);

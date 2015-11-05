@@ -498,7 +498,7 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
     
     isFoodEnough = true;//fusheng 标记粮食充足
     
-    FunBuildInfo& fbiInfo = FunBuildController::getInstance()->getFunbuildById(400000000);
+    FunBuildInfo& fbiInfo = FunBuildController::getInstance()->getFunbuildById(FUN_BUILD_MAIN_CITY_ID);
     
 
     m_nameLabel->setString(_lang(fbiInfo.name));
@@ -1433,7 +1433,7 @@ void GeneralTitanPopupView::spdCallBack()
     if (tmpTime<=GlobalData::shared()->freeSpdT) {
         gold = 0;
     }
-    FunBuildController::getInstance()->costCD(400000000, "", gold);
+    FunBuildController::getInstance()->costCD(FUN_BUILD_MAIN_CITY_ID, "", gold);
     CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("Titan_Speed"));
     
 };
@@ -1448,7 +1448,7 @@ void GeneralTitanPopupView::onCleanFeedCDClick(CCObject * pSender, Control::Even
 
 void GeneralTitanPopupView::onToolSpeedUpClick(CCObject * pSender, Control::EventType pCCControlEvent){
     //
-            FunBuildInfo& fbiInfo = FunBuildController::getInstance()->getFunbuildById(400000000); //fusheng 泰坦道具加速
+            FunBuildInfo& fbiInfo = FunBuildController::getInstance()->getFunbuildById(FUN_BUILD_MAIN_CITY_ID); //fusheng 泰坦道具加速
     
             if(fbiInfo.state == FUN_BUILD_UPING)
             {
@@ -1459,7 +1459,7 @@ void GeneralTitanPopupView::onToolSpeedUpClick(CCObject * pSender, Control::Even
                 if(toolInfo.getCNT()>0)
                 {
                     if (queue_id != -1) {
-                        PropSpeedupView::show(ItemSpdMenu_City, 400000000, queue_id);//fusheng 注意 不是只有1101  还有1102
+                        PropSpeedupView::show(ItemSpdMenu_City, FUN_BUILD_MAIN_CITY_ID, queue_id);//fusheng 注意 不是只有1101  还有1102
                     }
                     
                 }
@@ -1562,7 +1562,7 @@ bool GeneralTitanPopupView::onTouchBegan(CCTouch *pTouch, CCEvent *pEvent){
         
 
         
-        FunBuildInfo& fbiInfo = FunBuildController::getInstance()->getFunbuildById(400000000);//fusheng 使用建筑物状态
+        FunBuildInfo& fbiInfo = FunBuildController::getInstance()->getFunbuildById(FUN_BUILD_MAIN_CITY_ID);//fusheng 使用建筑物状态
         
         if(fbiInfo.state == FUN_BUILD_UPING)
         {
@@ -1571,7 +1571,7 @@ bool GeneralTitanPopupView::onTouchBegan(CCTouch *pTouch, CCEvent *pEvent){
             return true;
         }
         
-        PopupViewController::getInstance()->addPopupInView(TitanUpgradeView::create(400000000,CCString::create(m_titanId)->intValue()));
+        PopupViewController::getInstance()->addPopupInView(TitanUpgradeView::create(FUN_BUILD_MAIN_CITY_ID,CCString::create(m_titanId)->intValue()));
         CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("Titan_Up"));
         return true;
     }
@@ -1605,14 +1605,14 @@ bool GeneralTitanPopupView::onTouchBegan(CCTouch *pTouch, CCEvent *pEvent){
 
         
         
-        //        onSkillClick(NULL, CCControlEvent::TOUCH_DOWN);
-//        
-//        CCArray* p = CCArray::create();
-//        p->addObject(CCInteger::create(GENERAL_OPEN));
-//        CCArray* d = CCArray::create();
-//        
-//        DataRecordCommand* cmd = new DataRecordCommand(OPEN_PANEL, p, d);
-//        cmd->sendAndRelease();
+                onSkillClick(NULL, CCControlEvent::TOUCH_DOWN);
+        
+        CCArray* p = CCArray::create();
+        p->addObject(CCInteger::create(GENERAL_OPEN));
+        CCArray* d = CCArray::create();
+        
+        DataRecordCommand* cmd = new DataRecordCommand(OPEN_PANEL, p, d);
+        cmd->sendAndRelease();
 
         return true;
 
@@ -1621,7 +1621,7 @@ bool GeneralTitanPopupView::onTouchBegan(CCTouch *pTouch, CCEvent *pEvent){
     if(isTouchInside(this->m_titanDetail, pTouch))
     {
 //        CCCommonUtils::flyHint("", "", _lang("E100008"));
-        PopupViewController::getInstance()->addPopupInView(MainCityView::create(400000000));
+        PopupViewController::getInstance()->addPopupInView(MainCityView::create(FUN_BUILD_MAIN_CITY_ID));
         return true;
 
     }

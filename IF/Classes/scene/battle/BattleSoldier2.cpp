@@ -313,6 +313,10 @@ void BattleSoldier2::delayPlayAnimation(){
         for (int i = 0; i < cnt; i++)
         {
             cf = CCLoadSprite::getSF(CCString::createWithFormat("%s_%d_%s_%s_%d.png",m_icon.c_str(),m_side,m_direct.c_str(),actionName.c_str(),j)->getCString());
+            if(cf==nullptr)
+            {
+                continue;
+            }
             myArray.pushBack(cf);
             m_iconSpr->setDisplayFrame(cf);
         }
