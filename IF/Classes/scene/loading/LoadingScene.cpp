@@ -967,6 +967,9 @@ void LoadingScene::stepLoading(CCObject* p)
     GlobalData::shared()->analyticID = "AppStore";
 #endif
 #endif
+    
+    CCLOG("------- Dragon Clans : GlobalData::shared()->analyticID : %s", GlobalData::shared()->analyticID.c_str());
+    
     if (GlobalData::shared()->updateType==1)
     {
         auto _dialog = YesNoDialog::show(CCString::createWithFormat(_lang("login_error_client_ver_must").c_str(), str.c_str())->getCString(),

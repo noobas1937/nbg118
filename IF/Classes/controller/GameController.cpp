@@ -448,8 +448,8 @@ void GameController::goTurntoUrl(string url){
 }
 void GameController::gotoFaceBookLike()
 {
-    CCLOG("version-url:%s","https://www.facebook.com/Clash.Of.Kings.Game");
-    cocos2d::extension::CCDevice::updateVersion("https://www.facebook.com/Clash.Of.Kings.Game");
+    CCLOG("version-url:%s","https://www.facebook.com/Dragon-Clans-1484362238534405");
+    cocos2d::extension::CCDevice::updateVersion("https://www.facebook.com/Dragon-Clans-1484362238534405");
 }
 
 void GameController::callXCApi(string data){
