@@ -677,7 +677,7 @@ void FunBuild::setNamePos(int x, int y, CCLayer* sginLayer, CCLayer* popLayer, C
         }
         if(m_info->type != FUN_BUILD_FORT) {
             //TODO FIXBUG
-            //this->getAnimationManager()->runAnimationsForSequenceNamed("TrainingLoop");
+            this->getAnimationManager()->runAnimationsForSequenceNamed("TrainingLoop");
         }
         onShowParticleByType(1);
     }
