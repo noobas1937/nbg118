@@ -203,6 +203,8 @@ int TitanInfo::resetTitanInfo(CCDictionary* dict)//0没有改变 1数值改变(�
                 string puid = GlobalData::shared()->playerInfo.uid;
                 
                 CCUserDefault::sharedUserDefault()->setIntegerForKey((puid+"feedcdfix").c_str(), feedcdfix);
+                
+                CCUserDefault::sharedUserDefault()->flush();
             }
             
             
@@ -217,6 +219,8 @@ int TitanInfo::resetTitanInfo(CCDictionary* dict)//0没有改变 1数值改变(�
             string puid = GlobalData::shared()->playerInfo.uid;
             
             CCUserDefault::sharedUserDefault()->setIntegerForKey((puid+"feedcdfix").c_str(), feedcdfix);
+            
+            CCUserDefault::sharedUserDefault()->flush();          
             
         }
         

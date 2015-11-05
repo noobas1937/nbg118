@@ -48,15 +48,15 @@ QueueController::~QueueController() {
 
 void QueueController::TitanFinishCD(float dt)
 {
-    int qid = QueueController::getInstance()->getQueueQidByKey(CC_ITOA(400000000));
+    int qid = QueueController::getInstance()->getQueueQidByKey(CC_ITOA(FUN_BUILD_MAIN_CITY_ID));
     string uuid = GlobalData::shared()->allQueuesInfo[qid].uuid;//fusheng 10.13
     QueueFinishCommand* cmd = new QueueFinishCommand(QUEUE_FINISH_COMMAND, uuid);
     
-    auto biter = GlobalData::shared()->imperialInfo.find(400000000);
+    auto biter = GlobalData::shared()->imperialInfo.find(FUN_BUILD_MAIN_CITY_ID);
     
     if (biter!=GlobalData::shared()->imperialInfo.end()) {
         
-        FunBuildController::getInstance()->completeUpOrCreate(400000000);//fusheng 主城数据刷新
+        FunBuildController::getInstance()->completeUpOrCreate(FUN_BUILD_MAIN_CITY_ID);//fusheng 主城数据刷新
         biter->second.state = FUN_BUILD_UPING_END;//fusheng  设置状态 保证正常逻辑
     }
     

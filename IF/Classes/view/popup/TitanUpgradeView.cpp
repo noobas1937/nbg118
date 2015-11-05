@@ -138,7 +138,7 @@ bool TitanUpgradeView::init(int buildId, int pos)
 
 void TitanUpgradeView::updateTitanInfo(CCObject* obj)
 {
-    if(GlobalData::shared()->titanInfo.level<GlobalData::shared()->MaxBuildLv) {//fusheng 没有满级
+    if(GlobalData::shared()->titanInfo.level<GlobalData::shared()->MaxBuildLv) {//fusheng 没有满级  龙等级满级使用建筑满级
         ArmyInfo titanInfo = GlobalData::shared()->armyList[GlobalData::shared()->titanInfo.titanId]; //fusheng map中通过id获得泰坦属性 泰坦满记属性
         ArmyInfo nextTitanInfo = GlobalData::shared()->armyList[ CC_ITOA(CCString::create(GlobalData::shared()->titanInfo.titanId)->intValue()+1)];
         m_titanCurrentZDL->setString(CC_ITOA(titanInfo.power));
@@ -259,12 +259,16 @@ void TitanUpgradeView::updateInfo(CCObject* obj)
     m_liron = 0;
     m_lstone = 0;
     
-    //fusheng 泰坦喂食状态
-    auto item_titanStatus = UpgradeCell::create(8, 0, 0);
-    item_titanStatus->setPosition(ccp(curX, curY));
-    item_titanStatus->setTouchNode(m_infoList,m_buildId);
-    m_scrollView->addChild(item_titanStatus);
-    curY += _itemH;
+    if(GlobalData::shared()->titanInfo.level<GlobalData::shared()->MaxBuildLv) {//fusheng 没有满级  龙等级满级使用建筑满级
+        //fusheng 泰坦喂食状态
+        auto item_titanStatus = UpgradeCell::create(8, 0, 0);
+        item_titanStatus->setPosition(ccp(curX, curY));
+        item_titanStatus->setTouchNode(m_infoList,m_buildId);
+        m_scrollView->addChild(item_titanStatus);
+        curY += _itemH;
+    }
+   
+   
 
     
     if (stone_need>0) {
@@ -417,6 +421,11 @@ void TitanUpgradeView::updateInfo(CCObject* obj)
     else
     {
         
+    }
+    
+    if(GlobalData::shared()->titanInfo.level >= GlobalData::shared()->MaxBuildLv) {//fusheng 没有满级  龙等级满级使用建筑满级
+        m_instantBtn->setEnabled(false);
+        m_upBtn->setEnabled(false);
     }
     
     
@@ -642,11 +651,11 @@ void TitanUpgradeView::onOkInstantUp()
             //fusheng 如果在世界里的话  更新主城数据
             if(SceneController::getInstance()->currentSceneId == SCENE_ID_WORLD)
             {
-                auto biter = GlobalData::shared()->imperialInfo.find(400000000);
+                auto biter = GlobalData::shared()->imperialInfo.find(FUN_BUILD_MAIN_CITY_ID);
                 
                 if (biter!=GlobalData::shared()->imperialInfo.end()) {
                     
-                    FunBuildController::getInstance()->completeUpOrCreate(400000000);//fusheng 主城数据刷新
+                    FunBuildController::getInstance()->completeUpOrCreate(FUN_BUILD_MAIN_CITY_ID);//fusheng 主城数据刷新
                     biter->second.state = FUN_BUILD_UPING_END;//fusheng  设置状态 保证正常逻辑
                 }
             }
