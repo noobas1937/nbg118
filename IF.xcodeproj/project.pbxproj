@@ -364,7 +364,6 @@
 		57F2077C19826C2900BDE262 /* WallBuild.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57F2077B19826C2900BDE262 /* WallBuild.cpp */; };
 		57F3168318D1C452003942E9 /* UseResToolView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57F3168118D1C452003942E9 /* UseResToolView.cpp */; };
 		57F4E58D19E4DAD3001AB47C /* BuildCCB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57F4E58C19E4DAD3001AB47C /* BuildCCB.cpp */; };
-		57F4E59019E54AEB001AB47C /* EagleCCB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57F4E58F19E54AEB001AB47C /* EagleCCB.cpp */; };
 		57F68E1A1A11B2980048844D /* NpcTalkView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57F68E181A11B2980048844D /* NpcTalkView.cpp */; };
 		57F68E1D1A1310980048844D /* FacebookLikeView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57F68E1B1A1310980048844D /* FacebookLikeView.cpp */; };
 		57FA98AE1B7CAB9900ABF6FC /* JoinRecAllianceTipView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57FA98AC1B7CAB9900ABF6FC /* JoinRecAllianceTipView.cpp */; };
@@ -1926,8 +1925,6 @@
 		57F3168218D1C452003942E9 /* UseResToolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UseResToolView.h; sourceTree = "<group>"; };
 		57F4E58B19E4DAC3001AB47C /* BuildCCB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuildCCB.h; sourceTree = "<group>"; };
 		57F4E58C19E4DAD3001AB47C /* BuildCCB.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BuildCCB.cpp; sourceTree = "<group>"; };
-		57F4E58E19E54AE2001AB47C /* EagleCCB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EagleCCB.h; sourceTree = "<group>"; };
-		57F4E58F19E54AEB001AB47C /* EagleCCB.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EagleCCB.cpp; sourceTree = "<group>"; };
 		57F68E181A11B2980048844D /* NpcTalkView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NpcTalkView.cpp; sourceTree = "<group>"; };
 		57F68E191A11B2980048844D /* NpcTalkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NpcTalkView.h; sourceTree = "<group>"; };
 		57F68E1B1A1310980048844D /* FacebookLikeView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FacebookLikeView.cpp; sourceTree = "<group>"; };
@@ -4740,8 +4737,6 @@
 				57E3E9C319B8465F0001E1E4 /* TalkNoticeCell.cpp */,
 				57F4E58B19E4DAC3001AB47C /* BuildCCB.h */,
 				57F4E58C19E4DAD3001AB47C /* BuildCCB.cpp */,
-				57F4E58E19E54AE2001AB47C /* EagleCCB.h */,
-				57F4E58F19E54AEB001AB47C /* EagleCCB.cpp */,
 				574C56A01AB00B750094D324 /* SpeBuildBtnsView.cpp */,
 				574C56A11AB00B750094D324 /* SpeBuildBtnsView.h */,
 			);
@@ -7756,7 +7751,6 @@
 				FD6F41C817CE2F89008FDB9C /* CCLoadSprite.cpp in Sources */,
 				1D686BED1B57B7BC00080402 /* TrainingView.cpp in Sources */,
 				6CD847C11B2EE5C500C8AF0D /* SectionHeadView.m in Sources */,
-				57F4E59019E54AEB001AB47C /* EagleCCB.cpp in Sources */,
 				FD9C966F17CEDD13005F493D /* SceneContainer.cpp in Sources */,
 				BAB239AE18EEB97800B223C9 /* GetAllianceMembersCommand.cpp in Sources */,
 				FD9C967617CEE746005F493D /* SceneController.cpp in Sources */,

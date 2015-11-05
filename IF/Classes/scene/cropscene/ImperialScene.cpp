@@ -39,7 +39,6 @@
 #include "ActivityController.h"
 #include "cocos2d.h"
 #include "VipUtil.h"
-#include "EagleCCB.h"
 #include "Utf8Utils.h"
 #include "UserUpgradeView.h"
 #include "ScienceCommand.h"
@@ -327,7 +326,8 @@ bool ImperialScene::init()
         CCUserDefault::sharedUserDefault()->setStringForKey(ACCOUNT_IP, S2_ACCOUNT_IP);
         CCUserDefault::sharedUserDefault()->flush();
     }
-    if (!GlobalData::shared()->isXMLInitFlag) {
+    // tao.yu xml更新关闭  NBTODO @Guojiang
+    if (false) { // (!GlobalData::shared()->isXMLInitFlag) {
         scheduleOnce(schedule_selector(ImperialScene::downloadXML), 3);
     }
 //    m_sprBG1->visit();

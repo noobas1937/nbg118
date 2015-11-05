@@ -138,7 +138,7 @@ void HFViewport::beginScroll(cocos2d::CCTouch* touch)
 {
     mScrollStartPoint = touch->getLocation();
     mOperationStartPostition = this->m_TargetNode->getPosition();
-    CCLOG("beginScroll mScrollStartPoint=(%f,%f), mOperationStartPostition=(%f,%f)", mScrollStartPoint.x, mScrollStartPoint.y, mOperationStartPostition.x, mOperationStartPostition.y);
+//    CCLOG("beginScroll mScrollStartPoint=(%f,%f), mOperationStartPostition=(%f,%f)", mScrollStartPoint.x, mScrollStartPoint.y, mOperationStartPostition.x, mOperationStartPostition.y);
     
     if (mTouchDelegate) {
         mTouchDelegate->onBeginScroll(m_TargetNode->convertTouchToNodeSpace(touch));
@@ -189,15 +189,15 @@ void HFViewport::stepScroll(cocos2d::CCTouch* touch)
         curDiff = ccpMult(curDiff, OPERATION_DAMPING);
         CCPoint curPos = ccpAdd(mOperationStartPostition, curDiff);
         boundPos(curPos);
-        CCLOG("%d,,,,,,,%d",(int)curPos.x, (int)curPos.y);
-        CCLOGFUNCF("taget scale:%f", this->m_TargetNode->getScale());
+//        CCLOG("%d,,,,,,,%d",(int)curPos.x, (int)curPos.y);
+//        CCLOGFUNCF("taget scale:%f", this->m_TargetNode->getScale());
         this->m_TargetNode->setPosition(curPos);
     }
 }
 
 void HFViewport::endScroll(cocos2d::CCTouch* touch)
 {
-    CCLOGFUNCF("speed: %f, %f", m_tScrollDistance.x, m_tScrollDistance.y);
+//    CCLOGFUNCF("speed: %f, %f", m_tScrollDistance.x, m_tScrollDistance.y);
     do
     {
         if (isAutoMove) {
@@ -1059,7 +1059,7 @@ void HFViewport::onTouchesEnded(const std::vector<Touch*>& pTouches, Event *pEve
                 
             }
             CCTouch* ptouch =getAnyTouchObject(pTouches);
-            CCLOG("touchMoved posX:%f, posY:%f", ptouch->getLocation().x, ptouch->getLocation().y);
+//            CCLOG("touchMoved posX:%f, posY:%f", ptouch->getLocation().x, ptouch->getLocation().y);
             
             if (!moveableCheck(ptouch)) {
                 CCLOG("skip in touched moved!");
