@@ -20,6 +20,7 @@ public:
     std::string animationName;
     int startFrame;
     int endFrame;
+    std::vector<int> keyFrames;
 };
 
 class Titan : public Node

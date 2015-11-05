@@ -39,7 +39,6 @@
 #include "ActivityController.h"
 #include "cocos2d.h"
 #include "VipUtil.h"
-#include "EagleCCB.h"
 #include "Utf8Utils.h"
 #include "UserUpgradeView.h"
 #include "ScienceCommand.h"
@@ -327,7 +326,8 @@ bool ImperialScene::init()
         CCUserDefault::sharedUserDefault()->setStringForKey(ACCOUNT_IP, S2_ACCOUNT_IP);
         CCUserDefault::sharedUserDefault()->flush();
     }
-    if (!GlobalData::shared()->isXMLInitFlag) {
+    // tao.yu xml更新关闭  NBTODO @Guojiang
+    if (false) { // (!GlobalData::shared()->isXMLInitFlag) {
         scheduleOnce(schedule_selector(ImperialScene::downloadXML), 3);
     }
 //    m_sprBG1->visit();
@@ -619,12 +619,31 @@ void ImperialScene::onCreateTitan()
         return;
     }
     m_Titan->turnFront();
-
+    
+//    auto node = Node::create();
     titanRootNode = Node::create();
     titanRootNode->setRotation3D(Vec3(32, 39, -24));
     titanRootNode->addChild(m_Titan);
     titanRootNode->setPosition(m_touchLayer->convertToNodeSpace(m_titanNode->convertToWorldSpace(Point(0, 0))));
+    
+
     m_node3d->addChild(titanRootNode);
+    auto listener = EventListenerCustom::create(Animate3DDisplayedNotification,[this](EventCustom* ev)
+    {
+
+        auto particle = ParticleController::createFightingParticle("Dragon_landing",0.1);
+        
+
+        m_titanNode->addChild(particle);
+        
+        particle->setScaleY(0.7);
+        
+
+        particle->setCameraMask(m_touchLayer->getCameraMask(), true);
+    }
+                                                );
+    
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, titanRootNode);
 
     m_touchLayer->setCameraMask((unsigned short)CameraFlag::USER4, true);
     m_node3d->setCameraMask((unsigned short) CameraFlag::USER2, true);

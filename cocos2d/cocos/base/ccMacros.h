@@ -201,6 +201,14 @@ It should work same as apples CFSwapInt32LittleToHost(..)
 #define CC_SWAP_INT32_BIG_TO_HOST(i)    ((CC_HOST_IS_BIG_ENDIAN == true)? (i) : CC_SWAP32(i) )
 #define CC_SWAP_INT16_BIG_TO_HOST(i)    ((CC_HOST_IS_BIG_ENDIAN == true)? (i):  CC_SWAP16(i) )
 
+/*******************/
+/** Notifications **/
+/*******************/
+/** @def Animate3DDisplayedNotification
+ Notification name when a frame in Animate3D is played
+ */
+#define Animate3DDisplayedNotification "CCAnimate3DDisplayedNotification"
+
 /**********************/
 /** Profiling Macros **/
 /**********************/

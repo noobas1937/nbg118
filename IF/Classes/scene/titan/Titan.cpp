@@ -391,6 +391,22 @@ void Titan::changeTitanState(eActState state)
 sAnimationInfo* Titan::getAnimationByType(eActState e)
 {
     sAnimationInfo* animInfo = new sAnimationInfo;
+    
+    std::string keyFrames = CCCommonUtils::getPropById(CC_ITOA(_tid), "keyFrames");
+    vector<string> ks;
+    CCCommonUtils::splitString(keyFrames, "|", ks);
+    
+    if (ks.size()>0) {
+        if (ks.at(0) != "null") {
+            for (int i = 0; i<ks.size(); i++) {
+                
+                animInfo->keyFrames.push_back(atoi(ks.at(i).c_str()));
+            }
+            
+        }
+    }
+    
+    
     std::string anims = CCCommonUtils::getPropById(CC_ITOA(_tid), "animations");
     vector<string> strArr;
     CCCommonUtils::splitString(anims, "|", strArr);
@@ -406,6 +422,10 @@ sAnimationInfo* Titan::getAnimationByType(eActState e)
             return animInfo;
         }
     }
+    
+
+    
+
     animInfo->release();
     return nullptr;
 }
@@ -507,6 +527,16 @@ void Titan::walk()
             auto animation3d = Animation3D::create(animInfo->animationName);
             if (animation3d) {
                 pAnim = Animate3D::createWithFrames(animation3d, animInfo->startFrame, animInfo->endFrame);
+                
+                if (animInfo->keyFrames.size()!=0) {
+                    ValueMap v;
+                    
+                    v.insert(std::make_pair("fly_Dust",Value("fly_Dust")));
+//                    v.insert("action","fly_Dust");
+                    for (int i=0; i<animInfo->keyFrames.size(); i++) {
+                        pAnim->setKeyFrameUserInfo(animInfo->keyFrames.at(i),v);
+                    }
+                }
                 pAnim->retain();
                 _actionCache.insert(std::map<eActState,Animate3D*>::value_type(eActState::Walk,pAnim));
             }
