@@ -34,7 +34,6 @@
 #include "ActivityController.h"
 #include "cocos2d.h"
 #include "VipUtil.h"
-#include "EagleCCB.h"
 #include "Utf8Utils.h"
 #include "UserUpgradeView.h"
 #include "PayController.h"

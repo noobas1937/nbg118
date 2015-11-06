@@ -1960,7 +1960,8 @@ bool UnLockItemCell::init(int type, string itemId, CCNode* node)
             m_iconPath = "quest_Wishing well_icon1.png";
         }
     }
-    else if (m_type == FUN_BUILD_BARRACK1 || m_type == FUN_BUILD_BARRACK2 || m_type == FUN_BUILD_BARRACK3 || m_type == FUN_BUILD_BARRACK4) {
+//    else if (m_type == FUN_BUILD_BARRACK1 || m_type == FUN_BUILD_BARRACK2 || m_type == FUN_BUILD_BARRACK3 || m_type == FUN_BUILD_BARRACK4) {
+    else if (m_type == FUN_BUILD_BARRACK1 || m_type == FUN_BUILD_BARRACK2 || m_type == FUN_BUILD_BARRACK3 || m_type == FUN_BUILD_BARRACK4 ) {
         auto& aInfo = GlobalData::shared()->armyList[m_itemId];
         m_iconPath = aInfo.getHeadIcon();
         
@@ -1971,6 +1972,10 @@ bool UnLockItemCell::init(int type, string itemId, CCNode* node)
             CCCommonUtils::setSpriteMaxSize(bg, 273, true);
         }
         this->addChild(bg);
+    }
+    else if (m_type == FUN_BUILD_FORT)
+    {
+        m_iconPath = CCCommonUtils::getPropById(m_itemId, "icon").append("_small.png");
     }
     else {
         m_iconPath = CCCommonUtils::getIcon(m_itemId);

@@ -177,12 +177,28 @@ void BattleSoldier2::moveOnePoint(float t){
         this->changeDirect(m_lastDirect);
         m_status = ACTION_MOVE;
         m_loopTimes = numeric_limits<int>::max();
-        this->delayPlayAnimation();
+        
+        this->unschedule(schedule_selector(BattleSoldier2::playAttack));
+        if (m_armType == 1 || m_armType == 4 || m_armType == 3 || m_armType == 7)
+        {
+            this->schedule(schedule_selector(BattleSoldier2::playAttack), 2);
+            playAttack(0);
+        }
+        
         CCPoint gap = ccpSub(lastPos, onePos);
         float len = ccpLength(gap);
         float useTime = len/m_moveSpd;//len/120.0;
         CCSequence* sc = CCSequence::create(CCMoveTo::create(useTime, onePos),CCCallFunc::create(this, callfunc_selector(BattleSoldier2::moveOnePoint)),NULL);
-        m_iconSpr->runAction(sc);
+        Action* action = createAnimation();
+        if (action)
+        {
+            auto sp = Spawn::create(sc, action, NULL);
+            m_iconSpr->runAction(sp);
+        }
+        else
+        {
+            m_iconSpr->runAction(sc);
+        }
         m_moveIndex += 1;
     }else{
         m_status = ACTION_STAND;
@@ -217,11 +233,12 @@ std::string BattleSoldier2::getDirection(CCPoint from,CCPoint to){
     return direct;
 }
 
-
-void BattleSoldier2::delayPlayAnimation(){
-    
-    if (m_iconSpr == NULL||m_iconSpr->getReferenceCount()<=0) {
-        return ;
+Action* BattleSoldier2::createAnimation()
+{
+    Action* result = nullptr;
+    if (m_iconSpr == NULL || m_iconSpr->getReferenceCount() <= 0)
+    {
+        return result;
     }
     
     m_iconSpr->stopAllActions();
@@ -231,130 +248,231 @@ void BattleSoldier2::delayPlayAnimation(){
     
     int totalFrame = 0;
     std::string actionName = MOVE;
-    if(m_status == S_DEATH){
+    if (m_status == S_DEATH)
+    {
         actionName = DEATH;
-    }else if(m_status == S_ATTACK){
+    }
+    else if (m_status == S_ATTACK)
+    {
         actionName = ATTACK;
-    }else if(m_status == S_MOVE){
+    }
+    else if (m_status == S_MOVE)
+    {
         actionName = MOVE;
-    }else if(m_status == S_HURT){
+    }
+    else if (m_status == S_HURT)
+    {
         actionName = HURT;
-    }else if(m_status == S_STAND){
+    }
+    else if (m_status == S_STAND)
+    {
         actionName = STAND;
     }
     
     if (m_icon == "a010")
     { // 步兵
-        if(m_status == S_DEATH){
+        if (m_status == S_DEATH)
+        {
             totalFrame = 0;
-        }else if(m_status == S_ATTACK){
+        }
+        else if (m_status == S_ATTACK)
+        {
             totalFrame = 0;
-        }else if(m_status == S_MOVE){
+        }
+        else if (m_status == S_MOVE)
+        {
             totalFrame = 7;
-        }else if(m_status == S_HURT){
+        }
+        else if (m_status == S_HURT)
+        {
             totalFrame = 0;
-        }else if(m_status == S_STAND){
-//            totalFrame = 10;
-            totalFrame = 1;
+        }
+        else if (m_status == S_STAND)
+        {
+            totalFrame = 10;
         }
     }
     else if (m_icon == "a020")
     { // 骑兵
-        if(m_status == S_DEATH){
+        if (m_status == S_DEATH)
+        {
             totalFrame = 0;
-        }else if(m_status == S_ATTACK){
+        }
+        else if (m_status == S_ATTACK)
+        {
             totalFrame = 0;
-        }else if(m_status == S_MOVE){
+        }
+        else if (m_status == S_MOVE)
+        {
             totalFrame = 8;
-        }else if(m_status == S_HURT){
+        }
+        else if (m_status == S_HURT)
+        {
             totalFrame = 0;
-        }else if(m_status == S_STAND){
-//            totalFrame = 8;
-            totalFrame = 1;
+        }
+        else if (m_status == S_STAND)
+        {
+            totalFrame = 8;
         }
     }
     else if (m_icon == "a060")
     { // 弓兵
-        if(m_status == S_DEATH){
+        if (m_status == S_DEATH)
+        {
             totalFrame = 0;
-        }else if(m_status == S_ATTACK){
+        }
+        else if (m_status == S_ATTACK)
+        {
             totalFrame = 0;
-        }else if(m_status == S_MOVE){
+        }
+        else if (m_status == S_MOVE)
+        {
             totalFrame = 6;
-        }else if(m_status == S_HURT){
+        }
+        else if (m_status == S_HURT)
+        {
             totalFrame = 0;
-        }else if(m_status == S_STAND){
-//            totalFrame = 7;
-            totalFrame = 1;
+        }
+        else if (m_status == S_STAND)
+        {
+            totalFrame = 7;
         }
     }
     else if (m_icon == "zhanche")
     { // 法师
-        if(m_status == S_DEATH){
+        if (m_status == S_DEATH)
+        {
             totalFrame = 0;
-        }else if(m_status == S_ATTACK){
+        }
+        else if (m_status == S_ATTACK)
+        {
             totalFrame = 0;
-        }else if(m_status == S_MOVE){
+        }
+        else if (m_status == S_MOVE)
+        {
             totalFrame = 8;
-        }else if(m_status == S_HURT){
+        }
+        else if (m_status == S_HURT)
+        {
             totalFrame = 0;
-        }else if(m_status == S_STAND){
-//            totalFrame = 8;
-            totalFrame = 1;
+        }
+        else if (m_status == S_STAND)
+        {
+            totalFrame = 8;
         }
     }
     
-    for(int j=0;j<totalFrame;j++){
-        cf = CCLoadSprite::getSF(CCString::createWithFormat("%s_%d_%s_%s_%d.png",m_icon.c_str(),m_side,m_direct.c_str(),actionName.c_str(),j)->getCString());
+    for (int j = 0; j < totalFrame; j++)
+    {
+        cf = CCLoadSprite::getSF(CCString::createWithFormat("%s_%d_%s_%s_%d.png", m_icon.c_str(), m_side, m_direct.c_str(), actionName.c_str(), j)->getCString());
         CC_BREAK_IF(!cf);
         myArray.pushBack(cf);
         m_iconSpr->setDisplayFrame(cf);
     }
+    if (m_status == S_STAND)
+    {
+        int j = 0;
+        int cnt = 10 + rand() % 20;
+        for (int i = 0; i < cnt; i++)
+        {
+            cf = CCLoadSprite::getSF(CCString::createWithFormat("%s_%d_%s_%s_%d.png", m_icon.c_str(), m_side,m_direct.c_str(), actionName.c_str(), j)->getCString());
+            if (cf == nullptr)
+            {
+                continue;
+            }
+            myArray.pushBack(cf);
+            m_iconSpr->setDisplayFrame(cf);
+        }
+    }
     
     m_iconSpr->setColor(ccWHITE);
     float delayPerUnit = 0.1;
-    if(m_status==ACTION_ATTACK){
+    if (m_status == ACTION_ATTACK)
+    {
         delayPerUnit = ATTACK_SOLDIER_DELAY_PER_UNIT;
-    }else if(m_status==ACTION_MOVE){
+    }
+    else if (m_status==ACTION_MOVE)
+    {
         delayPerUnit = MOVE_SOLDIER_DELAY_PER_UNIT;
-    }else if(m_status == ACTION_HURT){
+    }
+    else if (m_status == ACTION_HURT)
+    {
         delayPerUnit = HURT_SOLDIER_DELAY_PER_UNIT;
-    }else if(m_status == ACTION_DEATH){
+    }
+    else if (m_status == ACTION_DEATH)
+    {
         delayPerUnit = 0.13;
-    }else{
+    }
+    else if (m_status == S_STAND)
+    {
+        float random_variable = rand() % 10 + 5.0;
+        delayPerUnit = 0.1 + 1.0 / random_variable;
+    }
+    else
+    {
         delayPerUnit = SOLDIER_DELAY_PER_UNIT;
     }
     
     float factor = GlobalData::shared()->speedFactor;
-    if(m_status!=ACTION_MOVE){
-        delayPerUnit = delayPerUnit*factor;
+    if (m_status != ACTION_MOVE)
+    {
+        delayPerUnit = delayPerUnit * factor;
     }
-    CCAnimation *animation=CCAnimation::createWithSpriteFrames(myArray, delayPerUnit);
+    CCAnimation *animation = CCAnimation::createWithSpriteFrames(myArray, delayPerUnit);
     animation->setLoops(m_loopTimes);
     animation->setRestoreOriginalFrame(false);
     m_iconSpr->stopAllActions();
-    if(m_status!=ACTION_HURT){
-        if (m_completeTarget && m_completeFunc) {
-            m_iconSpr->runAction(CCSequence::create(CCAnimate::create(animation), getCompleteFun(), NULL));
-        } else {
-            m_iconSpr->runAction(CCSequence::create(CCAnimate::create(animation), NULL));
+    if (m_status != ACTION_HURT)
+    {
+        if (m_completeTarget && m_completeFunc)
+        {
+            result = CCSequence::create(CCAnimate::create(animation), getCompleteFun(), NULL);
         }
-    }else if(m_status!=ACTION_DEATH){
-        CCSequence* s2;
-        if (m_completeTarget && m_completeFunc) {
-            s2 = CCSequence::create(CCAnimate::create(animation), getCompleteFun(), NULL);
-        } else {
-            s2 = CCSequence::create(CCAnimate::create(animation), NULL);
-        }
-        CCSpawn* sp = CCSpawn::create(s2,NULL);
-        m_iconSpr->runAction(sp);
-    }else{
-        if (m_completeFunc && m_completeTarget) {
-            m_iconSpr->runAction(CCSequence::create(CCAnimate::create(animation), getCompleteFun(), NULL));
-        } else {
-            m_iconSpr->runAction(CCSequence::create(CCAnimate::create(animation), NULL));
+        else
+        {
+            float random_variable = rand() % 5 + 0.1;
+            if (m_status != S_STAND) random_variable = 0;
+            result = CCSequence::create(DelayTime::create(random_variable), CCAnimate::create(animation), NULL);
         }
     }
+    else if (m_status != ACTION_DEATH)
+    {
+        CCSequence* s2;
+        if (m_completeTarget && m_completeFunc)
+        {
+            s2 = CCSequence::create(CCAnimate::create(animation), getCompleteFun(), NULL);
+        }
+        else
+        {
+            s2 = CCSequence::create(CCAnimate::create(animation), NULL);
+        }
+        CCSpawn* sp = CCSpawn::create(s2, NULL);
+        result = sp;
+    }
+    else
+    {
+        if (m_completeFunc && m_completeTarget)
+        {
+            result = CCSequence::create(CCAnimate::create(animation), getCompleteFun(), NULL);
+        }
+        else
+        {
+            result = CCSequence::create(CCAnimate::create(animation), NULL);
+        }
+    }
+    
+    return result;
+}
+
+void BattleSoldier2::delayPlayAnimation(){
+    
+    if (m_iconSpr == NULL||m_iconSpr->getReferenceCount()<=0) {
+        return ;
+    }
+    
+    Action* action = createAnimation();
+    if (action) m_iconSpr->runAction(action);
+    
    // myArray->release();
     this->unschedule(schedule_selector(BattleSoldier2::playAttack));
     if (m_armType==1||m_armType==4||m_armType==3||m_armType==7) {//
@@ -372,6 +490,6 @@ void BattleSoldier2::update(float delta)
 {
     if (m_shadow && m_iconSpr)
     {
-        m_shadow->setPosition(m_iconSpr->getPosition() + Vec2(0, -10));
+        m_shadow->setPosition(m_iconSpr->getPosition() + Vec2(-5, -14));
     }
 }

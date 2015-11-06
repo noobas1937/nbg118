@@ -39,7 +39,6 @@
 #include "ActivityController.h"
 #include "cocos2d.h"
 #include "VipUtil.h"
-#include "EagleCCB.h"
 #include "Utf8Utils.h"
 #include "UserUpgradeView.h"
 #include "ScienceCommand.h"
@@ -327,7 +326,8 @@ bool ImperialScene::init()
         CCUserDefault::sharedUserDefault()->setStringForKey(ACCOUNT_IP, S2_ACCOUNT_IP);
         CCUserDefault::sharedUserDefault()->flush();
     }
-    if (!GlobalData::shared()->isXMLInitFlag) {
+    // tao.yu xml更新关闭  NBTODO @Guojiang
+    if (false) { // (!GlobalData::shared()->isXMLInitFlag) {
         scheduleOnce(schedule_selector(ImperialScene::downloadXML), 3);
     }
 //    m_sprBG1->visit();
@@ -619,12 +619,31 @@ void ImperialScene::onCreateTitan()
         return;
     }
     m_Titan->turnFront();
-
+    
+//    auto node = Node::create();
     titanRootNode = Node::create();
     titanRootNode->setRotation3D(Vec3(32, 39, -24));
     titanRootNode->addChild(m_Titan);
     titanRootNode->setPosition(m_touchLayer->convertToNodeSpace(m_titanNode->convertToWorldSpace(Point(0, 0))));
+    
+
     m_node3d->addChild(titanRootNode);
+    auto listener = EventListenerCustom::create(Animate3DDisplayedNotification,[this](EventCustom* ev)
+    {
+
+        auto particle = ParticleController::createFightingParticle("Dragon_landing",0.1);
+        
+
+        m_titanNode->addChild(particle);
+        
+        particle->setScaleY(0.7);
+        
+
+        particle->setCameraMask(m_touchLayer->getCameraMask(), true);
+    }
+                                                );
+    
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, titanRootNode);
 
     
     m_touchLayer->setCameraMask((unsigned short)CameraFlag::USER4, true);
@@ -991,7 +1010,7 @@ void ImperialScene::onEnter()
     
     m_isDay = true;//默认白天
     checkDayTime(true);//判断是否是白天
-    changeDayOrNight(!m_isDay , false);
+//    changeDayOrNight(!m_isDay , false);
     
     if(!m_praticle){
         if (GlobalData::shared()->contryResType == 1) {
@@ -1275,6 +1294,7 @@ void ImperialScene::removeAllNightLight(){
 
 void ImperialScene::changeDayOrNight(bool isNight, bool isAni)
 {
+    // tao.yu 白天黑夜的变换，第一版关闭
     struct tm tm;
     char h[100];
     char m[100];
@@ -2711,7 +2731,7 @@ void ImperialScene::onEnterFrame(float dt)
     }
 
     checkDayTime();//判断是否是白天
-    changeDayOrNight(true, true);
+//    changeDayOrNight(true, true);
     m_sysTime++;
     m_talkTime++;
     if (m_sysTime%2==0) {
@@ -4361,8 +4381,8 @@ void ImperialScene::addSoldierToMap(int stype, int num, int ptx, int pty)
     int m_row = 6;
     int m_col = 3;
     string m_icon = "";
-    float scale = 2;
-    float shadow_scale = 1;
+    float scale = 1.5;
+    float shadow_scale = 0.65;
     
     int tX = 0;
     int tY = 0;
@@ -4401,7 +4421,7 @@ void ImperialScene::addSoldierToMap(int stype, int num, int ptx, int pty)
             break;
         case 3://长弓兵
             m_icon = "a060";
-            shadow_scale = 0.75;
+            shadow_scale = 0.75 * 0.65;
             break;
         default:
             m_icon = "a020";
@@ -4418,6 +4438,7 @@ void ImperialScene::addSoldierToMap(int stype, int num, int ptx, int pty)
 //        sNum = 8;
 //    }
     
+    srand((unsigned int)time(0));
     for (int i=0; i<sNum; i++) {
         int row = i%m_row;//某排上第几位
         int col = i/m_row;//第几排
