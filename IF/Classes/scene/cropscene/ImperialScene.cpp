@@ -1006,7 +1006,7 @@ void ImperialScene::onEnter()
     
     m_isDay = true;//默认白天
     checkDayTime(true);//判断是否是白天
-    changeDayOrNight(!m_isDay , false);
+//    changeDayOrNight(!m_isDay , false);
     
     if(!m_praticle){
         if (GlobalData::shared()->contryResType == 1) {
@@ -1289,6 +1289,7 @@ void ImperialScene::removeAllNightLight(){
 
 void ImperialScene::changeDayOrNight(bool isNight, bool isAni)
 {
+    // tao.yu 白天黑夜的变换，第一版关闭
     struct tm tm;
     char h[100];
     char m[100];
@@ -2725,7 +2726,7 @@ void ImperialScene::onEnterFrame(float dt)
     }
 
     checkDayTime();//判断是否是白天
-    changeDayOrNight(true, true);
+//    changeDayOrNight(true, true);
     m_sysTime++;
     m_talkTime++;
     if (m_sysTime%2==0) {
