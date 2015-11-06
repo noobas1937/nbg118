@@ -60,8 +60,10 @@ bool SceneContainer::init() {
         
         
         auto just3DCamera = Camera::createOrthographic(s.width, s.height, -10240, 10240); //1024会导致3d船部分被裁剪， 1024000会导致部分Android设备上小龙眼皮不对
-        just3DCamera->setPosition3D(Vec3(0.0f, 0.0f, 0.0f));
-        just3DCamera->setRotation3D(Vec3(0.f, 0.f, 0.f));
+        just3DCamera->setPosition3D(eye);
+        just3DCamera->lookAt(center, up);
+        //just3DCamera->setPosition3D(Vec3(0.0f, 0.0f, 0.0f));
+        //just3DCamera->setRotation3D(Vec3(0.f, 0.f, 0.f));
         
         //auto just3DCamera = Camera::create();
         just3DCamera->setCameraFlag(CameraFlag::USER2);
