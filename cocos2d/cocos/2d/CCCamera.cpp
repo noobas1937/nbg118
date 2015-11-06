@@ -183,7 +183,7 @@ bool Camera::initDefault()
     {
         case Director::Projection::_2D:
         {
-            initOrthographic(size.width, size.height, -1024, 1024); //引擎源码中参数是1024， 如果改成1024000，在部分Android机型上会出来龙眼皮不对的问题
+            initOrthographic(size.width, size.height, -10240, 10240); //ljf,引擎源码中参数是1024， 如果改成1024000，在部分Android机型上会出来龙眼皮不对的问题
             setPosition3D(Vec3(0.0f, 0.0f, 0.0f));
             setRotation3D(Vec3(0.f, 0.f, 0.f));
             break;
