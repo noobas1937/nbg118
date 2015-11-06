@@ -31,6 +31,7 @@ bool BattleSoldier2::init(){
     }
     m_shadow = CCLoadSprite::createSprite("shadow.png");
     m_shadow->setAnchorPoint(ccp(0.5, 0.5));
+    m_shadow->setOpacity(127);
     m_batchNode->addChild(m_shadow);
     
     m_iconSpr = CCLoadSprite::createSprite(filePath->getCString());
