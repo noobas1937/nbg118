@@ -4377,7 +4377,7 @@ void ImperialScene::addSoldierToMap(int stype, int num, int ptx, int pty)
     int m_col = 3;
     string m_icon = "";
     float scale = 1.5;
-    float shadow_scale = 0.65;
+    float shadow_scale = 0.5;
     
     int tX = 0;
     int tY = 0;
@@ -4390,7 +4390,7 @@ void ImperialScene::addSoldierToMap(int stype, int num, int ptx, int pty)
         case 5://弓兵
             m_icon = "a060";
             preNum = 4*700/10;
-//            shadow_scale = 0.5;
+            shadow_scale = 0.75 * 0.65;
             break;
         case 2://骑兵
             rowWidth = 30 * r_s;
@@ -4401,6 +4401,7 @@ void ImperialScene::addSoldierToMap(int stype, int num, int ptx, int pty)
             m_col = 2;
             m_icon = "a020";
             preNum = 3*450/10;
+            shadow_scale = 0.65;
 //            scale = 1;
             break;
         case 4://战车
@@ -4420,6 +4421,7 @@ void ImperialScene::addSoldierToMap(int stype, int num, int ptx, int pty)
             break;
         default:
             m_icon = "a020";
+            shadow_scale = 0.65;
             break;
     }
     

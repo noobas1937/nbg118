@@ -177,6 +177,8 @@ void MainCityArmy::restart(){
 }
 
 bool MainCityArmy::MackSoldier(int type, int idx){
+    float shadow_scale = 0.5;
+    
     // tao.yu 跑路的兵
     string m_icon = "";
     int tmpPx = 70;
@@ -188,21 +190,26 @@ bool MainCityArmy::MackSoldier(int type, int idx){
             break;
         case 1://弓兵
             m_icon = "a060";
+            shadow_scale = 0.75 * 0.65;
             break;
         case 2://骑兵
             m_icon = "a020";
+            shadow_scale = 0.65;
             break;
         case 3://战车
             m_icon = "zhanche";
             break;
         case 4://长弓兵
             m_icon = "a060";
+            shadow_scale = 0.75 * 0.65;
             break;
         case 5:
             m_icon = "a020";
+            shadow_scale = 0.65;
             break;
         default:
             m_icon = "a020";
+            shadow_scale = 0.65;
             break;
     }
     
@@ -240,6 +247,7 @@ bool MainCityArmy::MackSoldier(int type, int idx){
         }
         
         BattleSoldier2* soldier = BattleSoldier2::create(m_curBatch, NULL,0,0,m_icon,"NE",false);
+        soldier->getShadow()->setScale(shadow_scale);
         soldier->setSoldierPosition(posV[0]);
         soldier->setAnchorPoint(ccp(0.5, 0.5));
         this->addChild(soldier);

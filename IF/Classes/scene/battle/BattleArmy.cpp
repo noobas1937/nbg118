@@ -27,6 +27,8 @@ bool BattleArmy::init(){
     m_col = 1;
     m_soldiers = CCArray::create();
     
+    float shadow_scale = 0.5;
+    
     float scale = 0.5;
     switch (m_type) {
         case 0:
@@ -48,6 +50,7 @@ bool BattleArmy::init(){
             perY = 10;
             m_icon = "a060";
             m_direct = "SE";
+            shadow_scale = 0.75 * 0.65;
             break;
         case 2:
             rowWidth = 20;
@@ -58,6 +61,7 @@ bool BattleArmy::init(){
             m_col = 3;
             m_icon = "a020";
             m_direct = "NW";
+            shadow_scale = 0.65;
             break;
         case 3:
             scale = 1;
@@ -93,6 +97,7 @@ bool BattleArmy::init(){
             scale = 1.2;
             m_icon = "a020";
             m_direct = "NW";
+            shadow_scale = 0.65;
             break;
         case 6:
             scale = 0.7;
@@ -100,10 +105,12 @@ bool BattleArmy::init(){
             m_col = 1;
             m_icon = "a020";
             m_direct = "SE";
+            shadow_scale = 0.65;
             break;
         default:
             m_icon = "a020";
             m_direct = "NW";
+            shadow_scale = 0.65;
             break;
     }
     
@@ -119,6 +126,7 @@ bool BattleArmy::init(){
             soldier->setSprScale(scale);
             soldier->setSoldierPosition(m_pos+ccp(j*perX-i*rowWidth,-i*colHeight-j*perY)+ccp(rdx, rdy));
             soldier->setAnchorPoint(ccp(0.5, 0.5));
+            soldier->getShadow()->setScale(shadow_scale);
             this->addChild(soldier);
             soldier->playAnimation(ACTION_STAND);
             m_soldiers->addObject(soldier);
