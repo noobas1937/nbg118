@@ -69,7 +69,7 @@ void BuildCCB::setNamePos(int x, int y, CCLayer* sginLayer, CCSpriteBatchNode* b
                 for( itVec = arrSpr.begin(); itVec != arrSpr.end(); )
                 {
                     CCSprite* tmpSpr = dynamic_cast<CCSprite*>(*itVec);
-                    if(tmpSpr)
+                    if(tmpSpr && tmpSpr->getContentSize().width == 2 && tmpSpr->getContentSize().height == 2) // guojiang fuck this
                     {
                         tmpSpr->removeFromParent();
                         tmpSpr->getTexture()->setAntiAliasTexParameters();

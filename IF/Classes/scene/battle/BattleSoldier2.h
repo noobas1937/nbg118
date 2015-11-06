@@ -67,7 +67,9 @@ public:
     virtual void onExit() override;
     
     void playAnimation(ActionStatus status,float delayTime=0.0,CCCallFunc* completeFunc=NULL,int loopTimes=0);
+    Action* createAnimation();
     void delayPlayAnimation();
+    
     bool init() override;
     void changeDirect(std::string direct,bool replay=false);
     void setSoldierPosition(CCPoint p);
