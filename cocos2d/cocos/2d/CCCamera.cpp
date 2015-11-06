@@ -184,7 +184,7 @@ bool Camera::initDefault()
         case Director::Projection::_2D:
         {
             //initOrthographic(size.width, size.height, -1024000, 1024000); //d by ljf
-            initOrthographic(size.width, size.height, -1024, 1024); //a by ljf
+            initOrthographic(size.width, size.height, -10240, 10240); //引擎原始值是1024，1024会导致3d船部分被裁剪， 1024000会导致部分Android设备上小龙眼皮不对
             setPosition3D(Vec3(0.0f, 0.0f, 0.0f));
             setRotation3D(Vec3(0.f, 0.f, 0.f));
             break;

@@ -23,7 +23,7 @@ bool SceneContainer::init() {
         //场景层，在3d物体下面，通过自定义相机实现，设置depth值控制显示层级关系
         auto s = Director::getInstance()->getWinSize();
         
-        auto under3DCamera = Camera::createOrthographic(s.width, s.height, -1024, 1024);
+        auto under3DCamera = Camera::createOrthographic(s.width, s.height, -10240, 10240); //1024会导致3d船部分被裁剪， 1024000会导致部分Android设备上小龙眼皮不对
         under3DCamera->setPosition3D(Vec3(0.0f, 0.0f, 0.0f));
         under3DCamera->setRotation3D(Vec3(0.f, 0.f, 0.f));
         
@@ -59,7 +59,7 @@ bool SceneContainer::init() {
         //just3DCamera->setRotation3D(Vec3(32, 39, -24));
         
         
-        auto just3DCamera = Camera::createOrthographic(s.width, s.height, -1024, 1024);
+        auto just3DCamera = Camera::createOrthographic(s.width, s.height, -10240, 10240); //1024会导致3d船部分被裁剪， 1024000会导致部分Android设备上小龙眼皮不对
         just3DCamera->setPosition3D(Vec3(0.0f, 0.0f, 0.0f));
         just3DCamera->setRotation3D(Vec3(0.f, 0.f, 0.f));
         
