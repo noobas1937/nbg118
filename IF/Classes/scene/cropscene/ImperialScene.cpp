@@ -4376,7 +4376,7 @@ void ImperialScene::addSoldierToMap(int stype, int num, int ptx, int pty)
     int m_row = 6;
     int m_col = 3;
     string m_icon = "";
-    float scale = 1.5;
+    float scale = 1;
     float shadow_scale = 0.5;
     
     int tX = 0;

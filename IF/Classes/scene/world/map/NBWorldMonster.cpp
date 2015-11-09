@@ -560,7 +560,7 @@ void NBWorldMonster::createMonsterBatchItem(BatchTagType type, unsigned int inde
         else if (type != MonsterDead)
         {
             auto octopus = Sprite::createWithSpriteFrameName("waiting_0.png");
-            auto *ac1 = NBWorldNPC::createAnimation("World/World_5.plist", "waiting_%d.png", 0, 7);
+            auto *ac1 = NBWorldNPC::createAnimation("World/World_5.plist", "waiting_%d.png", 0, 11);
             octopus->runAction(ac1);
             
             octopus->setScaleX(monsterNode->getScaleX());

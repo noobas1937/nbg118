@@ -183,7 +183,7 @@ bool MainCityArmy::MackSoldier(int type, int idx){
     string m_icon = "";
     int tmpPx = 70;
     int tmpPy = 40;
-    float scale = 1.5;
+    float scale = 1;
     switch (type) {
         case 0://步兵
             m_icon = "a010";
