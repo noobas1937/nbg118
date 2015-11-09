@@ -2168,7 +2168,8 @@ void FunBuild::canShowState()
                 if(m_info->type == FUN_BUILD_WOOD)
                 {
                     m_spineAni->setToSetupPose();
-                    m_spineAni->setAnimation(0, "Working", false);
+//                    m_spineAni->setAnimation(0, "Working", false);
+                    m_spineAni->setAnimation(0, "Finish", true);
                     m_spineAni->update(0.00001);
                 }
                 m_effectState = 6;
