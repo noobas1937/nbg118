@@ -258,13 +258,13 @@ bool GeneralTitanPopupView::init()
     m_CleanFeedCDBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::DISABLED)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
     
 
-    m_titanFeedBtn->setZoomOnTouchDown(false);
-    
-    m_CleanFeedCDBtn->setZoomOnTouchDown(false);//fusheng 不做放缩
-    
-    m_toolSpeedUpBtn->setZoomOnTouchDown(false);
-    
-    m_speedUpBtn->setZoomOnTouchDown(false);
+//    m_titanFeedBtn->setZoomOnTouchDown(false);
+//    
+//    m_CleanFeedCDBtn->setZoomOnTouchDown(false);//fusheng 不做放缩
+//    
+//    m_toolSpeedUpBtn->setZoomOnTouchDown(false);
+//    
+//    m_speedUpBtn->setZoomOnTouchDown(false);
 
     
     m_titanAPTxtPre->setString("AP");//fusheng 需要文本
@@ -472,11 +472,9 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
     
     if(m_titanInfo.titanId=="")
     {
-//         CCCommonUtils::flyText("数据初始化失败");
         return;
     }
-//     this->feedCD =(float)(m_titanInfo.feedcd - GlobalData::shared()->getWorldTime());
-//    CCCommonUtils::flyHint("", "", CCString::createWithFormat("feedcd : %ld , WorldTime : %ld",m_titanInfo.feedcd,GlobalData::shared()->getWorldTime())->getCString());
+
    
     if(m_titanInfo.titanId!="")
     {
@@ -503,6 +501,16 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
 
     m_nameLabel->setString(_lang(fbiInfo.name));
     
+    
+    if(m_titanInfo.status==0)//fusheng 暂时没写 出征后龙的不同
+    {
+        
+    }
+    else
+    {
+        
+    }
+    
     if(fbiInfo.state == FUN_BUILD_UPING)
     {
         CCCommonUtils::setSpriteGray(m_titanUngrade, true);
@@ -518,7 +526,7 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         
         isUpgrading = true;
         
-        isUpdating = true;
+        beginUpdate = true;
         
        
         
@@ -542,7 +550,6 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
             if (GlobalData::shared()->allQueuesInfo[1101].itemId == 400000) {
                 queue_id = 1101;
             }
-            
             
         }
         
@@ -617,17 +624,7 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
     }
     
 
-    
-    if(m_titanInfo.status==0)
-    {
-        
-    }
-    else
-    {
-        
-    }
-    
-   
+
 
     if(m_titanInfo.nextExp!=0)
     {
@@ -814,27 +811,15 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
     else
     {
         if(m_titanInfo.feedcdfix!=0)//fusheng 修改 feedCD
-//        if(m_titanInfo.feedcd!=0)
         {
-//            this->feedCD =(m_titanInfo.feedcd - GlobalData::shared()->getWorldTime());
 
-//            this->feedCD = m_titanInfo.feedcdfix;
-//            
-//            if (m_titanInfo.feedcdfix>750*60*60) {
-//                this->feedCD = 0;
-//            }
-//            
-//            if (m_titanInfo.feedcdfix<0) {
-//                this->feedCD = 0;
-//            }
-            
             this->feedCD = m_titanInfo.feedcdfix - GlobalData::shared()->getWorldTime();
             
             perTimeForFeedCD = 0;//fusheng 重0计算
 
             if (this->feedCD <= 0) {
                 this->feedCD=0;
-                isUpdating |= false;
+                beginUpdate |= false;
                 
 
                 this->m_CleanFeedCDBtn->setEnabled(false);
@@ -849,7 +834,7 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
             }
             else
             {
-                isUpdating = true;
+                beginUpdate = true;
                 this->m_CleanFeedCDBtn->setEnabled(true);
                 m_CleanFeedCDBtnNode->setVisible(true);
                 
@@ -875,7 +860,7 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         else
         {
             this->feedCD=0;
-            isUpdating |= false;
+            beginUpdate |= false;
             this->m_CleanFeedCDBtn->setEnabled(false);
             m_CleanFeedCDBtnNode->setVisible(false);
             
@@ -923,7 +908,6 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
     {
         m_needGoldNode->setVisible(false);
         m_needFoodNode->setVisible(true);
-//        m_titanFeedStatus_0->setString(CCString::createWithFormat("Count : ")->getCString());//fusheng 需要文本
         m_titanFeedStatus_0->setString(_lang("500001"));
         m_titanFeedStatus_1->setString(CCString::createWithFormat("%3d",m_titanInfo.feedNum)->getCString());
         m_titanFeedStatus_2->setString(CCString::createWithFormat("/%d",m_titanInfo.feedMaxNum)->getCString());
@@ -986,7 +970,6 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         
         m_needGlod->setColor(ccGRAY);
     }
-//    CCCommonUtils::setSpriteGray(m_titanFeedBtnSprite, !isCanFeed);
 
 }
 
@@ -1283,7 +1266,7 @@ void GeneralTitanPopupView::update(float time){
 //    m_staminePro->setScaleX(s);
 //    m_tip->update(time);
     
-    if(!isUpdating)//fusheng 有时间改变
+    if(!beginUpdate)//fusheng 有时间改变
     {
         return;
     }
@@ -1603,16 +1586,16 @@ bool GeneralTitanPopupView::onTouchBegan(CCTouch *pTouch, CCEvent *pEvent){
         
         CCCommonUtils::flyHint("", "", _lang("E100008"));//fusheng 技能界面先关闭
 
-        
-        
-                onSkillClick(NULL, CCControlEvent::TOUCH_DOWN);
-        
-        CCArray* p = CCArray::create();
-        p->addObject(CCInteger::create(GENERAL_OPEN));
-        CCArray* d = CCArray::create();
-        
-        DataRecordCommand* cmd = new DataRecordCommand(OPEN_PANEL, p, d);
-        cmd->sendAndRelease();
+//        
+//        
+//                onSkillClick(NULL, CCControlEvent::TOUCH_DOWN);
+//        
+//        CCArray* p = CCArray::create();
+//        p->addObject(CCInteger::create(GENERAL_OPEN));
+//        CCArray* d = CCArray::create();
+//        
+//        DataRecordCommand* cmd = new DataRecordCommand(OPEN_PANEL, p, d);
+//        cmd->sendAndRelease();
 
         return true;
 
