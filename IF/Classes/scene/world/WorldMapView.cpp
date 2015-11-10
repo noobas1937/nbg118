@@ -4828,7 +4828,7 @@ void WorldMapView::addUnderNode(unsigned int index) {
             m_cityItem[index].push_back(under);
             m_cityBatchNode->addChild(under, index);
             
-            auto island = CCLoadSprite::createSprite("decor_island_100.png");
+            auto island = CCLoadSprite::createSprite("z_decor_002.png");
             island->setAnchorPoint(Vec2(0, 0));
             under->addChild(island);
 
@@ -5194,10 +5194,14 @@ void WorldMapView::addUnderNode(unsigned int index) {
                     int island_idx = NBWorldMapMainCity::getMainCityIslandImageIndex(&info, player.cityLv, -1);
                     if (island_idx >= 0)
                     {
-                        auto island = CCLoadSprite::createSprite(NBWorldMapMainCity::getMainCityIslandImage(island_idx, pos.x, pos.y));
-                        if (island->getTexture()) island->getTexture()->setAliasTexParameters();
-                        island->setAnchorPoint(Vec2(0, 0));
-                        under->addChild(island);
+                        if (island_idx == 0)
+                        {
+                            auto island = NBWorldMapMainCity::getMainCityIslandImage(island_idx, pos.x, pos.y);
+                            if (island)
+                            {
+                                under->addChild(island);
+                            }
+                        }
                         
                         house = NBWorldMapMainCity::getMainCity(island_idx, player.cityLv, -1);
                     }
