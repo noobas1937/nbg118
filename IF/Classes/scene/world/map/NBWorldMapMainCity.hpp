@@ -19,7 +19,7 @@ class NBWorldMapMainCity
 {
 public:
     static int getMainCityIslandImageIndex(const WorldCityInfo* info, int level, int nSpecialId);
-    static const char * getMainCityIslandImage(int island_index, int x, int y);
+    static Node * getMainCityIslandImage(int island_index, int x, int y);
     static Node * getMainCity(int island_index, int level, int nSpecialId);
     
 protected:
