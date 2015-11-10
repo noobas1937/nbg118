@@ -55,7 +55,7 @@ public:
 protected:
 
 private:
-    GeneralTitanPopupView():m_titanId(""),feedCD(0),isUpdating(false),upgradeCD(0),isUpgrading(false),queue_id(-1),nbpb(NULL),upgradeCDTotal(0),isGuideFeed(false),m_arrow(NULL),perTimeForFeedCD(0),perTimeForUpgradeCD(0){}
+    GeneralTitanPopupView():m_titanId(""),feedCD(0),beginUpdate(false),upgradeCD(0),isUpgrading(false),queue_id(-1),nbpb(NULL),upgradeCDTotal(0),isGuideFeed(false),m_arrow(NULL),perTimeForFeedCD(0),perTimeForUpgradeCD(0){}
     virtual void onEnter();
     virtual void onExit();
     virtual bool init();
@@ -71,7 +71,7 @@ private:
     virtual void onTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
     virtual void onTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
     
-    bool isUpdating;
+    bool beginUpdate;
     
    
     
