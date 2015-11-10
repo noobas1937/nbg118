@@ -4573,8 +4573,12 @@ void ImperialScene::checkTileGlow(CCObject* obj)
         if (pos>0) {
             m_tileGlowNode->removeAllChildren();
             m_tileGlowNode->setPosition( m_nodeBuildings[pos]->getPosition()+ccp(130,65) );
-            for (int i=1; i<=8; i++) {
-                auto particle = ParticleController::createParticle(CCString::createWithFormat("GuideRegional_%d",i)->getCString());
+//            for (int i=1; i<=8; i++) {
+//                auto particle = ParticleController::createParticle(CCString::createWithFormat("GuideRegional_%d",i)->getCString());
+//                m_tileGlowNode->addChild(particle);
+//            }
+            for (int i=0; i<=3; i++) {
+                auto particle = ParticleController::createParticle(CCString::createWithFormat("NewRegional2_%d",i)->getCString());
                 m_tileGlowNode->addChild(particle);
             }
         }
