@@ -493,7 +493,6 @@ LOCAL_SRC_FILES := main.cpp \
 ../../IF/Classes/scene/battle/MainCityArmy.cpp \
 ../../IF/Classes/scene/cropscene/Animal.cpp \
 ../../IF/Classes/scene/cropscene/BuildCCB.cpp \
-../../IF/Classes/scene/cropscene/EagleCCB.cpp \
 ../../IF/Classes/scene/cropscene/FlyCell.cpp \
 ../../IF/Classes/scene/cropscene/FunBuild.cpp \
 ../../IF/Classes/scene/cropscene/FunBuildBtnsView.cpp \
