@@ -88,13 +88,14 @@ string CCDevice::getDeviceUid()
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     JniMethodInfo minfo;
     if (!JniHelper::getStaticMethodInfo(minfo, "org/cocos2dx/ext/Device", "getUid", "()Ljava/lang/String;")) {
-        CCLOGFUNC("jni: no method");
+        CCLOGFUNC("CCDevice::getDeviceUid -> jni: no method");
         return "";
     }
     jstring retFromJava = (jstring)minfo.env->CallStaticObjectMethod(minfo.classID, minfo.methodID);
     minfo.env->DeleteLocalRef(minfo.classID);
     string ret=JniHelper::jstring2string(retFromJava);
     minfo.env->DeleteLocalRef(retFromJava);
+    CCLOG("CCDevice::getDeviceUid -> %s", ret.c_str());
     return ret;
 #else
 	return "unimplemented";
