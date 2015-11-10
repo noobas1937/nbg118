@@ -45,7 +45,7 @@ int NBWorldMapMainCity::getMainCityIslandImageIndex(const WorldCityInfo* info, i
 Node * NBWorldMapMainCity::getMainCityIslandImage(int island_index, int x, int y)
 {
     // 根据坐标和城市开始索引计算岛的外观，不用存储数据到服务器
-    int random_variable = (x + y) % 2;
+    int random_variable = (x + y) % 3;
     
     int offsetx = 128;
     int offsety = 128;
