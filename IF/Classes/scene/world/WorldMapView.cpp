@@ -5196,11 +5196,9 @@ void WorldMapView::addUnderNode(unsigned int index) {
                     {
                         if (island_idx == 0)
                         {
-                            auto island = CCLoadSprite::createSprite(NBWorldMapMainCity::getMainCityIslandImage(island_idx, pos.x, pos.y));
-                            if (island && island->getTexture())
+                            auto island = NBWorldMapMainCity::getMainCityIslandImage(island_idx, pos.x, pos.y);
+                            if (island)
                             {
-                                island->getTexture()->setAliasTexParameters();
-                                island->setAnchorPoint(Vec2(0, 0));
                                 under->addChild(island);
                             }
                         }

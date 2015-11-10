@@ -42,16 +42,34 @@ int NBWorldMapMainCity::getMainCityIslandImageIndex(const WorldCityInfo* info, i
     return -1;
 }
 
-const char * NBWorldMapMainCity::getMainCityIslandImage(int island_index, int x, int y)
+Node * NBWorldMapMainCity::getMainCityIslandImage(int island_index, int x, int y)
 {
     // 根据坐标和城市开始索引计算岛的外观，不用存储数据到服务器
     int random_variable = (x + y) % 2;
     
-    const char* ISLANDS = "island_001.png";
-    if (random_variable == 1) ISLANDS = "island_002.png";
-    else if (random_variable == 2) ISLANDS = "island_003.png";
+    int offsetx = 128;
+    int offsety = 128;
+    Vec2 positon(offsetx - 204, offsety - 120);
+    const char* ISLANDS = "z_island_001.png";
+    if (random_variable == 1)
+    {
+        positon.setPoint(offsetx - 172, offsety - 84);
+        ISLANDS = "z_island_002.png";
+    }
+    else if (random_variable == 2)
+    {
+        positon.setPoint(offsetx - 197, offsety - 112);
+        ISLANDS = "z_island_003.png";
+    }
 
-    return ISLANDS;
+    auto island = CCLoadSprite::createSprite( ISLANDS );
+    if (island && island->getTexture())
+    {
+        island->getTexture()->setAliasTexParameters();
+        island->setAnchorPoint(Vec2(0, 0));
+        island->setPosition(positon);
+    }
+    return island;
 }
 
 Node * NBWorldMapMainCity::getMainCity(int island_index, int level, int nSpecialId)
