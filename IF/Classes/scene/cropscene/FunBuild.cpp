@@ -999,15 +999,17 @@ void FunBuild::showUping()
     int tmppY = 0;
     if (m_info->type == FUN_BUILD_MAIN) {
         m_buildCCB = BuildCCB::create(1);
-        tmppY = -mainHeight/2+90;
+        tmppY = 90;
     }
     else {
         m_buildCCB = BuildCCB::create(0);
-        tmppY = -mainHeight/2+70;
-        if (m_info->type == FUN_BUILD_FOOD || m_info->type == FUN_BUILD_WOOD || m_info->type == FUN_BUILD_IRON || m_info->type == FUN_BUILD_STONE || m_info->type == FUN_BUILD_HOSPITAL || m_info->type == FUN_BUILD_BARRACK) {
-            tmppY = -mainHeight/2+50;
+        tmppY = 50;
+//        if (m_info->type == FUN_BUILD_FOOD || m_info->type == FUN_BUILD_WOOD || m_info->type == FUN_BUILD_IRON || m_info->type == FUN_BUILD_STONE || m_info->type == FUN_BUILD_HOSPITAL || m_info->type == FUN_BUILD_BARRACK) {
+//            tmppY = 50;
+//        }
+        if (m_info->type == FUN_BUILD_WALL) {
+            tmppY = -50;
         }
-        tmppX = -20;
     }
     int tmpOffx = parentX;
     int tmpOffy = parentY;
@@ -1019,7 +1021,12 @@ void FunBuild::showUping()
         tmpOffx = 0;
         tmpOffy = 0;
     }
-    m_buildCCB->setNamePos(tmpOffx+mainWidth/2+tmppX, tmpOffy+mainHeight/2+tmppY, m_signLayer, m_batchNode, m_zOrder);
+    
+    if (m_info->type == FUN_BUILD_FOOD || m_info->type == FUN_BUILD_WOOD || m_info->type == FUN_BUILD_IRON || m_info->type == FUN_BUILD_STONE || m_info->type == FUN_BUILD_HOSPITAL || m_info->type == FUN_BUILD_BARRACK) {
+        m_buildCCB->setScale(0.7);
+    }
+    
+    m_buildCCB->setNamePos(tmpOffx + mainWidth/2 + tmppX, tmpOffy + tmppY, m_signLayer, m_batchNode, m_zOrder);
     m_signNode->addChild(m_buildCCB);
     
     
