@@ -1009,14 +1009,14 @@ void FunBuildController::endUpFunBuild(CCDictionary* dict, int type)
             (*curBuildsInfo)[tk].is_Dirc = false;
             (*curBuildsInfo)[tk].updateTime = GlobalData::shared()->getWorldTime();
             
-            if(tk == 400000000)
+            if(tk == FUN_BUILD_MAIN_CITY_ID)
             {
                 CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_SPEED_UP_COMPLETE,CCString::create("upgrade"));//fusheng 用金币直接升级
                 
                 if(SceneController::getInstance()->currentSceneId == SCENE_ID_WORLD)
                 {
                     
-                    int qid = QueueController::getInstance()->getQueueQidByKey(CC_ITOA(400000000));
+                    int qid = QueueController::getInstance()->getQueueQidByKey(CC_ITOA(FUN_BUILD_MAIN_CITY_ID));
                  
                     QueueController::getInstance()->startFinishQueue(qid,false);//fusheng 在世界里升级  取消升级队列占用
                 }
@@ -1035,6 +1035,11 @@ void FunBuildController::endUpFunBuild(CCDictionary* dict, int type)
             }
             string key = QueueController::getInstance()->addQueueInfo(dict);
             int id = atoi(key.c_str());
+            
+            if(id == FUN_BUILD_MAIN_CITY_ID)//fusheng titan正常升级时 通知刷新
+            {
+                CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_INFORMATION_RESET, NULL);
+            }
             (*curBuildsInfo)[id].updateTime = tmp;
             CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_CHECK_TIME, CCInteger::create(id));
             CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE,

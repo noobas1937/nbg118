@@ -793,7 +793,7 @@ bool UIComponent::init(CCSize size)
 //    MailController::getInstance()->quitChatRoom( "388327000001");
 //    MailController::getInstance()->sendChatRoomMsg("hello everyone", "399237000001");
 
-    m_flyArrow = CCLoadSprite::createSprite("UI_hand.png");//guide_arrow_new.png
+    m_flyArrow = CCLoadSprite::createSprite("UI_hand.png");
     m_flyArrow->setAnchorPoint(ccp(0, 0));
     m_flyArrow->setVisible(false);
     m_csNode->removeAllChildrenWithCleanup(true);

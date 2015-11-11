@@ -67,21 +67,21 @@ bool ScienceView::init(int buildId, int scienceType)
         CCLoadSprite::doResourceByCommonIndex(5, false);
     });
     
-    auto tbg = CCLoadSprite::loadResource("technology_09.png");
-    auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
-    int maxHight = CCDirector::sharedDirector()->getWinSize().height;
-    int curHight = -500;
-    while (curHight<maxHight) {
-        auto bg = CCLoadSprite::createSprite("technology_09.png");
-        if (CCCommonUtils::isIosAndroidPad()) {
-            bg->setScale(2.4);
-        }
-        bg->setAnchorPoint(ccp(0, 1));
-        bg->setPosition(ccp(0, curHight));
-        curHight += bg->getContentSize().height;
-        tBatchNode->addChild(bg);
-    }
-    this->addChild(tBatchNode);
+//    auto tbg = CCLoadSprite::loadResource("technology_09.png");//fusheng 背景图片
+//    auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
+//    int maxHight = CCDirector::sharedDirector()->getWinSize().height;
+//    int curHight = -500;
+//    while (curHight<maxHight) {
+//        auto bg = CCLoadSprite::createSprite("technology_09.png");
+//        if (CCCommonUtils::isIosAndroidPad()) {
+//            bg->setScale(2.4);
+//        }
+//        bg->setAnchorPoint(ccp(0, 1));
+//        bg->setPosition(ccp(0, curHight));
+//        curHight += bg->getContentSize().height;
+//        tBatchNode->addChild(bg);
+//    }
+//    this->addChild(tBatchNode);
     
     auto tmpCCB = CCBLoadFile("ScienceTreeView",this,this);//ScienceView
     if (CCCommonUtils::isIosAndroidPad()) {
@@ -108,15 +108,15 @@ bool ScienceView::init(int buildId, int scienceType)
     m_infoList->addChild(m_scrollView);
     m_desLabel->setString(_lang("121990"));
     reInitView();
-    addBGPic();
+//    addBGPic();//fusheng 这里会崩溃 "UI_UseSkill_picture_blackwhite.png"  图片丢失
     
-    for (int i=1; i<=4; i++) {
-        auto particle = ParticleController::createParticle(CCString::createWithFormat("UiFire_%d",i)->getCString());
-        m_fireNode1->addChild(particle);
-        
-        auto particle1 = ParticleController::createParticle(CCString::createWithFormat("UiFire_%d",i)->getCString());
-        m_fireNode2->addChild(particle1);
-    }
+//    for (int i=1; i<=4; i++) {
+//        auto particle = ParticleController::createParticle(CCString::createWithFormat("UiFire_%d",i)->getCString());
+//        m_fireNode1->addChild(particle);
+//        
+//        auto particle1 = ParticleController::createParticle(CCString::createWithFormat("UiFire_%d",i)->getCString());
+//        m_fireNode2->addChild(particle1);
+//    }
 
     return true;
 }
@@ -159,7 +159,8 @@ void ScienceView::updateInfo(CCObject* obj)
     std::vector<string> sciList;
     CCCommonUtils::splitString(scienceIds, ";", sciList);
     
-    std::vector<int> idList;
+    idList.clear();//fusheng 先清一下
+   
     int maxPosY = 0;
     for (int i=0; i<sciList.size(); i++) {
         int scienceId = atoi(sciList[i].c_str());
@@ -199,6 +200,8 @@ void ScienceView::updateInfo(CCObject* obj)
         cell->setPosition(ccp(posx,posy));
         cell->setTouchNode(m_infoList);
         m_scrollView->addChild(cell);
+        
+        cells.push_back(cell);//fusheng 把cell存起来  和idList 对应
     }
     newAddLine(&idList, maxPosY);
 }
@@ -212,6 +215,9 @@ const int st_H_HD = 280;
 
 void ScienceView::newAddLine(vector<int>* idList, int maxHeight)
 {
+    
+    m_lineBatch->removeAllChildrenWithCleanup(true);//fusheng 删除原本的sprite
+    
     auto addLine = [](const CCPoint &startPt, std::vector<CCPoint> &endPt, std::vector<bool> openFlag, CCNode *parent, int maxH){
         if (CCCommonUtils::isIosAndroidPad()) {
             int curX = 140;
@@ -544,7 +550,7 @@ void ScienceCell::refreash(CCObject* obj)
             }
             m_isInit = true;
             m_isOpen = true;
-            
+            CCCommonUtils::setSpriteGray(m_bg, false);//fusheng 刷新时原本 灰度图 没有变回去
             auto& m_info = GlobalData::shared()->scienceInfo.infoMap[m_scienceId];
             resItems.clear();
             CCCommonUtils::splitString(m_info.resCondition, "|", resItems);
@@ -754,12 +760,14 @@ void ScienceCell::onEnterFrame(float dt)
             m_lockSpr->setVisible(_tmpLock);
             
             if (m_isOk) {
-                m_nameLabel->setColor(ccc3(164, 127, 55));
-                m_lvLabel->setColor(ccc3(164, 127, 55));
+                m_nameLabel->setColor(ccc3(183, 194, 254));
+                m_lvLabel->setColor(ccc3(0, 0, 0));
             }
             else {
-                m_nameLabel->setColor(ccc3(164, 28, 28));
-                m_lvLabel->setColor(ccc3(164, 28, 28));
+//                m_nameLabel->setColor(ccc3(164, 28, 28));
+//                m_lvLabel->setColor(ccc3(164, 28, 28));
+                m_nameLabel->setColor(ccc3(183, 194, 254));
+                m_lvLabel->setColor(ccc3(0, 0, 0));
             }
             
             if(m_type != 0 && m_type != 2) {
