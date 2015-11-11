@@ -442,6 +442,9 @@ void ScienceListView::updateScienceType(int pos, string name, string pic)
 
 void ScienceListView::onBtn1Click(CCObject * pSender, Control::EventType pCCControlEvent)
 {
+    //fusheng 屏蔽功能
+    CCCommonUtils::flyHint("", "", _lang("E100008"));
+    return;
     playClose(1);
 //    int type = m_posTypes[1];
 //    PopupViewController::getInstance()->addPopupInView(ScienceView::create(m_buildId, type));
@@ -453,11 +456,17 @@ void ScienceListView::onBtn2Click(CCObject * pSender, Control::EventType pCCCont
 //    if (PopupViewController::getInstance()->pushPop(pop)) {
 //        PopupViewController::getInstance()->addPopupView(pop);
 //    }
+    //fusheng 屏蔽功能
+    CCCommonUtils::flyHint("", "", _lang("E100008"));
+    return;
     playClose(2);
 }
 
 void ScienceListView::onBtn3Click(CCObject * pSender, Control::EventType pCCControlEvent)
 {
+    //fusheng 屏蔽功能
+    CCCommonUtils::flyHint("", "", _lang("E100008"));
+    return;
     playClose(3);
 }
 

@@ -289,6 +289,22 @@ void TMXLayer::setupTilesByCoordinate(const cocos2d::Point &tileCoordinate, cons
         m_indexForDynamic.insert(std::pair<int,unsigned int>((int)(1+globalIndex),indexForZ));
         
         Rect rect = _tileSet->getRectForGID(gid);
+        // guojiang
+        if (gid == 64)
+        {
+//            {{4,1210},{256,128}}
+            int k = (i + j) % 8;
+            if (k == 0) {}
+            else if (k == 1) rect = Rect(528,1210, 164,101);
+            else if (k == 2) rect = Rect(698,1210, 256,128);
+            else rect = Rect(0,2048-128, 256,128);
+//            else if (k == 3) rect = Rect(422,1428, 112,92);
+//            else if (k == 4) rect = Rect(540,1428, 150,131);
+//            {{528,1210},{164,101}}
+//            {{698,1210},{256,128}}
+//            {{422,1428},{112,92}}
+//            {{540,1428},{150,131}}
+        }
         rect = CC_RECT_PIXELS_TO_POINTS(rect);
         TMXTiledSprite *tile = reusedTileWithRect(rect);
         setupTileSprite(tile, pos, gid);

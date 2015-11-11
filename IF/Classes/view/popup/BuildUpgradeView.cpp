@@ -1688,7 +1688,7 @@ void UpgradeCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEven
             }
             else
             {
-                if (m_buildId == 400000000) {
+                if (m_buildId == FUN_BUILD_MAIN_CITY_ID) {
 //                    UIComponent::getInstance()->OnHomeBackBtnClick(NULL, CCControlEvent::TOUCH_DOWN);
                     if (CCCommonUtils::isIosAndroidPad())
                     {
@@ -1744,7 +1744,7 @@ void UpgradeCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEven
         }
         else if (m_type == 8) {
             
-            PopupViewController::getInstance()->goBackPopupView();
+//            PopupViewController::getInstance()->goBackPopupView();
             
             auto view = PopupViewController::getInstance()->getCurrentPopupView();
             

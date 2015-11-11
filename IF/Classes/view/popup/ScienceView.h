@@ -70,6 +70,9 @@ private:
 
     int m_buildId;
     int m_openNum;
+    
+    std::vector<ScienceCell*> cells;
+    std::vector<int> idList;
 };
 
 
@@ -87,6 +90,9 @@ public:
     void setTouchNode(CCNode* node);
     int m_scienceId;
     void setAttention();
+    
+    bool m_isOpen;
+
 private:
     bool init(int scienceId, CCSpriteBatchNode* batch, CCSpriteBatchNode* iconBatch, int posx, int posy);
     virtual void onEnter();
@@ -124,7 +130,6 @@ private:
     int m_posy;
     CCSpriteBatchNode* m_batch;
     CCSpriteBatchNode* m_iconBatch;
-    bool m_isOpen;
     bool m_isInit;
     int m_time;
     int m_type;

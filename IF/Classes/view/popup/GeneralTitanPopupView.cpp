@@ -33,15 +33,16 @@
 //#include "AllRankListPopUpView.h"
 #include "GeneralSkillListPopUpView.h"
 #include "FunBuildController.h"
-//#include "SoundController.h"
+#include "SoundController.h"
 #include "EquipmentController.h"
 //#include "EquipmentInfo.h"
 //#include "AchievementNewView.h"
 #include "AchievementController.h"
 #include "QueueController.h"
+#include "ConfirmDialogView.h"
 //
 //#include "EquipNewUseView.h"
-//#include "SceneController.h"
+#include "SceneController.h"
 //#include "ImperialScene.h"
 //#include "WorldMapView.h"
 //
@@ -56,6 +57,8 @@
 //static int cellW = 520;
 #include "NBCommonUtils.h"
 using namespace NBCommonUtils;
+
+#define MSG_BUILD_CELL "msg_build_cell"
 
 GeneralTitanPopupView* GeneralTitanPopupView::create(){
     GeneralTitanPopupView* ret = new GeneralTitanPopupView();
@@ -81,7 +84,7 @@ GeneralTitanPopupView* GeneralTitanPopupView::create(){
 //    
 //}
 //
-
+GeneralTitanPopupView::GeneralTitanPopupView():m_titanId(""),feedCD(0),beginUpdate(false),upgradeCD(0),isUpgrading(false),queue_id(-1),nbpb(NULL),upgradeCDTotal(0),isGuideFeed(false),m_arrow(NULL),perTimeForFeedCD(0),perTimeForUpgradeCD(0),_tmpGold(0),_resGold(0),_tmpTime(0),canResetUpgrade(true){}
 
 
 void GeneralTitanPopupView::onGetPlayerInfoCallback(cocos2d::CCObject *obj) {
@@ -144,13 +147,493 @@ void GeneralTitanPopupView::onGetPlayerInfoCallback(cocos2d::CCObject *obj) {
 }
 
 
+
+
+Node* createDashed(Size desingSize )
+{
+//    nb_xuxian.png
+//    nb_xuxiankuang
+    
+    CCSprite* sprDashed = CCLoadSprite::createSprite("nb_xuxian.png");
+    
+    float sprHeight = sprDashed->getContentSize().width;//fusheng 38
+    
+    CCSprite* sprDashedFrameBL = CCLoadSprite::createSprite("nb_xuxiankuang.png");
+    
+    float dfWidth = sprDashedFrameBL->getContentSize().width;
+    
+    float dfHeight = sprDashedFrameBL->getContentSize().height;
+    
+    
+    
+    int  numOfHor =(desingSize.width - dfWidth*2)/sprHeight;//横行需线条个数
+    
+    int  numOfVert =(desingSize.height - dfHeight*2)/sprHeight;//纵向需线条个数
+    
+    
+
+    
+    
+    
+    sprDashedFrameBL->setAnchorPoint(Vec2::ZERO);
+    
+    
+    CCSprite* sprDashedFrameBR = CCLoadSprite::createSprite("nb_xuxiankuang.png");
+    
+    sprDashedFrameBR->setAnchorPoint(Vec2(1,0));
+    
+    sprDashedFrameBR->setFlippedX(true);
+    
+    CCSprite* sprDashedFrameTL = CCLoadSprite::createSprite("nb_xuxiankuang.png");
+    
+    sprDashedFrameTL->setAnchorPoint(Vec2(0,1));
+    
+    sprDashedFrameTL->setFlippedY(true);
+    
+    CCSprite* sprDashedFrameTR = CCLoadSprite::createSprite("nb_xuxiankuang.png");
+    
+    sprDashedFrameTR->setAnchorPoint(Vec2(1,1));
+    
+    sprDashedFrameTR->setFlippedX(true);
+    
+    sprDashedFrameTR->setFlippedY(true);
+    
+//    Size size = desingSize;
+//
+//    size.width += spr->getContentSize().height*2;// 3像素*2
+//    size.height += spr->getContentSize().height*2;// 3像素*2
+
+    Node* container = Node::create();
+    
+    
+    sprDashedFrameBL->setPosition(Vec2::ZERO);
+    
+    
+    sprDashedFrameBR->setPosition(Vec2(sprDashedFrameBL->getPosition().x+dfWidth*2+numOfHor*sprHeight,sprDashedFrameBL->getPosition().y));
+    
+    sprDashedFrameTL->setPosition(Vec2(sprDashedFrameBL->getPosition().x,sprDashedFrameBL->getPosition().y+dfHeight*2+numOfVert*sprHeight));
+    
+    sprDashedFrameTR->setPosition(Vec2(sprDashedFrameBR->getPosition().x,sprDashedFrameTL->getPosition().y));
+    
+    
+    container->addChild(sprDashedFrameBL);//fusheng 使用左下角作为相对点
+ 
+    container->addChild(sprDashedFrameBR);
+    
+    container->addChild(sprDashedFrameTL);
+    
+    container->addChild(sprDashedFrameTR);
+    
+    for (int i = 0; i < numOfHor; i++) {//fusheng 底部的虚线和顶部
+        //底部
+        auto sp1 = CCLoadSprite::createSprite("nb_xuxian.png");
+        
+        sp1->setAnchorPoint(Vec2::ZERO);
+        
+        sp1->setPosition(sprDashedFrameBL->getPosition().x+dfWidth+i*sprHeight,sprDashedFrameBL->getPosition().y);
+        
+        container->addChild(sp1);
+        
+        
+        //顶部
+        auto sp2 = CCLoadSprite::createSprite("nb_xuxian.png");
+        
+        sp2->setAnchorPoint(Vec2(0,1));
+        
+        sp2->setPosition(sprDashedFrameTL->getPosition().x+dfWidth+i*sprHeight,sprDashedFrameTL->getPosition().y);
+        
+        container->addChild(sp2);
+    }
+
+    for (int i = 0; i < numOfVert; i++) {//fusheng 左右的虚线
+        //左
+        auto sp1 = CCLoadSprite::createSprite("nb_xuxian.png");
+        
+        sp1->setAnchorPoint(Vec2(0,1));
+        
+        sp1->setRotation(-90);
+        
+        sp1->setPosition(sprDashedFrameBL->getPosition().x,sprDashedFrameBL->getPosition().y+dfHeight+i*sprHeight);
+        
+        container->addChild(sp1);
+   
+        
+        
+        //右
+        auto sp2 = CCLoadSprite::createSprite("nb_xuxian.png");
+        
+        
+        sp2->setAnchorPoint(Vec2(1,1));
+        
+        sp2->setRotation(90);
+        
+        sp2->setPosition(sprDashedFrameBR->getPosition().x,sprDashedFrameBR->getPosition().y+dfHeight+i*sprHeight);
+        
+        container->addChild(sp2);
+    }
+
+    
+    
+    float ratioX = desingSize.width/(dfWidth*2+sprHeight*numOfHor);
+    
+    float ratioY = desingSize.height/(dfHeight*2+sprHeight*numOfVert);
+    
+    container->setScale(ratioX, ratioY);
+    
+    return container;
+    
+    
+}
+
+void GeneralTitanPopupView::updateTitanInfo(CCObject* obj)
+{
+    //fusheng 监听的是建筑队列完成  建筑属性还没有改变  所以给0.5秒时间反应
+    auto seq = Sequence::createWithTwoActions(DelayTime::create(0.5), CCCallFunc::create(
+                                                                                         [this]
+    {
+        canResetUpgrade = true;
+        updateInfo(nullptr);
+    }
+                                                                                         ));
+    seq->setTag(1234567);
+    
+    this->runAction(seq);
+    
+    
+}
+
+void GeneralTitanPopupView::updateInfo(CCObject* obj)
+{
+
+    
+    auto& m_info = FunBuildController::getInstance()->getFunbuildById(FUN_BUILD_MAIN_CITY_ID);
+    
+    if(m_info.state == FUN_BUILD_UPING)//fusheng 升级中不显示条件
+    {
+        m_scrollView->getContainer()->removeAllChildren();//升级按钮是否可点
+        
+        m_instantBtn->setEnabled(false);
+        
+        m_upBtn->setEnabled(false);
+        
+        m_titanUpingTip->setVisible(true);
+        
+        canResetUpgrade = false;//升级中为false;
+        
+        m_timeSpr1->setVisible(false);
+        
+        m_timeLabel->setVisible(false);
+        
+        return;
+    }
+    else
+    {
+         m_timeSpr1->setVisible(true);
+        
+        m_timeLabel->setVisible(true);
+        
+         m_titanUpingTip->setVisible(false);
+    }
+    
+    if (!canResetUpgrade) {//阻止显示条件
+        return;
+    }
+    
+    bool isCanUp = true;
+    
+    string name = "";
+    int silver_need = 0;
+    int wood_need = 0;
+    int time_need = 0;
+    int stone_need = 0;
+    int food_need = 0;
+    int iron_need = 0;
+    string tool_need = "";
+    string building = "";
+    string destip = "";
+    int level = 0;
+    
+
+
+    name = m_info.name;
+    silver_need = m_info.silver_need;
+    wood_need = m_info.wood_need;
+    time_need = m_info.time_need;
+    stone_need = m_info.stone_need;
+    food_need = m_info.food_need;
+    iron_need = m_info.iron_need;
+    tool_need = m_info.tool_need;
+    building = m_info.building;
+    level = m_info.level;
+    //        destip = m_info.destip;
+    destip = m_info.tip;
+    
+    _tmpTime = time_need;
+    m_nameLabel->setString(_lang(name));
+    
+    //    string title = _lang_1("102272", CC_ITOA(level));
+    string title = _lang_1("102272", " ");
+    if(level>=GlobalData::shared()->MaxBuildLv) {
+        title += _lang("102183");
+    }
+    m_lvLabelPre->setString(title);
+    
+    m_lvLabel->setString(CC_ITOA(level));
+    vector<cocos2d::CCLabelIF *> labels;
+    labels.push_back(m_lvLabelPre);
+    labels.push_back(m_lvLabel);
+    arrangeLabel(labels);
+    
+    //    string nextLv = _lang_1("102272", );
+    m_nextLvLabelPre->setString(title);
+    m_nextLvLabel->setString(CC_ITOA(level+1));
+    
+    labels.clear();
+    labels.push_back(m_nextLvLabelPre);
+    labels.push_back(m_nextLvLabel);
+    arrangeLabel(labels);
+    
+    float tmpEffect = CCCommonUtils::getEffectValueByNum(68);
+    _tmpTime = time_need/(1+CCCommonUtils::getEffectValueByNum(68)*1.0/100);
+    _tmpGold = CCCommonUtils::getGoldByTime(_tmpTime);
+    _resGold = 0;
+    
+    string timeInfo = CC_SECTOA(_tmpTime);
+    m_timeLabel->setString(timeInfo.c_str());
+    
+    
+    int _itemH = 46;
+    int curY = 25;
+    int curX = 30;
+    
+    if (CCCommonUtils::isIosAndroidPad()) {
+        _itemH = 87;
+        curX = 60;
+        curY = 50;
+    }
+    
+    m_instantBtn->setEnabled(true);
+    m_scrollView->getContainer()->removeAllChildren();
+    
+    m_lfood = 0;
+    m_lwood = 0;
+    m_liron = 0;
+    m_lstone = 0;
+    
+
+    
+    
+    
+    if (stone_need>0) {
+        auto item3 = UpgradeCell::create(0, Stone, stone_need);
+        item3->setPosition(ccp(curX, curY));
+        item3->setTouchNode(m_infoList,FUN_BUILD_MAIN_CITY_ID);
+        m_scrollView->addChild(item3);
+        curY += _itemH;
+        
+        if (!item3->m_isOk) {
+            //            isCanUp = false;
+        }
+        
+        int tmpSub = stone_need - GlobalData::shared()->resourceInfo.lStone;
+        if (tmpSub>0) {
+            _resGold += CCCommonUtils::getResGlodByType(Stone, tmpSub);
+            m_lstone = tmpSub;
+        }
+    }
+    if (iron_need>0) {
+        auto item4 = UpgradeCell::create(0, Iron, iron_need);
+        item4->setPosition(ccp(curX, curY));
+        item4->setTouchNode(m_infoList,FUN_BUILD_MAIN_CITY_ID);
+        m_scrollView->addChild(item4);
+        curY += _itemH;
+        
+        if (!item4->m_isOk) {
+            //            isCanUp = false;
+        }
+        
+        int tmpSub = iron_need - GlobalData::shared()->resourceInfo.lIron;
+        if (tmpSub>0) {
+            _resGold += CCCommonUtils::getResGlodByType(Iron, tmpSub);
+            m_liron = tmpSub;
+        }
+    }
+    if (food_need>0) {
+        auto item5 = UpgradeCell::create(0, Food, food_need);
+        item5->setPosition(ccp(curX, curY));
+        item5->setTouchNode(m_infoList,FUN_BUILD_MAIN_CITY_ID);
+        m_scrollView->addChild(item5);
+        curY += _itemH;
+        
+        if (!item5->m_isOk) {
+            //            isCanUp = false;
+        }
+        
+        int tmpSub = food_need - GlobalData::shared()->resourceInfo.lFood;
+        if (tmpSub>0) {
+            _resGold += CCCommonUtils::getResGlodByType(Food, tmpSub);
+            m_lfood = tmpSub;
+        }
+    }
+    
+    
+    if (wood_need>0) {
+        auto item2 = UpgradeCell::create(0, Wood, wood_need);
+        item2->setPosition(ccp(curX, curY));
+        item2->setTouchNode(m_infoList,FUN_BUILD_MAIN_CITY_ID);
+        m_scrollView->addChild(item2);
+        curY += _itemH;
+        
+        if (!item2->m_isOk) {
+            //            isCanUp = false;
+        }
+        
+        int tmpSub = wood_need - GlobalData::shared()->resourceInfo.lWood;
+        if (tmpSub>0) {
+            _resGold += CCCommonUtils::getResGlodByType(Wood, tmpSub);
+            m_lwood = tmpSub;
+        }
+    }
+    
+    if (tool_need != "") {
+        std::vector<string> toolItems;
+        CCCommonUtils::splitString(tool_need, "|", toolItems);
+        for (int i=0; i<toolItems.size(); i++) {
+            string curTool = toolItems[i];
+            std::vector<string> item;
+            CCCommonUtils::splitString(curTool, ";", item);
+            int id = atoi(item[0].c_str());
+            int num = atoi(item[1].c_str());
+            
+            auto itemTool = UpgradeCell::create(1, id, num);
+            itemTool->setPosition(ccp(curX, curY));
+            itemTool->setTouchNode(m_infoList,FUN_BUILD_MAIN_CITY_ID);
+            m_scrollView->addChild(itemTool);
+            curY += _itemH;
+            
+            if (!itemTool->m_isOk) {
+                auto toolInfo = ToolController::getInstance()->getToolInfoById(id);
+                _resGold += (num - toolInfo.getCNT()) * toolInfo.price;
+                //                isCanUp = false;
+            }
+        }
+    }
+    
+    _tmpGold = _tmpGold + _resGold;
+    m_inBtnGoldNum->setString(CC_ITOA(_tmpGold));
+    
+    if (building!="") {
+        std::vector<string> buildItems;
+        CCCommonUtils::splitString(building, "|", buildItems);
+        for (int i=0; i<buildItems.size(); i++) {
+            string curBuild = buildItems[i];
+            std::vector<string> tmpbuildVec;
+            CCCommonUtils::splitString(curBuild, ";", tmpbuildVec);
+            int paramBuild = atoi(tmpbuildVec[0].c_str())+atoi(tmpbuildVec[1].c_str());
+            auto itemBuild = UpgradeCell::create(2, paramBuild, 0);
+            itemBuild->setPosition(ccp(curX, curY));
+            itemBuild->setTouchNode(m_infoList,FUN_BUILD_MAIN_CITY_ID);
+            m_scrollView->addChild(itemBuild);
+            curY += _itemH;
+            
+            if (!itemBuild->m_isOk) {
+                isCanUp = false;
+                m_instantBtn->setEnabled(false);
+            }
+        }
+    }
+    if(GlobalData::shared()->titanInfo.level<GlobalData::shared()->MaxBuildLv) {//fusheng 没有满级  龙等级满级使用建筑满级
+        //fusheng 泰坦喂食状态
+        auto item_titanStatus = UpgradeCell::create(8, 0, 0);
+        item_titanStatus->setPosition(ccp(curX, curY));
+        item_titanStatus->setTouchNode(m_infoList,FUN_BUILD_MAIN_CITY_ID);
+        m_scrollView->addChild(item_titanStatus);
+        curY += _itemH;
+    }
+    
+    
+    //没有队列，显示条件不足
+    int qid = QueueController::getInstance()->canMakeItemByType(TYPE_BUILDING, 1);//_tmpTime, 取空闲队列，并不判断有效期是否够用
+    if(QID_MAX == qid)
+    {
+        int qid = QueueController::getInstance()->getMinTimeQidByType(TYPE_BUILDING);
+        auto itemQueue = UpgradeCell::create(3, Food, qid);
+        itemQueue->setPosition(ccp(curX, curY));
+        itemQueue->setTouchNode(m_infoList,FUN_BUILD_MAIN_CITY_ID);
+        m_scrollView->addChild(itemQueue);
+        curY += _itemH;
+        m_qid = qid;
+    }
+    else {
+        m_qid = qid;
+    }
+    m_upBtn->setEnabled(isCanUp);
+    curY -= 23;
+    m_scrollView->setContentSize(CCSize(m_infoList->getContentSize().width,curY));
+    m_scrollView->setContentOffset(ccp(0, m_infoList->getContentSize().height - curY));
+    bool touchable = curY < m_infoList->getContentSize().height?false:true;
+    m_scrollView->setTouchEnabled(touchable);
+    
+    //fusheng 添加喂食度判断
+    if(GlobalData::shared()->titanInfo.exp<GlobalData::shared()->titanInfo.nextExp)
+    {
+        m_instantBtn->setEnabled(false);
+        m_upBtn->setEnabled(false);
+    }
+    else
+    {
+        
+    }
+    
+    if(GlobalData::shared()->titanInfo.level >= GlobalData::shared()->MaxBuildLv) {//fusheng 没有满级  龙等级满级使用建筑满级
+        m_instantBtn->setEnabled(false);
+        m_upBtn->setEnabled(false);
+    }
+    
+    
+}
+
+//void GeneralTitanPopupView::onEnter()
+//{
+//    CCNode::onEnter();
+//    UIComponent::getInstance()->showResourceBar(true);
+//    if (m_openNum>0) {
+//        updateInfo(NULL);
+//    }
+//    
+//    m_openNum++;
+//    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(TitanUpgradeView::updateInfo), MSG_REFREASH_BUILD_UPGRADE, NULL);
+//    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(TitanUpgradeView::updateTitanInfo), MSG_TITAN_INFORMATION_RESET, NULL);
+//    setTouchEnabled(true);
+//    int sid = SceneController::getInstance()->currentSceneId;
+//    
+//    
+//    
+//    //CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, Touch_Default, false);
+//}
+
+//void TitanUpgradeView::onExit()
+//{
+//    UIComponent::getInstance()->showResourceBar(false);
+//    CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_REFREASH_BUILD_UPGRADE);
+//    CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_TITAN_INFORMATION_RESET);
+//    
+//    setTouchEnabled(false);
+//    
+//    //    if(SceneController::getInstance()->currentSceneId == SCENE_ID_WORLD)
+//    //    {
+//    //        CCLoadSprite::doResourceByPathIndex(IMPERIAL_PATH,22, true);
+//    //    }
+//    CCNode::onExit();
+//}
+
 bool GeneralTitanPopupView::init()
 {
     if (!PopupBaseView::init()) {
         return false;
     }
     
-   
+    onShowNextUnlockItem();
     
     CCLoadSprite::doResourceByCommonIndex(305, true);
     CCLoadSprite::doResourceByCommonIndex(3, true);
@@ -159,6 +642,11 @@ bool GeneralTitanPopupView::init()
     
     auto bg = CCBLoadFile("GeneralTitanDetail",this,this);
     
+
+    
+    
+    m_upBtnMsgLabel->setString(_lang("102104").c_str());
+    m_btnMsgLabel->setString(_lang("102127").c_str());
     
     if(m_arrow == NULL)
     {
@@ -213,13 +701,40 @@ bool GeneralTitanPopupView::init()
     //m_mainNode->setPosition();
     if(add>108)
     {
-        float tempX = (add - 108)/3;
+        float tempX = (add - 108)/2;
         
+        if(tempX>50)//上移50像素
+            tempX -= 50;
+            
         m_mainNode->setPositionY(m_mainNode->getPositionY()-108-tempX);
         
-        m_titanExtNode->setPositionY(m_titanExtNode->getPositionY()-108-tempX*2);
+
         
     }
+    
+    float infoListBottom = m_infoList->convertToWorldSpace(Vec2::ZERO).y;
+    float infoListTop = m_infoList_TR->convertToWorldSpace(Vec2::ZERO).y;
+    
+    Size sm_infoList = m_infoList->getContentSize();
+    sm_infoList.height = infoListTop - infoListBottom;
+    
+    m_infoList->setContentSize(sm_infoList);
+    
+    m_titanUpingTip->setNormalizedPosition(Vec2(0.5,0.5));
+    
+//    m_titanUpingTip->setString("hello uping");
+    
+    m_scrollView = CCScrollView::create(m_infoList->getContentSize());//fusheng
+    m_scrollView->setDirection(kCCScrollViewDirectionVertical);
+    m_infoList->addChild(m_scrollView);
+    
+    
+    //fusheng 产生一个虚线外框
+    Node* node = createDashed(Size(m_DashedTR->convertToWorldSpace(Vec2::ZERO).x - m_DashedBL->convertToWorldSpace(Vec2::ZERO).x,m_DashedTR->convertToWorldSpace(Vec2::ZERO).y-m_DashedBL->convertToWorldSpace(Vec2::ZERO).y));
+    m_DashedBL->addChild(node);
+    
+    auto pp = m_infoList->convertToNodeSpace( m_DashedBL->convertToWorldSpace(Vec2::ZERO));
+
     
     
     this->m_receiveGlow->setVisible(false);
@@ -240,7 +755,7 @@ bool GeneralTitanPopupView::init()
  
     m_ProTitanExt->setVisible(true);
     
-    this->resetAttribute(nullptr);
+//    this->resetAttribute(nullptr);
     
     this->scheduleUpdate();
     
@@ -296,6 +811,11 @@ bool GeneralTitanPopupView::init()
     titanUpingNode->addChild(nbpb);
     
     nbpb->setVisible(false);
+    
+    
+    
+
+    
   
     return true;
 }
@@ -485,12 +1005,20 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         m_Txt1->setString(CC_ITOA(armTitanInfo.attack));
         m_Txt2->setString(CC_ITOA(armTitanInfo.attack));
     }
+  
+    m_instantBtn->setEnabled(true);//fusheng 设置为默认值
     
-    string title = _lang_1("102272", CC_ITOA(m_titanInfo.level));
-    if(m_titanInfo.level>=GlobalData::shared()->MaxBuildLv) {
-        title += _lang("102183");
-    }
-    m_lvLabel->setString(title);
+    m_upBtn->setEnabled(true);
+    
+    beginUpdate = false;
+    
+    isUpgrading = false;
+    
+    
+
+    updateInfo(obj);//fusheng 升级信息
+    
+    
     
     bool isCanFeed = true;
     
@@ -510,10 +1038,71 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
     {
         
     }
+    int level = m_titanInfo.level;
+    
+    string title = _lang_1("102272", " ");
+    if(level>=GlobalData::shared()->MaxBuildLv) {
+        title += _lang("102183");
+        m_nextLvLabelPre->setVisible(false);
+        m_nextLvLabel->setVisible(false);
+        nb_arrow->setVisible(false);
+        
+        
+        ArmyInfo titanInfo = GlobalData::shared()->armyList[GlobalData::shared()->titanInfo.titanId]; //fusheng map中通过id获得
+        
+        m_titanCurrentZDLInNext->setString(CC_ITOA(titanInfo.power));
+    }
+    else
+    {
+        m_nextLvLabelPre->setVisible(true);
+        m_nextLvLabel->setVisible(true);
+        nb_arrow->setVisible(true);
+        
+        
+        
+        ArmyInfo titanInfo = GlobalData::shared()->armyList[GlobalData::shared()->titanInfo.titanId]; //fusheng map中通过id获得泰坦属性
+        ArmyInfo nextTitanInfo = GlobalData::shared()->armyList[ CC_ITOA(CCString::create(GlobalData::shared()->titanInfo.titanId)->intValue()+1)];
+        
+        m_titanCurrentZDLInNext->setString(CC_ITOA(titanInfo.power));
+        m_titanZDLAddValue->setString(CCString::createWithFormat("+%.1f",nextTitanInfo.power-titanInfo.power)->getCString());
+        
+
+    }
+    m_lvLabelPre->setString(title);
+    
+    m_lvLabel->setString(CC_ITOA(level));
+    vector<cocos2d::CCLabelIF *> labels;
+    labels.push_back(m_lvLabelPre);
+    labels.push_back(m_lvLabel);
+    arrangeLabel(labels);
+    
+    
+    m_nextLvLabelPre->setString(title);
+    m_nextLvLabel->setString(CC_ITOA(level+1));
+    
+    
+    labels.clear();
+    labels.push_back(m_nextLvLabelPre);
+    labels.push_back(m_nextLvLabel);
+    arrangeLabel(labels);
+    
+    
+    
+    if(level<GlobalData::shared()->MaxBuildLv) {//fusheng 没有满级  龙等级满级使用建筑满级
+       
+    }
+    else
+    {
+       
+    }
+    ;
     
     if(fbiInfo.state == FUN_BUILD_UPING)
     {
-        CCCommonUtils::setSpriteGray(m_titanUngrade, true);
+//        CCCommonUtils::setSpriteGray(m_titanUngrade, true);
+        
+
+        
         this->m_titanFeedBtn->setEnabled(false);//fusheng 泰坦升级时
         
         titanFeedNode->setVisible(false);
@@ -886,7 +1475,7 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         
         m_titanFeedStatus_1->setVisible(true);
         m_titanFeedStatus_2->setVisible(true);
-        m_titanFeedStatus_0->setPosition(138,-139);
+//        m_titanFeedStatus_0->setPosition(138,-139);
         vector<cocos2d::CCLabelIF *> labels;
         labels.push_back(m_titanFeedStatus_0);
         labels.push_back(m_titanFeedStatus_1);
@@ -912,7 +1501,7 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         m_titanFeedStatus_1->setString(CCString::createWithFormat("%3d",m_titanInfo.feedNum)->getCString());
         m_titanFeedStatus_2->setString(CCString::createWithFormat("/%d",m_titanInfo.feedMaxNum)->getCString());
         
-        m_titanFeedStatus_0->setPosition(138,-139);
+//        m_titanFeedStatus_0->setPosition(138,-139);
         m_titanFeedStatus_0->setColor(ccColor3B(195,206,254));
         
         m_titanFeedStatus_1->setVisible(true);
@@ -935,14 +1524,15 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
     {
     
         
-        m_titanFeedStatus_0->setString(_lang("500005"));//fusheng 需要文本
+//        m_titanFeedStatus_0->setString(_lang("500005"));//fusheng 需要文本
 
-        m_titanFeedStatus_0->setColor(ccColor3B(155,200,32));
+//        m_titanFeedStatus_0->setColor(ccColor3B(155,200,32));
         
-        m_titanFeedStatus_0->setPosition(138,-159);
+//        m_titanFeedStatus_0->setPosition(138,-159);
         
-        m_titanFeedStatus_1->setVisible(false);
-        m_titanFeedStatus_2->setVisible(false);
+//        m_titanFeedStatus_0->setVisible(false);
+//        m_titanFeedStatus_1->setVisible(false);
+//        m_titanFeedStatus_2->setVisible(false);
         
         m_titanFeedTxt->setString(_lang("500002"));//fusheng 需要文本
         if(GlobalData::shared()->titanInfo.level == 1)
@@ -1025,9 +1615,14 @@ void GeneralTitanPopupView::onEnter(){
     
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GeneralTitanPopupView::handleTianUpgradeAnimationComplete), MSG_TITAN_UPGRADE_ANIMATION_COMLETE, NULL);
     
+     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GeneralTitanPopupView::updateTitanInfo), MSG_REFREASH_BUILD_UPGRADE, NULL);
     
     
-//    
+    if(SceneController::getInstance()->currentSceneId == SCENE_ID_WORLD) //fusheng 在世界场景里 加载Imperial_22.plist
+    {
+        CCLoadSprite::doResourceByPathIndex(IMPERIAL_PATH,22, true);
+    }
+//
     onRefreshEquip();
     
    resetAttribute(nullptr);//fusheng onEnter时刷新数据
@@ -1044,6 +1639,10 @@ void GeneralTitanPopupView::onExit(){
 
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_TITAN_UPGRADE_ANIMATION_COMLETE);
     
+    CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_REFREASH_BUILD_UPGRADE);
+    
+
+    
 
 //    CCLoadSprite::doResourceByGeneralIndex(3, false);
     this->stopAllActionsByTag(888888);
@@ -1056,6 +1655,270 @@ void GeneralTitanPopupView::onExit(){
     
     PopupBaseView::onExit();
 }
+void GeneralTitanPopupView::onCreateOrUpClick(cocos2d::CCObject * pSender, Control::EventType pCCControlEvent)
+{
+    int qid = QueueController::getInstance()->canMakeItemByType(TYPE_BUILDING, _tmpTime);
+    if(QID_MAX == qid)
+    {
+        bool st = true;
+        if (m_qid != QID_MAX) {
+            auto& qInfo = GlobalData::shared()->allQueuesInfo[m_qid];
+            if (qInfo.endTime!=0) {
+                //可租用的队列
+                int lastTime = qInfo.endTime - GlobalData::shared()->getWorldTime();
+                if (lastTime < _tmpTime) {
+                    lastTime = MAX(0, lastTime);
+                    int needTime = _tmpTime - lastTime;
+                    const int baseTime = FunBuildController::getInstance()->building_base_k8;
+                    int needDay = ceil(needTime*1.0/86400);
+                    int minDay = baseTime / 86400 ;
+                    needDay = MAX(needDay, minDay);
+                    int day = 0;
+                    if(needDay%minDay!=0){
+                        int tmp = floor(needDay*1.0/minDay);
+                        day = tmp+1;
+                        needDay = day * minDay;
+                    }else{
+                        day = needDay/minDay;
+                    }
+                    needTime = day * baseTime;
+                    int needCost = day * FunBuildController::getInstance()->building_base_k9;
+                    m_rentTime = needTime;
+                    st = false;
+                    std::string showTip = _lang_1("102297", CC_ITOA(needDay));
+                    std::string t2 = "";
+                    auto m_info = FunBuildController::getInstance()->getFunbuildById(FUN_BUILD_MAIN_CITY_ID);
+                    if(m_info.level > 0){
+                        t2 = _lang_1("102502",_lang(m_info.name).c_str());
+                    }else{
+                        t2 = _lang_1("102503",_lang(m_info.name).c_str());
+                    }
+                    YesNoDialog::showQueueConfirm(showTip.c_str(),CCCallFunc::create(this, callfunc_selector(GeneralTitanPopupView::onYesRent)),_lang("102501").c_str(),t2.c_str(),lastTime,_tmpTime,_lang("102174").c_str(),needCost);
+                }
+            }
+        }
+        
+        //        qid = QueueController::getInstance()->getMinTimeQidByType(TYPE_BUILDING);
+        //        int tmpTime = GlobalData::shared()->allQueuesInfo[qid].finishTime - GlobalData::shared()->getWorldTime();
+        //        YesNoDialog::showTime( _lang("102120").c_str() , CCCallFunc::create(this, callfunc_selector(TitanUpgradeView::onGotoSpdView)), tmpTime, _lang("104903").c_str());
+        
+        if (st) {
+            CCCommonUtils::flyHint("icon_time.png", "", _lang("102120"));
+            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_BUILD_CELL);
+        }
+    }
+    else {
+
+            auto m_info = FunBuildController::getInstance()->getFunbuildById(FUN_BUILD_MAIN_CITY_ID);
+            if (m_info.type == FUN_BUILD_MAIN && m_info.level==(GlobalData::shared()->shield_base-1)) {
+                YesNoDialog::show( _lang_1("108588", CC_ITOA(GlobalData::shared()->shield_base)) , CCCallFunc::create(this, callfunc_selector(GeneralTitanPopupView::onOkUp)));
+            }
+            else {
+                onOkUp();
+            }
+    
+    }
+}
+
+void GeneralTitanPopupView::onOkUp()
+{
+    if (_resGold>0) {
+        string _dialog = "102312";//升级提示
+        string _btnDialog = "102104";
+
+        //        YesNoDialog::showButtonAndGold( _lang_1(_dialog, CC_ITOA(_resGold)) , CCCallFunc::create(this, callfunc_selector(TitanUpgradeView::onLastUp)), _lang("").c_str(),_resGold);
+        PopupViewController::getInstance()->addPopupView(ConfirmDialogView::create(m_lfood,m_lwood,m_liron,m_lstone,0,_resGold
+                                                                                   ,this,callfunc_selector(GeneralTitanPopupView::onLastUp)
+                                                                                   , _lang(_dialog), _lang(_btnDialog)),false);
+    }
+    else {
+        onLastUp();
+    }
+}
+void GeneralTitanPopupView::onYesRent()
+{
+    QueueController::getInstance()->rentQueue(m_qid, m_rentTime);
+}
+
+void GeneralTitanPopupView::onLastUp()
+{
+    SoundController::sharedSound()->playEffects(Music_Sfx_city_build);
+//    for (int j = 1; j<willUnlockItems.size(); j++)
+//    {
+//        CCUserDefault::sharedUserDefault()->setStringForKey(willUnlockItems[j].c_str(),"1");
+//    }
+    CCUserDefault::sharedUserDefault()->flush();
+    
+    bool isForce = false;
+    if (_resGold>0) {
+        isForce = true;
+    }
+
+        auto m_info = FunBuildController::getInstance()->getFunbuildById(FUN_BUILD_MAIN_CITY_ID);
+        if (m_info.state == FUN_BUILD_NORMAL && FunBuildController::getInstance()->startUpFunBuild(FUN_BUILD_MAIN_CITY_ID, _resGold, isForce))
+        {
+//            m_isReturn = false;
+            //            PopupViewController::getInstance()->removeAllPopupView();
+            //            auto layer = dynamic_cast<ImperialScene*>(SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE));
+            //            if(layer)
+            //                layer->showBuildBtns(m_buildId);
+            
+//            if(isForce)//fusheng 如果是强制建立  退出所有弹出窗 //fusheng 不管
+//                PopupViewController::getInstance()->removeAllPopupView();
+//            else
+//                PopupViewController::getInstance()->goBackPopupView();
+        }
+    
+    
+    CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("TitanUp_End"));
+}
+
+void GeneralTitanPopupView::onInstantClick(CCObject * pSender, Control::EventType pCCControlEvent)
+{
+
+        auto m_info = FunBuildController::getInstance()->getFunbuildById(FUN_BUILD_MAIN_CITY_ID);
+        if (m_info.type == FUN_BUILD_MAIN && m_info.level==(GlobalData::shared()->shield_base-1)) {
+            YesNoDialog::show( _lang_1("108588", CC_ITOA(GlobalData::shared()->shield_base)) , CCCallFunc::create(this, callfunc_selector(GeneralTitanPopupView::showWarningInstantUp)));
+        }
+        else {
+            showWarningInstantUp();
+        }
+    
+}
+void GeneralTitanPopupView::showWarningInstantUp(){
+    std::string name = "";
+    
+
+        auto m_info = FunBuildController::getInstance()->getFunbuildById(FUN_BUILD_MAIN_CITY_ID);
+        name = m_info.name;
+    
+    //    std::string showString = _lang_1("102498",_lang(name).c_str());
+    std::string showString = _lang("500008");
+    
+    YesNoDialog::showButtonAndGold(showString.c_str(), CCCallFunc::create(this, callfunc_selector(GeneralTitanPopupView::onOkInstantUp)),m_btnMsgLabel->getString().c_str(), _tmpGold);
+}
+
+void GeneralTitanPopupView::onOkInstantUp()
+{
+    SoundController::sharedSound()->playEffects(Music_Sfx_city_build);
+    
+    for (int j = 1; j<willUnlockItems.size(); j++)
+    {
+        CCUserDefault::sharedUserDefault()->setStringForKey(willUnlockItems[j].c_str(),"1");
+    }
+    CCUserDefault::sharedUserDefault()->flush();
+    
+
+        auto m_info = FunBuildController::getInstance()->getFunbuildById(FUN_BUILD_MAIN_CITY_ID);
+        if (m_info.state == FUN_BUILD_NORMAL && FunBuildController::getInstance()->startUpFunBuild(FUN_BUILD_MAIN_CITY_ID,_tmpGold))
+        {
+            m_isReturn = false;
+            PopupViewController::getInstance()->removeAllPopupView();
+            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_MAINSCENCE_GOBACK);
+            
+            
+            //fusheng 如果在世界里的话  更新主城数据
+            if(SceneController::getInstance()->currentSceneId == SCENE_ID_WORLD)
+            {
+                auto biter = GlobalData::shared()->imperialInfo.find(FUN_BUILD_MAIN_CITY_ID);
+                
+                if (biter!=GlobalData::shared()->imperialInfo.end()) {
+                    
+                    FunBuildController::getInstance()->completeUpOrCreate(FUN_BUILD_MAIN_CITY_ID);//fusheng 主城数据刷新
+                    biter->second.state = FUN_BUILD_UPING_END;//fusheng  设置状态 保证正常逻辑
+                }
+            }
+        }
+    
+}
+
+void GeneralTitanPopupView::onShowNextUnlockItem()
+{
+    //    return;
+
+    int m_buildId = FUN_BUILD_MAIN_CITY_ID;
+    
+    int itemId = m_buildId / 1000 ;
+    
+
+    string keys = "unlock_item";
+    
+    string msgInfo = CCCommonUtils::getPropById(CC_ITOA(itemId), keys);
+    //    if (itemId == FUN_BUILD_SCIENE) {
+    //        msgInfo = "1,700100,700200,730000|2,710000,711400,711500,730100,730200,730300,730400|3,720000|4,720100,720200,730500|5,700300,730600,730700,730800,730900|6,720300,720400,731000|7,700400,700500,710300|8,731100,731200,731300,731400|9,731500|10,700600,710500,720500,720600,720700|11,720800,731600|12,700700,710600|13,731700,731800,731900,732000|14,710400,732100|15,700800,711600,711700,720900|16,700900,701000,721000,732200,732300,732400,732500|17,732600|18,701200,701300,710700,732700,732800,732900,733000|19,721100,721200,733100|20,711000,733200|21,701400|22,701500,701600,711200,711300,721400,733300,733400,733500,733600|24,701700,733700|25,701800,721500,721600,721700,733800,733900,734000,734100|26,701900,711100|27,702000,702100,721800,734200|28,734300,734400,734500,734600|30,734700";
+    //    }
+    //    else if (itemId == FUN_BUILD_BARRACK1) {
+    //        msgInfo = "4,107001|7,107002|10,107003|13,107004|16,107005|19,107006|22,107007|26,107008|30,107009";
+    //    }
+    //    else if (itemId == FUN_BUILD_BARRACK2) {
+    //        msgInfo = "4,107101|7,107102|10,107103|13,107104|16,107105|19,107106|22,107107|26,107108|30,107109";
+    //    }
+    //    else if (itemId == FUN_BUILD_BARRACK3) {
+    //        msgInfo = "4,107201|7,107202|10,107203|13,107204|16,107205|19,107206|22,107207|26,107208|30,107209";
+    //    }
+    //    else if (itemId == FUN_BUILD_BARRACK4) {
+    //        msgInfo = "4,107301|7,107302|10,107303|13,107304|16,107305|19,107306|22,107307|26,107308|30,107309";
+    //    }
+    //    else if (itemId == FUN_BUILD_FORT) {
+    //        msgInfo = "2,107910|3,107920|6,107901|8,107911|10,107921|12,107902|14,107912|16,107922|18,107903|20,107913|22,107923|24,107904|27,107914|30,107924";
+    //    }
+    //    else if (itemId == FUN_BUILD_MAIN) {
+    //        msgInfo = "2,410000|3,425000|4,416000,403000,411000|5,426000,429000|6,401000,402000|7,407000|8,428000|10,414000|15,412000";
+    //    }
+    
+    if (msgInfo=="") {
+        return;
+    }
+    
+    int nextLv = 1;
+
+        auto m_info = FunBuildController::getInstance()->getFunbuildById(m_buildId);
+        nextLv = m_info.level+1;
+    
+    vector<string> msgItemVec;
+    vector<string> finalVec;
+    vector<string> nextVec;
+    CCCommonUtils::splitString(msgInfo, "|", msgItemVec);
+    for (int i=0; i<msgItemVec.size(); i++)
+    {
+        finalVec.clear();
+        CCCommonUtils::splitString(msgItemVec[i], ",", finalVec);
+        if (finalVec.size()>0 && finalVec[0] == CC_ITOA(nextLv)) {
+            break;
+        }
+        
+        if (atoi(finalVec[0].c_str()) > nextLv)
+        {
+            if (nextVec.size() == 0) {
+                nextVec = finalVec;
+            }
+            else {
+                if (atoi(nextVec[0].c_str()) > atoi(finalVec[0].c_str())) {
+                    nextVec = finalVec;
+                }
+            }
+        }
+        
+        if (i == msgItemVec.size()-1) {
+            finalVec.clear();
+        }
+    }
+    
+    if (finalVec.size()<=0) {
+        finalVec = nextVec;
+
+    }else {
+        willUnlockItems.clear();
+        willUnlockItems = finalVec;
+    }
+    
+    if (finalVec.size()<=0) {
+        return;
+    }
+    
+}
+
+
 SEL_CCControlHandler GeneralTitanPopupView::onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName)
 {
 //    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onSkillBtnClick", GeneralsPopupView::onSkillBtnClick);
@@ -1064,6 +1927,9 @@ SEL_CCControlHandler GeneralTitanPopupView::onResolveCCBCCControlSelector(cocos2
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onCleanFeedCDClick", GeneralTitanPopupView::onCleanFeedCDClick);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onSpeedUpClick", GeneralTitanPopupView::onSpeedUpClick);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onToolSpeedUpClick", GeneralTitanPopupView::onToolSpeedUpClick);
+    
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onCreateOrUpClick", GeneralTitanPopupView::onCreateOrUpClick);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onInstantClick", GeneralTitanPopupView::onInstantClick);
 
     return NULL;
 }
@@ -1080,17 +1946,39 @@ bool GeneralTitanPopupView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarge
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_upgradeCDTxt", CCLabelIF*, this->m_upgradeCDTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_toolSpeedUpTxt", CCLabelIF*, this->m_toolSpeedUpTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_dragonTip", CCLabelIF*, this->m_dragonTip);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanUpingTip", CCLabelIF*, this->m_titanUpingTip);
+    
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanFeedStatus_0", CCLabelIF*, this->m_titanFeedStatus_0);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanFeedStatus_1", CCLabelIF*, this->m_titanFeedStatus_1);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanFeedStatus_2", CCLabelIF*, this->m_titanFeedStatus_2);
+    
+    
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanUpgradePro", CCScale9Sprite*, this->m_titanUpgradePro);
     
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanFeedTxt", CCLabelIF*, this->m_titanFeedTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_feedCDBtnTxt", CCLabelIF*, this->m_feedCDBtnTxt);
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_infoList", CCNode*, this->m_infoList);
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_upBtn", CCControlButton*, this->m_upBtn);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_instantBtn", CCControlButton*, this->m_instantBtn);
+    
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_lvLabelPre", CCLabelIF*, this->m_lvLabelPre);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_lvLabel", CCLabelIF*, this->m_lvLabel);
+
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nextLvLabelPre", CCLabelIF*, this->m_nextLvLabelPre);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nextLvLabel", CCLabelIF*, this->m_nextLvLabel);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanCurrentZDLInNext", CCLabelIF*, this->m_titanCurrentZDLInNext);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanZDLAddValue", CCLabelIF*, this->m_titanZDLAddValue);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_btnMsgLabel", CCLabelIF*, this->m_btnMsgLabel);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_inBtnGoldNum", CCLabelIF*, this->m_inBtnGoldNum);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_upBtnMsgLabel", CCLabelIF*, this->m_upBtnMsgLabel);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_timeLabel", CCLabelIF*, this->m_timeLabel);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_lvLabel", CCLabelIF*, this->m_lvLabel);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_needFood", CCLabelIF*, this->m_needFood);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_currentFoodNum", CCLabelIF*, this->m_currentFoodNum);
@@ -1106,11 +1994,19 @@ bool GeneralTitanPopupView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarge
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanSkill", CCSprite*, this->m_titanSkill);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanUngrade", CCSprite*, this->m_titanUngrade);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanFeedBtnSprite", CCSprite*, this->m_titanFeedBtnSprite);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_timeSpr1", CCSprite*, this->m_timeSpr1);
+    
+
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bustPic", CCNode*, this->m_bustPic);
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_icon", CCNode*, this->m_icon);
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_touchLayer", CCNode*, this->m_touchLayer);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_toolSpeedUpBtnNode", CCNode*, this->m_toolSpeedUpBtnNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_speedUpBtnNode", CCNode*, this->m_speedUpBtnNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_infoList_TR", CCNode*, this->m_infoList_TR);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_DashedTR", CCNode*, this->m_DashedTR);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_DashedBL", CCNode*, this->m_DashedBL);
+
+    
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bottomNode", CCNode*, this->m_bottomNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanFeedBtnNode", CCNode*, this->m_titanFeedBtnNode);
@@ -1122,6 +2018,8 @@ bool GeneralTitanPopupView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarge
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_needGlod", CCLabelIF*, this->m_needGlod);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_needFoodNode", CCNode*, this->m_needFoodNode);
     
+    
+     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "nb_arrow", CCSprite*, this->nb_arrow);
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bNode", CCNode*, this->m_bNode);
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nameTxt", Label*, this->m_nameTxt);
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pointText", CCLabelIF*, this->m_pointText);
