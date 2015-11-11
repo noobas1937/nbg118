@@ -5,9 +5,8 @@
         <ItemSpec id="3070200" next="3070300" plot="3070210" arrow="0" area="plot_continue" enforce="1"/>
         <ItemSpec id="3070300" next="3070400" plot="3070310" arrow="0" area="plot_continue" enforce="1" mark="1"/>
         <ItemSpec id="3070400" next="3070500" arrow="2" area="UI_titan" enforce="1"/>
-        <ItemSpec id="3070500" next="3070600" arrow="5" area="Titan_Feed" enforce="1"/>
-        <ItemSpec id="3070600" next="3070700" arrow="2" area="Titan_Up" enforce="1"/>
-        <ItemSpec id="3070700" next="3070800" arrow="2" area="TitanUp_End" enforce="1"/>
+        <ItemSpec id="3070500" next="3070700" arrow="5" area="Titan_Feed" enforce="1"/>
+        <ItemSpec id="3070700" next="3070800" arrow="2" area="Titan_End" enforce="1"/>
         <ItemSpec id="3070800" next="3047900" arrow="2" area="Titan_Speed" enforce="1"/>
         <ItemSpec id="3047900" next="3070900" arrow="0" lag="4" enforce="1"/>
         <ItemSpec id="3070900" next="3071000" plot="3070910" arrow="0" area="plot_continue" enforce="1"/>
