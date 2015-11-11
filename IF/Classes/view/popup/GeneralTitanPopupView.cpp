@@ -650,7 +650,9 @@ bool GeneralTitanPopupView::init()
     
     if(m_arrow == NULL)
     {
-        m_arrow = CCLoadSprite::createSprite("guide_arrow_new.png");
+        m_arrow = CCLoadSprite::createSprite("UI_hand.png");
+        m_arrow->setFlipX(true);
+        m_arrow->setFlipY(true);
         
         m_arrow->setAnchorPoint(Vec2(0.5,0));
         
