@@ -841,14 +841,16 @@ CCNode* GeneralTitanPopupView::getGuideNode(string _key)
             }
         }
         
-    }else if (_key == "Titan_Up") {
-        if(fbiInfo.state == FUN_BUILD_UPING || fbiInfo.level>1)//fusheng 升级中或者级别大于1
-        {
-            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("Titan_Up"));
-            return NULL;
-        }
-        return m_titanUngrade;
-    }else if (_key == "Titan_Speed") {
+    }
+//    else if (_key == "Titan_Up") {
+//        if(fbiInfo.state == FUN_BUILD_UPING || fbiInfo.level>1)//fusheng 升级中或者级别大于1
+//        {
+//            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("Titan_Up"));
+//            return NULL;
+//        }
+//        return m_titanUngrade;
+//    }
+    else if (_key == "Titan_Speed") {
         if(fbiInfo.state == FUN_BUILD_UPING && fbiInfo.level==1)//fusheng 1级且升级中
         {
             if (!m_speedUpBtn->isVisible() || !m_speedUpBtn->isEnabled()) {
@@ -873,6 +875,19 @@ CCNode* GeneralTitanPopupView::getGuideNode(string _key)
             return UIComponent::getInstance()->m_popupReturnBtn;//fusheng 当前界面是GeneralTitanPopupView时
         }
         return NULL;
+    }else if(_key == "Titan_End")
+    {
+        if(fbiInfo.state != FUN_BUILD_UPING && fbiInfo.level==1)//fusheng 1级且不在升级中
+        {
+           return m_upBtn;
+        }
+        else
+        {
+            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("Titan_End"));
+        }
+        
+        
+        
     }
     return NULL;
 }
@@ -1770,7 +1785,7 @@ void GeneralTitanPopupView::onLastUp()
         }
     
     
-    CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("TitanUp_End"));
+    CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("Titan_End"));
 }
 
 void GeneralTitanPopupView::onInstantClick(CCObject * pSender, Control::EventType pCCControlEvent)

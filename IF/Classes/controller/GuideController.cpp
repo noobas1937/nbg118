@@ -891,23 +891,6 @@ CCNode* GuideController::getNode(std::string str){
                 node = NULL;
             }
         }
-        if(str == "TitanUp_End") {
-            FunBuildInfo& fbiInfo = FunBuildController::getInstance()->getFunbuildById(FUN_BUILD_MAIN_CITY_ID);
-            if(fbiInfo.state != FUN_BUILD_UPING && fbiInfo.level==1)//fusheng 1级且不在升级中
-            {
-                TitanUpgradeView *curView = dynamic_cast<TitanUpgradeView*>(PopupViewController::getInstance()->getCurrentPopupView());
-                if(curView && curView->isAniComplete()){
-                    node = curView->getGuideNode(str);
-                }
-            }
-            else
-            {
-                CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("TitanUp_End"));
-                node = NULL;
-            }
-            
-
-        }
     }
     
     if(node == NULL || node->getParent() == NULL){
