@@ -42,6 +42,12 @@ bool BuildCCB::initBuildCCB(int type)
         if (type == 1) {
             ccbName = "CityBuild_L";
         }
+        else if (type == 2) {
+            ccbName = "CityBuild_Farm";
+        }
+        else if (type == 3) {
+            ccbName = "CityBuild_Wall";
+        }
         CCBLoadFile(ccbName.c_str(),m_mainNode,this);
     }
     this->setAnchorPoint(ccp(0,0));
@@ -59,49 +65,29 @@ void BuildCCB::setNamePos(int x, int y, CCLayer* sginLayer, CCSpriteBatchNode* b
     
     m_zOrder = zOrder;
     int tmpOrd = 0;
-    if(m_mainNode) {
-        auto array = m_mainNode->getChildren();
-        if (array.size()>0) {
-            CCNode* allSprNode = dynamic_cast<CCNode*>(array.at(0));//ccb 中的layer的 node
-            if (allSprNode) {
-                auto& arrSpr = allSprNode->getChildren();
-                std::vector<Node*>::iterator itVec;
-                for( itVec = arrSpr.begin(); itVec != arrSpr.end(); )
-                {
-                    CCSprite* tmpSpr = dynamic_cast<CCSprite*>(*itVec);
-                    bool isFucked = tmpSpr
-                                 && tmpSpr->getTexture()
-                                 && tmpSpr->getTexture()->getPixelsWide() == 2
-                                 && tmpSpr->getTexture()->getPixelsHigh() == 2;// guojiang fuck this
-                    if (tmpSpr && !isFucked)
-                    {
-                        tmpSpr->removeFromParent();
-                        tmpSpr->getTexture()->setAntiAliasTexParameters();
-                        tmpSpr->setPosition(ccp(tmpSpr->getPositionX()+parentX, tmpSpr->getPositionY()+parentY));
-                        m_batchNode->addChild(tmpSpr, zOrder*1000+200+tmpOrd);
-                        m_sprArray->addObject(tmpSpr);
-                        tmpOrd++;
-                    }
-                    else
-                        itVec++;
-                }
-//                for (int i=0; i<arrSpr->count(); i++) {
-//                    CCSprite* tmpSpr = dynamic_cast<CCSprite*>(arrSpr->objectAtIndex(i));
-//                    if (tmpSpr) {
-//                        tmpSpr->removeFromParent();
-//                        tmpSpr->getTexture()->setAntiAliasTexParameters();
-//                        tmpSpr->setPosition(ccp(tmpSpr->getPositionX()+parentX, tmpSpr->getPositionY()+parentY));
-//                        m_batchNode->addChild(tmpSpr, zOrder*1000+200+tmpOrd);
-//                        m_sprArray->addObject(tmpSpr);
-//                        //                            tmpSpr->setZOrder(zOrder*1000+200+tmpOrd);
-//                        tmpOrd++;
-//                        i--;
-//                    }
-//                }
+    if(m_mainNode && m_rootNode) {
+
+        auto& arrSpr = m_rootNode->getChildren();
+        std::vector<Node*>::iterator itVec;
+        for( itVec = arrSpr.begin(); itVec != arrSpr.end(); )
+        {
+            CCSprite* tmpSpr = dynamic_cast<CCSprite*>(*itVec);
+            bool isFucked = tmpSpr
+                         && tmpSpr->getTexture()
+                         && tmpSpr->getTexture()->getPixelsWide() == 2
+                         && tmpSpr->getTexture()->getPixelsHigh() == 2;// guojiang fuck this
+            if (tmpSpr && !isFucked)
+            {
+                tmpSpr->removeFromParent();
+                tmpSpr->getTexture()->setAntiAliasTexParameters();
+                tmpSpr->setPosition(ccp(tmpSpr->getPositionX()+parentX, tmpSpr->getPositionY()+parentY));
+                m_batchNode->addChild(tmpSpr, zOrder*1000+200+tmpOrd);
+                m_sprArray->addObject(tmpSpr);
+                tmpOrd++;
             }
+            else
+                itVec++;
         }
-    }
-    else {
     }
     
 }
@@ -152,6 +138,8 @@ bool BuildCCB::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char
         m_datieNodes->addObject(pNode);
         return true;
     }
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_rootNode", CCNode*, this->m_rootNode);
+    
     return false;
 }
 

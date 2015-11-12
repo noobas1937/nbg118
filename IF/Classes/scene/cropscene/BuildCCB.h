@@ -49,6 +49,7 @@ protected:
     CCSafeObject<CCArray> m_sprArray;
     CCSafeObject<CCArray> m_famuNodes;
     CCSafeObject<CCArray> m_datieNodes;
+    CCSafeObject<CCNode> m_rootNode;
     
     void addParticleToBatch(cocos2d::CCParticleSystemQuad *particle);
     vector<CCParticleBatchNode*> m_parVec;

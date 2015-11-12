@@ -1001,15 +1001,18 @@ void FunBuild::showUping()
         m_buildCCB = BuildCCB::create(1);
         tmppY = 90;
     }
+    if (m_info->type == FUN_BUILD_WALL) {
+        m_buildCCB = BuildCCB::create(3);
+        tmppX = -30;
+        tmppY = -120;
+    }
+    else if (m_info->type == FUN_BUILD_FOOD || m_info->type == FUN_BUILD_WOOD || m_info->type == FUN_BUILD_IRON || m_info->type == FUN_BUILD_STONE || m_info->type == FUN_BUILD_HOSPITAL || m_info->type == FUN_BUILD_BARRACK) {
+        m_buildCCB = BuildCCB::create(2);
+        tmppY = 50;
+    }
     else {
         m_buildCCB = BuildCCB::create(0);
         tmppY = 50;
-//        if (m_info->type == FUN_BUILD_FOOD || m_info->type == FUN_BUILD_WOOD || m_info->type == FUN_BUILD_IRON || m_info->type == FUN_BUILD_STONE || m_info->type == FUN_BUILD_HOSPITAL || m_info->type == FUN_BUILD_BARRACK) {
-//            tmppY = 50;
-//        }
-        if (m_info->type == FUN_BUILD_WALL) {
-            tmppY = -50;
-        }
     }
     int tmpOffx = parentX;
     int tmpOffy = parentY;
@@ -1021,12 +1024,9 @@ void FunBuild::showUping()
         tmpOffx = 0;
         tmpOffy = 0;
     }
-
     m_buildCCB->setNamePos(tmpOffx + mainWidth/2 + tmppX, tmpOffy + tmppY, m_signLayer, m_batchNode, m_zOrder);
     m_signNode->addChild(m_buildCCB);
-    if (m_info->type == FUN_BUILD_FOOD || m_info->type == FUN_BUILD_WOOD || m_info->type == FUN_BUILD_IRON || m_info->type == FUN_BUILD_STONE || m_info->type == FUN_BUILD_HOSPITAL || m_info->type == FUN_BUILD_BARRACK) {
-        m_buildCCB->setScale(0.1);
-    }
+
     
 //    string upBgPic = "inner_create.png";
 //    if (m_info->type == FUN_BUILD_MAIN) {
