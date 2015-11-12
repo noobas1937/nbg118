@@ -28,15 +28,14 @@ def getCurrentTime():
     ret = "%4d%02d%02d%02d%02d%02d" % (currentYear, currentMonth, currentDay, currentHour, currentMinute, currentSecond)
     return ret
 
-def gen(url, dstFolderName, platform):
+def gen(url, dstFolderName, platform, AndroidManifest_xml):
     srcPath = os.path.split(os.path.realpath(__file__))[0] + '/../../IF/Resources/'
     dstPath = os.path.split(os.path.realpath(__file__))[0] + '/../../Resources_download_contents/' + platform + '_' + dstFolderName + '/'
 
     appVer = '0.0.1'
     if platform_Android == platform:
-        srcPath = os.path.split(os.path.realpath(__file__))[0] + '/../../proj.android/assets/'
-        xml = os.path.split(os.path.realpath(__file__))[0] + '/../../Publish.android/IF_Global/AndroidManifest.xml'        
-        tree = ET.parse(xml)
+        srcPath = os.path.split(os.path.realpath(__file__))[0] + '/../../proj.android/assets/'        
+        tree = ET.parse(AndroidManifest_xml)
         root = tree.getroot()
         appVer = root.attrib['{http://schemas.android.com/apk/res/android}versionName']
     else:
@@ -66,4 +65,5 @@ if __name__ == "__main__":
     url = sys.argv[1]
     dstFolderName = sys.argv[2]
     platform = sys.argv[3]
-    gen(url, dstFolderName, platform)
+    AndroidManifest_xml = sys.argv[4]
+    gen(url, dstFolderName, platform, AndroidManifest_xml)

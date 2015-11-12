@@ -38,13 +38,13 @@ fi
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd $DIR
-python android_update_project.py
+# python android_update_project.py
 
 # ... use paths relative to current directory
 # COCOS2DX_ROOT="$DIR/../IF/libs"
 APP_ROOT="$DIR/.."
 APP_ANDROID_ROOT="$DIR"
-APP_COCOS_RES_ROOT="$DIR/../Resources"
+APP_COCOS_RES_ROOT="$DIR/assets"
 
 echo "NDK_ROOT = $NDK_ROOT"
 # echo "COCOS2DX_ROOT = $COCOS2DX_ROOT"

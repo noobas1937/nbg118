@@ -14,12 +14,13 @@ def removeTexturePackerSmartUpdate(dir_path):
                         f = open(fullpath, 'r')
                         old = f.read()
                         nPos = old.index('<string>$TexturePacker:SmartUpdate:')
+                        new = ''
                         if nPos > 0:
                             new = old.replace(old[nPos:(nPos + 81)], '<string>$TexturePacker:SmartUpdate:--REMOVED----------------------------</string>')
                         f.close()
 
-                        if nPos > 0:
-                            f = open(fullpath, 'w+')
+                        if nPos > 0 and len(new) > 0:
+                            f = open(fullpath, 'w')
                             f.write(new)
                             f.close()                
 

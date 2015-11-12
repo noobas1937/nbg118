@@ -1,4 +1,5 @@
 #!/bin/sh
+sh_path=$PWD
 sourceroot=../
 packageroot=../../package
 soRootPath=../../package-so
@@ -84,7 +85,10 @@ else
 	exit -1
 fi
 
-cd ../Publish.android/IF_Global/assets
+cd ../tools/DLC 2>/dev/null
+python genDLC.py "http://cnimg.elex.com/ba/debug/" "debug" "Android" "$sh_path/AndroidManifest.xml"
+
+cd ../../Publish.android/IF_Global/assets
 
 rm -rf Battle/_alpha_Battle_a034_alpha.pkm
 rm -rf Battle/_alpha_Battle_a034.pkm
