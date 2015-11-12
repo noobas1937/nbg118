@@ -38,7 +38,7 @@ bool BuildCCB::initBuildCCB(int type)
     {
         m_mainNode = CCNode::create();
         this->addChild(m_mainNode);
-        string ccbName = "CityBuild_S";
+        string ccbName = "";
         if (type == 1) {
             ccbName = "CityBuild_L";
         }
@@ -47,6 +47,10 @@ bool BuildCCB::initBuildCCB(int type)
         }
         else if (type == 3) {
             ccbName = "CityBuild_Wall";
+        }
+        else
+        {
+            ccbName = "CityBuild_S";
         }
         CCBLoadFile(ccbName.c_str(),m_mainNode,this);
     }

@@ -998,10 +998,10 @@ void FunBuild::showUping()
     int tmppX = 0;
     int tmppY = 0;
     if (m_info->type == FUN_BUILD_MAIN) {
-        m_buildCCB = BuildCCB::create(1);
+//        m_buildCCB = BuildCCB::create(1);
         tmppY = 90;
     }
-    if (m_info->type == FUN_BUILD_WALL) {
+    else if (m_info->type == FUN_BUILD_WALL) {
         m_buildCCB = BuildCCB::create(3);
         tmppX = -30;
         tmppY = -120;
@@ -1024,10 +1024,10 @@ void FunBuild::showUping()
         tmpOffx = 0;
         tmpOffy = 0;
     }
-    m_buildCCB->setNamePos(tmpOffx + mainWidth/2 + tmppX, tmpOffy + tmppY, m_signLayer, m_batchNode, m_zOrder);
-    m_signNode->addChild(m_buildCCB);
-
-    
+    if (m_buildCCB) {
+        m_buildCCB->setNamePos(tmpOffx + mainWidth/2 + tmppX, tmpOffy + tmppY, m_signLayer, m_batchNode, m_zOrder);
+        m_signNode->addChild(m_buildCCB);
+    }
 //    string upBgPic = "inner_create.png";
 //    if (m_info->type == FUN_BUILD_MAIN) {
 //        upBgPic = "main_city_up.png";
@@ -1039,14 +1039,15 @@ void FunBuild::showUping()
 //    m_signNode->addChild(_cbg);
     
     auto sprAni = CCSprite::create();
-    CCCommonUtils::makeEffectSpr(sprAni, "inner_risk_%d.png", 18);
-    sprAni->setAnchorPoint(ccp(0.5, 0.5));
-    sprAni->setScale(2.0);
+//    CCCommonUtils::makeEffectSpr(sprAni, "inner_risk_%d.png", 18);
+//    sprAni->setAnchorPoint(ccp(0.5, 0.5));
+//    sprAni->setScale(2.0);
     int tmpY = 108;//_cbg->getContentSize().height;
     if (m_info->type == FUN_BUILD_MAIN) {
-        tmpY = 220;
+        tmpY = 190;
     }
     sprAni->setPosition(ccp(mainWidth/2, tmpY-40));
+    CCBLoadFile("CityBuild_CuiZi",sprAni,this);
     
     auto garyCloud1 = CCSprite::create();
     CCCommonUtils::makeEffectSpr(garyCloud1, "gary_cloud_%d.png", 13);
@@ -3515,7 +3516,9 @@ void FunBuildState::onEnterFrame(float dt)
                         particle->setPosition(ccp(66, 66));
                         m_freeTouchNode->addChild(particle);
                     }
-                    m_freeNode->setVisible(true);
+                    if (m_info->type != FUN_BUILD_MAIN) {
+                        m_freeNode->setVisible(true);
+                    }
                     m_helpNode->setVisible(false);
                     onPlayCanRec(1);
                 }
