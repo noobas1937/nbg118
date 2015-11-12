@@ -77,7 +77,7 @@ echo ""
 cd .. >/dev/null 2>/dev/null
 echo "2.Building for libgame.so..."
 #echo $logfileName
-sh build_native.sh  #>$logfileName.log 2>$logfileName.err
+sh copy_assets.sh  #>$logfileName.log 2>$logfileName.err
 python build_native.py -b release
 if [ -f "$soPath" ]; then
 	echo "[Done]"
