@@ -6,5 +6,9 @@
          "../cocos2d/cocos/scripting"
     ],
     "copy_resources": [
+        {
+            "from": "assets_tmp",
+            "to": ""
+        }
     ]
 }

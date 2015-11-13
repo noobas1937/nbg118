@@ -84,6 +84,7 @@ else
 	echo "[Failed]:$errorMsg"
 	exit -1
 fi
+rm -rf assets_tmp
 
 cd ../tools/DLC 2>/dev/null
 python genDLC.py "http://cnimg.elex.com/ba/debug/" "debug" "Android" "$sh_path/AndroidManifest.xml"
