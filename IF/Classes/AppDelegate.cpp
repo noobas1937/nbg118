@@ -10,7 +10,6 @@
 #include "SimpleAudioEngine.h"
 #include "CCMathUtils.h"
 #include "GlobalData.h"
-#include "LoadingScene.h"
 #include "SceneContainer.h"
 #include "SceneController.h"
 #include "CCSafeNotificationCenter.h"

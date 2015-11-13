@@ -998,6 +998,7 @@
 		B86B5D1B1BCCA7340010EC71 /* NBWorldMapDecoration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B86B5D191BCCA7340010EC71 /* NBWorldMapDecoration.cpp */; };
 		B86B5D3E1BCF3D1E0010EC71 /* NBWorldMonster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B86B5D3C1BCF3D1E0010EC71 /* NBWorldMonster.cpp */; };
 		B86B5D411BCF422E0010EC71 /* CloudLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B86B5D3F1BCF422E0010EC71 /* CloudLayer.cpp */; };
+		B8ECF0851BF58908002160E5 /* NBDLCController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8ECF0831BF58908002160E5 /* NBDLCController.cpp */; };
 		B8F554041BD093CB00AD16E3 /* NBWorldNPC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8F554021BD093CB00AD16E3 /* NBWorldNPC.cpp */; };
 		BA19245118C87ED7009C1CEA /* CCLabelIFBMFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA19244D18C87ED7009C1CEA /* CCLabelIFBMFont.cpp */; };
 		BA19245218C87ED7009C1CEA /* CCLabelIFTTF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA19244F18C87ED7009C1CEA /* CCLabelIFTTF.cpp */; };
@@ -3154,6 +3155,8 @@
 		B86B5D3D1BCF3D1E0010EC71 /* NBWorldMonster.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NBWorldMonster.hpp; sourceTree = "<group>"; };
 		B86B5D3F1BCF422E0010EC71 /* CloudLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CloudLayer.cpp; sourceTree = "<group>"; };
 		B86B5D401BCF422E0010EC71 /* CloudLayer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CloudLayer.hpp; sourceTree = "<group>"; };
+		B8ECF0831BF58908002160E5 /* NBDLCController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBDLCController.cpp; sourceTree = "<group>"; };
+		B8ECF0841BF58908002160E5 /* NBDLCController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NBDLCController.hpp; sourceTree = "<group>"; };
 		B8F554021BD093CB00AD16E3 /* NBWorldNPC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBWorldNPC.cpp; sourceTree = "<group>"; };
 		B8F554031BD093CB00AD16E3 /* NBWorldNPC.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NBWorldNPC.hpp; sourceTree = "<group>"; };
 		BA19244D18C87ED7009C1CEA /* CCLabelIFBMFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelIFBMFont.cpp; sourceTree = "<group>"; };
@@ -6103,6 +6106,8 @@
 				0C02A47D1ADFB4F5003C5112 /* UploadImageController.h */,
 				FD49130F18AE10660002D631 /* WorldController.cpp */,
 				FD49131018AE10660002D631 /* WorldController.h */,
+				B8ECF0831BF58908002160E5 /* NBDLCController.cpp */,
+				B8ECF0841BF58908002160E5 /* NBDLCController.hpp */,
 			);
 			name = controller;
 			path = Classes/controller;
@@ -7737,6 +7742,7 @@
 				FD6F417F17CDD218008FDB9C /* CCWebView.cpp in Sources */,
 				0C345ED01AB1A80C007D4EDC /* EvaluationView.cpp in Sources */,
 				FD49131118AE10660002D631 /* WorldController.cpp in Sources */,
+				B8ECF0851BF58908002160E5 /* NBDLCController.cpp in Sources */,
 				FD6F418017CDD218008FDB9C /* CCWebView.mm in Sources */,
 				576FCDC51920E35D00EAC245 /* TileInfo.cpp in Sources */,
 				57DB971118ED5CF600C80FA9 /* GetUserInfoCommand.cpp in Sources */,
