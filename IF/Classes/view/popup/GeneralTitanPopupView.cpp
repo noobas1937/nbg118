@@ -1848,7 +1848,9 @@ void GeneralTitanPopupView::changeUpterms(bool isForce,bottomBraceState state)
 void GeneralTitanPopupView::onCreateOrUpClick(cocos2d::CCObject * pSender, Control::EventType pCCControlEvent)
 {
     if (!canUpgrade) {
+        CCCommonUtils::flyHint("", "", _lang("500019"));
         changeUpterms(true,bottomBraceState::BBSHOW);
+        
         return;
     }
     
@@ -1973,7 +1975,10 @@ void GeneralTitanPopupView::onInstantClick(CCObject * pSender, Control::EventTyp
 {
     
     if (!canUpgrade) {
+        CCCommonUtils::flyHint("", "", _lang("500019"));
+        
         changeUpterms(true,bottomBraceState::BBSHOW);
+        
         return;
     }
     
