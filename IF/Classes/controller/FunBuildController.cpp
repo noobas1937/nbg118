@@ -1011,7 +1011,7 @@ void FunBuildController::endUpFunBuild(CCDictionary* dict, int type)
             
             if(tk == FUN_BUILD_MAIN_CITY_ID)
             {
-                CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_SPEED_UP_COMPLETE,CCString::create("upgrade"));//fusheng 用金币直接升级
+           
                 
                 if(SceneController::getInstance()->currentSceneId == SCENE_ID_WORLD)
                 {
@@ -1020,6 +1020,9 @@ void FunBuildController::endUpFunBuild(CCDictionary* dict, int type)
                  
                     QueueController::getInstance()->startFinishQueue(qid,false);//fusheng 在世界里升级  取消升级队列占用
                 }
+                FunBuildController::getInstance()->completeUpOrCreate(FUN_BUILD_MAIN_CITY_ID,false,true);//fusheng 升级就要强制刷新数据
+                
+                CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_SPEED_UP_COMPLETE,CCString::create("upgrade"));//fusheng 用金币直接升级
                     
             }
         }
@@ -1038,6 +1041,7 @@ void FunBuildController::endUpFunBuild(CCDictionary* dict, int type)
             
             if(id == FUN_BUILD_MAIN_CITY_ID)//fusheng titan正常升级时 通知刷新
             {
+                FunBuildController::getInstance()->completeUpOrCreate(FUN_BUILD_MAIN_CITY_ID,false,true);//fusheng 升级就要强制刷新数据
                 CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_INFORMATION_RESET, NULL);
             }
             (*curBuildsInfo)[id].updateTime = tmp;
@@ -1406,7 +1410,7 @@ bool FunBuildController::completeDestroy(int itemId)
     return true;
 }
 
-bool FunBuildController::completeUpOrCreate(int itemId, bool isCreate)
+bool FunBuildController::completeUpOrCreate(int itemId, bool isCreate , bool isForDragon)
 {
     if (curUpBuildsInfo->find(itemId)==curUpBuildsInfo->end()) {
         auto& info = (*curBuildsInfo)[itemId];
@@ -1423,7 +1427,8 @@ bool FunBuildController::completeUpOrCreate(int itemId, bool isCreate)
         auto& info = (*curBuildsInfo)[itemId];
         auto& nextInfo = (*curUpBuildsInfo)[itemId];
         info.level = nextInfo.level;
-        info.state = FUN_BUILD_NORMAL;
+        if(!isForDragon)
+            info.state = FUN_BUILD_NORMAL;
         
         info.time_need = nextInfo.time_need;
         info.oldExp = info.exp;
@@ -1481,8 +1486,8 @@ bool FunBuildController::completeUpOrCreate(int itemId, bool isCreate)
                 updateHavestPush();
             }
         }
-        
-        updateDataAboutBuild(itemId);
+        if(!isForDragon)
+            updateDataAboutBuild(itemId);
         //缓存一下大本数据
         if(info.type == FUN_BUILD_MAIN) {
             CCUserDefault::sharedUserDefault()->setIntegerForKey(FUN_BUILD_MAIN_LEVEL, info.level);

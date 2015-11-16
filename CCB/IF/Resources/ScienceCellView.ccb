@@ -2637,8 +2637,6 @@
 								</array>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>animatedProperties</key>
@@ -3247,8 +3245,6 @@
 								<real>0.0</real>
 							</dict>
 						</array>
-						<key>seqExpanded</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -3258,13 +3254,25 @@
 						<key>customClass</key>
 						<string></string>
 						<key>displayName</key>
-						<string>CCNode</string>
+						<string>m_picNode</string>
 						<key>memberVarAssignmentName</key>
 						<string>m_picNode</string>
 						<key>memberVarAssignmentType</key>
 						<integer>2</integer>
 						<key>properties</key>
 						<array>
+							<dict>
+								<key>name</key>
+								<string>position</string>
+								<key>type</key>
+								<string>Position</string>
+								<key>value</key>
+								<array>
+									<real>2</real>
+									<real>-5</real>
+									<integer>0</integer>
+								</array>
+							</dict>
 							<dict>
 								<key>name</key>
 								<string>anchorPoint</string>
@@ -3467,8 +3475,6 @@
 								<string>Sample Text Text Text Text</string>
 							</dict>
 						</array>
-						<key>seqExpanded</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -4192,7 +4198,7 @@
 			<key>name</key>
 			<string>Lock</string>
 			<key>offset</key>
-			<real>0.052734375</real>
+			<real>0.0</real>
 			<key>position</key>
 			<real>1</real>
 			<key>resolution</key>

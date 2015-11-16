@@ -146,7 +146,7 @@ public:
     void cancelBuildState(int itemId);
     
     bool completeDestroy(int itemId);
-    bool completeUpOrCreate(int itemId, bool isCreate=false);
+    bool completeUpOrCreate(int itemId, bool isCreate=false,bool isForDragon = false);
     void updateDataAboutBuild(int itemId);
     
     bool startFinish(int itemId);

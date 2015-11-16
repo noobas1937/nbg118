@@ -84,7 +84,7 @@ GeneralTitanPopupView* GeneralTitanPopupView::create(){
 //    
 //}
 //
-GeneralTitanPopupView::GeneralTitanPopupView():m_titanId(""),feedCD(0),beginUpdate(false),upgradeCD(0),isUpgrading(false),queue_id(-1),nbpb(NULL),upgradeCDTotal(0),isGuideFeed(false),m_arrow(NULL),perTimeForFeedCD(0),perTimeForUpgradeCD(0),_tmpGold(0),_resGold(0),_tmpTime(0),canResetUpgrade(true){}
+GeneralTitanPopupView::GeneralTitanPopupView():m_titanId(""),feedCD(0),beginUpdate(false),upgradeCD(0),isUpgrading(false),queue_id(-1),nbpb(NULL),upgradeCDTotal(0),isGuideFeed(false),m_arrow(NULL),perTimeForFeedCD(0),perTimeForUpgradeCD(0),_tmpGold(0),_resGold(0),_tmpTime(0),canResetUpgrade(true),isUptermsUnfold(false),canUpgrade(true){}
 
 
 void GeneralTitanPopupView::onGetPlayerInfoCallback(cocos2d::CCObject *obj) {
@@ -287,17 +287,20 @@ Node* createDashed(Size desingSize )
 
 void GeneralTitanPopupView::updateTitanInfo(CCObject* obj)
 {
-    //fusheng 监听的是建筑队列完成  建筑属性还没有改变  所以给0.5秒时间反应
-    auto seq = Sequence::createWithTwoActions(DelayTime::create(0.5), CCCallFunc::create(
-                                                                                         [this]
-    {
-        canResetUpgrade = true;
-        updateInfo(nullptr);
-    }
-                                                                                         ));
-    seq->setTag(1234567);
+    //fusheng 监听的是建筑队列完成  建筑属性还没有改变  所以给0.1秒时间反应
+//    auto seq = Sequence::createWithTwoActions(DelayTime::create(0.1), CCCallFunc::create(
+//                                                                                         [this]
+//    {
+//       
+//    }
+//                                                                                         ));
     
-    this->runAction(seq);
+//    canResetUpgrade = true;
+    updateInfo(nullptr);
+    
+//    seq->setTag(1234567);
+//    
+//    this->runAction(seq);
     
     
 }
@@ -305,6 +308,7 @@ void GeneralTitanPopupView::updateTitanInfo(CCObject* obj)
 void GeneralTitanPopupView::updateInfo(CCObject* obj)
 {
 
+    canUpgrade = true;//fusheng 默认可以升级
     
     auto& m_info = FunBuildController::getInstance()->getFunbuildById(FUN_BUILD_MAIN_CITY_ID);
     
@@ -330,9 +334,11 @@ void GeneralTitanPopupView::updateInfo(CCObject* obj)
     {
          m_timeSpr1->setVisible(true);
         
-        m_timeLabel->setVisible(true);
+         m_timeLabel->setVisible(true);
         
          m_titanUpingTip->setVisible(false);
+        
+         canResetUpgrade = true;
     }
     
     if (!canResetUpgrade) {//阻止显示条件
@@ -538,7 +544,7 @@ void GeneralTitanPopupView::updateInfo(CCObject* obj)
             
             if (!itemBuild->m_isOk) {
                 isCanUp = false;
-                m_instantBtn->setEnabled(false);
+               // m_instantBtn->setEnabled(false);
             }
         }
     }
@@ -567,7 +573,10 @@ void GeneralTitanPopupView::updateInfo(CCObject* obj)
     else {
         m_qid = qid;
     }
-    m_upBtn->setEnabled(isCanUp);
+//    m_upBtn->setEnabled(isCanUp);
+    
+    canUpgrade = isCanUp;
+    
     curY -= 23;
     m_scrollView->setContentSize(CCSize(m_infoList->getContentSize().width,curY));
     m_scrollView->setContentOffset(ccp(0, m_infoList->getContentSize().height - curY));
@@ -577,17 +586,51 @@ void GeneralTitanPopupView::updateInfo(CCObject* obj)
     //fusheng 添加喂食度判断
     if(GlobalData::shared()->titanInfo.exp<GlobalData::shared()->titanInfo.nextExp)
     {
+//        m_instantBtn->setEnabled(false);
+//        m_upBtn->setEnabled(false);
+        
+        canUpgrade = false;//fusheng canUpgrage表示按钮可点击时不同分支判断条件
+    }
+
+    
+    if(GlobalData::shared()->titanInfo.level >= GlobalData::shared()->MaxBuildLv || GlobalData::shared()->titanInfo.level != m_info.level) {//fusheng 没有满级  龙等级满级使用建筑满级    当龙的等级和建筑等级不一致时不可以升级
         m_instantBtn->setEnabled(false);
         m_upBtn->setEnabled(false);
-    }
-    else
-    {
-        
+        canUpgrade = false;
     }
     
-    if(GlobalData::shared()->titanInfo.level >= GlobalData::shared()->MaxBuildLv) {//fusheng 没有满级  龙等级满级使用建筑满级
-        m_instantBtn->setEnabled(false);
-        m_upBtn->setEnabled(false);
+    if(!canUpgrade && m_upBtn->isEnabled())//fusheng 按钮可点击 且 现在不能升级时 置灰
+    {
+        m_upBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::NORMAL)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
+        
+        m_upBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::SELECTED)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
+        
+        m_upBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::HIGH_LIGHTED)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
+        
+        
+        m_instantBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::NORMAL)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
+        
+        m_instantBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::SELECTED)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
+        
+        m_instantBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::HIGH_LIGHTED)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
+        
+    }
+    else if (canUpgrade && m_upBtn->isEnabled())//fusheng 按钮可点击 且 可升级时不置灰
+    {
+        m_upBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::NORMAL)->setState(cocos2d::ui::Scale9Sprite::State::NORMAL);
+        
+        m_upBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::SELECTED)->setState(cocos2d::ui::Scale9Sprite::State::NORMAL);
+        
+        m_upBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::HIGH_LIGHTED)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
+        
+        
+        
+        m_instantBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::NORMAL)->setState(cocos2d::ui::Scale9Sprite::State::NORMAL);
+        
+        m_instantBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::SELECTED)->setState(cocos2d::ui::Scale9Sprite::State::NORMAL);
+        
+        m_instantBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::HIGH_LIGHTED)->setState(cocos2d::ui::Scale9Sprite::State::NORMAL);
+
     }
     
     
@@ -713,9 +756,9 @@ bool GeneralTitanPopupView::init()
 
         
     }
-    
-    float infoListBottom = m_infoList->convertToWorldSpace(Vec2::ZERO).y;
-    float infoListTop = m_infoList_TR->convertToWorldSpace(Vec2::ZERO).y;
+    ;
+    float infoListTop  = m_infoList->convertToWorldSpaceAR(Vec2::ZERO).y;
+    float infoListBottom = m_DashedBL->convertToWorldSpaceAR(Vec2::ZERO).y;
     
     Size sm_infoList = m_infoList->getContentSize();
     sm_infoList.height = infoListTop - infoListBottom;
@@ -730,12 +773,17 @@ bool GeneralTitanPopupView::init()
     m_scrollView->setDirection(kCCScrollViewDirectionVertical);
     m_infoList->addChild(m_scrollView);
     
+    m_UpTermsBG->setContentSize(Size(m_DashedTR->convertToWorldSpace(Vec2::ZERO).x - m_DashedBL->convertToWorldSpace(Vec2::ZERO).x,m_DashedTR->convertToWorldSpace(Vec2::ZERO).y-m_DashedBL->convertToWorldSpace(Vec2::ZERO).y));
+    
+    
+    
+
     
     //fusheng 产生一个虚线外框
-    Node* node = createDashed(Size(m_DashedTR->convertToWorldSpace(Vec2::ZERO).x - m_DashedBL->convertToWorldSpace(Vec2::ZERO).x,m_DashedTR->convertToWorldSpace(Vec2::ZERO).y-m_DashedBL->convertToWorldSpace(Vec2::ZERO).y));
-    m_DashedBL->addChild(node);
+//    Node* node = createDashed(Size(m_DashedTR->convertToWorldSpace(Vec2::ZERO).x - m_DashedBL->convertToWorldSpace(Vec2::ZERO).x,m_DashedTR->convertToWorldSpace(Vec2::ZERO).y-m_DashedBL->convertToWorldSpace(Vec2::ZERO).y));
+//    m_DashedBL->addChild(node);
     
-    auto pp = m_infoList->convertToNodeSpace( m_DashedBL->convertToWorldSpace(Vec2::ZERO));
+//    auto pp = m_infoList->convertToNodeSpace( m_DashedBL->convertToWorldSpace(Vec2::ZERO));
 
     
     
@@ -757,7 +805,7 @@ bool GeneralTitanPopupView::init()
  
     m_ProTitanExt->setVisible(true);
     
-//    this->resetAttribute(nullptr);
+
     
     this->scheduleUpdate();
     
@@ -786,7 +834,7 @@ bool GeneralTitanPopupView::init()
     
     m_titanAPTxtPre->setString("AP");//fusheng 需要文本
     
-    m_titanExtTxtPre->setString("Exp");//fusheng 需要文本
+//    m_titanExtTxtPre->setString("Exp");//fusheng 需要文本
     
     m_toolSpeedUpTxt->setString(_lang("500009"));
     
@@ -813,6 +861,7 @@ bool GeneralTitanPopupView::init()
     titanUpingNode->addChild(nbpb);
     
     nbpb->setVisible(false);
+    
     
     
     
@@ -1032,8 +1081,6 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
     isUpgrading = false;
     
     
-
-    updateInfo(obj);//fusheng 升级信息
     
     
     
@@ -1042,6 +1089,11 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
     isFoodEnough = true;//fusheng 标记粮食充足
     
     FunBuildInfo& fbiInfo = FunBuildController::getInstance()->getFunbuildById(FUN_BUILD_MAIN_CITY_ID);
+    
+    
+    if( GlobalData::shared()->titanInfo.level == fbiInfo.level)
+        updateInfo(obj);//fusheng 升级信息
+
     
 
     m_nameLabel->setString(_lang(fbiInfo.name));
@@ -1104,6 +1156,56 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
     arrangeLabel(labels);
     
     
+    //fusheng  begin 体力
+    if(m_titanInfo.maxManual!=0)
+    {
+        float ratio =((float)m_titanInfo.currentManual)/m_titanInfo.maxManual;
+        
+        auto size = this->m_ProTiTanAP->getContentSize();
+        
+        size.width = m_ProTiTanAPMaxWidth * ratio;
+        
+        
+        m_ProTiTanAP->setVisible(ratio != 0);
+        
+        auto oriSize = m_ProTiTanAP->getOriginalSize();
+        
+        if (size.width<oriSize.width) {
+            
+            this->m_ProTiTanAP->setContentSize(oriSize);
+            
+        }
+        else
+        {
+            this->m_ProTiTanAP->setContentSize(size);
+            
+        }
+        
+        
+        
+        
+        this->m_titanAPTxt_0->setString("(");
+        this->m_titanAPTxt_1->setString(CCString::createWithFormat("%d",m_titanInfo.currentManual)->getCString());
+        this->m_titanAPTxt_2->setString(CCString::createWithFormat("/%d)",m_titanInfo.maxManual)->getCString());
+        
+        vector<cocos2d::CCLabelIF *> labels;
+        labels.push_back(m_titanAPTxtPre);
+        labels.push_back(m_titanAPTxt_0);
+        labels.push_back(m_titanAPTxt_1);
+        labels.push_back(m_titanAPTxt_2);
+        arrangeLabel(labels);
+        
+    }
+    else
+    {
+        
+        auto size = this->m_ProTiTanAP->getContentSize();
+        size.width = 0;
+        this->m_ProTiTanAP->setContentSize(size);
+        //        this->m_titanAPTxt->setString("数据异常");
+        
+    }
+    //fusheng  end 体力
     
     if(level<GlobalData::shared()->MaxBuildLv) {//fusheng 没有满级  龙等级满级使用建筑满级
        
@@ -1117,7 +1219,7 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
     if(fbiInfo.state == FUN_BUILD_UPING)
     {
 //        CCCommonUtils::setSpriteGray(m_titanUngrade, true);
-        
+        changeUpterms(true,bottomBraceState::BBCLOSE);
 
         
         this->m_titanFeedBtn->setEnabled(false);//fusheng 泰坦升级时
@@ -1216,368 +1318,326 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
             //        }
             
         }
-
+        
+        CCCommonUtils::setSpriteGray(m_BottomBraceArrow, true);
     }
     else
     {
+        CCCommonUtils::setSpriteGray(m_BottomBraceArrow, false);
         CCCommonUtils::setSpriteGray(m_titanUngrade, false);
         titanFeedNode->setVisible(true);
         titanUpingNode->setVisible(false);
 
         
         isUpgrading = false;
-
-    }
-    
-
-
-
-    if(m_titanInfo.nextExp!=0)
-    {
-//        this->m_titanExtTxt->setString(CCString::createWithFormat("%d/%d",m_titanInfo.exp,m_titanInfo.nextExp)->getCString());
         
-//        this->m_titanExtTxt->setString(CCString::createWithFormat("%s/%s",CC_ITOA_K((long)m_titanInfo.exp),CC_ITOA_K((long)m_titanInfo.nextExp))->getCString());
         
-        this->m_titanExtTxt_0->setString("(");
-        this->m_titanExtTxt_1->setString(CCString::createWithFormat("%s",CC_ITOA_K((long)m_titanInfo.exp))->getCString());
-        this->m_titanExtTxt_2->setString(CCString::createWithFormat("/%s)",CC_ITOA_K((long)m_titanInfo.nextExp))->getCString());
-        vector<cocos2d::CCLabelIF *> labels;
-        labels.push_back(m_titanExtTxt_0);
-        labels.push_back(m_titanExtTxt_1);
-        labels.push_back(m_titanExtTxt_2);
-        arrangeLabel(labels);
         
-        float ratio =((float)m_titanInfo.exp)/m_titanInfo.nextExp;
-        
-        auto size = this->m_ProTitanExt->getContentSize();
-        
-        size.width = m_ProTitanExtMaxWidth*ratio;
-        
-        m_ProTitanExt->setVisible(ratio != 0);
-        
-        auto oriSize = m_ProTitanExt->getOriginalSize();
-        
-        if (size.width<oriSize.width) {
+        //fusheng begin 经验
+        if(m_titanInfo.nextExp!=0)
+        {
             
-            this->m_ProTitanExt->setContentSize(oriSize);
-
+            
+            this->m_titanExtTxt_0->setString("(");
+            this->m_titanExtTxt_1->setString(CCString::createWithFormat("%s",CC_ITOA_K((long)m_titanInfo.exp))->getCString());
+            this->m_titanExtTxt_2->setString(CCString::createWithFormat("/%s)",CC_ITOA_K((long)m_titanInfo.nextExp))->getCString());
+            vector<cocos2d::CCLabelIF *> labels;
+            labels.push_back(m_titanExtTxt_0);
+            labels.push_back(m_titanExtTxt_1);
+            labels.push_back(m_titanExtTxt_2);
+            arrangeLabel(labels);
+            
+            float ratio =((float)m_titanInfo.exp)/m_titanInfo.nextExp;
+            
+            auto size = this->m_ProTitanExt->getContentSize();
+            
+            size.width = m_ProTitanExtMaxWidth*ratio;
+            
+            m_ProTitanExt->setVisible(ratio != 0);
+            
+            auto oriSize = m_ProTitanExt->getOriginalSize();
+            
+            if (size.width<oriSize.width) {
+                
+                this->m_ProTitanExt->setContentSize(oriSize);
+                
+            }
+            else
+            {
+                this->m_ProTitanExt->setContentSize(size);
+                
+            }
+            
         }
         else
         {
+            
+            
+            auto size = this->m_ProTitanExt->getContentSize();
+            size.width = 0;
+            
             this->m_ProTitanExt->setContentSize(size);
-
+            
         }
-        
-    }
-    else
-    {
-//        this->m_titanExtTxt->setString("数据异常");
-        
+        //fusheng end 经验
 
         
-        auto size = this->m_ProTitanExt->getContentSize();
-        size.width = 0;
-        
-        this->m_ProTitanExt->setContentSize(size);
-
-    }
-    
-
-
-    if(m_titanInfo.maxManual!=0)
-    {
-        float ratio =((float)m_titanInfo.currentManual)/m_titanInfo.maxManual;
-        
-        auto size = this->m_ProTiTanAP->getContentSize();
-        
-        size.width = m_ProTiTanAPMaxWidth * ratio;
-        
-        
-        m_ProTiTanAP->setVisible(ratio != 0);
        
-        auto oriSize = m_ProTiTanAP->getOriginalSize();
         
-        if (size.width<oriSize.width) {
+        
+       
+        
+        //fusheng begin 经验 and feedCD
+        if(m_titanInfo.exp>=m_titanInfo.nextExp)
+        {
+            isCanFeed = false;
+            this->m_CleanFeedCDBtn->setEnabled(false);
+            this->m_CleanFeedCDBtnNode->setVisible(false);
             
-            this->m_ProTiTanAP->setContentSize(oriSize);
+            this->m_titanFeedBtnNode->setVisible(true);
             
+            
+            m_titanFeedTxt->setString(_lang("500002"));//fusheng 需要文本
+            if(GlobalData::shared()->titanInfo.level == 1)
+                m_titanFeedTxt->setString(_lang("500011"));//fusheng 孵化
+            changeUpterms(true,bottomBraceState::BBSHOW);
         }
         else
         {
-            this->m_ProTiTanAP->setContentSize(size);
             
-        }
-        
-        
-        
-        
-        this->m_titanAPTxt_0->setString("(");
-        this->m_titanAPTxt_1->setString(CCString::createWithFormat("%d",m_titanInfo.currentManual)->getCString());
-        this->m_titanAPTxt_2->setString(CCString::createWithFormat("/%d)",m_titanInfo.maxManual)->getCString());
-        
-        vector<cocos2d::CCLabelIF *> labels;
-        labels.push_back(m_titanAPTxtPre);
-        labels.push_back(m_titanAPTxt_0);
-        labels.push_back(m_titanAPTxt_1);
-        labels.push_back(m_titanAPTxt_2);
-        arrangeLabel(labels);
-        
-    }
-    else
-    {
-        
-        auto size = this->m_ProTiTanAP->getContentSize();
-        size.width = 0;
-        this->m_ProTiTanAP->setContentSize(size);
-//        this->m_titanAPTxt->setString("数据异常");
-
-    }
-   
-    this->m_needFood->setString(CC_CMDITOAL(m_titanInfo.feedFoodNum));
-    
-    if(m_titanInfo.feedNum<m_titanInfo.feedMaxNum)//fusheng 只有在小于免费喂食的情况下  才判断粮食的
-    {
-        if(params)
-        {
-            
-            auto food = params->valueForKey("food");
-            if(food->length()!=0)
+            if(m_titanInfo.feedcdfix!=0)//fusheng 修改 feedCD
             {
-                this->m_currentFoodNum->setString(CCString::createWithFormat("/%s",CC_CMDITOAL(food->longValue()).c_str())->getCString());
                 
-                if(m_titanInfo.feedFoodNum>food->longValue())
-                {
+                this->feedCD = m_titanInfo.feedcdfix - GlobalData::shared()->getWorldTime();
+                
+                perTimeForFeedCD = 0;//fusheng 重0计算
+                
+                if (this->feedCD <= 0) {
+                    this->feedCD=0;
+                    beginUpdate |= false;
                     
-//                    this->m_needFood->setColor(ccColor3B::RED);
                     
-                    isFoodEnough = false;
+                    this->m_CleanFeedCDBtn->setEnabled(false);
+                    this->m_CleanFeedCDBtnNode->setVisible(false);
+                    
+                    this->m_titanFeedBtn->setEnabled(true);
+                    this->m_titanFeedBtnNode->setVisible(true);
+                    //            titanFeedNode->setVisible(true);
+                    //            titanUpingNode->setVisible(false);
+                    
                     
                 }
                 else
                 {
-//                    this->m_needFood->setColor(ccColor3B::WHITE);
+                    beginUpdate = true;
+                    this->m_CleanFeedCDBtn->setEnabled(true);
+                    m_CleanFeedCDBtnNode->setVisible(true);
+                    
+                    this->m_titanFeedBtn->setEnabled(false);
+                    m_titanFeedBtnNode->setVisible(false);
+                    
+                    if (feedCD>=0) {
+                        
+                        
+                        string timeInfo = CC_SECTOA((int)this->feedCD);
+                        this->m_feedCDTxt->setString(timeInfo);
+                        m_feedCDGoldTxt->setString(CC_CMDITOAL(CCCommonUtils::getGoldByTime((int)this->feedCD)));
+                        
+                    }
+                    
+                    
                 }
+                string timeInfo = CC_SECTOA((int)this->feedCD);
+                this->m_feedCDTxt->setString(timeInfo);
+                
+                
             }
             else
             {
-                //long lfood = GlobalData::shared()->resourceInfo.lFood;
-                
-                
-                
-                long lfood = GlobalData::shared()->resourceInfo.lFood;
-                if(m_titanInfo.feedFoodNum>lfood)
-                {
-                    
-//                    this->m_needFood->setColor(ccColor3B::RED);
-                    
-                    isFoodEnough = false;
-                }
-                else
-                {
-//                    this->m_needFood->setColor(ccColor3B::WHITE);
-                }
-                
-                //            this->m_currentFoodNum->setString(CCString::createWithFormat("/%ld",lfood)->getCString());
-                this->m_currentFoodNum->setString(CCString::createWithFormat("/%s",CC_CMDITOAL(lfood).c_str())->getCString());
-            }
-        }
-        else
-        {
-            long lfood = GlobalData::shared()->resourceInfo.lFood;
-            
-            
-            this->m_currentFoodNum->setString(CCString::createWithFormat("/%s",CC_CMDITOAL(lfood).c_str())->getCString());
-            
-            if(m_titanInfo.feedFoodNum>lfood)
-            {
-                
-//                this->m_needFood->setColor(ccColor3B::RED);
-                
-                isFoodEnough = false;
-            }
-            else
-            {
-//                this->m_needFood->setColor(ccColor3B::WHITE);
-            }
-        }
-    }
-
-    
-    
-    
-    
-    if(m_titanInfo.exp>=m_titanInfo.nextExp)
-    {
-        isCanFeed = false;
-        this->m_CleanFeedCDBtn->setEnabled(false);
-        this->m_CleanFeedCDBtnNode->setVisible(false);
-        
-        this->m_titanFeedBtnNode->setVisible(true);
-    }
-    else
-    {
-        if(m_titanInfo.feedcdfix!=0)//fusheng 修改 feedCD
-        {
-
-            this->feedCD = m_titanInfo.feedcdfix - GlobalData::shared()->getWorldTime();
-            
-            perTimeForFeedCD = 0;//fusheng 重0计算
-
-            if (this->feedCD <= 0) {
                 this->feedCD=0;
                 beginUpdate |= false;
-                
-
                 this->m_CleanFeedCDBtn->setEnabled(false);
-                this->m_CleanFeedCDBtnNode->setVisible(false);
+                m_CleanFeedCDBtnNode->setVisible(false);
                 
-                this->m_titanFeedBtn->setEnabled(true);
-                this->m_titanFeedBtnNode->setVisible(true);
-                //            titanFeedNode->setVisible(true);
-                //            titanUpingNode->setVisible(false);
+                m_titanFeedBtnNode->setVisible(true);
                 
-                
-            }
-            else
-            {
-                beginUpdate = true;
-                this->m_CleanFeedCDBtn->setEnabled(true);
-                m_CleanFeedCDBtnNode->setVisible(true);
-                
-                this->m_titanFeedBtn->setEnabled(false);
-                m_titanFeedBtnNode->setVisible(false);
-                
-                if (feedCD>=0) {
-                    
-                    
-                    string timeInfo = CC_SECTOA((int)this->feedCD);
-                    this->m_feedCDTxt->setString(timeInfo);
-                    m_feedCDGoldTxt->setString(CC_CMDITOAL(CCCommonUtils::getGoldByTime((int)this->feedCD)));
-                    
-                }
+                string timeInfo = CC_SECTOA((int)this->feedCD);
+                this->m_feedCDTxt->setString(timeInfo);
                 
                 
             }
-            string timeInfo = CC_SECTOA((int)this->feedCD);
-            this->m_feedCDTxt->setString(timeInfo);
+        }
+        //fusheng end 经验 and feedCD
+        
+        
+        //fusheng being 钻石 or 粮食
+        if(m_titanInfo.feedNum>=m_titanInfo.feedMaxNum)
+        {
+            m_titanFeedStatus_0->setString(_lang("500001"));
+            m_titanFeedStatus_1->setString(CCString::createWithFormat("%3d",m_titanInfo.feedMaxNum)->getCString());
+            m_titanFeedStatus_2->setString(CCString::createWithFormat("/%d",m_titanInfo.feedMaxNum)->getCString());
             
+            m_titanFeedStatus_0->setColor(ccColor3B(195,206,254));
+            
+            m_titanFeedStatus_1->setVisible(true);
+            m_titanFeedStatus_2->setVisible(true);
+            //        m_titanFeedStatus_0->setPosition(138,-139);
+            vector<cocos2d::CCLabelIF *> labels;
+            labels.push_back(m_titanFeedStatus_0);
+            labels.push_back(m_titanFeedStatus_1);
+            labels.push_back(m_titanFeedStatus_2);
+            arrangeLabel(labels);
+            
+            //        m_titanFeedTxt->setString("Accelerated growth");//fusheng 需要文本
+            m_titanFeedTxt->setString(_lang("500002"));
+            
+            int gold = (m_titanInfo.feedNum - m_titanInfo.feedMaxNum)*50+CCCommonUtils::getGoldByTime(3600);
+            gold = gold>1000? 1000:gold;
+            this->m_needGlod->setString(CC_CMDITOAL(gold));
+            
+            m_needGoldNode->setVisible(true);
+            m_needFoodNode->setVisible(false);
             
         }
         else
         {
-            this->feedCD=0;
-            beginUpdate |= false;
-            this->m_CleanFeedCDBtn->setEnabled(false);
-            m_CleanFeedCDBtnNode->setVisible(false);
             
-            m_titanFeedBtnNode->setVisible(true);
-
-            string timeInfo = CC_SECTOA((int)this->feedCD);
-            this->m_feedCDTxt->setString(timeInfo);
+            //fusheng begin 粮食
+            this->m_needFood->setString(CC_CMDITOAL(m_titanInfo.feedFoodNum));
+            
+            if(m_titanInfo.feedNum<m_titanInfo.feedMaxNum)//fusheng 只有在小于免费喂食的情况下  才判断粮食的
+            {
+                if(params)
+                {
+                    
+                    auto food = params->valueForKey("food");
+                    if(food->length()!=0)
+                    {
+                        this->m_currentFoodNum->setString(CCString::createWithFormat("/%s",CC_CMDITOAL(food->longValue()).c_str())->getCString());
+                        
+                        if(m_titanInfo.feedFoodNum>food->longValue())
+                        {
+                            
+                            //                    this->m_needFood->setColor(ccColor3B::RED);
+                            
+                            isFoodEnough = false;
+                            
+                        }
+                        else
+                        {
+                            //                    this->m_needFood->setColor(ccColor3B::WHITE);
+                        }
+                    }
+                    else
+                    {
+                        //long lfood = GlobalData::shared()->resourceInfo.lFood;
+                        
+                        
+                        
+                        long lfood = GlobalData::shared()->resourceInfo.lFood;
+                        if(m_titanInfo.feedFoodNum>lfood)
+                        {
+                            
+                            //                    this->m_needFood->setColor(ccColor3B::RED);
+                            
+                            isFoodEnough = false;
+                        }
+                        else
+                        {
+                            //                    this->m_needFood->setColor(ccColor3B::WHITE);
+                        }
+                        
+                        //            this->m_currentFoodNum->setString(CCString::createWithFormat("/%ld",lfood)->getCString());
+                        this->m_currentFoodNum->setString(CCString::createWithFormat("/%s",CC_CMDITOAL(lfood).c_str())->getCString());
+                    }
+                }
+                else
+                {
+                    long lfood = GlobalData::shared()->resourceInfo.lFood;
+                    
+                    
+                    this->m_currentFoodNum->setString(CCString::createWithFormat("/%s",CC_CMDITOAL(lfood).c_str())->getCString());
+                    
+                    if(m_titanInfo.feedFoodNum>lfood)
+                    {
+                        
+                        //                this->m_needFood->setColor(ccColor3B::RED);
+                        
+                        isFoodEnough = false;
+                    }
+                    else
+                    {
+                        //                this->m_needFood->setColor(ccColor3B::WHITE);
+                    }
+                }
+            }
+            //fusheng end 粮食
             
             
+            
+            
+            m_needGoldNode->setVisible(false);
+            m_needFoodNode->setVisible(true);
+            m_titanFeedStatus_0->setString(_lang("500001"));
+            m_titanFeedStatus_1->setString(CCString::createWithFormat("%3d",m_titanInfo.feedNum)->getCString());
+            m_titanFeedStatus_2->setString(CCString::createWithFormat("/%d",m_titanInfo.feedMaxNum)->getCString());
+            
+            //        m_titanFeedStatus_0->setPosition(138,-139);
+            m_titanFeedStatus_0->setColor(ccColor3B(195,206,254));
+            
+            m_titanFeedStatus_1->setVisible(true);
+            m_titanFeedStatus_2->setVisible(true);
+            
+            vector<cocos2d::CCLabelIF *> labels;
+            labels.push_back(m_titanFeedStatus_0);
+            labels.push_back(m_titanFeedStatus_1);
+            labels.push_back(m_titanFeedStatus_2);
+            arrangeLabel(labels);
+            
+            
+            m_titanFeedTxt->setString(_lang("500002"));//fusheng 需要文本
+            
+            if(GlobalData::shared()->titanInfo.level == 1)
+                m_titanFeedTxt->setString(_lang("500011"));//fusheng 孵化
         }
+        //fusheng being 钻石 or 粮食
+        
+        
+        
+        
+        
+
+        
+        this->m_titanFeedBtn->setEnabled(isCanFeed);
+        
+        setGrayNode(m_titanFeedBtnNode,!isCanFeed);
+        
+        if(isCanFeed)
+        {
+            m_titanFeedTxt->setColor(ccColor3B(31,72,14));
+            
+            m_needFood->setColor(ccColor3B(255,168,3));
+            
+            m_needGlod->setColor(ccColor3B(41,95,128));
+        }
+        else
+        {
+            m_titanFeedTxt->setColor(ccGRAY);
+            
+            m_needFood->setColor(ccGRAY);
+            
+            m_needGlod->setColor(ccGRAY);
+        }
+
+
     }
     
- 
+
+
     
-    if(m_titanInfo.feedNum>=m_titanInfo.feedMaxNum)
-    {
-//        m_titanFeedStatus_0->setString(CCString::createWithFormat("Count : ")->getCString());//fusheng 需要文本
-        m_titanFeedStatus_0->setString(_lang("500001"));
-        m_titanFeedStatus_1->setString(CCString::createWithFormat("%3d",m_titanInfo.feedMaxNum)->getCString());
-        m_titanFeedStatus_2->setString(CCString::createWithFormat("/%d",m_titanInfo.feedMaxNum)->getCString());
-        
-        m_titanFeedStatus_0->setColor(ccColor3B(195,206,254));
-        
-        m_titanFeedStatus_1->setVisible(true);
-        m_titanFeedStatus_2->setVisible(true);
-//        m_titanFeedStatus_0->setPosition(138,-139);
-        vector<cocos2d::CCLabelIF *> labels;
-        labels.push_back(m_titanFeedStatus_0);
-        labels.push_back(m_titanFeedStatus_1);
-        labels.push_back(m_titanFeedStatus_2);
-        arrangeLabel(labels);
-        
-//        m_titanFeedTxt->setString("Accelerated growth");//fusheng 需要文本
-        m_titanFeedTxt->setString(_lang("500002"));
-        
-        int gold = (m_titanInfo.feedNum - m_titanInfo.feedMaxNum)*50+CCCommonUtils::getGoldByTime(3600);
-        gold = gold>1000? 1000:gold;
-        this->m_needGlod->setString(CC_CMDITOAL(gold));
-        
-        m_needGoldNode->setVisible(true);
-        m_needFoodNode->setVisible(false);
-
-    }
-    else
-    {
-        m_needGoldNode->setVisible(false);
-        m_needFoodNode->setVisible(true);
-        m_titanFeedStatus_0->setString(_lang("500001"));
-        m_titanFeedStatus_1->setString(CCString::createWithFormat("%3d",m_titanInfo.feedNum)->getCString());
-        m_titanFeedStatus_2->setString(CCString::createWithFormat("/%d",m_titanInfo.feedMaxNum)->getCString());
-        
-//        m_titanFeedStatus_0->setPosition(138,-139);
-        m_titanFeedStatus_0->setColor(ccColor3B(195,206,254));
-        
-        m_titanFeedStatus_1->setVisible(true);
-        m_titanFeedStatus_2->setVisible(true);
-        
-        vector<cocos2d::CCLabelIF *> labels;
-        labels.push_back(m_titanFeedStatus_0);
-        labels.push_back(m_titanFeedStatus_1);
-        labels.push_back(m_titanFeedStatus_2);
-        arrangeLabel(labels);
-
-        
-        m_titanFeedTxt->setString(_lang("500002"));//fusheng 需要文本
-        
-        if(GlobalData::shared()->titanInfo.level == 1)
-            m_titanFeedTxt->setString(_lang("500011"));//fusheng 孵化
-    }
-
-    if(m_titanInfo.exp>=m_titanInfo.nextExp)
-    {
     
-        
-//        m_titanFeedStatus_0->setString(_lang("500005"));//fusheng 需要文本
 
-//        m_titanFeedStatus_0->setColor(ccColor3B(155,200,32));
-        
-//        m_titanFeedStatus_0->setPosition(138,-159);
-        
-//        m_titanFeedStatus_0->setVisible(false);
-//        m_titanFeedStatus_1->setVisible(false);
-//        m_titanFeedStatus_2->setVisible(false);
-        
-        m_titanFeedTxt->setString(_lang("500002"));//fusheng 需要文本
-        if(GlobalData::shared()->titanInfo.level == 1)
-            m_titanFeedTxt->setString(_lang("500011"));//fusheng 孵化
-
-    }
-
-    this->m_titanFeedBtn->setEnabled(isCanFeed);
     
-    setGrayNode(m_titanFeedBtnNode,!isCanFeed);
-    
-    if(isCanFeed)
-    {
-        m_titanFeedTxt->setColor(ccColor3B(31,72,14));
-        
-        m_needFood->setColor(ccColor3B(255,168,3));
-        
-        m_needGlod->setColor(ccColor3B(41,95,128));
-    }
-    else
-    {
-        m_titanFeedTxt->setColor(ccGRAY);
-        
-        m_needFood->setColor(ccGRAY);
-        
-        m_needGlod->setColor(ccGRAY);
-    }
-
 }
 
 
@@ -1642,8 +1702,22 @@ void GeneralTitanPopupView::onEnter(){
 //
     onRefreshEquip();
     
-   resetAttribute(nullptr);//fusheng onEnter时刷新数据
+    resetAttribute(nullptr);//fusheng onEnter时刷新数据
     
+    
+    if(m_titanInfo.exp>=m_titanInfo.nextExp)
+    {
+        FunBuildInfo& fbiInfo = FunBuildController::getInstance()->getFunbuildById(FUN_BUILD_MAIN_CITY_ID);
+        
+        if(fbiInfo.state != FUN_BUILD_UPING)
+        {
+            changeUpterms(true,bottomBraceState::BBSHOW);
+        }
+    }
+    else
+    {
+        changeUpterms(true,bottomBraceState::BBCLOSE);
+    }
     
 
 }
@@ -1672,8 +1746,115 @@ void GeneralTitanPopupView::onExit(){
     
     PopupBaseView::onExit();
 }
+
+void GeneralTitanPopupView::changeUpterms(bool isForce,bottomBraceState state)
+{
+   
+    
+    
+    FunBuildInfo& fbiInfo = FunBuildController::getInstance()->getFunbuildById(FUN_BUILD_MAIN_CITY_ID);
+    
+    
+    if (isForce || fbiInfo.state != FUN_BUILD_UPING) {//强制改变和不处于升级时相应  显示 or 隐藏 m_UpTermsNode
+       
+        
+        if (isForce) {
+            
+            if (state == bottomBraceState::BBSHOW) {
+
+                isUptermsUnfold = true;
+            }
+            else if (state == bottomBraceState::BBCLOSE)
+            {
+
+                isUptermsUnfold = false;
+            }
+            else
+            {
+                isUptermsUnfold = !isUptermsUnfold;
+
+            }
+                
+        }
+        else
+        {
+            isUptermsUnfold = !isUptermsUnfold;
+        }
+        
+        
+        
+        if (m_UpTermsNode) {
+            
+            if(isUptermsUnfold)
+            {
+                m_BottomBraceArrow->setFlippedY(false);
+            }
+            else
+            {
+                m_BottomBraceArrow->setFlippedY(true);
+            }
+            
+            
+            
+            
+            if(state == bottomBraceState::BBNONE)
+            {
+                
+                float dt = 0.1;
+                
+                m_UpTermsNode->stopAllActions();
+                
+                auto act =Sequence::createWithTwoActions( ScaleTo::create(isUptermsUnfold?0:m_UpTermsNode->getScaleY()/1*dt,1,isUptermsUnfold?1:0),CCCallFunc::create([this]()
+                                                                                                                                    
+                {
+                                                                                                                                                                      
+                   
+                    m_scrollView->setContentOffset( Vec2(m_scrollView->getContentOffset().x,m_scrollView->getContentOffset().y-1));
+                
+                     m_scrollView->setContentOffset( Vec2(m_scrollView->getContentOffset().x,m_scrollView->getContentOffset().y+1));//fusheng scrollView 属性不变 不显示
+                
+                
+                }
+                                                                                                                                                                      ));
+                
+                m_UpTermsNode->runAction(act);
+
+                
+                
+            }
+            else if(state == bottomBraceState::BBSHOW)
+            {
+                
+                m_UpTermsNode->stopAllActions();
+                m_UpTermsNode->setScaleY(1);
+                
+                
+                m_scrollView->setContentOffset( Vec2(m_scrollView->getContentOffset().x,m_scrollView->getContentOffset().y-1));
+                
+                m_scrollView->setContentOffset( Vec2(m_scrollView->getContentOffset().x,m_scrollView->getContentOffset().y+1));//fusheng scrollView 属性不变 不显示
+            }
+            else if(state == bottomBraceState::BBCLOSE)
+            {
+                
+                m_UpTermsNode->stopAllActions();
+                
+                m_UpTermsNode->setScaleY(0);
+                
+                
+            }
+        }
+    }
+}
 void GeneralTitanPopupView::onCreateOrUpClick(cocos2d::CCObject * pSender, Control::EventType pCCControlEvent)
 {
+    if (!canUpgrade) {
+        CCCommonUtils::flyHint("", "", _lang("500019"));
+        changeUpterms(true,bottomBraceState::BBSHOW);
+        
+        return;
+    }
+    
+    
     int qid = QueueController::getInstance()->canMakeItemByType(TYPE_BUILDING, _tmpTime);
     if(QID_MAX == qid)
     {
@@ -1792,14 +1973,22 @@ void GeneralTitanPopupView::onLastUp()
 
 void GeneralTitanPopupView::onInstantClick(CCObject * pSender, Control::EventType pCCControlEvent)
 {
-
-        auto m_info = FunBuildController::getInstance()->getFunbuildById(FUN_BUILD_MAIN_CITY_ID);
-        if (m_info.type == FUN_BUILD_MAIN && m_info.level==(GlobalData::shared()->shield_base-1)) {
-            YesNoDialog::show( _lang_1("108588", CC_ITOA(GlobalData::shared()->shield_base)) , CCCallFunc::create(this, callfunc_selector(GeneralTitanPopupView::showWarningInstantUp)));
-        }
-        else {
-            showWarningInstantUp();
-        }
+    
+    if (!canUpgrade) {
+        CCCommonUtils::flyHint("", "", _lang("500019"));
+        
+        changeUpterms(true,bottomBraceState::BBSHOW);
+        
+        return;
+    }
+    
+    auto m_info = FunBuildController::getInstance()->getFunbuildById(FUN_BUILD_MAIN_CITY_ID);
+    if (m_info.type == FUN_BUILD_MAIN && m_info.level==(GlobalData::shared()->shield_base-1)) {
+        YesNoDialog::show( _lang_1("108588", CC_ITOA(GlobalData::shared()->shield_base)) , CCCallFunc::create(this, callfunc_selector(GeneralTitanPopupView::showWarningInstantUp)));
+    }
+    else {
+        showWarningInstantUp();
+    }
     
 }
 void GeneralTitanPopupView::showWarningInstantUp(){
@@ -1841,7 +2030,7 @@ void GeneralTitanPopupView::onOkInstantUp()
                 
                 if (biter!=GlobalData::shared()->imperialInfo.end()) {
                     
-                    FunBuildController::getInstance()->completeUpOrCreate(FUN_BUILD_MAIN_CITY_ID);//fusheng 主城数据刷新
+                    FunBuildController::getInstance()->completeUpOrCreate(FUN_BUILD_MAIN_CITY_ID,false,true);//fusheng 主城数据刷新
                     biter->second.state = FUN_BUILD_UPING_END;//fusheng  设置状态 保证正常逻辑
                 }
             }
@@ -1974,6 +2163,13 @@ bool GeneralTitanPopupView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarge
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanUpgradePro", CCScale9Sprite*, this->m_titanUpgradePro);
     
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_UpTermsBG", CCScale9Sprite*, this->m_UpTermsBG);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_BottomBraceBG", CCScale9Sprite*, this->m_BottomBraceBG);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_UpTermsNode", CCNode*, this->m_UpTermsNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_BottomBraceArrow", CCSprite*, this->m_BottomBraceArrow);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_BottomBraceBGNode", CCNode*, this->m_BottomBraceBGNode);
+
+    
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanFeedTxt", CCLabelIF*, this->m_titanFeedTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_feedCDBtnTxt", CCLabelIF*, this->m_feedCDBtnTxt);
@@ -2003,7 +2199,7 @@ bool GeneralTitanPopupView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarge
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_speedUpBtn", CCControlButton*, this->m_speedUpBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_CleanFeedCDBtn", CCControlButton*, this->m_CleanFeedCDBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_feedCDGoldTxt", CCLabelIF*, this->m_feedCDGoldTxt);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanExtTxtPre", CCLabelIF*, this->m_titanExtTxtPre);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanExtTxtPre", CCLabelIF*, this->m_titanExtTxtPre);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_toolSpeedUpBtn", CCControlButton*, this->m_toolSpeedUpBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_foodStatus", CCSprite*, this->m_foodStatus);
@@ -2013,7 +2209,7 @@ bool GeneralTitanPopupView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarge
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanFeedBtnSprite", CCSprite*, this->m_titanFeedBtnSprite);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_timeSpr1", CCSprite*, this->m_timeSpr1);
     
-
+    
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bustPic", CCNode*, this->m_bustPic);
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_icon", CCNode*, this->m_icon);
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_touchLayer", CCNode*, this->m_touchLayer);
@@ -2136,6 +2332,8 @@ bool GeneralTitanPopupView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarge
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_eLvBg6", CCScale9Sprite*, this->m_eLvBg6);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_eLvBg7", CCScale9Sprite*, this->m_eLvBg7);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_eLvBg8", CCScale9Sprite*, this->m_eLvBg8);
+    
+    
 //
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_skillNumNode", CCNode*, this->m_skillNumNode);
 //    
@@ -2284,7 +2482,7 @@ void GeneralTitanPopupView::onTitanFeedClick(CCObject * pSender, Control::EventT
             
             int gold = (m_titanInfo.feedNum - m_titanInfo.feedMaxNum)*50+CCCommonUtils::getGoldByTime(3600);
             gold = gold>1000? 1000:gold;
-            YesNoDialog::showButtonAndGold(_lang("102120").c_str() , CCCallFunc::create(this, callfunc_selector(GeneralTitanPopupView::AccGrowthCallBack)), "OK", gold);
+            YesNoDialog::showButtonAndGold(_lang("500018").c_str() , CCCallFunc::create(this, callfunc_selector(GeneralTitanPopupView::AccGrowthCallBack)), "OK", gold);
 
         }
 
@@ -2522,6 +2720,13 @@ bool GeneralTitanPopupView::onTouchBegan(CCTouch *pTouch, CCEvent *pEvent){
         PopupViewController::getInstance()->addPopupInView(MainCityView::create(FUN_BUILD_MAIN_CITY_ID));
         return true;
 
+    }
+    
+    if(isTouchInside(this->m_BottomBraceBGNode, pTouch))
+    {
+        changeUpterms();
+        return true;
+        
     }
     
     return true;
