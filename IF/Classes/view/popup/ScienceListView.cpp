@@ -36,34 +36,38 @@ bool ScienceListView::init(int buildId)
     setIsHDPanel(true);
     CCLoadSprite::doResourceByCommonIndex(8, true);
     CCLoadSprite::doResourceByCommonIndex(4, true);
+    CCLoadSprite::doResourceByCommonIndex(6, true);
     setCleanFunction([](){
         CCLoadSprite::doResourceByCommonIndex(4, false);
+        CCLoadSprite::doResourceByCommonIndex(6, false);
         CCLoadSprite::doResourceByCommonIndex(8, false);
     });
     
     m_buildId = buildId;
     
     m_smokeLayer = CCLayer::create();
-    auto tbg = CCLoadSprite::loadResource("technology_09.png");
-    auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
+//    auto tbg = CCLoadSprite::loadResource("technology_09.png");
+//    auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
     int maxHight = CCDirector::sharedDirector()->getWinSize().height;
     int curHight = -100;
-    while (curHight<maxHight) {
-        auto bg = CCLoadSprite::createSprite("technology_09.png");
-        bg->setAnchorPoint(ccp(0, 1));
-        if (CCCommonUtils::isIosAndroidPad()) {
-            bg->setScale(2.4);
-        }
-        bg->setPosition(ccp(0, curHight));
-        curHight += bg->getContentSize().height;
-        bg->runAction(CCFadeIn::create(0.5));
-        tBatchNode->addChild(bg);
-    }
-    this->addChild(tBatchNode);
+//    while (curHight<maxHight) {
+//        auto bg = CCLoadSprite::createSprite("technology_09.png");
+//        bg->setAnchorPoint(ccp(0, 1));
+//        if (CCCommonUtils::isIosAndroidPad()) {
+//            bg->setScale(2.4);
+//        }
+////        bg->setPosition(ccp(0, curHight));
+//        curHight += bg->getContentSize().height;
+//        bg->runAction(CCFadeIn::create(0.5));
+//        tBatchNode->addChild(bg);
+//    }
+//    this->addChild(tBatchNode);
     
     this->addChild(m_smokeLayer);
+
     
     CCBLoadFile("ScienceListView",this,this);
+   
     this->setContentSize(CCDirector::sharedDirector()->getWinSize());
     
     m_name1BG->setVisible(false);
@@ -73,8 +77,8 @@ bool ScienceListView::init(int buildId)
     
     int addHeight = getExtendHeight();
     m_mainNode->setPositionY(m_mainNode->getPositionY() + addHeight / 3);
-    m_sceinceNode->setPositionY(m_sceinceNode->getPositionY()+ addHeight / 3 * 2);
-    
+//    m_sceinceNode->setPositionY(m_sceinceNode->getPositionY()+ addHeight / 3 * 2);
+    m_sceinceNode->setPositionY(m_sceinceNode->getPositionY()+ addHeight);//fusheng   顶到头
     FunBuildInfo& m_info = FunBuildController::getInstance()->getFunbuildById(m_buildId);
     m_title = _lang(m_info.name)+" "+_lang_1("102272", CC_ITOA(m_info.level));
     m_smokeLayer->setPosition(m_mainNode->getPosition());
@@ -85,13 +89,13 @@ bool ScienceListView::init(int buildId)
     
     m_desLabel->setString(_lang("121990"));
     
-    for (int i=1; i<=4; i++) {
-        auto particle = ParticleController::createParticle(CCString::createWithFormat("UiFire_%d",i)->getCString());
-        m_fireNode1->addChild(particle);
-        
-        auto particle1 = ParticleController::createParticle(CCString::createWithFormat("UiFire_%d",i)->getCString());
-        m_fireNode2->addChild(particle1);
-    }
+//    for (int i=1; i<=4; i++) {
+//        auto particle = ParticleController::createParticle(CCString::createWithFormat("UiFire_%d",i)->getCString());
+//        m_fireNode1->addChild(particle);
+//        
+//        auto particle1 = ParticleController::createParticle(CCString::createWithFormat("UiFire_%d",i)->getCString());
+//        m_fireNode2->addChild(particle1);
+//    }
     CCCommonUtils::setButtonTitle(m_btn, _lang("120153").c_str());
     this->getAnimationManager()->setAnimationCompletedCallback(this, callfunc_selector(ScienceListView::AnimationCallback));
 //    addBGPic();
@@ -109,6 +113,25 @@ bool ScienceListView::init(int buildId)
     
     m_timeText->setZOrder(1);
     update(1.0f);
+    
+    
+    changeBGMaxHeight(m_buildBG);
+    
+    auto listener = EventListenerTouchOneByOne::create();
+    
+    listener->onTouchBegan = [this](Touch* touch, Event* event)
+    {
+       
+        if (isTouchInside(m_buildBG, touch)) {
+            return true;
+        }
+        return false;
+    };
+    
+    listener->setSwallowTouches(true);
+    
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, m_buildBG);
+    
     return true;
 }
 
@@ -180,6 +203,7 @@ void ScienceListView::update(float time){
         m_descriptionText->setString("");
         m_hintText->setString(_lang("120154"));
         m_btn->setVisible(false);
+        m_timeSpr->setVisible(false);
     }
 }
 
@@ -240,7 +264,7 @@ void ScienceListView::closeView(CCObject* params)
 
 void ScienceListView::playBtnSmoke(float _time)
 {
-//    return;
+    return;
     auto btnSmoke1 = ParticleController::createParticle("ScienceSmoke");
     auto btnSmoke2 = ParticleController::createParticle("ScienceSmoke");
     auto btnSmoke3 = ParticleController::createParticle("ScienceSmoke");
@@ -282,6 +306,7 @@ void ScienceListView::addParticleToBatch(cocos2d::CCParticleSystemQuad *particle
 void ScienceListView::onEnter()
 {
     CCNode::onEnter();
+
     m_name1Label->setString("");
     m_name2Label->setString("");
     m_name3Label->setString("");
@@ -376,6 +401,10 @@ bool ScienceListView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, con
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_progressBG", CCScale9Sprite*, this->m_progressBG);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_progrossBar", CCScale9Sprite*, this->m_progrossBar);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bgContainer", CCNode*, this->m_bgContainer);
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_buildBG", CCScale9Sprite*, this->m_buildBG);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_timeSpr", CCSprite*, this->m_timeSpr);
+
 
     return false;
 }
@@ -407,6 +436,7 @@ void ScienceListView::updateScienceType(int pos, string name, string pic)
     if (pos == 1) {
         m_icon1Node->removeAllChildren();
         m_name1Label->setString(name);
+        CCCommonUtils::setSpriteGray(picSpr, true);
         m_icon1Node->addChild(picSpr);
     }
     else if (pos == 2) {
@@ -421,11 +451,13 @@ void ScienceListView::updateScienceType(int pos, string name, string pic)
         }
         else
             m_name2Label->setMaxScaleXByWidth(135);
+        CCCommonUtils::setSpriteGray(picSpr, true);
         m_icon2Node->addChild(picSpr);
     }
     else if (pos == 3) {
         m_icon3Node->removeAllChildren();
         m_name3Label->setString(name);
+        CCCommonUtils::setSpriteGray(picSpr, true);
         m_icon3Node->addChild(picSpr);
     }
     else if (pos == 4) {
