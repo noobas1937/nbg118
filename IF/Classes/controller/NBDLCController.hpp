@@ -21,7 +21,17 @@ class NBDLCController
 : public Ref
 {
 public:
-    static NBDLCController* create(string manifest_file_path);
+    // manifest_file_path : 打包 ipa 和 apk 时的配置
+    // 引擎默认为以下文件名，游戏实现修改对应命名规则
+    // 1. version_filename : version.manifest
+    // 2. temp_manifest_filename : project.manifest.temp
+    // 3. manifest_filename : project.manifest
+    // -----------------------------------------------------
+    // 1- local 目录 (local_main.manifest, local_version.manifest, local_project.manifest.temp, local_project.manifest)
+    static NBDLCController* create(string manifest_file_path,
+                                   string version_filename,
+                                   string temp_manifest_filename,
+                                   string manifest_filename);
     ~NBDLCController();
     
     void start();

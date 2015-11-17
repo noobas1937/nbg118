@@ -30,7 +30,6 @@ def getCurrentTime():
 
 def gen(url, dstFolderName, platform, AndroidManifest_xml):
     srcPath = os.path.split(os.path.realpath(__file__))[0] + '/../../IF/Resources/'
-    dstPath = os.path.split(os.path.realpath(__file__))[0] + '/../../Resources_download_contents/' + platform + '_' + dstFolderName + '/'
 
     appVer = '0.0.1'
     if platform_Android == platform:
@@ -42,6 +41,8 @@ def gen(url, dstFolderName, platform, AndroidManifest_xml):
         infoPlist = os.path.split(os.path.realpath(__file__))[0] + '/../../IF/Resources/Info.plist'
         pl = plistlib.readPlist(infoPlist)
         appVer = pl['CFBundleShortVersionString']
+
+    dstPath = os.path.split(os.path.realpath(__file__))[0] + '/../../static/Resources_download_contents/' + platform + '_' + dstFolderName + '/' + appVer + '/'
     
     url = url + appVer
     clientMainManifest = 'main.manifest'
@@ -58,6 +59,7 @@ def gen(url, dstFolderName, platform, AndroidManifest_xml):
     if os.path.exists(dstPath):
         shutil.rmtree(dstPath)
     shutil.copytree(srcPath, dstPath)
+    shutil.rmtree(dstPath + '/manifest')
     genManifests.exportManifests(dstPath, srcPath + 'manifest/', clientMainManifest, serverMainManifest, versionMainManifest)
 
 if __name__ == "__main__":

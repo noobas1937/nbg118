@@ -27,6 +27,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../IF/Classes/controller/MailController.cpp \
 ../../IF/Classes/controller/MazeController.cpp \
 ../../IF/Classes/controller/ModController.cpp \
+../../IF/Classes/controller/NBDLCController.cpp \
 ../../IF/Classes/controller/NetController.cpp \
 ../../IF/Classes/controller/ParticleController.cpp \
 ../../IF/Classes/controller/PayController.cpp \

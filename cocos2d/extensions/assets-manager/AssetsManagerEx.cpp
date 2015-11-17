@@ -41,10 +41,6 @@ using namespace std;
 
 NS_CC_EXT_BEGIN
 
-#define VERSION_FILENAME        "version.manifest"
-#define TEMP_MANIFEST_FILENAME  "project.manifest.temp"
-#define MANIFEST_FILENAME       "project.manifest"
-
 #define BUFFER_SIZE    8192
 #define MAX_FILENAME   512
 
@@ -56,7 +52,12 @@ const std::string AssetsManagerEx::BATCH_UPDATE_ID = "@batch_update";
 
 // Implementation of AssetsManagerEx
 
-AssetsManagerEx::AssetsManagerEx(const std::string& manifestUrl, const std::string& storagePath)
+AssetsManagerEx::AssetsManagerEx(
+                                 const std::string& manifestUrl,
+                                 const std::string& storagePath,
+                                 std::string version_filename,
+                                 std::string temp_manifest_filename,
+                                 std::string manifest_filename)
 : _updateState(State::UNCHECKED)
 , _assets(nullptr)
 , _storagePath("")
@@ -92,9 +93,12 @@ AssetsManagerEx::AssetsManagerEx(const std::string& manifestUrl, const std::stri
                                          std::placeholders::_4);
     _downloader->_onSuccess = std::bind(&AssetsManagerEx::onSuccess, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
     setStoragePath(storagePath);
-    _cacheVersionPath = _storagePath + VERSION_FILENAME;
-    _cacheManifestPath = _storagePath + MANIFEST_FILENAME;
-    _tempManifestPath = _storagePath + TEMP_MANIFEST_FILENAME;
+    _version_filename = version_filename;
+    _temp_manifest_filename = temp_manifest_filename;
+    _manifest_filename = manifest_filename;
+    _cacheVersionPath = _storagePath + version_filename;
+    _cacheManifestPath = _storagePath + temp_manifest_filename;
+    _tempManifestPath = _storagePath + manifest_filename;
 
     initManifests(manifestUrl);
 }
@@ -111,9 +115,14 @@ AssetsManagerEx::~AssetsManagerEx()
     CC_SAFE_RELEASE(_remoteManifest);
 }
 
-AssetsManagerEx* AssetsManagerEx::create(const std::string& manifestUrl, const std::string& storagePath)
+AssetsManagerEx* AssetsManagerEx::create(
+                                         const std::string& manifestUrl,
+                                         const std::string& storagePath,
+                                         std::string version_filename,
+                                         std::string temp_manifest_filename,
+                                         std::string manifest_filename)
 {
-    AssetsManagerEx* ret = new (std::nothrow) AssetsManagerEx(manifestUrl, storagePath);
+    AssetsManagerEx* ret = new (std::nothrow) AssetsManagerEx(manifestUrl, storagePath, version_filename, temp_manifest_filename, manifest_filename);
     if (ret)
     {
         ret->autorelease();
@@ -634,7 +643,7 @@ void AssetsManagerEx::updateSucceed()
 {
     // Every thing is correctly downloaded, do the following
     // 1. rename temporary manifest to valid manifest
-    _fileUtils->renameFile(_storagePath, TEMP_MANIFEST_FILENAME, MANIFEST_FILENAME);
+    _fileUtils->renameFile(_storagePath, _temp_manifest_filename, _manifest_filename);
     // 2. swap the localManifest
     if (_localManifest != nullptr)
         _localManifest->release();

@@ -87,7 +87,7 @@ fi
 rm -rf assets_tmp
 
 cd ../tools/DLC 2>/dev/null
-python genDLC.py "http://cnimg.elex.com/ba/debug/" "debug" "Android" "$sh_path/AndroidManifest.xml"
+python genDLC.py "http://127.0.0.1:5000/static/Resources_download_contents/Android_debug/" "debug" "Android" "$sh_path/AndroidManifest.xml"
 
 cd ../../Publish.android/IF_Global/assets
 

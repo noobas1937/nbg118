@@ -998,6 +998,7 @@
 		B86B5D1B1BCCA7340010EC71 /* NBWorldMapDecoration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B86B5D191BCCA7340010EC71 /* NBWorldMapDecoration.cpp */; };
 		B86B5D3E1BCF3D1E0010EC71 /* NBWorldMonster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B86B5D3C1BCF3D1E0010EC71 /* NBWorldMonster.cpp */; };
 		B86B5D411BCF422E0010EC71 /* CloudLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B86B5D3F1BCF422E0010EC71 /* CloudLayer.cpp */; };
+		B8813C171BFACE5D00BED7A7 /* manifest in Resources */ = {isa = PBXBuildFile; fileRef = B8813C161BFACE5D00BED7A7 /* manifest */; };
 		B8ECF0851BF58908002160E5 /* NBDLCController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8ECF0831BF58908002160E5 /* NBDLCController.cpp */; };
 		B8F554041BD093CB00AD16E3 /* NBWorldNPC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8F554021BD093CB00AD16E3 /* NBWorldNPC.cpp */; };
 		BA19245118C87ED7009C1CEA /* CCLabelIFBMFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA19244D18C87ED7009C1CEA /* CCLabelIFBMFont.cpp */; };
@@ -3155,6 +3156,7 @@
 		B86B5D3D1BCF3D1E0010EC71 /* NBWorldMonster.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NBWorldMonster.hpp; sourceTree = "<group>"; };
 		B86B5D3F1BCF422E0010EC71 /* CloudLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CloudLayer.cpp; sourceTree = "<group>"; };
 		B86B5D401BCF422E0010EC71 /* CloudLayer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CloudLayer.hpp; sourceTree = "<group>"; };
+		B8813C161BFACE5D00BED7A7 /* manifest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = manifest; path = Resources/manifest; sourceTree = "<group>"; };
 		B8ECF0831BF58908002160E5 /* NBDLCController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBDLCController.cpp; sourceTree = "<group>"; };
 		B8ECF0841BF58908002160E5 /* NBDLCController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NBDLCController.hpp; sourceTree = "<group>"; };
 		B8F554021BD093CB00AD16E3 /* NBWorldNPC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBWorldNPC.cpp; sourceTree = "<group>"; };
@@ -5890,6 +5892,7 @@
 		DB9F590717CD9A520037F7E5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B8813C161BFACE5D00BED7A7 /* manifest */,
 				B80D4B2E1BAFCA6B00422225 /* nb_world_link_area.tmx */,
 				B80D4B281BAFA1D800422225 /* nb_world.tmx */,
 				36DE16D71BA188C00020785E /* 3d */,
@@ -7146,6 +7149,7 @@
 				59D7F0301AF0BF85000120F9 /* HelpshiftLocalizable.strings in Resources */,
 				272AB65E1B15C7BC0052E896 /* mail_battlereport.png in Resources */,
 				DB3548A01B6A336C001B7FA0 /* number.fnt in Resources */,
+				B8813C171BFACE5D00BED7A7 /* manifest in Resources */,
 				FDB0D5D118209D7D00C11959 /* Loading in Resources */,
 				DB784C98198F836100DB5CBB /* Arial_Bold_Border.fnt in Resources */,
 				272AB66E1B15C7BC0052E896 /* messages.plist in Resources */,

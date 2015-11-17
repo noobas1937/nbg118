@@ -12848,7 +12848,7 @@ int lua_cocos2dx_extension_AssetsManagerEx_constructor(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_AssetsManagerEx_constructor'", nullptr);
             return 0;
         }
-        cobj = new cocos2d::extension::AssetsManagerEx(arg0, arg1);
+        cobj = new cocos2d::extension::AssetsManagerEx(arg0, arg1, VERSION_FILENAME, TEMP_MANIFEST_FILENAME, MANIFEST_FILENAME);
         cobj->autorelease();
         int ID =  (int)cobj->_ID ;
         int* luaID =  &cobj->_luaID ;

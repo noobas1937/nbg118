@@ -8,13 +8,16 @@
 
 #include "NBDLCController.hpp"
 
-NBDLCController* NBDLCController::create(string manifest_file_path)
+NBDLCController* NBDLCController::create(string manifest_file_path,
+                                         string version_filename,
+                                         string temp_manifest_filename,
+                                         string manifest_filename)
 {
     auto p = new NBDLCController();
     p->m_dlcPath = FileUtils::getInstance()->getWritablePath() + "dlc";
     p->m_serverAssetsPath = p->m_dlcPath; // 文件下载解压后存放的目录
     FileUtils::getInstance()->addSearchPath(p->m_serverAssetsPath, true); // 查找文件时优先搜索从服务器下载下来的文件
-    p->m_pAssetsManagerEx = AssetsManagerEx::create(manifest_file_path, p->m_dlcPath);
+    p->m_pAssetsManagerEx = AssetsManagerEx::create(manifest_file_path, p->m_dlcPath, version_filename, temp_manifest_filename, manifest_filename);
     p->m_pAssetsManagerEx->retain();
     
     CCLOG("NBDLCController : DLC path %s", p->m_dlcPath.c_str());
@@ -96,5 +99,5 @@ void NBDLCController::start()
 
 void NBDLCController::onCompleted()
 {
-    
+    release();
 }

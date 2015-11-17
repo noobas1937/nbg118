@@ -40,6 +40,11 @@
 
 NS_CC_EXT_BEGIN
 
+// guojiang
+#define VERSION_FILENAME        "version.manifest"
+#define TEMP_MANIFEST_FILENAME  "project.manifest.temp"
+#define MANIFEST_FILENAME       "project.manifest"
+
 /**
  * @brief   This class is used to auto update resources, such as pictures or scripts.
  */
@@ -76,7 +81,12 @@ public:
      @warning   The cached manifest in your storage path have higher priority and will be searched first,
                 only if it doesn't exist, AssetsManagerEx will use the given manifestUrl.
      */
-    static AssetsManagerEx* create(const std::string &manifestUrl, const std::string &storagePath);
+    static AssetsManagerEx* create(
+                                   const std::string &manifestUrl,
+                                   const std::string &storagePath,
+                                   std::string version_filename = VERSION_FILENAME,
+                                   std::string temp_manifest_filename = TEMP_MANIFEST_FILENAME,
+                                   std::string manifest_filename = MANIFEST_FILENAME);
     
     /** @brief  Check out if there is a new version of manifest.
      *          You may use this method before updating, then let user determine whether
@@ -110,7 +120,12 @@ public:
     
 CC_CONSTRUCTOR_ACCESS:
     
-    AssetsManagerEx(const std::string& manifestUrl, const std::string& storagePath);
+    AssetsManagerEx(
+                    const std::string& manifestUrl,
+                    const std::string& storagePath,
+                    std::string version_filename,
+                    std::string temp_manifest_filename,
+                    std::string manifest_filename);
     
     virtual ~AssetsManagerEx();
     
@@ -264,6 +279,11 @@ private:
     
     //! Marker for whether the assets manager is inited
     bool _inited;
+    
+    // guojiang
+    std::string _version_filename;
+    std::string _temp_manifest_filename;
+    std::string _manifest_filename;
 };
 
 NS_CC_EXT_END
