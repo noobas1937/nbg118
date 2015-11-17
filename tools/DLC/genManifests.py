@@ -47,43 +47,55 @@ def getMD5(file_name):
 
         return md5_returned
 
-def getAssetsMD5(path):
+def getAssetsMD5(resourceRootPath, assetsPath):
     ret = ''
-    for parent, dirnames, filenames in os.walk(path):
-        for filename in filenames:
-            fullpath = os.path.join(parent, filename)
-            name = fullpath.replace(path, '')
-            md5 = getMD5(fullpath)
+    if os.path.isdir(assetsPath): # assetsPath is dir
+        for parent, dirnames, filenames in os.walk(assetsPath):
+            for filename in filenames:
+                fullpath = os.path.join(parent, filename)
+                name = fullpath.replace(resourceRootPath, '')
+                md5 = getMD5(fullpath)
+                compressed = 'true'
+                if name.find('.zip') < 0:
+                    compressed = 'false'
+                c = '''
+            "%s" : {
+                "md5" : "%s",
+                "compressed" : %s
+            },''' % (name, md5, compressed)
+                ret = ret + c
+                print('md5:(%s, %s)' % (md5, name))
+    else: # assetsPath is single file
+        name = assetsPath.replace(resourceRootPath, '')
+        md5 = getMD5(assetsPath)
+        compressed = 'true'
+        if name.find('.zip') < 0:
             compressed = 'false'
-            c = '''
-        "%s" : {
-            "md5" : "%s",
-            "compressed" : %s
-        },''' % (name, md5, compressed)
-            ret = ret + c
-            print('md5:(%s, %s)' % (md5, name))
+        c = '''
+            "%s" : {
+                "md5" : "%s",
+                "compressed" : %s
+            },''' % (name, md5, compressed)
+        ret = ret + c
+        print('md5:(%s, %s)' % (md5, name))
     ret = ret + 'finalComma'
     ret = ret.replace(',finalComma', '')
     return ret
 
 
-def saveFile(path, content):
-    print(path)
-    f = open(path, 'w')
+def saveFile(file_full_path, content):
+    print(file_full_path)
+    f = open(file_full_path, 'w')
     f.write(content)
     f.close()
 
-def exportManifests(assetsPath, savePath, clientMainManifest, serverMainManifest, versionMainManifest):
-    if os.path.exists(savePath):
-        shutil.rmtree(savePath)
-    os.makedirs(savePath)
-
-    replaceMap["@ASSETS"] = getAssetsMD5(assetsPath)
+def exportManifests(resourceRootPath, assetsPath, clientMainManifest_savePath, clientMainManifest, serverMainManifest, versionMainManifest):
+    replaceMap["@ASSETS"] = getAssetsMD5(resourceRootPath, assetsPath)
     mm = main_manifest
     vm = version_manifest
     for (k, v) in replaceMap.items():
         mm = mm.replace(k, v)
         vm = vm.replace(k, v)
-    saveFile(savePath + clientMainManifest, mm)
-    saveFile(assetsPath + serverMainManifest, mm)
-    saveFile(assetsPath + versionMainManifest, vm)
+    saveFile(clientMainManifest_savePath + clientMainManifest,  mm)
+    saveFile(resourceRootPath + serverMainManifest,  mm)
+    saveFile(resourceRootPath + versionMainManifest, vm)
