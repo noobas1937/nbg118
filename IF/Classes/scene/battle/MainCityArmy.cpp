@@ -92,7 +92,7 @@ bool MainCityArmy::init(CCLayer* parent, CCSpriteBatchNode* soldierBatch, int bu
         m_stopCnt = 0;
         for(int i=0;i<m_soldierCnt;i++){
             MackSoldier(soldierType, i);
-        }
+        } 
         
     }
     return bRet;
