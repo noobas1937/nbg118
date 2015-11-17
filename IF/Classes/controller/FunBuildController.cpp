@@ -1020,7 +1020,7 @@ void FunBuildController::endUpFunBuild(CCDictionary* dict, int type)
                  
                     QueueController::getInstance()->startFinishQueue(qid,false);//fusheng 在世界里升级  取消升级队列占用
                 }
-                FunBuildController::getInstance()->completeUpOrCreate(FUN_BUILD_MAIN_CITY_ID,false,true);//fusheng 升级就要强制刷新数据
+                
                 
                 CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_SPEED_UP_COMPLETE,CCString::create("upgrade"));//fusheng 用金币直接升级
                     
@@ -1041,7 +1041,7 @@ void FunBuildController::endUpFunBuild(CCDictionary* dict, int type)
             
             if(id == FUN_BUILD_MAIN_CITY_ID)//fusheng titan正常升级时 通知刷新
             {
-                FunBuildController::getInstance()->completeUpOrCreate(FUN_BUILD_MAIN_CITY_ID,false,true);//fusheng 升级就要强制刷新数据
+                
                 CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_INFORMATION_RESET, NULL);
             }
             (*curBuildsInfo)[id].updateTime = tmp;

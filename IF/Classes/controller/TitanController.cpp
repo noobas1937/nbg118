@@ -10,6 +10,7 @@
 #include "GlobalData.h"
 #include "CCSafeNotificationCenter.h"
 #include "TitanInfoCommand.h"
+#include "FunBuildController.h"
 #include <limits>
 static TitanController *_instance = NULL;
 
@@ -108,6 +109,7 @@ void TitanController::parse(CCDictionary *dict)
     
     if (status&TITANUPGRADE)
     {
+        FunBuildController::getInstance()->completeUpOrCreate(FUN_BUILD_MAIN_CITY_ID,false,true);//fusheng 升级就要强制刷新数据
         CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_UPGRADE_COMPLETE,dict );
     }
     
@@ -120,7 +122,7 @@ void TitanController::handleErrorCode(int errorCode)
         case Error::TITAN_NO_ENOUGH_TILI:
             
         {
-            CCCommonUtils::flyHint("","","Insufficient Titan manual");
+            CCCommonUtils::flyHint("","",_lang("500010"));
             TitanInfoCommand *ticmd = new TitanInfoCommand();
             ticmd->sendAndRelease();
             

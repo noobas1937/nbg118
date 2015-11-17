@@ -2467,10 +2467,13 @@ void GeneralTitanPopupView::onTitanFeedClick(CCObject * pSender, Control::EventT
         }
         if(m_titanInfo.feedNum<m_titanInfo.feedMaxNum)
         {
-            //        if (this->feedCD<=0) {
-            //            TitanFeedCommand *tfCommand = new TitanFeedCommand();
-            //            tfCommand->sendAndRelease();
-            //        }
+            TitanInView* view = dynamic_cast<TitanInView*>(  m_titanPosInView->getChildByTag(10086));
+            
+            if (view && GlobalData::shared()->titanInfo.level != 1) {
+                view->m_Titan->changeTitanState(Titan::eActState::Idle);
+            }
+
+
             TitanFeedCommand *tfCommand = new TitanFeedCommand();
             tfCommand->sendAndRelease();
             CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("Titan_Feed"));
@@ -2497,6 +2500,11 @@ void GeneralTitanPopupView::onTitanFeedClick(CCObject * pSender, Control::EventT
 }
 void GeneralTitanPopupView::AccGrowthCallBack()
 {
+    TitanInView* view = dynamic_cast<TitanInView*>(  m_titanPosInView->getChildByTag(10086));
+    
+    if (view && GlobalData::shared()->titanInfo.level != 1) {
+        view->m_Titan->changeTitanState(Titan::eActState::Idle);
+    }
     TitanFeedCommand *tfCommand = new TitanFeedCommand();
     tfCommand->sendAndRelease();
     m_titanFeedBtn->setEnabled(false);
