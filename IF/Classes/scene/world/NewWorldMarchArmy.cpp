@@ -159,7 +159,7 @@ bool RockAni::init(CCNode *parent){
 //        rockStr = "WarStone.png";
 //    }
     m_rock = CCLoadSprite::createSprite(rockStr.c_str());
-    m_rock->setScale(0.3f);
+    m_rock->setScale(0.6f);
 //    m_rock->setColor(Color3B::RED);
     parent->addChild(m_rock);
     return true;
