@@ -106,16 +106,13 @@ bool AppDelegate::applicationDidFinishLaunching()
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 15);
     
-    CCLOG("Time profiler: [%ld] ,line: [%d]",CCMathUtils::getCurrentTime(),__LINE__);
+//    CCLOG("Time profiler: [%ld] ,line: [%d]",CCMathUtils::getCurrentTime(),__LINE__);
     //xml init
     LocalController::shared();//765ms
-    CCLOG("Time profiler: [%ld] ,line: [%d]",CCMathUtils::getCurrentTime(),__LINE__);
 //    pDirector->setDisplayStats(true);
     // load common resource
     CCLoadSprite::loadCommonResource();//2200ms
-    CCLOG("Time profiler: [%ld] ,line: [%d]",CCMathUtils::getCurrentTime(),__LINE__);
     CCLoadSprite::doResourceByGeneralIndex(100, true);//450ms
-    CCLOG("Time profiler: [%ld] ,line: [%d]",CCMathUtils::getCurrentTime(),__LINE__);
 //    auto sp = Sprite::create("3d/nb_main_menu_btn_bg.png");
 //    auto sp2 = Sprite::create("3d/but_03");
 
@@ -126,16 +123,12 @@ bool AppDelegate::applicationDidFinishLaunching()
     //tolua_extensions_ccb_open(pEngine->getLuaStack()->getLuaState());
     
     // run
-    CCLOG("Time profiler: [%ld] ,line: [%d]",CCMathUtils::getCurrentTime(),__LINE__);
     pDirector->runWithScene(SceneContainer::create());
-    CCLOG("Time profiler: [%ld] ,line: [%d]",CCMathUtils::getCurrentTime(),__LINE__);
 //#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
 //    CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(NetControllerSFSC::updateEvent), NetControllerSFSC::getInstance(), 0, false);
 //#endif
     CCLOG("WritablePath:[%s]", FileUtils::getInstance()->getWritablePath().c_str());
-    CCLOG("Time profiler: [%ld] ,line: [%d]",CCMathUtils::getCurrentTime(),__LINE__);
     SceneController::getInstance()->gotoLoading();//2300ms
-    CCLOG("Time profiler: [%ld] ,line: [%d]",CCMathUtils::getCurrentTime(),__LINE__);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     AppLibHelper::initLibs();
 #endif

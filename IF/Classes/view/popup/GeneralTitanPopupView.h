@@ -1,9 +1,10 @@
 //
-//  GeneralsPopupView.h
+//  GeneralTitanPopupView.h
 //  IF
 //
 //  Created by ganxiaohua on 14-6-11.
 //
+//  edited by fusheng
 //
 
 #ifndef __IF__GeneralTitanPopupView__
@@ -30,6 +31,13 @@
 //    CCSafeObject<CCLabelIF> m_timeText;
 //    CCSafeObject<CCLabelIF> m_desText;
 //};
+
+enum bottomBraceState
+{
+    BBNONE,
+    BBSHOW,
+    BBCLOSE
+};
 
 const char * const MSG_TITAN_UPGRADE_ANIMATION_COMLETE = "MSG_TITAN_UPGRADE_ANIMATION_COMLETE"; //泰坦升级完成
 
@@ -118,6 +126,10 @@ private:
     bool isUpgrading ;
     
     bool isFoodEnough;
+    
+    bool isUptermsUnfold;//fusheng 下拉展开
+    
+    void changeUpterms(bool isForce = false,bottomBraceState state = bottomBraceState::BBNONE);
     
     void calFeedCD(float ChangeTime = -1);
     
@@ -224,6 +236,8 @@ private:
     
     CCSafeObject<CCScale9Sprite> m_titanUpgradePro;
     
+
+    
     CCSafeObject<CCScale9Sprite> m_buildBG;
     CCSafeObject<CCNode>m_titanPosInView;
     //    CCSafeObject<CCLabelIF> m_titanAPTxt;
@@ -287,6 +301,11 @@ private:
     
     CCSafeObject<CCSprite> m_arrow;
     
+    CCSafeObject<CCNode> m_UpTermsNode;
+    CCSafeObject<CCSprite> m_BottomBraceArrow;//默认指向上
+    CCSafeObject<CCScale9Sprite> m_UpTermsBG;
+    CCSafeObject<CCScale9Sprite> m_BottomBraceBG;
+    CCSafeObject<CCNode> m_BottomBraceBGNode;
     ////    CCSafeObject<CCControlButton> m_skillBtn;
     //
     CCSafeObject<CCNode> m_equipNode1;
@@ -339,6 +358,8 @@ private:
     NBProgressBar* nbpb;
     
     bool canResetUpgrade;
+    
+    bool canUpgrade;//fusheng 是否可以升级  这里使用条件汇总
     
     
     

@@ -104,6 +104,8 @@
 										<false/>
 									</dict>
 								</array>
+								<key>selected</key>
+								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>
@@ -4195,8 +4197,6 @@
 												<false/>
 											</dict>
 										</array>
-										<key>selected</key>
-										<true/>
 									</dict>
 								</array>
 								<key>customClass</key>
@@ -7609,8 +7609,8 @@
 												<string>Color3</string>
 												<key>value</key>
 												<array>
-													<integer>215</integer>
-													<integer>220</integer>
+													<integer>254</integer>
+													<integer>255</integer>
 													<integer>255</integer>
 												</array>
 											</dict>

@@ -29,7 +29,7 @@ public PopupBaseView
 {
 public:
     static ScienceView* create(int buildId, int scienceType);
-    ScienceView():m_buildId(0),m_scienceType(0),m_openNum(0){};
+    ScienceView():m_buildId(0),m_scienceType(0),m_openNum(0),isFirst(true){};
     virtual ~ScienceView();
     void updateInfo(CCObject* obj);
     CCNode *getGuideNode(int sid);
@@ -48,11 +48,13 @@ private:
     void newAddLine(vector<int>* idList, int maxHeight);
     
     void decorateScienceViewByType(int type);
-    void reInitView();
+    void reInitView(CCObject* obj = NULL); //fusheng edit
     void addBGPic();
     
     CCSafeObject<CCNode> m_infoList;
     CCSafeObject<CCScale9Sprite> m_buildBG;
+    CCSafeObject<CCScale9Sprite> m_kejiBG33;
+    CCSafeObject<CCNode> m_kjBG33BottomNode;
     
     CCSafeObject<CCScrollView> m_scrollView;
     CCSpriteBatchNode* m_commonBatch;
@@ -60,19 +62,23 @@ private:
     
     map<int, ScienceCell*> m_scienceCells;
     CCSpriteBatchNode* m_itemBatch;
-    CCSpriteBatchNode* m_lineBatch;
+//    CCSpriteBatchNode* m_lineBatch;
+    CCSafeObject<CCNode> m_lineBatch;//fusheng 没必要使用BatchNode
     CCSafeObject<CCAniNode> m_aniNode;
     CCSafeObject<CCNode> m_bgContainer;
     CCSafeObject<CCLabelIF> m_desLabel;
     CCSafeObject<CCNode> m_bottomNode;
     CCSafeObject<CCNode> m_fireNode1;
     CCSafeObject<CCNode> m_fireNode2;
+    
+    CCSafeObject<CCSprite> m_huaWenBottom;
 
     int m_buildId;
     int m_openNum;
     
-    std::vector<ScienceCell*> cells;
+    std::map<int,ScienceCell*> cells;
     std::vector<int> idList;
+    bool isFirst;
 };
 
 
@@ -92,7 +98,8 @@ public:
     void setAttention();
     
     bool m_isOpen;
-
+    
+    void refreash(CCObject* obj);
 private:
     bool init(int scienceId, CCSpriteBatchNode* batch, CCSpriteBatchNode* iconBatch, int posx, int posy);
     virtual void onEnter();
@@ -105,8 +112,8 @@ private:
 	virtual SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName);
 	virtual bool onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode);
     
-    void refreash(CCObject* obj);
     void refreashState(CCObject* obj);
+    
     void onEnterFrame(float dt);
     void animationFunc();
     void addBoomb();
@@ -187,6 +194,7 @@ private:
     CCSafeObject<CCControlButton> m_instantBtn;
     CCSafeObject<CCControlButton> m_upBtn;
     CCSafeObject<CCNode> m_picNode;
+    CCSafeObject<CCNode> m_timeNode;
     CCSafeObject<CCScale9Sprite> m_bar;
     CCSafeObject<CCScale9Sprite> m_timeBar;
     
@@ -198,6 +206,7 @@ private:
     CCSafeObject<CCLabelIF> m_curNumLabel;
     CCSafeObject<CCLabelIF> m_nextNumLabel;
     CCSafeObject<CCSprite> m_lockSpr;
+    CCSafeObject<CCLabelIF> m_confitionLabel;
     
     CCSafeObject<CCLabelIF> m_btnMsgLabel;
     CCSafeObject<CCLabelIF> m_inBtnGoldNum;
@@ -207,8 +216,8 @@ private:
     CCSafeObject<CCNode> m_timeBarNode;
     
     CCSafeObject<CCLabelIF> m_maxMsgLabel;
-    CCSafeObject<CCScale9Sprite> m_bigBG;
-    CCSafeObject<CCScale9Sprite> m_smallBG;
+    CCSafeObject<CCNode> m_bigBG;
+    CCSafeObject<CCNode> m_smallBG;
     CCSafeObject<CCScale9Sprite> m_listBG;
     CCSafeObject<CCNode> m_btnNode;
     CCSafeObject<CCNode> m_mainNode;

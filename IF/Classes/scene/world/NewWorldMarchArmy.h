@@ -12,6 +12,13 @@
 #include "CommonInclude.h"
 #include "WorldController.h"
 
+//class MagicAni : public Ref
+//{
+//public:
+//    static MagicAni *create(Node *parent);
+//    void attack(Vec2 &startPt, Vec2 &endPt, );
+//};
+
 class RockAni : public CCObject{
 public:
     static RockAni *create(CCNode *parent);
@@ -100,6 +107,7 @@ private:
     void addParitcle();
     std::string getLandType();
     void playRockAttackAnimation(float _time);
+//    void playMagicAttackAnimation(float _time);
     void addWarParticleToBatch(cocos2d::CCParticleSystemQuad *particle);
     int getParticleTag();
     void setKingSpritePos();
