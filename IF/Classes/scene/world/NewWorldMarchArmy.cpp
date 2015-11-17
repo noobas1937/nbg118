@@ -404,7 +404,21 @@ CCAnimate *Soldier::getAnimate(float direction, int state){
 //    }else if(state == eSoldierState::kStand){
 //        stateStr = "stand";
 //    }
-
+    if(m_type == TITAN){
+        str = "dragon_1_%s_%s_%d.png";
+        totalFrame = 9;
+//        if(state == eSoldierState::kDead){
+//            totalFrame = 6;
+//        }else if(state == eSoldierState::kAttack){
+//            totalFrame = 11;
+//        }else if(state == eSoldierState::kWalk){
+//            totalFrame = 7;
+//        }else if(state == eSoldierState::kHurt){
+//            totalFrame = 1;
+//        }else if(state == eSoldierState::kStand){
+//            totalFrame = 10;
+//        }
+    }
 //    if(m_type == BU){
 //        str = "a010_0_%s_%s_%d.png";
 //        if(state == eSoldierState::kDead){
@@ -527,10 +541,10 @@ CCAnimate *Soldier::getAnimate(float direction, int state){
     }
     CCAnimate *animate = CCAnimate::create(animation);
     if(m_kingSprite1){
-       float s = 0.45;
-       auto w = spriteW * m_sprite->getScale() * s;
-       m_kingSprite1->setScale(w / m_kingSprite1->getContentSize().width);
-       m_kingSprite2->setScale(m_kingSprite1->getScale());
+        float s = 0.6;//0.45;
+        auto w = spriteW * m_sprite->getScale() * s;
+        m_kingSprite1->setScale(w / m_kingSprite1->getContentSize().width);
+        m_kingSprite2->setScale(m_kingSprite1->getScale());
     }
     return animate;
 }
@@ -574,7 +588,7 @@ bool Soldier::init(){
     }
    
     m_sprite = CCLoadSprite::createSprite("a060_0_S_move_0.png");
-    m_sprite->setScale(0.6);
+    m_sprite->setScale(1);
     m_parent->addChild(m_sprite, 1);
     m_sprite->setVisible(false);
     
