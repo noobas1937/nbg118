@@ -29,7 +29,7 @@ public PopupBaseView
 {
 public:
     static ScienceView* create(int buildId, int scienceType);
-    ScienceView():m_buildId(0),m_scienceType(0),m_openNum(0){};
+    ScienceView():m_buildId(0),m_scienceType(0),m_openNum(0),isFirst(true){};
     virtual ~ScienceView();
     void updateInfo(CCObject* obj);
     CCNode *getGuideNode(int sid);
@@ -78,6 +78,7 @@ private:
     
     std::map<int,ScienceCell*> cells;
     std::vector<int> idList;
+    bool isFirst;
 };
 
 

@@ -200,10 +200,12 @@ void ScienceView::updateInfo(CCObject* obj)
     else
         maxHeight += 50;
     
-    
-    this->m_scrollView->setContentSize(CCSize(m_infoList->getContentSize().width,maxHeight));
-    this->m_scrollView->setContentOffset(ccp(0, m_infoList->getContentSize().height - maxHeight));
-    
+    if(isFirst)
+    {
+        this->m_scrollView->setContentSize(CCSize(m_infoList->getContentSize().width,maxHeight));
+        this->m_scrollView->setContentOffset(ccp(0, m_infoList->getContentSize().height - maxHeight));
+        isFirst = false;
+    }
     for (int i=0; i<idList.size(); i++) {
         
         
@@ -212,7 +214,7 @@ void ScienceView::updateInfo(CCObject* obj)
         auto cellTemp = cells[info.posX*10 + info.posY];
         if(cellTemp)
         {
-            cellTemp->refreash(nullptr);
+            cellTemp->refreash(obj);
         }
         else
         {
@@ -353,7 +355,8 @@ void ScienceView::onEnter()
 void ScienceView::onExit()
 {
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_SCIENCE_DATA_REFRESH);
-//    CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_SCIENCE_CELL_STATE);
+    CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_SCIENCE_RESEARCH_FINISH);
+   
     
     if (m_openNum<=1) {
         m_scrollView->removeAllChildren();
@@ -779,13 +782,13 @@ void ScienceCell::onEnterFrame(float dt)
             if(m_type != 1) {
                 m_type=1;
                 m_particleNode->removeAllChildren();
-//                string tmpStart = "ScienceGlow_";
-//                int count = 4;
-//                for (int i=1; i<count; i++) {
-//                    auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString());
-//                    m_particleNode->addChild(particle);
-//                }
-                this->getAnimationManager()->runAnimationsForSequenceNamed("ResearchFadeIn_Yellow");
+                string tmpStart = "ScienceGlow_";
+                int count = 4;
+                for (int i=1; i<count; i++) {
+                    auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString());
+                    m_particleNode->addChild(particle);
+                }
+//                this->getAnimationManager()->runAnimationsForSequenceNamed("ResearchFadeIn_Yellow");
             }
         }
         else {
