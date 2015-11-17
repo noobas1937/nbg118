@@ -2379,6 +2379,12 @@ void GeneralTitanPopupView::update(float time){
 //    m_staminePro->setScaleX(s);
 //    m_tip->update(time);
     
+    TitanInView* view = dynamic_cast<TitanInView*>(  m_titanPosInView->getChildByTag(10086));
+    
+    if (view) {
+        view->m_Titan->update(time);
+    }
+    
     if(!beginUpdate)//fusheng 有时间改变
     {
         return;
@@ -3186,11 +3192,13 @@ void DragonUpgradeAniNode::onEnter()
    
     getAnimationManager()->runAnimations("FadeIn");
     
-    getAnimationManager()->setAnimationCompletedCallback(this, CC_CALLFUNC_SELECTOR(DragonUpgradeAniNode::animationCallBack));
+    float time = getAnimationManager()->getSequenceDuration("FadeIn");
+    
+//    getAnimationManager()->setAnimationCompletedCallback(this, CC_CALLFUNC_SELECTOR(DragonUpgradeAniNode::animationCallBack));
 
     
     
-//    this->runAction(Sequence::create(DelayTime::create(2),CallFunc::create(CC_CALLBACK_0(DragonUpgradeAniNode::animationCallBack,this)),nullptr));
+    this->runAction(Sequence::create(DelayTime::create(time*0.75),CallFunc::create(CC_CALLBACK_0(DragonUpgradeAniNode::animationCallBack,this)),nullptr));
 };
 
 void DragonUpgradeAniNode::onExit()
