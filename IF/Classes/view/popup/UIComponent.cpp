@@ -570,7 +570,7 @@ bool UIComponent::init(CCSize size)
 //        CCBLoadFile("_gameUI",this,this,true);
         CCBLoadFile("_game_ui", this, this, true);
     }
-    m_questRecSpr->setVisible(false);
+
     CanShowQuestPrc = false;
     
     this->setContentSize(CCSizeMake(size.width, size.height));
@@ -676,9 +676,6 @@ bool UIComponent::init(CCSize size)
     
     this->m_questName->setString(_lang("107500").c_str());
     
-    this->m_questTitle->setString(_lang("107527").c_str());
-    this->m_questTitle->setMaxScaleXByWidth(70.0);
-    
     this->m_homeBackBtnTitle->setString(_lang("108538").c_str());
     
     this->m_worldBtnTitle->setString(_lang("105601").c_str());
@@ -709,7 +706,7 @@ bool UIComponent::init(CCSize size)
     
     m_cdBG->setVisible(false);
     
-    m_homeBack->setVisible(false);
+    m_homeBG_NB->setVisible(false);
     
     
     
@@ -793,7 +790,7 @@ bool UIComponent::init(CCSize size)
 //    MailController::getInstance()->quitChatRoom( "388327000001");
 //    MailController::getInstance()->sendChatRoomMsg("hello everyone", "399237000001");
 
-    m_flyArrow = CCLoadSprite::createSprite("UI_hand.png");//guide_arrow_new.png
+    m_flyArrow = CCLoadSprite::createSprite("UI_hand.png");
     m_flyArrow->setAnchorPoint(ccp(0, 0));
     m_flyArrow->setVisible(false);
     m_csNode->removeAllChildrenWithCleanup(true);
@@ -1038,7 +1035,7 @@ void UIComponent::onEnterFrame(float dt)
     
     //    }
     
-    if(true || (CanShowQuestPrc && !m_questRecSpr->isVisible())) {
+    if(CanShowQuestPrc) {
         QuestPrcTimes ++;
         if (QuestPrcTimes>=7) {
             QuestPrcTimes = 0;
@@ -1228,9 +1225,9 @@ void UIComponent::onQuestStateUpdate(CCObject* p){
             m_questGoldNode->addChild(goldAni);
         }
         
-        if (!m_questContextBG1->isVisible()) {
-            playQuestRect();
-        }
+//        if (!m_questContextBG1->isVisible()) {
+//            playQuestRect();
+//        }
         
     }else{
         
@@ -1486,7 +1483,7 @@ void UIComponent::questIconAction()
     
     m_UIQuestNode->setPosition(m_questPt.x, m_questPt.y);
     
-    m_questContextBG1->setVisible(false);
+//    m_questContextBG1->setVisible(false);
     m_questTipNpcNode->setVisible(false);
     m_questContextBG->setScaleX(0);
     
@@ -1664,10 +1661,9 @@ void UIComponent::showPopupView(UIPopupViewType type, bool isHD)
         this->m_mainControlNode->setVisible(false);
         this->m_faveNode->setVisible(false);
         this->m_miniNode->setVisible(false);
-        m_homeBack->setVisible(false);
-        this->m_world->setVisible(false);
-        m_homeBack->setVisible(false);
-        this->m_world->setVisible(false);
+        m_homeBG_NB->setVisible(false);
+        m_world->setVisible(false);
+
         m_worldUINode->setVisible(false);
     }else if (type==UIPopupViewType_NONE||type==UIPopupViewType_Mail||type==UIPopupViewType_Tool_Store||type==UIPopupViewType_Sacrifice||type==UIPopupViewType_Merchant||type==UIPopupViewType_Repay_Lottery||type==9||type==10||type==UIPopupViewType_GeneralTitan) {
         if (CCCommonUtils::isIosAndroidPad() && !CCCommonUtils::getIsHDViewPort())
@@ -1745,7 +1741,7 @@ void UIComponent::showPopupView(UIPopupViewType type, bool isHD)
         this->m_miniNode->setVisible(false);
         if (SceneController::getInstance()->currentSceneId == SCENE_ID_MAIN) {
             
-            m_homeBack->setVisible(true);
+            m_homeBG_NB->setVisible(true);
             
             this->m_world->setVisible(false);
         }
@@ -1754,7 +1750,7 @@ void UIComponent::showPopupView(UIPopupViewType type, bool isHD)
             
         {
             
-            m_homeBack->setVisible(false);
+            m_homeBG_NB->setVisible(false);
             
             this->m_world->setVisible(true);
             
@@ -1842,7 +1838,7 @@ void UIComponent::showPopupView(UIPopupViewType type, bool isHD)
         this->m_miniNode->setVisible(false);
         if (SceneController::getInstance()->currentSceneId == SCENE_ID_MAIN) {
             
-            m_homeBack->setVisible(false);
+            m_homeBG_NB->setVisible(false);
             this->m_world->setVisible(true);
             
         }
@@ -1851,7 +1847,7 @@ void UIComponent::showPopupView(UIPopupViewType type, bool isHD)
             
         {
             
-            m_homeBack->setVisible(true);
+            m_homeBG_NB->setVisible(true);
             this->m_world->setVisible(false);
             
         }
@@ -1962,7 +1958,7 @@ void UIComponent::onSceneChanged(CCObject* params){
 //    this->m_UIQuestNode->setVisible(true);
     CheckGuideUIShow();
     
-    this->m_homeBack->setVisible(false);
+    this->m_homeBG_NB->setVisible(false);
     
     this->m_homeBackBtnTitle->setVisible(false);
     
@@ -2022,7 +2018,7 @@ void UIComponent::onSceneChanged(CCObject* params){
         
         
         
-        this->m_homeBack->setVisible(true);
+        this->m_homeBG_NB->setVisible(true);
         
         //        this->m_PVE->setVisible(false);
         
@@ -2048,7 +2044,7 @@ void UIComponent::onSceneChanged(CCObject* params){
         
         
         
-        this->m_homeBack->setVisible(true);
+        this->m_homeBG_NB->setVisible(true);
         
         //        this->m_PVE->setVisible(false);
         
@@ -2065,7 +2061,7 @@ void UIComponent::onSceneChanged(CCObject* params){
         
         this->m_UIQuestNode->setVisible(false);
         
-        this->m_homeBack->setVisible(true);
+        this->m_homeBG_NB->setVisible(true);
         
         //        this->m_PVE->setVisible(false);
         
@@ -2087,7 +2083,7 @@ void UIComponent::onSceneChanged(CCObject* params){
         
     }else if(currentSceneId==SCENE_ID_IMPERIAL){
         
-        this->m_homeBack->setVisible(true);
+        this->m_homeBG_NB->setVisible(true);
         
     } else if(currentSceneId == SCENE_ID_WORLD) {
         
@@ -2114,7 +2110,7 @@ void UIComponent::onSceneChanged(CCObject* params){
         
         this->m_worldBtnTitle->setVisible(false);
         
-        this->m_homeBack->setVisible(true);
+        this->m_homeBG_NB->setVisible(true);
         
         this->m_homeBackBtnTitle->setVisible(true);
         
@@ -2755,7 +2751,6 @@ bool UIComponent::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const c
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_questBG2", CCNode*, this->m_questBG2);
     
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_questRecSpr", CCScale9Sprite*, this->m_questRecSpr);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_questRecNode", CCNode*, this->m_questRecNode);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_storeBG", CCSprite*, this->m_storeBG);
@@ -2916,7 +2911,7 @@ bool UIComponent::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const c
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_questIcon", CCNode*, m_questIcon);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_questContextBG", CCScale9Sprite*, m_questContextBG);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_questContextBG1", CCScale9Sprite*, m_questContextBG1);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_questContextBG1", CCScale9Sprite*, m_questContextBG1);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_questTipNpcNode", CCNode*, m_questTipNpcNode);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_goldNewNode", CCNode*, this->m_goldNewNode);
@@ -2991,8 +2986,6 @@ bool UIComponent::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const c
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_power", CCLabelIFBMFont*, this->m_power);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_questName", CCLabelIF*, this->m_questName);
-    
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_questTitle", CCLabelIF*, this->m_questTitle);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_questTipNum", CCLabelIF*, this->m_questTipNum);
     
@@ -3297,7 +3290,7 @@ bool UIComponent::onTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEven
         
         return true;
         
-    }else if(isTouchInside(this->m_questBG2, pTouch) && m_mainControlNode->isVisible()){
+    }else if(isTouchInside(this->quest_bg, pTouch) && m_mainControlNode->isVisible()){
         
         hintType = 8;
         
@@ -3355,7 +3348,7 @@ bool UIComponent::onTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEven
     
     //    }
     
-    else if(m_mainControlNode->isVisible() && isTouchInside(this->m_homeBG_NB, pTouch))//fusheng 修改未NB
+    else if(m_mainControlNode->isVisible() && isTouchInside(this->m_homeBG, pTouch))
         
     {
         
@@ -3759,7 +3752,7 @@ void UIComponent::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEven
             
         case 14:{
             
-            if (m_homeBack->isVisible())
+            if (m_homeBG_NB->isVisible())
                 
             {
                 
@@ -6206,7 +6199,7 @@ void UIComponent::checkShowQuestPrc()
 {
     CanShowQuestPrc = false;
     QuestPrcTimes = 0;
-    m_questRecSpr->setVisible(false);
+
     if (m_recommandQuest==NULL) {
         return;
     }
@@ -6226,8 +6219,8 @@ void UIComponent::checkShowQuestPrc()
 void UIComponent::playQuestRect()
 {
     if (m_recommandQuest && !GuideController::share()->isInTutorial() && m_questContextBG->getScaleX()==1 && (m_recommandQuest->isShow==1||m_recommandQuest->isShow==2)) {
-        m_questContextBG1->stopAllActions();
-        m_questContextBG1->setVisible(!true); // guo.jiang
+//        m_questContextBG1->stopAllActions();
+//        m_questContextBG1->setVisible(!true); // guo.jiang
         
         if (m_recommandQuest->isShow==2) {
             m_questTipNpcNode->setVisible(true);
@@ -6240,59 +6233,14 @@ void UIComponent::playQuestRect()
             CCActionInterval * repeat = CCRepeat::create(CCSequence::create(moveTo1, moveTo2, NULL), 7);
             m_questTipNpcNode->runAction(repeat);
         }
-        
-        CCActionInterval * fadein = CCFadeIn::create(0.7);
-        CCActionInterval * fadeout = CCFadeOut::create(0.7);
-        CCActionInterval * sequence = CCSequence::create(fadein, fadeout, NULL);
-        CCActionInterval * repeat = CCRepeat::create(sequence, 5);
-        CCCallFunc * endFunCall= CCCallFunc::create(this, callfunc_selector(UIComponent::hideQuestRect));
-        m_questContextBG1->runAction(CCSequence::create(repeat, endFunCall, NULL));
     }
     return;
-    m_questRecSpr->setVisible(true);
-//    CCActionInterval * fadein = CCFadeIn::create(0.5);
-//    CCActionInterval * fadeout = CCFadeOut::create(0.5);
-//    CCActionInterval * repeat = CCRepeat::create(CCSequence::create(fadein, fadeout, NULL), 10);
-    CCCallFunc * funcall= CCCallFunc::create(this, callfunc_selector(UIComponent::hideQuestRect));
-    m_questRecSpr->runAction(CCSequence::create(CCDelayTime::create(10), funcall, NULL) );
-    
-    CCRect tmp_rect = cocos2d::CCRect(0, 0, 520, 80);
-    string tmpStart = "ShowFire_";
-    int maxP = tmp_rect.size.width/3;
-    for (int i=1; i<=5; i++) {
-        auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(), CCPointZero,maxP);
-        particle->setPosVar(ccp(tmp_rect.size.width/2, 0));
-        particle->setPosition(ccp(tmp_rect.origin.x+tmp_rect.size.width/2, tmp_rect.origin.y));
-        addParticleToBatch(particle);
-        
-        auto particle1 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(),CCPointZero,maxP);
-        particle1->setPosVar(ccp(tmp_rect.size.width/2, 0));
-        particle1->setPosition(ccp(tmp_rect.origin.x+tmp_rect.size.width/2, tmp_rect.origin.y+tmp_rect.size.height-7.5));
-        addParticleToBatch(particle1);
-    }
-    
-    tmpStart = "ShowFireUp_";
-    maxP = tmp_rect.size.height/3;
-    for (int i=1; i<=5; i++) {
-        auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(),CCPointZero,maxP);
-        particle->setPosVar(ccp(0, tmp_rect.size.height/2));
-        particle->setPosition(ccp(tmp_rect.origin.x, tmp_rect.origin.y+tmp_rect.size.height/2));
-        addParticleToBatch(particle);
-        
-        auto particle1 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(),CCPointZero,maxP);
-        particle1->setPosVar(ccp(0, tmp_rect.size.height/2));
-        particle1->setPosition(ccp(tmp_rect.origin.x+tmp_rect.size.width, tmp_rect.origin.y+tmp_rect.size.height/2));
-        addParticleToBatch(particle1);
-    }
 }
 
 void UIComponent::hideQuestRect()
 {
     QuestPrcTimes = 0;
     m_parVec.clear();
-    m_questRecSpr->stopAllActions();
-    m_questRecSpr->setVisible(false);
-    m_questRecNode->removeAllChildren();
     m_questTipNpcNode->setVisible(false);
 }
 

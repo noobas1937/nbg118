@@ -1402,8 +1402,8 @@ void UpgradeCell::refresh()
         m_picNode->addChild(pic);
     }
     
-    m_nameLabel->setColor(ccWHITE);
-    m_valueLabel->setColor(ccWHITE);
+    m_nameLabel->setColor(Color3B(196,207,255));
+    m_valueLabel->setColor(Color3B(196,207,255));
     
     m_nameLabel->setString(tmpCellName.c_str());
     if (m_type == 2) {
@@ -1421,7 +1421,7 @@ void UpgradeCell::refresh()
     else if (m_type == 3) {
         m_tmpName = tmpCellName;
         m_nameLabel->setFontSize(16);
-        
+        m_nameLabel->setDimensions(CCSizeMake(210, 0));
         if (CCCommonUtils::isIosAndroidPad())
         {
             m_nameLabel->setFontSize(40);
@@ -1429,6 +1429,7 @@ void UpgradeCell::refresh()
         }
         m_nameLabel->setString(m_tmpName+" "+CC_SECTOA(tmpTime));
         m_valueLabel->setString("");
+        
     }
     else if (m_type == 7) {
         m_tmpName = tmpCellName;
@@ -1444,18 +1445,31 @@ void UpgradeCell::refresh()
     }
     else if (m_type == 0) {
         if(m_isShow) {
+            
+            if (!m_isOk) {
+                m_nameLabel->setColor(Color3B(255,84,84));
+                
+                m_nameLabel->setFontSize(16);//fusheng 换字体大小
+                
+                m_valueLabel->setFontSize(16);
+            }
+            else
+            {
+                m_nameLabel->setFontSize(20);
+                
+                m_valueLabel->setFontSize(20);
+            }
+            
             m_nameLabel->setString(CC_CMDITOA(tmpSumValue).c_str());
             m_valueLabel->setString(CCString::createWithFormat("/%s",CC_CMDITOA(tmpCellValue).c_str())->getCString());
-            if (!m_isOk) {
-                m_nameLabel->setColor(ccRED);
-            }
+            
             m_valueLabel->setPositionX(m_nameLabel->getPositionX()+m_nameLabel->getContentSize().width*m_nameLabel->getOriginScaleX());
         }
         else {
             m_nameLabel->setString("");
             m_valueLabel->setString(CCString::createWithFormat("%s",CC_CMDITOA(tmpCellValue).c_str())->getCString());
             if (!m_isOk) {
-                m_valueLabel->setColor(ccRED);
+                m_valueLabel->setColor(Color3B(255,84,84));
             }
             m_valueLabel->setPositionX(m_nameLabel->getPositionX());
         }
@@ -1483,12 +1497,12 @@ void UpgradeCell::refresh()
             m_nameLabel->setDimensions(CCSizeMake(510, 0));
         }
         if (!m_isOk) {
-            m_nameLabel->setColor(ccRED);
+            m_nameLabel->setColor(Color3B(255,84,84));
        
         }
         else
         {
-            m_nameLabel->setColor(ccWHITE);
+            m_nameLabel->setColor(Color3B(196,207,255));
 
         }
 
@@ -1508,6 +1522,10 @@ void UpgradeCell::refresh()
     if (m_isOk) {
         m_yesSprite->setVisible(true);
         m_noSprite->setVisible(false);
+        
+        if ((m_type == 3||m_type == 0) && m_isShow) {
+            m_moveNode->setPositionX(0);
+        }
     }
     else {
         m_yesSprite->setVisible(false);
@@ -1516,6 +1534,13 @@ void UpgradeCell::refresh()
 //            m_noSprite->setVisible(false);
             m_btn->setVisible(true);
             m_btnLabel->setString(_lang("102153"));
+            if (m_isShow) {//fusheng 不显示按钮
+//                m_btn->setVisible(false);
+//                m_btnLabel->setString("");
+                if (!m_isOk) {
+                    m_moveNode->setPositionX(-90);
+                }
+            }
         }
         else if (m_type == 1) {
 //            m_noSprite->setVisible(false);
@@ -1535,6 +1560,10 @@ void UpgradeCell::refresh()
 //            m_noSprite->setVisible(false);
             m_btn->setVisible(true);
             m_btnLabel->setString(_lang("104903"));
+            
+            if (m_isShow) {
+                m_moveNode->setPositionX(-90);
+            }
         }
         else if (m_type == 7) {
             //            m_noSprite->setVisible(false);
@@ -1565,8 +1594,8 @@ void UpgradeCell::refresh()
         }
         
         if(m_type == 1 || m_type == 2 || m_type == 3 || m_type == 5 || m_type == 6 || m_type == 7) {
-            m_nameLabel->setColor(ccRED);
-            m_valueLabel->setColor(ccRED);
+            m_nameLabel->setColor(Color3B(255,84,84));
+            m_valueLabel->setColor(Color3B(255,84,84));
         }
     }
     
@@ -1618,20 +1647,20 @@ void UpgradeCell::onEnterFrame(float dt)
         if (m_isShow) {
             m_nameLabel->setString(CC_CMDITOA(tmpSumValue).c_str());
             if (!t_isOk) {
-                m_nameLabel->setColor(ccRED);
+                m_nameLabel->setColor(Color3B(255,84,84));
             }
             else {
-                m_nameLabel->setColor(ccWHITE);
+                m_nameLabel->setColor(Color3B(196,207,255));
             }
             m_valueLabel->setPositionX(m_nameLabel->getPositionX()+m_nameLabel->getContentSize().width*m_nameLabel->getOriginScaleX());
         }
         else {
             m_nameLabel->setString("");
             if (!t_isOk) {
-                m_valueLabel->setColor(ccRED);
+                m_valueLabel->setColor(Color3B(255,84,84));
             }
             else {
-                m_valueLabel->setColor(ccWHITE);
+                m_valueLabel->setColor(Color3B(196,207,255));
             }
             m_valueLabel->setPositionX(m_nameLabel->getPositionX());
         }
@@ -1688,7 +1717,7 @@ void UpgradeCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEven
             }
             else
             {
-                if (m_buildId == 400000000) {
+                if (m_buildId == FUN_BUILD_MAIN_CITY_ID) {
 //                    UIComponent::getInstance()->OnHomeBackBtnClick(NULL, CCControlEvent::TOUCH_DOWN);
                     if (CCCommonUtils::isIosAndroidPad())
                     {
@@ -1744,7 +1773,7 @@ void UpgradeCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEven
         }
         else if (m_type == 8) {
             
-            PopupViewController::getInstance()->goBackPopupView();
+//            PopupViewController::getInstance()->goBackPopupView();
             
             auto view = PopupViewController::getInstance()->getCurrentPopupView();
             
@@ -1790,6 +1819,9 @@ bool UpgradeCell::onAssignCCBMemberVariable(cocos2d::CCObject *pTarget, const ch
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_btn", CCScale9Sprite*, m_btn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_btnLabel", CCLabelIF*, m_btnLabel);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_touchBtn", CCNode*, m_touchBtn);
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_moveNode", CCNode*, m_moveNode);
+    
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_rectPic", CCScale9Sprite*, m_rectPic);
     return false;

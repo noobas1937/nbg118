@@ -124,6 +124,7 @@ enum MarchAniType {
     // double frame
     ,AniCollect
     ,AniCollectCloth
+    ,AniCollectTitan
     ,AniScout
     ,AniScoutCloth
     ,AniDeal
@@ -135,6 +136,7 @@ enum MarchAniType {
     ,AniTrebuchetWait
     ,AniTrebuchetAttack
     ,AniAllianceArea
+    
 };
 
 struct CellMap{

@@ -11,13 +11,14 @@
 bool ArrowAni::init(){
     m_rect = CCLoadSprite::createScale9Sprite("rect.png");
     this->addChild(m_rect);
-    m_arrow = CCLoadSprite::createSprite("guide_arrow_new.png");
+    m_arrow = CCLoadSprite::createSprite("UI_hand.png");
     if (CCCommonUtils::isIosAndroidPad() && CCCommonUtils::getIsHDViewPort())
     {
         m_arrow->setScale(2.f);
     }
     this->addChild(m_arrow);
-
+    m_arrow->setFlipX(true);
+    m_arrow->setFlipY(true);
     return true;
 }
 
@@ -103,9 +104,6 @@ ArrowAni* ArrowAni::create(float delayPerUnit){
     ArrowAni *pRet = new ArrowAni(delayPerUnit);
     if (pRet && pRet->init())
     {
-//        pRet->initWithSpriteFrame(CCLoadSprite::loadResource("guide_arrow_new.png"));
-        
-//        pRet->autorelease();
         return pRet;
     }
     else

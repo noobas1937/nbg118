@@ -8,6 +8,7 @@
 
 #include "AppDelegate.h"
 #include "SimpleAudioEngine.h"
+#include "CCMathUtils.h"
 #include "GlobalData.h"
 #include "LoadingScene.h"
 #include "SceneContainer.h"
@@ -106,8 +107,9 @@ bool AppDelegate::applicationDidFinishLaunching()
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 15);
     
+//    CCLOG("Time profiler: [%ld] ,line: [%d]",CCMathUtils::getCurrentTime(),__LINE__);
     //xml init
-    LocalController::shared();//600ms
+    LocalController::shared();//765ms
 //    pDirector->setDisplayStats(true);
     // load common resource
     CCLoadSprite::loadCommonResource();//2200ms

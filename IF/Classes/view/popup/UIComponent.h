@@ -189,7 +189,6 @@ public:
     CCSafeObject<CCNode> m_UserResBg;
     CCSafeObject<CCScale9Sprite> m_rightResBg;
     
-    CCSafeObject<CCScale9Sprite> m_questRecSpr;
     CCSafeObject<CCNode> m_questRecNode;
     CCSafeObject<CCSprite> m_chatBG;
     CCSafeObject<CCNode> m_questBG;
@@ -217,7 +216,6 @@ public:
     CCSafeObject<CCLabelIF> m_powerName;
     CCSafeObject<CCLabelIFBMFont> m_power;
     CCSafeObject<CCLabelIF> m_questName;
-    CCSafeObject<CCLabelIF> m_questTitle;
     CCSafeObject<CCLabelIF> m_questTipNum;
     
     CCSafeObject<CCNode> m_queueCell;
@@ -247,7 +245,7 @@ public:
     CCSafeObject<CCNode> m_questIcon;
     CCSafeObject<CCNode> m_questAnimNode;
     CCSafeObject<CCScale9Sprite> m_questContextBG;
-    CCSafeObject<CCScale9Sprite> m_questContextBG1;
+//    CCSafeObject<CCScale9Sprite> m_questContextBG1;
     CCSafeObject<CCNode> m_questTipNpcNode;
     
     CCSafeObject<CCScale9Sprite> m_stamineBar;
@@ -701,7 +699,6 @@ private:
     CCSafeObject<CCNode> m_UserResBg;
     CCSafeObject<CCScale9Sprite> m_rightResBg;
     
-    CCSafeObject<CCScale9Sprite> m_questRecSpr;
     CCSafeObject<CCNode> m_questRecNode;
     CCSafeObject<CCScale9Sprite> m_chatBG;
     CCSafeObject<CCNode> m_questBG;
@@ -728,7 +725,6 @@ private:
     
     CCSafeObject<CCLabelIFBMFont> m_power;
     CCSafeObject<CCLabelIF> m_questName;
-    CCSafeObject<CCLabelIF> m_questTitle;
     CCSafeObject<CCLabelIF> m_questTipNum;
 
     CCSafeObject<CCNode> m_queueCell;
@@ -758,7 +754,7 @@ private:
     CCSafeObject<CCNode> m_questIcon;
     CCSafeObject<CCNode> m_questAnimNode;
     CCSafeObject<CCScale9Sprite> m_questContextBG;
-    CCSafeObject<CCScale9Sprite> m_questContextBG1;
+//    CCSafeObject<CCScale9Sprite> m_questContextBG1;
     CCSafeObject<CCNode> m_questTipNpcNode;
     
     CCSafeObject<CCScale9Sprite> m_stamineBar;

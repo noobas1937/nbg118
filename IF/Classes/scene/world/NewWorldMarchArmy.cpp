@@ -160,6 +160,7 @@ bool RockAni::init(CCNode *parent){
     }
     m_rock = CCLoadSprite::createSprite(rockStr.c_str());
     m_rock->setScale(0.6f);
+    m_rock->setColor(Color3B::RED);
     parent->addChild(m_rock);
     return true;
 }
@@ -287,7 +288,7 @@ void Soldier::attack(){
         playAttackAnimation(0);
         playAttackAnimation(0);
         CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(Soldier::playAttackAnimation), this, 1.3, 5, 0.0, false);
-    }else if(m_type == CHE){
+    }else if(m_type == CHE || m_type == TITAN){
         CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(Soldier::playRockAttackAnimation), this, 2.6, 3, 0.4, false);
     }
 }
@@ -373,6 +374,9 @@ void Soldier::playRockAttackAnimation(float _time){
     rock->attack(m_startPoint, m_endPoint, 3.1, MarchArmy::getStartIndex(m_info), m_col + 1);
 }
 
+//void Soldier::playMagicAttackAnimation(float _time){
+//    
+//}
 // tao.yu 下面的函数用来获取小兵的动画
 CCAnimate *Soldier::getAnimate(float direction, int state){
     std::string stateStr = "";
@@ -404,7 +408,21 @@ CCAnimate *Soldier::getAnimate(float direction, int state){
 //    }else if(state == eSoldierState::kStand){
 //        stateStr = "stand";
 //    }
-
+    if(m_type == TITAN){
+        str = "dragon_1_%s_%s_%d.png";
+        totalFrame = 9;
+//        if(state == eSoldierState::kDead){
+//            totalFrame = 6;
+//        }else if(state == eSoldierState::kAttack){
+//            totalFrame = 11;
+//        }else if(state == eSoldierState::kWalk){
+//            totalFrame = 7;
+//        }else if(state == eSoldierState::kHurt){
+//            totalFrame = 1;
+//        }else if(state == eSoldierState::kStand){
+//            totalFrame = 10;
+//        }
+    }
 //    if(m_type == BU){
 //        str = "a010_0_%s_%s_%d.png";
 //        if(state == eSoldierState::kDead){
@@ -527,10 +545,10 @@ CCAnimate *Soldier::getAnimate(float direction, int state){
     }
     CCAnimate *animate = CCAnimate::create(animation);
     if(m_kingSprite1){
-       float s = 0.45;
-       auto w = spriteW * m_sprite->getScale() * s;
-       m_kingSprite1->setScale(w / m_kingSprite1->getContentSize().width);
-       m_kingSprite2->setScale(m_kingSprite1->getScale());
+        float s = 0.6;//0.45;
+        auto w = spriteW * m_sprite->getScale() * s;
+        m_kingSprite1->setScale(w / m_kingSprite1->getContentSize().width);
+        m_kingSprite2->setScale(m_kingSprite1->getScale());
     }
     return animate;
 }
@@ -574,7 +592,7 @@ bool Soldier::init(){
     }
    
     m_sprite = CCLoadSprite::createSprite("a060_0_S_move_0.png");
-    m_sprite->setScale(0.6);
+    m_sprite->setScale(1);
     m_parent->addChild(m_sprite, 1);
     m_sprite->setVisible(false);
     
@@ -1193,6 +1211,7 @@ void MarchArmy::attck(){
     vector<CCPoint> vectorBU;
     vector<CCPoint> vectorQI;
     vector<float> angleVector;
+    // 步兵
     float buW = _tile_width / 5;
     float buH = _tile_height / 5;
     if(m_info.targetType == FieldMonster || m_info.targetType == ActBossTile){
@@ -1209,6 +1228,7 @@ void MarchArmy::attck(){
     vectorBU.push_back(ccp(-buW, buH));
     vectorBU.push_back(ccp(buW, buH));
     vectorBU.push_back(ccp(buW, -buH));
+    // 骑兵
     float qiW = _tile_width / 4;
     float qiH = _tile_height / 4;
     if(m_info.targetType == FieldMonster || m_info.targetType == ActBossTile){
@@ -1367,6 +1387,11 @@ void MarchArmy::attck(){
     addToArr(chePt, CCMathUtils::getAngle(endPt, startPt), arr);
     if(isHaveArmy(CHE)){
         m_phalanx[CHE]->spreadTo(arr);
+    }
+    arr->removeAllObjects();
+    addToArr(chePt, CCMathUtils::getAngle(endPt, startPt), arr);
+    if(isHaveArmy(TITAN)){
+        m_phalanx[TITAN]->spreadTo(arr);
     }
     if(m_info.targetType == CityTile || m_info.targetType == ResourceTile || m_info.targetType == Trebuchet || m_info.targetType == Throne || m_info.targetType == Tile_allianceArea || m_info.targetType == tile_banner){
         cityAttack(0);
