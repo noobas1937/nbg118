@@ -155,12 +155,12 @@ void RockAni::setSockVisible()
 }
 bool RockAni::init(CCNode *parent){
     std::string rockStr = "world_stone_che.png";
-    if(m_rockIndex == 4){
-        rockStr = "WarStone.png";
-    }
+//    if(m_rockIndex == 4){
+//        rockStr = "WarStone.png";
+//    }
     m_rock = CCLoadSprite::createSprite(rockStr.c_str());
-    m_rock->setScale(0.6f);
-    m_rock->setColor(Color3B::RED);
+    m_rock->setScale(0.3f);
+//    m_rock->setColor(Color3B::RED);
     parent->addChild(m_rock);
     return true;
 }
