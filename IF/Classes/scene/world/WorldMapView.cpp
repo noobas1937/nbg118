@@ -4511,9 +4511,9 @@ CCAnimate* WorldMapView::createMarchAni(MarchAniType type,int direction, float d
             tmpAniArr.pushBack(CCLoadSprite::loadResource(CCString::createWithFormat(temp.c_str(),directionStr,(i + randIndex) % frameCount)->getCString()));
         }
         else if (type == AniCollectTitan){
-            // tao.yu 这是一个很屎的代码，龙的等级小于等于2级用动画1，大于2用动画2
+            // tao.yu 这是一个很屎的代码，龙的等级小于等于3级用动画1，大于3用动画2
             int picIndex = 1;
-            if (GlobalData::shared()->titanInfo.level > 2) {
+            if (GlobalData::shared()->titanInfo.level > 3) {
                 picIndex = 2;
             }
             tmpAniArr.pushBack(CCLoadSprite::loadResource(CCString::createWithFormat(temp.c_str(),picIndex,directionStr,i)->getCString()));

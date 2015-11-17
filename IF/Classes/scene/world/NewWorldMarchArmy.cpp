@@ -160,6 +160,7 @@ bool RockAni::init(CCNode *parent){
     }
     m_rock = CCLoadSprite::createSprite(rockStr.c_str());
     m_rock->setScale(0.6f);
+    m_rock->setColor(Color3B::RED);
     parent->addChild(m_rock);
     return true;
 }
@@ -287,7 +288,7 @@ void Soldier::attack(){
         playAttackAnimation(0);
         playAttackAnimation(0);
         CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(Soldier::playAttackAnimation), this, 1.3, 5, 0.0, false);
-    }else if(m_type == CHE){
+    }else if(m_type == CHE || m_type == TITAN){
         CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(Soldier::playRockAttackAnimation), this, 2.6, 3, 0.4, false);
     }
 }
@@ -373,6 +374,9 @@ void Soldier::playRockAttackAnimation(float _time){
     rock->attack(m_startPoint, m_endPoint, 3.1, MarchArmy::getStartIndex(m_info), m_col + 1);
 }
 
+//void Soldier::playMagicAttackAnimation(float _time){
+//    
+//}
 // tao.yu 下面的函数用来获取小兵的动画
 CCAnimate *Soldier::getAnimate(float direction, int state){
     std::string stateStr = "";
@@ -1207,6 +1211,7 @@ void MarchArmy::attck(){
     vector<CCPoint> vectorBU;
     vector<CCPoint> vectorQI;
     vector<float> angleVector;
+    // 步兵
     float buW = _tile_width / 5;
     float buH = _tile_height / 5;
     if(m_info.targetType == FieldMonster || m_info.targetType == ActBossTile){
@@ -1223,6 +1228,7 @@ void MarchArmy::attck(){
     vectorBU.push_back(ccp(-buW, buH));
     vectorBU.push_back(ccp(buW, buH));
     vectorBU.push_back(ccp(buW, -buH));
+    // 骑兵
     float qiW = _tile_width / 4;
     float qiH = _tile_height / 4;
     if(m_info.targetType == FieldMonster || m_info.targetType == ActBossTile){
@@ -1381,6 +1387,11 @@ void MarchArmy::attck(){
     addToArr(chePt, CCMathUtils::getAngle(endPt, startPt), arr);
     if(isHaveArmy(CHE)){
         m_phalanx[CHE]->spreadTo(arr);
+    }
+    arr->removeAllObjects();
+    addToArr(chePt, CCMathUtils::getAngle(endPt, startPt), arr);
+    if(isHaveArmy(TITAN)){
+        m_phalanx[TITAN]->spreadTo(arr);
     }
     if(m_info.targetType == CityTile || m_info.targetType == ResourceTile || m_info.targetType == Trebuchet || m_info.targetType == Throne || m_info.targetType == Tile_allianceArea || m_info.targetType == tile_banner){
         cityAttack(0);
