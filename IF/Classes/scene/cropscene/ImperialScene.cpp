@@ -234,7 +234,7 @@ bool ImperialScene::init()
     m_fountainNode->setPosition(m_FountainTouchNode->getPosition());
     m_touchLayer->addChild(m_fountainNode, 2120);
     
-    m_flyArrow = CCLoadSprite::createSprite("UI_hand.png");//guide_arrow_new.png
+    m_flyArrow = CCLoadSprite::createSprite("UI_hand.png");
     m_flyArrow->setAnchorPoint(ccp(0, 0.5));
 //    m_flyArrow->setFlipY(true);
     m_flyArrow->setVisible(false);

@@ -68,8 +68,8 @@ bool LoadingScene::init()
         
         string _uuid = cocos2d::extension::CCDevice::getDeviceUid();
         GlobalData::shared()->version = cocos2d::extension::CCDevice::getVersionName();
-        // tao.yu 版本号暂时固定
-        string _version = "0.0.1";//GlobalData::shared()->version.c_str();
+        // tao.yu 版本号暂时不显示
+        string _version = "";//GlobalData::shared()->version.c_str();
 //        _version = _version.substr(0,_version.length()-3);
 #if COCOS2D_DEBUG > 0
         CCLabelIF* label = CCLabelIF::create(CCString::createWithFormat("Inner-V: %s \n hudson Code: %s \n deviceID: %s",_version.c_str(),cocos2d::extension::CCDevice::getVersionCode().c_str(),_uuid.c_str())->getCString());
@@ -264,39 +264,40 @@ bool LoadingScene::init()
             m_headParticleNode->setScale(2.f);
         }
         
-        if(isJP()){
-            auto logFireNode1 = CCNode::create();
-            this->addChild(logFireNode1);
-            addFireParticle(logFireNode1, "LoadingLOGO_1", ccp(225, size.height - 170));
-            addFireParticle(logFireNode1, "LoadingLOGO_1", ccp(430, size.height - 230));
-
-            //logo
-            auto logo = CCLoadSprite::createSprite("logo.png");
-            logo->setAnchorPoint(ccp(0.5, 0.5));
-        
-            logo->setPosition(ccp(size.width/2, size.height - 200));// -lpsz.height/2
-            logo->setTag(LOADING_LOGO_TAG);
-            addChild(logo);
-        
-            if (CCCommonUtils::isIosAndroidPad())
-            {
-                logo->setScale(1.5f);
-                logo->setPosition(ccp(size.width/2, size.height - 300));// -lpsz.height/2
-            }
-        
-            auto logFireNode2 = CCNode::create();
-            this->addChild(logFireNode2);
-            addFireParticle(logFireNode2, "LoadingLOGO_2", ccp(225, size.height - 180));
-            addFireParticle(logFireNode2, "LoadingLOGO_2", ccp(430, size.height - 240));
-        }else{
-            //logo
+        // tao.yu logo
+//        if(isJP()){
+//            auto logFireNode1 = CCNode::create();
+//            this->addChild(logFireNode1);
+//            addFireParticle(logFireNode1, "LoadingLOGO_1", ccp(225, size.height - 170));
+//            addFireParticle(logFireNode1, "LoadingLOGO_1", ccp(430, size.height - 230));
+//
+//            //logo
+//            auto logo = CCLoadSprite::createSprite("logo.png");
+//            logo->setAnchorPoint(ccp(0.5, 0.5));
+//        
+//            logo->setPosition(ccp(size.width/2, size.height - 200));// -lpsz.height/2
+//            logo->setTag(LOADING_LOGO_TAG);
+//            addChild(logo);
+//        
+//            if (CCCommonUtils::isIosAndroidPad())
+//            {
+//                logo->setScale(1.5f);
+//                logo->setPosition(ccp(size.width/2, size.height - 300));// -lpsz.height/2
+//            }
+//        
+//            auto logFireNode2 = CCNode::create();
+//            this->addChild(logFireNode2);
+//            addFireParticle(logFireNode2, "LoadingLOGO_2", ccp(225, size.height - 180));
+//            addFireParticle(logFireNode2, "LoadingLOGO_2", ccp(430, size.height - 240));
+//        }else{
+//            //logo
 //            auto logo = CCLoadSprite::createSprite("logo.png");
 //            logo->setAnchorPoint(ccp(0.5, 0));
 //            
 //            logo->setPosition(ccp(size.width/2, 150));//
 //            logo->setTag(LOADING_LOGO_TAG);
 //            addChild(logo);
-            
+//            
 //            auto logFireNode1 = CCNode::create();
 //            this->addChild(logFireNode1);
 //            addFireParticle(logFireNode1, "LoadingMan_fire", ccp(320, 600));
@@ -314,7 +315,7 @@ bool LoadingScene::init()
 //            {
 //                logFireNode2->setScale(2.4);
 //            }
-        }
+//        }
 //
         auto tipsBg = CCLoadSprite::createSprite("loading_tips_bg.png");
         tipsBg->setTag(LOADING_3);

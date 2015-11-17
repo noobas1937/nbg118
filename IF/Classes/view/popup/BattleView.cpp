@@ -673,7 +673,7 @@ void BattleView::onClickMarchBtn(CCObject * pSender, Control::EventType pCCContr
     if( this->m_marchBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::NORMAL)->getState() == cocos2d::ui::Scale9Sprite::State::GRAY)
     {
         
-        CCCommonUtils::flyHint("", "", "Insufficient Titan manual");//fusheng 需要文本
+        CCCommonUtils::flyHint("", "", _lang("500010"));//fusheng 需要文本
         return ;
     }
     

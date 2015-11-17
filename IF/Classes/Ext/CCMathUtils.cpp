@@ -70,7 +70,7 @@ float CCMathUtils::getAngle(CCPoint from, CCPoint to)
 	return result;
 }
 
-int CCMathUtils::getCurrentTime(){
+long CCMathUtils::getCurrentTime(){
     struct timeval now;
     
     gettimeofday(&now, nullptr);

@@ -113,7 +113,7 @@ bool DragonScene::init()
     m_touchLayer->addChild(m_popLayer,10008);
     m_touchLayer->addChild(m_funLayer,10015);
     
-    m_flyArrow = CCLoadSprite::createSprite("UI_hand.png");//guide_arrow_new.png
+    m_flyArrow = CCLoadSprite::createSprite("UI_hand.png");
     m_flyArrow->setAnchorPoint(ccp(0, 0.5));
     m_flyArrow->setVisible(false);
     m_touchLayer->addChild(m_flyArrow,10012);

@@ -170,6 +170,7 @@ private:
     CCSafeObject<CCScale9Sprite> m_rectPic;
     CCSafeObject<CCNode> m_touchBtn;
     CCSafeObject<CCLabelIF> m_btnLabel;
+    CCSafeObject<CCNode> m_moveNode;
     
     int m_type;
     int m_itemId;

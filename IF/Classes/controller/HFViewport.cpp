@@ -1042,9 +1042,13 @@ void HFViewport::onTouchesEnded(const std::vector<Touch*>& pTouches, Event *pEve
     
     if (isUIMove) {
         //fusheng移动回来
+//        Sequence::createWithTwoActions(CCDelayTime::create(0.5), CallFunc::create([this]
+//        {
+//         
+//        }));
         UIComponent::getInstance()->moveIn();
         isUIMove = false;
-//        CCLog("脉动回来");
+
     }
     
     switch(mFingerMap.size())
