@@ -409,7 +409,11 @@ CCAnimate *Soldier::getAnimate(float direction, int state){
 //        stateStr = "stand";
 //    }
     if(m_type == TITAN){
+        // tao.yu 这是一个很屎的代码，龙的等级小于等于3级用动画1，大于3用动画2
         str = "dragon_1_%s_%s_%d.png";
+        if (GlobalData::shared()->titanInfo.level > 3) {
+            str = "dragon_2_%s_%s_%d.png";
+        }
         totalFrame = 9;
 //        if(state == eSoldierState::kDead){
 //            totalFrame = 6;
