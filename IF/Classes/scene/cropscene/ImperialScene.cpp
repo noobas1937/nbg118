@@ -63,6 +63,10 @@
 #include "IFSkeletonDataManager.h"
 #include "TitanInfoCommand.h"
 
+//begin a by ljf
+#include "Walker.h"
+//end a by ljf
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/jni/JniHelper.h"
 #endif
@@ -86,6 +90,9 @@ bool ImperialScene::init()
     
     m_personArray = CCArray::create();
     m_soldierArray = CCArray::create();
+    //begin a by ljf
+    //m_walkerArray = CCArray::create();
+    //end a by ljf
     ParticleController::initParticle();
     m_singleTouchState = false;
     m_exit = false;
@@ -118,6 +125,10 @@ bool ImperialScene::init()
     m_funLayer->addChild(m_speBuildBtnsView);
     m_battleLayer = CCLayer::create();
     m_soldierLayer = CCLayer::create();
+    //begin a by ljf
+    m_walkerLayer = CCLayer::create();
+    m_touchLayer->addChild(m_walkerLayer,2999);
+    //end a by ljf
     m_torchPar = CCArray::create();
     m_spineLayer = CCLayer::create();
     
@@ -553,7 +564,12 @@ void ImperialScene::buildingCallBack(CCObject* params)
     m_touchLayer->addChild(m_soldierBatchNode, 1999);
     
     refreshSoldiers(NULL);
-    
+    //begin a by ljf
+    cocos2d::CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Imperial/Imperial_22.plist");
+    m_walkerBatchNode = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("b010_0_N_move_0.png")->getTexture());
+    m_touchLayer->addChild(m_walkerBatchNode, 1999);
+    this->schedule(schedule_selector(ImperialScene::createWalker), 0.25, 1, 0.0f);
+    //end a by ljf
     m_talkACTCell = TalkNoticeCell::create(0);
     m_talkACTCell->setVisible(false);
     m_funLayer->addChild(m_talkACTCell, -1);
@@ -861,6 +877,38 @@ void ImperialScene::onVikingsShipMove(NBSprite3D * pSprite3d)
         particleNode->runAction(rotateSeq->clone());
     }
 }
+
+void ImperialScene::createWalker(float t)
+{
+    //method 2
+    if(true)
+    {
+        for (int i = 1; i <= 1; i++)
+        {
+            string m_icon = "b020";
+            Walker* soldier = Walker::create(m_walkerBatchNode, NULL,0,0,m_icon,"NE",false);
+            soldier->getShadow()->setScale(0.5);
+            
+            soldier->setAnchorPoint(ccp(0.5, 0.5));
+            
+            m_walkerLayer->addChild(soldier);
+            soldier->setSprScale(1);
+        }
+        
+        for (int i = 1; i <= 1; i++)
+        {
+            string m_icon = "b010";
+            Walker* soldier = Walker::create(m_walkerBatchNode, NULL,0,0,m_icon,"NE",false);
+            soldier->getShadow()->setScale(0.5);
+            
+            soldier->setAnchorPoint(ccp(0.5, 0.5));
+            
+            m_walkerLayer->addChild(soldier);
+            soldier->setSprScale(1);
+        }
+
+    }
+}
 //end a by ljf
 
 void ImperialScene::wallCallBack(CCObject* params)
@@ -1049,6 +1097,8 @@ void ImperialScene::onEnter()
     this->scheduleOnce(schedule_selector(ImperialScene::scheduleHarvestEffect), 0.45);
     //    GuideController::share()->start();
     BranchController::getInstance()->excute("InviteForGift");
+    
+    
     
 //    if (m_Titan) {//fusheng 龙的形象
 //        m_Titan->resetDisplay(GlobalData::shared()->titanInfo.tid);
@@ -1564,6 +1614,11 @@ void ImperialScene::clearGuideState(float _time)
 void ImperialScene::onExit()
 {
     m_exit = true;
+    //begin a by ljf
+    m_walkerBatchNode->removeAllChildren();
+    //m_walkerArray->removeAllObjects();
+    m_walkerLayer->removeFromParent();
+    //end a by ljf
     if(GlobalData::shared()->isUiInti){
         UIComponent::getInstance()->updateBuildState(false);
         //        UIComponent::getInstance()->onDeleteCropSceneUI();
@@ -2396,6 +2451,7 @@ void ImperialScene::onSingleTouchEnd(CCTouch* pTouch)
     }
     
     scheduleOnce(schedule_selector(ImperialScene::canSingleTouch), 0.2f);
+    
 }
 
 void ImperialScene::onResetLastBuildId()
@@ -4449,6 +4505,7 @@ void ImperialScene::addSoldierToMap(int stype, int num, int ptx, int pty)
         soldier->playAnimation(ActionStatus::ACTION_STAND);
         m_soldierArray->addObject(soldier);
     }
+    
 }
 
 void ImperialScene::scheduleHarvestEffect(float _time)
