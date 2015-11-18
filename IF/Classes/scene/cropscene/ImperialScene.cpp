@@ -337,10 +337,12 @@ bool ImperialScene::init()
         CCUserDefault::sharedUserDefault()->setStringForKey(ACCOUNT_IP, S2_ACCOUNT_IP);
         CCUserDefault::sharedUserDefault()->flush();
     }
-    // tao.yu xml更新关闭  NBTODO @Guojiang
-    if (false) { // (!GlobalData::shared()->isXMLInitFlag) {
-        scheduleOnce(schedule_selector(ImperialScene::downloadXML), 3);
-    }
+    
+    // guojiang : remove below, using LoadingScene::getDownloadContents()
+//    // tao.yu xml更新关闭  NBTODO @Guojiang
+//    if (false) { // (!GlobalData::shared()->isXMLInitFlag) {
+//        scheduleOnce(schedule_selector(ImperialScene::downloadXML), 3);
+//    }
 //    m_sprBG1->visit();
     CCLOG("ImperialScene Init finish %lu",clock() - ulc);
 //    playWatchGlow();
@@ -353,13 +355,13 @@ bool ImperialScene::init()
     //end a by ljf
     return true;
 }
-void ImperialScene::downloadXML(float _time)
-{
-    GlobalData::shared()->isXMLInitFlag = true;
-    GameController::getInstance()->m_manager = new UpdateManager();
-    GameController::getInstance()->m_manager->setDelegate(GameController::getInstance());
-    GameController::getInstance()->m_manager->update();
-}
+//void ImperialScene::downloadXML(float _time)
+//{
+//    GlobalData::shared()->isXMLInitFlag = true;
+//    GameController::getInstance()->m_manager = new UpdateManager();
+//    GameController::getInstance()->m_manager->setDelegate(GameController::getInstance());
+//    GameController::getInstance()->m_manager->update();
+//}
 
 void ImperialScene::buildingCallBack(CCObject* params)
 {

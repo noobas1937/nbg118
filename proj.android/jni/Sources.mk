@@ -502,6 +502,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../IF/Classes/scene/cropscene/SpeBuild.cpp \
 ../../IF/Classes/scene/cropscene/SpeBuildBtnsView.cpp \
 ../../IF/Classes/scene/cropscene/TalkNoticeCell.cpp \
+../../IF/Classes/scene/cropscene/Walker.cpp \
 ../../IF/Classes/scene/cropscene/WallBuild.cpp \
 ../../IF/Classes/scene/dragon/DragonBuild.cpp \
 ../../IF/Classes/scene/dragon/DragonBuildBtnsView.cpp \
