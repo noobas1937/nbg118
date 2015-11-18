@@ -1987,7 +1987,7 @@ string FunBuildController::orderBuild(string buildings)
 
 void FunBuildController::initPosPath()
 {
-    int soliderZorder = 1999 - 10;  //主场景中solider所在batch node的zorder为1999
+    int soliderZorder = 1999 - 10;  //ljf, 主场景中solider所在batch node的zorder为1999
     if (9) { int pos_idx = 9; vector<cocos2d::CCPoint> path;
         path.push_back(Vec2(2479, 1935)); // p6
         path.push_back(Vec2(2514, 2206)); // p7
