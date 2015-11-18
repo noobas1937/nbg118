@@ -39,6 +39,9 @@ private:
     void addLoadingTips();
     void addPlatformLogo();
     
+    // update ini & xml ----
+    void getDownloadContents();
+    
     virtual void onEnter();
     virtual void onExit();
     

@@ -93,8 +93,15 @@ def gen(url, dstFolderName, platform, AndroidManifest_xml):
                 os.remove(fullpath + filename)
             return zipname
     # ------------------------------------------------------------------------------------
-    # local
-    _export(dstPath + 'local', 'local')
+    # local/xml
+    _export(dstPath + 'local/xml', 'local_xml')
+    # local/text
+    text_res_path = dstPath + 'local/text'
+    for parent, dirnames, filenames in os.walk(text_res_path):
+        for filename in filenames:
+            text = os.path.join(parent, filename)
+            fn, ext = os.path.splitext(filename)
+            _export(text, fn)
     # common
     dict_common_res = {}
     common_res_path = dstPath + 'Common/'

@@ -26,6 +26,7 @@
 #include "FunBuildController.h"
 #include "IFSkeletonDataManager.h"
 #include "md5.h"
+#include "NBDLCController.hpp"
 
 #define MSG_MAIN_THREAD_XML 453
 #define LOADING_STEP        80
@@ -168,8 +169,6 @@ bool LoadingScene::init()
     // load common resource
     // 1 2 3 308
     CCLoadSprite::loadCommonResource();//2200ms
-    // Guidance
-    CCLoadSprite::doResourceByGeneralIndex(100, true);//450ms
     
     CCLabelIF::initFont();
     GameController::getInstance();
@@ -348,6 +347,40 @@ void LoadingScene::onGoToHelpShift(CCObject* p)
     HelpshiftCocos2dx::showConversation(config);
 }
 
+#pragma mark * update ini & xml
+
+void LoadingScene::getDownloadContents()
+{
+    string language = LocalController::shared()->getLanguageFileNameBasedOnUserSystem();
+    string manifest_file_path = "manifest/text_" + language + "_main.manifest";
+    string version_filename = "text_" + language + "_version.manifest";
+    string temp_manifest_filename = "text_" + language + "_project.manifest.temp";
+    string manifest_filename = "text_" + language + "_project.manifest";
+    auto cb_ini = [this, manifest_file_path](string manifest_file_path_as_key, EventAssetsManagerEx * event){
+        
+        // >>>>>>>
+        auto dlc_xml = NBDLCController::create("manifest/local_xml_main.manifest", "local_xml_version.manifest", "local_xml_project.manifest.temp", "local_xml_project.manifest");
+        dlc_xml->start("manifest/local_xml_main.manifest", [this](string manifest_file_path_as_key, EventAssetsManagerEx * event){
+            LocalController::shared()->purgeData();
+            LocalController::shared()->init();
+            
+            setLoadingTips();
+            LoadingScene::showLoading();
+            
+            //为月卡做记录
+            int loadCount = CCUserDefault::sharedUserDefault()->getIntegerForKey("day_load_count");
+            loadCount+=1;
+            CCUserDefault::sharedUserDefault()->setIntegerForKey("day_load_count", loadCount);
+            CCUserDefault::sharedUserDefault()->flush();
+        });
+        // <<<<<<
+    };
+    auto dlc_ini = NBDLCController::create(manifest_file_path, version_filename, temp_manifest_filename, manifest_filename);
+    dlc_ini->start(manifest_file_path, cb_ini);
+}
+
+#pragma mark *
+
 void LoadingScene::onEnter(){
     CCLayer::onEnter();
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(LoadingScene::doLogin), MSG_GameStart, NULL);
@@ -417,14 +450,8 @@ void LoadingScene::onEnter(){
         addY(this->getChildByTag(LOADING_3));
         addY(this->getChildByTag(LOADING_4));
     }
-    setLoadingTips();
-    LoadingScene::showLoading();
     
-    //为月卡做记录
-    int loadCount = CCUserDefault::sharedUserDefault()->getIntegerForKey("day_load_count");
-    loadCount+=1;
-    CCUserDefault::sharedUserDefault()->setIntegerForKey("day_load_count", loadCount);
-    CCUserDefault::sharedUserDefault()->flush();
+    getDownloadContents();
 }
 
 void LoadingScene::onExit(){
@@ -534,6 +561,9 @@ void LoadingScene::doLogin(CCObject* p)
 
 void LoadingScene::sendCmdLogin()
 {
+    // Guidance
+    CCLoadSprite::doResourceByGeneralIndex(100, true);//450ms
+    
     schedule(schedule_selector(LoadingScene::onLoginTimeout), 0.5);
     // password retry count reset
     GlobalData::shared()->isLoginFlag = true;

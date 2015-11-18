@@ -26,7 +26,6 @@ public:
     CCINIParser* TextINIManager();
     void purgeData();
     void setLang(std::string lang){m_lang=lang;};
-    std::string updatePath;
     
     std::string getLanguageFileName();
     std::string getLanguageFileNameBasedOnUserSystem();

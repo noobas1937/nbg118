@@ -7271,7 +7271,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "checkFile () {\n    touch -cm $1\n    if [[ -d $1 ]]; then\n        for file in \"$1/\"*\n        do (\n            checkFile $file\n        )\n        done\n    fi\n}\n\ntargetDir=\"${SRCROOT}/IF/Resources\"\ncheckFile $targetDir";
+			shellScript = "checkFile () {\n    touch -cm $1\n    if [[ -d $1 ]]; then\n        for file in \"$1/\"*\n        do (\n            checkFile $file\n        )\n        done\n    fi\n}\n\ntargetDir=\"${SRCROOT}/IF/Resources\"\ncheckFile $targetDir\nif [ ! -d \"${targetDir}/manifest\" ]; then\n    mkdir ${targetDir}/manifest\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 

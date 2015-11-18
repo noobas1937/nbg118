@@ -38,7 +38,6 @@ LocalController* LocalController::shared()
 {
     if (!m_LocalController) {
         m_LocalController = new LocalController();
-        m_LocalController->updatePath = CCFileUtils::sharedFileUtils()->getWritablePath();
         m_LocalController->init();
     }
     return m_LocalController;
@@ -146,39 +145,17 @@ std::string LocalController::getLanguageFileName()
     return fileName;
 }
 
-void LocalController::init() {
+void LocalController::init()
+{
     purgeData();
     unsigned long ulc = clock();
-    //成功下载xml的app版本
-    std::string _xmlVersion = CCUserDefault::sharedUserDefault()->getStringForKey("current-app-version-code","");
-    std::string _xmlQuestVersion = CCUserDefault::sharedUserDefault()->getStringForKey("current-version-code","");
-    //当前APP版本
-    std::string _appVersion = extension::CCDevice::getVersionName();
-    //是否使用本地xml
-    bool useLocalXml = false;
-    //没有下载过xml，使用apk内xml
-    if (_xmlVersion == "" || _xmlQuestVersion == "1.0.1487") {
-        useLocalXml = true;
-    }
-    else//成功下载过xml
-    {
-        //成功下载xml的版本
-        std::vector<std::string> _updateVersion;
-        CCCommonUtils::splitString(_xmlVersion,".", _updateVersion);
-        //当前app版本
-        std::vector<std::string> _appXMLVersion;
-        CCCommonUtils::splitString(_appVersion,".", _appXMLVersion);
-        //如果app的版本大于成功下载xml版本，使用apk内xml
-        if (_appXMLVersion[0] > _updateVersion[0] || _appXMLVersion[1] > _updateVersion[1] || _appXMLVersion[2] > _updateVersion[2]) {
-            useLocalXml = true;
-        }
-    }
     
-    
+    // ini
     std::string languageFileName = getLanguageFileName();
     std::string local2 = localPath + "text/text_" + languageFileName + ".ini";
     m_objINIFileParser = CCINIParser::parseWithFile(local2.c_str(),local2.c_str());
     
+    // xml
     bool test_xml = false;
     if (false == test_xml)
     {
