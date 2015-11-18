@@ -953,9 +953,9 @@ bool FunBuildController::startUpFunBuild(int itemId, int gold, bool isForce, int
     curFunBuildId = itemId;
     
     if(info.type == FUN_BUILD_MAIN && info.level==5) {//5级大本升级时记录，用来触发引导使用
-        string key = GlobalData::shared()->playerInfo.uid + "_" +CC_ITOA(info.level);
-        CCUserDefault::sharedUserDefault()->setStringForKey(GUIDE_MAINCITY_LEVEL_UP, key);
-        CCUserDefault::sharedUserDefault()->flush();
+//        string key = GlobalData::shared()->playerInfo.uid + "_" +CC_ITOA(info.level);//fusheng 先关掉
+//        CCUserDefault::sharedUserDefault()->setStringForKey(GUIDE_MAINCITY_LEVEL_UP, key);
+//        CCUserDefault::sharedUserDefault()->flush();
     }
     
     if(curFunBuildId == FUN_BUILD_MAIN_CITY_ID){
