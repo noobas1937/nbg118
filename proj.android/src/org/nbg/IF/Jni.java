@@ -522,9 +522,9 @@ public class Jni {
 		if(!needInit)
 			return;
 		HelpshiftBridge.install(IF.getInstance(),
-	      "78595a4520a0688ffb956c4067a028e9",
+	      "d364a0d2a0b3856ba1aa8d4cc0371855",
 	      "elex.helpshift.com",
-	      "elex_platform_20140804011326224-93771e1d4419a42");
+	      "elex_platform_20151106082553299-dfa2768467c76a9");
 		needInit = false;
 	}
 	
