@@ -575,7 +575,7 @@ bool UIComponent::init(CCSize size)
     
     this->setContentSize(CCSizeMake(size.width, size.height));
     
-    m_power->setFntFile("Arial_Bold_Border.fnt");
+    m_power->setFntFile(getNBFont(NB_FONT_Bold_Border));
     
     setFavoriteIconVisible(false);
     this->m_gold->setString(CC_CMDITOA(GlobalData::shared()->playerInfo.gold).c_str());

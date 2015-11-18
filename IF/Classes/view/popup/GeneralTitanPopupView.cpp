@@ -796,7 +796,7 @@ bool GeneralTitanPopupView::init()
     auto tieanInView = TitanInView::create();
     tieanInView->setTag(10086);
     m_titanPosInView->addChild(tieanInView );
-//    auto sdsds = cocos2d::Label::createWithBMFont("Arial_Bold.fnt", "222221122");
+//    auto sdsds = cocos2d::Label::createWithBMFont(getNBFont(NB_FONT_Bold), "222221122");
 //        this->m_titanPos->addChild(sdsds);
     
     m_ProTitanExtMaxWidth = m_ProTitanExt->getContentSize().width;

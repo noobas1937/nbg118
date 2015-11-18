@@ -27,7 +27,8 @@ public:
     // 2. temp_manifest_filename : project.manifest.temp
     // 3. manifest_filename : project.manifest
     // -----------------------------------------------------
-    // 1- local 目录 (local_main.manifest, local_version.manifest, local_project.manifest.temp, local_project.manifest)
+    // 1- local 目录 (manifest/local_main.manifest, local_version.manifest, local_project.manifest.temp, local_project.manifest)
+    // 2- Common 目录 (manifest/Common_1_main.manifest, Common_1_version.manifest, Common_1_project.manifest.temp, Common_1_project.manifest)
     static NBDLCController* create(string manifest_file_path,
                                    string version_filename,
                                    string temp_manifest_filename,

@@ -248,21 +248,7 @@ void CCLoadSprite::parseLoadOrRelease(bool isLoad,int sceneId, CCDictionary *dic
     switch (sceneId) {
         case SCENE_ID_LOADING:{
             const char* path = LOADING_PATH;
-            if (!dict) {
-                for (int i=1; i<3; i++) {
-                    actor(path,i);
-                }
-//                actor(path,12);
-            } else {
-//                CCDictElement* pElement = NULL;
-//                CCDICT_FOREACH(dict, pElement){
-//                    int index = dynamic_cast<CCInteger*>(pElement->getObject())->getValue();
-//                    actor(path,index);
-//                }
-                for (int i=4; i<6; i++) {
-                    actor(path,i);
-                }
-            }
+            actor(path, 2);
         }
             break;
         case SCENE_ID_WORLD:{

@@ -134,9 +134,9 @@ bool MailReadPopUpView::init(){
 
     }
     this->m_totalNode->removeChild(this->m_rewardNode);
-    this->m_nameText->setFntFile("Arial_Bold.fnt");
-    this->m_titleText->setFntFile("Arial_Bold.fnt");
-    //this->m_guideTxt->setFntFile("Arial_Bold.fnt");
+    this->m_nameText->setFntFile(getNBFont(NB_FONT_Bold));
+    this->m_titleText->setFntFile(getNBFont(NB_FONT_Bold));
+    //this->m_guideTxt->setFntFile(getNBFont(NB_FONT_Bold));
     this->m_nameText->setString(m_info.fromName.c_str());
     string nameExt = m_info.fromName;
     if(m_info.alliance!=""){

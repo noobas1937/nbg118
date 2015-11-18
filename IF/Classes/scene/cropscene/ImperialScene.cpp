@@ -106,7 +106,7 @@ bool ImperialScene::init()
     m_touchLayer = CCLayer::create();
     m_bgParticleLayer = CCLayer::create();
     m_nightLayer = CCLayer::create();
-    m_nameLayer =CCLabelBatchNode::create("Arial_Bold.fnt");
+    m_nameLayer =CCLabelBatchNode::create(getNBFont(NB_FONT_Bold));
     m_popLayer = CCLayer::create();
     m_signLayer = CCLayer::create();
     m_funLayer = CCLayer::create();

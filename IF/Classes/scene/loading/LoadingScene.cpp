@@ -35,341 +35,284 @@
 #define LOADING_3 669
 #define LOADING_4 670
 
-LoadingScene::~LoadingScene(){
+LoadingScene::LoadingScene()
+: m_steps(LOADING_STEP)
+, m_platformLoginFlag(false)
+{
 }
 
-LoadingScene::LoadingScene(): m_steps(LOADING_STEP),m_platformLoginFlag(false){}
+LoadingScene::~LoadingScene()
+{
+}
+
+#pragma mark * init functions
+
+void LoadingScene::addLoadingBG(Point& addPt)
+{
+    Size size = Director::getInstance()->getWinSize();
+    
+    if (SceneController::getInstance()->showBG)
+    {
+        SceneController::getInstance()->showBG->setPosition(ccp(size.width/2, size.height/2));
+        addChild(SceneController::getInstance()->showBG);
+        addPt = ccp(0, size.height / 2);
+        
+        auto colorLayer = CCLayerColor::create(ccc4(0, 0, 0, 100), size.width, size.height);
+        colorLayer->setAnchorPoint(ccp(0, 0));
+        addChild(colorLayer);
+    }
+    else
+    {
+        auto loadingBG = CCLoadSprite::createSprite("loading.png");
+        loadingBG->setAnchorPoint(ccp(0.5, 0.5));
+        loadingBG->setPositionX(size.width/2);
+        loadingBG->setPositionY(size.height/2);
+        if (CCCommonUtils::isIosAndroidPad())
+        {
+            loadingBG->setScale(1536/653.0);
+        }
+        
+        this->addChild(loadingBG);
+    }
+}
+
+void LoadingScene::addVersionLabel()
+{
+    string _uuid = cocos2d::extension::CCDevice::getDeviceUid();
+    GlobalData::shared()->version = cocos2d::extension::CCDevice::getVersionName();
+    
+    // tao.yu 版本号暂时不显示
+    string _version = "";//GlobalData::shared()->version.c_str();
+    //        _version = _version.substr(0,_version.length()-3);
+#if COCOS2D_DEBUG > 0
+    CCLabelIF* label = CCLabelIF::create(CCString::createWithFormat("Inner-V: %s \n hudson Code: %s \n deviceID: %s",_version.c_str(),cocos2d::extension::CCDevice::getVersionCode().c_str(),_uuid.c_str())->getCString());
+#else
+    CCLabelIF* label = CCLabelIF::create(CCString::createWithFormat("V %s (%s)",_version.c_str(),cocos2d::extension::CCDevice::getVersionCode().c_str())->getCString());
+#endif
+    
+    label->setScale(0.5f);
+    if (CCCommonUtils::isIosAndroidPad())
+    {
+        label->setScale(0.8f);
+    }
+    label->setFontSize(40);
+    label->setColor({255,255,255});
+    label->setAnchorPoint(CCPoint(1,1));
+    label->setPosition(ccp(CCDirector::sharedDirector()->getWinSize().width-10,CCDirector::sharedDirector()->getWinSize().height));
+    
+    addChild(label);
+}
+
+void LoadingScene::addLoadingTips()
+{
+    Size size = Director::getInstance()->getWinSize();
+    
+    auto tipsBg = CCLoadSprite::createSprite("loading_tips_bg.png");
+    tipsBg->setTag(LOADING_3);
+    tipsBg->setAnchorPoint(ccp(0.5, 0.5));
+    tipsBg->setScale(1.2f);
+    tipsBg->setPosition(ccp(size.width/2,m_barClipNode->getPositionY()+ 78));// -lpsz.height/2
+    addChild(tipsBg);
+    
+    auto tipsSize = CCSizeMake(tipsBg->getContentSize().width, tipsBg->getContentSize().height);
+    m_loadingTips = CCLabelIF::create("loading...");
+    m_loadingTips->setColor({220,187,111});
+    m_loadingTips->enableStroke(ccBLACK, 1.0);
+    m_loadingTips->setFontSize(24);
+    m_loadingTips->setDimensions(CCSizeMake(tipsSize.width*0.85, tipsSize.height*1.8));
+    m_loadingTips->setHorizontalAlignment(kCCTextAlignmentCenter);
+    m_loadingTips->setVerticalAlignment(kCCVerticalTextAlignmentCenter);
+    m_loadingTips->setAnchorPoint(ccp(0.5, 0.5));
+    m_loadingTips->setPosition(ccp(tipsBg->getPosition().x, tipsBg->getPosition().y));
+    if (CCCommonUtils::isIosAndroidPad())
+    {
+        tipsBg->setScale(2.4);
+        tipsBg->setPosition(ccp(size.width/2,(m_barClipNode->getPositionY()+ 78)*2.f));
+        
+        m_loadingTips->setFontSize(48);
+        m_loadingTips->setDimensions(CCSizeMake(tipsSize.width*0.85*2.f, tipsSize.height*1.8));
+        m_loadingTips->setPosition(ccp(tipsBg->getPosition().x, tipsBg->getPosition().y*1.f));
+    }
+    addChild(m_loadingTips);
+}
+
+void LoadingScene::addPlatformLogo()
+{
+    if (CCFileUtils::sharedFileUtils()->isFileExist("platform_logo.png"))
+    {
+        // 渠道logo
+        m_platformLogo = CCSprite::create("platform_logo.png");
+        if (m_platformLogo)
+        {
+            CCSize size = CCDirector::sharedDirector()->getWinSize();
+            m_platformLogo->setPosition(ccp(size.width/2, size.height/2));
+            addChild(m_platformLogo);
+        }
+    }
+}
 
 bool LoadingScene::init()
 {
-//    this->setScale(2.0);
-//    this->setAnchorPoint(ccp(0,0));
-    bool bRet = false;
-    addParticle();
-    
-    if (CCLayer::init()) {
-        if (CCCommonUtils::isIosAndroidPad() && !CCCommonUtils::getIsHDViewPort())
-        {
-            CCCommonUtils::setIsHDViewPort(true);
-        }
-        m_getServerListRetryTime = 0;
-        CCLabelIF::initFont();
-        GameController::getInstance();
-        //loadingLog统计
-        GameController::getInstance()->setLoadingLog("LoadingScene", "init");
-        
-        CCSize size = CCDirector::sharedDirector()->getWinSize();
-        m_isAdd = false;
-        auto loadingBarBG = CCLoadSprite::createSprite("loading_bar_BG.png");
-        loadingBarBG->setTag(LOADING_1);
-        auto loadingBar = CCLoadSprite::createSprite("loading_bar.png");
-        loadingBar->setTag(LOADING_2);
-        m_loadingProgress = CCLoadSprite::createSprite("loading_progress.png");
-        
-        string _uuid = cocos2d::extension::CCDevice::getDeviceUid();
-        GlobalData::shared()->version = cocos2d::extension::CCDevice::getVersionName();
-        // tao.yu 版本号暂时不显示
-        string _version = "";//GlobalData::shared()->version.c_str();
-//        _version = _version.substr(0,_version.length()-3);
-#if COCOS2D_DEBUG > 0
-        CCLabelIF* label = CCLabelIF::create(CCString::createWithFormat("Inner-V: %s \n hudson Code: %s \n deviceID: %s",_version.c_str(),cocos2d::extension::CCDevice::getVersionCode().c_str(),_uuid.c_str())->getCString());
-#else
-        CCLabelIF* label = CCLabelIF::create(CCString::createWithFormat("V %s (%s)",_version.c_str(),cocos2d::extension::CCDevice::getVersionCode().c_str())->getCString());
-#endif
-        
-		label->setScale(0.5f);
-        if (CCCommonUtils::isIosAndroidPad())
-        {
-            label->setScale(0.8f);
-        }
-        label->setFontSize(40);
-        label->setColor({255,255,255});
-        label->setAnchorPoint(CCPoint(1,1));
-		label->setPosition(ccp(CCDirector::sharedDirector()->getWinSize().width-10,CCDirector::sharedDirector()->getWinSize().height));
-        
-        auto addFireParticle = [](CCNode *parent, std::string particleName, const CCPoint &pt){
-            auto particle = ParticleController::createParticle(particleName);
-            auto newBatch = ParticleController::createParticleBatch(particle);
-            if (CCCommonUtils::isIosAndroidPad())
-            {
-                particle->setScale(2.4);
-            }
-            newBatch->addChild(particle);
-            particle->setPosition(pt);
-            parent->addChild(newBatch);
-        };
+    CCLayer::init();
 
-        auto addPt = ccp(0, 0);
-        if(SceneController::getInstance()->showBG){
-            SceneController::getInstance()->showBG->setPosition(ccp(size.width/2, size.height/2));
-            addChild(SceneController::getInstance()->showBG);
-            addPt = ccp(0, size.height / 2);
-            
-            auto colorLayer = CCLayerColor::create(ccc4(0, 0, 0, 100), size.width, size.height);
-            colorLayer->setAnchorPoint(ccp(0, 0));
-            addChild(colorLayer);
-        }else{
-            auto loadingBG = CCLoadSprite::createSprite("loading.png");
-            loadingBG->setAnchorPoint(ccp(0.5, 0.5));
-//            loadingBG->setScale(640.0 / loadingBG->getContentSize().width);
-            loadingBG->setPositionX(size.width/2);
-            loadingBG->setPositionY(size.height/2);
-            if(CCCommonUtils::isIosAndroidPad())
-            {
-                loadingBG->setScale(1536/653.0);
-            }
-            
-            this->addChild(loadingBG);
-
-//            m_rollingCloud = RollingSprite::create("cloud_ani.png", 30.0);
-//            this->addChild(m_rollingCloud);
-//            m_rollingCloud->setPosition(loadingBG->getPosition());
-            
-//            auto fireParticle = CCNode::create();
-//            this->addChild(fireParticle);
-//            addFireParticle(fireParticle, "LoadingMan_cloud", ccp(size.width / 2, size.height - 130));
-
-//            auto kingSpine = IFLoadingSceneArmyNode::create("Loading/Loading_3.atlas", "Spine/Loading/loading.json", "loading", 0.5);
-//            this->addChild(kingSpine);
-//            kingSpine->setPositionY(1050);
-//            if(CCCommonUtils::isIosAndroidPad())
-//            {
-//                kingSpine->setScale(2.18);
-//                kingSpine->setPosition(ccp(10,2050));
-//            }
-        }
-		addChild(label);
-        
-        m_loadPerLabel = CCLabelIF::create("0%");
-        m_loadPerLabel->setFntFile("Arial_Bold_Border.fnt");
-        m_loadPerLabel->setColor({255,255,255});
-        m_loadPerLabel->setFontSize(24);
-        m_loadPerLabel->setHorizontalAlignment(kCCTextAlignmentCenter);
-        m_loadPerLabel->setVerticalAlignment(kCCVerticalTextAlignmentCenter);
-        m_loadPerLabel->setAnchorPoint(ccp(0.5, 0.5));
-        m_loadPerLabel->setPosition(ccp(CCDirector::sharedDirector()->getWinSize().width/2,30)+ addPt);
-//        addChild(m_loadPerLabel);
-        m_loadPerLabel->setTag(LOADING_4);
-        
-        float _tipX = CCDirector::sharedDirector()->getWinSize().width/2-40;
-        m_loadtips = CCLabelIF::create(_lang("E100074").c_str());
-        m_loadtips->setFntFile("Arial_Bold_Border.fnt");
-        m_loadtips->setColor({140, 200, 200});
-        m_loadtips->setFontSize(20);
-        m_loadtips->setHorizontalAlignment(kCCTextAlignmentCenter);
-        m_loadtips->setVerticalAlignment(kCCVerticalTextAlignmentCenter);
-        m_loadtips->setAnchorPoint(ccp(0.5, 0.5));
-        m_loadtips->setPosition(ccp(_tipX,30) + addPt);
-        m_loadtips->setVisible(false);
-        addChild(m_loadtips);
-        
-        int __height = 30;
-        std::string language = LocalController::shared()->getLanguageFileName();
-        if (!CCLabelIF::canBeSupportedWithBmpFont(language))
-        {
-            __height = -20;
-        }
-
-        
-        m_FAQ = CCLabelIF::create(_lang("E100075").c_str());
-        m_FAQ->setFntFile("Arial_Bold_Border.fnt");
-        m_FAQ->setColor(ccGREEN);
-        m_FAQ->setFontSize(20);
-        m_FAQ->setHorizontalAlignment(kCCTextAlignmentCenter);
-        m_FAQ->setVerticalAlignment(kCCVerticalTextAlignmentCenter);
-        m_FAQ->setAnchorPoint(ccp(0.5, 0.5));
-        m_FAQ->setPosition(ccp(_tipX + m_loadtips->getContentSize().width/2 - __height,30) + addPt);
-        m_FAQ->setVisible(false);
-        addChild(m_FAQ);
-        
-        m_line = CCLoadSprite::createSprite("FAQ_line.png");
-        m_line->setAnchorPoint(ccp(0.5, 0));
-        m_line->setScaleX(m_FAQ->getContentSize().width/m_line->getContentSize().width-5);
-        m_line->setPosition(ccp(_tipX + m_loadtips->getContentSize().width/2 - __height,33-m_FAQ->getContentSize().height/2) + addPt);
-        m_line->setVisible(false);
-        addChild(m_line);
-        
-        m_FAQTouchNode = CCNode::create();
-        m_FAQTouchNode->setContentSize(Size(m_FAQ->getContentSize().width +10, m_FAQ->getContentSize().height+10));
-        m_FAQTouchNode->setAnchorPoint(ccp(0.5, 0.5));
-        m_FAQTouchNode->setPosition(ccp(_tipX + m_loadtips->getContentSize().width/2,30) + addPt);
-        m_FAQTouchNode->setScale(2);
-        addChild(m_FAQTouchNode);
-        
-        
-//        CCSize lbsz = loadingBar->getContentSize();
-        CCSize lbBGsz = loadingBar->getContentSize();
-
-        loadingBar->setPosition(ccp(size.width/2,lbBGsz.height*3) + addPt);
-        addChild(loadingBar);
-        
-        CCSize lpsz = m_loadingProgress->getContentSize();
-        m_barSize = lpsz+CCSizeMake(0, 30);
-//        if (CCCommonUtils::isIOSPad() || CCCommonUtils::isAdriodPad())
-//            m_barSize = lpsz*2+CCSizeMake(0, 30);
-        m_loadingProgress->setAnchorPoint(ccp(0,0));
-        m_loadingProgress->setPosition(ccp(0, lpsz.height/2));
-        m_barClipNode = CCClipNode::create(m_barSize.width, m_barSize.height);
-        m_barClipNode->addChild(m_loadingProgress);
-        m_barClipNode->setPosition(ccp((size.width-lpsz.width)/2,lbBGsz.height*3-lpsz.height) + addPt);
-        m_loadingProgress->setContentSize(CCSizeMake(m_barSize.width*0.1, m_barSize.height));
-        addChild(m_barClipNode);
-        loadingBarBG->setPosition(ccp(size.width/2,lbBGsz.height*3) + addPt);
-        addChild(loadingBarBG);
-        
-        if (CCCommonUtils::isIosAndroidPad())
-        {
-            loadingBarBG->setPosition(ccp(size.width/2,lbBGsz.height*3*2.4) + addPt);
-            loadingBarBG->setScale(2.f);
-            
-            m_barClipNode->setPosition(ccp((size.width-lpsz.width*2)/2.0,(lbBGsz.height*3-lpsz.height)*2.4) + addPt);
-            m_barClipNode->setScale(2.f);
-            
-            loadingBar->setPosition(ccp(size.width/2,lbBGsz.height*3*2.2) + addPt);
-            loadingBar->setScale(2.f);
-        }
-        
-        //加流动的光
-        m_clipNode = CCClipNode::create(m_barClipNode->getContentSize().width, m_barClipNode->getContentSize().height);
-        m_clipNode->setAnchorPoint(ccp(0, 0));
-        m_clipNode->setPosition(ccp((size.width-lpsz.width)/2,lbBGsz.height*3-30) + addPt);
-        
-        auto tmpSpr = CCLoadSprite::createSprite("Loading_bar_glow.png");
-        tmpSpr->setAnchorPoint(ccp(0, 0));
-        tmpSpr->setPosition(ccp(-tmpSpr->getContentSize().width, 8) + addPt);
-        m_clipNode->addChild(tmpSpr);
-        CCActionInterval * move1 = CCMoveTo::create(1.5, ccp(lpsz.width,8));
-        CCActionInterval * move2 = CCMoveTo::create(0, ccp(-tmpSpr->getContentSize().width,8));
-        tmpSpr->runAction(CCRepeatForever::create(CCSequence::create(move1,move2,NULL)));
-        addChild(m_clipNode);
-        if (CCCommonUtils::isIosAndroidPad())
-        {
-//            tmpSpr->setPosition(ccp(-tmpSpr->getContentSize().width, 8) + addPt);
-            m_clipNode->setPosition(ccp((size.width-lpsz.width*2)/2,(lbBGsz.height*3-30)*2.4) + addPt);
-            m_clipNode->setScale(2.f);
-        }
-        
-        //加进度条头上的光效
-        m_headParticleNode = CCNode::create();
-        m_headParticleNode->setPosition(ccp((size.width-lpsz.width)/2,lbBGsz.height*3) + addPt);
-        for (int i=1; i<=3; i++) {
-            auto particle = ParticleController::createParticle(CCString::createWithFormat("Loading_%d",i)->getCString());
-            m_headParticleNode->addChild(particle);
-        }
-        addChild(m_headParticleNode);
-        
-        if (CCCommonUtils::isIosAndroidPad())
-        {
-            m_headParticleNode->setPosition(ccp((size.width-lpsz.width)/2,lbBGsz.height*3*2.35) + addPt);
-            m_headParticleNode->setScale(2.f);
-        }
-        
-        // tao.yu logo
-//        if(isJP()){
-//            auto logFireNode1 = CCNode::create();
-//            this->addChild(logFireNode1);
-//            addFireParticle(logFireNode1, "LoadingLOGO_1", ccp(225, size.height - 170));
-//            addFireParticle(logFireNode1, "LoadingLOGO_1", ccp(430, size.height - 230));
-//
-//            //logo
-//            auto logo = CCLoadSprite::createSprite("logo.png");
-//            logo->setAnchorPoint(ccp(0.5, 0.5));
-//        
-//            logo->setPosition(ccp(size.width/2, size.height - 200));// -lpsz.height/2
-//            logo->setTag(LOADING_LOGO_TAG);
-//            addChild(logo);
-//        
-//            if (CCCommonUtils::isIosAndroidPad())
-//            {
-//                logo->setScale(1.5f);
-//                logo->setPosition(ccp(size.width/2, size.height - 300));// -lpsz.height/2
-//            }
-//        
-//            auto logFireNode2 = CCNode::create();
-//            this->addChild(logFireNode2);
-//            addFireParticle(logFireNode2, "LoadingLOGO_2", ccp(225, size.height - 180));
-//            addFireParticle(logFireNode2, "LoadingLOGO_2", ccp(430, size.height - 240));
-//        }else{
-//            //logo
-//            auto logo = CCLoadSprite::createSprite("logo.png");
-//            logo->setAnchorPoint(ccp(0.5, 0));
-//            
-//            logo->setPosition(ccp(size.width/2, 150));//
-//            logo->setTag(LOADING_LOGO_TAG);
-//            addChild(logo);
-//            
-//            auto logFireNode1 = CCNode::create();
-//            this->addChild(logFireNode1);
-//            addFireParticle(logFireNode1, "LoadingMan_fire", ccp(320, 600));
-//            if (CCCommonUtils::isIosAndroidPad())
-//            {
-//                logFireNode1->setScale(2.4);
-//                logo->setScale(1.7f);
-//                logo->setPositionY(600);
-//            }
-//
-//            auto logFireNode2 = CCNode::create();
-//            this->addChild(logFireNode2);
-//            addFireParticle(logFireNode2, "LoadingMan_cold", ccp(200, logo->getPositionY() + logo->getContentSize().height / 4));
-//            if (CCCommonUtils::isIosAndroidPad())
-//            {
-//                logFireNode2->setScale(2.4);
-//            }
-//        }
-//
-        auto tipsBg = CCLoadSprite::createSprite("loading_tips_bg.png");
-        tipsBg->setTag(LOADING_3);
-        tipsBg->setAnchorPoint(ccp(0.5, 0.5));
-        tipsBg->setScale(1.2f);
-        tipsBg->setPosition(ccp(size.width/2,m_barClipNode->getPositionY()+ 78));// -lpsz.height/2
-        
-        addChild(tipsBg);
-
-        
-        auto tipsSize = CCSizeMake(tipsBg->getContentSize().width, tipsBg->getContentSize().height);
-        
-        m_loadingTips = CCLabelIF::create("loading...");
-        m_loadingTips->setColor({220,187,111});
-        m_loadingTips->enableStroke(ccBLACK, 1.0);
-        m_loadingTips->setFontSize(24);
-        m_loadingTips->setDimensions(CCSizeMake(tipsSize.width*0.85, tipsSize.height*1.8));
-        m_loadingTips->setHorizontalAlignment(kCCTextAlignmentCenter);
-        m_loadingTips->setVerticalAlignment(kCCVerticalTextAlignmentCenter);
-        m_loadingTips->setAnchorPoint(ccp(0.5, 0.5));
-        m_loadingTips->setPosition(ccp(tipsBg->getPosition().x, tipsBg->getPosition().y));
-        addChild(m_loadingTips);
-        
-        if (CCCommonUtils::isIosAndroidPad())
-        {
-            tipsBg->setScale(2.4);
-            tipsBg->setPosition(ccp(size.width/2,(m_barClipNode->getPositionY()+ 78)*2.f));
-            
-            m_loadingTips->setFontSize(48);
-            m_loadingTips->setDimensions(CCSizeMake(tipsSize.width*0.85*2.f, tipsSize.height*1.8));
-            m_loadingTips->setPosition(ccp(tipsBg->getPosition().x, tipsBg->getPosition().y*1.f));
-        }
-        
-        if(CCFileUtils::sharedFileUtils()->isFileExist("platform_logo.png")) {
-            // 渠道logo
-            m_platformLogo = CCSprite::create("platform_logo.png");
-            if(m_platformLogo) {
-                CCSize size = CCDirector::sharedDirector()->getWinSize();
-                m_platformLogo->setPosition(ccp(size.width/2, size.height/2));
-//                m_platformLogo->setScaleX(size.width / 640);
-//                m_platformLogo->setScaleY(size.height / 852);
-                addChild(m_platformLogo);
-            }
-        }
-        setCleanFunction([](){
-            CCLoadSprite::releaseResourceBySceneId(SCENE_ID_LOADING);
-        });
-//        CCCommonUtils::recordStepByHttp("4");
-        bRet = true;
+    ParticleController::initParticle();
+    if (CCCommonUtils::isIosAndroidPad() && !CCCommonUtils::getIsHDViewPort())
+    {
+        CCCommonUtils::setIsHDViewPort(true);
     }
+    m_getServerListRetryTime = 0;
+    
+    //TODO
+    //xml init
+    LocalController::shared();//765ms
+    // load common resource
+    // 1 2 3 308
+    CCLoadSprite::loadCommonResource();//2200ms
+    // Guidance
+    CCLoadSprite::doResourceByGeneralIndex(100, true);//450ms
+    
+    CCLabelIF::initFont();
+    GameController::getInstance();
+    //loadingLog统计
+    GameController::getInstance()->setLoadingLog("LoadingScene", "init");
+    
+    CCSize size = CCDirector::sharedDirector()->getWinSize();
+    m_isAdd = false;
+    
+    auto addPt = ccp(0, 0);
+    addLoadingBG(addPt);
+    addVersionLabel();
+    
+    // m_loadtips
+    float _tipX = CCDirector::sharedDirector()->getWinSize().width/2-40;
+    m_loadtips = CCLabelIF::create(_lang("E100074").c_str());
+    m_loadtips->setFntFile(getNBFont(NB_FONT_Bold_Border));
+    m_loadtips->setColor({140, 200, 200});
+    m_loadtips->setFontSize(20);
+    m_loadtips->setHorizontalAlignment(kCCTextAlignmentCenter);
+    m_loadtips->setVerticalAlignment(kCCVerticalTextAlignmentCenter);
+    m_loadtips->setAnchorPoint(ccp(0.5, 0.5));
+    m_loadtips->setPosition(ccp(_tipX,30) + addPt);
+    m_loadtips->setVisible(false);
+    addChild(m_loadtips);
+    
+    //
+    int __height = 30;
+    std::string language = LocalController::shared()->getLanguageFileName();
+    if (!CCLabelIF::canBeSupportedWithBmpFont(language))
+    {
+        __height = -20;
+    }
+
+    // m_FAQ
+    m_FAQ = CCLabelIF::create(_lang("E100075").c_str());
+    m_FAQ->setFntFile(getNBFont(NB_FONT_Bold_Border));
+    m_FAQ->setColor(ccGREEN);
+    m_FAQ->setFontSize(20);
+    m_FAQ->setHorizontalAlignment(kCCTextAlignmentCenter);
+    m_FAQ->setVerticalAlignment(kCCVerticalTextAlignmentCenter);
+    m_FAQ->setAnchorPoint(ccp(0.5, 0.5));
+    m_FAQ->setPosition(ccp(_tipX + m_loadtips->getContentSize().width/2 - __height,30) + addPt);
+    m_FAQ->setVisible(false);
+    addChild(m_FAQ);
+    
+    // m_line
+    m_line = CCLoadSprite::createSprite("FAQ_line.png");
+    m_line->setAnchorPoint(ccp(0.5, 0));
+    m_line->setScaleX(m_FAQ->getContentSize().width/m_line->getContentSize().width-5);
+    m_line->setPosition(ccp(_tipX + m_loadtips->getContentSize().width/2 - __height,33-m_FAQ->getContentSize().height/2) + addPt);
+    m_line->setVisible(false);
+    addChild(m_line);
+    
+    // m_FAQTouchNode
+    m_FAQTouchNode = CCNode::create();
+    m_FAQTouchNode->setContentSize(Size(m_FAQ->getContentSize().width +10, m_FAQ->getContentSize().height+10));
+    m_FAQTouchNode->setAnchorPoint(ccp(0.5, 0.5));
+    m_FAQTouchNode->setPosition(ccp(_tipX + m_loadtips->getContentSize().width/2,30) + addPt);
+    m_FAQTouchNode->setScale(2);
+    addChild(m_FAQTouchNode);
+    
+    //
+    auto loadingBar = CCLoadSprite::createSprite("loading_bar.png");
+    loadingBar->setTag(LOADING_2);
+    CCSize lbBGsz = loadingBar->getContentSize();
+    loadingBar->setPosition(ccp(size.width/2,lbBGsz.height*3) + addPt);
+    addChild(loadingBar);
+    
+    m_loadingProgress = CCLoadSprite::createSprite("loading_progress.png");
+    CCSize lpsz = m_loadingProgress->getContentSize();
+    m_barSize = lpsz+CCSizeMake(0, 30);
+
+    m_loadingProgress->setAnchorPoint(ccp(0,0));
+    m_loadingProgress->setPosition(ccp(0, lpsz.height/2));
+    m_barClipNode = CCClipNode::create(m_barSize.width, m_barSize.height);
+    m_barClipNode->addChild(m_loadingProgress);
+    m_barClipNode->setPosition(ccp((size.width-lpsz.width)/2,lbBGsz.height*3-lpsz.height) + addPt);
+    m_loadingProgress->setContentSize(CCSizeMake(m_barSize.width*0.1, m_barSize.height));
+    addChild(m_barClipNode);
+    
+    auto loadingBarBG = CCLoadSprite::createSprite("loading_bar_BG.png");
+    loadingBarBG->setTag(LOADING_1);
+    loadingBarBG->setPosition(ccp(size.width/2,lbBGsz.height*3) + addPt);
+    addChild(loadingBarBG);
+    
+    if (CCCommonUtils::isIosAndroidPad())
+    {
+        loadingBarBG->setPosition(ccp(size.width/2,lbBGsz.height*3*2.4) + addPt);
+        loadingBarBG->setScale(2.f);
+        
+        m_barClipNode->setPosition(ccp((size.width-lpsz.width*2)/2.0,(lbBGsz.height*3-lpsz.height)*2.4) + addPt);
+        m_barClipNode->setScale(2.f);
+        
+        loadingBar->setPosition(ccp(size.width/2,lbBGsz.height*3*2.2) + addPt);
+        loadingBar->setScale(2.f);
+    }
+    
+    // 加流动的光
+    m_clipNode = CCClipNode::create(m_barClipNode->getContentSize().width, m_barClipNode->getContentSize().height);
+    m_clipNode->setAnchorPoint(ccp(0, 0));
+    m_clipNode->setPosition(ccp((size.width-lpsz.width)/2,lbBGsz.height*3-30) + addPt);
+    auto tmpSpr = CCLoadSprite::createSprite("Loading_bar_glow.png");
+    tmpSpr->setAnchorPoint(ccp(0, 0));
+    tmpSpr->setPosition(ccp(-tmpSpr->getContentSize().width, 8) + addPt);
+    m_clipNode->addChild(tmpSpr);
+    CCActionInterval * move1 = CCMoveTo::create(1.5, ccp(lpsz.width,8));
+    CCActionInterval * move2 = CCMoveTo::create(0, ccp(-tmpSpr->getContentSize().width,8));
+    tmpSpr->runAction(CCRepeatForever::create(CCSequence::create(move1,move2,NULL)));
+    addChild(m_clipNode);
+    if (CCCommonUtils::isIosAndroidPad())
+    {
+        m_clipNode->setPosition(ccp((size.width-lpsz.width*2)/2,(lbBGsz.height*3-30)*2.4) + addPt);
+        m_clipNode->setScale(2.f);
+    }
+    
+    // 加进度条头上的光效
+    m_headParticleNode = CCNode::create();
+    m_headParticleNode->setPosition(ccp((size.width-lpsz.width)/2,lbBGsz.height*3) + addPt);
+    for (int i=1; i<=3; i++) {
+        auto particle = ParticleController::createParticle(CCString::createWithFormat("Loading_%d",i)->getCString());
+        m_headParticleNode->addChild(particle);
+    }
+    if (CCCommonUtils::isIosAndroidPad())
+    {
+        m_headParticleNode->setPosition(ccp((size.width-lpsz.width)/2,lbBGsz.height*3*2.35) + addPt);
+        m_headParticleNode->setScale(2.f);
+    }
+    addChild(m_headParticleNode);
+
+    addLoadingTips();
+    addPlatformLogo();
+    
+    setCleanFunction([](){
+        CCLoadSprite::releaseResourceBySceneId(SCENE_ID_LOADING);
+    });
+
     this->scheduleOnce(schedule_selector(LoadingScene::show45SecondAlert), 45);
-    CCLOG("test init end");
-    return bRet;
+
+    return true;
 }
+
+#pragma mark *
 
 bool LoadingScene::onTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
@@ -403,10 +346,6 @@ void LoadingScene::onGoToHelpShift(CCObject* p)
     config->setObject(meta, HS_META_DATA_KEY);
     GlobalData::shared()->isBind = true;
     HelpshiftCocos2dx::showConversation(config);
-}
-
-void LoadingScene::addParticle(){
-    ParticleController::initParticle();
 }
 
 void LoadingScene::onEnter(){
@@ -464,7 +403,7 @@ void LoadingScene::onEnter(){
                 node->setPositionY(node->getPositionY() + add);
             }
         };
-        addY(m_loadPerLabel);
+
         addY(m_loadtips);
         addY(m_FAQ);
         addY(m_line);
@@ -905,7 +844,7 @@ void LoadingScene::loadingAni(float t)
     } else {
         float pro = (LOADING_STEP-m_steps+1)*1.0/(LOADING_STEP*1.0);
         string proInfo = CC_ITOA(pro*100);
-        m_loadPerLabel->setString(proInfo+"%");
+
         float curX = m_barSize.width*pro;
         m_clipNode->setContentSize(CCSizeMake(curX, m_barSize.height));
         m_barClipNode->setContentSize(CCSizeMake(curX, m_barSize.height));
@@ -925,13 +864,6 @@ void LoadingScene::loadingAni(float t)
             m_platformLogo = NULL;
         }
     }
-}
-
-void LoadingScene::parseXML() {
-    return;
-//    LocalController::shared()->init();
-//    GlobalData::shared()->isXMLInitFlag = true;
-//    doLoginInit();
 }
 
 void LoadingScene::stepLoading(CCObject* p)
@@ -994,7 +926,6 @@ void LoadingScene::gotoMainScene(float t)
     if (m_steps > 1) {
         float pro = (LOADING_STEP-m_steps+1)*1.0/(LOADING_STEP*1.0);
         string proInfo = CC_ITOA(pro*100);
-        m_loadPerLabel->setString(proInfo+"%");
         
         float curX = m_barSize.width*pro;
         m_clipNode->setContentSize(CCSizeMake(curX, m_barSize.height+30));
@@ -1021,7 +952,7 @@ void LoadingScene::gotoMainScene(float t)
         unschedule(schedule_selector(LoadingScene::gotoMainScene));
         m_barClipNode->setContentSize(m_barSize);
         m_clipNode->setContentSize(m_barSize);
-        m_loadPerLabel->setString("100%");
+
         m_headParticleNode->setPositionX(m_clipNode->getPositionX()+m_barSize.width);
         
         //行云log

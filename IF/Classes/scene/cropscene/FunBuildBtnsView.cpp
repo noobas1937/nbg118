@@ -61,16 +61,16 @@ bool FunBuildBtnsView::init()
     CCBLoadFile("BuildBtnView",this,this);
     m_name1->setString(_lang("102271"));
     m_name2->setString(_lang("102270"));
-    m_name1->setFntFile("Arial_Bold_Border.fnt");
-    m_name2->setFntFile("Arial_Bold_Border.fnt");
-    m_name3->setFntFile("Arial_Bold_Border.fnt");
-    m_name4->setFntFile("Arial_Bold_Border.fnt");
-    m_msg5->setFntFile("Arial_Bold_Border.fnt");
-    m_goldLabel->setFntFile("Arial_Bold_Border.fnt");
-    m_IncreasedGlodTxt->setFntFile("Arial_Bold_Border.fnt");
-    m_name5->setFntFile("Arial_Bold_Border.fnt");
-    m_IncreasedTime->setFntFile("Arial_Bold_Border.fnt");
-    m_msgV5->setFntFile("Arial_Bold_Border.fnt");
+    m_name1->setFntFile(getNBFont(NB_FONT_Bold_Border));
+    m_name2->setFntFile(getNBFont(NB_FONT_Bold_Border));
+    m_name3->setFntFile(getNBFont(NB_FONT_Bold_Border));
+    m_name4->setFntFile(getNBFont(NB_FONT_Bold_Border));
+    m_msg5->setFntFile(getNBFont(NB_FONT_Bold_Border));
+    m_goldLabel->setFntFile(getNBFont(NB_FONT_Bold_Border));
+    m_IncreasedGlodTxt->setFntFile(getNBFont(NB_FONT_Bold_Border));
+    m_name5->setFntFile(getNBFont(NB_FONT_Bold_Border));
+    m_IncreasedTime->setFntFile(getNBFont(NB_FONT_Bold_Border));
+    m_msgV5->setFntFile(getNBFont(NB_FONT_Bold_Border));
     
     this->getAnimationManager()->setAnimationCompletedCallback(this, callfunc_selector(FunBuildBtnsView::animationFunc));
     return true;
