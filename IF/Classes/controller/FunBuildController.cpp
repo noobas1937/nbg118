@@ -953,9 +953,9 @@ bool FunBuildController::startUpFunBuild(int itemId, int gold, bool isForce, int
     curFunBuildId = itemId;
     
     if(info.type == FUN_BUILD_MAIN && info.level==5) {//5级大本升级时记录，用来触发引导使用
-        string key = GlobalData::shared()->playerInfo.uid + "_" +CC_ITOA(info.level);
-        CCUserDefault::sharedUserDefault()->setStringForKey(GUIDE_MAINCITY_LEVEL_UP, key);
-        CCUserDefault::sharedUserDefault()->flush();
+//        string key = GlobalData::shared()->playerInfo.uid + "_" +CC_ITOA(info.level);//fusheng 先关掉
+//        CCUserDefault::sharedUserDefault()->setStringForKey(GUIDE_MAINCITY_LEVEL_UP, key);
+//        CCUserDefault::sharedUserDefault()->flush();
     }
     
     if(curFunBuildId == FUN_BUILD_MAIN_CITY_ID){
@@ -1987,7 +1987,7 @@ string FunBuildController::orderBuild(string buildings)
 
 void FunBuildController::initPosPath()
 {
-    int soliderZorder = 1999 - 10;  //主场景中solider所在batch node的zorder为1999
+    int soliderZorder = 1999 - 10;  //ljf, 主场景中solider所在batch node的zorder为1999
     if (9) { int pos_idx = 9; vector<cocos2d::CCPoint> path;
         path.push_back(Vec2(2479, 1935)); // p6
         path.push_back(Vec2(2514, 2206)); // p7

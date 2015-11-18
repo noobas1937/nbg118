@@ -35,9 +35,9 @@
 void AppLibHelper::initLibs(){
     
     //helpshift
-    HelpshiftCocos2dx::install("78595a4520a0688ffb956c4067a028e9",
+    HelpshiftCocos2dx::install("d364a0d2a0b3856ba1aa8d4cc0371855",
                                "elex.helpshift.com",
-                               "elex_platform_20141202023300092-786765b5a741399");
+                               "elex_platform_20151106082553273-c091635469ad514");
     
     //adjust
     NSString *yourAppToken = @"evjqgpfe66zl";
