@@ -545,7 +545,8 @@ void Walker::update(float delta)
 void Walker::startMove()
 {
     int totalPointInGraph = mPointsInPathGraph.size();
-    int randSeq = rand() % (totalPointInGraph);
+    int randSeq = 1 + rand() % (totalPointInGraph - 1);
+    
     nextMove(randSeq);
 }
 
