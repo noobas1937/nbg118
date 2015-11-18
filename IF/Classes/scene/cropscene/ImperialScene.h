@@ -70,6 +70,7 @@ public:
     void onVikingsShipMove(NBSprite3D * pSprite3d);
     void onVikingsShipIdle(NBSprite3D * pSprite3d);
     bool onVikingsShipTouched(CCTouch* pTouch);
+    void createWalker(float t);
     //end a by ljf
     
     void onUpdateInfo();
@@ -328,6 +329,10 @@ private:
     CCSafeObject<CCSpriteBatchNode> m_rescustombatchNode;
     CCSafeObject<CCSpriteBatchNode> m_resBlentBatchNode;
     CCSafeObject<CCSpriteBatchNode> m_soldierBatchNode;
+    //begin a by ljf
+    CCSafeObject<CCSpriteBatchNode> m_walkerBatchNode;
+    CCSafeObject<CCLayer> m_walkerLayer;
+    //end a by ljf
     CCSafeObject<CCSpriteBatchNode> m_chrTreeBatchNode;
     CCSafeObject<CCSpriteBatchNode> m_chrTreeBlentBatchNode;
     CCSafeObject<CCSpriteBatchNode> m_cludeBatchNode;
@@ -342,6 +347,9 @@ private:
     CCSafeObject<CCPointArray> m_ptArrowClick;
     CCSafeObject<CCPointArray> m_pt2Array;
     CCSafeObject<CCArray> m_soldierArray;
+    //begin a by ljf
+    //CCSafeObject<CCArray> m_walkerArray;
+    //end a by ljf
     
     vector<CCParticleBatchNode*> m_parVec;
     vector<CCParticleBatchNode*> m_cloudVec;
