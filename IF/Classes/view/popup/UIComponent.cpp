@@ -530,7 +530,7 @@ UIComponent::~UIComponent(){
 
 
 
-UIComponent::UIComponent():m_bUIShowFlag(true),m_goldNum(NULL){
+UIComponent::UIComponent():m_bUIShowFlag(true),m_goldNum(NULL),uiStatus(UIStatus::UINOMOVE),moveBackTime(0){
     
     m_CanClickTarget = false;
     
@@ -774,6 +774,7 @@ bool UIComponent::init(CCSize size)
     m_giftNode2->addChild(particle2);
 
     this->schedule(schedule_selector(UIComponent::updateTime), 1);
+    this->scheduleUpdate();
     this->updateTime(0);
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(UIComponent::refreshInit), MSG_INIT_FINISH, NULL);//init之后 如果ui已经创建修改ui属性
 
@@ -6928,6 +6929,8 @@ void UIComponent::moveOut()
 {
     float totalSecend = 0.5;
     
+    float dt = 0;//fusheng 时间以top为主
+    
     if(main_ui_top)
     {
 
@@ -6939,10 +6942,12 @@ void UIComponent::moveOut()
         
         if (maxLength != 0) {
             
-            float dt = (curPos - movePosTop).length()/maxLength*totalSecend;
+            dt = (curPos - movePosTop).length()/maxLength*totalSecend;
             if (dt != 0) {
                 
-                auto mt = MoveTo::create(dt, movePosTop);
+                auto mt = Sequence::createWithTwoActions( MoveTo::create(dt, movePosTop),CallFunc::create([this]{
+                    uiStatus = UIStatus::UIMOVED;
+                }));
                 
                 mt->setTag(89757);
                 
@@ -6964,7 +6969,7 @@ void UIComponent::moveOut()
         
         if (maxLength != 0) {
             
-            float dt = (curPos - movePosLeft).length()/maxLength*totalSecend;
+//            float dt = (curPos - movePosLeft).length()/maxLength*totalSecend;
             if (dt != 0) {
                 
                 auto mt = MoveTo::create(dt, movePosLeft);
@@ -6989,7 +6994,7 @@ void UIComponent::moveOut()
         
         if (maxLength != 0) {
             
-            float dt = (curPos - movePosRight).length()/maxLength*totalSecend;
+//            float dt = (curPos - movePosRight).length()/maxLength*totalSecend;
             if (dt != 0) {
                 
                 auto mt = MoveTo::create(dt, movePosRight);
@@ -7015,7 +7020,7 @@ void UIComponent::moveOut()
         
         if (maxLength != 0) {
             
-            float dt = (curPos - movePosBottom).length()/maxLength*totalSecend;
+//            float dt = (curPos - movePosBottom).length()/maxLength*totalSecend;
             if (dt != 0) {
                 
                 auto mt = MoveTo::create(dt, movePosBottom);
@@ -7029,10 +7034,140 @@ void UIComponent::moveOut()
     }
 }
 
+
+void UIComponent::handleTouchEvent(UITouchEvent event)//fusheng 处理点击事件
+{
+    switch (uiStatus) {
+       
+        case UIStatus::UINOMOVE :
+            
+            
+            switch (event) {
+                case UITouchEvent::UITOUCHBEGIN :
+                    
+                    uiStatus = UIStatus::UIMOVEOUTTING;
+                    moveOut();
+                    
+                    break;
+                case UITouchEvent::UITOUCHEND://fusheng 不处理
+                    
+                    break;
+                    
+            }
+            
+            
+            break;
+        case UIStatus::UIMOVEOUTTING :
+            
+            switch (event) {
+                case UITouchEvent::UITOUCHBEGIN ://fusheng 不处理
+                    this->stopActionByTag(446688);
+                    moveOut();
+                    break;
+                case UITouchEvent::UITOUCHEND:
+                    this->stopActionByTag(446688);
+                    auto seq = Sequence::createWithTwoActions(CCDelayTime::create(0.5), CallFunc::create([this]{
+                        uiStatus = UIStatus::UIMOVEBACKING;
+                        
+                        this->moveIn();
+                    }));
+                    
+                    seq->setTag(446688);
+                    
+                    this->runAction(seq);
+                    
+//                    uiStatus = UIMOVEBACKING;
+//                    moveIn();
+                    
+                    break;
+                    
+            }
+            
+            break;
+
+            
+        
+            
+        case UIStatus::UIMOVED :
+            
+            switch (event) {
+                case UITouchEvent::UITOUCHBEGIN :
+                    
+//                    this->stopActionByTag(886644);
+                    this->stopActionByTag(446688);
+                    break;
+                case UITouchEvent::UITOUCHEND:
+                    
+//                    this->stopActionByTag(886644);
+//                    auto seq = Sequence::createWithTwoActions(CCDelayTime::create(0.5), CallFunc::create([this]{
+//                        uiStatus = UIStatus::UIMOVEBACKING;
+//                        
+//                        this->moveIn();
+//                    }));
+//                    
+//                    seq->setTag(886644);
+//                    
+//                    this->runAction(seq);
+                    
+                    break;
+                    
+            }
+            
+            break;
+            
+        case UIStatus::UIMOVEBACKING :
+            
+            switch (event) {
+                case UITouchEvent::UITOUCHBEGIN :
+                    uiStatus = UIStatus::UIMOVEOUTTING;
+                    moveOut();
+                    
+                    break;
+                case UITouchEvent::UITOUCHEND://fusheng 不处理
+                    
+                    break;
+                    
+            }
+            
+            break;
+        
+       
+    }
+}
+
+void UIComponent::update(float dt)
+{
+    if(uiStatus == UIStatus::UIMOVED)
+    {
+        moveBackTime += dt;
+        
+        if(moveBackTime>0.5)
+        {
+            uiStatus = UIStatus::UIMOVEBACKING;
+            this->moveIn();
+            moveBackTime = 0;
+        }
+        
+    }
+}
+
+void UIComponent::holdMoved()
+{
+    if(uiStatus == UIStatus::UIMOVED)
+    {
+        moveBackTime = 0;
+        
+    }
+
+}
+
 void UIComponent::moveIn()
 {
     float totalSecend = 0.5;
 //    if(isMoveAction())
+    
+
+    float dt = 0; //时间以top为主
     if(true)
     {
         if(main_ui_top)
@@ -7046,10 +7181,13 @@ void UIComponent::moveIn()
             
             if (maxLength != 0) {
                 
-                float dt = (curPos - originPosTop).length()/maxLength*totalSecend;
+                dt = (curPos - originPosTop).length()/maxLength*totalSecend;
                 if (dt != 0) {
                     
-                    auto mt = MoveTo::create(dt, originPosTop);
+                    uiStatus = UIStatus::UIMOVEBACKING;
+                    auto mt = Sequence::createWithTwoActions( MoveTo::create(dt, originPosTop),CallFunc::create([this]{
+                        uiStatus = UIStatus::UINOMOVE;
+                    }));
                     
                     mt->setTag(89757);
                     
@@ -7071,7 +7209,7 @@ void UIComponent::moveIn()
             
             if (maxLength != 0) {
                 
-                float dt = (curPos - originPosLeft).length()/maxLength*totalSecend;
+//                float dt = (curPos - originPosLeft).length()/maxLength*totalSecend;
                 if (dt != 0) {
                     
                     auto mt = MoveTo::create(dt, originPosLeft);
@@ -7096,7 +7234,7 @@ void UIComponent::moveIn()
             
             if (maxLength != 0) {
                 
-                float dt = (curPos - originPosRight).length()/maxLength*totalSecend;
+//                float dt = (curPos - originPosRight).length()/maxLength*totalSecend;
                 if (dt != 0) {
                     
                     auto mt = MoveTo::create(dt, originPosRight);
@@ -7122,7 +7260,7 @@ void UIComponent::moveIn()
             
             if (maxLength != 0) {
                 
-                float dt = (curPos - originPosBottom).length()/maxLength*totalSecend;
+//                float dt = (curPos - originPosBottom).length()/maxLength*totalSecend;
                 if (dt != 0) {
                     
                     auto mt = MoveTo::create(dt, originPosBottom);

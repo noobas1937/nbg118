@@ -66,7 +66,7 @@ bool HFViewport::init()
         isMove = false;
         notMove = false;
         this->scheduleUpdate();
-        triggerTime = 0.1;//fusheng 两秒
+        triggerTime = 0.3;//fusheng 两秒
         return true;
     }
     while(0);
@@ -83,15 +83,21 @@ void HFViewport::onEnter()
 }
 void HFViewport::update(float time)
 {
+    
+    
+
     if (isBeginTouch&&isCanMoveAction) {
         
         touchSecond += time;
+        
+        UIComponent::getInstance()->holdMoved();
         
         if (touchSecond >= triggerTime) {
             if (!isUIMove) {
                 isUIMove = true;
                 //fusheng 移动UI
-                UIComponent::getInstance()->moveOut();
+//                UIComponent::getInstance()->moveOut();
+                UIComponent::getInstance()->handleTouchEvent(UITouchEvent::UITOUCHBEGIN);
             }
             
         }
@@ -894,16 +900,16 @@ void HFViewport::onTouchesMoved(const std::vector<Touch*>& pTouches, Event *pEve
                 touchSecond = 0.0;
                 break;
             }
-//            if (isBeginTouch)
-//            {
-//                CCTouch* ptouch =getAnyTouchObject(pTouches);
-//                auto newPos = ptouch->getLocation();
-//                
-//                if (ccpSub(newPos, mPreviewPos).length()>10) {
-//                    isBeginTouch = false;
-//                    touchSecond = 0.0;
-//                }
-//            }
+            if (isBeginTouch&&UIComponent::getInstance()->uiStatus == UIStatus::UINOMOVE)
+            {
+                CCTouch* ptouch =getAnyTouchObject(pTouches);
+                auto newPos = ptouch->getLocation();
+                
+                if (ccpSub(newPos, mPreviewPos).length()>10) {
+                    isBeginTouch = false;
+                    touchSecond = 0.0;
+                }
+            }
             
             if (!mForceStopScroll && mMovable) {
                 CCPoint newPoint, moveDistance;
@@ -1046,7 +1052,8 @@ void HFViewport::onTouchesEnded(const std::vector<Touch*>& pTouches, Event *pEve
 //        {
 //         
 //        }));
-        UIComponent::getInstance()->moveIn();
+        UIComponent::getInstance()->handleTouchEvent(UITouchEvent::UITOUCHEND);
+//        UIComponent::getInstance()->moveIn();
         isUIMove = false;
 
     }

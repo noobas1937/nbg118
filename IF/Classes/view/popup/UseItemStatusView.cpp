@@ -151,6 +151,17 @@ bool UseItemStatusView::init()
         m_scrollView->setContentOffset(ccp(0, m_infoList->getContentSize().height - contentHeight));
         
         m_scrollH = contentHeight;
+        
+        //fusheng begin 调整背景大小
+        changeBGMaxHeight(m_viewBg);
+        
+//        auto winSize = Director::getInstance()->getVisibleSize();
+        
+//        auto pp = m_viewBg->getParent()->convertToNodeSpaceAR(Vec2(0,winSize.height));
+        
+        m_viewBg->setPositionY(m_viewBg->getPositionY()+m_viewBg->getContentSize().height-newBgHeight);
+        
+        //fusheng end
     }
     
     m_barSize = m_bar->getContentSize();

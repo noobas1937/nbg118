@@ -39,6 +39,20 @@ enum OldTitleType
     UIComponentOldTitle_SEVEN_TYPE,
 };
 
+enum UIStatus//fusheng UI状态
+{
+    UINOMOVE,//UI没有移动
+    UIMOVEOUTTING,//UI往外移动中
+    UIMOVED,//UI已经移出去
+    UIMOVEBACKING,//UI往回移动中
+};
+
+enum UITouchEvent//fusheng
+{
+    UITOUCHBEGIN,
+    UITOUCHEND
+};
+
 class UIComponent;
 
 class UIComponentOldTitle : public CCLayer
@@ -474,6 +488,15 @@ public:
     void showShakeGuideLayer();
     CC_SYNTHESIZE(int, m_queueCount, queueCount);
     void removeShakeGuide();
+    
+    UIStatus uiStatus;
+    void handleTouchEvent(UITouchEvent event);
+    
+    void holdMoved();//保持在外部
+    
+    void update(float dt);
+    
+    float moveBackTime;
 public:
     void onPopupReturnClick(CCObject * pSender, CCControlEvent pCCControlEvent);
     void onCancelDelMailClick(CCObject * pSender, CCControlEvent pCCControlEvent);
