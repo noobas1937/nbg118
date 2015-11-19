@@ -375,6 +375,9 @@ public:
     void updateBuildState(bool st=false, int qid=0);
     void loadMailResource();
     
+    
+    void updateDragonStatus(CCObject* params);
+    
     void refreshUIComponent();
     void refreshChatInfo(int type);
     void refreshChatInfoIOS(ChatInfo info);
@@ -633,6 +636,8 @@ private:
     CCSafeObject<CCSprite> m_alliance;
     CCSafeObject<CCSprite> m_homeBack;
     CCSafeObject<CCSprite> m_configSet;
+    
+    CCSafeObject<CCSprite>  m_dragonIcon;
 
     CCSafeObject<CCNode> m_homeBG;
     CCSafeObject<CCSprite> m_homeBG_NB;//fusheng 添加一个新的回城按钮
