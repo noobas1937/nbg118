@@ -9,6 +9,10 @@
 #include "CCLoadSprite.h"
 #include "SceneController.h"
 #include "DynamicResourceController.h"
+#include "NBDLCController.hpp"
+#include <map>
+
+static std::map<const char*, bool> map_NBDLCController;
 
 #define CC_2x2_WHITE_IMAGE_KEY  "cc_2x2_white_image"
 static unsigned char cc_2x2_white_image[] = {
@@ -25,6 +29,12 @@ static unsigned char cc_2x2_white_image[] = {
 #define WORLD_COUNT 4
 
 USING_NS_CC;
+
+void CCLoadSprite::init()
+{
+    map_NBDLCController.clear();
+}
+
 void CCLoadSprite::doLoadCommonResourceAsync(){
 //    CCLog("android_test_doLoadCommonResourceAsync");
 //#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
@@ -409,6 +419,29 @@ if (CCTexture2D::useDownloadResource() == true){
             }else{
                 cocos2d::CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(buffer);
             }
+        }
+    }
+    
+    // guojiang
+    if (strcmp(path, COMMON_PATH) == 0)
+    {
+        char buffer[32];
+        sprintf(buffer, "%d", index);
+        
+        string idx = (const char*)buffer;
+        string manifest_file_path = "manifest/Common_" + idx + "_main.manifest";
+        string version_filename = "Common_" + idx + "_version.manifest";
+        string temp_manifest_filename = "Common_" + idx + "_project.manifest.temp";
+        string manifest_filename = "Common_" + idx + "_project.manifest";
+        
+        auto it = map_NBDLCController.find(manifest_file_path.c_str());
+        if (it == map_NBDLCController.end())
+        {
+            auto dlc = NBDLCController::create(manifest_file_path, version_filename, temp_manifest_filename, manifest_filename);
+            map_NBDLCController[manifest_file_path.c_str()] = true;
+            dlc->start(manifest_file_path, [](string manifest_file_path_as_key, EventAssetsManagerEx * event){
+                
+            });
         }
     }
 }

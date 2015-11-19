@@ -47,7 +47,9 @@ enum CCLoadSpriteType{
     CCLoadSpriteType_MONSTERLAYERLITTLE,
 };
 class CCLoadSprite {
-public:    
+public:
+    static void init();
+    
     static void loadResourceBySceneId(int sceneId,cocos2d::CCDictionary *dict = NULL);
     static void releaseResourceBySceneId(int sceneId,cocos2d::CCDictionary *dict = NULL);
     static void loadCommonResource();

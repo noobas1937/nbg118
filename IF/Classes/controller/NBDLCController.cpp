@@ -9,7 +9,7 @@
 #include "NBDLCController.hpp"
 #include "../Ext/CCDevice.h"
 
-static bool hasBeenAddedSearchPath = false;
+static string current_dlc_path = "";
 
 NBDLCController* NBDLCController::create(string manifest_file_path,
                                          string version_filename,
@@ -19,8 +19,8 @@ NBDLCController* NBDLCController::create(string manifest_file_path,
     auto p = new NBDLCController();
     p->m_dlcPath = FileUtils::getInstance()->getWritablePath() + "dlc" + cocos2d::extension::CCDevice::getVersionName();
     p->m_serverAssetsPath = p->m_dlcPath; // 文件下载解压后存放的目录
-    if (!hasBeenAddedSearchPath) FileUtils::getInstance()->addSearchPath(p->m_serverAssetsPath, true); // 查找文件时优先搜索从服务器下载下来的文件
-    hasBeenAddedSearchPath = true;
+    if (current_dlc_path != p->m_serverAssetsPath) FileUtils::getInstance()->addSearchPath(p->m_serverAssetsPath, true); // 查找文件时优先搜索从服务器下载下来的文件
+    current_dlc_path = p->m_serverAssetsPath;
     p->m_pAssetsManagerEx = AssetsManagerEx::create(manifest_file_path, p->m_dlcPath, version_filename, temp_manifest_filename, manifest_filename);
     p->m_pAssetsManagerEx->retain();
     

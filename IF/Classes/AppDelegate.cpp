@@ -96,6 +96,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 //    CCLOG("Time profiler: [%ld] ,line: [%d]",CCMathUtils::getCurrentTime(),__LINE__);
     
     // run
+    CCLoadSprite::init();
     pDirector->runWithScene(SceneContainer::create());
     SceneController::getInstance()->gotoLoading();//2300ms
     

@@ -16,14 +16,14 @@ def hello():
 def getAPKS_118():
     ret = ''
     package = os.path.split(os.path.realpath(__file__))[0] + '/static/package/'
-    print(package)
+    # print(package)
     for parent, dirnames, filenames in os.walk(package):
         for filename in filenames:
             fn, ext = os.path.splitext(filename)
             if ext == '.apk':
                 apk_path = os.path.join(parent, filename)
                 ret = ret + '<a href="/static/package/%s" download="%s">%s</a><br><br>' % (apk_path.replace(package, ''), filename, fn)
-    print(ret)
+    # print(ret)
     if len(ret) <= 0:
         ret = 'no apks for download'
     return ret
