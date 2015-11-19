@@ -1,6 +1,6 @@
 #!/bin/sh
 
-BUILD_NUMBER=1007
+BUILD_NUMBER=1008
 
 sourceroot=../
 packageroot=../../package
