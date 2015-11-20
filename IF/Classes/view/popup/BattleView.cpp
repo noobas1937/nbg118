@@ -211,15 +211,13 @@ bool BattleView::init(unsigned int startIndex,unsigned int targetIndex,unsigned 
         auto armyInfo = GlobalData::shared()->armyList[GlobalData::shared()->titanInfo.titanId];
         if(armyInfo.free == 0)
         {
-            return false;
+            return ;
         }
         if (selectDragon) {
             
             selectDragon = false;//
             
             this->refreshDragonNumStatus();
-            
-            return true;
             
         }
         else
@@ -252,11 +250,10 @@ bool BattleView::init(unsigned int startIndex,unsigned int targetIndex,unsigned 
                 this->refreshDragonNumStatus();
             }
             
-             return true;
-    
+                 
         }
         
-         return false;
+         return ;
     };
     
     listener->setSwallowTouches(true);
