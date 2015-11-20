@@ -65,6 +65,7 @@
 
 //begin a by ljf
 #include "Walker.h"
+#include "Enemy.h"
 //end a by ljf
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
@@ -568,7 +569,14 @@ void ImperialScene::buildingCallBack(CCObject* params)
     cocos2d::CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Imperial/Imperial_22.plist");
     m_walkerBatchNode = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("b010_0_N_move_0.png")->getTexture());
     m_touchLayer->addChild(m_walkerBatchNode, 1999);
+    
+    cocos2d::CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Imperial/Imperial_1.plist");
+    m_jianBatchNode = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("jian_0.png")->getTexture());
+    m_touchLayer->addChild(m_jianBatchNode, 1999);
+    
     this->schedule(schedule_selector(ImperialScene::createWalker), 0.25, 1, 0.0f);
+    this->schedule(schedule_selector(ImperialScene::createEnemy), 15.0, CC_REPEAT_FOREVER, 0.0f);
+    //this->schedule(schedule_selector(ImperialScene::shootArrow), 5.0, CC_REPEAT_FOREVER, 5.0f);
     //end a by ljf
     m_talkACTCell = TalkNoticeCell::create(0);
     m_talkACTCell->setVisible(false);
@@ -898,7 +906,7 @@ void ImperialScene::createWalker(float t)
         for (int i = 1; i <= 1; i++)
         {
             string m_icon = "b010";
-            Walker* soldier = Walker::create(m_walkerBatchNode, NULL,0,0,m_icon,"NE",false);
+            Walker* soldier = Walker::create(m_walkerBatchNode, NULL, 0,0,m_icon,"NE",false);
             soldier->getShadow()->setScale(0.5);
             
             soldier->setAnchorPoint(ccp(0.5, 0.5));
@@ -909,6 +917,40 @@ void ImperialScene::createWalker(float t)
 
     }
 }
+
+void ImperialScene::createEnemy(float t)
+{
+    for (int i = 1; i <= 2; i++)
+    {
+        OutsideEnemy* soldier = OutsideEnemy::create(m_walkerBatchNode, m_jianBatchNode, ENEMY_TYPE_WILDMAN);
+        //soldier->getShadow()->setScale(0.5);
+        
+        soldier->setAnchorPoint(ccp(0.5, 0.5));
+        
+        m_walkerLayer->addChild(soldier);
+        
+        soldier->move();
+        //soldier->setSprScale(1);
+    }
+}
+
+void ImperialScene::shootArrow(float t)
+{
+    CCPoint p1 = OutsideEnemy::ArrowBegin1;
+    CCPoint p11 = OutsideEnemy::ArrowBegin2;
+    CCPoint p2 = OutsideEnemy::PathEnd;
+    //CCPoint localP = m_jianBatchNode->convertToNodeSpaceAR(p2);
+    //CCPoint pos = ccp(localP.x+CCMathUtils::getRandomInt(450, 600), localP.y-CCMathUtils::getRandomInt(300, 400));
+    //CCPoint pos = m_jianBatchNode->convertToNodeSpaceAR(p1);
+    GongJian2* gong1 = GongJian2::create(m_jianBatchNode, p1, p2, 0, "jian_0.png", 1.5);
+    GongJian2* gong2 = GongJian2::create(m_jianBatchNode, p11, p2, 0, "jian_0.png", 1.5);
+    //addChild(gong);
+    //auto sprite = CCLoadSprite::createSprite("jian_0.png");
+    //m_jianBatchNode->addChild(sprite);
+    //sprite->setPosition(p2);
+    //gong->setPosition(localP);
+}
+
 //end a by ljf
 
 void ImperialScene::wallCallBack(CCObject* params)
@@ -1616,6 +1658,7 @@ void ImperialScene::onExit()
     m_exit = true;
     //begin a by ljf
     m_walkerBatchNode->removeAllChildren();
+    m_jianBatchNode->removeAllChildren();
     //m_walkerArray->removeAllObjects();
     m_walkerLayer->removeFromParent();
     //end a by ljf

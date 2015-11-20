@@ -16,12 +16,12 @@
 class GongJian2 : public BaseSkill{
 public:
     virtual bool init();
-    static GongJian2* create(CCNode * batchNode,CCPoint startPoint,CCPoint endPoint,int side, string pic);
+    static GongJian2* create(CCNode * batchNode,CCPoint startPoint,CCPoint endPoint,int side, string pic, float scale = 0.6, float speed = 400.0);
     ~GongJian2(){
         
     }
 protected:
-    GongJian2(CCNode * batchNode,CCPoint startPoint,CCPoint endPoint,int side, string pic) : m_batchNode(batchNode)
+    GongJian2(CCNode * batchNode,CCPoint startPoint,CCPoint endPoint,int side, string pic, float scale, float speed) : m_batchNode(batchNode), mScale(scale), mSpeed(speed)
     ,m_startPoint(startPoint)
     ,m_endPoint(endPoint)
     ,m_attSide(side)
@@ -44,6 +44,10 @@ protected:
     string m_pic;
     float subX;
     float subY;
+    //begin a by ljf
+    float mScale;
+    float mSpeed;
+    //end a by ljf
     SpriteSheetAni* ani;
     CC_SYNTHESIZE(CCNode*, m_batchNode, BatchNode);
     CC_SYNTHESIZE(CCSprite*, m_jian, Jian);
