@@ -19,7 +19,8 @@ bool GongJian2::init(){
     m_jian->setPosition(m_startPoint);
     CCPoint gap = ccpSub(m_startPoint, m_endPoint);
     int len = MAX(abs((int)gap.x),abs((int)gap.y));
-    float time = 1.0*len/400;
+    //float time = 1.0*len/400;
+    float time = 1.0*len/mSpeed;
     if(time<0.2){
         time = 0.2;
     }
@@ -30,7 +31,8 @@ bool GongJian2::init(){
     //angle = fabsf(angle);
     CCSequence* s1;
     CCSequence* s2;
-    float scale = 0.6;
+    //float scale = 0.6;
+    float scale = mScale; //a by ljf
     ccBezierConfig  beziercofig;
     if(gap.y<0){//从下往上打
         if(angle2<15){
@@ -100,8 +102,8 @@ void GongJian2::update(float time){
 
 }
 
-GongJian2* GongJian2::create(CCNode * batchNode,CCPoint startPoint,CCPoint endPoint,int side, string pic){
-    GongJian2* ret = new GongJian2(batchNode,startPoint,endPoint,side,pic);
+GongJian2* GongJian2::create(CCNode * batchNode,CCPoint startPoint,CCPoint endPoint,int side, string pic, float scale, float speed){
+    GongJian2* ret = new GongJian2(batchNode,startPoint,endPoint,side,pic, scale, speed);
     if(ret && ret->init()){
         ret->autorelease();
     }else{
