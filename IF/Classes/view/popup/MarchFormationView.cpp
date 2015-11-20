@@ -55,10 +55,12 @@ bool MarchFormationView::init()
     setIsHDPanel(true);
     CCLoadSprite::doResourceByCommonIndex(8, true);
     CCLoadSprite::doResourceByCommonIndex(7, true);
+    CCLoadSprite::doResourceByCommonIndex(6, true);
     CCLoadSprite::doResourceByCommonIndex(504, true);
     setCleanFunction([](){
         CCLoadSprite::doResourceByCommonIndex(8, false);
         CCLoadSprite::doResourceByCommonIndex(7, false);
+        CCLoadSprite::doResourceByCommonIndex(6, false);
         CCLoadSprite::doResourceByCommonIndex(504, false);
     });
     
@@ -77,8 +79,7 @@ bool MarchFormationView::init()
         
         int dy = 852 - CCDirector::sharedDirector()->getWinSize().height;
         m_bg->setPreferredSize(m_bg->getContentSize() + CCSize(0, -dy));
-        m_renderBG->setPreferredSize(m_renderBG->getContentSize() + CCSize(0, -dy));
-        m_renderBG->setPositionY(m_renderBG->getPositionY() + dy / 2);
+
         m_downNode->setPositionY(m_downNode->getPositionY() + dy);
         m_infoList->setPositionY(m_infoList->getPositionY() + dy);
         m_infoList->setContentSize(m_infoList->getContentSize() - CCSize(0, dy));
@@ -120,8 +121,121 @@ bool MarchFormationView::init()
     SoundController::sharedSound()->playEffects(Music_Sfx_world_click_attack);
     m_marchBtn->setEnabled(false);
     
+    
+    
+    
+    auto listener = EventListenerTouchOneByOne::create();
+    listener->onTouchBegan = [this](Touch* touch, Event* evt)
+    {
+        if (isTouchInside(m_2touchBtnBg, touch)) {
+            return true;
+        }
+        return false;
+    };
+    
+    listener->onTouchEnded = [this](Touch* touch, Event* evt)
+    {
+        //        CCCommonUtils::flyHint("", "", "hehe");
+        auto armyInfo = GlobalData::shared()->armyList[GlobalData::shared()->titanInfo.titanId];
+        if((armyInfo.free + armyInfo.march)== 0)
+        {
+            return false;
+        }
+        if (selectDragon) {
+            
+            SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
+            
+            selectDragon = false;//
+            
+            this->refreshDragonNumStatus();
+            
+            return true;
+            
+        }
+        else
+        {
+            //fusheng 需要判断是否可以点击派出龙   出征部队人数已满
+            
+            
+            SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
+            
+            
+
+            selectDragon = true;
+            
+            this->refreshDragonNumStatus();
+
+            
+            return true;
+            
+        }
+        
+        return false;
+    };
+    
+    listener->setSwallowTouches(true);
+    
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, m_bg);
+    
+    
+    refreshDragonStatus(nullptr);
+    
+    
     return true;
 }
+
+
+void MarchFormationView::refreshDragonStatus(CCObject* obj)
+{
+    auto armyInfo = GlobalData::shared()->armyList[GlobalData::shared()->titanInfo.titanId];
+    if((armyInfo.free + armyInfo.march) != 0)//士兵里有龙
+    {
+
+
+        
+        string name = CCCommonUtils::getNameById(GlobalData::shared()->titanInfo.titanId);
+       
+        m_dragonName->setString(name);
+        
+        
+        string id = CC_ITOA(GlobalData::shared()->titanInfo.tid);
+        
+        auto picName = CCCommonUtils::getPropById(id, "dragonMarchUI");
+        
+        auto spr = CCLoadSprite::createSprite(picName.c_str());
+        m_dragonPicNode->removeAllChildren();
+        
+        m_dragonPicNode->addChild(spr);
+        
+
+
+        
+    }
+  
+}
+
+
+void MarchFormationView::refreshDragonNumStatus()
+{
+    auto armyInfo = GlobalData::shared()->armyList[GlobalData::shared()->titanInfo.titanId];
+    if((armyInfo.free + armyInfo.march) != 0 )//士兵里有龙
+    {
+
+        
+
+        
+        m_2touchBtn->setPositionX(selectDragon?84:25);
+        
+        m_2touchBtn->setSpriteFrame(selectDragon?"nb_checkboxBlockON.png":"nb_checkboxBlockOFF.png");
+        
+        TroopsController::getInstance()->updateTmpBattleData(GlobalData::shared()->titanInfo.titanId, selectDragon?1:0, GlobalData::shared()->titanInfo.titanId);
+    }
+    
+    m_selSoldierMap[GlobalData::shared()->titanInfo.titanId] = selectDragon?1:0;
+    
+    CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MARCH_FORMATION_CHANGE);
+}
+
 
 void MarchFormationView::getFormationDetail(int index){
     if (index == 1) {
@@ -162,7 +276,26 @@ void MarchFormationView::getFormationDetail(int index){
             CCCommonUtils::splitString(vector1[i], ",", vector2);
             if (vector2.size() == 2) {
                 int selNum = atoi(vector2[1].c_str());
-                TroopsController::getInstance()->updateTmpBattleData(vector2[0], selNum, vector2[0]);
+                
+                int sid = atoi(vector2[0].c_str());
+                if(sid>=107401&&sid<=107430)//fusheng 存在泰坦
+                {
+                    auto armyInfo = GlobalData::shared()->armyList[GlobalData::shared()->titanInfo.titanId];
+                    if((armyInfo.free + armyInfo.march) != 0 )//士兵里有龙
+                    {
+                        selectDragon = selNum == 1?true:false;
+                        
+                        this->refreshDragonNumStatus();
+                        
+                    }
+                    
+                }
+                else
+                {
+                    TroopsController::getInstance()->updateTmpBattleData(vector2[0], selNum, vector2[0]);
+                }
+
+                
             }
         }
     }
@@ -221,6 +354,20 @@ void MarchFormationView::generateData(){
         if((it->second.free <= 0  && it->second.march <= 0) || !it->second.isArmy){
             continue;
         }
+        int sid = atoi(it->first.c_str());
+        if(sid>=107401&&sid<=107430)//fusheng 加一个保障
+        {
+            if (it->first != GlobalData::shared()->titanInfo.titanId) {
+                continue;
+            }
+            else
+            {
+                TroopsController::getInstance()->m_tmpFreeSoldiers[it->first] = (it->second).free + (it->second).march;
+                TroopsController::getInstance()->m_tmpConfSoldiers[it->first] = (it->second).free + (it->second).march;
+                continue;
+            }
+        }
+
         TroopsController::getInstance()->m_tmpFreeSoldiers[it->first] = (it->second).free + (it->second).march;
         TroopsController::getInstance()->m_tmpConfSoldiers[it->first] = (it->second).free + (it->second).march;
         int index = 0;
@@ -283,6 +430,10 @@ void MarchFormationView::onEnter()
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(MarchFormationView::updateArmyNumber), MSG_TROOPS_BACK, NULL);
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(MarchFormationView::updateFormationChange), MARCH_FORMATION_CHANGE, NULL);
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(MarchFormationView::updateLoadInfo), MSG_TROOPS_BATTLE_LOAD, NULL);
+    
+    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(MarchFormationView::refreshDragonStatus), MSG_TITAN_UPGRADE_COMPLETE, NULL);
+    
+    
     updateLoadInfo(NULL);
     CCNode::onEnter();
 }
@@ -294,6 +445,7 @@ void MarchFormationView::onExit()
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this,MSG_TROOPS_BACK);
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this,MARCH_FORMATION_CHANGE);
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this,MSG_TROOPS_BATTLE_LOAD);
+      CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this,MSG_TITAN_UPGRADE_COMPLETE);
     CCNode::onExit();
 }
 
@@ -330,6 +482,14 @@ SEL_CCControlHandler MarchFormationView::onResolveCCBCCControlSelector(cocos2d::
 
 bool MarchFormationView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode)
 {
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_dragonPicNode", CCNode*, this->m_dragonPicNode);
+  
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_dragonName", CCLabelIF*, this->m_dragonName);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_2touchBtnBg", CCSprite*, this->m_2touchBtnBg);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_2touchBtn", CCSprite*, this->m_2touchBtn);
+    
+    
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_marchBtn", CCControlButton*, this->m_marchBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_quickBtn", CCControlButton*, this->m_quickBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_msg1Label", CCLabelIF*, this->m_msg1Label);
@@ -341,7 +501,7 @@ bool MarchFormationView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, 
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_iconContainer", CCNode*, this->m_iconContainer);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_alertNode", CCNode*, this->m_alertNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bg", CCScale9Sprite*, this->m_bg);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_renderBG", CCScale9Sprite*, this->m_renderBG);
+ 
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_hintText", CCLabelIF*, m_hintText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_hintText1", CCLabelIF*, m_hintText1);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_forTipsTxt", CCLabelIF*, m_forTipsTxt);
@@ -433,6 +593,19 @@ void MarchFormationView::updateArmyNumber(CCObject* obj)
         if(!it->second.isArmy){
             continue;
         }
+        int sid = atoi(it->first.c_str());
+        if(sid>=107401&&sid<=107430)//fusheng 加一个保障
+        {
+            if (it->first != GlobalData::shared()->titanInfo.titanId) {
+                continue;
+            }
+            else
+            {
+                TroopsController::getInstance()->m_tmpFreeSoldiers[it->first] = (it->second).free + (it->second).march;
+                TroopsController::getInstance()->m_tmpConfSoldiers[it->first] = (it->second).free + (it->second).march;
+                continue;
+            }
+        }
         if((it->second).free != TroopsController::getInstance()->m_tmpConfSoldiers[it->first])
         {
             int count = (it->second).free-TroopsController::getInstance()->m_tmpConfSoldiers[it->first];
@@ -443,6 +616,8 @@ void MarchFormationView::updateArmyNumber(CCObject* obj)
         {
             continue;
         }
+        
+       
         int index = 0;
         bool addFlag = false;
         while (index < m_tmpArray->count()) {
@@ -599,28 +774,33 @@ bool MarchFormationCell::init(CCNode* clickNode,string itemId, int num, int inde
     m_clickNode = clickNode;
     m_subBtn->setTouchPriority(Touch_Popup_Item);
     m_addBtn->setTouchPriority(Touch_Popup_Item);
-    auto m_sliderBg = CCLoadSprite::createScale9Sprite("huadongtiao3.png");
-    m_sliderBg->setInsetBottom(5);
-    m_sliderBg->setInsetLeft(5);
-    m_sliderBg->setInsetRight(5);
-    m_sliderBg->setInsetTop(5);
-    m_sliderBg->setAnchorPoint(ccp(0.5,0.5));
-    m_sliderBg->setPosition(ccp(252/2, 25));
-    m_sliderBg->setContentSize(CCSize(252,18));
-    
-    auto bgSp = CCLoadSprite::createSprite("huadongtiao4.png");
-    bgSp->setVisible(false);
-    auto proSp = CCLoadSprite::createSprite("huadongtiao4.png");
-    auto thuSp = CCLoadSprite::createSprite("huadongtiao1.png");
-    
-    m_slider = CCSliderBar::createSlider(m_sliderBg, proSp, thuSp);
+//    auto m_sliderBg = CCLoadSprite::createScale9Sprite("huadongtiao3.png");
+//    m_sliderBg->setInsetBottom(5);
+//    m_sliderBg->setInsetLeft(5);
+//    m_sliderBg->setInsetRight(5);
+//    m_sliderBg->setInsetTop(5);
+    m_slider = NBSlider::create("nb_bar_bg.png", "nb_bar_pro.png", "nb_cursor_icon.png",NBSlider::TextureResType::PLIST);
+    m_slider->setCapInsets(Rect(8, 1, 30, 13));
+    m_slider->setContentSize(Size(230, 15));
+//    m_sliderBg->setAnchorPoint(ccp(0.5,0.5));
+//    m_sliderBg->setPosition(ccp(252/2, 25));
+//    m_sliderBg->setContentSize(CCSize(252,18));
+//    
+//    auto bgSp = CCLoadSprite::createSprite("huadongtiao4.png");
+//    bgSp->setVisible(false);
+//    auto proSp = CCLoadSprite::createSprite("huadongtiao4.png");
+//    auto thuSp = CCLoadSprite::createSprite("huadongtiao1.png");
+//    
+//    m_slider = CCSliderBar::createSlider(m_sliderBg, proSp, thuSp);
     m_slider->setMinimumValue(0.0f);
     m_slider->setMaximumValue(1.0f);
-    m_slider->setProgressScaleX(248/proSp->getContentSize().width);
+//    m_slider->setProgressScaleX(248/proSp->getContentSize().width);
     m_slider->setTag(1);
-    m_slider->setLimitMoveValue(25);
-    m_slider->setTouchPriority(Touch_Popup);
-    m_slider->addTargetWithActionForControlEvents(this, cccontrol_selector(MarchFormationCell::valueChange), CCControlEventValueChanged);
+//    m_slider->setLimitMoveValue(25);
+//    m_slider->setTouchPriority(Touch_Popup);
+     m_slider->addEventListener(CC_CALLBACK_2(MarchFormationCell::valueChange, this));
+//    m_slider->addTargetWithActionForControlEvents(this, cccontrol_selector(MarchFormationCell::valueChange), CCControlEventValueChanged);
+     m_slider->setPosition(-230 / 2, -15 / 2);
     m_sliderNode->addChild(m_slider, 1);
     
     auto editSize = m_editNode->getContentSize();
@@ -656,6 +836,21 @@ void MarchFormationCell::setData(string itemId, int num, int index)
     
     m_picNode->removeAllChildren();
     
+    int id = atoi(itemId.c_str());
+
+    if (picName != "ico107401_small.png")
+    {
+        auto pic = CCLoadSprite::createSprite(picName.c_str());
+        CCCommonUtils::setSpriteMaxSize(pic, 110);
+        m_picNode->addChild(pic);
+        pic->setPositionY(-10);
+        
+        m_picBg0->setVisible(id % 4 == 0);
+        m_picBg1->setVisible(id % 4 == 1);
+        m_picBg2->setVisible(id % 4 == 2);
+        m_picBg3->setVisible(id % 4 == 3);
+    }
+    
     auto pic = CCLoadSprite::createSprite(picName.c_str());
     CCCommonUtils::setSpriteMaxSize(pic, 110);
     m_picNode->addChild(pic);
@@ -685,7 +880,7 @@ void MarchFormationCell::refresh(){
     setData(m_soldierId, num, m_index);
 }
 
-void MarchFormationCell::valueChange(CCObject * pSender, CCControlEvent pCCControlEvent)
+void MarchFormationCell::valueChange(Ref *pSender, NBSlider::EventType type)
 {
     if (m_cntNum<=0) {
         return;
@@ -767,6 +962,12 @@ bool MarchFormationCell::onAssignCCBMemberVariable(cocos2d::CCObject *pTarget, c
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_editNode", CCNode*, m_editNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_subBtn", CCControlButton*, m_subBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_addBtn", CCControlButton*, m_addBtn);
+    
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_picBg0", Sprite*, m_picBg0);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_picBg1", Sprite*, m_picBg1);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_picBg2", Sprite*, m_picBg2);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_picBg3", Sprite*, m_picBg3);
     
     return false;
 }
