@@ -38,11 +38,9 @@ public:
     
     static OutsideEnemy * create(CCNode * pBatchNode, CCNode * pArrowBatchNode,  int enemyType);
     
-    void move();
+    void start();
     
-    void die();
     
-    void shootArrow();
     
     void update(float delta);
     
@@ -61,6 +59,9 @@ public:
     
 private:
     bool init();
+    void move();
+    void die();
+    void shootArrow();
     CCSequence * createAnimation(int enemyActionStatus);
     void hideAndReleaseSelf();
     string mIcon;

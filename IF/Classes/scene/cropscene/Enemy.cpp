@@ -133,7 +133,8 @@ void OutsideEnemy::die()
     if(mActionStatus == ENEMY_ACTION_STATUS_DIE)
         return;
     CCSequence* action = createAnimation(ENEMY_ACTION_STATUS_DIE);
-    CCSequence * sc = CCSequence::create(action, CCCallFunc::create(this, callfunc_selector(OutsideEnemy::hideAndReleaseSelf)),NULL);
+    CCFadeOut * fadeOut = FadeOut::create(0.5);
+    CCSequence * sc = CCSequence::create(action, fadeOut,  CCCallFunc::create(this, callfunc_selector(OutsideEnemy::hideAndReleaseSelf)),NULL);
     mIconSpr->stopAllActions();
     mIconSpr->runAction(sc);
     mActionStatus = ENEMY_ACTION_STATUS_DIE;
@@ -205,4 +206,9 @@ void OutsideEnemy::shootArrow()
     CCPoint p2 = mToPos;
     GongJian2* gong1 = GongJian2::create(mArrowBatchNode, p1, p2, 0, "jian_0.png", 1.5, 600);
     GongJian2* gong2 = GongJian2::create(mArrowBatchNode, p11, p2, 0, "jian_0.png", 1.5, 600);
+}
+
+void OutsideEnemy::start()
+{
+    move();
 }
