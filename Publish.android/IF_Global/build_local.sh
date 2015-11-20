@@ -7,10 +7,6 @@ sourceroot=../
 packageroot=../../package
 soRootPath=../../package-so
 logRoot=$packageroot
-static_for_download=../../static/package
-if [ ! -d "${static_for_download}" ]; then
-    mkdir ${static_for_download}
-fi
 
 mkdir $soRootPath >/dev/null 2>/dev/null
 mkdir $logRoot >/dev/null 2>/dev/null
@@ -192,8 +188,6 @@ echo ""
 # echo ""
 
 echo "*************************************************"
-
-cp $apkTargetPath ${static_for_download} >/dev/null
 
 errorMsg=`cat $logfileName.err`
 if [ ! -n "$errorMsg" ]; then
