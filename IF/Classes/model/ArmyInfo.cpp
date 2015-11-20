@@ -212,10 +212,6 @@ std::string ArmyInfo::getHeadIcon(){
     
     int soldierId = CCString::create(itemId)->intValue();
     
-    if (soldierId<=107430&&soldierId>=107401) {
-        
-        return "ico107401_small.png";//fusheng 龙先暂时使用一张
-    }
     
     
     return "ico" + itemId+ "_small.png";
