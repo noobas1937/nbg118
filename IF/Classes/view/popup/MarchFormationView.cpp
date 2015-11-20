@@ -139,7 +139,7 @@ bool MarchFormationView::init()
         auto armyInfo = GlobalData::shared()->armyList[GlobalData::shared()->titanInfo.titanId];
         if((armyInfo.free + armyInfo.march)== 0)
         {
-            return false;
+            return ;
         }
         if (selectDragon) {
             
@@ -148,8 +148,6 @@ bool MarchFormationView::init()
             selectDragon = false;//
             
             this->refreshDragonNumStatus();
-            
-            return true;
             
         }
         else
@@ -166,11 +164,11 @@ bool MarchFormationView::init()
             this->refreshDragonNumStatus();
 
             
-            return true;
+
             
         }
         
-        return false;
+        return ;
     };
     
     listener->setSwallowTouches(true);
