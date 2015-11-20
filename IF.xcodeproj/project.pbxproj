@@ -3265,7 +3265,7 @@
 		DB784C96198F836100DB5CBB /* Arial_Bold_Border.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Arial_Bold_Border.fnt; path = Resources/Arial_Bold_Border.fnt; sourceTree = "<group>"; };
 		DB784C97198F836100DB5CBB /* Arial_Bold_Border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Arial_Bold_Border.png; path = Resources/Arial_Bold_Border.png; sourceTree = "<group>"; };
 		DB971A8E1A26CA9F00A194DB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		DB9F58F317CD9A520037F7E5 /* DragonClans.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DragonClans.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB9F58F317CD9A520037F7E5 /* IF.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IF.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB9F58F617CD9A520037F7E5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		DB9F58F817CD9A520037F7E5 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		DB9F58FA17CD9A520037F7E5 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
@@ -5810,7 +5810,7 @@
 		DB9F58F417CD9A520037F7E5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DB9F58F317CD9A520037F7E5 /* DragonClans.app */,
+				DB9F58F317CD9A520037F7E5 /* IF.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -6977,9 +6977,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		DB9F58F217CD9A520037F7E5 /* DragonClans */ = {
+		DB9F58F217CD9A520037F7E5 /* IF */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DB9F5CA017CD9A580037F7E5 /* Build configuration list for PBXNativeTarget "DragonClans" */;
+			buildConfigurationList = DB9F5CA017CD9A580037F7E5 /* Build configuration list for PBXNativeTarget "IF" */;
 			buildPhases = (
 				FD35B5F11910962D002A71E9 /* ShellScript */,
 				DB9F58EF17CD9A520037F7E5 /* Sources */,
@@ -6990,9 +6990,9 @@
 			);
 			dependencies = (
 			);
-			name = DragonClans;
+			name = IF;
 			productName = IF;
-			productReference = DB9F58F317CD9A520037F7E5 /* DragonClans.app */;
+			productReference = DB9F58F317CD9A520037F7E5 /* IF.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -7008,7 +7008,7 @@
 					};
 				};
 			};
-			buildConfigurationList = DB9F58EE17CD9A520037F7E5 /* Build configuration list for PBXProject "DragonClans" */;
+			buildConfigurationList = DB9F58EE17CD9A520037F7E5 /* Build configuration list for PBXProject "IF" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -7049,7 +7049,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				DB9F58F217CD9A520037F7E5 /* DragonClans */,
+				DB9F58F217CD9A520037F7E5 /* IF */,
 			);
 		};
 /* End PBXProject section */
@@ -8537,7 +8537,7 @@
 					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.elex-tech.DragonClans";
-				PRODUCT_NAME = DragonClans;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "\"IF/libs/Chipmunk/include/chipmunk\"";
@@ -8615,7 +8615,7 @@
 					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.elex-tech.DragonClans";
-				PRODUCT_NAME = DragonClans;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "\"IF/libs/Chipmunk/include/chipmunk\"";
@@ -8627,7 +8627,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		DB9F58EE17CD9A520037F7E5 /* Build configuration list for PBXProject "DragonClans" */ = {
+		DB9F58EE17CD9A520037F7E5 /* Build configuration list for PBXProject "IF" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DB9F5C9E17CD9A580037F7E5 /* Debug */,
@@ -8636,7 +8636,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DB9F5CA017CD9A580037F7E5 /* Build configuration list for PBXNativeTarget "DragonClans" */ = {
+		DB9F5CA017CD9A580037F7E5 /* Build configuration list for PBXNativeTarget "IF" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DB9F5CA117CD9A580037F7E5 /* Debug */,
