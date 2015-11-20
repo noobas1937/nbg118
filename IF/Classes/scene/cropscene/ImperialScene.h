@@ -71,6 +71,8 @@ public:
     void onVikingsShipIdle(NBSprite3D * pSprite3d);
     bool onVikingsShipTouched(CCTouch* pTouch);
     void createWalker(float t);
+    void createEnemy(float t);
+    void shootArrow(float t);
     //end a by ljf
     
     void onUpdateInfo();
@@ -331,6 +333,7 @@ private:
     CCSafeObject<CCSpriteBatchNode> m_soldierBatchNode;
     //begin a by ljf
     CCSafeObject<CCSpriteBatchNode> m_walkerBatchNode;
+    CCSafeObject<CCSpriteBatchNode> m_jianBatchNode;
     CCSafeObject<CCLayer> m_walkerLayer;
     //end a by ljf
     CCSafeObject<CCSpriteBatchNode> m_chrTreeBatchNode;
