@@ -16,6 +16,7 @@
 #include "CCMultiColTableView.h"
 #include "CheckBox.h"
 #include "CCSliderBar.h"
+#include "NBSlider.h"
 
 class MarchFormationView: public PopupBaseView
 ,public CCBSelectorResolver
@@ -25,7 +26,7 @@ class MarchFormationView: public PopupBaseView
 {
 public:
     static MarchFormationView* create(int index);
-    MarchFormationView(int index):m_index(index){};
+    MarchFormationView(int index):m_index(index),selectDragon(false){};
     virtual ~MarchFormationView();
 protected:
     // scrollview delegate
@@ -79,7 +80,6 @@ private:
     CCSafeObject<CCSprite> m_addIcon;
     CCSafeObject<CCSprite> m_addIcon1;
     CCSafeObject<CCScale9Sprite> m_bg;
-    CCSafeObject<CCScale9Sprite> m_renderBG;
     //    CCSafeObject<CheckBox> m_box;
     CCSafeObject<CCNode> m_downNode;
     CCSafeObject<CCNode> m_alertNode;
@@ -89,6 +89,22 @@ private:
     CCSafeObject<CCArray> m_tmpArray;
     CCSafeObject<CCControlButton> m_formationBtn1;
     CCSafeObject<CCControlButton> m_formationBtn2;
+    
+    
+    
+    CCSafeObject<CCSprite> m_2touchBtnBg;
+    CCSafeObject<CCSprite> m_2touchBtn;
+    
+    CCSafeObject<CCNode> m_dragonPicNode;
+    CCSafeObject<CCLabelIF> m_dragonName;
+    
+     bool selectDragon;
+    
+    void refreshDragonNumStatus();
+    void refreshDragonStatus(CCObject* obj);
+                                                          
+    
+    
     int m_index;
     map<std::string, int> m_selSoldierMap;
 };
@@ -115,7 +131,7 @@ private:
     virtual SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName);
     virtual bool onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode);
     
-    void valueChange(CCObject * pSender, CCControlEvent pCCControlEvent);
+    void valueChange(Ref *pSender, NBSlider::EventType type);
     void onSubClick(CCObject * pSender, CCControlEvent pCCControlEvent);
     void onAddClick(CCObject * pSender, CCControlEvent pCCControlEvent);
     void editBoxReturn(CCEditBox *editBox);
@@ -125,8 +141,13 @@ private:
     CCSafeObject<CCNode> m_picNode;
     CCSafeObject<CCNode> m_levelNode;
     CCSafeObject<CCNode> m_sliderNode;
-    CCSafeObject<CCSliderBar> m_slider;
+    CCSafeObject<NBSlider> m_slider;
     CCSafeObject<CCNode> m_editNode;
+    
+    CCSafeObject<Sprite> m_picBg0;
+    CCSafeObject<Sprite> m_picBg1;
+    CCSafeObject<Sprite> m_picBg2;
+    CCSafeObject<Sprite> m_picBg3;
     CCEditBox* m_editBox;
     int m_cntNum;
     int m_index;

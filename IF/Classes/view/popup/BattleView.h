@@ -28,7 +28,9 @@ class BattleView: public PopupBaseView
 {
 public:
     static BattleView* create(unsigned int startIndex,unsigned int targetIndex,unsigned int haveOwner,float slow=1.0,int rally=0,int bType=-1,int wtIndex=-1,std::string other="", int targetType=0);
-    BattleView():m_startIndex(0),m_targetIndex(0),m_haveOwner(0),m_rally(0),m_bType(-1),m_wtIndex(0),m_other(string()),m_targetType(0),m_slow(1.0),isBegin(true){};
+    
+    BattleView();
+
     virtual ~BattleView();
     CCNode* getGuideNode(string _key);
 protected:
@@ -91,7 +93,7 @@ private:
     CCSafeObject<CCControlButton> m_formationBtn1;
     CCSafeObject<CCControlButton> m_formationBtn2;
     CCSafeObject<CCSprite> m_addIcon;
-    CCSafeObject<CCSprite> m_addIcon1;
+
     CCSafeObject<CCScale9Sprite> m_bg;
     CCSafeObject<CCScale9Sprite> m_renderBG;
 //    CCSafeObject<CheckBox> m_box;
@@ -101,6 +103,36 @@ private:
     CCSafeObject<CCNode> m_stamineNode;
     CCSafeObject<CCMultiColTableView > m_tabView;
     CCSafeObject<CCArray> m_tmpArray;
+    
+    
+    CCSafeObject<CCSprite> m_2touchBtnBg;
+    CCSafeObject<CCSprite> m_2touchBtn;
+    
+    
+    CCSafeObject<CCNode> m_dragonMarchingNode;
+    
+    CCSafeObject<CCLabelIF> m_dragonMarchingLable;
+    
+    
+    CCSafeObject<CCNode> m_dragonNode;
+    CCSafeObject<CCNode> m_dragonPicNode;
+    
+    CCSafeObject<CCNode> m_dragonPicNode2;
+    
+    CCSafeObject<CCLabelIF> m_dragonName;
+    
+    CCSafeObject<CCLabelIF> m_titanAPTxt_0;
+    CCSafeObject<CCLabelIF> m_titanAPTxt_1;
+    CCSafeObject<CCLabelIF> m_titanAPTxt_2;
+    CCSafeObject<CCScale9Sprite> m_ProTiTanAP;
+    
+    float m_ProTiTanAPMaxWidth;
+    
+
+    void refreshDragonNumStatus();//选择不选择龙  会影响是否可以出征
+    
+    void refreshDragonStatus(CCObject* obj);//根据龙的出征状态 修改node
+    
     unsigned int m_startIndex;
     unsigned int m_targetIndex;
     int m_rally;
@@ -112,6 +144,10 @@ private:
     int m_index;
     float m_slow;
     bool isBegin;
+    
+    bool selectDragon;//fusheng 龙出征
+    
+    
 };
 
 class NBSlider;

@@ -124,54 +124,28 @@
             <key>anniu1-1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{670,678},{50,50}}</string>
+                <string>{{864,601},{49,49}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{50,50}}</string>
+                <string>{{2,2},{49,49}}</string>
                 <key>sourceSize</key>
-                <string>{50,50}</string>
-            </dict>
-            <key>anniu1-2.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{766,640},{50,50}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{50,50}}</string>
-                <key>sourceSize</key>
-                <string>{50,50}</string>
+                <string>{53,53}</string>
             </dict>
             <key>anniu2-1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{864,602},{50,50}}</string>
+                <string>{{864,546},{49,49}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{50,50}}</string>
+                <string>{{2,2},{49,49}}</string>
                 <key>sourceSize</key>
-                <string>{50,50}</string>
-            </dict>
-            <key>anniu2-2.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{864,546},{50,50}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{50,50}}</string>
-                <key>sourceSize</key>
-                <string>{50,50}</string>
+                <string>{53,53}</string>
             </dict>
             <key>city_gain_bar_center.png</key>
             <dict>
@@ -187,19 +161,6 @@
                 <string>{291,22}</string>
             </dict>
             <key>city_gain_bar_left.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{72,899},{11,24}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <true/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{11,24}}</string>
-                <key>sourceSize</key>
-                <string>{11,24}</string>
-            </dict>
-            <key>city_gain_bar_right.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{55,899},{11,24}}</string>
@@ -651,7 +612,7 @@
             <key>size</key>
             <string>{1024,1024}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:3291b5b80c45919b8163856485aff9f3:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:dc4b286d6ea7bbab9f43efd3ec4bb85d:1/1$</string>
             <key>textureFileName</key>
             <string>Common_504.pvr.ccz</string>
         </dict>
