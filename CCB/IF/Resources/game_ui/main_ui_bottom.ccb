@@ -2532,11 +2532,11 @@
 										<key>customClass</key>
 										<string></string>
 										<key>displayName</key>
-										<string>m_dragon</string>
+										<string>m_dragonIcon</string>
 										<key>memberVarAssignmentName</key>
-										<string></string>
+										<string>m_dragonIcon</string>
 										<key>memberVarAssignmentType</key>
-										<integer>0</integer>
+										<integer>2</integer>
 										<key>properties</key>
 										<array>
 											<dict>
@@ -2579,7 +2579,7 @@
 												<key>value</key>
 												<array>
 													<string>Common/Common_1.plist</string>
-													<string>skill_btn.png</string>
+													<string>skill_107402.png</string>
 												</array>
 											</dict>
 											<dict>
@@ -4994,8 +4994,6 @@
 										<string>game_ui/quest_info.ccb</string>
 									</dict>
 								</array>
-								<key>selected</key>
-								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>

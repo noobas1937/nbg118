@@ -1560,15 +1560,16 @@ void ProductionSoldiersView::selectionDecided(CCGallery *gallery, CCGalleryItem 
 
 void ProductionSoldiersView::showChangePrt()
 {
+    m_soldierPrtNode->setScale(0.8);
     m_soldierPrtNode->setVisible(false);
     if (m_soldierPrtNode->getChildrenCount() <= 0) {
-        auto prt1 = ParticleController::createParticle("soldierView_change_0");
-        m_soldierPrtNode->addChild(prt1);
-        prt1->setTag(0);
-        
-        auto prt2 = ParticleController::createParticle("soldierView_change_1");
-        m_soldierPrtNode->addChild(prt2);
-        prt2->setTag(1);
+        for (int i = 0; i < 7; i++) {
+            string prtPath = "soldierchange_";
+            prtPath.append(CC_ITOA(i));
+            auto prt = ParticleController::createParticle(prtPath.c_str());
+            m_soldierPrtNode->addChild(prt);
+            prt->setTag(i);
+        }
     }
     for (int i = 0; i < m_soldierPrtNode->getChildrenCount(); i++) {
         auto prt = (CCParticleSystemQuad*)(m_soldierPrtNode->getChildByTag(i));

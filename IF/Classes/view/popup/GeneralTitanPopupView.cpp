@@ -1185,7 +1185,7 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         
         
         this->m_titanAPTxt_0->setString("(");
-        this->m_titanAPTxt_1->setString(CCString::createWithFormat("%d",m_titanInfo.currentManual)->getCString());
+        this->m_titanAPTxt_1->setString(CCString::createWithFormat("%d",m_titanInfo.currentManual<0?0:m_titanInfo.currentManual)->getCString());
         this->m_titanAPTxt_2->setString(CCString::createWithFormat("/%d)",m_titanInfo.maxManual)->getCString());
         
         vector<cocos2d::CCLabelIF *> labels;

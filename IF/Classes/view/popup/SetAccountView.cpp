@@ -325,7 +325,8 @@ void SetAccountView::onSendNewAccount()
     NewACCCommand* cmd = new NewACCCommand(isOld, WAR_NUM);
     cmd->sendAndRelease();
     if(WAR_NUM == 2) {
-        PopupViewController::getInstance()->removePopupView(this);
+//        PopupViewController::getInstance()->removePopupView(this);
+        PopupViewController::getInstance()->removeAllPopupView();
     }
     LuaController::getInstance()->clearChatNotice();
 }
@@ -378,6 +379,7 @@ void WarningView::onOKClick(CCObject * pSender, Control::EventType pCCControlEve
 {
     if (m_onYes) {
         m_onYes->execute();
+        
     }
     PopupViewController::getInstance()->removePopupView(this);
     

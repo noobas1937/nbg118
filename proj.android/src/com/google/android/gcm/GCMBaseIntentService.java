@@ -53,7 +53,7 @@ import org.nbg.stac.empire.common.manager.GCMIntentService;
  */
 public abstract class GCMBaseIntentService extends IntentService {
 
-	public static final String GCM_DEFAULT_SENDER_ID = "1076345567071,312229299745";
+	public static final String GCM_DEFAULT_SENDER_ID = "1076345567071,664052380024";
 	/**
 	 * GCM 消息传递使用的service所在的包路径
 	 */

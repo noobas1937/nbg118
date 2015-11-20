@@ -308,6 +308,7 @@ bool UIComponentOldTitle::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget,
     
     //    CCLOG("ccbi control name %s",pMemberVariableName);
     
+    
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_ironIcon", CCSprite*, this->m_ironIcon);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_stoneIcon", CCSprite*, this->m_stoneIcon);
@@ -862,6 +863,10 @@ void UIComponent::onEnter()
     
     CCLayer::onEnter();
     
+    
+    
+    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(UIComponent::updateDragonStatus), MSG_TITAN_UPGRADE_COMPLETE, NULL);
+    
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(UIComponent::onCityResoureceUpdate), MSG_CITY_RESOURCES_UPDATE, NULL);
     
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(UIComponent::onSceneChanged), MSG_SCENE_CHANGED, NULL);
@@ -1016,6 +1021,9 @@ void UIComponent::onEnter()
     resetRepayActivity(NULL);
     //提示可打造并穿戴装备
     updateEquipTips(NULL);
+    
+    
+    updateDragonStatus(nullptr);
     
 #if(CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
     ChatServiceCocos2dx::postUIShow();
@@ -1336,6 +1344,7 @@ void UIComponent::onExit()
     
     onHideFrameEff(NULL);
     
+    CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_TITAN_UPGRADE_COMPLETE);
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MAIL_LIST_DELETE);
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MAIL_SAVE_LIST_CHANGE);
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_REPAY_INFO_INIT);
@@ -2670,11 +2679,19 @@ SEL_CCControlHandler UIComponent::onResolveCCBCCControlSelector(cocos2d::CCObjec
     return NULL;
     
 }
+void UIComponent::updateDragonStatus(CCObject *params)
+{
+    string icon = CCCommonUtils::getPropById(CC_ITOA(GlobalData::shared()->titanInfo.tid), "dragonUI");
+//    m_dragonIcon->setTexture(icon);
+    m_dragonIcon->setSpriteFrame(icon);
+}
 
 bool UIComponent::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode)
 {
     
 //    CCLOG("ccbi control name %s",pMemberVariableName);
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_dragonIcon", CCSprite*, this->m_dragonIcon);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_general", CCSprite*, this->m_general);
     
