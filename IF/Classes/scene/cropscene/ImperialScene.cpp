@@ -577,7 +577,7 @@ void ImperialScene::buildingCallBack(CCObject* params)
     m_touchLayer->addChild(m_jianBatchNode, 1999);
     
     this->schedule(schedule_selector(ImperialScene::createWalker), 0.25, 1, 0.0f);
-    this->schedule(schedule_selector(ImperialScene::createEnemy), 15.0, CC_REPEAT_FOREVER, 0.0f);
+    this->schedule(schedule_selector(ImperialScene::createEnemy), 60.0, CC_REPEAT_FOREVER, 0.0f);
     //this->schedule(schedule_selector(ImperialScene::shootArrow), 5.0, CC_REPEAT_FOREVER, 5.0f);
     //end a by ljf
     m_talkACTCell = TalkNoticeCell::create(0);
@@ -931,7 +931,7 @@ void ImperialScene::createEnemy(float t)
         
         m_walkerLayer->addChild(soldier);
         
-        soldier->move();
+        soldier->start();
         //soldier->setSprScale(1);
     }
 }
