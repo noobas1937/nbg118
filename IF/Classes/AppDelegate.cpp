@@ -26,6 +26,9 @@
     #include "TestinCrashHelper.h"
 #endif
 
+#include "CCLuaEngine.h"
+#include "lua_module_register.h"
+
 #define IS_HD 1  // 1 是HD版本 0 不是
 
 USING_NS_CC;
@@ -95,6 +98,22 @@ bool AppDelegate::applicationDidFinishLaunching()
     
 //    CCLOG("Time profiler: [%ld] ,line: [%d]",CCMathUtils::getCurrentTime(),__LINE__);
     
+// ------------------------------------------------------------------------------------
+    // register lua module
+    auto engine = LuaEngine::getInstance();
+    ScriptEngineManager::getInstance()->setScriptEngine(engine);
+    lua_State* L = engine->getLuaStack()->getLuaState();
+    lua_module_register(L);
+    
+    LuaStack* stack = engine->getLuaStack();
+    stack->setXXTEAKeyAndSign("n_77wDDolqz", strlen("n_77wDDolqz"), "i900_gFymA", strlen("i900_gFymA"));
+    
+    if (engine->executeScriptFile("src/main.lua"))
+    {
+        CCLOG("Lua init Error");
+    }
+    
+// ------------------------------------------------------------------------------------
     // run
     CCLoadSprite::init();
     pDirector->runWithScene(SceneContainer::create());
