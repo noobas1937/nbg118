@@ -568,6 +568,12 @@
 -- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
         
 --------------------------------
+-- 
+-- @function [parent=#ParticleSystem] getTextureName 
+-- @param self
+-- @return char#char ret (return value: char)
+        
+--------------------------------
 --  Sets the emission rate of the particles.<br>
 -- param rate The emission rate of the particles.
 -- @function [parent=#ParticleSystem] setEmissionRate 
@@ -623,6 +629,12 @@
 -- return True if add success.<br>
 -- js ctor
 -- @function [parent=#ParticleSystem] addParticle 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#ParticleSystem] getOpacityModifyRGB 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         

@@ -1002,6 +1002,7 @@
 		B81B73E01C02DCA50092774E /* NBGNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B81B73D61C02DCA50092774E /* NBGNode.cpp */; };
 		B81B73E91C02DD230092774E /* NB_md5.c in Sources */ = {isa = PBXBuildFile; fileRef = B81B73E71C02DD230092774E /* NB_md5.c */; };
 		B81B73EB1C02DE150092774E /* src in Resources */ = {isa = PBXBuildFile; fileRef = B81B73EA1C02DE150092774E /* src */; };
+		B81B73ED1C02FF790092774E /* res in Resources */ = {isa = PBXBuildFile; fileRef = B81B73EC1C02FF790092774E /* res */; };
 		B838C5B11BDA36EE00EC74B3 /* NBWaterSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B838C5AF1BDA36EE00EC74B3 /* NBWaterSprite.cpp */; };
 		B8581EA01BBA34E70027F733 /* TypeDefinition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8581E9F1BBA34E70027F733 /* TypeDefinition.cpp */; };
 		B864A3BD1BCB43EA001BD875 /* DynamicTiledMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B864A3BB1BCB43EA001BD875 /* DynamicTiledMap.cpp */; };
@@ -3177,6 +3178,7 @@
 		B81B73E71C02DD230092774E /* NB_md5.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = NB_md5.c; sourceTree = "<group>"; };
 		B81B73E81C02DD230092774E /* NB_md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NB_md5.h; sourceTree = "<group>"; };
 		B81B73EA1C02DE150092774E /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; name = src; path = Resources/src; sourceTree = "<group>"; };
+		B81B73EC1C02FF790092774E /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = Resources/res; sourceTree = "<group>"; };
 		B838C5AF1BDA36EE00EC74B3 /* NBWaterSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBWaterSprite.cpp; sourceTree = "<group>"; };
 		B838C5B01BDA36EE00EC74B3 /* NBWaterSprite.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NBWaterSprite.hpp; sourceTree = "<group>"; };
 		B8581E9F1BBA34E70027F733 /* TypeDefinition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TypeDefinition.cpp; sourceTree = "<group>"; };
@@ -5999,6 +6001,7 @@
 		DB9F590717CD9A520037F7E5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B81B73EC1C02FF790092774E /* res */,
 				B81B73EA1C02DE150092774E /* src */,
 				B8813C161BFACE5D00BED7A7 /* manifest */,
 				B80D4B2E1BAFCA6B00422225 /* nb_world_link_area.tmx */,
@@ -7362,6 +7365,7 @@
 				BAD17E571AA5BDB400163E67 /* TwitterKitResources.bundle in Resources */,
 				59D7F04A1AF0BF85000120F9 /* HSTutorial@2x.png in Resources */,
 				272AB6591B15C7BC0052E896 /* icon_chat_translate2.png in Resources */,
+				B81B73ED1C02FF790092774E /* res in Resources */,
 				272AB6671B15C7BC0052E896 /* ui_gold_coin.png in Resources */,
 				E6402A1018AC5BEF00CCE64C /* cloud2.tmx in Resources */,
 			);

@@ -15,8 +15,6 @@
 
 #include "NBGCCBReader.h"
 
-#define CCBI_PATH "ccbi/v3/"
-
 #define CREATE_CCB_FUNC_WITH_DEFAULT_VARNAMES(__BA_CLASS__, __BA_VAR_CLASS__) \
 static __BA_CLASS__* createWithCCB(const char* resFilePath) \
 { \

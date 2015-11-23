@@ -10,7 +10,7 @@
 #include "NBGNode.h"
 #include "CCLuaEngine.h"
 
-#define CCBRESOURCES_BASE_PATH "2d/"
+#define CCBRESOURCES_BASE_PATH "res/"
 using namespace cocosbuilder;
 
 NBGCCBReader::NBGCCBReader()

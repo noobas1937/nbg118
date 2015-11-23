@@ -25,12 +25,6 @@
 -- @return AnimationCache#AnimationCache self (return value: cc.AnimationCache)
         
 --------------------------------
--- 
--- @function [parent=#AnimationCache] init 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
 --  Adds an animation from an NSDictionary.<br>
 -- Make sure that the frames were previously loaded in the SpriteFrameCache.<br>
 -- param dictionary An NSDictionary.<br>
@@ -42,6 +36,30 @@
 -- @param #map_table dictionary
 -- @param #string plist
 -- @return AnimationCache#AnimationCache self (return value: cc.AnimationCache)
+        
+--------------------------------
+--  @deprecated. Use removeAnimation() instead<br>
+-- js NA<br>
+-- lua NA
+-- @function [parent=#AnimationCache] removeAnimationByName 
+-- @param self
+-- @param #string name
+-- @return AnimationCache#AnimationCache self (return value: cc.AnimationCache)
+        
+--------------------------------
+-- 
+-- @function [parent=#AnimationCache] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- deprecated. Use getAnimation() instead<br>
+-- js NA<br>
+-- lua NA
+-- @function [parent=#AnimationCache] animationByName 
+-- @param self
+-- @param #string name
+-- @return Animation#Animation ret (return value: cc.Animation)
         
 --------------------------------
 --  Deletes a Animation from the cache.<br>
@@ -67,6 +85,18 @@
 --  Purges the cache. It releases all the Animation objects and the shared instance.<br>
 -- js NA
 -- @function [parent=#AnimationCache] destroyInstance 
+-- @param self
+-- @return AnimationCache#AnimationCache self (return value: cc.AnimationCache)
+        
+--------------------------------
+--  @deprecated Use getInstance() instead. 
+-- @function [parent=#AnimationCache] sharedAnimationCache 
+-- @param self
+-- @return AnimationCache#AnimationCache ret (return value: cc.AnimationCache)
+        
+--------------------------------
+--  @deprecated Use destroyInstance() instead. 
+-- @function [parent=#AnimationCache] purgeSharedAnimationCache 
 -- @param self
 -- @return AnimationCache#AnimationCache self (return value: cc.AnimationCache)
         

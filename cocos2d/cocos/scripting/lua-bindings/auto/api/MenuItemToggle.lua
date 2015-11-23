@@ -19,17 +19,23 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+--  Sets the index of the selected item. 
+-- @function [parent=#MenuItemToggle] setSelectedIndex 
+-- @param self
+-- @param #unsigned int index
+-- @return MenuItemToggle#MenuItemToggle self (return value: cc.MenuItemToggle)
+        
+--------------------------------
 --  Gets the index of the selected item. 
 -- @function [parent=#MenuItemToggle] getSelectedIndex 
 -- @param self
 -- @return unsigned int#unsigned int ret (return value: unsigned int)
         
 --------------------------------
---  Add more menu item. 
--- @function [parent=#MenuItemToggle] addSubItem 
+-- deprecated Use `getSelectedItem` instead.
+-- @function [parent=#MenuItemToggle] selectedItem 
 -- @param self
--- @param #cc.MenuItem item
--- @return MenuItemToggle#MenuItemToggle self (return value: cc.MenuItemToggle)
+-- @return MenuItem#MenuItem ret (return value: cc.MenuItem)
         
 --------------------------------
 --  Return the selected item. 
@@ -38,10 +44,10 @@
 -- @return MenuItem#MenuItem ret (return value: cc.MenuItem)
         
 --------------------------------
---  Sets the index of the selected item. 
--- @function [parent=#MenuItemToggle] setSelectedIndex 
+--  Add more menu item. 
+-- @function [parent=#MenuItemToggle] addSubItem 
 -- @param self
--- @param #unsigned int index
+-- @param #cc.MenuItem item
 -- @return MenuItemToggle#MenuItemToggle self (return value: cc.MenuItemToggle)
         
 --------------------------------

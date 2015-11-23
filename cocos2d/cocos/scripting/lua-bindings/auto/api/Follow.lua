@@ -5,14 +5,6 @@
 -- @parent_module cc
 
 --------------------------------
---  Alter behavior - turn on/off boundary. <br>
--- param value Turn on/off boundary.
--- @function [parent=#Follow] setBoundarySet 
--- @param self
--- @param #bool value
--- @return Follow#Follow self (return value: cc.Follow)
-        
---------------------------------
 -- Initializes the action with a set boundary or with no boundary.<br>
 -- param followedNode  The node to be followed.<br>
 -- param rect  The boundary. If \p rect is equal to Rect::ZERO, it'll work<br>
@@ -22,6 +14,22 @@
 -- @param #cc.Node followedNode
 -- @param #rect_table rect
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+--  Alter behavior - turn on/off boundary. <br>
+-- param value Turn on/off boundary.
+-- @function [parent=#Follow] setBoundarySet 
+-- @param self
+-- @param #bool value
+-- @return Follow#Follow self (return value: cc.Follow)
+        
+--------------------------------
+--  @deprecated Alter behavior - turn on/off boundary. <br>
+-- param value Turn on/off boundary.
+-- @function [parent=#Follow] setBoudarySet 
+-- @param self
+-- @param #bool value
+-- @return Follow#Follow self (return value: cc.Follow)
         
 --------------------------------
 --  Return boundarySet.<br>

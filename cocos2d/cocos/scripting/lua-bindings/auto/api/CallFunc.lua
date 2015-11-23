@@ -11,11 +11,13 @@
 -- @return CallFunc#CallFunc self (return value: cc.CallFunc)
         
 --------------------------------
---  Get the selector target.<br>
--- return The selector target.
--- @function [parent=#CallFunc] getTargetCallback 
+--  initializes the action with the callback<br>
+-- typedef void (Ref::*SEL_CallFunc)();<br>
+-- deprecated Use the std::function API instead.
+-- @function [parent=#CallFunc] initWithTarget 
 -- @param self
--- @return Ref#Ref ret (return value: cc.Ref)
+-- @param #cc.Ref target
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 --  Set the selector target.<br>

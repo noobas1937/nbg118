@@ -147,6 +147,12 @@
 -- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
 
 --------------------------------
+-- 
+-- @function [parent=#RenderTexture] newImage 
+-- @param self
+-- @return Image#Image ret (return value: cc.Image)
+        
+--------------------------------
 --  Clears the texture with a specified depth value. <br>
 -- param depthValue A specified depth value.
 -- @function [parent=#RenderTexture] clearDepth 
@@ -184,7 +190,7 @@
         
 --------------------------------
 -- 
--- @function [parent=#RenderTexture] newImage 
+-- @function [parent=#RenderTexture] newCCImage 
 -- @param self
 -- @return Image#Image ret (return value: cc.Image)
         

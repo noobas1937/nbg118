@@ -26,6 +26,13 @@
 -- @return ActionManager#ActionManager self (return value: cc.ActionManager)
         
 --------------------------------
+--  @deprecated Use getNumberOfRunningActionsInTarget() instead.
+-- @function [parent=#ActionManager] numberOfRunningActionsInTarget 
+-- @param self
+-- @param #cc.Node target
+-- @return int#int ret (return value: int)
+        
+--------------------------------
 --  Removes all actions from all the targets.
 -- @function [parent=#ActionManager] removeAllActions 
 -- @param self
@@ -81,7 +88,7 @@
 -- @function [parent=#ActionManager] getNumberOfRunningActionsInTarget 
 -- @param self
 -- @param #cc.Node target
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 --  Removes all actions from a certain target.<br>
