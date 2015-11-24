@@ -1047,7 +1047,6 @@
 		BADF47451A53E591008E2414 /* Chartboost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BADF47441A53E591008E2414 /* Chartboost.framework */; };
 		BADF47571A53E71C008E2414 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BADF47561A53E71C008E2414 /* EventKit.framework */; };
 		BADF47591A53E725008E2414 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BADF47581A53E725008E2414 /* EventKitUI.framework */; };
-		C280C8AF1A4C1147002C7860 /* footprintsingle.png in Resources */ = {isa = PBXBuildFile; fileRef = C280C8AE1A4C1147002C7860 /* footprintsingle.png */; };
 		C2C7B5631A4BDC39005B6ED1 /* CCLineBatchedSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2C7B5611A4BDC39005B6ED1 /* CCLineBatchedSprite.cpp */; };
 		C2E8E1D81A5FDBD500765330 /* CCFlagWaveSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2E8E1D61A5FDBD500765330 /* CCFlagWaveSprite.cpp */; };
 		DB3548A01B6A336C001B7FA0 /* number.fnt in Resources */ = {isa = PBXBuildFile; fileRef = DB35489E1B6A336C001B7FA0 /* number.fnt */; };
@@ -3251,7 +3250,6 @@
 		BADF47541A53E704008E2414 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		BADF47561A53E71C008E2414 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		BADF47581A53E725008E2414 /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
-		C280C8AE1A4C1147002C7860 /* footprintsingle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = footprintsingle.png; path = Resources/footprintsingle.png; sourceTree = "<group>"; };
 		C2C7B5611A4BDC39005B6ED1 /* CCLineBatchedSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLineBatchedSprite.cpp; sourceTree = "<group>"; };
 		C2C7B5621A4BDC39005B6ED1 /* CCLineBatchedSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLineBatchedSprite.h; sourceTree = "<group>"; };
 		C2E8E1D61A5FDBD500765330 /* CCFlagWaveSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFlagWaveSprite.cpp; sourceTree = "<group>"; };
@@ -5906,7 +5904,6 @@
 				DB35489F1B6A336C001B7FA0 /* number.png */,
 				1C49506F1AA0576200333C5E /* Spine */,
 				96F6B7E71A79D67C0032D9C0 /* particleImg */,
-				C280C8AE1A4C1147002C7860 /* footprintsingle.png */,
 				DB784C96198F836100DB5CBB /* Arial_Bold_Border.fnt */,
 				DB784C97198F836100DB5CBB /* Arial_Bold_Border.png */,
 				DB58DA23197FDF1800E0A29D /* Arial_Gradient.fnt */,
@@ -7112,7 +7109,6 @@
 				272AB6301B15C7BC0052E896 /* chat_bottom_keyboard_nor.png in Resources */,
 				272AB64E1B15C7BC0052E896 /* g045.png in Resources */,
 				272AB6231B15C7BC0052E896 /* alliance_01_full.png in Resources */,
-				C280C8AF1A4C1147002C7860 /* footprintsingle.png in Resources */,
 				1C4950701AA0576200333C5E /* Spine in Resources */,
 				DBEEF73019764FA7009D9327 /* Arial_Bold_Regular.png in Resources */,
 				59D7F03D1AF0BF85000120F9 /* HS-powered-by-logo@2x.png in Resources */,
