@@ -473,6 +473,7 @@ void GeneralsPopupView::refreshView(){
         pBust = m_info->pic;
     }
     auto sprite = CCLoadSprite::createSprite((pBust + "_bust.png").c_str());
+    sprite->setAnchorPoint(Vec2(0.5,0));
     sprite->setTag(0);
     sprite->setOpacity(0);
     sprite->setPositionX(-7);

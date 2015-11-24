@@ -64,9 +64,13 @@ bool GoldExchangeAdvertisingView::init()
 
 //    m_tabView->setTouchEnabled(false);
     
-    m_animNode = CCNode::create();
-    m_scrollContainer->getParent()->addChild(m_animNode);
-    m_animNode->setVisible(false);
+    //fusheng beign d
+//    m_animNode = CCNode::create();
+//    m_scrollContainer->getParent()->addChild(m_animNode);
+//    m_animNode->setVisible(false);
+    
+    m_animNode = nullptr;
+    //fusheng end
 
     refreshView(NULL);
     return true;
@@ -817,14 +821,14 @@ void GoldExchangeAdvertisingCommCell::refreshData(){
     if(m_dataItem->item!=""){
         m_moreLabel->setString(_lang("102162"));
         m_showMoreNode->setVisible(true);
-        m_showMoneyNode->setPositionY(0);
-        m_desLabel->setPositionY(0.2);
+//        m_showMoneyNode->setPositionY(0);//fusheng 11.25 d
+//        m_desLabel->setPositionY(0.2);
 
     }else{
         m_moreLabel->setString("");
         m_showMoreNode->setVisible(false);
-        m_showMoneyNode->setPositionY(-20);
-        m_desLabel->setPositionY(-50);
+//        m_showMoneyNode->setPositionY(-20);//fusheng 11.25 d
+//        m_desLabel->setPositionY(-50);
 
     }
 //    m_getLabel->setString(_lang_1("115073",""));
