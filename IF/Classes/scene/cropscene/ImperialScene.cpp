@@ -1151,29 +1151,18 @@ void ImperialScene::showWaterfall()
 {
     CCBLoadFile("waterfall",m_waterfallNode,this);
     // add particle
-    auto prt1 = ParticleController::createParticle("Waterfall_water_z");
-    m_waterfall_prt->getChildByTag(1)->addChild(prt1);
-    
-    auto prt2 = ParticleController::createParticle("Waterfall_fall_z");
-    m_waterfall_prt->getChildByTag(2)->addChild(prt2);
-    
-    auto prt3 = ParticleController::createParticle("Waterfall_water_z");
-    m_waterfall_prt->getChildByTag(3)->addChild(prt3);
-    
-    auto prt4 = ParticleController::createParticle("Waterfall_fall_z");
-    m_waterfall_prt->getChildByTag(4)->addChild(prt4);
     
     auto prt5 = ParticleController::createParticle("Waterfall_water_z");
-    m_waterfall_prt->getChildByTag(5)->addChild(prt5);
+    m_waterfall_prt->getChildByTag(1)->addChild(prt5);
     
     auto prt6 = ParticleController::createParticle("Waterfall_water_w");
-    m_waterfall_prt->getChildByTag(6)->addChild(prt6);
+    m_waterfall_prt->getChildByTag(2)->addChild(prt6);
     
     auto prt7 = ParticleController::createParticle("Waterfall_fall_z");
-    m_waterfall_prt->getChildByTag(7)->addChild(prt7);
+    m_waterfall_prt->getChildByTag(3)->addChild(prt7);
     
     auto prt8 = ParticleController::createParticle("Waterfall_fall_w");
-    m_waterfall_prt->getChildByTag(8)->addChild(prt8);
+    m_waterfall_prt->getChildByTag(4)->addChild(prt8);
 
 }
 
