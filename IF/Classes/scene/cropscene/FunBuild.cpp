@@ -287,11 +287,11 @@ bool FunBuild::initFunBuild(int itemId, CCLabelBatchNode* nameLayer)
         m_buildState = NULL;
         
         m_moveFrame = CCLoadSprite::createSprite("Tile_frame.png");
-        m_moveFrame->setPosition(ccp(93, 56));
+//        m_moveFrame->setPosition(ccp(93, 56));
         m_moveFrame->setVisible(false);
         if ((m_info->pos>=6 && m_info->pos<=16) || (m_info->pos>=52 && m_info->pos<=53)) {
             m_moveFrame->setScale(1.3);
-            m_moveFrame->setPosition(ccp(131, 67));
+//            m_moveFrame->setPosition(ccp(131, 67));
         }
         
         //begin a by ljf
@@ -342,21 +342,21 @@ bool FunBuild::initFunBuild(int itemId, CCLabelBatchNode* nameLayer)
         m_tile = CCLoadSprite::createSprite(tileName.c_str());
         m_tile->getTexture()->setAntiAliasTexParameters();
         this->setContentSize(m_tile->getContentSize());
-        m_tile->setAnchorPoint(ccp(0,0));
+        m_tile->setAnchorPoint(ccp(0.5,0.5));
         mainWidth = m_tile->getContentSize().width;
         mainHeight = m_tile->getContentSize().height;
         m_moveFrame = CCLoadSprite::createSprite("Tile_frame.png");
-        m_moveFrame->setPosition(ccp(93, 56));
+//        m_moveFrame->setPosition(ccp(0, 0));
         m_moveFrame->setVisible(false);
         if ((itemId>=6 && itemId<=16) || (itemId>=52 && itemId<=53)) {
             m_moveFrame->setScale(1.3);
-            m_moveFrame->setPosition(ccp(131, 67));
+//            m_moveFrame->setPosition(ccp(131, 67));
         }
         
         return true;
     }
     this->setContentSize(CCSizeMake(mainWidth, mainHeight));
-    this->setAnchorPoint(ccp(0,0));
+    this->setAnchorPoint(ccp(0.5,0.5));
     
     
     if(this->getAnimationManager()->getSequenceId("Default Timeline") >=0) {
@@ -515,7 +515,7 @@ void FunBuild::addTips(){
         introTip->setTag(9);
         m_tipNode->addChild(introTip);
         introTip->setAnimationAndPlay(3,5);
-        m_tipNode->setPosition(ccp(parentX+mainWidth/2, parentY + mainHeight));
+        m_tipNode->setPosition(ccp(parentX, parentY + mainHeight));
         m_popLayer->addChild(m_tipNode,m_zOrder);
     }
 }
@@ -549,8 +549,8 @@ void FunBuild::setNamePos(int x, int y, CCLayer* sginLayer, CCLayer* popLayer, C
     }
     
     m_signNode->setPosition(ccp(x,y));
-    m_upEffectNode->setPosition(ccp(x+mainWidth/2,y+mainHeight/2));
-    m_forgeEffectNode->setPosition(ccp(x+mainWidth/2,y+mainHeight/2));
+    m_upEffectNode->setPosition(ccp(x,y));
+    m_forgeEffectNode->setPosition(ccp(x,y));
     sginLayer->addChild(m_signNode);
     sginLayer->addChild(m_upEffectNode);
     sginLayer->addChild(m_forgeEffectNode);
@@ -907,7 +907,7 @@ void FunBuild::addWorkShopBuildState(CCObject* param){
     if (m_popLayer && m_buildState==NULL && btype==FUN_BUILD_WORKSHOP) {
         removeTips();
         m_buildState = FunBuildState::create(m_buildingKey);
-        m_buildState->setPosition(ccp(parentX+mainWidth/2, parentY));
+        m_buildState->setPosition(ccp(parentX, parentY));
         m_popLayer->addChild(m_buildState,m_zOrder);
         
         isEffectRunning = false;
@@ -920,9 +920,9 @@ void FunBuild::addFunBuildState()
     if (m_popLayer && m_buildState==NULL) {
         removeTips();
         m_buildState = FunBuildState::create(m_buildingKey);
-        m_buildState->setPosition(ccp(parentX+mainWidth/2, parentY));
+        m_buildState->setPosition(ccp(parentX, parentY));
         if (m_buildingKey == FUN_BUILD_MAIN_CITY_ID) {
-            m_buildState->setPosition(ccp(parentX+mainWidth/2, parentY+100));
+            m_buildState->setPosition(ccp(parentX, parentY+100));
         }
         m_popLayer->addChild(m_buildState,m_zOrder);
     }
@@ -1633,7 +1633,7 @@ void FunBuild::onClickThis(float _time)
                 }
                 
                 if(layer) {
-                    auto pt = layer->onGetSceenPt(parentX+mainWidth/2, parentY);
+                    auto pt = layer->onGetSceenPt(parentX, parentY);
                     auto movePt = IsNeedMove(pt.x, pt.y, layer->onGetTouchLayerScale());
                     if(movePt.x>0 || movePt.y>0) {
                         int ex = pt.x;
@@ -1644,7 +1644,7 @@ void FunBuild::onClickThis(float _time)
                         if (movePt.y>0) {
                             ey = movePt.y;
                         }
-                        layer->onMoveToPosDir(parentX+mainWidth/2, parentY, ex, ey);
+                        layer->onMoveToPosDir(parentX, parentY, ex, ey);
                     }
                 }
                 
@@ -1653,7 +1653,7 @@ void FunBuild::onClickThis(float _time)
                     dh = 100;
                 }
                 if (!m_info->is_Dirc && layer) {
-                    layer->onShowBtnsView(parentX+mainWidth/2, parentY+dh, m_buildingKey);
+                    layer->onShowBtnsView(parentX, parentY+dh, m_buildingKey);
                     playShadow();
                 }
             }
@@ -2779,7 +2779,7 @@ void FunBuild::onShowParticleByType(int type)
             for(int i=1;i<=3;i++)
             {
                 auto particle = ParticleController::createParticle(CCString::createWithFormat("Smithy_%d",i)->getCString());
-                particle->setPosition(ccp(parentX+mainWidth/2, parentY+100));
+                particle->setPosition(ccp(parentX, parentY+100));
                 addParticleToBatch(particle);
             }
         }else if (m_info->type == FUN_BUILD_WORKSHOP) {
@@ -2806,7 +2806,7 @@ void FunBuild::onShowParticleByType(int type)
             int count = 4;
             for (int i=1; i<=count; i++) {
                 auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString());
-                particle->setPosition(ccp(parentX+mainWidth/2, parentY+100));
+                particle->setPosition(ccp(parentX, parentY+100));
                 addParticleToBatch(particle);
             }
         }
@@ -2816,7 +2816,7 @@ void FunBuild::onShowParticleByType(int type)
         int count = 2;
         for (int i=1; i<=count; i++) {
             auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString());
-            particle->setPosition(ccp(parentX+mainWidth/2, parentY+100));
+            particle->setPosition(ccp(parentX, parentY+100));
             addParticleToBatch(particle);
         }
     }
@@ -2825,7 +2825,7 @@ void FunBuild::onShowParticleByType(int type)
         int count = 3;
         for (int i=1; i<=count; i++) {
             auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString());
-            particle->setPosition(ccp(parentX+mainWidth/2, parentY+60));
+            particle->setPosition(ccp(parentX, parentY+60));
             addParticleToBatch(particle);
         }
     }
@@ -2874,7 +2874,7 @@ void FunBuild::onPlayParticle()
 //    onHideParticle();
     auto layer = dynamic_cast<ImperialScene*>(SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE));
     if (layer) {
-        auto pt = layer->onGetSceenPt(parentX+mainWidth/2, parentY+mainHeight);
+        auto pt = layer->onGetSceenPt(parentX, parentY+mainHeight);
         if(m_buildingKey/1000!=FUN_BUILD_FORGE && m_buildingKey/1000!=FUN_BUILD_WORKSHOP)
         {
             layer->onFlyTroopParticle(pt.x, pt.y, 1);

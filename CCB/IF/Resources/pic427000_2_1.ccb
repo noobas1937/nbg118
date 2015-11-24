@@ -62,8 +62,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>-34</real>
-									<real>21</real>
+									<real>-128</real>
+									<real>-116</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -112,6 +112,8 @@
 								<false/>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -130,25 +132,13 @@
 						<array>
 							<dict>
 								<key>name</key>
-								<string>position</string>
-								<key>type</key>
-								<string>Position</string>
-								<key>value</key>
-								<array>
-									<real>-108</real>
-									<real>-1</real>
-									<integer>0</integer>
-								</array>
-							</dict>
-							<dict>
-								<key>name</key>
 								<string>anchorPoint</string>
 								<key>type</key>
 								<string>Point</string>
 								<key>value</key>
 								<array>
-									<real>0.0</real>
-									<real>0.0</real>
+									<real>0.5</real>
+									<real>0.5</real>
 								</array>
 							</dict>
 							<dict>
@@ -218,8 +208,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>158.4873046875</real>
-									<real>25.393463134765625</real>
+									<real>165.4873046875</real>
+									<real>-66.606536865234375</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -301,8 +291,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>190</real>
-									<real>38</real>
+									<real>197</real>
+									<real>-54</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -384,8 +374,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>190</real>
-									<real>38</real>
+									<real>197</real>
+									<real>-54</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -445,8 +435,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>164.5</real>
-									<real>28.400001525878906</real>
+									<real>171.5</real>
+									<real>-63.599998474121094</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -634,7 +624,7 @@
 			<key>offset</key>
 			<real>0.0</real>
 			<key>position</key>
-			<real>0.0</real>
+			<real>1.7333333492279053</real>
 			<key>resolution</key>
 			<real>30</real>
 			<key>scale</key>

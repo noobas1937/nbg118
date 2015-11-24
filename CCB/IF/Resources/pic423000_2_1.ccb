@@ -7,7 +7,7 @@
 	<key>currentResolution</key>
 	<integer>0</integer>
 	<key>currentSequenceId</key>
-	<integer>3</integer>
+	<integer>0</integer>
 	<key>fileType</key>
 	<string>CocosBuilder</string>
 	<key>fileVersion</key>
@@ -25,6 +25,18 @@
 			<integer>1</integer>
 			<key>position</key>
 			<real>0.0</real>
+		</dict>
+		<dict>
+			<key>orientation</key>
+			<integer>1</integer>
+			<key>position</key>
+			<real>-144</real>
+		</dict>
+		<dict>
+			<key>orientation</key>
+			<integer>0</integer>
+			<key>position</key>
+			<real>-119</real>
 		</dict>
 	</array>
 	<key>jsControlled</key>
@@ -62,8 +74,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>-3.9999961853027344</real>
-									<real>12.000001907348633</real>
+									<real>-148</real>
+									<real>-77</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -74,7 +86,7 @@
 								<string>Size</string>
 								<key>value</key>
 								<array>
-									<real>290</real>
+									<real>300</real>
 									<real>240</real>
 									<integer>0</integer>
 								</array>
@@ -112,6 +124,8 @@
 								<false/>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -135,8 +149,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>-77</real>
-									<real>-4</real>
+									<real>-14</real>
+									<real>30</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -147,8 +161,8 @@
 								<string>Point</string>
 								<key>value</key>
 								<array>
-									<real>0.0</real>
-									<real>0.0</real>
+									<real>0.5</real>
+									<real>0.5</real>
 								</array>
 							</dict>
 							<dict>
@@ -218,8 +232,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>146.1273193359375</real>
-									<real>22.873458862304688</real>
+									<real>144.1273193359375</real>
+									<real>14.873458862304688</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -301,8 +315,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>118</real>
-									<real>21</real>
+									<real>116</real>
+									<real>13</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -384,8 +398,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>214</real>
-									<real>58</real>
+									<real>212</real>
+									<real>50</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -445,8 +459,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>151.10000610351562</real>
-									<real>25.900001525878906</real>
+									<real>149.10000610351562</real>
+									<real>17.900001525878906</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -711,8 +725,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>0.0</real>
-											<real>10</real>
+											<real>150</real>
+											<real>160</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -739,8 +753,8 @@
 										<string>ScaleLock</string>
 										<key>value</key>
 										<array>
-											<real>1</real>
-											<real>1</real>
+											<real>0.0</real>
+											<real>0.0</real>
 											<false/>
 											<integer>0</integer>
 										</array>
@@ -1019,8 +1033,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>3</real>
-											<real>9</real>
+											<real>150</real>
+											<real>160</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -1047,8 +1061,8 @@
 										<string>ScaleLock</string>
 										<key>value</key>
 										<array>
-											<real>1</real>
-											<real>1</real>
+											<real>0.0</real>
+											<real>0.0</real>
 											<false/>
 											<integer>0</integer>
 										</array>
@@ -1312,8 +1326,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>0.0</real>
-											<real>10</real>
+											<real>150</real>
+											<real>160</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -1340,8 +1354,8 @@
 										<string>ScaleLock</string>
 										<key>value</key>
 										<array>
-											<real>1</real>
-											<real>1</real>
+											<real>0.0</real>
+											<real>0.0</real>
 											<false/>
 											<integer>0</integer>
 										</array>
@@ -1383,7 +1397,7 @@
 										<key>type</key>
 										<string>Byte</string>
 										<key>value</key>
-										<integer>0</integer>
+										<integer>255</integer>
 									</dict>
 									<dict>
 										<key>name</key>
@@ -1416,8 +1430,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>-17.672327041625977</real>
-									<real>30.365222930908203</real>
+									<real>-156.67233276367188</real>
+									<real>-86.634780883789062</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -1853,8 +1867,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>174</real>
-									<real>131</real>
+									<real>49</real>
+									<real>45</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -2338,8 +2352,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>132</real>
-									<real>111</real>
+									<real>7</real>
+									<real>25</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -2424,8 +2438,6 @@
 								</array>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 				</array>
 				<key>customClass</key>
@@ -2575,9 +2587,9 @@
 			<key>name</key>
 			<string>Default</string>
 			<key>offset</key>
-			<real>1.3203125</real>
+			<real>0.0</real>
 			<key>position</key>
-			<real>10</real>
+			<real>0.0</real>
 			<key>resolution</key>
 			<real>30</real>
 			<key>scale</key>
@@ -2713,7 +2725,7 @@
 			<key>offset</key>
 			<real>0.0</real>
 			<key>position</key>
-			<real>0.23333333432674408</real>
+			<real>2</real>
 			<key>resolution</key>
 			<real>30</real>
 			<key>scale</key>
