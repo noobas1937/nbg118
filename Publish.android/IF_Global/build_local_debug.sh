@@ -51,8 +51,10 @@ rm -rf *.bak
 cd ../../Android_Resource >/dev/null 2>/dev/null
 rm -rf *
 
-cd ../CCB/IF >/dev/null 2>/dev/null
 echo "0.pack_all.command..."
+cd ../CCB/LuaCCB >/dev/null 2>/dev/null
+sh pack_android.sh
+cd ../CCB/IF >/dev/null 2>/dev/null
 sh pack_android.sh
 # guo jiang todo
 cp  -rf ./Imperial/Imperial_41/*.jpg ../../Android_Resource/Imperial/
