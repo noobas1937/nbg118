@@ -13,7 +13,7 @@
 
 NS_CC_BEGIN
 
-#define FOOTPRINTIMGPATH "footprintsingle.png"
+#define FOOTPRINTIMGPATH "World/footprintsingle.png"
 #define MAX_LENGTH_PER_LINE 128 * 120
 
 class CCLineBatchedSpriteCell : public CCSprite{

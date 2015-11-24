@@ -106,8 +106,9 @@ void OutsideEnemy::move()
     if(useTime != 0)
     {
         //sc = CCSequence::create(CCMoveTo::create(useTime, onePos),CCCallFunc::create(this, callfunc_selector(Walker::moveOnePoint)),NULL);
-        sc = CCSequence::create(CCMoveTo::create(useTime, toPos), CCCallFunc::create(this, callfunc_selector(OutsideEnemy::die)), NULL);
-        CCSequence *arrowSc = CCSequence::create(CCDelayTime::create(useTime - 0.5), CCCallFunc::create(this, callfunc_selector(OutsideEnemy::shootArrow)), NULL);
+        //sc = CCSequence::create(CCMoveTo::create(useTime, toPos), CCCallFunc::create(this, callfunc_selector(OutsideEnemy::die)), NULL);
+        sc = CCSequence::create(CCMoveTo::create(useTime, toPos), CCCallFunc::create(this, callfunc_selector(OutsideEnemy::scare)), NULL);
+        CCSequence *arrowSc = CCSequence::create(CCDelayTime::create(useTime - 0.25), CCCallFunc::create(this, callfunc_selector(OutsideEnemy::shootArrow)), NULL);
         arrowAction = CCSpawn::create(sc, arrowSc, NULL);
         action = createAnimation(ENEMY_ACTION_STATUS_MOVE);
     }
@@ -133,10 +134,46 @@ void OutsideEnemy::die()
     if(mActionStatus == ENEMY_ACTION_STATUS_DIE)
         return;
     CCSequence* action = createAnimation(ENEMY_ACTION_STATUS_DIE);
-    CCSequence * sc = CCSequence::create(action, CCCallFunc::create(this, callfunc_selector(OutsideEnemy::hideAndReleaseSelf)),NULL);
+    CCFadeOut * fadeOut = FadeOut::create(0.5);
+    CCSequence * sc = CCSequence::create(action, fadeOut,  CCCallFunc::create(this, callfunc_selector(OutsideEnemy::hideAndReleaseSelf)),NULL);
     mIconSpr->stopAllActions();
     mIconSpr->runAction(sc);
     mActionStatus = ENEMY_ACTION_STATUS_DIE;
+}
+
+void OutsideEnemy::scare()
+{
+    
+    if(mActionStatus == ENEMY_ACTION_STATUS_SCARE)
+        return;
+    CCSequence* action = createAnimation(ENEMY_ACTION_STATUS_SCARE);
+    CCSequence * sc = CCSequence::create(action, CCCallFunc::create(this, callfunc_selector(OutsideEnemy::retreat)), NULL);
+    mIconSpr->stopAllActions();
+    mIconSpr->runAction(sc);
+    mActionStatus = ENEMY_ACTION_STATUS_SCARE;
+}
+
+void OutsideEnemy::retreat()
+{
+    if(mActionStatus == ENEMY_ACTION_STATUS_RETREAT)
+        return;
+    CCSequence* action = createAnimation(ENEMY_ACTION_STATUS_RETREAT);
+    
+    CCPoint gap = ccpSub(mToPos, mFromPos);
+    float len = ccpLength(gap);
+    float useTime = len / (mMoveSpeed + 30);//len/120.0;
+   
+    CCSpawn * spawnAction = nullptr;
+    if(useTime > 0)
+    {
+        auto moveAction = CCMoveTo::create(useTime, mFromPos);
+        CCSequence * sequanceAction = CCSequence::create(moveAction, CCCallFunc::create(this, callfunc_selector(OutsideEnemy::hideAndReleaseSelf)), NULL);
+        spawnAction = Spawn::create(action, sequanceAction, NULL);
+    }
+   
+    mIconSpr->stopAllActions();
+    mIconSpr->runAction(spawnAction);
+    mActionStatus = ENEMY_ACTION_STATUS_RETREAT;
 }
 
 CCSequence* OutsideEnemy::createAnimation(int enemyActionStatus)
@@ -160,6 +197,20 @@ CCSequence* OutsideEnemy::createAnimation(int enemyActionStatus)
         actionName = "die";
         delayPerUnit = 0.15;
         loopTimes = 1;
+    }
+    else if(enemyActionStatus == ENEMY_ACTION_STATUS_SCARE)
+    {
+        totalFrame = 7;
+        actionName = "scare";
+        delayPerUnit = 0.1;
+        loopTimes = 1;
+    }
+    else if(enemyActionStatus == ENEMY_ACTION_STATUS_RETREAT)
+    {
+        totalFrame = 5;
+        actionName = "retreat";
+        delayPerUnit = 0.15;
+        loopTimes = numeric_limits<int>::max();
     }
     for (int j = 0; j < totalFrame; j++)
     {
@@ -202,7 +253,12 @@ void OutsideEnemy::shootArrow()
 {
     CCPoint p1 = OutsideEnemy::ArrowBegin1;
     CCPoint p11 = OutsideEnemy::ArrowBegin2;
-    CCPoint p2 = mToPos;
+    CCPoint p2 = mToPos + Vec2(-80, 80);
     GongJian2* gong1 = GongJian2::create(mArrowBatchNode, p1, p2, 0, "jian_0.png", 1.5, 600);
     GongJian2* gong2 = GongJian2::create(mArrowBatchNode, p11, p2, 0, "jian_0.png", 1.5, 600);
+}
+
+void OutsideEnemy::start()
+{
+    move();
 }
