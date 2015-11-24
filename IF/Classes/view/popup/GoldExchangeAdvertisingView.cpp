@@ -31,7 +31,7 @@
 
 #include "LuaController.h"
 
-const int advertiseCellW = 540;
+const int advertiseCellW = 640;//fusheng 540
 
 GoldExchangeAdvertisingView* GoldExchangeAdvertisingView::create(){
     GoldExchangeAdvertisingView* ret = new GoldExchangeAdvertisingView();
@@ -104,7 +104,8 @@ void GoldExchangeAdvertisingView::onPlayEnterFrame(float dt){
     addButtonLight(false);
     int addX = -advertiseCellW;
     int offSetX = int((m_tabView->getContentOffset().x + addX) / advertiseCellW) * advertiseCellW;
-    int minX  = m_tabView->minContainerOffset().x+20;
+//    int minX  = m_tabView->minContainerOffset().x+20;//fusheng 11.24
+    int minX  = m_tabView->minContainerOffset().x;
     if(offSetX > 0){
         offSetX = 0;
     }else
@@ -388,7 +389,9 @@ void GoldExchangeAdvertisingView::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
         addX = 0;
     }
     int offSetX = int((m_tabView->getContentOffset().x + addX) / advertiseCellW) * advertiseCellW;
-    int minX  = m_tabView->minContainerOffset().x+20;
+//    int minX  = m_tabView->minContainerOffset().x+20;
+    int minX  = m_tabView->minContainerOffset().x;
+    
     if(offSetX > 0){
         offSetX = 0;
     }
@@ -405,12 +408,12 @@ CCSize GoldExchangeAdvertisingView::tableCellSizeForIndex(CCTableView *table, ss
     if(idx >= m_data->count()){
         return CCSizeZero;
     }
-    return CCSize(advertiseCellW, 220);
+    return CCSize(advertiseCellW, 245);
 }
 
 CCSize GoldExchangeAdvertisingView::cellSizeForTable(CCTableView *table)
 {
-    return CCSize(advertiseCellW, 220);
+    return CCSize(advertiseCellW, 245);
 }
 
 CCTableViewCell* GoldExchangeAdvertisingView::tableCellAtIndex(CCTableView *table, ssize_t idx)
@@ -516,7 +519,7 @@ void GoldExchangeAdvertisingCell::setData(GoldExchangeItem* item){
             }else{
                 auto cell = GoldExchangeAdvertisingCommCell::create(m_item);
                 this->addChild(cell);
-                cell->setPositionY(-66);
+//                cell->setPositionY(-66);
                 m_costBtnRect = cell->getCostBtnRect();
             }
         }
@@ -528,7 +531,7 @@ void GoldExchangeAdvertisingCell::refreshView(){
 }
 
 bool GoldExchangeAdvertisingCell::init(){
-    this->setContentSize(CCSize(540, 300));
+    this->setContentSize(CCSize(640, 250));//fusheng 540
 //    setCleanFunction([](){
 //        CCLoadSprite::doResourceByCommonIndex(100, false);
 //        CCLoadSprite::doResourceByGeneralIndex(1, false);
@@ -580,7 +583,7 @@ bool GoldExchangeHallweenCell::init()
         subStr = "GoldAdvertising"+subStr+"Cell";
         CCBLoadFile(subStr.c_str(), this, this, false);
     }
-    this->setContentSize(CCSizeMake(540, 220));
+    this->setContentSize(CCSizeMake(640, 245));
     //    this->m_title->setString(_lang("102148").c_str());
     string dollar = PayController::getInstance()->getDollarText(m_dataItem->dollar,m_dataItem->product_id);
 //    m_animNode = CCNode::create();
@@ -748,7 +751,7 @@ bool GoldExchangeAdvertisingCommCell::init()
 {
    
     CCBLoadFile("GoldAdvertisingCommonCell",this,this,false);
-    this->setContentSize(CCSizeMake(540, 220));
+    this->setContentSize(CCSizeMake(640, 250));
     //    this->m_title->setString(_lang("102148").c_str());
     string dollar = PayController::getInstance()->getDollarText(m_dataItem->dollar,m_dataItem->product_id);
     //    this->m_dollerNum->setString(dollar.c_str());

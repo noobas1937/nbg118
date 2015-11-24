@@ -14,7 +14,7 @@
         <key>quiet</key>
         <false/>
         <key>premultiplyAlpha</key>
-        <true/>
+        <false/>
         <key>shapeDebug</key>
         <false/>
         <key>dpi</key>
@@ -54,7 +54,7 @@
         <key>maxTextureSize</key>
         <QSize>
             <key>width</key>
-            <int>1024</int>
+            <int>2048</int>
             <key>height</key>
             <int>1024</int>
         </QSize>

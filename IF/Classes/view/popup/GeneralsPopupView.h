@@ -167,8 +167,7 @@ private:
     CCSafeObject<CCNode> m_bNode;
     CCSafeObject<CCNode> m_bottomNode;
     CCSafeObject<CCNode> m_particleNode;
-    CCSafeObject<CCSprite> m_leftBg;
-    CCSafeObject<CCSprite> m_rightBg;
+
     CCSafeObject<CCSprite> m_ChangeAvatar;
     
     CCSafeObject<CCControlButton> m_renameBtn;

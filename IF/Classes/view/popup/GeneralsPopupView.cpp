@@ -137,6 +137,15 @@ bool GeneralsPopupView::init()
         return false;
     }
     setIsHDPanel(true);
+    
+    //fusheng begin 添加图片
+    CCLoadSprite::doResourceByGeneralIndex(1, true);
+    CCLoadSprite::doResourceByGeneralIndex(2, true);
+    CCLoadSprite::doResourceByGeneralIndex(3, true);
+    
+    //fusheng end
+    
+    
     CCLog("CCLoadSprite::doResourceByCommonIndex(503, true)");
     loadResource();
     
@@ -205,13 +214,17 @@ bool GeneralsPopupView::init()
     {
         if (!CCCommonUtils::isIosAndroidPad()) {
             m_infoNode->setContentSize(CCSize(m_infoNode->getContentSize().width, m_infoNode->getContentSize().height+extH));
-//            m_infoNode->setPositionY(m_infoNode->getPositionY()-extH); //fusheng 应美术要求 下调100像素
-            m_infoNode->setPositionY(m_infoNode->getPositionY()-extH-100);
+            m_infoNode->setPositionY(m_infoNode->getPositionY()-extH); //fusheng 应美术要求 下调100像素
+//            m_infoNode->setPositionY(m_infoNode->getPositionY()-extH-100);
             m_scrollView = CCScrollView::create(m_infoNode->getContentSize());
             m_scrollView->setDirection(kCCScrollViewDirectionVertical);
             m_infoNode->addChild(m_scrollView);
+            
+            
+//           auto m_mainNode->getPosition();
+            
             m_mainNode->removeFromParent();
-            m_mainNode->setPosition(ccp(320, 550));
+            m_mainNode->setPosition(ccp(320, 500));
             m_scrollView->addChild(m_mainNode);
             m_scrollView->setContentSize(CCSize(m_infoNode->getContentSize().width,880));
             m_scrollView->setContentOffset(ccp(0, m_infoNode->getContentSize().height - 880));
@@ -297,7 +310,7 @@ bool GeneralsPopupView::init()
             m_scrollView->setDirection(kCCScrollViewDirectionVertical);
             m_infoNode->addChild(m_scrollView);
             m_mainNode->removeFromParent();
-            m_mainNode->setPosition(ccp(320, 550));
+            m_mainNode->setPosition(ccp(320, 500));
             m_scrollView->addChild(m_mainNode);
             m_scrollView->setContentSize(CCSize(m_infoNode->getContentSize().width,880+90));
             m_scrollView->setContentOffset(ccp(0, m_infoNode->getContentSize().height - 880-90));
@@ -432,12 +445,7 @@ bool GeneralsPopupView::init()
     
     m_buildBG->setPositionY(m_buildBG->getPositionY()+m_buildBG->getContentSize().height-oldH);
     
-    //fusheng begin 添加图片
-    CCLoadSprite::doResourceByGeneralIndex(1, true);
-    CCLoadSprite::doResourceByGeneralIndex(2, true);
-    CCLoadSprite::doResourceByGeneralIndex(3, true);
-    
-    //fusheng end
+
     
     
 
@@ -565,9 +573,7 @@ void GeneralsPopupView::onExit(){
     resetRankPop();
     CCLoadSprite::doResourceByCommonIndex(100, false);
 //    CCLoadSprite::doResourceByCommonIndex(305, false);
-    CCLoadSprite::doResourceByGeneralIndex(1, false);
-    CCLoadSprite::doResourceByGeneralIndex(2, false);
-    CCLoadSprite::doResourceByGeneralIndex(3, false);
+
     CCLoadSprite::releaseDynamicResourceByType(CCLoadSpriteType_GOODS);
     
     PopupBaseView::onExit();
@@ -657,8 +663,7 @@ bool GeneralsPopupView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, c
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_expTxt2", CCLabelIF*, this->m_expTxt2);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_expBar", CCScale9Sprite*, this->m_expBar);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_leftBg", CCSprite*, this->m_leftBg);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_rightBg", CCSprite*, this->m_rightBg);
+
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_renameBtn", CCControlButton*, this->m_renameBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bTxt3", CCLabelIF*, this->m_bTxt3);
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bTxt4", CCLabelIF*, this->m_bTxt4);
@@ -2126,11 +2131,11 @@ void GeneralPicCell::refreshView()
 }
 
 bool GeneralPicCell::init(){
-    setCleanFunction([](){
-        CCLoadSprite::doResourceByGeneralIndex(1, false);
-        CCLoadSprite::doResourceByGeneralIndex(2, false);
-        CCLoadSprite::doResourceByGeneralIndex(3, false);
-    });
+//    setCleanFunction([](){
+//        CCLoadSprite::doResourceByGeneralIndex(1, false);
+//        CCLoadSprite::doResourceByGeneralIndex(2, false);
+//        CCLoadSprite::doResourceByGeneralIndex(3, false);
+//    });
     
     CCBLoadFile("GeneralPicCell",this,this);
 
