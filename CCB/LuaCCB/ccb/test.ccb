@@ -89,7 +89,7 @@
 						<key>value</key>
 						<array>
 							<string>test.plist</string>
-							<string>test/advHotBG3.png</string>
+							<string>advHotBG2.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -104,6 +104,8 @@
 						</array>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>

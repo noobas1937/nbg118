@@ -25,13 +25,13 @@
 	<key>javascriptMainCCB</key>
 	<string></string>
 	<key>needRepublish</key>
-	<true/>
+	<false/>
 	<key>onlyPublishCCBs</key>
 	<true/>
 	<key>publishDirectory</key>
-	<string>Published</string>
+	<string>../../IF/Resources/res/ccbi</string>
 	<key>publishDirectoryAndroid</key>
-	<string>Published</string>
+	<string>../../IF/Resources/res/ccbi</string>
 	<key>publishDirectoryHTML5</key>
 	<string>Published-HTML5</string>
 	<key>publishEnabledAndroid</key>
