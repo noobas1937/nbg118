@@ -63,6 +63,17 @@ void WorldMapView::monsterDeathCB(CCObject* obj)
 void WorldMapView::refreshMonster(CCObject *obj){
     CCInteger *in = dynamic_cast<CCInteger*>(obj);
     if(in){
+        
+        for (int i = MonsterAttack; i <= MonsterBreath; i++)
+        {
+            int tag = 1000000 * 100 + WORLD_MAP_VIEW->getBatchTag(BatchTagType(i), in->getValue());
+            auto c = WORLD_MAP_VIEW->m_mapMonstersNode->getChildByTag(tag);
+            if (c)
+            {
+                c->removeFromParent();
+            }
+        }
+        
         auto city = m_cityInfo.find(in->getValue());
         if(city != m_cityInfo.end()){
             if(city->second.fieldMonsterInfo.currentHp == 0 && city->second.cityType == MonsterTile){
