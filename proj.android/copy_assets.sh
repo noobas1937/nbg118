@@ -103,15 +103,6 @@ done
 # sed -i.bak 's/World_4.pvr.ccz/_alpha_World_4.pkm/g' "$APP_COCOS_RES_ROOT"/WorldMap.tmx
 # rm -rf "$APP_COCOS_RES_ROOT"/*.bak
 
-echo "xxtea lua codes"
-luaSrcDir="${APP_COCOS_RES_ROOT}/src"
-luaSrcDir_tmp="${APP_COCOS_RES_ROOT}/src_tmp"
-mv ${luaSrcDir} ${luaSrcDir_tmp}
-cd "${APP_ROOT}/tools"
-./pack_files/pack_files.sh -i ${luaSrcDir_tmp} -o ${APP_COCOS_RES_ROOT} -ek n_77wDDolqz -es i900_gFymA
-rm -rf ${luaSrcDir_tmp}
-cd $DIR
-
 rm -rf "$APP_COCOS_RES_ROOT"/WorldMap.tmx
 rm -rf "$APP_COCOS_RES_ROOT"/WorldMap1.tmx
 
@@ -145,6 +136,17 @@ if [ -f "$file" ]; then
 	cp "$file" "$APP_ANDROID_ROOT"/res/drawable-ldpi/icon.png
 fi
 
+echo "copy ccbi files for lua"
+cp -r "${APP_ROOT}/IF/Resources/res/ccbi" "${APP_COCOS_RES_ROOT}/res/ccbi"
+
+echo "xxtea lua codes"
+luaSrcDir="${APP_COCOS_RES_ROOT}/src"
+luaSrcDir_tmp="${APP_COCOS_RES_ROOT}/src_tmp"
+mv ${luaSrcDir} ${luaSrcDir_tmp}
+cd "${APP_ROOT}/tools"
+./pack_files/pack_files.sh -i ${luaSrcDir_tmp} -o ${luaSrcDir} -ek n_77wDDolqz -es i900_gFymA
+rm -rf ${luaSrcDir_tmp}
+cd $DIR
 
 # if [[ "$buildexternalsfromsource" ]]; then
 #     echo "Building external dependencies from source"

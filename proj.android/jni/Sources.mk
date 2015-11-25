@@ -887,5 +887,6 @@ LOCAL_SRC_FILES := main.cpp \
 ../../IF/Classes/view/Widget/IFSkeletonBatchLayer.cpp \
 ../../IF/Classes/view/Widget/IFSkeletonDataManager.cpp \
 ../../IF/Classes/view/Widget/IFSkeletonNode.cpp \
+../../IF/Classes/Lua/ext/md5/NB_md5.c \
 ../../IF/libs/extensions/HelpShift/HelpshiftCocos2dx.cpp \
 
