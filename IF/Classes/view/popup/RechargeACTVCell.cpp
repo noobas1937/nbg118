@@ -223,7 +223,7 @@ bool RechargeACTVCell::initRechargeACTVCell()
             LuaController::getInstance()->showExchangeSale(this,dataItemNormal);
         }else{
             GoldExchangeSaleView* cell =  GoldExchangeSaleView::create(dataItemNormal, 1);
-            cell->ignoreAnchorPointForPosition(false);
+            cell->ignoreAnchorPointForPosition(false); //ljf
             cell->setAnchorPoint(ccp(0.5, 0.5));
             cell->setPosition(ccp(winSize.width/2, winSize.height/2));
             this->addChild(cell);
@@ -367,7 +367,8 @@ void ActivityBox::setData(){
                     
                 }
             }else if(it->second->type == "1"){
-                if(it->second->bought|| it->second->popup_image=="hide" || it->second->popup_image.empty()){
+                //if(it->second->bought|| it->second->popup_image=="hide" || it->second->popup_image.empty()){ //d by ljf
+                if(it->second->bought|| it->second->popup_image=="hide" || it->second->popup_image.empty() ){
                     continue;
                 }
                 if(it->second->end>GlobalData::shared()->getWorldTime()){
