@@ -959,44 +959,85 @@ void ImperialScene::shootArrow(float t)
 
 void ImperialScene::onCreateBridge()
 {
-    m_bridge3D = NBSprite3D::create("3d/bridge/bridge_1_skin.c3b");
-    m_bridge3D->setTexture("3d/bridge/bridge_1.jpg");
     auto bridgeRootNode = CCNode::create();
     bridgeRootNode->setRotation3D(Vec3(32, 39, -24));
-    bridgeRootNode->addChild(m_bridge3D);
-    
     bridgeRootNode->setPosition(m_touchLayer->convertToNodeSpace(m_bridgeNode->convertToWorldSpace(Point(0, 0))));
-
     auto pBridgeNode = Node::create();
     pBridgeNode->addChild(bridgeRootNode);
     m_node3d->addChild(pBridgeNode);
-    m_bridge3D->setScale(3);
-    auto anim_stand = Animation3D::create("3d/bridge/bridge_1_open.c3b");
-    if (anim_stand) {
-        auto pAnim = Animate3D::createWithFrames(anim_stand, 0, 104); //close 105-256
-        if (pAnim) {
-            auto act = RepeatForever::create(pAnim);
-            m_bridge3D->runAction(act);
-        }
-    }
+    
+    m_bridge3D_Up = NBSprite3D::create("3d/bridge/bridge_2_skin.c3b");
+    m_bridge3D_Up->setTexture("3d/bridge/bridge_1.jpg");
+    m_bridge3D_Up->setScale(7);
+    bridgeRootNode->addChild(m_bridge3D_Up);
+    
+    m_bridge3D_Down = NBSprite3D::create("3d/bridge/bridge_2_skin.c3b");
+    m_bridge3D_Down->setTexture("3d/bridge/bridge_1.jpg");
+    m_bridge3D_Down->setScale(7);
+    m_bridge3D_Down->setRotation3D(Vec3(0, 180, 0));
+    bridgeRootNode->addChild(m_bridge3D_Down);
     
     m_touchLayer->setCameraMask((unsigned short)CameraFlag::USER4, true);
     m_node3d->setCameraMask((unsigned short) CameraFlag::USER2, true);
 }
 
-void ImperialScene::onBridgeTouched(CCTouch* pTouch)
+bool ImperialScene::onBridgeTouched(CCTouch* pTouch)
 {
+    if(m_bridge3D_Up == nullptr || m_bridge3D_Down == nullptr || m_bridgeTouchNode == nullptr)
+    {
+        return false;
+    }
+    Vec2 touchPoint = m_bridgeTouchNode->convertToNodeSpace(pTouch->getLocation());
+    // 下面的touch点转换是为了让点击区域在模型内
+    float originX = -1 * m_bridgeTouchNode->getContentSize().width * m_bridgeTouchNode->getAnchorPoint().x;
+    float originY = -1 * m_bridgeTouchNode->getContentSize().height * m_bridgeTouchNode->getAnchorPoint().y;
+    touchPoint.x = touchPoint.x + originX;
+    touchPoint.y = touchPoint.y + originY;
     
+    Rect boundingBox(originX, originY, m_bridgeTouchNode->getContentSize().width, m_bridgeTouchNode->getContentSize().height);
+
+    bool isTouched = boundingBox.containsPoint(touchPoint);
+    if (!isTouched) {
+        return false;
+    }
+    
+    if (m_bridgeOpened) {
+        onBridgeClose();
+    }
+    else {
+        onBridgeOpen();
+    }
+    return true;
 }
 
 void ImperialScene::onBridgeOpen()
 {
-    
+    m_bridgeOpened = true;
+    auto anim1 = Animation3D::create("3d/bridge/bridge_2_open.c3b");
+    if (anim1) {
+        auto pAnim = Animate3D::createWithFrames(anim1, 0, 104); //close 105-256
+        if (pAnim) {
+            auto act = Repeat::create(pAnim,1);
+            auto act2 = act->clone();
+            m_bridge3D_Up->runAction(act);
+            m_bridge3D_Down->runAction(act2);
+        }
+    }
 }
 
 void ImperialScene::onBridgeClose()
 {
-    
+    m_bridgeOpened = false;
+    auto anim1 = Animation3D::create("3d/bridge/bridge_2_close.c3b");
+    if (anim1) {
+        auto pAnim = Animate3D::createWithFrames(anim1, 105, 256); //close 105-256
+        if (pAnim) {
+            auto act = Repeat::create(pAnim,1);
+            auto act2 = act->clone();
+            m_bridge3D_Up->runAction(act);
+            m_bridge3D_Down->runAction(act2);
+        }
+    }
 }
 
 void ImperialScene::wallCallBack(CCObject* params)
@@ -2393,6 +2434,9 @@ void ImperialScene::onSingleTouchEnd(CCTouch* pTouch)
         return;
     }
     //end a by ljf
+    if (onBridgeTouched(pTouch)) {
+        return;
+    }
     if (curTouchBuildId > -1) {
         if(lastTouchBuildId != curTouchBuildId)
         {

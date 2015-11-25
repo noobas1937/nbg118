@@ -50,7 +50,7 @@ class ImperialScene:public CCLayer,public ITouchDelegate,public CCBMemberVariabl
 public:
     ImperialScene():lastTouchBuildId(-1),curTouchBuildId(-1),m_count(0),m_singleTouchState(false),m_mainPatPlayTime(0),m_waterType(0)
     ,m_curBuildId(0),m_curBuildPosx(0),m_curBuildPosy(0),m_tmpMoveX(0),m_tmpMoveY(0),m_canClick(true),m_buildingInitState(false)
-    ,m_oldScale(1.0),m_oldPosX(0),m_oldPosY(0),m_isOnlyPower(0),m_isSave(false),m_tmpBuildPos(0),m_removeSpeBId(0),m_curGuideEnd(false),m_isLogin(false),m_beginTouchType(0),m_forceMove(false),m_exit(false),m_isDay(false),m_isRain(false),m_sysTime(0),m_talkTime(0), m_lotteryBuild(NULL),mActionManager(NULL),m_nightLights(NULL),m_rescustombatchNode(NULL),m_Titan(NULL),m_bridgeOpened(false),m_bridge3D(NULL){};
+    ,m_oldScale(1.0),m_oldPosX(0),m_oldPosY(0),m_isOnlyPower(0),m_isSave(false),m_tmpBuildPos(0),m_removeSpeBId(0),m_curGuideEnd(false),m_isLogin(false),m_beginTouchType(0),m_forceMove(false),m_exit(false),m_isDay(false),m_isRain(false),m_sysTime(0),m_talkTime(0), m_lotteryBuild(NULL),mActionManager(NULL),m_nightLights(NULL),m_rescustombatchNode(NULL),m_Titan(NULL),m_bridgeOpened(false),m_bridge3D_Up(NULL),m_bridge3D_Down(NULL){};
     
     virtual ~ImperialScene(){};
     CREATE_FUNC(ImperialScene);
@@ -76,7 +76,7 @@ public:
     //end a by ljf
     
     void onCreateBridge();
-    void onBridgeTouched(CCTouch* pTouch);
+    bool onBridgeTouched(CCTouch* pTouch);
     void onBridgeOpen();
     void onBridgeClose();
     
@@ -437,7 +437,8 @@ private:
     CCSafeObject<CCNode> m_cityBgNode;
     
     // tao.yu bridge
-    CCSafeObject<NBSprite3D> m_bridge3D;
+    CCSafeObject<NBSprite3D> m_bridge3D_Up;
+    CCSafeObject<NBSprite3D> m_bridge3D_Down;
     CCSafeObject<CCNode> m_bridgeNode;
     CCSafeObject<CCNode> m_bridgeTouchNode;
     bool m_bridgeOpened;
