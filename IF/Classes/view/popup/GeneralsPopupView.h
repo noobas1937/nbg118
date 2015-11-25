@@ -192,6 +192,9 @@ private:
     CCSafeObject<CCNode> m_headIcon;
     CCSafeObject<CCNode> m_scrollContainer;
     
+    CCSafeObject<CCNode> m_nameNode;
+    CCSafeObject<CCNode> ForCCBAnimation;
+    
 //    CCSafeObject<CCTableView> m_tabView;
     CCSafeObject<CCArray> m_data;
     CCSafeObject<CCNode> m_resetNode;

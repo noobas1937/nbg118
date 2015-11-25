@@ -139,9 +139,9 @@ bool GeneralsPopupView::init()
     setIsHDPanel(true);
     
     //fusheng begin 添加图片
-    CCLoadSprite::doResourceByGeneralIndex(1, true);
-    CCLoadSprite::doResourceByGeneralIndex(2, true);
-    CCLoadSprite::doResourceByGeneralIndex(3, true);
+    CCLoadSprite::doResourceByGeneralIndex(1, true);//亮光放在这里
+//    CCLoadSprite::doResourceByGeneralIndex(2, true);
+//    CCLoadSprite::doResourceByGeneralIndex(3, true);
     
     //fusheng end
     
@@ -446,6 +446,18 @@ bool GeneralsPopupView::init()
     m_buildBG->setPositionY(m_buildBG->getPositionY()+m_buildBG->getContentSize().height-oldH);
     
 
+    int tmp = 200;
+    if (CCDirector::getInstance()->getWinSize().height/CCDirector::getInstance()->getWinSize().width<1.6) {
+        m_nameNode->setPositionY(m_nameNode->getPositionY()+tmp);
+        m_selfInfoNode->setPositionY(m_selfInfoNode->getPositionY()+tmp);
+        
+        m_bustPic->setScale(0.65);
+        
+        m_bustPic->setPositionY(m_bustPic->getPositionY()+tmp);
+        
+        ForCCBAnimation->setScaleY(0.65);
+    }
+    
     
     
 
@@ -516,7 +528,7 @@ void GeneralsPopupView::onSetBagTipNode()
 
 void GeneralsPopupView::loadResource(){
     CCLoadSprite::doResourceByCommonIndex(105, true);
-    CCLoadSprite::doResourceByCommonIndex(100, true);
+//    CCLoadSprite::doResourceByCommonIndex(100, true);//fusheng 装备
     CCLoadSprite::doResourceByCommonIndex(305, true);
     CCLoadSprite::doResourceByCommonIndex(503, true);
     CCLoadSprite::doResourceByCommonIndex(7, true);
@@ -648,6 +660,11 @@ void GeneralsPopupView::onSkillBtnClick(CCObject * pSender, Control::EventType p
 
 bool GeneralsPopupView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode)
 {
+
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nameNode", CCNode*, this->m_nameNode);
+
+     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "ForCCBAnimation", CCNode*, this->ForCCBAnimation);
+    
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_expTxtPre", CCLabelIF*, this->m_expTxtPre);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_stamineTextPre", CCLabelIF*, this->m_stamineTextPre);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_ChangeAvatar", CCSprite*, this->m_ChangeAvatar);
