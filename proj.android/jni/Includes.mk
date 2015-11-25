@@ -68,6 +68,12 @@ $(LOCAL_PATH)/../../IF/Classes/Ext/GUI \
 $(LOCAL_PATH)/../../IF/Classes/Ext/GUI/CCRichLabel \
 $(LOCAL_PATH)/../../IF/Classes/Ext/GUI/WebView \
 $(LOCAL_PATH)/../../IF/Classes/Ext/shaders \
+$(LOCAL_PATH)/../../IF/Classes/Lua \
+$(LOCAL_PATH)/../../IF/Classes/Lua/api4lua \
+$(LOCAL_PATH)/../../IF/Classes/Lua/auto \
+$(LOCAL_PATH)/../../IF/Classes/Lua/ccb \
+$(LOCAL_PATH)/../../IF/Classes/Lua/ext \
+$(LOCAL_PATH)/../../IF/Classes/Lua/ext/md5 \
 $(LOCAL_PATH)/../../IF/Classes/model \
 $(LOCAL_PATH)/../../IF/Classes/Net \
 $(LOCAL_PATH)/../../IF/Classes/Net/command \
