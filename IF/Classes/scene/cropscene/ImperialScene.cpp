@@ -484,6 +484,7 @@ void ImperialScene::buildingCallBack(CCObject* params)
     showWaterfall();
     
     m_buildingInitState = true;
+    onCreateBridge();
     onCreateTitan();
     this->titanChangeStatus(NULL);
     onEnterFrame(0);
@@ -952,6 +953,51 @@ void ImperialScene::shootArrow(float t)
 }
 
 //end a by ljf
+
+
+// 桥
+
+void ImperialScene::onCreateBridge()
+{
+    m_bridge3D = NBSprite3D::create("3d/bridge/bridge_1_skin.c3b");
+    m_bridge3D->setTexture("3d/bridge/bridge_1.jpg");
+    auto bridgeRootNode = CCNode::create();
+    bridgeRootNode->setRotation3D(Vec3(32, 39, -24));
+    bridgeRootNode->addChild(m_bridge3D);
+    
+    bridgeRootNode->setPosition(m_touchLayer->convertToNodeSpace(m_bridgeNode->convertToWorldSpace(Point(0, 0))));
+
+    auto pBridgeNode = Node::create();
+    pBridgeNode->addChild(bridgeRootNode);
+    m_node3d->addChild(pBridgeNode);
+    m_bridge3D->setScale(3);
+    auto anim_stand = Animation3D::create("3d/bridge/bridge_1_open.c3b");
+    if (anim_stand) {
+        auto pAnim = Animate3D::createWithFrames(anim_stand, 0, 104); //close 105-256
+        if (pAnim) {
+            auto act = RepeatForever::create(pAnim);
+            m_bridge3D->runAction(act);
+        }
+    }
+    
+    m_touchLayer->setCameraMask((unsigned short)CameraFlag::USER4, true);
+    m_node3d->setCameraMask((unsigned short) CameraFlag::USER2, true);
+}
+
+void ImperialScene::onBridgeTouched(CCTouch* pTouch)
+{
+    
+}
+
+void ImperialScene::onBridgeOpen()
+{
+    
+}
+
+void ImperialScene::onBridgeClose()
+{
+    
+}
 
 void ImperialScene::wallCallBack(CCObject* params)
 {
@@ -3778,6 +3824,8 @@ bool ImperialScene::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const
     //end a by ljf
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_cityBgNode", CCNode*, this->m_cityBgNode);
     
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bridgeNode", CCNode*, this->m_bridgeNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bridgeTouchNode", CCNode*, this->m_bridgeTouchNode);
     
     return false;
 }
