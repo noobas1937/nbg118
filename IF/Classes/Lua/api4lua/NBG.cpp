@@ -81,7 +81,7 @@ extern "C" {
         env->ReleaseStringUTFChars(country, k);
     }
     
-    void Java_com_elex_tech_nbg_NBGNative_nativeSetAppInfo(JNIEnv *env, jobject thisz, jstring packageNames, jstring versionName, jint versionCode)
+    void Java_com_elex_tech_nbg_NBGNative_nativeSetAppInfo(JNIEnv *env, jobject thisz, jstring packageNames, jstring versionName, jstring versionCode)
     {
         const char* k = env->GetStringUTFChars(packageNames, 0);
         if (k)
@@ -97,7 +97,12 @@ extern "C" {
         }
         env->ReleaseStringUTFChars(versionName, k);
         
-        UserDefault::getInstance()->setStringForKey("versionCode", std::to_string(versionCode));
+        k = env->GetStringUTFChars(versionCode, 0);
+        if (k)
+        {
+            UserDefault::getInstance()->setStringForKey("versionCode", k);
+        }
+        env->ReleaseStringUTFChars(versionCode, k);
     }
     
 #ifdef __cplusplus
@@ -162,7 +167,7 @@ string NBG::getHandSetInfo()
     }
     jstring retFromJava = (jstring)minfo.env->CallStaticObjectMethod(minfo.classID, minfo.methodID);
     minfo.env->DeleteLocalRef(minfo.classID);
-    const char* k = env->GetStringUTFChars(retFromJava, 0);
+    const char* k = minfo.env->GetStringUTFChars(retFromJava, 0);
     ret = k;
     minfo.env->ReleaseStringUTFChars(retFromJava, k);
 

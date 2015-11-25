@@ -24,12 +24,13 @@ def removeTexturePackerSmartUpdate(dir_path):
                             f.write(new)
                             f.close()                
 
-                        print('    REMOVE -- TexturePacker:SmartUpdate: ' + fullpath)
+                        # print('    REMOVE -- TexturePacker:SmartUpdate: ' + fullpath)
                     except:
-                        print('           -- not a TexturePacker plist: ' + fullpath)
+                        # print('           -- not a TexturePacker plist: ' + fullpath)
+                        continue
 
 
-print('iOS     ------------ ')
+print('iOS     ------------ REMOVE -- TexturePacker:SmartUpdate')
 removeTexturePackerSmartUpdate(SCRIPT_PATH + '/../IF/Resources')
-print('Android ------------ ')
+print('Android ------------ REMOVE -- TexturePacker:SmartUpdate')
 removeTexturePackerSmartUpdate(SCRIPT_PATH + '/../Android_Resource')
