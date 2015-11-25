@@ -6131,10 +6131,12 @@ void UIComponent::setActivityStatus(){
 }
 void UIComponent::resetGoldActivityBox(CCObject* p){
     // tao.yu 第一个版本关闭充值
-    if (true) {
+    
+    if (false) {
         this->m_rechargeNode->setVisible(false);
         return;
     }
+    
     this->m_rechargeNode->removeAllChildren();
     if(GlobalData::shared()->analyticID == "common"){
         this->m_rechargeNode->setVisible(false);
@@ -6182,6 +6184,8 @@ void UIComponent::resetGoldActivityBox(CCObject* p){
         activityBox->setPosition(ccp(43, 43));
         this->m_rechargeNode->addChild(activityBox);
     }
+    
+
 //    if (CCCommonUtils::isIosAndroidPad()) {
 //        this->m_rechargeNode->setVisible(false);
 //    }

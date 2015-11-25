@@ -223,6 +223,7 @@ bool RechargeACTVCell::initRechargeACTVCell()
             LuaController::getInstance()->showExchangeSale(this,dataItemNormal);
         }else{
             GoldExchangeSaleView* cell =  GoldExchangeSaleView::create(dataItemNormal, 1);
+            cell->ignoreAnchorPointForPosition(false);
             cell->setAnchorPoint(ccp(0.5, 0.5));
             cell->setPosition(ccp(winSize.width/2, winSize.height/2));
             this->addChild(cell);
