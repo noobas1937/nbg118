@@ -626,30 +626,54 @@ void Walker::initPath()
      （2519，2215）
      （2840，2399）
      */
-    path.push_back(Vec2(1859, 1361)); // p1
-    path.push_back(Vec2(1735, 1518)); // p2 //建筑角
-    path.push_back(Vec2(1790, 1568)); // p3
-    path.push_back(Vec2(1576, 1689)); // p4
-    path.push_back(Vec2(1426, 1886)); // p5 //建筑角
-    path.push_back(Vec2(1548, 1968)); // p6
-    path.push_back(Vec2(1625, 1913)); // p7
-    path.push_back(Vec2(1687, 1988)); // p8 //建筑面前
-    path.push_back(Vec2(1902, 2050)); // p9 //挥手
-    path.push_back(Vec2(2166, 2174)); // p10
+//    path.push_back(Vec2(1859, 1361)); // p1
+//    path.push_back(Vec2(1735, 1518)); // p2 //建筑角
+//    path.push_back(Vec2(1790, 1568)); // p3
+//    path.push_back(Vec2(1576, 1689)); // p4
+//    path.push_back(Vec2(1426, 1886)); // p5 //建筑角
+//    path.push_back(Vec2(1548, 1968)); // p6
+//    path.push_back(Vec2(1625, 1913)); // p7
+//    path.push_back(Vec2(1687, 1988)); // p8 //建筑面前
+//    path.push_back(Vec2(1902, 2050)); // p9 //挥手
+//    path.push_back(Vec2(2166, 2174)); // p10
+//    
+//    path.push_back(Vec2(2098,2244)); // p11, 开始下楼梯
+//    path.push_back(Vec2(2258,2210)); // p12
+//    path.push_back(Vec2(2320,2247)); // p13 开始下楼梯
+//    path.push_back(Vec2(2459,2222)); // p14
+//    path.push_back(Vec2(2519,2215)); // p15 开始过右边桥
+//    path.push_back(Vec2(2840,2399)); // p16
+//
+//    path.push_back(Vec2(2722,2065)); // p17
+//    path.push_back(Vec2(2784, 1876)); //p18
+//    path.push_back(Vec2(2293, 1511));//p19，开始过中间桥
+//    path.push_back(Vec2(3431, 909)); //p20
+//    
+//    path.push_back(Vec2(1956, 1269)); //p21，河边呼吸
     
-    path.push_back(Vec2(2098,2244)); // p11, 开始下楼梯
-    path.push_back(Vec2(2258,2210)); // p12
-    path.push_back(Vec2(2320,2247)); // p13 开始下楼梯
-    path.push_back(Vec2(2459,2222)); // p14
-    path.push_back(Vec2(2519,2215)); // p15 开始过右边桥
-    path.push_back(Vec2(2840,2399)); // p16
-
-    path.push_back(Vec2(2722,2065)); // p17
-    path.push_back(Vec2(2784, 1876)); //p18
-    path.push_back(Vec2(2293, 1511));//p19，开始过中间桥
-    path.push_back(Vec2(3431, 909)); //p20
-    
-    path.push_back(Vec2(1956, 1269)); //p21，河边呼吸
+    int path_ox = 0;
+    int path_oy = 0;
+    path.push_back(Vec2(1786 + path_ox, 1258 + path_oy)); // p1
+    path.push_back(Vec2(1645 + path_ox, 1294 + path_oy)); // p2
+    path.push_back(Vec2(1778 + path_ox, 1366 + path_oy)); // p3
+    path.push_back(Vec2(1850 + path_ox, 1332 + path_oy)); // p4
+    path.push_back(Vec2(1943 + path_ox, 1352 + path_oy)); // p5
+    path.push_back(Vec2(2056 + path_ox, 1387 + path_oy)); // p6
+    path.push_back(Vec2(2187 + path_ox, 1446 + path_oy)); // p7
+    path.push_back(Vec2(2102 + path_ox, 1503 + path_oy)); // p8
+    path.push_back(Vec2(2141 + path_ox, 1576 + path_oy)); // p9
+    path.push_back(Vec2(2286 + path_ox, 1491 + path_oy)); // p10
+    path.push_back(Vec2(2079 + path_ox, 1655 + path_oy)); // p11
+    path.push_back(Vec2(2011 + path_ox, 1728 + path_oy)); // p12
+    path.push_back(Vec2(1913 + path_ox, 1826 + path_oy)); // p13
+    path.push_back(Vec2(1804 + path_ox, 1898 + path_oy)); // p14
+    path.push_back(Vec2(1963 + path_ox, 1932 + path_oy)); // p15
+    path.push_back(Vec2(2029 + path_ox, 2012 + path_oy)); // p16
+    path.push_back(Vec2(2011 + path_ox, 1851 + path_oy)); // p17
+    path.push_back(Vec2(2091 + path_ox, 1723 + path_oy)); // p18
+    path.push_back(Vec2(2172 + path_ox, 1654 + path_oy)); // p19
+    path.push_back(Vec2(2286 + path_ox, 1617 + path_oy)); // p20
+    path.push_back(Vec2(2341 + path_ox, 1553 + path_oy)); // p21
 
     
     int i = 1;
