@@ -127,7 +127,20 @@ void FunBuildBtnsView::onShow(int buildId)
         m_name4->setString(_lang("102350"));
     }
     else if(buildType == FUN_BUILD_BARRACK1 || buildType == FUN_BUILD_BARRACK2 || buildType == FUN_BUILD_BARRACK3 || buildType == FUN_BUILD_BARRACK4){
-        btnIcons.push_back("shangBing.png");
+        
+        if (buildType == FUN_BUILD_BARRACK1) { //fusheng add 以前士兵统一使用shangBing.png
+            btnIcons.push_back("shangBing.png");
+        }
+        else if (buildType == FUN_BUILD_BARRACK2) {
+            btnIcons.push_back("icon_trainQi.png");
+        }
+        else if (buildType == FUN_BUILD_BARRACK3) {
+            btnIcons.push_back("icon_trainGong.png");
+        }
+        else if (buildType == FUN_BUILD_BARRACK4) {
+            btnIcons.push_back("icon_trainChe.png");
+        }
+        
         m_name3->setString(_lang("102276"));
     }
     else if (buildType == FUN_BUILD_WAR) {
