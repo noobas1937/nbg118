@@ -4,53 +4,66 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>g015_bust.png</key>
+            <key>g008_bust.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1107,510},{500,500}}</string>
+                <string>{{4,917},{484,369}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{500,500}}</string>
+                <string>{{0,0},{484,369}}</string>
                 <key>sourceSize</key>
-                <string>{500,500}</string>
+                <string>{484,369}</string>
+            </dict>
+            <key>g015_bust.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{4,542},{484,369}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{484,369}}</string>
+                <key>sourceSize</key>
+                <string>{484,369}</string>
             </dict>
             <key>g024_bust.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1107,4},{500,500}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{500,500}}</string>
-                <key>sourceSize</key>
-                <string>{500,500}</string>
-            </dict>
-            <key>g026_bust.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{542,4},{635,559}}</string>
+                <string>{{650,494},{484,369}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{635,559}}</string>
+                <string>{{0,0},{484,369}}</string>
                 <key>sourceSize</key>
-                <string>{635,559}</string>
+                <string>{484,369}</string>
+            </dict>
+            <key>g026_bust.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{650,4},{484,369}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{484,369}}</string>
+                <key>sourceSize</key>
+                <string>{484,369}</string>
             </dict>
             <key>nb_flagBG1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,650},{304,331}}</string>
+                <string>{{494,984},{304,331}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{304,331}}</string>
                 <key>sourceSize</key>
@@ -63,7 +76,7 @@
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{640,532}}</string>
                 <key>sourceSize</key>
@@ -77,9 +90,9 @@
             <key>realTextureFileName</key>
             <string>General_1.pvr.ccz</string>
             <key>size</key>
-            <string>{2048,1024}</string>
+            <string>{1024,2048}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:bf7022fee173c9664f519a6a82f72a4c:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:d468c538f9bdd6d4bdfb9f8f62a24479:1/1$</string>
             <key>textureFileName</key>
             <string>General_1.pvr.ccz</string>
         </dict>

@@ -224,7 +224,7 @@ bool GeneralsPopupView::init()
 //           auto m_mainNode->getPosition();
             
             m_mainNode->removeFromParent();
-            m_mainNode->setPosition(ccp(320, 500));
+            m_mainNode->setPosition(ccp(320, 510));
             m_scrollView->addChild(m_mainNode);
             m_scrollView->setContentSize(CCSize(m_infoNode->getContentSize().width,880));
             m_scrollView->setContentOffset(ccp(0, m_infoNode->getContentSize().height - 880));
@@ -294,6 +294,7 @@ bool GeneralsPopupView::init()
         arrangeLabel(vec);
         
         
+        m_ChangeAvatarNode->setVisible(true);
         
        
         
@@ -310,7 +311,7 @@ bool GeneralsPopupView::init()
             m_scrollView->setDirection(kCCScrollViewDirectionVertical);
             m_infoNode->addChild(m_scrollView);
             m_mainNode->removeFromParent();
-            m_mainNode->setPosition(ccp(320, 500));
+            m_mainNode->setPosition(ccp(320, 510));
             m_scrollView->addChild(m_mainNode);
             m_scrollView->setContentSize(CCSize(m_infoNode->getContentSize().width,880+90));
             m_scrollView->setContentOffset(ccp(0, m_infoNode->getContentSize().height - 880-90));
@@ -401,6 +402,8 @@ bool GeneralsPopupView::init()
         if(!m_info->isInAlliance()) {
             m_btnAlliance->setEnabled(false);
         }
+        
+        m_ChangeAvatarNode->setVisible(false);
     }
     
     m_particleNode = CCNode::create();
@@ -447,11 +450,12 @@ bool GeneralsPopupView::init()
     
 
     int tmp = 200;
+    m_bustPic->setScale(1.4);
     if (CCDirector::getInstance()->getWinSize().height/CCDirector::getInstance()->getWinSize().width<1.6) {
         m_nameNode->setPositionY(m_nameNode->getPositionY()+tmp);
         m_selfInfoNode->setPositionY(m_selfInfoNode->getPositionY()+tmp);
         
-        m_bustPic->setScale(0.65);
+        m_bustPic->setScale(1);
         
         m_bustPic->setPositionY(m_bustPic->getPositionY()+tmp);
         
@@ -661,6 +665,9 @@ void GeneralsPopupView::onSkillBtnClick(CCObject * pSender, Control::EventType p
 bool GeneralsPopupView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode)
 {
 
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nbTouchNodeForChangeAvatar", CCNode*, this->m_nbTouchNodeForChangeAvatar);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_ChangeAvatarNode", CCNode*, this->m_ChangeAvatarNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nameNode", CCNode*, this->m_nameNode);
 
      CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "ForCCBAnimation", CCNode*, this->ForCCBAnimation);
@@ -1009,7 +1016,7 @@ void GeneralsPopupView::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
                 SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
 //                PopupViewController::getInstance()->addPopupInView(RoleInfoView::create(&(GlobalData::shared()->playerInfo)));
             }
-            else if(isTouchInside(m_ChangeAvatar, pTouch)){
+            else if(isTouchInside(m_nbTouchNodeForChangeAvatar, pTouch) && m_ChangeAvatarNode->isVisible()){
                 
                 
                 PopupViewController::getInstance()->addPopupView(ChangePicPopupView::create());

@@ -815,8 +815,9 @@ bool GoldExchangeAdvertisingCommCell::init()
 }
 void GoldExchangeAdvertisingCommCell::refreshData(){
     m_getGoldNumText->setString(CC_CMDITOA(atoi(m_dataItem->gold_doller.c_str())).c_str());
-    string perStr = m_dataItem->percent+"%";
+    string perStr = m_dataItem->percent;
     m_percentLabel->setString(perStr);
+    m_percentLabel2->setString("%");
     m_desLabel->setString(_lang("101237"));
     if(m_dataItem->item!=""){
         m_moreLabel->setString(_lang("102162"));
@@ -874,6 +875,8 @@ bool GoldExchangeAdvertisingCommCell::onAssignCCBMemberVariable(cocos2d::CCObjec
 {
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_getGoldNumText", CCLabelBMFont*, this->m_getGoldNumText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_percentLabel", CCLabelIF*, this->m_percentLabel);
+        CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_percentLabel2", CCLabelIF*, this->m_percentLabel2);
+
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_timeLabel", CCLabelIF*, this->m_timeLabel);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_desLabel", CCLabelIF*, this->m_desLabel);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_moreLabel", CCLabelIF*, this->m_moreLabel);

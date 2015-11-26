@@ -194,6 +194,8 @@ private:
     
     CCSafeObject<CCNode> m_nameNode;
     CCSafeObject<CCNode> ForCCBAnimation;
+    CCSafeObject<CCNode> m_ChangeAvatarNode;
+    CCSafeObject<CCNode> m_nbTouchNodeForChangeAvatar;
     
 //    CCSafeObject<CCTableView> m_tabView;
     CCSafeObject<CCArray> m_data;
