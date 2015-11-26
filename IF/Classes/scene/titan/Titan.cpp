@@ -578,11 +578,11 @@ void Titan::turnFront()
         //_model->setRotation3D(Vec3(0,180,0));
         //end a by ljf
         // 面朝正方向
-        //_model->setRotation3D(Vec3(32, 39, -24));
+        //_model->setRotation3D(Vec3(38, 39, -24));
         // 面朝左90度
-//        _model->setRotation3D(Vec3(32, -51, 24));
+//        _model->setRotation3D(Vec3(38, -51, 24));
         // 面朝左90度
-//        _model->setRotation3D(Vec3(32, -6, 24));
+//        _model->setRotation3D(Vec3(38, -6, 24));
     }
 }
 

@@ -647,7 +647,7 @@ void ImperialScene::onCreateTitan()
     
 //    auto node = Node::create();
     titanRootNode = Node::create();
-    titanRootNode->setRotation3D(Vec3(32, 39, -24));
+    titanRootNode->setRotation3D(Vec3(38, 39, -24));
     titanRootNode->addChild(m_Titan);
     titanRootNode->setPosition(m_touchLayer->convertToNodeSpace(m_titanNode->convertToWorldSpace(Point(0, 0))));
     
@@ -689,7 +689,7 @@ void ImperialScene::onCreateVikingsShip()
     m_vikings3D = NBSprite3D::create("3d/ship/ship_3_skin.c3b");
     m_vikings3D->setTexture("3d/ship/ship_3.jpg");
     auto vikingsRootNode = CCNode::create();
-    vikingsRootNode->setRotation3D(Vec3(32, 39, -24));
+    vikingsRootNode->setRotation3D(Vec3(38, 39, -24));
 //    vikingsRootNode->setPosition(-200,-50);
     vikingsRootNode->addChild(m_vikings3D);
     
@@ -960,22 +960,34 @@ void ImperialScene::shootArrow(float t)
 void ImperialScene::onCreateBridge()
 {
     auto bridgeRootNode = CCNode::create();
-    bridgeRootNode->setRotation3D(Vec3(32, 39, -24));
+    bridgeRootNode->setRotation3D(Vec3(38, 39, -24));
+//    bridgeRootNode->setRotation3D(Vec3(0, 0, 0));
     bridgeRootNode->setPosition(m_touchLayer->convertToNodeSpace(m_bridgeNode->convertToWorldSpace(Point(0, 0))));
     auto pBridgeNode = Node::create();
     pBridgeNode->addChild(bridgeRootNode);
     m_node3d->addChild(pBridgeNode);
     
-    m_bridge3D_Up = NBSprite3D::create("3d/bridge/bridge_2_skin.c3b");
+    m_bridge3D_Up = NBSprite3D::create("3d/bridge/bridge_1_skin.c3b");
     m_bridge3D_Up->setTexture("3d/bridge/bridge_1.jpg");
-    m_bridge3D_Up->setScale(7);
+    m_bridge3D_Up->setScale(6);
     bridgeRootNode->addChild(m_bridge3D_Up);
     
-    m_bridge3D_Down = NBSprite3D::create("3d/bridge/bridge_2_skin.c3b");
+    m_bridge3D_Down = NBSprite3D::create("3d/bridge/bridge_1_skin.c3b");
     m_bridge3D_Down->setTexture("3d/bridge/bridge_1.jpg");
-    m_bridge3D_Down->setScale(7);
+    m_bridge3D_Down->setScale(6);
     m_bridge3D_Down->setRotation3D(Vec3(0, 180, 0));
     bridgeRootNode->addChild(m_bridge3D_Down);
+    
+    auto anim = Animation3D::create("3d/bridge/bridge_1_open.c3b");
+    if (anim) {
+        auto pAnim = Animate3D::createWithFrames(anim, 0, 1);
+        if (pAnim) {
+            auto act = Repeat::create(pAnim,1);
+            auto act2 = act->clone();
+            m_bridge3D_Up->runAction(act);
+            m_bridge3D_Down->runAction(act2);
+        }
+    }
     
     m_touchLayer->setCameraMask((unsigned short)CameraFlag::USER4, true);
     m_node3d->setCameraMask((unsigned short) CameraFlag::USER2, true);
@@ -983,7 +995,7 @@ void ImperialScene::onCreateBridge()
 
 bool ImperialScene::onBridgeTouched(CCTouch* pTouch)
 {
-    if(m_bridge3D_Up == nullptr || m_bridge3D_Down == nullptr || m_bridgeTouchNode == nullptr)
+    if(!m_isBridgeCanClick || m_bridge3D_Up == nullptr || m_bridge3D_Down == nullptr || m_bridgeTouchNode == nullptr)
     {
         return false;
     }
@@ -1000,6 +1012,7 @@ bool ImperialScene::onBridgeTouched(CCTouch* pTouch)
     if (!isTouched) {
         return false;
     }
+    m_isBridgeCanClick = false;
     
     if (m_bridgeOpened) {
         onBridgeClose();
@@ -1012,8 +1025,8 @@ bool ImperialScene::onBridgeTouched(CCTouch* pTouch)
 
 void ImperialScene::onBridgeOpen()
 {
-    m_bridgeOpened = true;
-    auto anim1 = Animation3D::create("3d/bridge/bridge_2_open.c3b");
+//    m_bridgeOpened = true;
+    auto anim1 = Animation3D::create("3d/bridge/bridge_1_open.c3b");
     if (anim1) {
         auto pAnim = Animate3D::createWithFrames(anim1, 0, 104); //close 105-256
         if (pAnim) {
@@ -1021,24 +1034,33 @@ void ImperialScene::onBridgeOpen()
             auto act2 = act->clone();
             m_bridge3D_Up->runAction(act);
             m_bridge3D_Down->runAction(act2);
+            this->runAction(CCSequence::create(CCDelayTime::create(4.0), CCCallFuncN::create(this, callfuncN_selector(ImperialScene::changeBridgeState)), NULL));
         }
     }
 }
 
 void ImperialScene::onBridgeClose()
 {
-    m_bridgeOpened = false;
-    auto anim1 = Animation3D::create("3d/bridge/bridge_2_close.c3b");
+//    m_bridgeOpened = false;
+    auto anim1 = Animation3D::create("3d/bridge/bridge_1_close.c3b");
     if (anim1) {
-        auto pAnim = Animate3D::createWithFrames(anim1, 105, 256); //close 105-256
+        auto pAnim = Animate3D::createWithFrames(anim1, 150, 256); //close 150-256
         if (pAnim) {
             auto act = Repeat::create(pAnim,1);
             auto act2 = act->clone();
             m_bridge3D_Up->runAction(act);
             m_bridge3D_Down->runAction(act2);
+            this->runAction(CCSequence::create(CCDelayTime::create(4.0), CCCallFuncN::create(this, callfuncN_selector(ImperialScene::changeBridgeState)), NULL));
         }
     }
 }
+
+void ImperialScene::changeBridgeState(CCNode* p)
+{
+    m_bridgeOpened = !m_bridgeOpened;
+    m_isBridgeCanClick = true;
+}
+
 
 void ImperialScene::wallCallBack(CCObject* params)
 {
