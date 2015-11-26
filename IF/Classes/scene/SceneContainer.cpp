@@ -54,7 +54,7 @@ bool SceneContainer::init() {
         float eyex = eye.x;
         float eyey = eye.y;
         float eyez = eye.z;
-        //just3DCamera->setRotation3D(Vec3(32, 39, -24));
+        //just3DCamera->setRotation3D(Vec3(38, 39, -24));
         
         /*
         auto just3DCamera = Camera::createOrthographic(s.width, s.height, -1024000, 1024000);

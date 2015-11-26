@@ -484,6 +484,7 @@ void ImperialScene::buildingCallBack(CCObject* params)
     showWaterfall();
     
     m_buildingInitState = true;
+    onCreateBridge();
     onCreateTitan();
     this->titanChangeStatus(NULL);
     onEnterFrame(0);
@@ -646,7 +647,7 @@ void ImperialScene::onCreateTitan()
     
 //    auto node = Node::create();
     titanRootNode = Node::create();
-    titanRootNode->setRotation3D(Vec3(32, 39, -24));
+    titanRootNode->setRotation3D(Vec3(38, 39, -24));
     titanRootNode->addChild(m_Titan);
     titanRootNode->setPosition(m_touchLayer->convertToNodeSpace(m_titanNode->convertToWorldSpace(Point(0, 0))));
     
@@ -688,7 +689,7 @@ void ImperialScene::onCreateVikingsShip()
     m_vikings3D = NBSprite3D::create("3d/ship/ship_3_skin.c3b");
     m_vikings3D->setTexture("3d/ship/ship_3.jpg");
     auto vikingsRootNode = CCNode::create();
-    vikingsRootNode->setRotation3D(Vec3(32, 39, -24));
+    vikingsRootNode->setRotation3D(Vec3(38, 39, -24));
 //    vikingsRootNode->setPosition(-200,-50);
     vikingsRootNode->addChild(m_vikings3D);
     
@@ -1076,6 +1077,114 @@ void ImperialScene::shootArrow(float t)
 
 //end a by ljf
 
+
+// 桥
+
+void ImperialScene::onCreateBridge()
+{
+    auto bridgeRootNode = CCNode::create();
+    bridgeRootNode->setRotation3D(Vec3(38, 39, -24));
+//    bridgeRootNode->setRotation3D(Vec3(0, 0, 0));
+    bridgeRootNode->setPosition(m_touchLayer->convertToNodeSpace(m_bridgeNode->convertToWorldSpace(Point(0, 0))));
+    auto pBridgeNode = Node::create();
+    pBridgeNode->addChild(bridgeRootNode);
+    m_node3d->addChild(pBridgeNode);
+    
+    m_bridge3D_Up = NBSprite3D::create("3d/bridge/bridge_1_skin.c3b");
+    m_bridge3D_Up->setTexture("3d/bridge/bridge_1.jpg");
+    m_bridge3D_Up->setScale(6);
+    bridgeRootNode->addChild(m_bridge3D_Up);
+    
+    m_bridge3D_Down = NBSprite3D::create("3d/bridge/bridge_1_skin.c3b");
+    m_bridge3D_Down->setTexture("3d/bridge/bridge_1.jpg");
+    m_bridge3D_Down->setScale(6);
+    m_bridge3D_Down->setRotation3D(Vec3(0, 180, 0));
+    bridgeRootNode->addChild(m_bridge3D_Down);
+    
+    auto anim = Animation3D::create("3d/bridge/bridge_1_open.c3b");
+    if (anim) {
+        auto pAnim = Animate3D::createWithFrames(anim, 0, 1);
+        if (pAnim) {
+            auto act = Repeat::create(pAnim,1);
+            auto act2 = act->clone();
+            m_bridge3D_Up->runAction(act);
+            m_bridge3D_Down->runAction(act2);
+        }
+    }
+    
+    m_touchLayer->setCameraMask((unsigned short)CameraFlag::USER4, true);
+    m_node3d->setCameraMask((unsigned short) CameraFlag::USER2, true);
+}
+
+bool ImperialScene::onBridgeTouched(CCTouch* pTouch)
+{
+    if(!m_isBridgeCanClick || m_bridge3D_Up == nullptr || m_bridge3D_Down == nullptr || m_bridgeTouchNode == nullptr)
+    {
+        return false;
+    }
+    Vec2 touchPoint = m_bridgeTouchNode->convertToNodeSpace(pTouch->getLocation());
+    // 下面的touch点转换是为了让点击区域在模型内
+    float originX = -1 * m_bridgeTouchNode->getContentSize().width * m_bridgeTouchNode->getAnchorPoint().x;
+    float originY = -1 * m_bridgeTouchNode->getContentSize().height * m_bridgeTouchNode->getAnchorPoint().y;
+    touchPoint.x = touchPoint.x + originX;
+    touchPoint.y = touchPoint.y + originY;
+    
+    Rect boundingBox(originX, originY, m_bridgeTouchNode->getContentSize().width, m_bridgeTouchNode->getContentSize().height);
+
+    bool isTouched = boundingBox.containsPoint(touchPoint);
+    if (!isTouched) {
+        return false;
+    }
+    m_isBridgeCanClick = false;
+    
+    if (m_bridgeOpened) {
+        onBridgeClose();
+    }
+    else {
+        onBridgeOpen();
+    }
+    return true;
+}
+
+void ImperialScene::onBridgeOpen()
+{
+//    m_bridgeOpened = true;
+    auto anim1 = Animation3D::create("3d/bridge/bridge_1_open.c3b");
+    if (anim1) {
+        auto pAnim = Animate3D::createWithFrames(anim1, 0, 104); //close 105-256
+        if (pAnim) {
+            auto act = Repeat::create(pAnim,1);
+            auto act2 = act->clone();
+            m_bridge3D_Up->runAction(act);
+            m_bridge3D_Down->runAction(act2);
+            this->runAction(CCSequence::create(CCDelayTime::create(4.0), CCCallFuncN::create(this, callfuncN_selector(ImperialScene::changeBridgeState)), NULL));
+        }
+    }
+}
+
+void ImperialScene::onBridgeClose()
+{
+//    m_bridgeOpened = false;
+    auto anim1 = Animation3D::create("3d/bridge/bridge_1_close.c3b");
+    if (anim1) {
+        auto pAnim = Animate3D::createWithFrames(anim1, 150, 256); //close 150-256
+        if (pAnim) {
+            auto act = Repeat::create(pAnim,1);
+            auto act2 = act->clone();
+            m_bridge3D_Up->runAction(act);
+            m_bridge3D_Down->runAction(act2);
+            this->runAction(CCSequence::create(CCDelayTime::create(4.0), CCCallFuncN::create(this, callfuncN_selector(ImperialScene::changeBridgeState)), NULL));
+        }
+    }
+}
+
+void ImperialScene::changeBridgeState(CCNode* p)
+{
+    m_bridgeOpened = !m_bridgeOpened;
+    m_isBridgeCanClick = true;
+}
+
+
 void ImperialScene::wallCallBack(CCObject* params)
 {
     //loadingLog统计
@@ -1274,29 +1383,18 @@ void ImperialScene::showWaterfall()
 {
     CCBLoadFile("waterfall",m_waterfallNode,this);
     // add particle
-    auto prt1 = ParticleController::createParticle("Waterfall_water_z");
-    m_waterfall_prt->getChildByTag(1)->addChild(prt1);
-    
-    auto prt2 = ParticleController::createParticle("Waterfall_fall_z");
-    m_waterfall_prt->getChildByTag(2)->addChild(prt2);
-    
-    auto prt3 = ParticleController::createParticle("Waterfall_water_z");
-    m_waterfall_prt->getChildByTag(3)->addChild(prt3);
-    
-    auto prt4 = ParticleController::createParticle("Waterfall_fall_z");
-    m_waterfall_prt->getChildByTag(4)->addChild(prt4);
     
     auto prt5 = ParticleController::createParticle("Waterfall_water_z");
-    m_waterfall_prt->getChildByTag(5)->addChild(prt5);
+    m_waterfall_prt->getChildByTag(1)->addChild(prt5);
     
     auto prt6 = ParticleController::createParticle("Waterfall_water_w");
-    m_waterfall_prt->getChildByTag(6)->addChild(prt6);
+    m_waterfall_prt->getChildByTag(2)->addChild(prt6);
     
     auto prt7 = ParticleController::createParticle("Waterfall_fall_z");
-    m_waterfall_prt->getChildByTag(7)->addChild(prt7);
+    m_waterfall_prt->getChildByTag(3)->addChild(prt7);
     
     auto prt8 = ParticleController::createParticle("Waterfall_fall_w");
-    m_waterfall_prt->getChildByTag(8)->addChild(prt8);
+    m_waterfall_prt->getChildByTag(4)->addChild(prt8);
 
 }
 
@@ -2481,6 +2579,9 @@ void ImperialScene::onSingleTouchEnd(CCTouch* pTouch)
         return;
     }
     //end a by ljf
+    if (onBridgeTouched(pTouch)) {
+        return;
+    }
     if (curTouchBuildId > -1) {
         if(lastTouchBuildId != curTouchBuildId)
         {
@@ -3912,6 +4013,8 @@ bool ImperialScene::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const
     //end a by ljf
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_cityBgNode", CCNode*, this->m_cityBgNode);
     
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bridgeNode", CCNode*, this->m_bridgeNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bridgeTouchNode", CCNode*, this->m_bridgeTouchNode);
     
     return false;
 }

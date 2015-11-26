@@ -49,8 +49,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>9.483795166015625</real>
-									<real>6.3202171325683594</real>
+									<real>-135</real>
+									<real>-97</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -99,6 +99,8 @@
 								<false/>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -117,25 +119,13 @@
 						<array>
 							<dict>
 								<key>name</key>
-								<string>position</string>
-								<key>type</key>
-								<string>Position</string>
-								<key>value</key>
-								<array>
-									<real>-5</real>
-									<real>0.0</real>
-									<integer>0</integer>
-								</array>
-							</dict>
-							<dict>
-								<key>name</key>
 								<string>anchorPoint</string>
 								<key>type</key>
 								<string>Point</string>
 								<key>value</key>
 								<array>
-									<real>0.0</real>
-									<real>0.0</real>
+									<real>0.5</real>
+									<real>0.5</real>
 								</array>
 							</dict>
 							<dict>
@@ -205,8 +195,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>204.1273193359375</real>
-									<real>23.873458862304688</real>
+									<real>112.1273193359375</real>
+									<real>-46.126541137695312</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -265,8 +255,6 @@
 								</array>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -290,8 +278,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>233.65570068359375</real>
-									<real>34.674484252929688</real>
+									<real>141.65570068359375</real>
+									<real>-35.325515747070312</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -350,8 +338,6 @@
 								</array>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -375,8 +361,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>236.70001220703125</real>
-									<real>30.699996948242188</real>
+									<real>144.70001220703125</real>
+									<real>-39.300003051757812</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -413,8 +399,6 @@
 								<false/>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -438,8 +422,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>209.10000610351562</real>
-									<real>25.900001525878906</real>
+									<real>117.10000610351562</real>
+									<real>-44.099998474121094</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -476,8 +460,6 @@
 								<false/>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 				</array>
 				<key>customClass</key>

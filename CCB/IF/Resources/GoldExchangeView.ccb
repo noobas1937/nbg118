@@ -224,7 +224,7 @@
 						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<string>Common/Common_8.plist</string>
+							<string>Common/Common_1.plist</string>
 							<string>nb_cx_BG2.png</string>
 						</array>
 					</dict>
@@ -240,6 +240,8 @@
 						</array>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>

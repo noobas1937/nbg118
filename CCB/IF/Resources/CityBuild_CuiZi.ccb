@@ -57,7 +57,7 @@
 									<key>type</key>
 									<integer>2</integer>
 									<key>value</key>
-									<real>0.0</real>
+									<real>15</real>
 								</dict>
 								<dict>
 									<key>easing</key>
@@ -98,11 +98,41 @@
 									<key>name</key>
 									<string>rotation</string>
 									<key>time</key>
-									<real>0.63333332538604736</real>
+									<real>0.56666666269302368</real>
 									<key>type</key>
 									<integer>2</integer>
 									<key>value</key>
 									<real>0.0</real>
+								</dict>
+								<dict>
+									<key>easing</key>
+									<dict>
+										<key>type</key>
+										<integer>1</integer>
+									</dict>
+									<key>name</key>
+									<string>rotation</string>
+									<key>time</key>
+									<real>0.66666668653488159</real>
+									<key>type</key>
+									<integer>2</integer>
+									<key>value</key>
+									<real>30</real>
+								</dict>
+								<dict>
+									<key>easing</key>
+									<dict>
+										<key>type</key>
+										<integer>1</integer>
+									</dict>
+									<key>name</key>
+									<string>rotation</string>
+									<key>time</key>
+									<real>0.80000001192092896</real>
+									<key>type</key>
+									<integer>2</integer>
+									<key>value</key>
+									<real>15</real>
 								</dict>
 							</array>
 							<key>name</key>
@@ -158,7 +188,7 @@
 						<key>type</key>
 						<string>Degrees</string>
 						<key>value</key>
-						<real>0.0</real>
+						<real>15</real>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -191,10 +221,6 @@
 						</array>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
-				<key>seqExpanded</key>
-				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>
@@ -281,7 +307,7 @@
 			<key>offset</key>
 			<real>0.0</real>
 			<key>position</key>
-			<real>1.1666666269302368</real>
+			<real>0.0</real>
 			<key>resolution</key>
 			<real>30</real>
 			<key>scale</key>
