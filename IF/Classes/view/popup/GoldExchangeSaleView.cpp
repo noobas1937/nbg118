@@ -84,7 +84,17 @@ bool GoldExchangeSaleView::init()
    
     int extWidth = 0;
     string dollar = PayController::getInstance()->getDollarText(m_dataItem->dollar,m_dataItem->product_id);
-    m_oldPriceLabel->setString(PayController::getInstance()->getDollarText(m_dataItem->oldprice,""));
+    //begin d by ljf
+    //m_oldPriceLabel->setString(PayController::getInstance()->getDollarText(m_dataItem->oldprice,""));
+    //end d by ljf
+    //begin a by ljf,只保留小数点后两位
+    string oldPrice = PayController::getInstance()->getDollarText(m_dataItem->oldprice,"");
+    if (dollar.rfind(".") != string::npos)
+        dollar = dollar.substr(0, dollar.rfind(".") + 3);
+    if (oldPrice.rfind(".") != string::npos)
+        oldPrice = oldPrice.substr(0, oldPrice.rfind(".") + 3);
+    m_oldPriceLabel->setString(oldPrice);
+    //end a by ljf
     m_newPriceLabel->setString(dollar);
     if(m_oldPriceLabel->getContentSize().width>90){
         extWidth = m_oldPriceLabel->getContentSize().width - 90;

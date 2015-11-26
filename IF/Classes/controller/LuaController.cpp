@@ -158,6 +158,7 @@ bool LuaController::checkActLuaValid(ActivityEventObj* obj)
     return true;
 }
 bool LuaController::showNoramlIcon(std::string popImg){
+    return true; //a by ljf
     string file1 = CCFileUtils::sharedFileUtils()->getWritablePath() + "lua/ccbi/GoldExchange"+popImg+ "LuaView.ccbi";
     string file2 = CCFileUtils::sharedFileUtils()->getWritablePath() + "lua/ccbi/GoldExchange"+popImg+ "LuaIcon.ccbi";
     string bImage1 = CCFileUtils::sharedFileUtils()->getWritablePath() + "lua/resources/"+popImg + ".pvr.ccz";
