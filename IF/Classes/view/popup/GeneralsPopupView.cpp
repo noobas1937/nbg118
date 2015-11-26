@@ -137,6 +137,15 @@ bool GeneralsPopupView::init()
         return false;
     }
     setIsHDPanel(true);
+    
+    //fusheng begin 添加图片
+    CCLoadSprite::doResourceByGeneralIndex(1, true);//亮光放在这里
+//    CCLoadSprite::doResourceByGeneralIndex(2, true);
+//    CCLoadSprite::doResourceByGeneralIndex(3, true);
+    
+    //fusheng end
+    
+    
     CCLog("CCLoadSprite::doResourceByCommonIndex(503, true)");
     loadResource();
     
@@ -205,13 +214,17 @@ bool GeneralsPopupView::init()
     {
         if (!CCCommonUtils::isIosAndroidPad()) {
             m_infoNode->setContentSize(CCSize(m_infoNode->getContentSize().width, m_infoNode->getContentSize().height+extH));
-//            m_infoNode->setPositionY(m_infoNode->getPositionY()-extH); //fusheng 应美术要求 下调100像素
-            m_infoNode->setPositionY(m_infoNode->getPositionY()-extH-100);
+            m_infoNode->setPositionY(m_infoNode->getPositionY()-extH); //fusheng 应美术要求 下调100像素
+//            m_infoNode->setPositionY(m_infoNode->getPositionY()-extH-100);
             m_scrollView = CCScrollView::create(m_infoNode->getContentSize());
             m_scrollView->setDirection(kCCScrollViewDirectionVertical);
             m_infoNode->addChild(m_scrollView);
+            
+            
+//           auto m_mainNode->getPosition();
+            
             m_mainNode->removeFromParent();
-            m_mainNode->setPosition(ccp(320, 550));
+            m_mainNode->setPosition(ccp(320, 510));
             m_scrollView->addChild(m_mainNode);
             m_scrollView->setContentSize(CCSize(m_infoNode->getContentSize().width,880));
             m_scrollView->setContentOffset(ccp(0, m_infoNode->getContentSize().height - 880));
@@ -281,6 +294,7 @@ bool GeneralsPopupView::init()
         arrangeLabel(vec);
         
         
+        m_ChangeAvatarNode->setVisible(true);
         
        
         
@@ -297,7 +311,7 @@ bool GeneralsPopupView::init()
             m_scrollView->setDirection(kCCScrollViewDirectionVertical);
             m_infoNode->addChild(m_scrollView);
             m_mainNode->removeFromParent();
-            m_mainNode->setPosition(ccp(320, 550));
+            m_mainNode->setPosition(ccp(320, 510));
             m_scrollView->addChild(m_mainNode);
             m_scrollView->setContentSize(CCSize(m_infoNode->getContentSize().width,880+90));
             m_scrollView->setContentOffset(ccp(0, m_infoNode->getContentSize().height - 880-90));
@@ -388,6 +402,8 @@ bool GeneralsPopupView::init()
         if(!m_info->isInAlliance()) {
             m_btnAlliance->setEnabled(false);
         }
+        
+        m_ChangeAvatarNode->setVisible(false);
     }
     
     m_particleNode = CCNode::create();
@@ -432,12 +448,20 @@ bool GeneralsPopupView::init()
     
     m_buildBG->setPositionY(m_buildBG->getPositionY()+m_buildBG->getContentSize().height-oldH);
     
-    //fusheng begin 添加图片
-    CCLoadSprite::doResourceByGeneralIndex(1, true);
-    CCLoadSprite::doResourceByGeneralIndex(2, true);
-    CCLoadSprite::doResourceByGeneralIndex(3, true);
+
+    int tmp = 200;
+    m_bustPic->setScale(1.4);
+    if (CCDirector::getInstance()->getWinSize().height/CCDirector::getInstance()->getWinSize().width<1.6) {
+        m_nameNode->setPositionY(m_nameNode->getPositionY()+tmp);
+        m_selfInfoNode->setPositionY(m_selfInfoNode->getPositionY()+tmp);
+        
+        m_bustPic->setScale(1);
+        
+        m_bustPic->setPositionY(m_bustPic->getPositionY()+tmp);
+        
+        ForCCBAnimation->setScaleY(0.65);
+    }
     
-    //fusheng end
     
     
 
@@ -465,6 +489,7 @@ void GeneralsPopupView::refreshView(){
         pBust = m_info->pic;
     }
     auto sprite = CCLoadSprite::createSprite((pBust + "_bust.png").c_str());
+    sprite->setAnchorPoint(Vec2(0.5,0));
     sprite->setTag(0);
     sprite->setOpacity(0);
     sprite->setPositionX(-7);
@@ -507,7 +532,7 @@ void GeneralsPopupView::onSetBagTipNode()
 
 void GeneralsPopupView::loadResource(){
     CCLoadSprite::doResourceByCommonIndex(105, true);
-    CCLoadSprite::doResourceByCommonIndex(100, true);
+//    CCLoadSprite::doResourceByCommonIndex(100, true);//fusheng 装备
     CCLoadSprite::doResourceByCommonIndex(305, true);
     CCLoadSprite::doResourceByCommonIndex(503, true);
     CCLoadSprite::doResourceByCommonIndex(7, true);
@@ -565,9 +590,7 @@ void GeneralsPopupView::onExit(){
     resetRankPop();
     CCLoadSprite::doResourceByCommonIndex(100, false);
 //    CCLoadSprite::doResourceByCommonIndex(305, false);
-    CCLoadSprite::doResourceByGeneralIndex(1, false);
-    CCLoadSprite::doResourceByGeneralIndex(2, false);
-    CCLoadSprite::doResourceByGeneralIndex(3, false);
+
     CCLoadSprite::releaseDynamicResourceByType(CCLoadSpriteType_GOODS);
     
     PopupBaseView::onExit();
@@ -641,6 +664,14 @@ void GeneralsPopupView::onSkillBtnClick(CCObject * pSender, Control::EventType p
 
 bool GeneralsPopupView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode)
 {
+
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nbTouchNodeForChangeAvatar", CCNode*, this->m_nbTouchNodeForChangeAvatar);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_ChangeAvatarNode", CCNode*, this->m_ChangeAvatarNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nameNode", CCNode*, this->m_nameNode);
+
+     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "ForCCBAnimation", CCNode*, this->ForCCBAnimation);
+    
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_expTxtPre", CCLabelIF*, this->m_expTxtPre);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_stamineTextPre", CCLabelIF*, this->m_stamineTextPre);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_ChangeAvatar", CCSprite*, this->m_ChangeAvatar);
@@ -657,8 +688,7 @@ bool GeneralsPopupView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, c
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_expTxt2", CCLabelIF*, this->m_expTxt2);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_expBar", CCScale9Sprite*, this->m_expBar);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_leftBg", CCSprite*, this->m_leftBg);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_rightBg", CCSprite*, this->m_rightBg);
+
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_renameBtn", CCControlButton*, this->m_renameBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bTxt3", CCLabelIF*, this->m_bTxt3);
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bTxt4", CCLabelIF*, this->m_bTxt4);
@@ -986,7 +1016,7 @@ void GeneralsPopupView::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
                 SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
 //                PopupViewController::getInstance()->addPopupInView(RoleInfoView::create(&(GlobalData::shared()->playerInfo)));
             }
-            else if(isTouchInside(m_ChangeAvatar, pTouch)){
+            else if(isTouchInside(m_nbTouchNodeForChangeAvatar, pTouch) && m_ChangeAvatarNode->isVisible()){
                 
                 
                 PopupViewController::getInstance()->addPopupView(ChangePicPopupView::create());
@@ -2126,11 +2156,11 @@ void GeneralPicCell::refreshView()
 }
 
 bool GeneralPicCell::init(){
-    setCleanFunction([](){
-        CCLoadSprite::doResourceByGeneralIndex(1, false);
-        CCLoadSprite::doResourceByGeneralIndex(2, false);
-        CCLoadSprite::doResourceByGeneralIndex(3, false);
-    });
+//    setCleanFunction([](){
+//        CCLoadSprite::doResourceByGeneralIndex(1, false);
+//        CCLoadSprite::doResourceByGeneralIndex(2, false);
+//        CCLoadSprite::doResourceByGeneralIndex(3, false);
+//    });
     
     CCBLoadFile("GeneralPicCell",this,this);
 

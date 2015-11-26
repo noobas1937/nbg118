@@ -1426,10 +1426,12 @@ void BattleView::refreshDragonNumStatus()
         CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_COUNT_CHANGE
                                                                                , CCInteger::create(selectDragon?1:0));
     
-        m_2touchBtn->setPositionX(selectDragon?84:25);
+        m_2touchBtn->setPositionX(selectDragon?94:20);
         
         
         m_2touchBtn->setSpriteFrame(selectDragon?"nb_checkboxBlockON.png":"nb_checkboxBlockOFF.png");
+        
+        m_2touchBtnBg->setSpriteFrame(selectDragon?"nb_checkboxBGSend.png":"nb_checkboxBGStay.png");
     
         TroopsController::getInstance()->updateTmpBattleData(GlobalData::shared()->titanInfo.titanId, selectDragon?1:0, GlobalData::shared()->titanInfo.titanId);
     }

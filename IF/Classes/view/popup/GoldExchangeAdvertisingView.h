@@ -184,6 +184,7 @@ private:
     
     CCSafeObject<CCLabelBMFont> m_getGoldNumText;
     CCSafeObject<CCLabelIF> m_percentLabel;
+     CCSafeObject<CCLabelIF> m_percentLabel2;
     CCSafeObject<CCLabelIF> m_timeLabel;
     CCSafeObject<CCLabelIF> m_desLabel;
     CCSafeObject<CCLabelIF> m_moreLabel;

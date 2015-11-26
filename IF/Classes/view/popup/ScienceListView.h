@@ -106,6 +106,10 @@ private:
     CCSafeObject<CCScale9Sprite> m_progressBG;
     CCSafeObject<CCClipNode>  m_barClipNode;
     
+    CCSafeObject<CCSprite>  m_magicCircle;
+    
+    
+    
     CCSafeObject<CCLayer> m_smokeLayer;
     vector<CCParticleBatchNode*> m_parVec;
     

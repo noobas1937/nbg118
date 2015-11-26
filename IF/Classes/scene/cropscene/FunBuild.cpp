@@ -3322,19 +3322,19 @@ bool FunBuildState::init(int itemId)
             }
             
             string pic = "";
-            pic = "icon_zaobing.png";  //fusheng 暂时不确定有什么兵种  先使用icon_zaobing.png代替
-//            if (buildType == FUN_BUILD_BARRACK1) {
-//                pic = "icon_bubing.png";
-//            }
-//            else if (buildType == FUN_BUILD_BARRACK2) {
-//                pic = "icon_qibing.png";
-//            }
-//            else if (buildType == FUN_BUILD_BARRACK3) {
-//                pic = "icon_gongbing.png";
-//            }
-//            else if (buildType == FUN_BUILD_BARRACK4) {
-//                pic = "icon_chebing.png";
-//            }
+//            pic = "icon_zaobing.png";  //fusheng 暂时不确定有什么兵种  先使用icon_zaobing.png代替
+            if (buildType == FUN_BUILD_BARRACK1) {
+                pic = "icon_bubing.png";
+            }
+            else if (buildType == FUN_BUILD_BARRACK2) {
+                pic = "icon_qibing.png";
+            }
+            else if (buildType == FUN_BUILD_BARRACK3) {
+                pic = "icon_gongbing.png";
+            }
+            else if (buildType == FUN_BUILD_BARRACK4) {
+                pic = "icon_chebing.png";
+            }
 //            else if (buildType == FUN_BUILD_FORT) {
 //                pic = "icon_xianjing.png";
 //            }
@@ -3365,8 +3365,18 @@ bool FunBuildState::init(int itemId)
                 if (vec.size()>0) {
                     recPic = CCCommonUtils::getIcon(vec[0]);
                 }
+            }else if (buildType == FUN_BUILD_BARRACK1) { //fusheng add 以前士兵统一使用shangBing.png
+                recPic = "icon_bubing.png";
             }
-            auto utIcon = CCLoadSprite::createSprite(recPic.c_str());
+            else if (buildType == FUN_BUILD_BARRACK2) {
+                recPic = "icon_qibing.png";
+            }
+            else if (buildType == FUN_BUILD_BARRACK3) {
+                recPic = "icon_gongbing.png";
+            }
+            else if (buildType == FUN_BUILD_BARRACK4) {
+                recPic = "icon_chebing.png";
+            }            auto utIcon = CCLoadSprite::createSprite(recPic.c_str());
             m_recIcon->addChild(utIcon);
         }
     }
