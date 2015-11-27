@@ -690,7 +690,7 @@ void ImperialScene::onCreateVikingsShip()
     m_vikings3D->setTexture("3d/ship/ship_3.jpg");
     auto vikingsRootNode = CCNode::create();
     vikingsRootNode->setRotation3D(Vec3(38, 39, -24));
-//    vikingsRootNode->setPosition(-200,-50);
+
     vikingsRootNode->addChild(m_vikings3D);
     
     vikingsRootNode->setPosition(m_touchLayer->convertToNodeSpace(m_vikingNode->convertToWorldSpace(Point(0, 0))));
@@ -701,6 +701,8 @@ void ImperialScene::onCreateVikingsShip()
     pVikingNode->addChild(vikingsRootNode);
     m_node3d->addChild(pVikingNode);
     m_vikings3D->setScale(1.4);
+    m_vikings3D->setRotation3D(Vec3(0, -80, 0));
+    m_vikingsParticleNode->setRotation3D(Vec3(0, -80, 0));
     //end a by ljf
     // m_node3d->addChild(vikingsRootNode);//d by ljf
     
@@ -915,7 +917,7 @@ void ImperialScene::onVikingsShipMove(NBSprite3D * pSprite3d)
             auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d","CityBoat_back_",i)->getCString());
             
             particle->setPosition3D(Vec3(0, 0, 0 - 130) );
-            particle->setRotation3D(Vec3(90, -60, 0));
+            particle->setRotation3D(Vec3(90, -60 , 0));
             
             particleNode->addChild(particle);
             
@@ -925,7 +927,7 @@ void ImperialScene::onVikingsShipMove(NBSprite3D * pSprite3d)
         for( int i = 0; i <= 1; i++)
         {
             auto particle = ParticleController::createParticle(CCString::createWithFormat("%s","CityBoat_spray")->getCString());
-            particle->setRotation3D(Vec3(90, 90, 0));
+            particle->setRotation3D(Vec3(90, 90 , 0));
             
             particle->setPosition3D(Vec3(155 - i * 310, 0, 0)); //左侧船桨位置
             particleNode->addChild(particle);
@@ -937,30 +939,51 @@ void ImperialScene::onVikingsShipMove(NBSprite3D * pSprite3d)
             {
                 auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d","CityBoat_water_",i)->getCString());
                 
-                particle->setRotation3D(Vec3(90, 0, 180 * j));
+                particle->setRotation3D(Vec3(90, 0 , 180 * j));
                 particle->setPosition3D(Vec3(45 - j * 90, 0, 20));
                 particleNode->addChild(particle);
             }
         }
     
     //});
+    vector<int> openBridgeSeq;
+    vector<int> closeBridgeSeq;
     vector<CCPoint> path;
     path.push_back(Vec2(m_vikingPath1->getPositionX(), m_vikingPath1->getPositionY()));
     path.push_back(Vec2(m_vikingPath2->getPositionX(), m_vikingPath2->getPositionY()));
+    openBridgeSeq.push_back(path.size() -1 );
     path.push_back(Vec2(m_vikingPath3->getPositionX(), m_vikingPath3->getPositionY()));
+    closeBridgeSeq.push_back(path.size() -1 );
+    path.push_back(Vec2(m_vikingPath4->getPositionX(), m_vikingPath4->getPositionY()));
+    path.push_back(Vec2(m_vikingPath5->getPositionX(), m_vikingPath5->getPositionY()));
+    path.push_back(Vec2(m_vikingPath4->getPositionX(), m_vikingPath4->getPositionY()));
+    path.push_back(Vec2(m_vikingPath3->getPositionX(), m_vikingPath3->getPositionY()));
+    openBridgeSeq.push_back(path.size() -1 );
     path.push_back(Vec2(m_vikingPath2->getPositionX(), m_vikingPath2->getPositionY()));
+    closeBridgeSeq.push_back(path.size() -1 );
     path.push_back(Vec2(m_vikingPath1->getPositionX(), m_vikingPath1->getPositionY()));
     path.push_back(Vec2(m_vikingNode->getPositionX(), m_vikingNode->getPositionY()));
     
-    Vec2 lastPos = Vec2(m_vikingNode->getPositionX(), m_vikingNode->getPositionY());
+    //Vec2 lastPos = Vec2(m_vikingNode->getPositionX(), m_vikingNode->getPositionY());
+    Vec2 lastPos = m_touchLayer->convertToNodeSpace(pSprite3d->getParent()->convertToWorldSpace(Point::ZERO));
     
     float moveSpeed = 70;
-    float lastAngle = -52.5;
+    //float lastAngle = -52.5;
+    //float lastAngle = pSprite3d->getRotationY();
+    //Vec3 angle = pSprite3d->getRotation3D();
+    //float lastAngle = angle.y;
+    //lastAngle = lastAngle + pSprite3d->getParent()->getRotation3D().y;
+    float lastAngle = -90.0 + pSprite3d->getRotation3D().y + pSprite3d->getParent()->getRotation3D().y;
+    float originalAngle = lastAngle;
     bool isResetAngle = true;
     float rotateSeppd = 50.0;
     Vector<FiniteTimeAction*> arrayOfMoveActions;
     Vector<FiniteTimeAction*> arrayOfRotateActions;
     //arrayOfRotateActions.pushBack(actionBeforeMove);
+    int seq = 0;
+    float pastTime = 0;
+    vector<float> openBridgeTimes;
+    vector<float> closeBridgeTimes;
     for(auto iter = path.begin(); iter != path.end(); ++iter)
     {
         Vec2 onePos = *iter;
@@ -983,10 +1006,31 @@ void ImperialScene::onVikingsShipMove(NBSprite3D * pSprite3d)
         
         lastPos = onePos;
         lastAngle = oneAngle;
+        
+        pastTime += moveTime + rotateTime;
+        for(auto iter1 = openBridgeSeq.begin(); iter1 != openBridgeSeq.end(); ++iter1)
+        {
+            int openSeq = *(iter1);
+            if(openSeq == seq)
+            {
+                
+                openBridgeTimes.push_back(pastTime - 3.5);
+            }
+        }
+        for(auto iter1 = closeBridgeSeq.begin(); iter1 != closeBridgeSeq.end(); ++iter1)
+        {
+            int openSeq = *(iter1);
+            if(openSeq == seq)
+            {
+                //this->schedule(schedule_selector(ImperialScene::closeBridge), 100, 0,  pastTime);
+                closeBridgeTimes.push_back(pastTime);
+            }
+        }
+        seq += 1;
     }
     if(isResetAngle)
     {
-        auto rotate1 = RotateBy::create(fabsf(-52.5 - lastAngle) / rotateSeppd, Vec3(0, -52.5 - lastAngle, 0));
+        auto rotate1 = RotateBy::create(fabsf(originalAngle - lastAngle) / rotateSeppd, Vec3(0, originalAngle - lastAngle, 0));
         arrayOfRotateActions.pushBack(rotate1);
     }
     
@@ -1008,6 +1052,15 @@ void ImperialScene::onVikingsShipMove(NBSprite3D * pSprite3d)
     CCSequence * rotateSeq = CCSequence::create(arrayOfRotateActions);
     pSprite3d->runAction(rotateSeq);
     particleNode->runAction(rotateSeq->clone());
+    
+    if(openBridgeTimes.size() == 2)
+    {
+        this->schedule(schedule_selector(ImperialScene::openBridge), openBridgeTimes[1] - openBridgeTimes[0], 1, openBridgeTimes[0]);
+    }
+    if(closeBridgeTimes.size() == 2)
+    {
+        this->schedule(schedule_selector(ImperialScene::closeBridge), closeBridgeTimes[1] - closeBridgeTimes[0], 1, closeBridgeTimes[0]);
+    }
 }
 
 void ImperialScene::createWalker(float t)
@@ -1075,6 +1128,21 @@ void ImperialScene::shootArrow(float t)
     //gong->setPosition(localP);
 }
 
+void ImperialScene::openBridge(float t)
+{
+    if(m_bridgeOpened == false)
+    {
+        onBridgeOpen();
+    }
+}
+
+void ImperialScene::closeBridge(float t)
+{
+    if(m_bridgeOpened == true)
+    {
+        onBridgeClose();
+    }
+}
 //end a by ljf
 
 
@@ -1122,6 +1190,12 @@ bool ImperialScene::onBridgeTouched(CCTouch* pTouch)
     {
         return false;
     }
+    //begin a by ljf
+    if(m_isVikingShipMove)
+    {
+        return false;
+    }
+    //end a by ljf
     Vec2 touchPoint = m_bridgeTouchNode->convertToNodeSpace(pTouch->getLocation());
     // 下面的touch点转换是为了让点击区域在模型内
     float originX = -1 * m_bridgeTouchNode->getContentSize().width * m_bridgeTouchNode->getAnchorPoint().x;
@@ -4008,6 +4082,7 @@ bool ImperialScene::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vikingPath2", CCNode*, this->m_vikingPath2);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vikingPath3", CCNode*, this->m_vikingPath3);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vikingPath4", CCNode*, this->m_vikingPath4);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vikingPath5", CCNode*, this->m_vikingPath5);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vikingTouchNode", CCNode*, this->m_vikingTouchNode);
     
     //end a by ljf

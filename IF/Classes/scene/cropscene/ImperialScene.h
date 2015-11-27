@@ -73,6 +73,8 @@ public:
     void createWalker(float t);
     void createEnemy(float t);
     void shootArrow(float t);
+    void openBridge(float t);
+    void closeBridge(float t);
     //end a by ljf
     
     void onCreateBridge();
@@ -413,6 +415,7 @@ private:
     CCSafeObject<CCNode> m_vikingPath2;
     CCSafeObject<CCNode> m_vikingPath3;
     CCSafeObject<CCNode> m_vikingPath4;
+    CCSafeObject<CCNode> m_vikingPath5;
     CCSafeObject<NBSprite3D> m_vikings3D;
     CCSafeObject<CCNode> m_vikingTouchNode;
     CCSafeObject<CCNode> m_vikingsParticleNode;
