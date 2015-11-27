@@ -6132,7 +6132,7 @@ void UIComponent::setActivityStatus(){
 void UIComponent::resetGoldActivityBox(CCObject* p){
     // tao.yu 第一个版本关闭充值
     
-    if (false) {
+    if (true) {
         this->m_rechargeNode->setVisible(false);
         return;
     }
