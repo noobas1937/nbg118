@@ -155,19 +155,19 @@ SEL_CCControlHandler GoldExchangeItemView::onResolveCCBCCControlSelector(cocos2d
 
 bool GoldExchangeItemView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode)
 {
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_goldNum1", CCLabelIF*, this->m_goldNum1);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_goldNum1", CCLabelBMFont*, this->m_goldNum1);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_dollerNum1", CCLabelIF*, this->m_dollerNum1);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_iconNode1", CCNode*, this->m_iconNode1);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_cellNode1", CCNode*, this->m_cellNode1);
     
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_goldNum2", CCLabelIF*, this->m_goldNum2);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_goldNum2", CCLabelBMFont*, this->m_goldNum2);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_dollerNum2", CCLabelIF*, this->m_dollerNum2);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_saleText2", CCLabelIF*, this->m_saleText2);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_iconNode2", CCNode*, this->m_iconNode2);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_cellNode2", CCNode*, this->m_cellNode2);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_goldAddNum2", CCLabelIF*, this->m_goldAddNum2);
     
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_goldNum3", CCLabelIF*, this->m_goldNum3);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_goldNum3", CCLabelBMFont*, this->m_goldNum3);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_dollerNum3", CCLabelIF*, this->m_dollerNum3);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_saleText3", CCLabelIF*, this->m_saleText3);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_iconNode3", CCNode*, this->m_iconNode3);

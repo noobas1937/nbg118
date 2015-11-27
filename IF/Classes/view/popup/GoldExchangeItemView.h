@@ -45,12 +45,12 @@ private:
     void goToExchangeCommamand();
     void refreshData(CCObject* p = NULL);
 
-    CCSafeObject<CCLabelIF> m_goldNum1;
+    CCSafeObject<CCLabelBMFont> m_goldNum1;
     CCSafeObject<CCLabelIF> m_dollerNum1;
     CCSafeObject<CCNode> m_iconNode1;
     CCSafeObject<CCNode> m_cellNode1;
     
-    CCSafeObject<CCLabelIF> m_goldNum2;
+    CCSafeObject<CCLabelBMFont> m_goldNum2;
     CCSafeObject<CCLabelIF> m_dollerNum2;
     CCSafeObject<CCNode> m_iconNode2;
     CCSafeObject<CCNode> m_cellNode2;
@@ -59,7 +59,7 @@ private:
     CCSafeObject<CCLabelIF> m_saleText2;
     CCSafeObject<CCLabelIF> m_goldAddNum2;
     
-    CCSafeObject<CCLabelIF> m_goldNum3;
+    CCSafeObject<CCLabelBMFont> m_goldNum3;
     CCSafeObject<CCLabelIF> m_dollerNum3;
     CCSafeObject<CCNode> m_iconNode3;
     CCSafeObject<CCNode> m_cellNode3;

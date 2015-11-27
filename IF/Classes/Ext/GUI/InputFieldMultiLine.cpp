@@ -541,6 +541,10 @@ void InputFieldMultiLine::setBgVisible(bool v){
     bg->setVisible(v);
 }
 
+Scale9Sprite* InputFieldMultiLine::getBG(){
+    return bg;
+}
+
 void InputFieldMultiLine::openIME()
 {
     isEditing = true;

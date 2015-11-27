@@ -45,7 +45,7 @@
 #include "NBCommonUtils.h"
 using namespace NBCommonUtils;
 //const int cellW = 640;
-static int cellW = 520;
+static int cellW = 640;
 
 GeneralsPopupView* GeneralsPopupView::create(){
     GeneralsPopupView* ret = new GeneralsPopupView();
@@ -532,7 +532,7 @@ void GeneralsPopupView::onSetBagTipNode()
 
 void GeneralsPopupView::loadResource(){
     CCLoadSprite::doResourceByCommonIndex(105, true);
-//    CCLoadSprite::doResourceByCommonIndex(100, true);//fusheng 装备
+    CCLoadSprite::doResourceByCommonIndex(100, true);//fusheng 装备
     CCLoadSprite::doResourceByCommonIndex(305, true);
     CCLoadSprite::doResourceByCommonIndex(503, true);
     CCLoadSprite::doResourceByCommonIndex(7, true);

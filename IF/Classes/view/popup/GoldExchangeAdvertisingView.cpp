@@ -814,7 +814,12 @@ bool GoldExchangeAdvertisingCommCell::init()
     return true;
 }
 void GoldExchangeAdvertisingCommCell::refreshData(){
-    m_getGoldNumText->setString(CC_CMDITOA(atoi(m_dataItem->gold_doller.c_str())).c_str());
+    string str = CC_CMDITOA(atoi(m_dataItem->gold_doller.c_str())).c_str();//fusheng
+    if(str.length()!=0)
+    {
+        str = "+"+str;
+        m_getGoldNumText->setString(str);
+    }
     string perStr = m_dataItem->percent;
     m_percentLabel->setString(perStr);
     m_percentLabel2->setString("%");
