@@ -921,6 +921,7 @@ void ImperialScene::onVikingsShipMove(NBSprite3D * pSprite3d)
             
             particleNode->addChild(particle);
             particle->setGlobalZOrder(-1);
+            particle->setCameraMask(particleNode->getParent()->getCameraMask());
             
         }
         //船浆水花
@@ -932,6 +933,7 @@ void ImperialScene::onVikingsShipMove(NBSprite3D * pSprite3d)
             particle->setPosition3D(Vec3(155 - i * 310, 0, 0)); //左侧船桨位置
             particleNode->addChild(particle);
             particle->setGlobalZOrder(-1);
+            particle->setCameraMask(particleNode->getParent()->getCameraMask());
         }
         //船侧水花
         for(int i = 0; i <= 1; i++)
@@ -943,6 +945,7 @@ void ImperialScene::onVikingsShipMove(NBSprite3D * pSprite3d)
                 particle->setPosition3D(Vec3(45 - j * 90, 0, 20));
                 particleNode->addChild(particle);
                 particle->setGlobalZOrder(-1);
+                particle->setCameraMask(particleNode->getParent()->getCameraMask());
             }
         }
     
