@@ -48,6 +48,9 @@ bool BuildCCB::initBuildCCB(int type)
         else if (type == 3) {
             ccbName = "CityBuild_Wall";
         }
+        else if (type == 4) {
+            ccbName = "CityBuild_Tower";
+        }
         else
         {
             ccbName = "CityBuild_S";
