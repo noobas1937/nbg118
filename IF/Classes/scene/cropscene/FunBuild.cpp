@@ -1042,11 +1042,11 @@ void FunBuild::showUping()
 //    CCCommonUtils::makeEffectSpr(sprAni, "inner_risk_%d.png", 18);
 //    sprAni->setAnchorPoint(ccp(0.5, 0.5));
 //    sprAni->setScale(2.0);
-    int tmpY = 108;//_cbg->getContentSize().height;
-    if (m_info->type == FUN_BUILD_MAIN) {
-        tmpY = 190;
-    }
-    sprAni->setPosition(ccp(mainWidth/2, tmpY-40));
+//    int tmpY = 108;//_cbg->getContentSize().height;
+//    if (m_info->type == FUN_BUILD_MAIN) {
+//        tmpY = 190;
+//    }
+    sprAni->setPosition(ccp(mainWidth/2+40, 70));
     CCBLoadFile("CityBuild_CuiZi",sprAni,this);
     
     auto garyCloud1 = CCSprite::create();

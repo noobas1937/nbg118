@@ -1167,7 +1167,7 @@ void ImperialScene::onBridgeClose()
 //    m_bridgeOpened = false;
     auto anim1 = Animation3D::create("3d/bridge/bridge_1_close.c3b");
     if (anim1) {
-        auto pAnim = Animate3D::createWithFrames(anim1, 150, 256); //close 150-256
+        auto pAnim = Animate3D::createWithFrames(anim1, 140, 260); //close 140-260
         if (pAnim) {
             auto act = Repeat::create(pAnim,1);
             auto act2 = act->clone();
