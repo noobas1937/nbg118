@@ -945,6 +945,10 @@
 		972666461BAC07D300D59BC2 /* TitanInView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 972666441BAC07D300D59BC2 /* TitanInView.cpp */; };
 		9737F0B31BD6188900E1B440 /* NBCommonUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9737F0B11BD6188900E1B440 /* NBCommonUtils.cpp */; };
 		974034461BAFDB3C00330AD3 /* TitanController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 974034441BAFDB3C00330AD3 /* TitanController.cpp */; };
+		975778DB1C07F97200D6CB14 /* nb_fnt1.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 975778D71C07F97200D6CB14 /* nb_fnt1.fnt */; };
+		975778DC1C07F97200D6CB14 /* nb_fnt1.png in Resources */ = {isa = PBXBuildFile; fileRef = 975778D81C07F97200D6CB14 /* nb_fnt1.png */; };
+		975778DD1C07F97200D6CB14 /* nb_fnt2.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 975778D91C07F97200D6CB14 /* nb_fnt2.fnt */; };
+		975778DE1C07F97200D6CB14 /* nb_fnt2.png in Resources */ = {isa = PBXBuildFile; fileRef = 975778DA1C07F97200D6CB14 /* nb_fnt2.png */; };
 		97CF485F1BE10B9E003F3C67 /* NBProgressBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 97CF485D1BE10B9E003F3C67 /* NBProgressBar.cpp */; };
 		A817139A1B660629008DE4D4 /* ChatTestCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A81713941B660629008DE4D4 /* ChatTestCommand.cpp */; };
 		A817139B1B660629008DE4D4 /* GetNewMailMsgCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A81713961B660629008DE4D4 /* GetNewMailMsgCommand.cpp */; };
@@ -3064,6 +3068,10 @@
 		9737F0B21BD6188900E1B440 /* NBCommonUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBCommonUtils.h; sourceTree = "<group>"; };
 		974034441BAFDB3C00330AD3 /* TitanController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TitanController.cpp; sourceTree = "<group>"; };
 		974034451BAFDB3C00330AD3 /* TitanController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitanController.h; sourceTree = "<group>"; };
+		975778D71C07F97200D6CB14 /* nb_fnt1.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = nb_fnt1.fnt; path = Resources/nb_fnt1.fnt; sourceTree = "<group>"; };
+		975778D81C07F97200D6CB14 /* nb_fnt1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = nb_fnt1.png; path = Resources/nb_fnt1.png; sourceTree = "<group>"; };
+		975778D91C07F97200D6CB14 /* nb_fnt2.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = nb_fnt2.fnt; path = Resources/nb_fnt2.fnt; sourceTree = "<group>"; };
+		975778DA1C07F97200D6CB14 /* nb_fnt2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = nb_fnt2.png; path = Resources/nb_fnt2.png; sourceTree = "<group>"; };
 		97CF485D1BE10B9E003F3C67 /* NBProgressBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBProgressBar.cpp; sourceTree = "<group>"; };
 		97CF485E1BE10B9E003F3C67 /* NBProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBProgressBar.h; sourceTree = "<group>"; };
 		A81713941B660629008DE4D4 /* ChatTestCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChatTestCommand.cpp; sourceTree = "<group>"; };
@@ -5895,6 +5903,10 @@
 		DB9F590717CD9A520037F7E5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				975778D71C07F97200D6CB14 /* nb_fnt1.fnt */,
+				975778D81C07F97200D6CB14 /* nb_fnt1.png */,
+				975778D91C07F97200D6CB14 /* nb_fnt2.fnt */,
+				975778DA1C07F97200D6CB14 /* nb_fnt2.png */,
 				B80D4B2E1BAFCA6B00422225 /* nb_world_link_area.tmx */,
 				B80D4B281BAFA1D800422225 /* nb_world.tmx */,
 				36DE16D71BA188C00020785E /* 3d */,
@@ -7104,6 +7116,7 @@
 				6CD847C01B2EE5C500C8AF0D /* MemberTableCell.xib in Resources */,
 				B15628B318FEB62000902628 /* pve_fnt_title.fnt in Resources */,
 				272AB6661B15C7BC0052E896 /* toolbar_bottom_bar.png in Resources */,
+				975778DB1C07F97200D6CB14 /* nb_fnt1.fnt in Resources */,
 				272AB65B1B15C7BC0052E896 /* icon_kuang.png in Resources */,
 				272AB61E1B15C7BC0052E896 /* InfoPlist.strings in Resources */,
 				272AB6301B15C7BC0052E896 /* chat_bottom_keyboard_nor.png in Resources */,
@@ -7195,6 +7208,7 @@
 				272AB6681B15C7BC0052E896 /* ui_gray_biaotilan.png in Resources */,
 				59D7F03A1AF0BF85000120F9 /* HS-no-connection.png in Resources */,
 				272AB64A1B15C7BC0052E896 /* g038.png in Resources */,
+				975778DD1C07F97200D6CB14 /* nb_fnt2.fnt in Resources */,
 				366E1C7517D09868006CCCBF /* local in Resources */,
 				272AB6641B15C7BC0052E896 /* tishikuang_full.png in Resources */,
 				59D7F04F1AF0BF85000120F9 /* HelpshiftConfig.plist in Resources */,
@@ -7204,6 +7218,7 @@
 				272AB64F1B15C7BC0052E896 /* gm.png in Resources */,
 				272AB63E1B15C7BC0052E896 /* chuzheng_frame02.png in Resources */,
 				272AB63B1B15C7BC0052E896 /* chat_to_bg_pressed.png in Resources */,
+				975778DE1C07F97200D6CB14 /* nb_fnt2.png in Resources */,
 				FDC0AF2217D6DAF7006E79E6 /* ccbi in Resources */,
 				6C8758C51B94064600C20ECC /* InputView.xib in Resources */,
 				59D7F04E1AF0BF85000120F9 /* HSTutorialiPad@3x.png in Resources */,
@@ -7238,6 +7253,7 @@
 				272AB6531B15C7BC0052E896 /* horn_checked.png in Resources */,
 				272AB6341B15C7BC0052E896 /* chat_bottom_textfield.png in Resources */,
 				5736A1AD18225C9D007C431C /* Imperial in Resources */,
+				975778DC1C07F97200D6CB14 /* nb_fnt1.png in Resources */,
 				59D7F0381AF0BF85000120F9 /* HS-delete-button@2x.png in Resources */,
 				59D7F0311AF0BF85000120F9 /* HS-Attachment.png in Resources */,
 				272AB6491B15C7BC0052E896 /* g032.png in Resources */,
