@@ -2249,8 +2249,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>4313.798828125</real>
-							<real>965.37109375</real>
+							<real>4383.2431640625</real>
+							<real>1071.27392578125</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -2469,8 +2469,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>3192.800048828125</real>
-							<real>415.79998779296875</real>
+							<real>3262.24462890625</real>
+							<real>521.70281982421875</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -8641,6 +8641,44 @@
 						<string>Check</string>
 						<key>value</key>
 						<false/>
+					</dict>
+				</array>
+			</dict>
+			<dict>
+				<key>baseClass</key>
+				<string>CCBFile</string>
+				<key>children</key>
+				<array/>
+				<key>customClass</key>
+				<string></string>
+				<key>displayName</key>
+				<string>CCBFile</string>
+				<key>memberVarAssignmentName</key>
+				<string></string>
+				<key>memberVarAssignmentType</key>
+				<integer>0</integer>
+				<key>properties</key>
+				<array>
+					<dict>
+						<key>name</key>
+						<string>scale</string>
+						<key>type</key>
+						<string>ScaleLock</string>
+						<key>value</key>
+						<array>
+							<real>1</real>
+							<real>1</real>
+							<false/>
+							<integer>0</integer>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>ccbFile</string>
+						<key>type</key>
+						<string>CCBFile</string>
+						<key>value</key>
+						<string>IC_wall_1.ccb</string>
 					</dict>
 				</array>
 			</dict>
