@@ -61,18 +61,23 @@ bool GoldExchangeMoreListView::init(int itemId)
     m_oldPriceLabel->setString(PayController::getInstance()->getDollarText(m_dataItem->oldprice,""));
     m_newPriceLabel->setString(dollar);
 
+
     m_goldNumText->setString(m_dataItem->gold_doller.c_str());
     m_soleOutSpr->setVisible(false);
     if (m_dataItem->bought) {
         m_soleOutSpr->setVisible(true);
         m_costBtn->setEnabled(false);
     }
-    m_animNode = CCNode::create();
-    m_costBtn->getParent()->addChild(m_animNode);
-    m_animNode->setPosition(m_costBtn->getPosition());
-    CCSize btnSize = m_costBtn->getContentSize();
-    ButtonLightEffect* btnEffect = ButtonLightEffect::create(btnSize);
-    m_animNode->addChild(btnEffect);
+    
+    m_liBaoName->setString(_lang(m_dataItem->name));
+    //fusheng d begin
+//    m_animNode = CCNode::create();
+//    m_costBtn->getParent()->addChild(m_animNode);
+//    m_animNode->setPosition(m_costBtn->getPosition());
+//    CCSize btnSize = m_costBtn->getContentSize();
+//    ButtonLightEffect* btnEffect = ButtonLightEffect::create(btnSize);
+//    m_animNode->addChild(btnEffect);
+    //fusheng d end
     
 //    CCSprite* Spr = CCSprite::create();
 //    m_animNode->addChild(Spr);
@@ -177,10 +182,13 @@ bool GoldExchangeMoreListView::onAssignCCBMemberVariable(cocos2d::CCObject * pTa
 {
    // CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_okBtn", CCControlButton*, this->m_okBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_infoList", CCNode*, this->m_infoList);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_goldNumText", CCLabelBMFont*, this->m_goldNumText);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_goldNumText", CCLabelIF*, this->m_goldNumText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_oldPriceLabel", CCLabelIF*, this->m_oldPriceLabel);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_newPriceLabel", CCLabelIF*, this->m_newPriceLabel);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_getLabel", CCLabelIF*, this->m_getLabel);
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_liBaoName", CCLabelIF*, this->m_liBaoName);
+    
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_costBtn", CCControlButton*, this->m_costBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_buildBG", CCScale9Sprite*, this->m_buildBG);
