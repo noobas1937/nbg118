@@ -36,7 +36,7 @@
 			<key>orientation</key>
 			<integer>0</integer>
 			<key>position</key>
-			<real>448</real>
+			<real>-162</real>
 		</dict>
 		<dict>
 			<key>orientation</key>
@@ -4116,8 +4116,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>1353.175537109375</real>
-									<real>1108.3358154296875</real>
+									<real>1458.43505859375</real>
+									<real>1089.7606201171875</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -4162,8 +4162,6 @@
 								<false/>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 				</array>
 				<key>customClass</key>
@@ -4331,6 +4329,8 @@
 						<false/>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>
