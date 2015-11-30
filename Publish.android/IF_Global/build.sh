@@ -54,6 +54,7 @@ echo "0.pack_all.command..."
 sh pack_android.sh
 # guo jiang todo
 cp  -rf ./Imperial/Imperial_41/*.png ../../Android_Resource/Imperial/
+cp  -rf ../../IF/Resources/World/footprintsingle.png ../../Android_Resource/World/
 echo "[Done]"
 echo ""
 

@@ -10,7 +10,7 @@ curDate=`date '+%Y%m%d'`
 #echo $curDate
 curTime=`date '+%H%M-%S'`
 #echo $curTime
-logfileName=$logRoot/$curDate/$BUILD_NUMBER-$curDate-$curTime
+logfileName=$logRoot/$curDate/$curDate-$curTime
 #echo $logfileName
 mkdir $logRoot/$curDate >/dev/null 2>/dev/null
 
@@ -20,7 +20,7 @@ apkTargetDir=$packageroot/$curDate
 soTargetDir=$soRootPath/$curDate
 mkdir $soTargetDir >/dev/null 2>/dev/null
 
-apkTargetPath=$apkTargetDir/$BUILD_NUMBER-DragonClans_google-$curDate-$curTime.apk
+apkTargetPath=$apkTargetDir/DragonClans_google-$curDate-$curTime.apk
 apkTargetLastPath=$apkTargetDir/DragonClans_google.apk
 
 if [ ! -n "$ANDROID_HOME" ]; then
@@ -55,6 +55,7 @@ echo "0.pack_all.command..."
 sh pack_android.sh
 # guo jiang todo
 cp  -rf ./Imperial/Imperial_41/*.png ../../Android_Resource/Imperial/
+cp  -rf ../../IF/Resources/World/footprintsingle.png ../../Android_Resource/World/
 echo "[Done]"
 echo ""
 
@@ -92,8 +93,8 @@ rm -rf Battle/Battle_11.pkm
 
 cd ..
 
-mkdir $soTargetDir/IF_$BUILD_NUMBER >/dev/null 2>/dev/null
-copyPath=$soTargetDir/IF_$BUILD_NUMBER/
+mkdir $soTargetDir/IF >/dev/null 2>/dev/null
+copyPath=$soTargetDir/IF/
 echo $copyPath
 cp -rf ../../proj.android/obj/local/armeabi $copyPath >/dev/null
 
