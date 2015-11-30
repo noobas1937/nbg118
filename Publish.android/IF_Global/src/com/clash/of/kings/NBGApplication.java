@@ -14,7 +14,7 @@ public class EmpireApplication extends Application {
 		super.onCreate();
 		try {
 			// Add your initialization code here
-		    Parse.initialize(this, "mOzkRMxp0CwRal3O1rOXH9VJK4pIgJApzcY3Vmsj", "vyXy2kQHrwmCv0sLCxIRFDwpZSZk2qyTirjKgmwh");
+		    Parse.initialize(this, "id4b1N0wIOfYKMJjFzIrMOS7Mx7ifvuShwU7E44g", "OS1yie0SmvHnGHOv7JSzF0ryLIv3K1hgYcnpIZD4");
 			
 			PushService.setDefaultPushCallback(this, EmpireActivity.class);
 			ParseInstallation.getCurrentInstallation().saveInBackground();
@@ -40,8 +40,8 @@ public class NBGApplication extends MultiDexApplication {
 		Log.d("EmpireApplication","enter onCreate");
 		super.onCreate();
 		try{
-			String strAppId = "mOzkRMxp0CwRal3O1rOXH9VJK4pIgJApzcY3Vmsj";
-			String strAppKey = "vyXy2kQHrwmCv0sLCxIRFDwpZSZk2qyTirjKgmwh";
+			String strAppId = "id4b1N0wIOfYKMJjFzIrMOS7Mx7ifvuShwU7E44g";
+			String strAppKey = "OS1yie0SmvHnGHOv7JSzF0ryLIv3K1hgYcnpIZD4";
 	    	Parse.initialize(this, strAppId, strAppKey);
 	    	Log.d("EmpireApplication","Init Parse");
 	    	ParseUser.enableAutomaticUser();

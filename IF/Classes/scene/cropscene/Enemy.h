@@ -23,6 +23,8 @@ enum EnemyActionStatus
     ENEMY_ACTION_STATUS_DIE, //死亡
     ENEMY_ACTION_STATUS_MOVE, //走
     ENEMY_ACTION_STATUS_IDLE,
+    ENEMY_ACTION_STATUS_RETREAT, //往回跑
+    ENEMY_ACTION_STATUS_SCARE, //被吓到
 };
 
 enum EnemyType
@@ -40,13 +42,13 @@ public:
     
     void start();
     
-    
-    
     void update(float delta);
     
     void onEnter();
     
     void onExit();
+    
+    
     
     static CCPoint PathBegin;
     static CCPoint PathEnd;
@@ -62,6 +64,8 @@ private:
     void move();
     void die();
     void shootArrow();
+    void retreat();
+    void scare();
     CCSequence * createAnimation(int enemyActionStatus);
     void hideAndReleaseSelf();
     string mIcon;

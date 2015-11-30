@@ -220,11 +220,11 @@ void MarchFormationView::refreshDragonNumStatus()
     {
 
         
-
-        
-        m_2touchBtn->setPositionX(selectDragon?84:25);
+        m_2touchBtn->setPositionX(selectDragon?94:20);
         
         m_2touchBtn->setSpriteFrame(selectDragon?"nb_checkboxBlockON.png":"nb_checkboxBlockOFF.png");
+        
+        m_2touchBtnBg->setSpriteFrame(selectDragon?"nb_checkboxBGSend.png":"nb_checkboxBGStay.png");
         
         TroopsController::getInstance()->updateTmpBattleData(GlobalData::shared()->titanInfo.titanId, selectDragon?1:0, GlobalData::shared()->titanInfo.titanId);
     }

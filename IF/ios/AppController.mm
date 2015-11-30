@@ -103,8 +103,8 @@ static AppDelegate s_sharedApplication;
     
     [Fabric with:@[CrashlyticsKit]];
     
-    [Parse setApplicationId:@"mOzkRMxp0CwRal3O1rOXH9VJK4pIgJApzcY3Vmsj"
-                  clientKey:@"vyXy2kQHrwmCv0sLCxIRFDwpZSZk2qyTirjKgmwh"];
+    [Parse setApplicationId:@"id4b1N0wIOfYKMJjFzIrMOS7Mx7ifvuShwU7E44g"
+                  clientKey:@"OS1yie0SmvHnGHOv7JSzF0ryLIv3K1hgYcnpIZD4"];
     cocos2d::GLViewImpl *glview = cocos2d::GLViewImpl::createWithEAGLView(__glView);
     cocos2d::Director::getInstance()->setOpenGLView(glview);
     cocos2d::CCApplication::sharedApplication()->run();
