@@ -588,7 +588,7 @@ void GeneralsPopupView::onExit(){
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_CHANGE_PLAYER_NAME);
 //    CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, "showEquipTips");//fusheng 不监听装备提示
     resetRankPop();
-    CCLoadSprite::doResourceByCommonIndex(100, false);
+//    CCLoadSprite::doResourceByCommonIndex(100, false);
 //    CCLoadSprite::doResourceByCommonIndex(305, false);
 
     CCLoadSprite::releaseDynamicResourceByType(CCLoadSpriteType_GOODS);
@@ -964,7 +964,7 @@ void GeneralsPopupView::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
         return;
     }
     
-    if (m_info)
+    if (m_info)//fusheng 查询别人
     {
         if(isTouchInside(m_clickNode4, pTouch))
         {
