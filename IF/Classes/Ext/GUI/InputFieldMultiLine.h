@@ -96,6 +96,7 @@ public:
     bool getIsEditing();
     void setAddH(int h);
     void setBgVisible(bool v);
+    Scale9Sprite* getBG();
 private:
     bool isEditing;
     int m_bakLineNumber;

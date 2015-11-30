@@ -330,6 +330,8 @@ inline bool isTouchInside(CCNode* pNode, CCTouch* touch)
         return false;
     CCPoint touchLocation=pNode->getParent()->convertToNodeSpace(touch->getLocation());
     CCRect bBox=pNode->boundingBox();
+//    touchLocation.x -= bBox.size.width * pNode->getAnchorPoint().x;
+//    touchLocation.y -= bBox.size.height * pNode->getAnchorPoint().y;
     return bBox.containsPoint(touchLocation);
 }
 

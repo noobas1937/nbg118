@@ -53,20 +53,24 @@ bool GoldExchangeView::init(){
         
         int exH = getExtendHeight();
         m_listNode->setContentSize(CCSizeMake(m_listNode->getContentSize().width,m_listNode->getContentSize().height+exH));
+        
+
+        
+        
         //m_BGNode->setPositionY(m_BGNode->getPositionY()+exH);
-        setContentSize(winsize);
+//        setContentSize(winsize);
         setGoldNum();
         int newBgHeight = exH;
-        int BGcount = (winsize.height)/100+1;
-        for (int i=0; i<BGcount; i++) {
-            auto pic = CCLoadSprite::createSprite("technology_09.png");
-            if (CCCommonUtils::isIosAndroidPad() && CCCommonUtils::getIsHDViewPort())
-            {
-                pic->setScaleX(2.4);
-            }
-            m_BGNode->addChild(pic);
-            pic->setPositionY(-i*100);
-        }
+//        int BGcount = (winsize.height)/100+1;
+//        for (int i=0; i<BGcount; i++) {
+//            auto pic = CCLoadSprite::createSprite("technology_09.png");
+//            if (CCCommonUtils::isIosAndroidPad() && CCCommonUtils::getIsHDViewPort())
+//            {
+//                pic->setScaleX(2.4);
+//            }
+//            m_BGNode->addChild(pic);
+//            pic->setPositionY(-i*100);
+//        }
         if(isGetData()){
             getData();
         }else{
@@ -154,11 +158,12 @@ void GoldExchangeView::initList(){
     std::sort(sortMap.begin(),sortMap.end(),sortExchangeItem);
     
     int i=0;
-    int dy=-220;
-    float tmp = 6.66;
+    int dy=-160;
+    float tmp = 10;
     if (CCCommonUtils::isIosAndroidPad()&& CCCommonUtils::getIsHDViewPort())
     {
-        dy=-230;
+//        dy=-230;
+        dy = -170;
     }
     CCNode* listNode = CCNode::create();
     m_scrollView->addChild(listNode);
@@ -170,22 +175,32 @@ void GoldExchangeView::initList(){
             if((*it)->type=="1" && (*it)->popup_image != "hide"){
                 cell =  GoldExchangeItemView::create((*it));
                 cell->setPositionY(dy);
-                if(i%2==0){
-                    if(CCCommonUtils::isIosAndroidPad()&& CCCommonUtils::getIsHDViewPort())
-                        cell->setPositionX(6.66*2.4);
-                    else
-                        cell->setPositionX(6.66);
-                }else{
-                    if(CCCommonUtils::isIosAndroidPad()&& CCCommonUtils::getIsHDViewPort())
-                        cell->setPositionX(6.66*2+310*2.4);
-                    else
-                        cell->setPositionX(6.66*2+310);
-//                    dy -= cell->getContentSize().height;
-                    if(CCCommonUtils::isIosAndroidPad() && CCCommonUtils::getIsHDViewPort())
-                        dy -= cell->getContentSize().height;
-                    else
-                        dy -= cell->getContentSize().height;
-                }
+//                if(i%2==0){
+//                    if(CCCommonUtils::isIosAndroidPad()&& CCCommonUtils::getIsHDViewPort())
+//                        cell->setPositionX(6.66*2.4);
+//                    else
+//                        cell->setPositionX(6.66);
+//                }else{
+//                    if(CCCommonUtils::isIosAndroidPad()&& CCCommonUtils::getIsHDViewPort())
+//                        cell->setPositionX(6.66*2+310*2.4);
+//                    else
+//                        cell->setPositionX(6.66*2+310);
+////                    dy -= cell->getContentSize().height;
+//                    if(CCCommonUtils::isIosAndroidPad() && CCCommonUtils::getIsHDViewPort())
+//                        dy -= cell->getContentSize().height;
+//                    else
+//                        dy -= cell->getContentSize().height;
+//                }
+                
+                if(CCCommonUtils::isIosAndroidPad()&& CCCommonUtils::getIsHDViewPort())
+                    cell->setPositionX(tmp*2.4);
+                else
+                    cell->setPositionX(tmp);
+                
+                if(CCCommonUtils::isIosAndroidPad() && CCCommonUtils::getIsHDViewPort())
+                    dy -= cell->getContentSize().height;
+                else
+                    dy -= cell->getContentSize().height;
                 
                 listNode->addChild(cell);
                 
@@ -198,34 +213,50 @@ void GoldExchangeView::initList(){
     if(GlobalData::shared()->analyticID == "mycard" || GlobalData::shared()->analyticID == "gash"){
         cell =  GoldExchangeItemView::create(NULL);
         cell->setPositionY(dy);
-        if(i%2==0){
-            cell->setPositionX(6.66);
-        }else{
-            
-            if(CCCommonUtils::isIosAndroidPad()&& CCCommonUtils::getIsHDViewPort())
-            {
-                cell->setPositionX(6.66*2+310*2.4);
-                dy -= cell->getContentSize().height;
-            }
-            else
-            {
-                cell->setPositionX(6.66*2+310);
-                dy -= cell->getContentSize().height;
-            }
-            
-            
-        }
+//        if(i%2==0){
+//            cell->setPositionX(6.66);
+//        }else{
+//            
+//            if(CCCommonUtils::isIosAndroidPad()&& CCCommonUtils::getIsHDViewPort())
+//            {
+//                cell->setPositionX(6.66*2+310*2.4);
+//                dy -= cell->getContentSize().height;
+//            }
+//            else
+//            {
+//                cell->setPositionX(6.66*2+310);
+//                dy -= cell->getContentSize().height;
+//            }
+//            
+//            
+//        }
+        if(CCCommonUtils::isIosAndroidPad()&& CCCommonUtils::getIsHDViewPort())
+            cell->setPositionX(tmp*2.4);
+        else
+            cell->setPositionX(tmp);
+        
+        if(CCCommonUtils::isIosAndroidPad() && CCCommonUtils::getIsHDViewPort())
+            dy -= cell->getContentSize().height;
+        else
+            dy -= cell->getContentSize().height;
+        
+
+        
+    
         listNode->addChild(cell);
         i++;
     }
     
-    if(i%2==1){
-        if(CCCommonUtils::isIosAndroidPad()&& CCCommonUtils::getIsHDViewPort())
-            cell->setPositionX(6.66*2+310*2.4);
-        else
-            cell->setPositionX(6.66*2+310);
-    }
-    listNode->setPositionY(-dy);
+//    if(i%2==1){//fusheng 原本是针对第五个商品的
+//        if(CCCommonUtils::isIosAndroidPad()&& CCCommonUtils::getIsHDViewPort())
+//            cell->setPositionX(6.66*2+310*2.4);
+//        else
+//            cell->setPositionX(6.66*2+310);
+//    }
+//    listNode->setPositionY(-dy); //fusheng d 11.23
+    listNode->setPositionY(m_listNode->getContentSize().height);
+    
+//    listNode->setContentSize(Size(620, -dy));
     offsetY+=(-dy);
     i=0;
 //    map<string, GoldExchangeItem*>::iterator it1 = sortMap1.end();
@@ -284,7 +315,7 @@ void GoldExchangeView::initList(){
 //    }
     //显示 advertising
     GoldExchangeAdvertisingView* advertsingcell =  GoldExchangeAdvertisingView::create();
-    advertsingcell->setPositionX(-320);
+//    advertsingcell->setPositionX(-320);
 //    advertsingcell->setPositionY(offsetY);
 //    offsetY += 410;
 
@@ -311,9 +342,18 @@ void GoldExchangeView::initList(){
 //        m_scrollView->setViewSize(listSize);
 //        monthCardCell->setTag(1000);
 //    }
-    m_scrollView->setContentSize(CCSize(m_listNode->getContentSize().width,offsetY));
-    m_scrollView->setContentOffset(ccp(0, m_listNode->getContentSize().height - offsetY));
+//    m_scrollView->setContentSize(CCSize(m_listNode->getContentSize().width,offsetY));
+//    m_scrollView->setContentOffset(ccp(0, m_listNode->getContentSize().height - offsetY));
+    
+
+//    
+    m_scrollView->setContentSize(CCSize(m_listNode->getContentSize().width,m_listNode->getContentSize().height));
+//    m_scrollView->setContentOffset(ccp(0, m_listNode->getContentSize().height));
     m_listNode->addChild(m_scrollView);
+    
+    auto svp = m_scrollView->convertToNodeSpaceAR(Vec2::ZERO);
+    
+    auto mlnp = m_listNode->convertToNodeSpaceAR(Vec2::ZERO);
 
 }
 

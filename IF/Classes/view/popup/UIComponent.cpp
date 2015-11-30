@@ -6131,10 +6131,12 @@ void UIComponent::setActivityStatus(){
 }
 void UIComponent::resetGoldActivityBox(CCObject* p){
     // tao.yu 第一个版本关闭充值
+    
     if (true) {
         this->m_rechargeNode->setVisible(false);
         return;
     }
+    
     this->m_rechargeNode->removeAllChildren();
     if(GlobalData::shared()->analyticID == "common"){
         this->m_rechargeNode->setVisible(false);
@@ -6160,11 +6162,13 @@ void UIComponent::resetGoldActivityBox(CCObject* p){
                     break;
                 }
             }else if(it->second->type == "1"){
-                if(it->second->bought|| it->second->popup_image=="hide" || it->second->popup_image.empty()){
+                //if(it->second->bought|| it->second->popup_image=="hide" || it->second->popup_image.empty()){ //d by ljf
+                if(it->second->bought|| it->second->popup_image=="hide" || it->second->popup_image.empty()  ){ //a by ljf
                     continue;
                 }
                 if(it->second->end>GlobalData::shared()->getWorldTime()){
-                    if(LuaController::getInstance()->showNoramlIcon(it->second->popup_image)){
+                    //if(LuaController::getInstance()->showNoramlIcon(it->second->popup_image)){ //d by ljf
+                    if(true){
                         isEnd = false;
                         break;
                     }
@@ -6182,6 +6186,8 @@ void UIComponent::resetGoldActivityBox(CCObject* p){
         activityBox->setPosition(ccp(43, 43));
         this->m_rechargeNode->addChild(activityBox);
     }
+    
+
 //    if (CCCommonUtils::isIosAndroidPad()) {
 //        this->m_rechargeNode->setVisible(false);
 //    }

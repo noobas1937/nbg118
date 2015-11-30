@@ -167,8 +167,7 @@ private:
     CCSafeObject<CCNode> m_bNode;
     CCSafeObject<CCNode> m_bottomNode;
     CCSafeObject<CCNode> m_particleNode;
-    CCSafeObject<CCSprite> m_leftBg;
-    CCSafeObject<CCSprite> m_rightBg;
+
     CCSafeObject<CCSprite> m_ChangeAvatar;
     
     CCSafeObject<CCControlButton> m_renameBtn;
@@ -192,6 +191,11 @@ private:
 
     CCSafeObject<CCNode> m_headIcon;
     CCSafeObject<CCNode> m_scrollContainer;
+    
+    CCSafeObject<CCNode> m_nameNode;
+    CCSafeObject<CCNode> ForCCBAnimation;
+    CCSafeObject<CCNode> m_ChangeAvatarNode;
+    CCSafeObject<CCNode> m_nbTouchNodeForChangeAvatar;
     
 //    CCSafeObject<CCTableView> m_tabView;
     CCSafeObject<CCArray> m_data;

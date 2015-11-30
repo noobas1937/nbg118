@@ -62,8 +62,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>1</real>
-									<real>0.0</real>
+									<real>-71</real>
+									<real>-116</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -112,6 +112,8 @@
 								<false/>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -135,8 +137,8 @@
 								<string>Point</string>
 								<key>value</key>
 								<array>
-									<real>0.0</real>
-									<real>0.0</real>
+									<real>0.5</real>
+									<real>0.5</real>
 								</array>
 							</dict>
 							<dict>
@@ -183,8 +185,6 @@
 								</array>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -208,8 +208,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>106.12730407714844</real>
-									<real>22.873458862304688</real>
+									<real>22.127304077148438</real>
+									<real>-82.126541137695312</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -291,8 +291,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>135</real>
-									<real>34</real>
+									<real>51</real>
+									<real>-71</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -374,8 +374,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>137</real>
-									<real>30</real>
+									<real>53</real>
+									<real>-75</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -435,8 +435,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>112.10000610351562</real>
-									<real>25.900001525878906</real>
+									<real>28.100006103515625</real>
+									<real>-79.099998474121094</real>
 									<integer>0</integer>
 								</array>
 							</dict>

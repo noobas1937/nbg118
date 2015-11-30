@@ -32,10 +32,10 @@ bool GoldExchangeItemView::init()
     CCBLoadFile("GoldExchangeItemViewNew",this,this,false);
     if(CCCommonUtils::isIosAndroidPad()&& CCCommonUtils::getIsHDViewPort())
     {
-        this->setContentSize(CCSizeMake(310*2.4, 210*1.8));
+        this->setContentSize(CCSizeMake(620*2.4, 155*1.8));
     }
     else
-        this->setContentSize(CCSizeMake(310, 220));
+        this->setContentSize(CCSizeMake(620, 155));
     refreshData();
     return true;
 }

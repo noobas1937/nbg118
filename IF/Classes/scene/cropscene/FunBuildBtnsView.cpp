@@ -127,7 +127,20 @@ void FunBuildBtnsView::onShow(int buildId)
         m_name4->setString(_lang("102350"));
     }
     else if(buildType == FUN_BUILD_BARRACK1 || buildType == FUN_BUILD_BARRACK2 || buildType == FUN_BUILD_BARRACK3 || buildType == FUN_BUILD_BARRACK4){
-        btnIcons.push_back("shangBing.png");
+        
+        if (buildType == FUN_BUILD_BARRACK1) { //fusheng add 以前士兵统一使用shangBing.png
+            btnIcons.push_back("shangBing.png");
+        }
+        else if (buildType == FUN_BUILD_BARRACK2) {
+            btnIcons.push_back("icon_trainQi.png");
+        }
+        else if (buildType == FUN_BUILD_BARRACK3) {
+            btnIcons.push_back("icon_trainGong.png");
+        }
+        else if (buildType == FUN_BUILD_BARRACK4) {
+            btnIcons.push_back("icon_trainChe.png");
+        }
+        
         m_name3->setString(_lang("102276"));
     }
     else if (buildType == FUN_BUILD_WAR) {
@@ -282,8 +295,8 @@ bool FunBuildBtnsView::onShowInfo()
     
     if (m_info->state == FUN_BUILD_NORMAL) {
         if (m_qid == QID_MAX) {
-            m_toolNode->setPositionY(-93.6+60);
-            m_nameNode->setPositionY(250);
+            m_toolNode->setPositionY(-100);
+            m_nameNode->setPositionY(300);
             if (buildType == FUN_BUILD_WOOD || buildType == FUN_BUILD_STONE || buildType == FUN_BUILD_IRON || buildType == FUN_BUILD_FOOD || buildType == FUN_BUILD_BARRACK || buildType == FUN_BUILD_HOSPITAL){
                 m_nameNode->setPositionY(150);
             }
@@ -318,10 +331,10 @@ bool FunBuildBtnsView::onShowInfo()
             }
         }
         else {//建筑正在造兵 或者 正在研究
-            m_toolNode->setPositionY(-93.6);
-            m_nameNode->setPositionY(250+60);
+            m_toolNode->setPositionY(-100-60);
+            m_nameNode->setPositionY(300+60);
             if (buildType == FUN_BUILD_HOSPITAL){
-                m_nameNode->setPositionY(150+60);
+                m_nameNode->setPositionY(120+60);
             }
             m_spdNode->setVisible(true);
             m_icon1Node->removeAllChildren();
@@ -362,10 +375,10 @@ bool FunBuildBtnsView::onShowInfo()
     }
     else {//升级 或者 建造中， 显示 秒建筑的 cd按钮
         m_qid = QueueController::getInstance()->getMinTimeQidByType(TYPE_BUILDING, CC_ITOA(m_buildingKey));
-        m_toolNode->setPositionY(-93.6);
-        m_nameNode->setPositionY(250+60);
+        m_toolNode->setPositionY(-100-60);
+        m_nameNode->setPositionY(300+60);
         if (buildType == FUN_BUILD_WOOD || buildType == FUN_BUILD_STONE || buildType == FUN_BUILD_IRON || buildType == FUN_BUILD_FOOD || buildType == FUN_BUILD_BARRACK || buildType == FUN_BUILD_HOSPITAL){
-            m_nameNode->setPositionY(150+60);
+            m_nameNode->setPositionY(120+60);
         }
         m_spdNode->setVisible(true);
         m_icon1Node->removeAllChildren();

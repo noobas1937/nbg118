@@ -48,6 +48,9 @@ bool BuildCCB::initBuildCCB(int type)
         else if (type == 3) {
             ccbName = "CityBuild_Wall";
         }
+        else if (type == 4) {
+            ccbName = "CityBuild_Tower";
+        }
         else
         {
             ccbName = "CityBuild_S";
@@ -84,7 +87,7 @@ void BuildCCB::setNamePos(int x, int y, CCLayer* sginLayer, CCSpriteBatchNode* b
             {
                 tmpSpr->removeFromParent();
                 tmpSpr->getTexture()->setAntiAliasTexParameters();
-                tmpSpr->setPosition(ccp(tmpSpr->getPositionX()+parentX, tmpSpr->getPositionY()+parentY));
+                tmpSpr->setPosition(ccp(tmpSpr->getPositionX()+parentX, tmpSpr->getPositionY() + parentY));
                 m_batchNode->addChild(tmpSpr, zOrder*1000+200+tmpOrd);
                 m_sprArray->addObject(tmpSpr);
                 tmpOrd++;

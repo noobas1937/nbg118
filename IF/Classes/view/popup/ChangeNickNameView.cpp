@@ -73,16 +73,16 @@ bool ChangeNickNameView::init(string goodsUUID){
     
     if (CCCommonUtils::isIosAndroidPad())
     {
-        m_editBox = InputFieldMultiLine::create(editSize, "UI_Chat_text.png", 80);
+        m_editBox = InputFieldMultiLine::create(editSize, "nb_editBG.png", 80);
     }
     else
-        m_editBox = InputFieldMultiLine::create(editSize, "UI_Chat_text.png", 30);
+        m_editBox = InputFieldMultiLine::create(editSize, "nb_editBG.png", 30);
     m_editBox->setAddH(5);
     m_editBox->setAnchorPoint(ccp(0,0));
     nameMaxLen=MAX_NAME_CHAR;
     m_editBox->setMaxChars(nameMaxLen);
     m_editBox->setLineNumber(1);
-    m_editBox->setFontColor(ccBLACK);
+    m_editBox->setFontColor(ccWHITE);
     m_editBox->setPosition(ccp(0,0));
     m_editBox->setSwallowsTouches(true);
     m_editBox->setMoveFlag(true);
@@ -93,6 +93,8 @@ bool ChangeNickNameView::init(string goodsUUID){
     nameTip.append(_lang("105214").c_str());
     m_editBox->setPlaceHolder(nameTip.c_str());
     m_nameNode->addChild(m_editBox);
+    
+    m_editBox->getBG()->setCapInsets(Rect(22,21,1,1));
     
     m_msgLabel->setString(_lang_1("105224", CC_ITOA(MAX_NAME_CHAR)));
 
@@ -234,7 +236,7 @@ void ChangeNickNameView::onInputFieldCloseEvent(cocos2d::CCObject *params)
     {
         int lastNum = nameMaxLen-length;
         m_msgLabel->setString(_lang_1("105224", CC_ITOA(lastNum) ));
-        m_msgLabel->setColor(ccc3(96,49,0));
+        m_msgLabel->setColor(ccc3(109,107,100));
     }
 }
 
@@ -250,7 +252,7 @@ void ChangeNickNameView::chechNameFun(float _time)
         lastNum = 0;
     }
     m_msgLabel->setString(_lang_1("105224", CC_ITOA(lastNum) ));
-    m_msgLabel->setColor(ccc3(96,49,0));
+    m_msgLabel->setColor(ccc3(109,107,100));
     
 //    m_nameOkNode->setVisible(true);
 //    m_msgLabel->setVisible(false);
@@ -291,7 +293,7 @@ void ChangeNickNameView::checkSuccess(CCObject* data)
         lastNum = 0;
     }
     m_msgLabel->setString(_lang_1("105224", CC_ITOA(lastNum) ));
-    m_msgLabel->setColor(ccc3(96,49,0));
+    m_msgLabel->setColor(ccc3(109,107,100));
     m_msgLabel->setVisible(true);
 
     nameMaxLen=lastNum+m_editBox->getText().length();

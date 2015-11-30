@@ -212,9 +212,40 @@ void ScienceListView::AnimationCallback()
     this->getAnimationManager()->setAnimationCompletedCallback(this, NULL);
     string name = getAnimationManager()->getLastCompletedSequenceName();
     if(name == "FadeIn") {
-        m_isInit = true;
+        
         playCircleGlow();
         updateInfo();
+        
+        
+        Size winSize = CCDirector::getInstance()->getWinSize();
+        
+        if (winSize.height/winSize.width < 1.6) {
+            m_magicCircle->runAction(Sequence::createWithTwoActions( CCScaleTo::create(0.3, 1),CallFunc::create([this]{
+                m_magicCircle->setScale(1);
+                
+            })));
+            
+            m_node1->runAction(CCMoveBy::create(0.3, Vec2(20,-20)));
+            
+            m_node2->runAction(CCMoveBy::create(0.3, Vec2(-20,-20)));
+            
+            m_node3->runAction(CCMoveBy::create(0.3, Vec2(20,20)));
+            
+            m_node4->runAction(CCMoveBy::create(0.3, Vec2(-20,20)));
+            
+            
+            this->runAction(Sequence::createWithTwoActions(CCDelayTime::create(0.35), CallFunc::create([this]{
+                m_isInit = true;
+                
+            })));
+
+        }
+        else
+        {
+            m_isInit = true;
+        }
+        
+        
 //        int addHeight = getExtendHeight();
 //        m_bottomNode->setPositionY(m_bottomNode->getPositionY()-addHeight/2);
     }
@@ -352,6 +383,10 @@ SEL_CCControlHandler ScienceListView::onResolveCCBCCControlSelector(cocos2d::CCO
 
 bool ScienceListView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode)
 {
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_magicCircle", CCSprite*, this->m_magicCircle);
+
+    
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_mainNode", CCNode*, this->m_mainNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bottomNode", CCNode*, this->m_bottomNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_icon1Node", CCNode*, this->m_icon1Node);
@@ -470,6 +505,14 @@ void ScienceListView::updateScienceType(int pos, string name, string pic)
         m_name5Label->setString(name);
         m_icon5Node->addChild(picSpr);
     }
+    
+    //fusheng 添加一个fadeIn效果
+    if(picSpr->getContentSize().width!=2 || picSpr->getContentSize().height!=2 )
+    {
+        picSpr->setOpacity(0);
+        
+        picSpr->runAction(CCFadeIn::create(0.3));
+    }
 }
 
 void ScienceListView::onBtn1Click(CCObject * pSender, Control::EventType pCCControlEvent)
@@ -539,7 +582,7 @@ void ScienceListView::playCircleGlow()
         
         CCLoadSprite::doResourceByCommonIndex(4, true);
         auto circle = CCLoadSprite::createSprite("IconGlow.png");
-        circle->setScale(2.0);
+//        circle->setScale(2.0);
         CCActionInterval * rotateto1 = CCRotateTo::create(4, -180);
         CCActionInterval * rotateto2 = CCRotateTo::create(4, -360);
         CCActionInterval * rotateto3 = CCRotateTo::create(0, 0);

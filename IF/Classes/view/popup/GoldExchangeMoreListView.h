@@ -41,7 +41,7 @@ private:
     CCSafeObject<CCNode> m_mainNode;
     CCSafeObject<CCControlButton> m_okBtn;
     CCSafeObject<CCNode> m_infoList;
-    CCSafeObject<CCLabelBMFont> m_goldNumText;
+    CCSafeObject<CCLabelIF> m_goldNumText;
     CCSafeObject<CCLabelIF> m_oldPriceLabel;
     CCSafeObject<CCLabelIF> m_newPriceLabel;
     CCSafeObject<CCLabelIF> m_getLabel;
@@ -51,6 +51,8 @@ private:
     CCSafeObject<CCSprite> m_soleOutSpr1;
     CCSafeObject<CCSprite> m_arrowSpr;
     CCSafeObject<CCNode> m_animNode;
+    
+    CCSafeObject<CCLabelIF> m_liBaoName;
     
     int m_itemId;
     CCSafeObject<CCScrollView> m_scrollView;
