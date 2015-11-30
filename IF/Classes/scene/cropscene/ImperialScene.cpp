@@ -3522,7 +3522,8 @@ CCNode* ImperialScene::getBuildById(int itemId){
             return m_buildItems[id]->m_spr;
         }
         setUnMoveScence(true);
-        return m_buildItems[id];
+        //        return m_buildItems[id];//fusheng 改成返回m_spr
+        return m_buildItems[id]->m_spr;
     }
     if(itemId < BUILD_COUNT - 1){
         map<int, FunBuildInfo>::iterator it;
