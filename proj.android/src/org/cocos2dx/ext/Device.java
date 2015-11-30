@@ -156,6 +156,17 @@ public class Device {
 		}
 		return "";
 	}
+	
+	public static String getDLCVersionName() {
+		try {
+			String pName = Jni.getGameActivity().getPackageName();
+			PackageInfo pinfo = Jni.getGameActivity().getPackageManager().getPackageInfo(pName, PackageManager.GET_CONFIGURATIONS);
+			return pinfo.versionName;
+		} catch (Exception e) {
+			Tracker.reportException(Jni.getGameActivity(), e);
+		}
+		return "";
+	}
 
 	public static String getVersionCode() {
 		try {

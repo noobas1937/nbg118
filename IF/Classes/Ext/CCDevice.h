@@ -33,6 +33,9 @@ namespace CCDevice{
     /* added end */
     
     std::string getVersionName();
+    // 动态更新资源时使用的版本号
+    // android 的版本号因为历史原因为 1.1.8 + 'x.x.x' <==> getVersionName = 1.1.8 + getDLCVersionName
+    std::string getDLCVersionName();
     std::string getHandSetInfo();
     std::string getVersionCode();
     void updateVersion(const std::string &msg);

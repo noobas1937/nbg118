@@ -17,7 +17,7 @@ NBDLCController* NBDLCController::create(string manifest_file_path,
                                          string manifest_filename)
 {
     auto p = new NBDLCController();
-    p->m_dlcPath = FileUtils::getInstance()->getWritablePath() + "dlc" + cocos2d::extension::CCDevice::getVersionName();
+    p->m_dlcPath = FileUtils::getInstance()->getWritablePath() + "dlc" + cocos2d::extension::CCDevice::getDLCVersionName();
     p->m_serverAssetsPath = p->m_dlcPath; // 文件下载解压后存放的目录
     if (current_dlc_path != p->m_serverAssetsPath) FileUtils::getInstance()->addSearchPath(p->m_serverAssetsPath, true); // 查找文件时优先搜索从服务器下载下来的文件
     current_dlc_path = p->m_serverAssetsPath;

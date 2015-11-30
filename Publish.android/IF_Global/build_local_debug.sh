@@ -58,7 +58,7 @@ cp -r ../CCB/LuaCCB/tps ../CCB/IF/res
 cd ../CCB/IF >/dev/null 2>/dev/null
 sh pack_android.sh
 # guo jiang todo
-cp -rf ./Imperial/Imperial_41/*.jpg ../../Android_Resource/Imperial/
+cp -rf ./Imperial/Imperial_41/*.png ../../Android_Resource/Imperial/
 rm -rf ./res
 echo "[Done]"
 echo ""
@@ -91,7 +91,7 @@ fi
 rm -rf assets_tmp
 
 cd ../tools/DLC 2>/dev/null
-python genDLC.py "http://127.0.0.1:5000/static/Resources_download_contents/Android_debug/" "debug" "Android" "$sh_path/AndroidManifest.xml"
+python genDLC.py "http://50.22.64.208/dragon_clans_dlc/Android_debug/" "debug" "Android" "$sh_path/AndroidManifest.xml"
 
 cd ../../Publish.android/IF_Global/assets
 
