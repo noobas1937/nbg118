@@ -1950,6 +1950,9 @@ void ChangePicPopupView::onResetPicClick(CCObject * pSender, Control::EventType 
 
 void ChangePicPopupView::onSetUserPicClick(cocos2d::CCObject *pSender, Control::EventType pCCControlEvent)
 {
+    //fusheng 暂时不能上传头像
+    CCCommonUtils::flyHint("", "", _lang("E100008"));
+    return;
     if (haveUpload())
     {
         //have uploaded one
