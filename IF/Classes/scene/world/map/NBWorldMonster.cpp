@@ -54,6 +54,19 @@ void WorldMapView::monsterDeathCB(CCObject* obj)
             CCCallFuncO* callFunc = CCCallFuncO::create(this, callfuncO_selector(WorldMapView::refreshMonster), CCInteger::create(index));
             CCSequence* seq = CCSequence::create(delayTime, fadeOut, callFunc, nullptr);
             monster->runAction(seq);
+            
+            for (int i = MonsterAttack; i <= MonsterBreath; i++)
+            {
+                int tag = 1000000 * 100 + WORLD_MAP_VIEW->getBatchTag(BatchTagType(i), index);
+                auto c = WORLD_MAP_VIEW->m_mapMonstersNode->getChildByTag(tag);
+                if (c)
+                {
+                    CCDelayTime* delayTime = CCDelayTime::create(3.0f);
+                    CCFadeOut* fadeOut = CCFadeOut::create(2.0f);
+                    CCSequence* seq = CCSequence::create(delayTime, fadeOut, nullptr);
+                    c->runAction(seq);
+                }
+            }
         }
         
         CC_SAFE_RELEASE_NULL(arr);
@@ -559,6 +572,16 @@ void NBWorldMonster::createMonsterBatchItem(BatchTagType type, unsigned int inde
         
         if (type == MonsterAttack)
         {
+            for (int i = MonsterAttack; i <= MonsterBreath; i++)
+            {
+                int tag = 1000000 * 100 + WORLD_MAP_VIEW->getBatchTag(BatchTagType(i), index);
+                auto c = WORLD_MAP_VIEW->m_mapMonstersNode->getChildByTag(tag);
+                if (c)
+                {
+                    c->removeFromParent();
+                }
+            }
+            
             auto octopus = Sprite::createWithSpriteFrameName("attack_0.png");
             auto *ac1 = NBWorldNPC::createAnimation("World/World_5.plist", "attack_%d.png", 0, 7);
             octopus->runAction(ac1);

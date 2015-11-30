@@ -21,8 +21,8 @@ apkTargetDir=$packageroot/$curDate
 soTargetDir=$soRootPath/$curDate
 mkdir $soTargetDir >/dev/null 2>/dev/null
 
-apkTargetPath=$apkTargetDir/DragonClans_google-$curDate-$curTime.apk
-apkTargetLastPath=$apkTargetDir/DragonClans_google.apk
+apkTargetPath=$apkTargetDir/$BUILD_NUMBER-DragonClans_google-release-$curDate-$curTime.apk
+apkTargetLastPath=$apkTargetDir/DragonClans_google-release.apk
 
 if [ ! -n "$ANDROID_HOME" ]; then
 echo "Error:Need to specify ANDROID_HOME first"
@@ -57,7 +57,8 @@ cp -r ../CCB/LuaCCB/tps ../CCB/IF/res
 cd ../CCB/IF >/dev/null 2>/dev/null
 sh pack_android.sh
 # guo jiang todo
-cp -rf ./Imperial/Imperial_41/*.png ../../Android_Resource/Imperial/
+cp  -rf ./Imperial/Imperial_41/*.png ../../Android_Resource/Imperial/
+cp  -rf ../../IF/Resources/World/footprintsingle.png ../../Android_Resource/World/
 rm -rf ./res
 echo "[Done]"
 echo ""
@@ -160,7 +161,7 @@ echo "6.Making install script..."
 	echo 'echo ""' >> $installScriptPath
 
 	echo 'echo "3.Installing new package..."' >> $installScriptPath
-	echo "adb install IF_debug.apk" >> $installScriptPath
+	echo "adb install _release.apk" >> $installScriptPath
 	echo 'echo "[Done]"' >> $installScriptPath
 	echo 'echo ""' >> $installScriptPath
 
