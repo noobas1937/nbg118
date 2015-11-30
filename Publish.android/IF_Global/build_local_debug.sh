@@ -20,8 +20,8 @@ apkTargetDir=$packageroot/$curDate
 soTargetDir=$soRootPath/$curDate
 mkdir $soTargetDir >/dev/null 2>/dev/null
 
-apkTargetPath=$apkTargetDir/DragonClans_google-$curDate-$curTime.apk
-apkTargetLastPath=$apkTargetDir/DragonClans_google.apk
+apkTargetPath=$apkTargetDir/DragonClans_google-debug-$curDate-$curTime.apk
+apkTargetLastPath=$apkTargetDir/DragonClans_google-debug.apk
 
 if [ ! -n "$ANDROID_HOME" ]; then
 echo "Error:Need to specify ANDROID_HOME first"
@@ -155,7 +155,7 @@ echo "6.Making install script..."
 	echo 'echo ""' >> $installScriptPath
 
 	echo 'echo "3.Installing new package..."' >> $installScriptPath
-	echo "adb install IF_debug.apk" >> $installScriptPath
+	echo "adb install _debug.apk" >> $installScriptPath
 	echo 'echo "[Done]"' >> $installScriptPath
 	echo 'echo ""' >> $installScriptPath
 
