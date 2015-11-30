@@ -117,7 +117,7 @@
 								<string>Size</string>
 								<key>value</key>
 								<array>
-									<real>405</real>
+									<real>480</real>
 									<real>62</real>
 									<integer>0</integer>
 								</array>
@@ -175,8 +175,6 @@
 								<real>10</real>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -752,7 +750,7 @@
 								<string>Size</string>
 								<key>value</key>
 								<array>
-									<real>450</real>
+									<real>490</real>
 									<real>80</real>
 									<integer>0</integer>
 								</array>
@@ -900,6 +898,8 @@
 								<false/>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 				</array>
 				<key>customClass</key>

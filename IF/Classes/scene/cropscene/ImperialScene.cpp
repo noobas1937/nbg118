@@ -2343,7 +2343,7 @@ void ImperialScene::onMoveToBuildAndPlay(int itemId, bool st)
     int buildPosX = build->getParent()->getPositionX();
     int buildPosY = build->getParent()->getPositionY() + build->mainHeight;
     if (itemId == FUN_BUILD_MAIN_CITY_ID) {
-        buildPosX = build->getParent()->getPositionX() + build->mainWidth * 0.3;
+        buildPosX = build->getParent()->getPositionX() + build->mainWidth * 0.7;
         buildPosY -= build->mainHeight/4;
     }
     m_flyArrow->setPosition(ccp(buildPosX, buildPosY));

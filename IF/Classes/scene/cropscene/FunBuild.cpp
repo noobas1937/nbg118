@@ -3003,6 +3003,7 @@ void FunBuild::checkIncreasedStatus(){
         m_gainSpr = CCSprite::create();
         CCCommonUtils::makeEffectSpr(m_gainSpr, "Gain_%d.png", 16,0.1);
         m_gainSpr->setScale(scale);
+        m_gainSpr->setAnchorPoint(Vec2(0.5,0.5));
 //        m_gainSpr->setPosition(ccp(tmpBatchPosX-30+offX, tmpBatchPosY-30+offY));
         m_gainSpr->setPosition(ccp(tmpBatchPosX+0+offX, tmpBatchPosY+0+offY));
         m_gainSpr->setOpacity(175);
@@ -3014,7 +3015,7 @@ void FunBuild::checkIncreasedStatus(){
         for (int i=1; i<count; i++) {
             auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString());
 //            particle->setPosition(ccp(parentX+70+offX, parentY+30+offY));
-            particle->setPosition(ccp(parentX+100+offX, parentY+60+offY));
+            particle->setPosition(ccp(parentX+offX, parentY+offY));
             addSpeParticleToBatch(particle);
         }
     }else{
