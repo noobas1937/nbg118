@@ -53,7 +53,7 @@ cd ../CCB/IF >/dev/null 2>/dev/null
 echo "0.pack_all.command..."
 sh pack_android.sh
 # guo jiang todo
-cp  -rf ./Imperial/Imperial_41/*.jpg ../../Android_Resource/Imperial/
+cp  -rf ./Imperial/Imperial_41/*.png ../../Android_Resource/Imperial/
 echo "[Done]"
 echo ""
 
