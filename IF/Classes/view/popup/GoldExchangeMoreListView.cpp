@@ -233,11 +233,18 @@ bool GoldExchangeMoreListCell::init(int itemId, int num,int type)
             CCCommonUtils::setSpriteMaxSize(icon, 60, true);
             m_iconNode->addChild(icon);
             m_nameLabel->setString(name);
-            m_numLabel->setString(CC_ITOA(num));
+            string str = CC_ITOA(num);
+            str = "X" + str;
+            m_numLabel->setString(str);
         }
         else {//道具
             CCCommonUtils::createGoodsIcon(itemId, m_iconNode, CCSize(65, 65),NULL,m_nameLabel);
-            m_numLabel->setString(CC_ITOA(num));
+            
+            string str = CC_ITOA(num);
+            str = "X" + str;
+            m_numLabel->setString(str);
+
+//            m_numLabel->setString(CC_ITOA(num));
 //            auto& toolInfo = ToolController::getInstance()->getToolInfoById(itemId);
 //            name = _lang(toolInfo.name);
 //            picStr = CCCommonUtils::getIcon(CC_ITOA(itemId));
@@ -250,7 +257,9 @@ bool GoldExchangeMoreListCell::init(int itemId, int num,int type)
         auto& eInfo = EquipmentController::getInstance()->EquipmentInfoMap[itemId];
         name = _lang(eInfo.name);
         m_nameLabel->setString(name);
-        m_numLabel->setString(CC_ITOA(num));
+        string str = CC_ITOA(num);
+        str = "X" + str;
+        m_numLabel->setString(str);
         string bgPath = CCCommonUtils::getToolBgByColor(eInfo.color);
         auto iconBg = CCLoadSprite::createSprite(bgPath.c_str());
         CCCommonUtils::setSpriteMaxSize(iconBg, 55, true);

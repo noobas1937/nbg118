@@ -5924,13 +5924,13 @@ std::string WorldMapView::getSpriteName(WorldCityInfo &info){
         }else if(info.resource.type == Stone){
             picName = "0018.png";
         }else if(info.resource.type == Iron){
-            picName = "0021.png";
+            picName = "0019.png";
         }else if(info.resource.type == Food){
             picName = "0020.png";
         }else if(info.resource.type == Gold){
             std::string iconName = CCCommonUtils::getPropById("100101", "resource");
             if(iconName == ""){
-                picName = "0019.png";
+                picName = "0021.png";
             }else{
                 picName = iconName + ".png";
             }
