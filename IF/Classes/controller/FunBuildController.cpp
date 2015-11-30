@@ -287,7 +287,7 @@ void FunBuildController::retDataFromServer(CCDictionary* dict)
         //分析提取引导数据
         string gFake = CCUserDefault::sharedUserDefault()->getStringForKey("Guide_Fake","");
         string GuideBuildKey = "";
-        if (GlobalData::shared()->playerInfo.level == 1 && GlobalData::shared()->playerInfo.exp == 0) //fusheng 新手引导提取数据
+        if (GlobalData::shared()->playerInfo.level == 1 && GlobalData::shared()->playerInfo.exp == 0) //fusheng 提取新手引导数据
         {
 //fusheng d 没有骑兵营  建造步兵营后不用再建造
 //            int tmpQid1 = QueueController::getInstance()->getMinTimeQidByType(TYPE_FORCE);//骑兵队列 待秒cd
@@ -313,7 +313,7 @@ void FunBuildController::retDataFromServer(CCDictionary* dict)
 //                    m_guideBuildMap[GuideBuildKey] = info;
 //                    continue;
 //                }
-                else if (id==FUN_BUILD_FOOD && pos==21 && level==1) {//农田
+                else if (id==FUN_BUILD_FOOD && pos==27 && level==1) {//农田
                     GuideBuildKey = GuideBuildKey + CC_ITOA(id)+"_"+CC_ITOA(pos)+"_"+CC_ITOA(level);
                     m_guideBuildMap[GuideBuildKey] = info;
                     continue;
@@ -334,7 +334,7 @@ void FunBuildController::retDataFromServer(CCDictionary* dict)
 //                    continue;
 //                }
 //                else if (id==FUN_BUILD_FOOD && pos==17 && level==1) {//农田
-                if (id==FUN_BUILD_FOOD && pos==21 && level==1) {//农田
+                if (id==FUN_BUILD_FOOD && pos==27 && level==1) {//农田
                     GuideBuildKey = GuideBuildKey + CC_ITOA(id)+"_"+CC_ITOA(pos)+"_"+CC_ITOA(level);
                     m_guideBuildMap[GuideBuildKey] = info;
                     continue;
@@ -683,7 +683,7 @@ bool FunBuildController::startOpenFunBuild(int itemId, int pos, int gold, bool i
             gFakeState = true;
             CCUserDefault::sharedUserDefault()->setStringForKey("Guide_Fake","end_1");
         }
-        else if ((gFake=="end_1"||gFake=="start_2") && itemId==FUN_BUILD_FOOD && pos==21) {
+        else if ((gFake=="end_1"||gFake=="start_2") && itemId==FUN_BUILD_FOOD && pos==27) {
             gFakeState = true;
             CCUserDefault::sharedUserDefault()->setStringForKey("Guide_Fake","end_2");
         }
