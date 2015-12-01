@@ -1387,6 +1387,9 @@ bool ImperialScene::onBridgeTouched(CCTouch* pTouch)
     else {
         onBridgeOpen();
     }
+//    auto particle = ParticleController::createParticle(CCString::createWithFormat("BridgeMoveF")->getCString());
+//    m_bridgeNode->addChild(particle);
+//    particle->setTag(9527);
     return true;
 }
 
@@ -1426,6 +1429,25 @@ void ImperialScene::changeBridgeState(CCNode* p)
 {
     m_bridgeOpened = !m_bridgeOpened;
     m_isBridgeCanClick = true;
+    // 桥落下的时候播放水花粒子
+    if (false && !m_bridgeOpened) {
+        auto prt_l_0 = ParticleController::createParticle(CCString::createWithFormat("BridgeWaterL_0")->getCString());
+        prt_l_0->setAutoRemoveOnFinish(true);
+        auto prt_l_1 = ParticleController::createParticle(CCString::createWithFormat("BridgeWaterL_1")->getCString());
+        prt_l_1->setAutoRemoveOnFinish(true);
+        m_waterNode_L->addChild(prt_l_0);
+        m_waterNode_L->addChild(prt_l_1);
+        
+        auto prt_r_0 = ParticleController::createParticle(CCString::createWithFormat("BridgeWaterR_0")->getCString());
+        prt_r_0->setAutoRemoveOnFinish(true);
+        auto prt_r_1 = ParticleController::createParticle(CCString::createWithFormat("BridgeWaterR_1")->getCString());
+        prt_r_1->setAutoRemoveOnFinish(true);
+        m_waterNode_R->addChild(prt_r_0);
+        m_waterNode_R->addChild(prt_r_1);
+    }
+//    if (m_bridgeNode->getChildByTag(9527)) {
+//        m_bridgeNode->removeChildByTag(9527);
+//    }
 }
 
 
@@ -4279,6 +4301,8 @@ bool ImperialScene::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bridgeNode", CCNode*, this->m_bridgeNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bridgeTouchNode", CCNode*, this->m_bridgeTouchNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_waterNode_L", CCNode*, this->m_waterNode_L);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_waterNode_R", CCNode*, this->m_waterNode_R);
     
     
     return false;

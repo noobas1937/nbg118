@@ -466,6 +466,9 @@ private:
     CCSafeObject<NBSprite3D> m_bridge3D_Down;
     CCSafeObject<CCNode> m_bridgeNode;
     CCSafeObject<CCNode> m_bridgeTouchNode;
+    CCSafeObject<CCNode> m_waterNode_L;
+    CCSafeObject<CCNode> m_waterNode_R;
+    
     bool m_bridgeOpened;
     bool m_isBridgeCanClick;
     
