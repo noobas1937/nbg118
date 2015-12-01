@@ -3370,7 +3370,7 @@ bool FunBuildState::init(int itemId)
             
             string recPic = "shangBing.png";
             if (buildType == FUN_BUILD_FORT) {
-                recPic = "icon_trap.png";
+                recPic = "icon_trapComplete.png";
             }else if (buildType == FUN_BUILD_FORGE) {
                 recPic = "icon_equip.png";
             }else if (buildType == FUN_BUILD_WORKSHOP) {
