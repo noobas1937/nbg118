@@ -3705,9 +3705,9 @@
 														<string>ScaleLock</string>
 														<key>value</key>
 														<array>
-															<real>0.69999998807907104</real>
-															<real>0.69999998807907104</real>
-															<false/>
+															<real>1</real>
+															<real>1</real>
+															<true/>
 															<integer>0</integer>
 														</array>
 													</dict>
@@ -3727,7 +3727,7 @@
 														<key>value</key>
 														<array>
 															<string>Common/Common_1.plist</string>
-															<string>ui_gold.png</string>
+															<string>ui_speedup_gem.png</string>
 														</array>
 													</dict>
 													<dict>
@@ -4195,6 +4195,8 @@
 												<false/>
 											</dict>
 										</array>
+										<key>selected</key>
+										<true/>
 									</dict>
 								</array>
 								<key>customClass</key>
