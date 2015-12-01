@@ -1664,7 +1664,7 @@
 										<key>value</key>
 										<array>
 											<string>Common/Common_8.plist</string>
-											<string>Recharge_jiantou1.png</string>
+											<string>nb_RechargeArrow.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -1675,8 +1675,8 @@
 										<key>value</key>
 										<array>
 											<integer>254</integer>
-											<integer>251</integer>
-											<integer>0</integer>
+											<integer>255</integer>
+											<integer>255</integer>
 										</array>
 									</dict>
 									<dict>
@@ -1857,6 +1857,8 @@
 										</array>
 									</dict>
 								</array>
+								<key>selected</key>
+								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>
@@ -2125,8 +2127,6 @@
 								<string>20000</string>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 				</array>
 				<key>customClass</key>

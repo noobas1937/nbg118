@@ -619,14 +619,31 @@ void GuideController::addGuideView(bool movingFlag){
     }
     else if(opers.size()>0 && opers[0] == "MC")
     {
-        if (!CCCommonUtils::isIosAndroidPad())
-        {
-            dx -= 20;
-            dy -= 10;
-        }
         
-        w += 40;
-        h += 20;
+        int itemID =  atoi(opers[1].c_str());
+        
+        if(itemID<1000)
+        {
+            if (!CCCommonUtils::isIosAndroidPad())//fusheng edit  地块的偏移量
+            {
+                dx -= 40;
+                dy -= 30;
+            }
+            
+            w += 20;
+            h += 20;
+        }
+        else
+        {
+//            if (!CCCommonUtils::isIosAndroidPad())//fusheng edit  建筑物的偏移量
+//            {
+//                dx -= 20;
+//                dy += 10;
+//            }
+//            
+//            w += 40;
+//            h += 10;
+        }
     }
     else if(opers.size()>=3 && opers[2] == "collect")
     {

@@ -1,7 +1,5 @@
 #!/bin/sh
 
-BUILD_NUMBER=1005
-
 sourceroot=../
 packageroot=../../package
 soRootPath=../../package-so
@@ -13,7 +11,7 @@ curDate=`date '+%Y%m%d'`
 #echo $curDate
 curTime=`date '+%H%M-%S'`
 #echo $curTime
-logfileName=$logRoot/$curDate/$BUILD_NUMBER-$curDate-$curTime
+logfileName=$logRoot/$curDate/$curDate-$curTime
 #echo $logfileName
 mkdir $logRoot/$curDate >/dev/null 2>/dev/null
 
@@ -23,8 +21,8 @@ apkTargetDir=$packageroot/$curDate
 soTargetDir=$soRootPath/$curDate
 mkdir $soTargetDir >/dev/null 2>/dev/null
 
-apkTargetPath=$apkTargetDir/$BUILD_NUMBER-DragonClans_google-$curDate-$curTime.apk
-apkTargetLastPath=$apkTargetDir/DragonClans_google.apk
+apkTargetPath=$apkTargetDir/DragonClans_google-release-$curDate-$curTime.apk
+apkTargetLastPath=$apkTargetDir/DragonClans_google-release.apk
 
 if [ ! -n "$ANDROID_HOME" ]; then
 echo "Error:Need to specify ANDROID_HOME first"
@@ -45,9 +43,9 @@ echo ""
 
 echo "building start with log:$logfileName"
 echo "*************************************************"
-oldBuildNumber=999
+# oldBuildNumber=999
 # guo jiang local
-sed -i.bak 's/'$oldBuildNumber'/'$BUILD_NUMBER'/g' AndroidManifest.xml
+# sed -i.bak 's/'$oldBuildNumber'/'$BUILD_NUMBER'/g' AndroidManifest.xml
 rm -rf *.bak
 
 cd ../../Android_Resource >/dev/null 2>/dev/null
@@ -57,7 +55,8 @@ cd ../CCB/IF >/dev/null 2>/dev/null
 echo "0.pack_all.command..."
 sh pack_android.sh
 # guo jiang todo
-cp  -rf ./Imperial/Imperial_41/*.jpg ../../Android_Resource/Imperial/
+cp  -rf ./Imperial/Imperial_41/*.png ../../Android_Resource/Imperial/
+cp  -rf ../../IF/Resources/World/footprintsingle.png ../../Android_Resource/World/
 echo "[Done]"
 echo ""
 
@@ -95,8 +94,8 @@ rm -rf Battle/Battle_11.pkm
 
 cd ..
 
-mkdir $soTargetDir/IF_$BUILD_NUMBER >/dev/null 2>/dev/null
-copyPath=$soTargetDir/IF_$BUILD_NUMBER/
+mkdir $soTargetDir/IF >/dev/null 2>/dev/null
+copyPath=$soTargetDir/IF/
 echo $copyPath
 cp -rf ../../proj.android/obj/local/armeabi $copyPath >/dev/null
 
@@ -157,7 +156,7 @@ echo "6.Making install script..."
 	echo 'echo ""' >> $installScriptPath
 
 	echo 'echo "3.Installing new package..."' >> $installScriptPath
-	echo "adb install IF_debug.apk" >> $installScriptPath
+	echo "adb install _release.apk" >> $installScriptPath
 	echo 'echo "[Done]"' >> $installScriptPath
 	echo 'echo ""' >> $installScriptPath
 
