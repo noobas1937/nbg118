@@ -27,10 +27,10 @@ NBDLCController* NBDLCController::create(string manifest_file_path,
     if (it == current_dlc_paths.end()) FileUtils::getInstance()->addSearchPath(dlc_path, true); // 查找文件时优先搜索从服务器下载下来的文件
     current_dlc_paths[dlc_path] = true;
     
-    if (FileUtils::getInstance()->isFileExist(dlc_path + "/" + manifest_filename))
-    {
-        manifest_file_path = dlc_path + "/" + manifest_filename;
-    }
+//    if (FileUtils::getInstance()->isFileExist(dlc_path + "/" + manifest_filename))
+//    {
+//        manifest_file_path = dlc_path + "/" + manifest_filename;
+//    }
     
     auto p = new NBDLCController();
     p->m_pAssetsManagerEx = AssetsManagerEx::create(manifest_file_path, dlc_path, version_filename, temp_manifest_filename, manifest_filename);
