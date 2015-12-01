@@ -693,25 +693,26 @@ void ImperialScene::onCreateVikingsShip(int level)
     int maxMarchCount = WorldController::getInstance()->getMaxMarchCount();
     int currentMarchCount = WorldController::getInstance()->getCurrentMarchCount();
     int showShipNum = maxMarchCount-currentMarchCount;
+    
     if(showShipNum > 0)
     {
         createOneVikingsShip(1, m_vikingNode, m_vikingTouchNode, level);
     }
     if(showShipNum > 1)
     {
-        createOneVikingsShip(2, m_vikingNode, m_vikingTouchNode, level);
+        createOneVikingsShip(2, m_vikingNode2, m_vikingTouchNode2, level);
     }
     if(showShipNum > 2)
     {
-        createOneVikingsShip(3, m_vikingNode, m_vikingTouchNode, level);
+        createOneVikingsShip(3, m_vikingNode3, m_vikingTouchNode3, level);
     }
     if(showShipNum > 3)
     {
-        createOneVikingsShip(4, m_vikingNode, m_vikingTouchNode, level);
+        createOneVikingsShip(4, m_vikingNode4, m_vikingTouchNode4, level);
     }
     if(showShipNum > 4)
     {
-        createOneVikingsShip(5, m_vikingNode, m_vikingTouchNode, level);
+        createOneVikingsShip(5, m_vikingNode5, m_vikingTouchNode5, level);
     }
     
 }
@@ -732,19 +733,19 @@ void ImperialScene::updateVikingsShipNum()
     }
     if(showShipNum > 1)
     {
-        createOneVikingsShip(2, m_vikingNode, m_vikingTouchNode, mShipLevel);
+        createOneVikingsShip(2, m_vikingNode2, m_vikingTouchNode2, mShipLevel);
     }
     if(showShipNum > 2)
     {
-        createOneVikingsShip(3, m_vikingNode, m_vikingTouchNode, mShipLevel);
+        createOneVikingsShip(3, m_vikingNode3, m_vikingTouchNode3, mShipLevel);
     }
     if(showShipNum > 3)
     {
-        createOneVikingsShip(4, m_vikingNode, m_vikingTouchNode, mShipLevel);
+        createOneVikingsShip(4, m_vikingNode4, m_vikingTouchNode4, mShipLevel);
     }
     if(showShipNum > 4)
     {
-        createOneVikingsShip(5, m_vikingNode, m_vikingTouchNode, mShipLevel);
+        createOneVikingsShip(5, m_vikingNode5, m_vikingTouchNode5, mShipLevel);
     }
 }
 
@@ -762,6 +763,9 @@ void ImperialScene::destroyOneVikingsShip(int seq)
 
 int ImperialScene::getVikingsShipModelLevel(int level)
 {
+    auto dict = _dict(LocalController::shared()->DBXMLManager()->getGroupByKey("building")->objectForKey("427000"));
+    std::string guideStr = dict->valueForKey("pic_order")->getCString();
+    
     int modelLevel = (level - 1) / 3 + 1;
     if(modelLevel < 1)
         modelLevel = 1;
