@@ -1469,6 +1469,10 @@ void FunBuild::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
             }else if (cnt == 1){
                 int firstPos = FunBuildController::getInstance()->WillMovePos[0];
                 if (firstPos>16 && firstPos<52 && pos>16 && pos<52 && firstPos!=pos) {
+                    auto& tileInfo = FunBuildController::getInstance()->m_tileMap[m_buildingKey];
+                    if (tileInfo.state == FUN_BUILD_LOCK || tileInfo.xmlOpen == FUN_BUILD_HIDE) {
+                        return;
+                    }
                     FunBuildController::getInstance()->SetMoveBuildPos(pos);
                 }else if ( ((firstPos<=16 && firstPos>=6) || (firstPos>=52 && firstPos<=53)) && firstPos!=pos) {
                     if ((pos<=16 && pos>=6) || (pos>=52 && pos<=53)) {
@@ -2441,7 +2445,12 @@ void FunBuild::onMoveBuild(CCObject* param)
         if (!m_tile->isVisible()) {
             return;
         }
+        auto& tileInfo = FunBuildController::getInstance()->m_tileMap[m_buildingKey];
+        if (tileInfo.state == FUN_BUILD_LOCK || tileInfo.xmlOpen == FUN_BUILD_HIDE) {
+            return;
+        }
     }
+    
     
     int pos = getCurPos();
     if (pos < 0) {
