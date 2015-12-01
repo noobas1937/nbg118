@@ -67,6 +67,7 @@ private:
     CCSafeObject<CCSprite> m_pageflag;
     CCSafeObject<CCArray> m_data;
     CCSafeObject<CCNode> m_animNode;
+    CCSafeObject<CCLayerColor> m_touchLayer;
     CCTableView* m_tabView;
 
     void generateData();

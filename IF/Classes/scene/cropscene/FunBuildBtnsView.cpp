@@ -222,7 +222,7 @@ void FunBuildBtnsView::onShow(int buildId)
             double effectTime = m_info->effectTime;
             double gapTime = effectTime - GlobalData::shared()->getWorldTime();
             if(gapTime<=0){
-                m_IncreasedGold->setVisible(true);
+//                m_IncreasedGold->setVisible(true);
                 m_IncreasedGlodTxt->setString(m_info->para[3].c_str());
                 int k6 = FunBuildController::getInstance()->building_base_k6;
                 m_IncreasedTime->setString(CCCommonUtils::changeTimeAddUnit(k6));

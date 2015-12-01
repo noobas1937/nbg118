@@ -73,6 +73,79 @@ bool GoldExchangeAdvertisingView::init()
     //fusheng end
 
     refreshView(NULL);
+    
+    
+    
+    auto listener = EventListenerTouchOneByOne::create();
+    
+    listener->onTouchBegan = [this](Touch* pTouch, Event* evt)
+    {
+        if(isTouchInside(m_touchLayer, pTouch)){
+            this->unschedule(schedule_selector(GoldExchangeAdvertisingView::showButtonLight));
+            this->unschedule(schedule_selector(GoldExchangeAdvertisingView::onPlayEnterFrame));
+            this->schedule(schedule_selector(GoldExchangeAdvertisingView::onPlayEnterFrame),10.0);
+            m_x = 1000;
+            return true;
+        }else{
+            return false;
+        }
+
+    };
+    
+    listener->onTouchMoved = [this](Touch* pTouch, Event* evt)
+    {
+        if(isTouchInside(m_touchLayer, pTouch)){
+            int dx = pTouch->getLocation().x - pTouch->getStartLocation().x;
+            if(dx > 10 || dx < -10){
+                addButtonLight(false);
+                if(m_x == 1000){
+                    m_x = m_tabView->getContentOffset().x;
+                }
+                int offX = m_x + dx;
+                int min = m_tabView->minContainerOffset().x;
+                int max = 200;
+                if(offX > max){
+                    offX = max;
+                }
+                if(offX < min){
+                    offX = min;
+                }
+                m_tabView->setContentOffset(ccp(offX, 0), false);
+            }
+        }
+
+        
+    };
+
+    listener->onTouchEnded = [this](Touch* pTouch, Event* evt)
+    {
+        int addX = -advertiseCellW / 2;
+        int dx = pTouch->getStartLocation().x - pTouch->getLocation().x;
+        if(dx > 20){
+            addX = -advertiseCellW;
+        }else if(dx < -20){
+            addX = 0;
+        }
+        int offSetX = int((m_tabView->getContentOffset().x + addX) / advertiseCellW) * advertiseCellW;
+        //    int minX  = m_tabView->minContainerOffset().x+20;
+        int minX  = m_tabView->minContainerOffset().x;
+        
+        if(offSetX > 0){
+            offSetX = 0;
+        }
+        if(offSetX < minX){
+            offSetX = minX;
+        }
+        m_tabView->setContentOffset(ccp(offSetX, 0), true);
+        setButtonState(offSetX);
+        this->scheduleOnce(schedule_selector(GoldExchangeAdvertisingView::showButtonLight), 0.15);
+        
+    };
+
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, m_touchLayer);
+    
+    
+    
     return true;
 }
 
@@ -344,67 +417,36 @@ bool GoldExchangeAdvertisingView::onAssignCCBMemberVariable(cocos2d::CCObject * 
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pageNode", CCNode*, this->m_pageNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_costBtn", CCControlButton*, this->m_costBtn);
     
+    
+     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_touchLayer", CCLayerColor*, this->m_touchLayer);
+    
+    
     return false;
 }
 
 bool GoldExchangeAdvertisingView::onTouchBegan(CCTouch *pTouch, CCEvent *pEvent){
-    if(isTouchInside(m_scrollContainer, pTouch)){
-        this->unschedule(schedule_selector(GoldExchangeAdvertisingView::showButtonLight));
-        this->unschedule(schedule_selector(GoldExchangeAdvertisingView::onPlayEnterFrame));
-        this->schedule(schedule_selector(GoldExchangeAdvertisingView::onPlayEnterFrame),10.0);
-        m_x = 1000;
-        return true;
-    }else{
-        return false;
-    }
-
+//    if(isTouchInside(m_scrollContainer, pTouch)){
+//    if(isTouchInside(m_touchLayer, pTouch)){
+//        this->unschedule(schedule_selector(GoldExchangeAdvertisingView::showButtonLight));
+//        this->unschedule(schedule_selector(GoldExchangeAdvertisingView::onPlayEnterFrame));
+//        this->schedule(schedule_selector(GoldExchangeAdvertisingView::onPlayEnterFrame),10.0);
+//        m_x = 1000;
+//        return true;
+//    }else{
+//        return false;
+//    }
+    return false;
     
 }
 
 void GoldExchangeAdvertisingView::onTouchMoved(CCTouch *pTouch, CCEvent *pEvent){
-    if(isTouchInside(m_scrollContainer, pTouch)){
-        int dx = pTouch->getLocation().x - pTouch->getStartLocation().x;
-        if(dx > 10 || dx < -10){
-            addButtonLight(false);
-            if(m_x == 1000){
-                m_x = m_tabView->getContentOffset().x;
-            }
-            int offX = m_x + dx;
-            int min = m_tabView->minContainerOffset().x;
-            int max = 200;
-            if(offX > max){
-                offX = max;
-            }
-            if(offX < min){
-                offX = min;
-            }
-            m_tabView->setContentOffset(ccp(offX, 0), false);
-        }
-    }
+//    if(isTouchInside(m_scrollContainer, pTouch)){
+    
 }
 
 void GoldExchangeAdvertisingView::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent){
 
-    int addX = -advertiseCellW / 2;
-    int dx = pTouch->getStartLocation().x - pTouch->getLocation().x;
-    if(dx > 20){
-        addX = -advertiseCellW;
-    }else if(dx < -20){
-        addX = 0;
-    }
-    int offSetX = int((m_tabView->getContentOffset().x + addX) / advertiseCellW) * advertiseCellW;
-//    int minX  = m_tabView->minContainerOffset().x+20;
-    int minX  = m_tabView->minContainerOffset().x;
     
-    if(offSetX > 0){
-        offSetX = 0;
-    }
-    if(offSetX < minX){
-        offSetX = minX;
-    }
-    m_tabView->setContentOffset(ccp(offSetX, 0), true);
-    setButtonState(offSetX);
-    this->scheduleOnce(schedule_selector(GoldExchangeAdvertisingView::showButtonLight), 0.15);
 }
 
 CCSize GoldExchangeAdvertisingView::tableCellSizeForIndex(CCTableView *table, ssize_t idx)
