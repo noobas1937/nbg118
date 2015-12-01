@@ -762,6 +762,9 @@ void ImperialScene::destroyOneVikingsShip(int seq)
 
 int ImperialScene::getVikingsShipModelLevel(int level)
 {
+    //auto dict = _dict(LocalController::shared()->DBXMLManager()->getGroupByKey("building")->objectForKey("400000"));
+    //std::string guideStr = dict->valueForKey("guard")->getCString();
+    
     int modelLevel = (level - 1) / 3 + 1;
     if(modelLevel < 1)
         modelLevel = 1;
