@@ -763,14 +763,28 @@ void ImperialScene::destroyOneVikingsShip(int seq)
 
 int ImperialScene::getVikingsShipModelLevel(int level)
 {
-    auto dict = _dict(LocalController::shared()->DBXMLManager()->getGroupByKey("building")->objectForKey("427000"));
-    std::string guideStr = dict->valueForKey("pic_order")->getCString();
+    int modelLevel = 1;
     
+    auto dict = _dict(LocalController::shared()->DBXMLManager()->getGroupByKey("building")->objectForKey("427000"));
+    vector<string> picVec;
+    picVec.clear();
+    string picOrder = dict->valueForKey("pic_order")->getCString();
+    CCCommonUtils::splitString(picOrder, ";", picVec);
+    for (int i=0; i<picVec.size(); i++) {
+        int blv = atoi(picVec[i].c_str());
+        if(level >= blv)
+        {
+            modelLevel++;
+        }
+    }
+    
+    /*
     int modelLevel = (level - 1) / 3 + 1;
     if(modelLevel < 1)
         modelLevel = 1;
     if(modelLevel > 4)
         modelLevel = 4;
+    */
     return modelLevel;
 }
 
