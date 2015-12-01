@@ -351,6 +351,8 @@ void LoadingScene::onGoToHelpShift(CCObject* p)
 
 void LoadingScene::getDownloadContents()
 {
+    NBDLCController::clean();
+    
     string language = LocalController::shared()->getLanguageFileNameBasedOnUserSystem();
     string manifest_file_path = "manifest/text_" + language + "_main.manifest";
     string version_filename = "text_" + language + "_version.manifest";

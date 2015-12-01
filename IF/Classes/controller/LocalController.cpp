@@ -159,7 +159,7 @@ void LocalController::init()
     bool test_xml = false;
     if (false == test_xml)
     {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         const char* XMLS[51] = {
             "local/xml/item_ab.xml",
             "local/xml/item_achievement.xml",
@@ -220,9 +220,9 @@ void LocalController::init()
             CCLOG("android m_objXMLParser: %s", filePath.c_str());
             m_objXMLParser->initWithFile(filePath.c_str());
         }
-#else
-        m_objXMLParser = CCRapidXMLParser::parseWithFileAndLocalDir("", "local/xml");
-#endif
+//#else
+//        m_objXMLParser = CCRapidXMLParser::parseWithFileAndLocalDir("", "local/xml");
+//#endif
     }
     else
     {

@@ -97,8 +97,8 @@ AssetsManagerEx::AssetsManagerEx(
     _temp_manifest_filename = temp_manifest_filename;
     _manifest_filename = manifest_filename;
     _cacheVersionPath = _storagePath + version_filename;
-    _cacheManifestPath = _storagePath + temp_manifest_filename;
-    _tempManifestPath = _storagePath + manifest_filename;
+    _cacheManifestPath = _storagePath + manifest_filename;
+    _tempManifestPath = _storagePath + temp_manifest_filename;
 
     initManifests(manifestUrl);
 }
@@ -185,6 +185,40 @@ void AssetsManagerEx::prepareLocalManifest()
     _localManifest->prependSearchPaths();
 }
 
+int split(const string& str, vector<string>& ret_, string sep = ",")
+{
+    if (str.empty())
+    {
+        return 0;
+    }
+    
+    string tmp;
+    string::size_type pos_begin = str.find_first_not_of(sep);
+    string::size_type comma_pos = 0;
+    
+    while (pos_begin != string::npos)
+    {
+        comma_pos = str.find(sep, pos_begin);
+        if (comma_pos != string::npos)
+        {
+            tmp = str.substr(pos_begin, comma_pos - pos_begin);
+            pos_begin = comma_pos + sep.length();
+        }
+        else
+        {
+            tmp = str.substr(pos_begin);
+            pos_begin = comma_pos;
+        }
+        
+        if (!tmp.empty())
+        {
+            ret_.push_back(tmp);
+            tmp.clear();
+        }
+    }
+    return 0;
+}
+
 void AssetsManagerEx::loadLocalManifest(const std::string& manifestUrl)
 {
     Manifest *cachedManifest = nullptr;
@@ -208,8 +242,29 @@ void AssetsManagerEx::loadLocalManifest(const std::string& manifestUrl)
     if (_localManifest->isLoaded())
     {
         // Compare with cached manifest to determine which one to use
-        if (cachedManifest) {
-            if (strcmp(_localManifest->getVersion().c_str(), cachedManifest->getVersion().c_str()) > 0)
+        if (cachedManifest)
+        {
+            std::string local_version = _localManifest->getVersion();
+            vector<string> ret_local_version;
+            split(local_version, ret_local_version, ".");
+            
+            std::string cached_version = cachedManifest->getVersion();
+            vector<string> ret_cached_version;
+            split(cached_version, ret_cached_version, ".");
+            
+            bool is_cachedManifest_new = true;
+            for (int i = 0; i < ret_local_version.size() && i < ret_cached_version.size(); ++i)
+            {
+                int v = atoi(ret_cached_version[i].c_str()) - atoi(ret_local_version[i].c_str());
+                is_cachedManifest_new = v >= 0;
+                if (v > 0)
+                {
+                    break;
+                }
+            }
+            
+            // if (strcmp(_localManifest->getVersion().c_str(), cachedManifest->getVersion().c_str()) > 0)
+            if (false == is_cachedManifest_new)
             {
                 // Recreate storage, to empty the content
                 _fileUtils->removeDirectory(_storagePath);

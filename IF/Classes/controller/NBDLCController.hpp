@@ -21,6 +21,8 @@ class NBDLCController
 : public Ref
 {
 public:
+    static void clean();
+    
     // manifest_file_path : 打包 ipa 和 apk 时的配置
     // 引擎默认为以下文件名，游戏实现修改对应命名规则
     // 1. version_filename : version.manifest
@@ -44,8 +46,6 @@ protected:
     void onCompleted();
     
     AssetsManagerEx* m_pAssetsManagerEx;
-    string m_dlcPath;
-    string m_serverAssetsPath;
 };
 
 #endif /* NBDLCController_hpp */
