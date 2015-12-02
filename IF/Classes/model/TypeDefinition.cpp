@@ -8,7 +8,7 @@
 
 #include "TypeDefinition.h"
 
-#define CHANGE_SERVER COCOS2D_DEBUG
+#define CHANGE_SERVER 0
 //测试使用 不要提交
 //#define CHANGE_SERVER 1
 //#define CHANGE_SERVER 2

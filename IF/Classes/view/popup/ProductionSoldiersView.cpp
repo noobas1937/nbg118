@@ -337,7 +337,7 @@ void ProductionSoldiersView::addSoldierIcon(){
     ArmyInfo* m_info = getCurArmy();
 //    CCSprite* pic = CCLoadSprite::createSprite(m_info->getBodyIcon().c_str());
     auto pic = C3DShowView::create(m_info->getModelName().c_str(),m_info->getModelTexName().c_str());
-    pic->getModel().getObject()->setScale(18);
+    pic->getModel().getObject()->setScale(m_info->getModelScale());
     if(btype == FUN_BUILD_FORT){
         pic->getModel().getObject()->setRotation3D(Vec3(0,35,0));
     }

@@ -1344,12 +1344,12 @@ void ImperialScene::onCreateBridge()
     
     m_bridge3D_Up = NBSprite3D::create("3d/bridge/bridge_1_skin.c3b");
     m_bridge3D_Up->setTexture("3d/bridge/bridge_1.jpg");
-    m_bridge3D_Up->setScale(6);
+    m_bridge3D_Up->setScale(5.5);
     bridgeRootNode->addChild(m_bridge3D_Up);
     
     m_bridge3D_Down = NBSprite3D::create("3d/bridge/bridge_1_skin.c3b");
     m_bridge3D_Down->setTexture("3d/bridge/bridge_1.jpg");
-    m_bridge3D_Down->setScale(6);
+    m_bridge3D_Down->setScale(5.5);
     m_bridge3D_Down->setRotation3D(Vec3(0, 180, 0));
     bridgeRootNode->addChild(m_bridge3D_Down);
     
