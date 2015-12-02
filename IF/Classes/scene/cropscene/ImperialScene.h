@@ -68,6 +68,7 @@ public:
     // tao.yu vikings
     void onCreateVikingsShip(int level);
     //begin a by ljf
+    void loadSpineActivityBox();
     int getVikingsShipModelLevel(int level);
     void onUpgradeVikingsShip(int level);
     void shipActionAfterMove(CCNode* pNode, void *pObj);

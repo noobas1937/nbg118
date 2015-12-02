@@ -18,6 +18,9 @@
 #include "FlyCBuildView.h"
 #include "HFHeadImgNode.h"
 #include "ChatInfo.h"
+//begin a by ljf
+#include "RechargeACTVCell.h"
+//end a by ljf
 
 enum BtnIndex{
     BTN_GENERAL,
@@ -353,6 +356,9 @@ class UIComponent: public CCLayer
 public:
     ~UIComponent();
     UIComponent();
+    //begin a by ljf
+    ActivityBox * getActivityBox(){return mActivityBox;}
+    //end a by ljf
     static UIComponent* getInstance();
     static void purgeData();
     void setUserData();
@@ -889,6 +895,9 @@ private:
     bool m_UIQuestNodeStat;
     int m_showPower;
     vector<CCParticleBatchNode*> m_parVec;
+    //begin a by ljf
+    ActivityBox * mActivityBox;
+    //end a by ljf
 };
 
 #endif /* defined(__IF__UIComponent__) */

@@ -354,6 +354,7 @@ bool ImperialScene::init()
     m_isVikingShipMove = false;
     mVikingShipDict = CCDictionary::create();
     mShipLevel = 0;
+    loadSpineActivityBox(); //放在这里加载没有问题，如果在ActivityBox初始化时加载会有问题。
     //end a by ljf
     return true;
 }
@@ -718,6 +719,18 @@ void ImperialScene::onCreateVikingsShip(int level)
 }
 
 //begin a by ljf
+void ImperialScene::loadSpineActivityBox()
+{
+    UIComponent * uiLayer = UIComponent::getInstance();
+    
+    auto activityBox = uiLayer->getActivityBox();
+    if(activityBox)
+    {
+        activityBox->loadSpine();
+    }
+        
+}
+
 void ImperialScene::updateVikingsShipNum()
 {
     int maxMarchCount = WorldController::getInstance()->getMaxMarchCount();
