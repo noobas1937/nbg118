@@ -33,6 +33,15 @@ protected:
     void offerUpdate(CCObject* p);
     void gotoMainScene(float t);
 private:
+    // init ----
+    void addLoadingBG(Point& addPt);
+    void addVersionLabel();
+    void addLoadingTips();
+    void addPlatformLogo();
+    
+    // update ini & xml ----
+    void getDownloadContents();
+    
     virtual void onEnter();
     virtual void onExit();
     
@@ -40,14 +49,12 @@ private:
     virtual void onTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
     bool isChina();
     void showLoading();
-    void parseXML();
     void sendCmdLogin();
     void loadingAni(float t);
     void selectLogin(float t);
     void sendCmdGetServerList(CCObject* p);
     void onGetServerList(CCHttpClient* client, CCHttpResponse* response);
     void setLoadingTips();
-    void addParticle();
     void onEnterFrame(CCObject* p);
     void onLoginTimeout(float t);
     void onGetServerStatus(CCHttpClient* client, CCHttpResponse* response);
@@ -67,7 +74,6 @@ private:
     CCSafeObject<CCNode> m_rollingCloud;
     CCSafeObject<CCSprite > m_loadingProgress;
     CCSafeObject<CCLabelIF> m_loadingTips;
-    CCSafeObject<CCLabelIF> m_loadPerLabel;
     CCSafeObject<CCLabelIF> m_loadtips;
     CCSafeObject<CCLabelIF> m_FAQ;
     CCSafeObject<CCSprite > m_line;

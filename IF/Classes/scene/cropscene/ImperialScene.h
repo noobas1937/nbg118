@@ -210,7 +210,7 @@ private:
     void clearGuideState(float _time);
     void playFlyTroopParticle(float _time);
     void playPowerAni(float _time);
-    void downloadXML(float _time);
+//    void downloadXML(float _time);
     
     void onFinishMoveBuild(CCObject* obj);
     

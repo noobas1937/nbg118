@@ -11,6 +11,12 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
+-- 
+-- @function [parent=#Texture2D] stringForFormat 
+-- @param self
+-- @return char#char ret (return value: char)
+        
+--------------------------------
 --  Returns the pixel format.<br>
 -- since v2.0
 -- @function [parent=#Texture2D] getStringForFormat 
@@ -18,16 +24,17 @@
 -- @return char#char ret (return value: char)
         
 --------------------------------
--- @overload self, cc.Image, int         
--- @overload self, cc.Image         
+-- @overload self, cc.Image, int, string         
+-- @overload self, cc.Image, string         
 -- @function [parent=#Texture2D] initWithImage
 -- @param self
 -- @param #cc.Image image
 -- @param #int format
+-- @param #string path
 -- @return bool#bool ret (return value: bool)
 
 --------------------------------
---  Gets max S. 
+--  Gets max S 
 -- @function [parent=#Texture2D] getMaxS 
 -- @param self
 -- @return float#float ret (return value: float)
@@ -52,6 +59,14 @@
 -- @param self
 -- @return int#int ret (return value: int)
         
+--------------------------------
+-- @overload self, int         
+-- @overload self         
+-- @function [parent=#Texture2D] bitsPerPixelForFormat
+-- @param self
+-- @param #int format
+-- @return unsigned int#unsigned int ret (return value: unsigned int)
+
 --------------------------------
 -- @overload self, int         
 -- @overload self         
@@ -98,6 +113,12 @@
 -- @function [parent=#Texture2D] getContentSize 
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)
+        
+--------------------------------
+-- 
+-- @function [parent=#Texture2D] getAlphaName 
+-- @param self
+-- @return unsigned int#unsigned int ret (return value: unsigned int)
         
 --------------------------------
 --  Sets alias texture parameters:<br>
@@ -150,6 +171,13 @@
 -- @return Texture2D#Texture2D self (return value: cc.Texture2D)
         
 --------------------------------
+-- 
+-- @function [parent=#Texture2D] setTextureName 
+-- @param self
+-- @param #char file
+-- @return Texture2D#Texture2D self (return value: cc.Texture2D)
+        
+--------------------------------
 --  Get content size. 
 -- @function [parent=#Texture2D] getContentSizeInPixels 
 -- @param self
@@ -177,6 +205,12 @@
 -- @return GLProgram#GLProgram ret (return value: cc.GLProgram)
         
 --------------------------------
+-- 
+-- @function [parent=#Texture2D] getFileName 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
 --  Whether or not the texture has mip maps.
 -- @function [parent=#Texture2D] hasMipmaps 
 -- @param self
@@ -188,6 +222,59 @@
 -- @param self
 -- @param #float maxS
 -- @return Texture2D#Texture2D self (return value: cc.Texture2D)
+        
+--------------------------------
+-- 
+-- @function [parent=#Texture2D] useDownloadResource 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#Texture2D] isSmallTexture 
+-- @param self
+-- @param #string textureFile
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#Texture2D] setDownloadFlag 
+-- @param self
+-- @param #bool down
+-- @return Texture2D#Texture2D self (return value: cc.Texture2D)
+        
+--------------------------------
+-- 
+-- @function [parent=#Texture2D] setDefaultAlphaPixelFormat 
+-- @param self
+-- @param #int format
+-- @return Texture2D#Texture2D self (return value: cc.Texture2D)
+        
+--------------------------------
+--  Returns the alpha pixel format.<br>
+-- since v0.8
+-- @function [parent=#Texture2D] getDefaultAlphaPixelFormat 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
+--  Treats (or not) PVR files as if they have alpha premultiplied.<br>
+-- param haveAlphaPremultiplied <br>
+-- Since it is impossible to know at runtime if the PVR images have the alpha channel premultiplied, it is<br>
+-- possible load them as if they have (or not) the alpha channel premultiplied.<br>
+-- By default it is disabled.<br>
+-- deprecated, please use Image::setPVRImagesHavePremultipliedAlpha() instead.<br>
+-- since v0.99.5
+-- @function [parent=#Texture2D] PVRImagesHavePremultipliedAlpha 
+-- @param self
+-- @param #bool haveAlphaPremultiplied
+-- @return Texture2D#Texture2D self (return value: cc.Texture2D)
+        
+--------------------------------
+-- 
+-- @function [parent=#Texture2D] defaultAlphaPixelFormat 
+-- @param self
+-- @return int#int ret (return value: int)
         
 --------------------------------
 --  sets the default pixel format for UIImagescontains alpha channel.<br>
@@ -204,17 +291,10 @@
 -- - If the image is an RGB (without Alpha) then: If the default pixel format is RGBA8888 then a RGBA8888 (32-bit) will be used. Otherwise a RGB565 (16-bit texture) will be used.<br>
 -- This parameter is not valid for PVR / PVR.CCZ images.<br>
 -- since v0.8
--- @function [parent=#Texture2D] setDefaultAlphaPixelFormat 
+-- @function [parent=#Texture2D] setSmallFlag 
 -- @param self
--- @param #int format
+-- @param #bool small
 -- @return Texture2D#Texture2D self (return value: cc.Texture2D)
-        
---------------------------------
---  Returns the alpha pixel format.<br>
--- since v0.8
--- @function [parent=#Texture2D] getDefaultAlphaPixelFormat 
--- @param self
--- @return int#int ret (return value: int)
         
 --------------------------------
 -- js ctor

@@ -110,14 +110,11 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- Set parent bone.<br>
--- If parent is NUll, then also remove this bone from armature.<br>
--- It will not set the Armature, if you want to add the bone to a Armature, you should use Armature::addBone(Bone *bone, const char* parentName).<br>
--- param parent  the parent bone.<br>
--- nullptr : remove this bone from armature
--- @function [parent=#Bone] setParentBone 
+-- 
+-- @function [parent=#Bone] changeDisplayByName 
 -- @param self
--- @param #ccs.Bone parent
+-- @param #string name
+-- @param #bool force
 -- @return Bone#Bone self (return value: ccs.Bone)
         
 --------------------------------
@@ -150,16 +147,27 @@
 -- @return ColliderDetector#ColliderDetector ret (return value: ccs.ColliderDetector)
         
 --------------------------------
--- 
--- @function [parent=#Bone] getChildArmature 
+-- Set parent bone.<br>
+-- If parent is NUll, then also remove this bone from armature.<br>
+-- It will not set the Armature, if you want to add the bone to a Armature, you should use Armature::addBone(Bone *bone, const char* parentName).<br>
+-- param parent  the parent bone.<br>
+-- nullptr : remove this bone from armature
+-- @function [parent=#Bone] setParentBone 
 -- @param self
--- @return Armature#Armature ret (return value: ccs.Armature)
+-- @param #ccs.Bone parent
+-- @return Bone#Bone self (return value: ccs.Bone)
         
 --------------------------------
 -- 
 -- @function [parent=#Bone] getTweenData 
 -- @param self
 -- @return FrameData#FrameData ret (return value: ccs.FrameData)
+        
+--------------------------------
+-- 
+-- @function [parent=#Bone] getChildArmature 
+-- @param self
+-- @return Armature#Armature ret (return value: ccs.Armature)
         
 --------------------------------
 -- 
@@ -224,6 +232,14 @@
 -- @function [parent=#Bone] getArmature 
 -- @param self
 -- @return Armature#Armature ret (return value: ccs.Armature)
+        
+--------------------------------
+-- 
+-- @function [parent=#Bone] changeDisplayByIndex 
+-- @param self
+-- @param #int index
+-- @param #bool force
+-- @return Bone#Bone self (return value: ccs.Bone)
         
 --------------------------------
 -- 

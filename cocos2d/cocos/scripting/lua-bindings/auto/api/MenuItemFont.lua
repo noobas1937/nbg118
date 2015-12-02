@@ -5,10 +5,33 @@
 -- @parent_module cc
 
 --------------------------------
+--  Initializes a menu item from a string with a target/selector. 
+-- @function [parent=#MenuItemFont] initWithString 
+-- @param self
+-- @param #string value
+-- @param #function callback
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  Returns the name of the Font.<br>
 -- js getFontNameObj<br>
 -- js NA
 -- @function [parent=#MenuItemFont] getFontNameObj 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+--  get font size .<br>
+-- js getFontSize<br>
+-- js NA
+-- @function [parent=#MenuItemFont] getFontSizeObj 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
+--  Deprecated Use getFontNameObj() instead.<br>
+-- js NA
+-- @function [parent=#MenuItemFont] fontNameObj 
 -- @param self
 -- @return string#string ret (return value: string)
         
@@ -24,18 +47,8 @@
 -- @return MenuItemFont#MenuItemFont self (return value: cc.MenuItemFont)
         
 --------------------------------
---  Initializes a menu item from a string with a target/selector. 
--- @function [parent=#MenuItemFont] initWithString 
--- @param self
--- @param #string value
--- @param #function callback
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
---  get font size .<br>
--- js getFontSize<br>
--- js NA
--- @function [parent=#MenuItemFont] getFontSizeObj 
+-- 
+-- @function [parent=#MenuItemFont] fontSizeObj 
 -- @param self
 -- @return int#int ret (return value: int)
         
@@ -58,16 +71,22 @@
 -- @return MenuItemFont#MenuItemFont self (return value: cc.MenuItemFont)
         
 --------------------------------
+-- 
+-- @function [parent=#MenuItemFont] fontName 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
 --  Get default font size. 
 -- @function [parent=#MenuItemFont] getFontSize 
 -- @param self
 -- @return int#int ret (return value: int)
         
 --------------------------------
---  Get the default font name. 
--- @function [parent=#MenuItemFont] getFontName 
+-- 
+-- @function [parent=#MenuItemFont] fontSize 
 -- @param self
--- @return string#string ret (return value: string)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 --  Set default font size. 
@@ -75,6 +94,12 @@
 -- @param self
 -- @param #int size
 -- @return MenuItemFont#MenuItemFont self (return value: cc.MenuItemFont)
+        
+--------------------------------
+--  Get the default font name. 
+-- @function [parent=#MenuItemFont] getFontName 
+-- @param self
+-- @return string#string ret (return value: string)
         
 --------------------------------
 -- js ctor

@@ -58,6 +58,9 @@
 -- @param self
 -- @param #string manifestUrl
 -- @param #string storagePath
+-- @param #string version_filename
+-- @param #string temp_manifest_filename
+-- @param #string manifest_filename
 -- @return AssetsManagerEx#AssetsManagerEx ret (return value: cc.AssetsManagerEx)
         
 --------------------------------
@@ -66,6 +69,9 @@
 -- @param self
 -- @param #string manifestUrl
 -- @param #string storagePath
+-- @param #string version_filename
+-- @param #string temp_manifest_filename
+-- @param #string manifest_filename
 -- @return AssetsManagerEx#AssetsManagerEx self (return value: cc.AssetsManagerEx)
         
 return nil

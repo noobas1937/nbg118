@@ -11,7 +11,7 @@
 -- @function [parent=#ListView] getIndex 
 -- @param self
 -- @param #ccui.Widget item
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- brief Remove all items in current ListView.
@@ -47,7 +47,7 @@
 -- param index A given index in ssize_t.
 -- @function [parent=#ListView] removeItem 
 -- @param self
--- @param #long index
+-- @param #int index
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
@@ -55,14 +55,14 @@
 -- return A index of a selected item.
 -- @function [parent=#ListView] getCurSelectedIndex 
 -- @param self
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- Insert a default item(create by cloning model) into listview at a give index.<br>
 -- param index  A index in ssize_t.
 -- @function [parent=#ListView] insertDefaultItem 
 -- @param self
--- @param #long index
+-- @param #int index
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
@@ -113,7 +113,7 @@
 -- return A widget instance.
 -- @function [parent=#ListView] getItem 
 -- @param self
--- @param #long index
+-- @param #int index
 -- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
@@ -144,7 +144,7 @@
 -- @function [parent=#ListView] insertCustomItem 
 -- @param self
 -- @param #ccui.Widget item
--- @param #long index
+-- @param #int index
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------

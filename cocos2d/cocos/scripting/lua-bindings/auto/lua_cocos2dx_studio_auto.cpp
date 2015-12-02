@@ -7552,7 +7552,7 @@ int lua_cocos2dx_studio_Bone_init(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_studio_Bone_setParentBone(lua_State* tolua_S)
+int lua_cocos2dx_studio_Bone_changeDisplayByName(lua_State* tolua_S)
 {
     int argc = 0;
     cocostudio::Bone* cobj = nullptr;
@@ -7572,32 +7572,35 @@ int lua_cocos2dx_studio_Bone_setParentBone(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_Bone_setParentBone'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_Bone_changeDisplayByName'", nullptr);
         return 0;
     }
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
+    if (argc == 2) 
     {
-        cocostudio::Bone* arg0;
+        std::string arg0;
+        bool arg1;
 
-        ok &= luaval_to_object<cocostudio::Bone>(tolua_S, 2, "ccs.Bone",&arg0, "ccs.Bone:setParentBone");
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccs.Bone:changeDisplayByName");
+
+        ok &= luaval_to_boolean(tolua_S, 3,&arg1, "ccs.Bone:changeDisplayByName");
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_Bone_setParentBone'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_Bone_changeDisplayByName'", nullptr);
             return 0;
         }
-        cobj->setParentBone(arg0);
+        cobj->changeDisplayByName(arg0, arg1);
         lua_settop(tolua_S, 1);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.Bone:setParentBone",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.Bone:changeDisplayByName",argc, 2);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_Bone_setParentBone'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_Bone_changeDisplayByName'.",&tolua_err);
 #endif
 
     return 0;
@@ -7809,7 +7812,7 @@ int lua_cocos2dx_studio_Bone_getColliderDetector(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_studio_Bone_getChildArmature(lua_State* tolua_S)
+int lua_cocos2dx_studio_Bone_setParentBone(lua_State* tolua_S)
 {
     int argc = 0;
     cocostudio::Bone* cobj = nullptr;
@@ -7829,29 +7832,32 @@ int lua_cocos2dx_studio_Bone_getChildArmature(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_Bone_getChildArmature'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_Bone_setParentBone'", nullptr);
         return 0;
     }
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
+    if (argc == 1) 
     {
+        cocostudio::Bone* arg0;
+
+        ok &= luaval_to_object<cocostudio::Bone>(tolua_S, 2, "ccs.Bone",&arg0, "ccs.Bone:setParentBone");
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_Bone_getChildArmature'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_Bone_setParentBone'", nullptr);
             return 0;
         }
-        cocostudio::Armature* ret = cobj->getChildArmature();
-        object_to_luaval<cocostudio::Armature>(tolua_S, "ccs.Armature",(cocostudio::Armature*)ret);
+        cobj->setParentBone(arg0);
+        lua_settop(tolua_S, 1);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.Bone:getChildArmature",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.Bone:setParentBone",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_Bone_getChildArmature'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_Bone_setParentBone'.",&tolua_err);
 #endif
 
     return 0;
@@ -7899,6 +7905,53 @@ int lua_cocos2dx_studio_Bone_getTweenData(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_Bone_getTweenData'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_Bone_getChildArmature(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::Bone* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.Bone",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::Bone*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_Bone_getChildArmature'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_Bone_getChildArmature'", nullptr);
+            return 0;
+        }
+        cocostudio::Armature* ret = cobj->getChildArmature();
+        object_to_luaval<cocostudio::Armature>(tolua_S, "ccs.Armature",(cocostudio::Armature*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.Bone:getChildArmature",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_Bone_getChildArmature'.",&tolua_err);
 #endif
 
     return 0;
@@ -8353,6 +8406,59 @@ int lua_cocos2dx_studio_Bone_getArmature(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_studio_Bone_changeDisplayByIndex(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::Bone* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.Bone",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::Bone*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_Bone_changeDisplayByIndex'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 2) 
+    {
+        int arg0;
+        bool arg1;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccs.Bone:changeDisplayByIndex");
+
+        ok &= luaval_to_boolean(tolua_S, 3,&arg1, "ccs.Bone:changeDisplayByIndex");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_Bone_changeDisplayByIndex'", nullptr);
+            return 0;
+        }
+        cobj->changeDisplayByIndex(arg0, arg1);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.Bone:changeDisplayByIndex",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_Bone_changeDisplayByIndex'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_studio_Bone_getBoneData(lua_State* tolua_S)
 {
     int argc = 0;
@@ -8511,13 +8617,14 @@ int lua_register_cocos2dx_studio_Bone(lua_State* tolua_S)
         tolua_function(tolua_S,"removeDisplay",lua_cocos2dx_studio_Bone_removeDisplay);
         tolua_function(tolua_S,"setBoneData",lua_cocos2dx_studio_Bone_setBoneData);
         tolua_function(tolua_S,"init",lua_cocos2dx_studio_Bone_init);
-        tolua_function(tolua_S,"setParentBone",lua_cocos2dx_studio_Bone_setParentBone);
+        tolua_function(tolua_S,"changeDisplayByName",lua_cocos2dx_studio_Bone_changeDisplayByName);
         tolua_function(tolua_S,"addDisplay",lua_cocos2dx_studio_Bone_addDisplay);
         tolua_function(tolua_S,"getBlendFunc",lua_cocos2dx_studio_Bone_getBlendFunc);
         tolua_function(tolua_S,"removeFromParent",lua_cocos2dx_studio_Bone_removeFromParent);
         tolua_function(tolua_S,"getColliderDetector",lua_cocos2dx_studio_Bone_getColliderDetector);
-        tolua_function(tolua_S,"getChildArmature",lua_cocos2dx_studio_Bone_getChildArmature);
+        tolua_function(tolua_S,"setParentBone",lua_cocos2dx_studio_Bone_setParentBone);
         tolua_function(tolua_S,"getTweenData",lua_cocos2dx_studio_Bone_getTweenData);
+        tolua_function(tolua_S,"getChildArmature",lua_cocos2dx_studio_Bone_getChildArmature);
         tolua_function(tolua_S,"changeDisplayWithIndex",lua_cocos2dx_studio_Bone_changeDisplayWithIndex);
         tolua_function(tolua_S,"changeDisplayWithName",lua_cocos2dx_studio_Bone_changeDisplayWithName);
         tolua_function(tolua_S,"setArmature",lua_cocos2dx_studio_Bone_setArmature);
@@ -8527,6 +8634,7 @@ int lua_register_cocos2dx_studio_Bone(lua_State* tolua_S)
         tolua_function(tolua_S,"getNodeToArmatureTransform",lua_cocos2dx_studio_Bone_getNodeToArmatureTransform);
         tolua_function(tolua_S,"getDisplayManager",lua_cocos2dx_studio_Bone_getDisplayManager);
         tolua_function(tolua_S,"getArmature",lua_cocos2dx_studio_Bone_getArmature);
+        tolua_function(tolua_S,"changeDisplayByIndex",lua_cocos2dx_studio_Bone_changeDisplayByIndex);
         tolua_function(tolua_S,"getBoneData",lua_cocos2dx_studio_Bone_getBoneData);
         tolua_function(tolua_S,"create", lua_cocos2dx_studio_Bone_create);
     tolua_endmodule(tolua_S);
@@ -8590,6 +8698,230 @@ int lua_register_cocos2dx_studio_BatchNode(lua_State* tolua_S)
     return 1;
 }
 
+int lua_cocos2dx_studio_ArmatureAnimation_setAnimationInternal(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::ArmatureAnimation* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.ArmatureAnimation",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::ArmatureAnimation*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_ArmatureAnimation_setAnimationInternal'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        double arg0;
+
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "ccs.ArmatureAnimation:setAnimationInternal");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ArmatureAnimation_setAnimationInternal'", nullptr);
+            return 0;
+        }
+        cobj->setAnimationInternal(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.ArmatureAnimation:setAnimationInternal",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ArmatureAnimation_setAnimationInternal'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_ArmatureAnimation_playWithIndexes(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::ArmatureAnimation* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.ArmatureAnimation",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::ArmatureAnimation*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_ArmatureAnimation_playWithIndexes'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        std::vector<int> arg0;
+
+        ok &= luaval_to_std_vector_int(tolua_S, 2, &arg0, "ccs.ArmatureAnimation:playWithIndexes");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ArmatureAnimation_playWithIndexes'", nullptr);
+            return 0;
+        }
+        cobj->playWithIndexes(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    if (argc == 2) 
+    {
+        std::vector<int> arg0;
+        int arg1;
+
+        ok &= luaval_to_std_vector_int(tolua_S, 2, &arg0, "ccs.ArmatureAnimation:playWithIndexes");
+
+        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "ccs.ArmatureAnimation:playWithIndexes");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ArmatureAnimation_playWithIndexes'", nullptr);
+            return 0;
+        }
+        cobj->playWithIndexes(arg0, arg1);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    if (argc == 3) 
+    {
+        std::vector<int> arg0;
+        int arg1;
+        bool arg2;
+
+        ok &= luaval_to_std_vector_int(tolua_S, 2, &arg0, "ccs.ArmatureAnimation:playWithIndexes");
+
+        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "ccs.ArmatureAnimation:playWithIndexes");
+
+        ok &= luaval_to_boolean(tolua_S, 4,&arg2, "ccs.ArmatureAnimation:playWithIndexes");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ArmatureAnimation_playWithIndexes'", nullptr);
+            return 0;
+        }
+        cobj->playWithIndexes(arg0, arg1, arg2);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.ArmatureAnimation:playWithIndexes",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ArmatureAnimation_playWithIndexes'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_ArmatureAnimation_playByIndex(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::ArmatureAnimation* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.ArmatureAnimation",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::ArmatureAnimation*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_ArmatureAnimation_playByIndex'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        int arg0;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccs.ArmatureAnimation:playByIndex");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ArmatureAnimation_playByIndex'", nullptr);
+            return 0;
+        }
+        cobj->playByIndex(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    if (argc == 2) 
+    {
+        int arg0;
+        int arg1;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccs.ArmatureAnimation:playByIndex");
+
+        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "ccs.ArmatureAnimation:playByIndex");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ArmatureAnimation_playByIndex'", nullptr);
+            return 0;
+        }
+        cobj->playByIndex(arg0, arg1);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    if (argc == 3) 
+    {
+        int arg0;
+        int arg1;
+        int arg2;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccs.ArmatureAnimation:playByIndex");
+
+        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "ccs.ArmatureAnimation:playByIndex");
+
+        ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2, "ccs.ArmatureAnimation:playByIndex");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ArmatureAnimation_playByIndex'", nullptr);
+            return 0;
+        }
+        cobj->playByIndex(arg0, arg1, arg2);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.ArmatureAnimation:playByIndex",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ArmatureAnimation_playByIndex'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_studio_ArmatureAnimation_getSpeedScale(lua_State* tolua_S)
 {
     int argc = 0;
@@ -8633,6 +8965,153 @@ int lua_cocos2dx_studio_ArmatureAnimation_getSpeedScale(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ArmatureAnimation_getSpeedScale'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_ArmatureAnimation_setSpeedScale(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::ArmatureAnimation* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.ArmatureAnimation",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::ArmatureAnimation*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_ArmatureAnimation_setSpeedScale'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        double arg0;
+
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "ccs.ArmatureAnimation:setSpeedScale");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ArmatureAnimation_setSpeedScale'", nullptr);
+            return 0;
+        }
+        cobj->setSpeedScale(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.ArmatureAnimation:setSpeedScale",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ArmatureAnimation_setSpeedScale'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_ArmatureAnimation_init(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::ArmatureAnimation* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.ArmatureAnimation",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::ArmatureAnimation*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_ArmatureAnimation_init'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocostudio::Armature* arg0;
+
+        ok &= luaval_to_object<cocostudio::Armature>(tolua_S, 2, "ccs.Armature",&arg0, "ccs.ArmatureAnimation:init");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ArmatureAnimation_init'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->init(arg0);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.ArmatureAnimation:init",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ArmatureAnimation_init'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_ArmatureAnimation_getAnimationScale(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::ArmatureAnimation* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.ArmatureAnimation",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::ArmatureAnimation*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_ArmatureAnimation_getAnimationScale'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ArmatureAnimation_getAnimationScale'", nullptr);
+            return 0;
+        }
+        double ret = cobj->getAnimationScale();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.ArmatureAnimation:getAnimationScale",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ArmatureAnimation_getAnimationScale'.",&tolua_err);
 #endif
 
     return 0;
@@ -8774,193 +9253,6 @@ int lua_cocos2dx_studio_ArmatureAnimation_gotoAndPause(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_studio_ArmatureAnimation_playWithIndexes(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocostudio::ArmatureAnimation* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"ccs.ArmatureAnimation",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocostudio::ArmatureAnimation*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_ArmatureAnimation_playWithIndexes'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        std::vector<int> arg0;
-
-        ok &= luaval_to_std_vector_int(tolua_S, 2, &arg0, "ccs.ArmatureAnimation:playWithIndexes");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ArmatureAnimation_playWithIndexes'", nullptr);
-            return 0;
-        }
-        cobj->playWithIndexes(arg0);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    if (argc == 2) 
-    {
-        std::vector<int> arg0;
-        int arg1;
-
-        ok &= luaval_to_std_vector_int(tolua_S, 2, &arg0, "ccs.ArmatureAnimation:playWithIndexes");
-
-        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "ccs.ArmatureAnimation:playWithIndexes");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ArmatureAnimation_playWithIndexes'", nullptr);
-            return 0;
-        }
-        cobj->playWithIndexes(arg0, arg1);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    if (argc == 3) 
-    {
-        std::vector<int> arg0;
-        int arg1;
-        bool arg2;
-
-        ok &= luaval_to_std_vector_int(tolua_S, 2, &arg0, "ccs.ArmatureAnimation:playWithIndexes");
-
-        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "ccs.ArmatureAnimation:playWithIndexes");
-
-        ok &= luaval_to_boolean(tolua_S, 4,&arg2, "ccs.ArmatureAnimation:playWithIndexes");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ArmatureAnimation_playWithIndexes'", nullptr);
-            return 0;
-        }
-        cobj->playWithIndexes(arg0, arg1, arg2);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.ArmatureAnimation:playWithIndexes",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ArmatureAnimation_playWithIndexes'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_studio_ArmatureAnimation_setAnimationData(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocostudio::ArmatureAnimation* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"ccs.ArmatureAnimation",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocostudio::ArmatureAnimation*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_ArmatureAnimation_setAnimationData'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        cocostudio::AnimationData* arg0;
-
-        ok &= luaval_to_object<cocostudio::AnimationData>(tolua_S, 2, "ccs.AnimationData",&arg0, "ccs.ArmatureAnimation:setAnimationData");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ArmatureAnimation_setAnimationData'", nullptr);
-            return 0;
-        }
-        cobj->setAnimationData(arg0);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.ArmatureAnimation:setAnimationData",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ArmatureAnimation_setAnimationData'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_studio_ArmatureAnimation_setSpeedScale(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocostudio::ArmatureAnimation* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"ccs.ArmatureAnimation",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocostudio::ArmatureAnimation*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_ArmatureAnimation_setSpeedScale'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        double arg0;
-
-        ok &= luaval_to_number(tolua_S, 2,&arg0, "ccs.ArmatureAnimation:setSpeedScale");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ArmatureAnimation_setSpeedScale'", nullptr);
-            return 0;
-        }
-        cobj->setSpeedScale(arg0);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.ArmatureAnimation:setSpeedScale",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ArmatureAnimation_setSpeedScale'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_studio_ArmatureAnimation_getAnimationData(lua_State* tolua_S)
 {
     int argc = 0;
@@ -9004,240 +9296,6 @@ int lua_cocos2dx_studio_ArmatureAnimation_getAnimationData(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ArmatureAnimation_getAnimationData'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_studio_ArmatureAnimation_gotoAndPlay(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocostudio::ArmatureAnimation* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"ccs.ArmatureAnimation",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocostudio::ArmatureAnimation*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_ArmatureAnimation_gotoAndPlay'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        int arg0;
-
-        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccs.ArmatureAnimation:gotoAndPlay");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ArmatureAnimation_gotoAndPlay'", nullptr);
-            return 0;
-        }
-        cobj->gotoAndPlay(arg0);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.ArmatureAnimation:gotoAndPlay",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ArmatureAnimation_gotoAndPlay'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_studio_ArmatureAnimation_init(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocostudio::ArmatureAnimation* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"ccs.ArmatureAnimation",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocostudio::ArmatureAnimation*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_ArmatureAnimation_init'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        cocostudio::Armature* arg0;
-
-        ok &= luaval_to_object<cocostudio::Armature>(tolua_S, 2, "ccs.Armature",&arg0, "ccs.ArmatureAnimation:init");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ArmatureAnimation_init'", nullptr);
-            return 0;
-        }
-        bool ret = cobj->init(arg0);
-        tolua_pushboolean(tolua_S,(bool)ret);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.ArmatureAnimation:init",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ArmatureAnimation_init'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_studio_ArmatureAnimation_playWithNames(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocostudio::ArmatureAnimation* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"ccs.ArmatureAnimation",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocostudio::ArmatureAnimation*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_ArmatureAnimation_playWithNames'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        std::vector<std::string> arg0;
-
-        ok &= luaval_to_std_vector_string(tolua_S, 2, &arg0, "ccs.ArmatureAnimation:playWithNames");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ArmatureAnimation_playWithNames'", nullptr);
-            return 0;
-        }
-        cobj->playWithNames(arg0);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    if (argc == 2) 
-    {
-        std::vector<std::string> arg0;
-        int arg1;
-
-        ok &= luaval_to_std_vector_string(tolua_S, 2, &arg0, "ccs.ArmatureAnimation:playWithNames");
-
-        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "ccs.ArmatureAnimation:playWithNames");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ArmatureAnimation_playWithNames'", nullptr);
-            return 0;
-        }
-        cobj->playWithNames(arg0, arg1);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    if (argc == 3) 
-    {
-        std::vector<std::string> arg0;
-        int arg1;
-        bool arg2;
-
-        ok &= luaval_to_std_vector_string(tolua_S, 2, &arg0, "ccs.ArmatureAnimation:playWithNames");
-
-        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "ccs.ArmatureAnimation:playWithNames");
-
-        ok &= luaval_to_boolean(tolua_S, 4,&arg2, "ccs.ArmatureAnimation:playWithNames");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ArmatureAnimation_playWithNames'", nullptr);
-            return 0;
-        }
-        cobj->playWithNames(arg0, arg1, arg2);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.ArmatureAnimation:playWithNames",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ArmatureAnimation_playWithNames'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_studio_ArmatureAnimation_getMovementCount(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocostudio::ArmatureAnimation* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"ccs.ArmatureAnimation",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocostudio::ArmatureAnimation*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_ArmatureAnimation_getMovementCount'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ArmatureAnimation_getMovementCount'", nullptr);
-            return 0;
-        }
-        ssize_t ret = cobj->getMovementCount();
-        tolua_pushnumber(tolua_S,(lua_Number)ret);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.ArmatureAnimation:getMovementCount",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ArmatureAnimation_getMovementCount'.",&tolua_err);
 #endif
 
     return 0;
@@ -9376,6 +9434,290 @@ int lua_cocos2dx_studio_ArmatureAnimation_getCurrentMovementID(lua_State* tolua_
 
     return 0;
 }
+int lua_cocos2dx_studio_ArmatureAnimation_setAnimationScale(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::ArmatureAnimation* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.ArmatureAnimation",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::ArmatureAnimation*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_ArmatureAnimation_setAnimationScale'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        double arg0;
+
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "ccs.ArmatureAnimation:setAnimationScale");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ArmatureAnimation_setAnimationScale'", nullptr);
+            return 0;
+        }
+        cobj->setAnimationScale(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.ArmatureAnimation:setAnimationScale",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ArmatureAnimation_setAnimationScale'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_ArmatureAnimation_setAnimationData(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::ArmatureAnimation* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.ArmatureAnimation",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::ArmatureAnimation*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_ArmatureAnimation_setAnimationData'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocostudio::AnimationData* arg0;
+
+        ok &= luaval_to_object<cocostudio::AnimationData>(tolua_S, 2, "ccs.AnimationData",&arg0, "ccs.ArmatureAnimation:setAnimationData");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ArmatureAnimation_setAnimationData'", nullptr);
+            return 0;
+        }
+        cobj->setAnimationData(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.ArmatureAnimation:setAnimationData",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ArmatureAnimation_setAnimationData'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_ArmatureAnimation_gotoAndPlay(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::ArmatureAnimation* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.ArmatureAnimation",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::ArmatureAnimation*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_ArmatureAnimation_gotoAndPlay'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        int arg0;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccs.ArmatureAnimation:gotoAndPlay");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ArmatureAnimation_gotoAndPlay'", nullptr);
+            return 0;
+        }
+        cobj->gotoAndPlay(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.ArmatureAnimation:gotoAndPlay",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ArmatureAnimation_gotoAndPlay'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_ArmatureAnimation_playWithNames(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::ArmatureAnimation* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.ArmatureAnimation",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::ArmatureAnimation*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_ArmatureAnimation_playWithNames'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        std::vector<std::string> arg0;
+
+        ok &= luaval_to_std_vector_string(tolua_S, 2, &arg0, "ccs.ArmatureAnimation:playWithNames");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ArmatureAnimation_playWithNames'", nullptr);
+            return 0;
+        }
+        cobj->playWithNames(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    if (argc == 2) 
+    {
+        std::vector<std::string> arg0;
+        int arg1;
+
+        ok &= luaval_to_std_vector_string(tolua_S, 2, &arg0, "ccs.ArmatureAnimation:playWithNames");
+
+        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "ccs.ArmatureAnimation:playWithNames");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ArmatureAnimation_playWithNames'", nullptr);
+            return 0;
+        }
+        cobj->playWithNames(arg0, arg1);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    if (argc == 3) 
+    {
+        std::vector<std::string> arg0;
+        int arg1;
+        bool arg2;
+
+        ok &= luaval_to_std_vector_string(tolua_S, 2, &arg0, "ccs.ArmatureAnimation:playWithNames");
+
+        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "ccs.ArmatureAnimation:playWithNames");
+
+        ok &= luaval_to_boolean(tolua_S, 4,&arg2, "ccs.ArmatureAnimation:playWithNames");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ArmatureAnimation_playWithNames'", nullptr);
+            return 0;
+        }
+        cobj->playWithNames(arg0, arg1, arg2);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.ArmatureAnimation:playWithNames",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ArmatureAnimation_playWithNames'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_ArmatureAnimation_getMovementCount(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::ArmatureAnimation* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.ArmatureAnimation",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::ArmatureAnimation*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_ArmatureAnimation_getMovementCount'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ArmatureAnimation_getMovementCount'", nullptr);
+            return 0;
+        }
+        ssize_t ret = cobj->getMovementCount();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.ArmatureAnimation:getMovementCount",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ArmatureAnimation_getMovementCount'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_studio_ArmatureAnimation_create(lua_State* tolua_S)
 {
     int argc = 0;
@@ -9462,19 +9804,23 @@ int lua_register_cocos2dx_studio_ArmatureAnimation(lua_State* tolua_S)
 
     tolua_beginmodule(tolua_S,"ArmatureAnimation");
         tolua_function(tolua_S,"new",lua_cocos2dx_studio_ArmatureAnimation_constructor);
+        tolua_function(tolua_S,"setAnimationInternal",lua_cocos2dx_studio_ArmatureAnimation_setAnimationInternal);
+        tolua_function(tolua_S,"playWithIndexes",lua_cocos2dx_studio_ArmatureAnimation_playWithIndexes);
+        tolua_function(tolua_S,"playByIndex",lua_cocos2dx_studio_ArmatureAnimation_playByIndex);
         tolua_function(tolua_S,"getSpeedScale",lua_cocos2dx_studio_ArmatureAnimation_getSpeedScale);
+        tolua_function(tolua_S,"setSpeedScale",lua_cocos2dx_studio_ArmatureAnimation_setSpeedScale);
+        tolua_function(tolua_S,"init",lua_cocos2dx_studio_ArmatureAnimation_init);
+        tolua_function(tolua_S,"getAnimationScale",lua_cocos2dx_studio_ArmatureAnimation_getAnimationScale);
         tolua_function(tolua_S,"play",lua_cocos2dx_studio_ArmatureAnimation_play);
         tolua_function(tolua_S,"gotoAndPause",lua_cocos2dx_studio_ArmatureAnimation_gotoAndPause);
-        tolua_function(tolua_S,"playWithIndexes",lua_cocos2dx_studio_ArmatureAnimation_playWithIndexes);
-        tolua_function(tolua_S,"setAnimationData",lua_cocos2dx_studio_ArmatureAnimation_setAnimationData);
-        tolua_function(tolua_S,"setSpeedScale",lua_cocos2dx_studio_ArmatureAnimation_setSpeedScale);
         tolua_function(tolua_S,"getAnimationData",lua_cocos2dx_studio_ArmatureAnimation_getAnimationData);
-        tolua_function(tolua_S,"gotoAndPlay",lua_cocos2dx_studio_ArmatureAnimation_gotoAndPlay);
-        tolua_function(tolua_S,"init",lua_cocos2dx_studio_ArmatureAnimation_init);
-        tolua_function(tolua_S,"playWithNames",lua_cocos2dx_studio_ArmatureAnimation_playWithNames);
-        tolua_function(tolua_S,"getMovementCount",lua_cocos2dx_studio_ArmatureAnimation_getMovementCount);
         tolua_function(tolua_S,"playWithIndex",lua_cocos2dx_studio_ArmatureAnimation_playWithIndex);
         tolua_function(tolua_S,"getCurrentMovementID",lua_cocos2dx_studio_ArmatureAnimation_getCurrentMovementID);
+        tolua_function(tolua_S,"setAnimationScale",lua_cocos2dx_studio_ArmatureAnimation_setAnimationScale);
+        tolua_function(tolua_S,"setAnimationData",lua_cocos2dx_studio_ArmatureAnimation_setAnimationData);
+        tolua_function(tolua_S,"gotoAndPlay",lua_cocos2dx_studio_ArmatureAnimation_gotoAndPlay);
+        tolua_function(tolua_S,"playWithNames",lua_cocos2dx_studio_ArmatureAnimation_playWithNames);
+        tolua_function(tolua_S,"getMovementCount",lua_cocos2dx_studio_ArmatureAnimation_getMovementCount);
         tolua_function(tolua_S,"create", lua_cocos2dx_studio_ArmatureAnimation_create);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocostudio::ArmatureAnimation).name();
@@ -10423,6 +10769,40 @@ int lua_cocos2dx_studio_ArmatureDataManager_addSpriteFrameFromFile(lua_State* to
 
     return 0;
 }
+int lua_cocos2dx_studio_ArmatureDataManager_purge(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"ccs.ArmatureDataManager",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ArmatureDataManager_purge'", nullptr);
+            return 0;
+        }
+        cocostudio::ArmatureDataManager::purge();
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccs.ArmatureDataManager:purge",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ArmatureDataManager_purge'.",&tolua_err);
+#endif
+    return 0;
+}
 int lua_cocos2dx_studio_ArmatureDataManager_destroyInstance(lua_State* tolua_S)
 {
     int argc = 0;
@@ -10491,6 +10871,40 @@ int lua_cocos2dx_studio_ArmatureDataManager_getInstance(lua_State* tolua_S)
 #endif
     return 0;
 }
+int lua_cocos2dx_studio_ArmatureDataManager_sharedArmatureDataManager(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"ccs.ArmatureDataManager",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ArmatureDataManager_sharedArmatureDataManager'", nullptr);
+            return 0;
+        }
+        cocostudio::ArmatureDataManager* ret = cocostudio::ArmatureDataManager::sharedArmatureDataManager();
+        object_to_luaval<cocostudio::ArmatureDataManager>(tolua_S, "ccs.ArmatureDataManager",(cocostudio::ArmatureDataManager*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccs.ArmatureDataManager:sharedArmatureDataManager",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ArmatureDataManager_sharedArmatureDataManager'.",&tolua_err);
+#endif
+    return 0;
+}
 static int lua_cocos2dx_studio_ArmatureDataManager_finalize(lua_State* tolua_S)
 {
     printf("luabindings: finalizing LUA object (ArmatureDataManager)");
@@ -10520,8 +10934,10 @@ int lua_register_cocos2dx_studio_ArmatureDataManager(lua_State* tolua_S)
         tolua_function(tolua_S,"addTextureData",lua_cocos2dx_studio_ArmatureDataManager_addTextureData);
         tolua_function(tolua_S,"isAutoLoadSpriteFile",lua_cocos2dx_studio_ArmatureDataManager_isAutoLoadSpriteFile);
         tolua_function(tolua_S,"addSpriteFrameFromFile",lua_cocos2dx_studio_ArmatureDataManager_addSpriteFrameFromFile);
+        tolua_function(tolua_S,"purge", lua_cocos2dx_studio_ArmatureDataManager_purge);
         tolua_function(tolua_S,"destroyInstance", lua_cocos2dx_studio_ArmatureDataManager_destroyInstance);
         tolua_function(tolua_S,"getInstance", lua_cocos2dx_studio_ArmatureDataManager_getInstance);
+        tolua_function(tolua_S,"sharedArmatureDataManager", lua_cocos2dx_studio_ArmatureDataManager_sharedArmatureDataManager);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocostudio::ArmatureDataManager).name();
     g_luaType[typeName] = "ccs.ArmatureDataManager";
@@ -11135,6 +11551,53 @@ int lua_cocos2dx_studio_Armature_setParentBone(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_studio_Armature_drawContour(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::Armature* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.Armature",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::Armature*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_Armature_drawContour'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_Armature_drawContour'", nullptr);
+            return 0;
+        }
+        cobj->drawContour();
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.Armature:drawContour",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_Armature_drawContour'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_studio_Armature_setBatchNode(lua_State* tolua_S)
 {
     int argc = 0;
@@ -11743,6 +12206,7 @@ int lua_register_cocos2dx_studio_Armature(lua_State* tolua_S)
         tolua_function(tolua_S,"getBatchNode",lua_cocos2dx_studio_Armature_getBatchNode);
         tolua_function(tolua_S,"init",lua_cocos2dx_studio_Armature_init);
         tolua_function(tolua_S,"setParentBone",lua_cocos2dx_studio_Armature_setParentBone);
+        tolua_function(tolua_S,"drawContour",lua_cocos2dx_studio_Armature_drawContour);
         tolua_function(tolua_S,"setBatchNode",lua_cocos2dx_studio_Armature_setBatchNode);
         tolua_function(tolua_S,"getBlendFunc",lua_cocos2dx_studio_Armature_getBlendFunc);
         tolua_function(tolua_S,"setArmatureData",lua_cocos2dx_studio_Armature_setArmatureData);
@@ -14793,6 +15257,40 @@ int lua_cocos2dx_studio_GUIReader_destroyInstance(lua_State* tolua_S)
 #endif
     return 0;
 }
+int lua_cocos2dx_studio_GUIReader_purgeGUIReader(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"ccs.GUIReader",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_GUIReader_purgeGUIReader'", nullptr);
+            return 0;
+        }
+        cocostudio::GUIReader::purgeGUIReader();
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccs.GUIReader:purgeGUIReader",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_GUIReader_purgeGUIReader'.",&tolua_err);
+#endif
+    return 0;
+}
 int lua_cocos2dx_studio_GUIReader_getInstance(lua_State* tolua_S)
 {
     int argc = 0;
@@ -14827,6 +15325,40 @@ int lua_cocos2dx_studio_GUIReader_getInstance(lua_State* tolua_S)
 #endif
     return 0;
 }
+int lua_cocos2dx_studio_GUIReader_shareReader(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"ccs.GUIReader",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_GUIReader_shareReader'", nullptr);
+            return 0;
+        }
+        cocostudio::GUIReader* ret = cocostudio::GUIReader::shareReader();
+        object_to_luaval<cocostudio::GUIReader>(tolua_S, "ccs.GUIReader",(cocostudio::GUIReader*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccs.GUIReader:shareReader",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_GUIReader_shareReader'.",&tolua_err);
+#endif
+    return 0;
+}
 static int lua_cocos2dx_studio_GUIReader_finalize(lua_State* tolua_S)
 {
     printf("luabindings: finalizing LUA object (GUIReader)");
@@ -14845,7 +15377,9 @@ int lua_register_cocos2dx_studio_GUIReader(lua_State* tolua_S)
         tolua_function(tolua_S,"widgetFromBinaryFile",lua_cocos2dx_studio_GUIReader_widgetFromBinaryFile);
         tolua_function(tolua_S,"getVersionInteger",lua_cocos2dx_studio_GUIReader_getVersionInteger);
         tolua_function(tolua_S,"destroyInstance", lua_cocos2dx_studio_GUIReader_destroyInstance);
+        tolua_function(tolua_S,"purgeGUIReader", lua_cocos2dx_studio_GUIReader_purgeGUIReader);
         tolua_function(tolua_S,"getInstance", lua_cocos2dx_studio_GUIReader_getInstance);
+        tolua_function(tolua_S,"shareReader", lua_cocos2dx_studio_GUIReader_shareReader);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocostudio::GUIReader).name();
     g_luaType[typeName] = "ccs.GUIReader";
@@ -18972,6 +19506,53 @@ int lua_register_cocos2dx_studio_InnerActionFrame(lua_State* tolua_S)
     return 1;
 }
 
+int lua_cocos2dx_studio_ColorFrame_getAlpha(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::timeline::ColorFrame* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.ColorFrame",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::timeline::ColorFrame*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_ColorFrame_getAlpha'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ColorFrame_getAlpha'", nullptr);
+            return 0;
+        }
+        uint16_t ret = cobj->getAlpha();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.ColorFrame:getAlpha",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ColorFrame_getAlpha'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_studio_ColorFrame_getColor(lua_State* tolua_S)
 {
     int argc = 0;
@@ -19015,6 +19596,56 @@ int lua_cocos2dx_studio_ColorFrame_getColor(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ColorFrame_getColor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_ColorFrame_setAlpha(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::timeline::ColorFrame* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.ColorFrame",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::timeline::ColorFrame*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_ColorFrame_setAlpha'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        uint16_t arg0;
+
+        ok &= luaval_to_uint16(tolua_S, 2,&arg0, "ccs.ColorFrame:setAlpha");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ColorFrame_setAlpha'", nullptr);
+            return 0;
+        }
+        cobj->setAlpha(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.ColorFrame:setAlpha",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ColorFrame_setAlpha'.",&tolua_err);
 #endif
 
     return 0;
@@ -19153,7 +19784,9 @@ int lua_register_cocos2dx_studio_ColorFrame(lua_State* tolua_S)
 
     tolua_beginmodule(tolua_S,"ColorFrame");
         tolua_function(tolua_S,"new",lua_cocos2dx_studio_ColorFrame_constructor);
+        tolua_function(tolua_S,"getAlpha",lua_cocos2dx_studio_ColorFrame_getAlpha);
         tolua_function(tolua_S,"getColor",lua_cocos2dx_studio_ColorFrame_getColor);
+        tolua_function(tolua_S,"setAlpha",lua_cocos2dx_studio_ColorFrame_setAlpha);
         tolua_function(tolua_S,"setColor",lua_cocos2dx_studio_ColorFrame_setColor);
         tolua_function(tolua_S,"create", lua_cocos2dx_studio_ColorFrame_create);
     tolua_endmodule(tolua_S);

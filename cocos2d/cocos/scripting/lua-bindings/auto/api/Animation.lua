@@ -5,6 +5,14 @@
 -- @parent_module cc
 
 --------------------------------
+-- deprecated. Use addSpriteFrameWithFile() instead.<br>
+-- js NA
+-- @function [parent=#Animation] addSpriteFrameWithFileName 
+-- @param self
+-- @param #string filename
+-- @return Animation#Animation self (return value: cc.Animation)
+        
+--------------------------------
 --  Gets the times the animation is going to loop. 0 means animation is not animated. 1, animation is executed one time, ... <br>
 -- return The times the animation is going to loop.
 -- @function [parent=#Animation] getLoops 

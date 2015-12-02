@@ -23,6 +23,13 @@
 -- @return Value#Value ret (return value: cc.Value)
         
 --------------------------------
+-- 
+-- @function [parent=#TMXObjectGroup] objectNamed 
+-- @param self
+-- @param #string objectName
+-- @return map_table#map_table ret (return value: map_table)
+        
+--------------------------------
 --  Gets the offset position of child objects. <br>
 -- return The offset position of child objects.
 -- @function [parent=#TMXObjectGroup] getPositionOffset 
@@ -74,6 +81,13 @@
 -- @param self
 -- @param #map_table properties
 -- @return TMXObjectGroup#TMXObjectGroup self (return value: cc.TMXObjectGroup)
+        
+--------------------------------
+-- 
+-- @function [parent=#TMXObjectGroup] propertyNamed 
+-- @param self
+-- @param #string propertyName
+-- @return Value#Value ret (return value: cc.Value)
         
 --------------------------------
 --  Sets the array of the objects.<br>

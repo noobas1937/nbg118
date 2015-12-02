@@ -5,8 +5,57 @@
 -- @parent_module ccs
 
 --------------------------------
+--  The animation update speed
+-- @function [parent=#ArmatureAnimation] setAnimationInternal 
+-- @param self
+-- @param #float animationInternal
+-- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
+        
+--------------------------------
+-- 
+-- @function [parent=#ArmatureAnimation] playWithIndexes 
+-- @param self
+-- @param #array_table movementIndexes
+-- @param #int durationTo
+-- @param #bool loop
+-- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
+        
+--------------------------------
+-- Play animation by index, the other param is the same to play.<br>
+-- deprecated, please use playWithIndex<br>
+-- param  animationIndex  the animation index you want to play
+-- @function [parent=#ArmatureAnimation] playByIndex 
+-- @param self
+-- @param #int animationIndex
+-- @param #int durationTo
+-- @param #int loop
+-- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
+        
+--------------------------------
 -- 
 -- @function [parent=#ArmatureAnimation] getSpeedScale 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
+-- Scale animation play speed.<br>
+-- param animationScale Scale value
+-- @function [parent=#ArmatureAnimation] setSpeedScale 
+-- @param self
+-- @param #float speedScale
+-- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
+        
+--------------------------------
+-- Init with a Armature<br>
+-- param armature The Armature ArmatureAnimation will bind to
+-- @function [parent=#ArmatureAnimation] init 
+-- @param self
+-- @param #ccs.Armature armature
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#ArmatureAnimation] getAnimationScale 
 -- @param self
 -- @return float#float ret (return value: float)
         
@@ -36,69 +85,9 @@
         
 --------------------------------
 -- 
--- @function [parent=#ArmatureAnimation] playWithIndexes 
--- @param self
--- @param #array_table movementIndexes
--- @param #int durationTo
--- @param #bool loop
--- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
-        
---------------------------------
--- 
--- @function [parent=#ArmatureAnimation] setAnimationData 
--- @param self
--- @param #ccs.AnimationData data
--- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
-        
---------------------------------
--- Scale animation play speed.<br>
--- param animationScale Scale value
--- @function [parent=#ArmatureAnimation] setSpeedScale 
--- @param self
--- @param #float speedScale
--- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
-        
---------------------------------
--- 
 -- @function [parent=#ArmatureAnimation] getAnimationData 
 -- @param self
 -- @return AnimationData#AnimationData ret (return value: ccs.AnimationData)
-        
---------------------------------
--- Go to specified frame and play current movement.<br>
--- You need first switch to the movement you want to play, then call this function.<br>
--- example : playByIndex(0);<br>
--- gotoAndPlay(0);<br>
--- playByIndex(1);<br>
--- gotoAndPlay(0);<br>
--- gotoAndPlay(15);
--- @function [parent=#ArmatureAnimation] gotoAndPlay 
--- @param self
--- @param #int frameIndex
--- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
-        
---------------------------------
--- Init with a Armature<br>
--- param armature The Armature ArmatureAnimation will bind to
--- @function [parent=#ArmatureAnimation] init 
--- @param self
--- @param #ccs.Armature armature
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- 
--- @function [parent=#ArmatureAnimation] playWithNames 
--- @param self
--- @param #array_table movementNames
--- @param #int durationTo
--- @param #bool loop
--- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
-        
---------------------------------
--- Get movement count
--- @function [parent=#ArmatureAnimation] getMovementCount 
--- @param self
--- @return long#long ret (return value: long)
         
 --------------------------------
 -- 
@@ -115,6 +104,50 @@
 -- @function [parent=#ArmatureAnimation] getCurrentMovementID 
 -- @param self
 -- @return string#string ret (return value: string)
+        
+--------------------------------
+-- Scale animation play speed.<br>
+-- This method is deprecated, please use setSpeedScale.<br>
+-- param animationScale Scale value
+-- @function [parent=#ArmatureAnimation] setAnimationScale 
+-- @param self
+-- @param #float animationScale
+-- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
+        
+--------------------------------
+-- 
+-- @function [parent=#ArmatureAnimation] setAnimationData 
+-- @param self
+-- @param #ccs.AnimationData data
+-- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
+        
+--------------------------------
+-- Go to specified frame and play current movement.<br>
+-- You need first switch to the movement you want to play, then call this function.<br>
+-- example : playByIndex(0);<br>
+-- gotoAndPlay(0);<br>
+-- playByIndex(1);<br>
+-- gotoAndPlay(0);<br>
+-- gotoAndPlay(15);
+-- @function [parent=#ArmatureAnimation] gotoAndPlay 
+-- @param self
+-- @param #int frameIndex
+-- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
+        
+--------------------------------
+-- 
+-- @function [parent=#ArmatureAnimation] playWithNames 
+-- @param self
+-- @param #array_table movementNames
+-- @param #int durationTo
+-- @param #bool loop
+-- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
+        
+--------------------------------
+-- Get movement count
+-- @function [parent=#ArmatureAnimation] getMovementCount 
+-- @param self
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- Create with a Armature<br>

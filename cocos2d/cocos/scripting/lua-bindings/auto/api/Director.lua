@@ -336,6 +336,13 @@
         
 --------------------------------
 -- 
+-- @function [parent=#Director] setVisitFlag 
+-- @param self
+-- @param #bool b
+-- @return Director#Director self (return value: cc.Director)
+        
+--------------------------------
+-- 
 -- @function [parent=#Director] restart 
 -- @param self
 -- @return Director#Director self (return value: cc.Director)
@@ -486,6 +493,19 @@
 -- @function [parent=#Director] getActionManager 
 -- @param self
 -- @return ActionManager#ActionManager ret (return value: cc.ActionManager)
+        
+--------------------------------
+-- 
+-- @function [parent=#Director] sharedMainThread 
+-- @param self
+-- @return CCPThread#CCPThread ret (return value: cc.CCPThread)
+        
+--------------------------------
+-- deprecated Use getInstance() instead.<br>
+-- js NA
+-- @function [parent=#Director] sharedDirector 
+-- @param self
+-- @return Director#Director ret (return value: cc.Director)
         
 --------------------------------
 -- Returns a shared instance of the director. <br>

@@ -259,7 +259,7 @@ bool AllScienceBigCell::init(int itemId, int type, int isLock)
 {
     bool ret = true;
     CCBLoadFile("AllScienceTCell",this,this);
-    m_floorLabel->setFntFile("Arial_Bold_Border.fnt");
+    m_floorLabel->setFntFile(getNBFont(NB_FONT_Bold_Border));
     setData(itemId, type, isLock);
     return ret;
 }
@@ -414,7 +414,7 @@ bool AllScienceCell::init(int r_type, int itemId, bool isLock)
     
     m_researshLabel->setString(_lang("115165"));
     m_masterLabel->setString("Master");
-    m_masterLabel->setFntFile("Arial_Gradient.fnt");
+    m_masterLabel->setFntFile(getNBFont(NB_FONT_Gradient));
     m_bOpen  = false;
     
     m_starBar = CCStarBar::createStarBar(info.sumStars);

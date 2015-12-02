@@ -63,7 +63,7 @@ bool SuggestionView::init()
 //    m_editBox->setText(_lang("105205").c_str());
 //    m_infoLabel =  CCLabelIF::create("", 22, CCSizeMake(550, 0), kCCTextAlignmentLeft, kCCVerticalTextAlignmentCenter);
 //    if (LocalController::shared()->getLanguageFileName() != "zh_CN") {
-//        this->m_infoLabel->setFntFile("Arial_Bold.fnt");
+//        this->m_infoLabel->setFntFile(getNBFont(NB_FONT_Bold));
 //    }
     
    // m_infoLabel->setAnchorPoint(ccp(0,0.5));

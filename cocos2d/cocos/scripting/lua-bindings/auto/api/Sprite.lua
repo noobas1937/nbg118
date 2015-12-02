@@ -13,6 +13,13 @@
 -- @return Sprite#Sprite self (return value: cc.Sprite)
 
 --------------------------------
+-- 
+-- @function [parent=#Sprite] setTextureCoords 
+-- @param self
+-- @param #rect_table rect
+-- @return Sprite#Sprite self (return value: cc.Sprite)
+        
+--------------------------------
 -- @overload self, cc.Texture2D         
 -- @overload self, string         
 -- @function [parent=#Sprite] setTexture
@@ -43,16 +50,11 @@
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
--- @overload self, cc.Texture2D, rect_table         
--- @overload self, cc.Texture2D         
--- @overload self, cc.Texture2D, rect_table, bool         
--- @function [parent=#Sprite] initWithTexture
+--  @deprecated Use `getSpriteFrame()` instead. 
+-- @function [parent=#Sprite] displayFrame 
 -- @param self
--- @param #cc.Texture2D texture
--- @param #rect_table rect
--- @param #bool rotated
--- @return bool#bool ret (return value: bool)
-
+-- @return SpriteFrame#SpriteFrame ret (return value: cc.SpriteFrame)
+        
 --------------------------------
 -- Returns the batch node object if this sprite is rendered by SpriteBatchNode.<br>
 -- return The SpriteBatchNode object if this sprite is rendered by SpriteBatchNode,<br>
@@ -73,6 +75,33 @@
 -- @param self
 -- @param #bool cleanup
 -- @return Sprite#Sprite self (return value: cc.Sprite)
+        
+--------------------------------
+-- 
+-- @function [parent=#Sprite] getScaleY 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
+-- 
+-- @function [parent=#Sprite] getScaleX 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
+--  @deprecated Use isFlippedX() instead.<br>
+-- js NA<br>
+-- lua NA
+-- @function [parent=#Sprite] isFlipX 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+--  @deprecated Use isFlippedY() instead.<br>
+-- js NA
+-- @function [parent=#Sprite] isFlipY 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @overload self, rect_table, bool, size_table         
@@ -106,7 +135,27 @@
 -- Returns the index used on the TextureAtlas.
 -- @function [parent=#Sprite] getAtlasIndex 
 -- @param self
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
+        
+--------------------------------
+-- 
+-- @function [parent=#Sprite] getBoundingBox 
+-- @param self
+-- @return rect_table#rect_table ret (return value: rect_table)
+        
+--------------------------------
+--  @deprecated Use `setSpriteFrame()` instead. 
+-- @function [parent=#Sprite] setDisplayFrame 
+-- @param self
+-- @param #cc.SpriteFrame newFrame
+-- @return Sprite#Sprite self (return value: cc.Sprite)
+        
+--------------------------------
+-- 
+-- @function [parent=#Sprite] setContentSize 
+-- @param self
+-- @param #size_table contentSize
+-- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
 -- Sets the batch node to sprite.<br>
@@ -136,7 +185,7 @@
 -- @function [parent=#Sprite] setDisplayFrameWithAnimationName 
 -- @param self
 -- @param #string animationName
--- @param #long frameIndex
+-- @param #int frameIndex
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
@@ -144,6 +193,22 @@
 -- @function [parent=#Sprite] setTextureAtlas 
 -- @param self
 -- @param #cc.TextureAtlas textureAtlas
+-- @return Sprite#Sprite self (return value: cc.Sprite)
+        
+--------------------------------
+--  @deprecated Use setFlippedY() instead.<br>
+-- js NA
+-- @function [parent=#Sprite] setFlipY 
+-- @param self
+-- @param #bool flippedY
+-- @return Sprite#Sprite self (return value: cc.Sprite)
+        
+--------------------------------
+--  @deprecated Use setFlippedX() instead<br>
+-- js NA
+-- @function [parent=#Sprite] setFlipX 
+-- @param self
+-- @param #bool flippedX
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
@@ -164,9 +229,20 @@
 -- warning Don't modify this value unless you know what you are doing.
 -- @function [parent=#Sprite] setAtlasIndex 
 -- @param self
--- @param #long atlasIndex
+-- @param #int atlasIndex
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
+--------------------------------
+-- @overload self, cc.Texture2D, rect_table         
+-- @overload self, cc.Texture2D         
+-- @overload self, cc.Texture2D, rect_table, bool         
+-- @function [parent=#Sprite] initWithTexture
+-- @param self
+-- @param #cc.Texture2D texture
+-- @param #rect_table rect
+-- @param #bool rotated
+-- @return bool#bool ret (return value: bool)
+
 --------------------------------
 -- Makes the Sprite to be updated in the Atlas.
 -- @function [parent=#Sprite] setDirty 
@@ -194,6 +270,12 @@
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
+-- 
+-- @function [parent=#Sprite] getScale 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
 -- @overload self, string, rect_table         
 -- @overload self, string         
 -- @function [parent=#Sprite] initWithFile
@@ -219,6 +301,13 @@
 -- @function [parent=#Sprite] getTextureAtlas 
 -- @param self
 -- @return TextureAtlas#TextureAtlas ret (return value: cc.TextureAtlas)
+        
+--------------------------------
+--  @deprecated Use `getSpriteFrame()` instead.<br>
+-- js NA
+-- @function [parent=#Sprite] getDisplayFrame 
+-- @param self
+-- @return SpriteFrame#SpriteFrame ret (return value: cc.SpriteFrame)
         
 --------------------------------
 -- Initializes a sprite with an SpriteFrame. The texture and rect in SpriteFrame will be applied on this sprite.<br>

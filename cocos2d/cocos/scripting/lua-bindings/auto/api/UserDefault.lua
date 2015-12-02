@@ -111,8 +111,31 @@
 -- @return UserDefault#UserDefault self (return value: cc.UserDefault)
         
 --------------------------------
+--  All supported platforms other iOS & Android and CC_PLATFORM_WINRT use xml file to save values. This function checks whether the xml file exists or not.<br>
+-- return True if the xml file exists, flase if not.<br>
+-- js NA
+-- @function [parent=#UserDefault] isXMLFileExist 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- js NA
 -- @function [parent=#UserDefault] destroyInstance 
+-- @param self
+-- @return UserDefault#UserDefault self (return value: cc.UserDefault)
+        
+--------------------------------
+--  @deprecated Use getInstace() instead.<br>
+-- js NA<br>
+-- lua NA
+-- @function [parent=#UserDefault] sharedUserDefault 
+-- @param self
+-- @return UserDefault#UserDefault ret (return value: cc.UserDefault)
+        
+--------------------------------
+-- @deprecated Use destroyInstance() instead.<br>
+-- js NA
+-- @function [parent=#UserDefault] purgeSharedUserDefault 
 -- @param self
 -- @return UserDefault#UserDefault self (return value: cc.UserDefault)
         
@@ -122,13 +145,5 @@
 -- @function [parent=#UserDefault] getXMLFilePath 
 -- @param self
 -- @return string#string ret (return value: string)
-        
---------------------------------
---  All supported platforms other iOS & Android and CC_PLATFORM_WINRT use xml file to save values. This function checks whether the xml file exists or not.<br>
--- return True if the xml file exists, flase if not.<br>
--- js NA
--- @function [parent=#UserDefault] isXMLFileExist 
--- @param self
--- @return bool#bool ret (return value: bool)
         
 return nil

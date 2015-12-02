@@ -18,7 +18,7 @@ NS_CC_BEGIN
 #endif
 
 static const float _defaultBMFontSize = 30.0;
-#define BMFONT_NAME "Arial_Bold.fnt"
+#define BMFONT_NAME getNBFont(NB_FONT_Bold)
 
 bool CCLabelIF::m_useBMFont = true;
 bool CCLabelIF::m_useRichFont = false;

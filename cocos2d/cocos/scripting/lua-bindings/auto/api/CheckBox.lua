@@ -5,6 +5,14 @@
 -- @parent_module ccui
 
 --------------------------------
+-- Query whether the CheckBox is selected or not.<br>
+-- deprecated use `setSelected(bool)` instead.<br>
+-- return selected    true that checkbox is selected, false otherwise.
+-- @function [parent=#CheckBox] getSelectedState 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- Load background selected state texture for checkbox.<br>
 -- param backGroundSelected    The background selected state image name.<br>
 -- param texType    @see `Widget::TextureResType`
@@ -113,6 +121,15 @@
 -- @function [parent=#CheckBox] setZoomScale 
 -- @param self
 -- @param #float scale
+-- @return CheckBox#CheckBox self (return value: ccui.CheckBox)
+        
+--------------------------------
+-- Change Checkbox state to selected.<br>
+-- deprecated use `isSelected()` instead<br>
+-- param selected   True means the Checkbox will be selected, false means unselected.
+-- @function [parent=#CheckBox] setSelectedState 
+-- @param self
+-- @param #bool selected
 -- @return CheckBox#CheckBox self (return value: ccui.CheckBox)
         
 --------------------------------
