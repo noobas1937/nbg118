@@ -1218,6 +1218,7 @@
 		ED2608C41BF42FE400D6BD14 /* Walker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED2608C21BF42FE400D6BD14 /* Walker.cpp */; };
 		ED8509631BE07AFD002E1B2C /* NBWaterMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED8509611BE07AFD002E1B2C /* NBWaterMap.cpp */; };
 		ED929BF71BFC650E005A44C9 /* Enemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED929BF51BFC650E005A44C9 /* Enemy.cpp */; };
+		EDAEDDF21C0BEE1D00F4DA59 /* VikingShip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDAEDDF01C0BEE1D00F4DA59 /* VikingShip.cpp */; };
 		F429408C1B67AE7000078155 /* ComposeView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F429408A1B67AE7000078155 /* ComposeView.cpp */; };
 		F45EFC621B6B63AA00B0C19F /* ComposeAni.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45EFC601B6B63AA00B0C19F /* ComposeAni.cpp */; };
 		F45EFC651B6B820E00B0C19F /* MatetialAni.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45EFC631B6B820E00B0C19F /* MatetialAni.cpp */; };
@@ -3581,6 +3582,8 @@
 		ED8509621BE07AFD002E1B2C /* NBWaterMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBWaterMap.h; sourceTree = "<group>"; };
 		ED929BF51BFC650E005A44C9 /* Enemy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Enemy.cpp; sourceTree = "<group>"; };
 		ED929BF61BFC650E005A44C9 /* Enemy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Enemy.h; sourceTree = "<group>"; };
+		EDAEDDF01C0BEE1D00F4DA59 /* VikingShip.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VikingShip.cpp; path = vikingship/VikingShip.cpp; sourceTree = "<group>"; };
+		EDAEDDF11C0BEE1D00F4DA59 /* VikingShip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VikingShip.h; path = vikingship/VikingShip.h; sourceTree = "<group>"; };
 		F429408A1B67AE7000078155 /* ComposeView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ComposeView.cpp; sourceTree = "<group>"; };
 		F429408B1B67AE7000078155 /* ComposeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComposeView.h; sourceTree = "<group>"; };
 		F45EFC601B6B63AA00B0C19F /* ComposeAni.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ComposeAni.cpp; sourceTree = "<group>"; };
@@ -6400,6 +6403,7 @@
 		DBA087DE17CDA95F001C68AD /* scene */ = {
 			isa = PBXGroup;
 			children = (
+				EDAEDDF71C0BEE3900F4DA59 /* VikingShip */,
 				36DE16DF1BA188D60020785E /* titan */,
 				5724402E1B218344000DAF5F /* dragon */,
 				FD3E3809183B3F19005596BD /* world */,
@@ -6501,6 +6505,15 @@
 				967B1D5C1AB94A9200D1E983 /* MailGiftView.h */,
 			);
 			name = mail;
+			sourceTree = "<group>";
+		};
+		EDAEDDF71C0BEE3900F4DA59 /* VikingShip */ = {
+			isa = PBXGroup;
+			children = (
+				EDAEDDF01C0BEE1D00F4DA59 /* VikingShip.cpp */,
+				EDAEDDF11C0BEE1D00F4DA59 /* VikingShip.h */,
+			);
+			name = VikingShip;
 			sourceTree = "<group>";
 		};
 		FD0E65291844860300101958 /* gtmbase64 */ = {
@@ -7739,6 +7752,7 @@
 				94A247DE1B5E38BB0012E1EE /* MarchFormationView.cpp in Sources */,
 				59DEBDF51B058B40007FC5CB /* NSString+ADJAdditions.m in Sources */,
 				57CF2BA118504F2A001A8854 /* BuyEnergyCommand.cpp in Sources */,
+				EDAEDDF21C0BEE1D00F4DA59 /* VikingShip.cpp in Sources */,
 				E69C695B1A1DC20400E99E9A /* MODCommand.cpp in Sources */,
 				96D2A3971A4820FA00F39C7F /* PropSpeedupView.cpp in Sources */,
 				96E933F819EBB1BD0088ED12 /* SocialPopUpView.cpp in Sources */,

@@ -1567,6 +1567,7 @@ void WorldController::startVIPGuide(){
     UIComponent::getInstance()->onVipBtnClick(NULL,Control::EventType::TOUCH_DOWN);
 }
 unsigned int WorldController::getMaxMarchCount() {
+    
     return 1 + CCCommonUtils::getEffectValueByNum(55);
 }
 

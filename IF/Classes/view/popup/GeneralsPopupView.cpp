@@ -140,8 +140,8 @@ bool GeneralsPopupView::init()
     
     //fusheng begin 添加图片
     CCLoadSprite::doResourceByGeneralIndex(1, true);//亮光放在这里
-//    CCLoadSprite::doResourceByGeneralIndex(2, true);
-//    CCLoadSprite::doResourceByGeneralIndex(3, true);
+    CCLoadSprite::doResourceByGeneralIndex(2, true);
+    CCLoadSprite::doResourceByGeneralIndex(3, true);
     
     //fusheng end
     
@@ -547,7 +547,7 @@ void GeneralsPopupView::onEnter(){
         pBust = m_info->pic;
     }
     m_count = CCCommonUtils::getBustIdxByName(pBust);
-    CCLoadSprite::doLoadResourceAsync(GENERAL_PATH, CCCallFuncO::create(this, callfuncO_selector(GeneralsPopupView::asyDelayLoad), NULL), m_count);
+
     
     UIComponent::getInstance()->showPopupView(UIPopupViewType_ArcPop_TitanUpgrade);
     loadResource();
@@ -578,6 +578,10 @@ void GeneralsPopupView::onEnter(){
     }
     
     updateEquipTips(NULL);
+    
+    
+    GeneralsPopupView::asyDelayLoad(nullptr);
+//    CCLoadSprite::doLoadResourceAsync(GENERAL_PATH, CCCallFuncO::create(this, callfuncO_selector(), NULL), m_count);
 }
 
 void GeneralsPopupView::onExit(){
@@ -1720,10 +1724,10 @@ bool ChangePicPopupView::init()
     
     m_scrollContainer->setVisible(false);
     
-    CCLoadSprite::doLoadResourceAsync(GENERAL_PATH, CCCallFuncO::create(this, callfuncO_selector(ChangePicPopupView::asyDelayLoad), NULL), 1);
-    CCLoadSprite::doLoadResourceAsync(GENERAL_PATH, CCCallFuncO::create(this, callfuncO_selector(ChangePicPopupView::asyDelayLoad), NULL), 2);
-    CCLoadSprite::doLoadResourceAsync(GENERAL_PATH, CCCallFuncO::create(this, callfuncO_selector(ChangePicPopupView::asyDelayLoad), NULL), 3);
-    
+//    CCLoadSprite::doLoadResourceAsync(GENERAL_PATH, CCCallFuncO::create(this, callfuncO_selector(ChangePicPopupView::asyDelayLoad), NULL), 1);
+//    CCLoadSprite::doLoadResourceAsync(GENERAL_PATH, CCCallFuncO::create(this, callfuncO_selector(ChangePicPopupView::asyDelayLoad), NULL), 2);
+//    CCLoadSprite::doLoadResourceAsync(GENERAL_PATH, CCCallFuncO::create(this, callfuncO_selector(ChangePicPopupView::asyDelayLoad), NULL), 3);
+    ChangePicPopupView::asyDelayLoad(NULL);
 
 //    setCleanFunction([](){ //fusheng 删除ChangePicPopupView时不清理缓存
 //        CCLoadSprite::doResourceByGeneralIndex(1, false);
@@ -1811,11 +1815,11 @@ void ChangePicPopupView::setButtonState(int offX)
 }
 
 void ChangePicPopupView::asyDelayLoad(CCObject* p){
-    m_count += 1;
-    if(m_count==3){
+//    m_count += 1;
+//    if(m_count==3){
         m_scrollContainer->setVisible(true);
         refreshView();
-    }
+//    }
 }
 
 void ChangePicPopupView::refreshView(){
@@ -1950,6 +1954,9 @@ void ChangePicPopupView::onResetPicClick(CCObject * pSender, Control::EventType 
 
 void ChangePicPopupView::onSetUserPicClick(cocos2d::CCObject *pSender, Control::EventType pCCControlEvent)
 {
+    //fusheng 暂时不能上传头像
+    CCCommonUtils::flyHint("", "", _lang("E100008"));
+    return;
     if (haveUpload())
     {
         //have uploaded one

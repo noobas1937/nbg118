@@ -158,7 +158,7 @@ void GoldExchangeView::initList(){
     std::sort(sortMap.begin(),sortMap.end(),sortExchangeItem);
     
     int i=0;
-    int dy=-160;
+    int dy=-155;
     float tmp = 10;
     if (CCCommonUtils::isIosAndroidPad()&& CCCommonUtils::getIsHDViewPort())
     {
@@ -210,6 +210,56 @@ void GoldExchangeView::initList(){
         it++;
     }while (it != sortMap.end());
     
+    
+    
+    
+    
+    
+    
+//    it = sortMap.begin();
+//    cell=NULL;
+//    do {
+//        if (true) {
+//            if((*it)->type=="1" && (*it)->popup_image != "hide"){
+//                cell =  GoldExchangeItemView::create((*it));
+//                cell->setPositionY(dy);
+//                //                if(i%2==0){
+//                //                    if(CCCommonUtils::isIosAndroidPad()&& CCCommonUtils::getIsHDViewPort())
+//                //                        cell->setPositionX(6.66*2.4);
+//                //                    else
+//                //                        cell->setPositionX(6.66);
+//                //                }else{
+//                //                    if(CCCommonUtils::isIosAndroidPad()&& CCCommonUtils::getIsHDViewPort())
+//                //                        cell->setPositionX(6.66*2+310*2.4);
+//                //                    else
+//                //                        cell->setPositionX(6.66*2+310);
+//                ////                    dy -= cell->getContentSize().height;
+//                //                    if(CCCommonUtils::isIosAndroidPad() && CCCommonUtils::getIsHDViewPort())
+//                //                        dy -= cell->getContentSize().height;
+//                //                    else
+//                //                        dy -= cell->getContentSize().height;
+//                //                }
+//                
+//                if(CCCommonUtils::isIosAndroidPad()&& CCCommonUtils::getIsHDViewPort())
+//                    cell->setPositionX(tmp*2.4);
+//                else
+//                    cell->setPositionX(tmp);
+//                
+//                if(CCCommonUtils::isIosAndroidPad() && CCCommonUtils::getIsHDViewPort())
+//                    dy -= cell->getContentSize().height;
+//                else
+//                    dy -= cell->getContentSize().height;
+//                
+//                listNode->addChild(cell);
+//                
+//                i++;
+//            }
+//        }
+//        it++;
+//    }while (it != sortMap.end());
+    
+    
+    
     if(GlobalData::shared()->analyticID == "mycard" || GlobalData::shared()->analyticID == "gash"){
         cell =  GoldExchangeItemView::create(NULL);
         cell->setPositionY(dy);
@@ -253,11 +303,16 @@ void GoldExchangeView::initList(){
 //        else
 //            cell->setPositionX(6.66*2+310);
 //    }
-//    listNode->setPositionY(-dy); //fusheng d 11.23
-    listNode->setPositionY(m_listNode->getContentSize().height);
+
+//    listNode->setPositionY(m_listNode->getContentSize().height);
+
     
 //    listNode->setContentSize(Size(620, -dy));
     offsetY+=(-dy);
+    
+    offsetY-=155;
+    
+    listNode->setPositionY(offsetY); //fusheng d 11.23
     i=0;
 //    map<string, GoldExchangeItem*>::iterator it1 = sortMap1.end();
 //    do {
@@ -342,12 +397,20 @@ void GoldExchangeView::initList(){
 //        m_scrollView->setViewSize(listSize);
 //        monthCardCell->setTag(1000);
 //    }
-//    m_scrollView->setContentSize(CCSize(m_listNode->getContentSize().width,offsetY));
-//    m_scrollView->setContentOffset(ccp(0, m_listNode->getContentSize().height - offsetY));
+    m_scrollView->setContentSize(CCSize(m_listNode->getContentSize().width,offsetY));
+    m_scrollView->setContentOffset(ccp(0, m_listNode->getContentSize().height - offsetY));
     
 
 //    
-    m_scrollView->setContentSize(CCSize(m_listNode->getContentSize().width,m_listNode->getContentSize().height));
+//    m_scrollView->setContentSize(CCSize(m_listNode->getContentSize().width,m_listNode->getContentSize().height));
+//    m_scrollView->setContentSize(CCSize(m_listNode->getContentSize().width,offsetY));
+//    ;
+//    m_scrollView->setPositionY(m_listNode->getContentSize().height - offsetY);
+//    
+//    float newH =offsetY;
+//    
+//    m_scrollView->setViewSize(Size(m_scrollView->getViewSize().width,newH));
+
 //    m_scrollView->setContentOffset(ccp(0, m_listNode->getContentSize().height));
     m_listNode->addChild(m_scrollView);
     

@@ -119,7 +119,7 @@ private:
     
     CCSafeObject<CCNode> m_nameTouchNode;
     CCSafeObject<CCSprite> m_nameSpr;
-    CCSafeObject<CCSprite> m_changPicSpr;
+
     CCSafeObject<HFHeadImgNode> m_headImgNode;
     CCSafeObject<CCNode> m_starNode;
     CCSafeObject<CCNode> m_speStarNode;
@@ -182,6 +182,11 @@ private:
     CCSafeObject<CCScale9Sprite> m_bg1;
     CCSafeObject<CCScale9Sprite> m_bg2;
     
+    
+    
+    
+     CCSafeObject<CCSprite> m_huaWen0;
+     CCSafeObject<CCSprite> m_huaWen1;
 //    CCSafeObject<CCNode> m_tipNode;
 //    CCSafeObject<CCLabelIF> m_desName;
 //    CCSafeObject<CCLabelIF> m_desLabel;

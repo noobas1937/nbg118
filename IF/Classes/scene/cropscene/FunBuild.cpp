@@ -1469,6 +1469,10 @@ void FunBuild::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
             }else if (cnt == 1){
                 int firstPos = FunBuildController::getInstance()->WillMovePos[0];
                 if (firstPos>16 && firstPos<52 && pos>16 && pos<52 && firstPos!=pos) {
+                    auto& tileInfo = FunBuildController::getInstance()->m_tileMap[m_buildingKey];
+                    if (tileInfo.state == FUN_BUILD_LOCK || tileInfo.xmlOpen == FUN_BUILD_HIDE) {
+                        return;
+                    }
                     FunBuildController::getInstance()->SetMoveBuildPos(pos);
                 }else if ( ((firstPos<=16 && firstPos>=6) || (firstPos>=52 && firstPos<=53)) && firstPos!=pos) {
                     if ((pos<=16 && pos>=6) || (pos>=52 && pos<=53)) {
@@ -2441,7 +2445,12 @@ void FunBuild::onMoveBuild(CCObject* param)
         if (!m_tile->isVisible()) {
             return;
         }
+        auto& tileInfo = FunBuildController::getInstance()->m_tileMap[m_buildingKey];
+        if (tileInfo.state == FUN_BUILD_LOCK || tileInfo.xmlOpen == FUN_BUILD_HIDE) {
+            return;
+        }
     }
+    
     
     int pos = getCurPos();
     if (pos < 0) {
@@ -3361,7 +3370,7 @@ bool FunBuildState::init(int itemId)
             
             string recPic = "shangBing.png";
             if (buildType == FUN_BUILD_FORT) {
-                recPic = "icon_trap.png";
+                recPic = "icon_trapComplete.png";
             }else if (buildType == FUN_BUILD_FORGE) {
                 recPic = "icon_equip.png";
             }else if (buildType == FUN_BUILD_WORKSHOP) {
@@ -3390,7 +3399,7 @@ bool FunBuildState::init(int itemId)
     if(bType==FUN_BUILD_WOOD || bType==FUN_BUILD_FOOD || bType==FUN_BUILD_IRON || bType==FUN_BUILD_STONE || bType==FUN_BUILD_HOSPITAL || bType==FUN_BUILD_BARRACK) {
         m_freeNode->setPositionY(115);
         m_helpNode->setPositionY(115);
-        m_getNode->setPositionY(100);
+        m_getNode->setPositionY(30);
     } else {
         m_freeNode->setPositionY(195);
         m_helpNode->setPositionY(195);

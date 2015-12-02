@@ -4,18 +4,18 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>bnt_02.png</key>
+            <key>chuzheng_frame01.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,4},{98,111}}</string>
+                <string>{{4,4},{642,201}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{98,111}}</string>
+                <string>{{0,0},{642,201}}</string>
                 <key>sourceSize</key>
-                <string>{98,111}</string>
+                <string>{642,201}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -25,7 +25,7 @@
             <key>realTextureFileName</key>
             <string>Common_3.pvr.ccz</string>
             <key>size</key>
-            <string>{106,119}</string>
+            <string>{650,209}</string>
             <key>smartupdate</key>
             <string>$TexturePacker:SmartUpdate:--REMOVED----------------------------</string>
             <key>textureFileName</key>

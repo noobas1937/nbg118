@@ -43,6 +43,7 @@
 
 //begin a by ljf
 #define IMPERIAL_SCENE_TOUCH_LAYER_TAG 89217
+#include "VikingShip.h"
 //end a by ljf
 
 class ImperialScene:public CCLayer,public ITouchDelegate,public CCBMemberVariableAssigner
@@ -65,11 +66,19 @@ public:
     // tao.yu titan
     void onCreateTitan();
     // tao.yu vikings
-    void onCreateVikingsShip();
+    void onCreateVikingsShip(int level);
     //begin a by ljf
-    void onVikingsShipMove(NBSprite3D * pSprite3d);
-    void onVikingsShipIdle(NBSprite3D * pSprite3d);
+    int getVikingsShipModelLevel(int level);
+    void onUpgradeVikingsShip(int level);
+    void shipActionAfterMove(CCNode* pNode, void *pObj);
+    void createOneVikingsShip(int seq, CCNode * posCCBNode, CCNode * touchCCBNode, int level);
+    void destroyOneVikingsShip(int seq);
+    void updateVikingsShipNum();
+    int mShipLevel;
+    void onVikingsShipMove(VikingShip * pShipInfo);
+    
     bool onVikingsShipTouched(CCTouch* pTouch);
+    
     void createWalker(float t);
     void createEnemy(float t);
     void shootArrow(float t);
@@ -416,9 +425,22 @@ private:
     CCSafeObject<CCNode> m_vikingPath3;
     CCSafeObject<CCNode> m_vikingPath4;
     CCSafeObject<CCNode> m_vikingPath5;
-    CCSafeObject<NBSprite3D> m_vikings3D;
+    //CCSafeObject<NBSprite3D> m_vikings3D;
+    //CCSafeObject<NBSprite3D> m_vikings3D2;
+    //CCSafeObject<NBSprite3D> m_vikings3D3;
+    //CCSafeObject<NBSprite3D> m_vikings3D4;
+    //CCSafeObject<NBSprite3D> m_vikings3D5;
     CCSafeObject<CCNode> m_vikingTouchNode;
-    CCSafeObject<CCNode> m_vikingsParticleNode;
+    //CCSafeObject<CCNode> m_vikingsParticleNode;
+    CCSafeObject<CCNode> m_vikingNode2;
+    CCSafeObject<CCNode> m_vikingTouchNode2;
+    CCSafeObject<CCNode> m_vikingNode3;
+    CCSafeObject<CCNode> m_vikingTouchNode3;
+    CCSafeObject<CCNode> m_vikingNode4;
+    CCSafeObject<CCNode> m_vikingTouchNode4;
+    CCSafeObject<CCNode> m_vikingNode5;
+    CCSafeObject<CCNode> m_vikingTouchNode5;
+    CCSafeObject<CCDictionary> mVikingShipDict;
     //end a by ljf
     // tao.yu titan move path
     CCSafeObject<CCNode> m_tpath_1;
@@ -444,6 +466,9 @@ private:
     CCSafeObject<NBSprite3D> m_bridge3D_Down;
     CCSafeObject<CCNode> m_bridgeNode;
     CCSafeObject<CCNode> m_bridgeTouchNode;
+    CCSafeObject<CCNode> m_waterNode_L;
+    CCSafeObject<CCNode> m_waterNode_R;
+    
     bool m_bridgeOpened;
     bool m_isBridgeCanClick;
     
