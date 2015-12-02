@@ -284,6 +284,8 @@ private:
     std::string _version_filename;
     std::string _temp_manifest_filename;
     std::string _manifest_filename;
+    // is aVersion newer than bVersion
+    bool isNewVersion(std::string aVersion, std::string bVersion);
 };
 
 NS_CC_EXT_END

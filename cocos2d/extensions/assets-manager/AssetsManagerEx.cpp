@@ -185,40 +185,6 @@ void AssetsManagerEx::prepareLocalManifest()
     _localManifest->prependSearchPaths();
 }
 
-int split(const string& str, vector<string>& ret_, string sep = ",")
-{
-    if (str.empty())
-    {
-        return 0;
-    }
-    
-    string tmp;
-    string::size_type pos_begin = str.find_first_not_of(sep);
-    string::size_type comma_pos = 0;
-    
-    while (pos_begin != string::npos)
-    {
-        comma_pos = str.find(sep, pos_begin);
-        if (comma_pos != string::npos)
-        {
-            tmp = str.substr(pos_begin, comma_pos - pos_begin);
-            pos_begin = comma_pos + sep.length();
-        }
-        else
-        {
-            tmp = str.substr(pos_begin);
-            pos_begin = comma_pos;
-        }
-        
-        if (!tmp.empty())
-        {
-            ret_.push_back(tmp);
-            tmp.clear();
-        }
-    }
-    return 0;
-}
-
 void AssetsManagerEx::loadLocalManifest(const std::string& manifestUrl)
 {
     Manifest *cachedManifest = nullptr;
@@ -244,27 +210,8 @@ void AssetsManagerEx::loadLocalManifest(const std::string& manifestUrl)
         // Compare with cached manifest to determine which one to use
         if (cachedManifest)
         {
-            std::string local_version = _localManifest->getVersion();
-            vector<string> ret_local_version;
-            split(local_version, ret_local_version, ".");
-            
-            std::string cached_version = cachedManifest->getVersion();
-            vector<string> ret_cached_version;
-            split(cached_version, ret_cached_version, ".");
-            
-            bool is_cachedManifest_new = true;
-            for (int i = 0; i < ret_local_version.size() && i < ret_cached_version.size(); ++i)
-            {
-                int v = atoi(ret_cached_version[i].c_str()) - atoi(ret_local_version[i].c_str());
-                is_cachedManifest_new = v >= 0;
-                if (v > 0)
-                {
-                    break;
-                }
-            }
-            
             // if (strcmp(_localManifest->getVersion().c_str(), cachedManifest->getVersion().c_str()) > 0)
-            if (false == is_cachedManifest_new)
+            if (true == isNewVersion(_localManifest->getVersion(), cachedManifest->getVersion()))
             {
                 // Recreate storage, to empty the content
                 _fileUtils->removeDirectory(_storagePath);
@@ -531,7 +478,7 @@ void AssetsManagerEx::parseVersion()
     }
     else
     {
-        if (_localManifest->versionEquals(_remoteManifest))
+        if (true == isNewVersion(_localManifest->getVersion(), _remoteManifest->getVersion()) || _localManifest->versionEquals(_remoteManifest))
         {
             _updateState = State::UP_TO_DATE;
             dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ALREADY_UP_TO_DATE);
@@ -587,7 +534,7 @@ void AssetsManagerEx::parseManifest()
     }
     else
     {
-        if (_localManifest->versionEquals(_remoteManifest))
+        if (true == isNewVersion(_localManifest->getVersion(), _remoteManifest->getVersion()) || _localManifest->versionEquals(_remoteManifest))
         {
             _updateState = State::UP_TO_DATE;
             dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ALREADY_UP_TO_DATE);
@@ -641,7 +588,7 @@ void AssetsManagerEx::startUpdate()
         _tempManifest = _remoteManifest;
         
         std::unordered_map<std::string, Manifest::AssetDiff> diff_map = _localManifest->genDiff(_remoteManifest);
-        if (diff_map.size() == 0)
+        if (diff_map.size() == 0 || true == isNewVersion(_localManifest->getVersion(), _remoteManifest->getVersion()))
         {
             updateSucceed();
         }
@@ -1004,6 +951,65 @@ void AssetsManagerEx::destroyDownloadedVersion()
 {
     _fileUtils->removeFile(_cacheVersionPath);
     _fileUtils->removeFile(_cacheManifestPath);
+}
+
+
+#pragma mark *
+
+int split(const string& str, vector<string>& ret_, string sep = ",")
+{
+    if (str.empty())
+    {
+        return 0;
+    }
+    
+    string tmp;
+    string::size_type pos_begin = str.find_first_not_of(sep);
+    string::size_type comma_pos = 0;
+    
+    while (pos_begin != string::npos)
+    {
+        comma_pos = str.find(sep, pos_begin);
+        if (comma_pos != string::npos)
+        {
+            tmp = str.substr(pos_begin, comma_pos - pos_begin);
+            pos_begin = comma_pos + sep.length();
+        }
+        else
+        {
+            tmp = str.substr(pos_begin);
+            pos_begin = comma_pos;
+        }
+        
+        if (!tmp.empty())
+        {
+            ret_.push_back(tmp);
+            tmp.clear();
+        }
+    }
+    return 0;
+}
+
+bool AssetsManagerEx::isNewVersion(std::string aVersion, std::string bVersion)
+{
+    vector<string> a_versions;
+    split(aVersion, a_versions, ".");
+    
+    vector<string> b_versions;
+    split(bVersion, b_versions, ".");
+    
+    bool is_a_new = true;
+    for (int i = 0; i < a_versions.size() && i < b_versions.size(); ++i)
+    {
+        int v = atoi(a_versions[i].c_str()) - atoi(b_versions[i].c_str());
+        is_a_new = v > 0;
+        if (v > 0)
+        {
+            break;
+        }
+    }
+    
+    return is_a_new;
 }
 
 NS_CC_EXT_END

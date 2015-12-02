@@ -17,6 +17,11 @@ USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace std;
 
+//1. AssetsManagerEx::initManifests 如果下载目录和相应配置存在，先判断包内的配置版本号和下载目录里的配置版本号的大小。包内的配置版本号大于下载目录里的配置版本号时，删除下载目录
+//2. AssetsManagerEx::parseVersion()  检查包内的配置和服务器Version配置的版本号
+//3. AssetsManagerEx::parseManifest() 检查包内的配置和服务器配置的版本号
+//4. 包内的配置版本号小于服务器配置版本号时开始下载
+
 class NBDLCController
 : public Ref
 {
