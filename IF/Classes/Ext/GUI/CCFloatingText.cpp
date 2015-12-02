@@ -84,7 +84,7 @@ void CCFloatingText::startAnimation()
             break;
         }
         case floating_type_ui1:{ //
-            m_label->setFntFile("Arial_Bold_Border.fnt");
+            m_label->setFntFile(getNBFont(NB_FONT_Bold_Border));
             CCFiniteTimeAction* endcall = CCCallFunc::create(this, callfunc_selector(CCFloatingText::removeObject));
             CCFiniteTimeAction* moveby1 = CCMoveBy::create(0.6,ccp(0, 30));
             CCFiniteTimeAction* delay1 = CCDelayTime::create(0.3);
@@ -105,7 +105,7 @@ void CCFloatingText::startAnimation()
             break;
         }
         case floating_type_out:{
-            m_label->setFntFile("Arial_Bold_Border.fnt");
+            m_label->setFntFile(getNBFont(NB_FONT_Bold_Border));
             CCFiniteTimeAction* endcall = CCCallFunc::create(this, callfunc_selector(CCFloatingText::removeObject));
             CCFiniteTimeAction* moveby1 = CCMoveBy::create(0.6,ccp(0, -30));
             CCFiniteTimeAction* delay1 = CCDelayTime::create(0.3);

@@ -41,6 +41,12 @@
 -- @return Application#Application self (return value: cc.Application)
         
 --------------------------------
+--  @deprecated Use getInstance() instead 
+-- @function [parent=#Application] sharedApplication 
+-- @param self
+-- @return Application#Application ret (return value: cc.Application)
+        
+--------------------------------
 -- brief    Get current application instance.<br>
 -- return Current application instance pointer.
 -- @function [parent=#Application] getInstance 

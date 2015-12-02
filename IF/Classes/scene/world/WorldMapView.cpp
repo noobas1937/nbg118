@@ -279,7 +279,7 @@ bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType) {
     m_heiqishiLvBgBachNode = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("building_level_overlay.png")->getTexture(), 448);
     m_layers[WM_ROAD]->addChild(m_heiqishiLvBgBachNode, roadIndex++);
     
-    m_heiqishiLvLbNode = CCLabelBatchNode::create("Arial_Bold_Regular.fnt");
+    m_heiqishiLvLbNode = CCLabelBatchNode::create(getNBFont(NB_FONT_Bold_Regular));
     m_layers[WM_ROAD]->addChild(m_heiqishiLvLbNode, roadIndex++);
     
     m_spinLabelNode = CCNode::create();
@@ -395,10 +395,10 @@ bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType) {
     //    m_mapMonsterBossNode = IFSkeletonBatchLayer::create();
     //    m_layers[WM_CITY]->addChild(m_mapMonsterBossNode, 12);
     
-    m_labelNode = CCLabelBatchNode::create("Arial_Bold_Regular.fnt");
+    m_labelNode = CCLabelBatchNode::create(getNBFont(NB_FONT_Bold_Regular));
     m_layers[WM_CITY]->addChild(m_labelNode, 10);
     
-    m_labelNode1 = CCLabelBatchNode::create("Arial_Bold_Border.fnt");
+    m_labelNode1 = CCLabelBatchNode::create(getNBFont(NB_FONT_Bold_Border));
     m_layers[WM_CITY]->addChild(m_labelNode1, 11);
     
     m_unBatchLabelNode = CCNode::create();

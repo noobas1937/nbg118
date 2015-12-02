@@ -3399,7 +3399,7 @@ bool FunBuildState::init(int itemId)
     if(bType==FUN_BUILD_WOOD || bType==FUN_BUILD_FOOD || bType==FUN_BUILD_IRON || bType==FUN_BUILD_STONE || bType==FUN_BUILD_HOSPITAL || bType==FUN_BUILD_BARRACK) {
         m_freeNode->setPositionY(115);
         m_helpNode->setPositionY(115);
-        m_getNode->setPositionY(100);
+        m_getNode->setPositionY(30);
     } else {
         m_freeNode->setPositionY(195);
         m_helpNode->setPositionY(195);

@@ -25,6 +25,18 @@
 -- @return bool#bool ret (return value: bool)
 
 --------------------------------
+--  @deprecated Use getNodeToWorldTransform() instead 
+-- @function [parent=#Node] nodeToWorldTransform 
+-- @param self
+-- @return AffineTransform#AffineTransform ret (return value: cc.AffineTransform)
+        
+--------------------------------
+-- 
+-- @function [parent=#Node] getShaderProgram 
+-- @param self
+-- @return GLProgram#GLProgram ret (return value: cc.GLProgram)
+        
+--------------------------------
 -- Gets the description string. It makes debugging easier.<br>
 -- return A string<br>
 -- js NA<br>
@@ -140,6 +152,13 @@
 -- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
+-- 
+-- @function [parent=#Node] setZOrder 
+-- @param self
+-- @param #int localZOrder
+-- @return Node#Node self (return value: cc.Node)
+        
+--------------------------------
 -- Changes the scale factor on Z axis of this node<br>
 -- The Default value is 1.0 if you haven't changed it before.<br>
 -- param scaleZ   The scale factor on Z axis.<br>
@@ -198,9 +217,10 @@
         
 --------------------------------
 -- 
--- @function [parent=#Node] getOpacity 
+-- @function [parent=#Node] _setLocalZOrder 
 -- @param self
--- @return unsigned char#unsigned char ret (return value: unsigned char)
+-- @param #int z
+-- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
 -- 
@@ -291,11 +311,17 @@
 -- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
--- Set the GLProgramState for this node.<br>
--- param glProgramState The GLProgramState for this node.
--- @function [parent=#Node] setGLProgramState 
+-- Changes the Y skew angle of the node in degrees.<br>
+-- The difference between `setRotationalSkew()` and `setSkew()` is that the first one simulate Flash's skew functionality<br>
+-- while the second one uses the real skew function.<br>
+-- This angle describes the shear distortion in the Y direction.<br>
+-- Thus, it is the angle between the X coordinate and the bottom edge of the shape.<br>
+-- The default skewY angle is 0. Positive values distort the node in a CCW direction.<br>
+-- param skewY    The Y skew angle of the node in degrees.<br>
+-- warning The physics body doesn't support this.
+-- @function [parent=#Node] setSkewY 
 -- @param self
--- @param #cc.GLProgramState glProgramState
+-- @param #float skewY
 -- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
@@ -304,6 +330,12 @@
 -- @param self
 -- @param #function callback
 -- @return Node#Node self (return value: cc.Node)
+        
+--------------------------------
+-- 
+-- @function [parent=#Node] getOpacity 
+-- @param self
+-- @return unsigned char#unsigned char ret (return value: unsigned char)
         
 --------------------------------
 --  Sets the position (x,y) using values between 0 and 1.<br>
@@ -344,6 +376,25 @@
 -- @param #bool cleanup
 -- @return Node#Node self (return value: cc.Node)
 
+--------------------------------
+-- 
+-- @function [parent=#Node] getRotationX 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
+-- 
+-- @function [parent=#Node] getRotationY 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
+-- 
+-- @function [parent=#Node] setCleanFunction 
+-- @param self
+-- @param #function var
+-- @return Node#Node self (return value: cc.Node)
+        
 --------------------------------
 -- @overload self, cc.Node         
 -- @overload self         
@@ -416,6 +467,24 @@
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
+--  @deprecated use getNodeToParentTransform() instead 
+-- @function [parent=#Node] nodeToParentTransform 
+-- @param self
+-- @return AffineTransform#AffineTransform ret (return value: cc.AffineTransform)
+        
+--------------------------------
+--  @deprecated Use getNumberOfRunningActions() instead 
+-- @function [parent=#Node] numberOfRunningActions 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
+-- 
+-- @function [parent=#Node] isOpacityModifyRGB 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- @overload self, float, float         
 -- @overload self, vec2_table         
 -- @function [parent=#Node] setPosition
@@ -443,28 +512,11 @@
 -- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
--- Sets whether the anchor point will be (0,0) when you position this node.<br>
--- This is an internal method, only used by Layer and Scene. Don't call it outside framework.<br>
--- The default value is false, while in Layer and Scene are true.<br>
--- param ignore    true if anchor point will be (0,0) when you position this node.<br>
--- todo This method should be renamed as setIgnoreAnchorPointForPosition(bool) or something with "set".
--- @function [parent=#Node] ignoreAnchorPointForPosition 
+-- Set the GLProgramState for this node.<br>
+-- param glProgramState The GLProgramState for this node.
+-- @function [parent=#Node] setGLProgramState 
 -- @param self
--- @param #bool ignore
--- @return Node#Node self (return value: cc.Node)
-        
---------------------------------
--- Changes the Y skew angle of the node in degrees.<br>
--- The difference between `setRotationalSkew()` and `setSkew()` is that the first one simulate Flash's skew functionality<br>
--- while the second one uses the real skew function.<br>
--- This angle describes the shear distortion in the Y direction.<br>
--- Thus, it is the angle between the X coordinate and the bottom edge of the shape.<br>
--- The default skewY angle is 0. Positive values distort the node in a CCW direction.<br>
--- param skewY    The Y skew angle of the node in degrees.<br>
--- warning The physics body doesn't support this.
--- @function [parent=#Node] setSkewY 
--- @param self
--- @param #float skewY
+-- @param #cc.GLProgramState glProgramState
 -- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
@@ -526,7 +578,7 @@
 -- return The number of actions that are running plus the ones that are schedule to run.
 -- @function [parent=#Node] getNumberOfRunningActions 
 -- @param self
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- Calls children's updateTransform() method recursively.<br>
@@ -550,7 +602,7 @@
 -- return The amount of children.
 -- @function [parent=#Node] getChildrenCount 
 -- @param self
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- Converts a Vec2 to node (local) space coordinates. The result is in Points.<br>
@@ -593,9 +645,10 @@
 
 --------------------------------
 -- 
--- @function [parent=#Node] isOpacityModifyRGB 
+-- @function [parent=#Node] setShaderProgram 
 -- @param self
--- @return bool#bool ret (return value: bool)
+-- @param #cc.GLProgram glprogram
+-- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
 -- Returns the rotation of the node in degrees.<br>
@@ -604,6 +657,19 @@
 -- @function [parent=#Node] getRotation 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+-- Resumes all scheduled selectors, actions and event listeners.<br>
+-- This method is called internally by onEnter.
+-- @function [parent=#Node] resumeSchedulerAndActions 
+-- @param self
+-- @return Node#Node self (return value: cc.Node)
+        
+--------------------------------
+-- 
+-- @function [parent=#Node] getZOrder 
+-- @param self
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- Returns the anchorPoint in absolute pixels.<br>
@@ -622,6 +688,13 @@
 -- @param self
 -- @param #string name
 -- @param #bool cleanup
+-- @return Node#Node self (return value: cc.Node)
+        
+--------------------------------
+-- 
+-- @function [parent=#Node] setVertexZ 
+-- @param self
+-- @param #float vertexZ
 -- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
@@ -663,6 +736,28 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
+-- Sets whether the anchor point will be (0,0) when you position this node.<br>
+-- This is an internal method, only used by Layer and Scene. Don't call it outside framework.<br>
+-- The default value is false, while in Layer and Scene are true.<br>
+-- param ignore    true if anchor point will be (0,0) when you position this node.<br>
+-- todo This method should be renamed as setIgnoreAnchorPointForPosition(bool) or something with "set".
+-- @function [parent=#Node] ignoreAnchorPointForPosition 
+-- @param self
+-- @param #bool ignore
+-- @return Node#Node self (return value: cc.Node)
+        
+--------------------------------
+-- Checks whether a lambda function is scheduled.<br>
+-- param key      key of the callback<br>
+-- return Whether the lambda function selector is scheduled.<br>
+-- js NA<br>
+-- lua NA
+-- @function [parent=#Node] isScheduled 
+-- @param self
+-- @param #string key
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- 
 -- @function [parent=#Node] getDisplayedColor 
 -- @param self
@@ -676,6 +771,20 @@
 -- @param self
 -- @param #int tag
 -- @return Action#Action ret (return value: cc.Action)
+        
+--------------------------------
+-- 
+-- @function [parent=#Node] setRotationX 
+-- @param self
+-- @param #float rotationX
+-- @return Node#Node self (return value: cc.Node)
+        
+--------------------------------
+-- 
+-- @function [parent=#Node] setRotationY 
+-- @param self
+-- @param #float rotationY
+-- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
 --  Changes the name that is used to identify the node easily.<br>
@@ -720,6 +829,12 @@
 -- @function [parent=#Node] getOrderOfArrival 
 -- @param self
 -- @return int#int ret (return value: int)
+        
+--------------------------------
+--  @deprecated Use getBoundingBox instead 
+-- @function [parent=#Node] boundingBox 
+-- @param self
+-- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
 -- Sets the ActionManager object that is used by all actions.<br>
@@ -825,15 +940,17 @@
 -- @return mat4_table#mat4_table ret (return value: mat4_table)
         
 --------------------------------
--- Checks whether a lambda function is scheduled.<br>
--- param key      key of the callback<br>
--- return Whether the lambda function selector is scheduled.<br>
--- js NA<br>
--- lua NA
--- @function [parent=#Node] isScheduled 
+-- Pauses all scheduled selectors, actions and event listeners.<br>
+-- This method is called internally by onExit.
+-- @function [parent=#Node] pauseSchedulerAndActions 
 -- @param self
--- @param #string key
--- @return bool#bool ret (return value: bool)
+-- @return Node#Node self (return value: cc.Node)
+        
+--------------------------------
+-- 
+-- @function [parent=#Node] getVertexZ 
+-- @param self
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- Defines the oder in which the nodes are renderer.<br>
@@ -862,6 +979,12 @@
 -- @param #float scaleY
 -- @return Node#Node self (return value: cc.Node)
 
+--------------------------------
+-- 
+-- @function [parent=#Node] getCleanFunction 
+-- @param self
+-- @return function#function ret (return value: function)
+        
 --------------------------------
 -- Gets a child from the container with its tag.<br>
 -- param tag   An identifier to find the child node.<br>
@@ -1088,11 +1211,23 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
+--  @deprecated Use getWorldToNodeTransform() instead 
+-- @function [parent=#Node] worldToNodeTransform 
+-- @param self
+-- @return AffineTransform#AffineTransform ret (return value: cc.AffineTransform)
+        
+--------------------------------
 --  Returns the normalized position.<br>
 -- return The normalized position.
 -- @function [parent=#Node] getNormalizedPosition 
 -- @param self
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
+        
+--------------------------------
+--  @deprecated Use getParentToNodeTransform() instead 
+-- @function [parent=#Node] parentToNodeTransform 
+-- @param self
+-- @return AffineTransform#AffineTransform ret (return value: cc.AffineTransform)
         
 --------------------------------
 -- Gets the X rotation (angle) of the node in degrees which performs a horizontal rotation skew.<br>

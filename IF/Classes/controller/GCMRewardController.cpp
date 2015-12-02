@@ -10,7 +10,6 @@
 #include "GCMRewardCommand.h"
 #include "GeneralManager.h"
 #include "YesNoDialog.h"
-#include "LoadingScene.h"
 #include "SceneController.h"
 #include "ToolController.h"
 #include "EquipmentController.h"

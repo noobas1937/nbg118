@@ -96,6 +96,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#Armature] drawContour 
+-- @param self
+-- @return Armature#Armature self (return value: ccs.Armature)
+        
+--------------------------------
+-- 
 -- @function [parent=#Armature] setBatchNode 
 -- @param self
 -- @param #ccs.BatchNode batchNode

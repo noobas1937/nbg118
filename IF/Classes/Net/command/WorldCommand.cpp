@@ -13,7 +13,6 @@
 #include "WorldMapView.h"
 #include "LogoutCommand.h"
 #include "NetController.h"
-#include "LoadingScene.h"
 #include "FlyHint.h"
 #include "UIComponent.h"
 #include "SoundController.h"

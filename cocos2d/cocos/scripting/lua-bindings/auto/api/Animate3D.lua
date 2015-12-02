@@ -5,6 +5,21 @@
 -- @parent_module cc
 
 --------------------------------
+-- 
+-- @function [parent=#Animate3D] setPlayBack 
+-- @param self
+-- @param #bool reverse
+-- @return Animate3D#Animate3D self (return value: cc.Animate3D)
+        
+--------------------------------
+-- 
+-- @function [parent=#Animate3D] setKeyFrameUserInfo 
+-- @param self
+-- @param #int keyFrame
+-- @param #map_table userInfo
+-- @return Animate3D#Animate3D self (return value: cc.Animate3D)
+        
+--------------------------------
 -- get & set speed, negative speed means playing reverse 
 -- @function [parent=#Animate3D] getSpeed 
 -- @param self
@@ -29,6 +44,12 @@
 -- @function [parent=#Animate3D] removeFromMap 
 -- @param self
 -- @return Animate3D#Animate3D self (return value: cc.Animate3D)
+        
+--------------------------------
+-- get & set play reverse, these are deprecated, use set negative speed instead
+-- @function [parent=#Animate3D] getPlayBack 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 

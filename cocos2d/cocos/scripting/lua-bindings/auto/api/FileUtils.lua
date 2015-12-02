@@ -141,6 +141,15 @@
 -- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
+-- Removes a directory.<br>
+-- param dirPath  The full path of the directory, it must be an absolute path.<br>
+-- return True if the directory have been removed successfully, false if not.
+-- @function [parent=#FileUtils] removeDirectory 
+-- @param self
+-- @param #string dirPath
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- Gets the array of search paths.<br>
 -- return The array of search paths.<br>
 -- see fullPathForFilename(const char*).<br>
@@ -174,15 +183,6 @@
 -- @param #char filedata
 -- @param #int filesize
 -- @return map_table#map_table ret (return value: map_table)
-        
---------------------------------
--- Removes a directory.<br>
--- param dirPath  The full path of the directory, it must be an absolute path.<br>
--- return True if the directory have been removed successfully, false if not.
--- @function [parent=#FileUtils] removeDirectory 
--- @param self
--- @param #string dirPath
--- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- Sets the array of search paths.<br>
@@ -344,6 +344,18 @@
 -- @function [parent=#FileUtils] destroyInstance 
 -- @param self
 -- @return FileUtils#FileUtils self (return value: cc.FileUtils)
+        
+--------------------------------
+--  @deprecated Use destroyInstance() instead 
+-- @function [parent=#FileUtils] purgeFileUtils 
+-- @param self
+-- @return FileUtils#FileUtils self (return value: cc.FileUtils)
+        
+--------------------------------
+--  @deprecated Use getInstance() instead 
+-- @function [parent=#FileUtils] sharedFileUtils 
+-- @param self
+-- @return FileUtils#FileUtils ret (return value: cc.FileUtils)
         
 --------------------------------
 -- Gets the instance of FileUtils.

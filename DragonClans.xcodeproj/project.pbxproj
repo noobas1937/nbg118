@@ -996,12 +996,25 @@
 		B80A40AE1BD88A7A00B4D9CB /* NBWorldMapMainCity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B80A40AC1BD88A7A00B4D9CB /* NBWorldMapMainCity.cpp */; };
 		B80D4B2A1BAFA1D800422225 /* nb_world.tmx in Resources */ = {isa = PBXBuildFile; fileRef = B80D4B281BAFA1D800422225 /* nb_world.tmx */; };
 		B80D4B2F1BAFCA6B00422225 /* nb_world_link_area.tmx in Resources */ = {isa = PBXBuildFile; fileRef = B80D4B2E1BAFCA6B00422225 /* nb_world_link_area.tmx */; };
+		B81B73D91C02DCA50092774E /* LuaCCBNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B81B73C71C02DCA50092774E /* LuaCCBNode.cpp */; };
+		B81B73DA1C02DCA50092774E /* NBG.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B81B73C91C02DCA50092774E /* NBG.cpp */; };
+		B81B73DB1C02DCA50092774E /* NBG.mm in Sources */ = {isa = PBXBuildFile; fileRef = B81B73CB1C02DCA50092774E /* NBG.mm */; };
+		B81B73DC1C02DCA50092774E /* NBGNetManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B81B73CC1C02DCA50092774E /* NBGNetManager.cpp */; };
+		B81B73DD1C02DCA50092774E /* NBGNetManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = B81B73CE1C02DCA50092774E /* NBGNetManager.mm */; };
+		B81B73DE1C02DCA50092774E /* lua_nbg_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B81B73D01C02DCA50092774E /* lua_nbg_auto.cpp */; };
+		B81B73DF1C02DCA50092774E /* NBGCCBReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B81B73D41C02DCA50092774E /* NBGCCBReader.cpp */; };
+		B81B73E01C02DCA50092774E /* NBGNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B81B73D61C02DCA50092774E /* NBGNode.cpp */; };
+		B81B73E91C02DD230092774E /* NB_md5.c in Sources */ = {isa = PBXBuildFile; fileRef = B81B73E71C02DD230092774E /* NB_md5.c */; };
+		B81B73EB1C02DE150092774E /* src in Resources */ = {isa = PBXBuildFile; fileRef = B81B73EA1C02DE150092774E /* src */; };
+		B81B73ED1C02FF790092774E /* res in Resources */ = {isa = PBXBuildFile; fileRef = B81B73EC1C02FF790092774E /* res */; };
 		B838C5B11BDA36EE00EC74B3 /* NBWaterSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B838C5AF1BDA36EE00EC74B3 /* NBWaterSprite.cpp */; };
 		B8581EA01BBA34E70027F733 /* TypeDefinition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8581E9F1BBA34E70027F733 /* TypeDefinition.cpp */; };
 		B864A3BD1BCB43EA001BD875 /* DynamicTiledMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B864A3BB1BCB43EA001BD875 /* DynamicTiledMap.cpp */; };
 		B86B5D1B1BCCA7340010EC71 /* NBWorldMapDecoration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B86B5D191BCCA7340010EC71 /* NBWorldMapDecoration.cpp */; };
 		B86B5D3E1BCF3D1E0010EC71 /* NBWorldMonster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B86B5D3C1BCF3D1E0010EC71 /* NBWorldMonster.cpp */; };
 		B86B5D411BCF422E0010EC71 /* CloudLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B86B5D3F1BCF422E0010EC71 /* CloudLayer.cpp */; };
+		B8813C171BFACE5D00BED7A7 /* manifest in Resources */ = {isa = PBXBuildFile; fileRef = B8813C161BFACE5D00BED7A7 /* manifest */; };
+		B8ECF0851BF58908002160E5 /* NBDLCController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8ECF0831BF58908002160E5 /* NBDLCController.cpp */; };
 		B8F554041BD093CB00AD16E3 /* NBWorldNPC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8F554021BD093CB00AD16E3 /* NBWorldNPC.cpp */; };
 		BA19245118C87ED7009C1CEA /* CCLabelIFBMFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA19244D18C87ED7009C1CEA /* CCLabelIFBMFont.cpp */; };
 		BA19245218C87ED7009C1CEA /* CCLabelIFTTF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA19244F18C87ED7009C1CEA /* CCLabelIFTTF.cpp */; };
@@ -3153,6 +3166,27 @@
 		B80A40AD1BD88A7A00B4D9CB /* NBWorldMapMainCity.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NBWorldMapMainCity.hpp; sourceTree = "<group>"; };
 		B80D4B281BAFA1D800422225 /* nb_world.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = nb_world.tmx; path = Resources/nb_world.tmx; sourceTree = "<group>"; };
 		B80D4B2E1BAFCA6B00422225 /* nb_world_link_area.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = nb_world_link_area.tmx; path = Resources/nb_world_link_area.tmx; sourceTree = "<group>"; };
+		B81B73C61C02DCA50092774E /* api4lua_support.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = api4lua_support.h; sourceTree = "<group>"; };
+		B81B73C71C02DCA50092774E /* LuaCCBNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaCCBNode.cpp; sourceTree = "<group>"; };
+		B81B73C81C02DCA50092774E /* LuaCCBNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaCCBNode.h; sourceTree = "<group>"; };
+		B81B73C91C02DCA50092774E /* NBG.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBG.cpp; sourceTree = "<group>"; };
+		B81B73CA1C02DCA50092774E /* NBG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBG.h; sourceTree = "<group>"; };
+		B81B73CB1C02DCA50092774E /* NBG.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NBG.mm; sourceTree = "<group>"; };
+		B81B73CC1C02DCA50092774E /* NBGNetManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBGNetManager.cpp; sourceTree = "<group>"; };
+		B81B73CD1C02DCA50092774E /* NBGNetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBGNetManager.h; sourceTree = "<group>"; };
+		B81B73CE1C02DCA50092774E /* NBGNetManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NBGNetManager.mm; sourceTree = "<group>"; };
+		B81B73D01C02DCA50092774E /* lua_nbg_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_nbg_auto.cpp; sourceTree = "<group>"; };
+		B81B73D11C02DCA50092774E /* lua_nbg_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_nbg_auto.hpp; sourceTree = "<group>"; };
+		B81B73D31C02DCA50092774E /* INBGCCBDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INBGCCBDelegate.h; sourceTree = "<group>"; };
+		B81B73D41C02DCA50092774E /* NBGCCBReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBGCCBReader.cpp; sourceTree = "<group>"; };
+		B81B73D51C02DCA50092774E /* NBGCCBReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBGCCBReader.h; sourceTree = "<group>"; };
+		B81B73D61C02DCA50092774E /* NBGNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBGNode.cpp; sourceTree = "<group>"; };
+		B81B73D71C02DCA50092774E /* NBGNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBGNode.h; sourceTree = "<group>"; };
+		B81B73D81C02DCA50092774E /* lua_module_register.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_module_register.h; sourceTree = "<group>"; };
+		B81B73E71C02DD230092774E /* NB_md5.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = NB_md5.c; sourceTree = "<group>"; };
+		B81B73E81C02DD230092774E /* NB_md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NB_md5.h; sourceTree = "<group>"; };
+		B81B73EA1C02DE150092774E /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; name = src; path = Resources/src; sourceTree = "<group>"; };
+		B81B73EC1C02FF790092774E /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = Resources/res; sourceTree = "<group>"; };
 		B838C5AF1BDA36EE00EC74B3 /* NBWaterSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBWaterSprite.cpp; sourceTree = "<group>"; };
 		B838C5B01BDA36EE00EC74B3 /* NBWaterSprite.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NBWaterSprite.hpp; sourceTree = "<group>"; };
 		B8581E9F1BBA34E70027F733 /* TypeDefinition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TypeDefinition.cpp; sourceTree = "<group>"; };
@@ -3164,6 +3198,9 @@
 		B86B5D3D1BCF3D1E0010EC71 /* NBWorldMonster.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NBWorldMonster.hpp; sourceTree = "<group>"; };
 		B86B5D3F1BCF422E0010EC71 /* CloudLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CloudLayer.cpp; sourceTree = "<group>"; };
 		B86B5D401BCF422E0010EC71 /* CloudLayer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CloudLayer.hpp; sourceTree = "<group>"; };
+		B8813C161BFACE5D00BED7A7 /* manifest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = manifest; path = Resources/manifest; sourceTree = "<group>"; };
+		B8ECF0831BF58908002160E5 /* NBDLCController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBDLCController.cpp; sourceTree = "<group>"; };
+		B8ECF0841BF58908002160E5 /* NBDLCController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NBDLCController.hpp; sourceTree = "<group>"; };
 		B8F554021BD093CB00AD16E3 /* NBWorldNPC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBWorldNPC.cpp; sourceTree = "<group>"; };
 		B8F554031BD093CB00AD16E3 /* NBWorldNPC.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NBWorldNPC.hpp; sourceTree = "<group>"; };
 		BA19244D18C87ED7009C1CEA /* CCLabelIFBMFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelIFBMFont.cpp; sourceTree = "<group>"; };
@@ -5681,6 +5718,73 @@
 			path = libs/extensions/crashhelper;
 			sourceTree = "<group>";
 		};
+		B81B73C41C02DCA50092774E /* Lua */ = {
+			isa = PBXGroup;
+			children = (
+				B81B73C51C02DCA50092774E /* api4lua */,
+				B81B73CF1C02DCA50092774E /* auto */,
+				B81B73D21C02DCA50092774E /* ccb */,
+				B81B73E51C02DD230092774E /* ext */,
+				B81B73D81C02DCA50092774E /* lua_module_register.h */,
+			);
+			name = Lua;
+			path = Classes/Lua;
+			sourceTree = "<group>";
+		};
+		B81B73C51C02DCA50092774E /* api4lua */ = {
+			isa = PBXGroup;
+			children = (
+				B81B73C61C02DCA50092774E /* api4lua_support.h */,
+				B81B73C71C02DCA50092774E /* LuaCCBNode.cpp */,
+				B81B73C81C02DCA50092774E /* LuaCCBNode.h */,
+				B81B73C91C02DCA50092774E /* NBG.cpp */,
+				B81B73CA1C02DCA50092774E /* NBG.h */,
+				B81B73CB1C02DCA50092774E /* NBG.mm */,
+				B81B73CC1C02DCA50092774E /* NBGNetManager.cpp */,
+				B81B73CD1C02DCA50092774E /* NBGNetManager.h */,
+				B81B73CE1C02DCA50092774E /* NBGNetManager.mm */,
+			);
+			path = api4lua;
+			sourceTree = "<group>";
+		};
+		B81B73CF1C02DCA50092774E /* auto */ = {
+			isa = PBXGroup;
+			children = (
+				B81B73D01C02DCA50092774E /* lua_nbg_auto.cpp */,
+				B81B73D11C02DCA50092774E /* lua_nbg_auto.hpp */,
+			);
+			path = auto;
+			sourceTree = "<group>";
+		};
+		B81B73D21C02DCA50092774E /* ccb */ = {
+			isa = PBXGroup;
+			children = (
+				B81B73D31C02DCA50092774E /* INBGCCBDelegate.h */,
+				B81B73D41C02DCA50092774E /* NBGCCBReader.cpp */,
+				B81B73D51C02DCA50092774E /* NBGCCBReader.h */,
+				B81B73D61C02DCA50092774E /* NBGNode.cpp */,
+				B81B73D71C02DCA50092774E /* NBGNode.h */,
+			);
+			path = ccb;
+			sourceTree = "<group>";
+		};
+		B81B73E51C02DD230092774E /* ext */ = {
+			isa = PBXGroup;
+			children = (
+				B81B73E61C02DD230092774E /* md5 */,
+			);
+			path = ext;
+			sourceTree = "<group>";
+		};
+		B81B73E61C02DD230092774E /* md5 */ = {
+			isa = PBXGroup;
+			children = (
+				B81B73E71C02DD230092774E /* NB_md5.c */,
+				B81B73E81C02DD230092774E /* NB_md5.h */,
+			);
+			path = md5;
+			sourceTree = "<group>";
+		};
 		B86B5D181BCCA2900010EC71 /* map */ = {
 			isa = PBXGroup;
 			children = (
@@ -5906,6 +6010,9 @@
 		DB9F590717CD9A520037F7E5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B81B73EC1C02FF790092774E /* res */,
+				B81B73EA1C02DE150092774E /* src */,
+				B8813C161BFACE5D00BED7A7 /* manifest */,
 				975778D71C07F97200D6CB14 /* nb_fnt1.fnt */,
 				975778D81C07F97200D6CB14 /* nb_fnt1.png */,
 				975778D91C07F97200D6CB14 /* nb_fnt2.fnt */,
@@ -6017,6 +6124,7 @@
 				FD9C967D17CF284D005F493D /* CommonInclude.h */,
 				DBA087DA17CDA95F001C68AD /* controller */,
 				FD6F415817CDD218008FDB9C /* Ext */,
+				B81B73C41C02DCA50092774E /* Lua */,
 				DBA087DB17CDA95F001C68AD /* model */,
 				366E306417D58C3A006CCCBF /* Net */,
 				DBA087DE17CDA95F001C68AD /* scene */,
@@ -6125,6 +6233,8 @@
 				0C02A47D1ADFB4F5003C5112 /* UploadImageController.h */,
 				FD49130F18AE10660002D631 /* WorldController.cpp */,
 				FD49131018AE10660002D631 /* WorldController.h */,
+				B8ECF0831BF58908002160E5 /* NBDLCController.cpp */,
+				B8ECF0841BF58908002160E5 /* NBDLCController.hpp */,
 			);
 			name = controller;
 			path = Classes/controller;
@@ -7136,6 +7246,7 @@
 				272AB64E1B15C7BC0052E896 /* g045.png in Resources */,
 				272AB6231B15C7BC0052E896 /* alliance_01_full.png in Resources */,
 				1C4950701AA0576200333C5E /* Spine in Resources */,
+				B81B73EB1C02DE150092774E /* src in Resources */,
 				DBEEF73019764FA7009D9327 /* Arial_Bold_Regular.png in Resources */,
 				59D7F03D1AF0BF85000120F9 /* HS-powered-by-logo@2x.png in Resources */,
 				DB368DA818EAC5BF00C886DF /* Arial_Bold.fnt in Resources */,
@@ -7173,6 +7284,7 @@
 				59D7F0301AF0BF85000120F9 /* HelpshiftLocalizable.strings in Resources */,
 				272AB65E1B15C7BC0052E896 /* mail_battlereport.png in Resources */,
 				DB3548A01B6A336C001B7FA0 /* number.fnt in Resources */,
+				B8813C171BFACE5D00BED7A7 /* manifest in Resources */,
 				FDB0D5D118209D7D00C11959 /* Loading in Resources */,
 				DB784C98198F836100DB5CBB /* Arial_Bold_Border.fnt in Resources */,
 				272AB66E1B15C7BC0052E896 /* messages.plist in Resources */,
@@ -7278,6 +7390,7 @@
 				BAD17E571AA5BDB400163E67 /* TwitterKitResources.bundle in Resources */,
 				59D7F04A1AF0BF85000120F9 /* HSTutorial@2x.png in Resources */,
 				272AB6591B15C7BC0052E896 /* icon_chat_translate2.png in Resources */,
+				B81B73ED1C02FF790092774E /* res in Resources */,
 				272AB6671B15C7BC0052E896 /* ui_gold_coin.png in Resources */,
 				E6402A1018AC5BEF00CCE64C /* cloud2.tmx in Resources */,
 			);
@@ -7297,7 +7410,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "checkFile () {\n    touch -cm $1\n    if [[ -d $1 ]]; then\n        for file in \"$1/\"*\n        do (\n            checkFile $file\n        )\n        done\n    fi\n}\n\ntargetDir=\"${SRCROOT}/IF/Resources\"\ncheckFile $targetDir";
+			shellScript = "checkFile () {\n    touch -cm $1\n    if [[ -d $1 ]]; then\n        for file in \"$1/\"*\n        do (\n            checkFile $file\n        )\n        done\n    fi\n}\n\ntargetDir=\"${SRCROOT}/IF/Resources\"\ncheckFile $targetDir\nif [ ! -d \"${targetDir}/manifest\" ]; then\n    mkdir ${targetDir}/manifest\nfi\n\nif [ \"${CONFIGURATION}\" = \"Release\" ]; then\n    luaSrcDir=\"${SRCROOT}/IF/Resources/src\"\n    luaSrcDir_tmp=\"${SRCROOT}/IF/Resources/src_tmp\"\n    pack_files_Dir=\"${SRCROOT}/tools/pack_files\"\n    mv ${luaSrcDir} ${luaSrcDir_tmp}\n    cd ${DIR}\n    ./pack_files/pack_files.sh -i ${luaSrcDir_tmp} -o ${luaSrcDir} -ek n_77wDDolqz -es i900_gFymA\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -7345,6 +7458,7 @@
 				E6CE60331A7630AD002BB495 /* KingsGiftView.cpp in Sources */,
 				36A968A817E981DE002129DA /* YesNoDialog.cpp in Sources */,
 				59DEBDF71B058B40007FC5CB /* ADJAdjustFactory.m in Sources */,
+				B81B73DE1C02DCA50092774E /* lua_nbg_auto.cpp in Sources */,
 				96E68B4719F66C6F0068A09C /* FBFriendInfo.cpp in Sources */,
 				7CC3F2121A00F8CE007BA6E3 /* GoldExchangeAdvertisingView.cpp in Sources */,
 				13ADB1101B6773EF0028161F /* DRConfigCommand.cpp in Sources */,
@@ -7427,6 +7541,7 @@
 				276ED2C01B18171B00C54632 /* BDKViewController.mm in Sources */,
 				6C8673AF1B96DE00005103E3 /* VersionHelper.mm in Sources */,
 				E65681FB19EBB5E00049EFD0 /* GetAllServerListCommand.cpp in Sources */,
+				B81B73DB1C02DCA50092774E /* NBG.mm in Sources */,
 				6C86FE891B94690300CD5C1C /* ZYTSystemMailListVC.m in Sources */,
 				57FAFDBB18F55E3E00366A17 /* AllianceScienceListView.cpp in Sources */,
 				061E39911B833C2F00E8CD32 /* IFShakeLayer.cpp in Sources */,
@@ -7464,6 +7579,8 @@
 				57DB75BA18C56BD50093A4CD /* ToolCommand.cpp in Sources */,
 				9628F5C31B256C3600B94982 /* CrossServiceTargetView.cpp in Sources */,
 				96D7BABF1A3EA6B700D5118F /* PushKingdomName.cpp in Sources */,
+				B81B73DD1C02DCA50092774E /* NBGNetManager.mm in Sources */,
+				B81B73E01C02DCA50092774E /* NBGNode.cpp in Sources */,
 				94DF5C121AF9EE7D00560B58 /* WorldMarchCompetePush.cpp in Sources */,
 				272AB6781B15C7BC0052E896 /* ChatCellIOS.mm in Sources */,
 				FDC9E79218BDED6500F0962F /* BlankTile.cpp in Sources */,
@@ -7775,6 +7892,7 @@
 				FD6F417F17CDD218008FDB9C /* CCWebView.cpp in Sources */,
 				0C345ED01AB1A80C007D4EDC /* EvaluationView.cpp in Sources */,
 				FD49131118AE10660002D631 /* WorldController.cpp in Sources */,
+				B8ECF0851BF58908002160E5 /* NBDLCController.cpp in Sources */,
 				FD6F418017CDD218008FDB9C /* CCWebView.mm in Sources */,
 				576FCDC51920E35D00EAC245 /* TileInfo.cpp in Sources */,
 				57DB971118ED5CF600C80FA9 /* GetUserInfoCommand.cpp in Sources */,
@@ -7924,6 +8042,7 @@
 				E6FC9B13181E02D000BAFCFF /* MailPopUpView.cpp in Sources */,
 				88A3E4CA18BEED2400788B54 /* TrainSoldierCommand.cpp in Sources */,
 				9631D2D11A80950600C24306 /* AllianceActivityView.cpp in Sources */,
+				B81B73DC1C02DCA50092774E /* NBGNetManager.cpp in Sources */,
 				E6FC9B14181E02D000BAFCFF /* MailReadPopUpView.cpp in Sources */,
 				FD1F56D018BC8B2600CBF71F /* AddFavorite.cpp in Sources */,
 				6CD847AE1B2EA29C00C8AF0D /* ZYTChatSystemCell.m in Sources */,
@@ -8131,6 +8250,7 @@
 				96E055F81A5A214200FF4405 /* PushKingdomBanner.cpp in Sources */,
 				E6497D9918C96A8100A8B502 /* BuildingHospitalPopUpView.cpp in Sources */,
 				E6497D9C18C96A8B00A8B502 /* TreatCommand.cpp in Sources */,
+				B81B73E91C02DD230092774E /* NB_md5.c in Sources */,
 				E6E05C601A6E19A600510E8E /* RechargePopupView.cpp in Sources */,
 				96E3C24D1A382F340085423E /* KingdomServantCell.cpp in Sources */,
 				E6497D9F18C96A9700A8B502 /* TreatInfo.cpp in Sources */,
@@ -8185,6 +8305,7 @@
 				96D57B9F18DFD07200384045 /* JoinAllianceView.cpp in Sources */,
 				60F1EA8C1AE0F9BF00E88C58 /* KingdomMailView.cpp in Sources */,
 				96E3C2411A37F0F90085423E /* CheckKingdomView.cpp in Sources */,
+				B81B73DF1C02DCA50092774E /* NBGCCBReader.cpp in Sources */,
 				96D57BA218DFDFBB00384045 /* AllianceInfo.cpp in Sources */,
 				E676995918E03D5900D0B201 /* NewPlotView.cpp in Sources */,
 				60DB5DE51B219139006C37B7 /* DragonInfo.cpp in Sources */,
@@ -8299,6 +8420,7 @@
 				570943281AA93BE100A0D410 /* EquipNewUseView.cpp in Sources */,
 				57E654F0192F30B9003A4273 /* TileOpenView.cpp in Sources */,
 				9644A9C41901213200968A7A /* ItemStatusView.cpp in Sources */,
+				B81B73D91C02DCA50092774E /* LuaCCBNode.cpp in Sources */,
 				96FBF1E91A4AA7C200281C55 /* PushKingdomWinner.cpp in Sources */,
 				9644A9C719012F3B00968A7A /* UseItemStatusView.cpp in Sources */,
 				96D966641904AEAF00C5323A /* ShowStatusItemCommand.cpp in Sources */,
@@ -8307,6 +8429,7 @@
 				E64B37FA19D03D7300884255 /* ResourceSpeedPush.cpp in Sources */,
 				96E39B771A26D284005BC258 /* AllianceIntroTip.cpp in Sources */,
 				9625A3E519769561002CA560 /* AllianceRenderHelpCommand.cpp in Sources */,
+				B81B73DA1C02DCA50092774E /* NBG.cpp in Sources */,
 				E671517B1907FF68002369C8 /* GeneralPush.cpp in Sources */,
 				6C3532011B4E21AD00CDDEA3 /* ZYTChatTableViewCell.m in Sources */,
 				E66FB911190A2B13003A7413 /* ArmyOpenPush.cpp in Sources */,
@@ -8561,6 +8684,10 @@
 					"-lz",
 					"-lsqlite3",
 					"-ObjC",
+					"-pagezero_size",
+					10000,
+					"-image_base",
+					100000000,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.elex-tech.DragonClans";
 				PRODUCT_NAME = DragonClans;
@@ -8639,6 +8766,10 @@
 					"-lz",
 					"-lsqlite3",
 					"-ObjC",
+					"-pagezero_size",
+					10000,
+					"-image_base",
+					100000000,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.elex-tech.DragonClans";
 				PRODUCT_NAME = DragonClans;

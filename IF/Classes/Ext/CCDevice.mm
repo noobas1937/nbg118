@@ -146,6 +146,11 @@ string CCDevice::getVersionName()
     return [[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"] UTF8String];
 }
 
+string CCDevice::getDLCVersionName()
+{
+    return CCDevice::getVersionName();
+}
+
 string CCDevice::getVersionCode()
 {
     return [[NSString stringWithFormat: @"%d",[[[[NSBundle mainBundle] infoDictionary] objectForKey:@"Version Code"] intValue]] UTF8String];

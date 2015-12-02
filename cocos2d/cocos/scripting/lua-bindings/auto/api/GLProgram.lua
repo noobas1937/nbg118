@@ -21,6 +21,22 @@
 -- @return bool#bool ret (return value: bool)
 
 --------------------------------
+-- 
+-- @function [parent=#GLProgram] initWithVertexShaderFilename 
+-- @param self
+-- @param #string vertexFilename
+-- @param #string fragFilename
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#GLProgram] addAttribute 
+-- @param self
+-- @param #string attributeName
+-- @param #unsigned int index
+-- @return GLProgram#GLProgram self (return value: cc.GLProgram)
+        
+--------------------------------
 -- @overload self, string, string, string         
 -- @overload self, string, string         
 -- @function [parent=#GLProgram] initWithFilenames
@@ -85,6 +101,14 @@
 -- @param #string attributeName
 -- @param #unsigned int index
 -- @return GLProgram#GLProgram self (return value: cc.GLProgram)
+        
+--------------------------------
+-- 
+-- @function [parent=#GLProgram] initWithVertexShaderByteArray 
+-- @param self
+-- @param #char vertexByteArray
+-- @param #char fragByteArray
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 --  Calls glGetAttribLocation. 

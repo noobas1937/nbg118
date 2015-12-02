@@ -26,6 +26,14 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
+-- the cache method to create or get an Animation3D object
+-- @function [parent=#Animation3D] getOrCreate 
+-- @param self
+-- @param #string filename
+-- @param #string animationName
+-- @return Animation3D#Animation3D ret (return value: cc.Animation3D)
+        
+--------------------------------
 -- read all animation or only the animation with given animationName? animationName == "" read the first.
 -- @function [parent=#Animation3D] create 
 -- @param self

@@ -24,7 +24,6 @@ def build(build_mode):
         build_mode = 'debug'
 
     print app_android_root, build_mode, cocos_root
-    print "test123"
     command = 'cocos compile -p android -s %s -m %s' % (app_android_root, build_mode) 
     if os.system(command) != 0:
         raise Exception("Build dynamic library for project [ " + app_android_root + " ] fails!")

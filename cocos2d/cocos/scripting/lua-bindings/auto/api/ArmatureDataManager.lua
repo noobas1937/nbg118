@@ -145,6 +145,12 @@
 -- @return ArmatureDataManager#ArmatureDataManager self (return value: ccs.ArmatureDataManager)
         
 --------------------------------
+--  @deprecated Use destoryInstance() instead 
+-- @function [parent=#ArmatureDataManager] purge 
+-- @param self
+-- @return ArmatureDataManager#ArmatureDataManager self (return value: ccs.ArmatureDataManager)
+        
+--------------------------------
 -- 
 -- @function [parent=#ArmatureDataManager] destroyInstance 
 -- @param self
@@ -153,6 +159,12 @@
 --------------------------------
 -- 
 -- @function [parent=#ArmatureDataManager] getInstance 
+-- @param self
+-- @return ArmatureDataManager#ArmatureDataManager ret (return value: ccs.ArmatureDataManager)
+        
+--------------------------------
+--  @deprecated Use getInstance() instead 
+-- @function [parent=#ArmatureDataManager] sharedArmatureDataManager 
 -- @param self
 -- @return ArmatureDataManager#ArmatureDataManager ret (return value: ccs.ArmatureDataManager)
         

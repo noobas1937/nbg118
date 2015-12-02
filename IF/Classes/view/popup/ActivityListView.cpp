@@ -401,25 +401,25 @@ bool ActivityListCell::init(ActivityEventObj* actObj,CCNode* clickArea)
     setContentSize(ccb->getContentSize());
 
     if (CCLabelIF::canBeSupportedWithBmpFont(language)) {
-//        m_nameLabel->setFntFile("Arial_Bold_Border.fnt");
-//        m_infoTTF->setFntFile("Arial_Bold_Border.fnt");
-//        m_timeLabel1->setFntFile("Arial_Bold_Border.fnt");
-//        m_desText1->setFntFile("Arial_Bold_Border.fnt");
-//        m_lblItem1->setFntFile("Arial_Bold_Border.fnt");
-//        m_lblItem2->setFntFile("Arial_Bold_Border.fnt");
-//        m_moreLabel->setFntFile("Arial_Bold.fnt");
-//        m_rewardName->setFntFile("Arial_Bold_Border.fnt");
-//        m_timeLabel2->setFntFile("Arial_Bold_Border.fnt");
+//        m_nameLabel->setFntFile(getNBFont(NB_FONT_Bold_Border));
+//        m_infoTTF->setFntFile(getNBFont(NB_FONT_Bold_Border));
+//        m_timeLabel1->setFntFile(getNBFont(NB_FONT_Bold_Border));
+//        m_desText1->setFntFile(getNBFont(NB_FONT_Bold_Border));
+//        m_lblItem1->setFntFile(getNBFont(NB_FONT_Bold_Border));
+//        m_lblItem2->setFntFile(getNBFont(NB_FONT_Bold_Border));
+//        m_moreLabel->setFntFile(getNBFont(NB_FONT_Bold));
+//        m_rewardName->setFntFile(getNBFont(NB_FONT_Bold_Border));
+//        m_timeLabel2->setFntFile(getNBFont(NB_FONT_Bold_Border));
         
-        m_nameLabel->setFntFile("Arial_Bold_Regular.fnt");
-        m_infoTTF->setFntFile("Arial_Bold_Regular.fnt");
-        m_timeLabel1->setFntFile("Arial_Bold_Regular.fnt");
-        m_desText1->setFntFile("Arial_Bold_Regular.fnt");
-        m_lblItem1->setFntFile("Arial_Bold_Regular.fnt");
-        m_lblItem2->setFntFile("Arial_Bold_Regular.fnt");
-        m_moreLabel->setFntFile("Arial_Bold.fnt");
-        m_rewardName->setFntFile("Arial_Bold_Regular.fnt");
-        m_timeLabel2->setFntFile("Arial_Bold_Regular.fnt");
+        m_nameLabel->setFntFile(getNBFont(NB_FONT_Bold_Regular));
+        m_infoTTF->setFntFile(getNBFont(NB_FONT_Bold_Regular));
+        m_timeLabel1->setFntFile(getNBFont(NB_FONT_Bold_Regular));
+        m_desText1->setFntFile(getNBFont(NB_FONT_Bold_Regular));
+        m_lblItem1->setFntFile(getNBFont(NB_FONT_Bold_Regular));
+        m_lblItem2->setFntFile(getNBFont(NB_FONT_Bold_Regular));
+        m_moreLabel->setFntFile(getNBFont(NB_FONT_Bold));
+        m_rewardName->setFntFile(getNBFont(NB_FONT_Bold_Regular));
+        m_timeLabel2->setFntFile(getNBFont(NB_FONT_Bold_Regular));
     }
     if (CCLabelIF::canBeSupportedWithBmpFont(language)) {
         CCLabelIF::enableBmFont(false);

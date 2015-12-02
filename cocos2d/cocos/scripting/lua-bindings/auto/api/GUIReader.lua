@@ -46,7 +46,19 @@
         
 --------------------------------
 -- 
+-- @function [parent=#GUIReader] purgeGUIReader 
+-- @param self
+-- @return GUIReader#GUIReader self (return value: ccs.GUIReader)
+        
+--------------------------------
+-- 
 -- @function [parent=#GUIReader] getInstance 
+-- @param self
+-- @return GUIReader#GUIReader ret (return value: ccs.GUIReader)
+        
+--------------------------------
+-- 
+-- @function [parent=#GUIReader] shareReader 
 -- @param self
 -- @return GUIReader#GUIReader ret (return value: ccs.GUIReader)
         

@@ -579,7 +579,7 @@ bool UIComponent::init(CCSize size)
     
     this->setContentSize(CCSizeMake(size.width, size.height));
     
-    m_power->setFntFile("Arial_Bold_Border.fnt");
+    m_power->setFntFile(getNBFont(NB_FONT_Bold_Border));
     
     setFavoriteIconVisible(false);
     this->m_gold->setString(CC_CMDITOA(GlobalData::shared()->playerInfo.gold).c_str());
@@ -6135,7 +6135,7 @@ void UIComponent::setActivityStatus(){
 void UIComponent::resetGoldActivityBox(CCObject* p){
     // tao.yu 第一个版本关闭充值
     
-    if (true) {
+    if (false) {
         this->m_rechargeNode->setVisible(false);
         return;
     }

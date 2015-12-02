@@ -28,6 +28,13 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
+-- Gets the string value of label.<br>
+-- return String value.
+-- @function [parent=#Text] getStringValue 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
 -- @overload self, int         
 -- @overload self         
 -- @function [parent=#Text] disableEffect
@@ -125,7 +132,7 @@
 -- return  String length.
 -- @function [parent=#Text] getStringLength 
 -- @param self
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 --  Gets the render size in auto mode.<br>
@@ -203,6 +210,14 @@
 -- @function [parent=#Text] setTextHorizontalAlignment 
 -- @param self
 -- @param #int alignment
+-- @return Text#Text self (return value: ccui.Text)
+        
+--------------------------------
+-- Changes the string value of label.<br>
+-- param text  String value.
+-- @function [parent=#Text] setText 
+-- @param self
+-- @param #string text
 -- @return Text#Text self (return value: ccui.Text)
         
 --------------------------------

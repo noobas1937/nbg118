@@ -24,6 +24,14 @@
 --------------------------------
 -- Returns a tile from position x,y.<br>
 -- For the moment only channel R is used
+-- @function [parent=#TileMapAtlas] tileAt 
+-- @param self
+-- @param #vec2_table position
+-- @return color3b_table#color3b_table ret (return value: color3b_table)
+        
+--------------------------------
+-- Returns a tile from position x,y.<br>
+-- For the moment only channel R is used
 -- @function [parent=#TileMapAtlas] getTileAt 
 -- @param self
 -- @param #vec2_table position
