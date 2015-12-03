@@ -160,7 +160,7 @@ private:
     CCSafeObject<CCNode> m_soldierPrtNode;
     
     CCSafeObject<CCControlButton> m_fortHelpBtn;
-    
+    CCSafeObject<Node> m_trapsNumNode;
     CCSafeObject<CCNode> m_cdBarNode;
     CCSafeObject<CCLabelIF> m_nameText;
     CCSafeObject<CCScale9Sprite> m_progrossBar;
