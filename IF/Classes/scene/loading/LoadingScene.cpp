@@ -214,7 +214,8 @@ bool LoadingScene::init()
     auto loadingBar = CCLoadSprite::createSprite("loading_bar.png");
     loadingBar->setTag(LOADING_2);
     CCSize lbBGsz = loadingBar->getContentSize();
-    loadingBar->setPosition(ccp(size.width/2,lbBGsz.height*1.5) + addPt);
+    float baseHeight = lbBGsz.height*1.5;
+    loadingBar->setPosition(ccp(size.width/2,baseHeight) + addPt);
     addChild(loadingBar);
     
     m_loadingProgress = CCLoadSprite::createSprite("loading_progress.png");
@@ -225,31 +226,31 @@ bool LoadingScene::init()
     m_loadingProgress->setPosition(ccp(0, lpsz.height/2));
     m_barClipNode = CCClipNode::create(m_barSize.width, m_barSize.height);
     m_barClipNode->addChild(m_loadingProgress);
-    m_barClipNode->setPosition(ccp((size.width-lpsz.width)/2,lbBGsz.height*1.5-lpsz.height) + addPt);
+    m_barClipNode->setPosition(ccp((size.width-lpsz.width)/2,baseHeight-lpsz.height) + addPt);
     m_loadingProgress->setContentSize(CCSizeMake(m_barSize.width*0.1, m_barSize.height));
     addChild(m_barClipNode);
     
     auto loadingBarBG = CCLoadSprite::createSprite("loading_bar_BG.png");
     loadingBarBG->setTag(LOADING_1);
-    loadingBarBG->setPosition(ccp(size.width/2,lbBGsz.height*1.5) + addPt);
+    loadingBarBG->setPosition(ccp(size.width/2,baseHeight) + addPt);
     addChild(loadingBarBG);
     
     if (CCCommonUtils::isIosAndroidPad())
     {
-        loadingBarBG->setPosition(ccp(size.width/2,lbBGsz.height*1.5*2.4) + addPt);
+        loadingBarBG->setPosition(ccp(size.width/2,baseHeight*2.4) + addPt);
         loadingBarBG->setScale(2.f);
         
-        m_barClipNode->setPosition(ccp((size.width-lpsz.width*2)/2.0,(lbBGsz.height*1.5-lpsz.height)*2.4) + addPt);
+        m_barClipNode->setPosition(ccp((size.width-lpsz.width*2)/2.0,(baseHeight-lpsz.height)*2.4) + addPt);
         m_barClipNode->setScale(2.f);
         
-        loadingBar->setPosition(ccp(size.width/2,lbBGsz.height*1.5*2.2) + addPt);
+        loadingBar->setPosition(ccp(size.width/2,baseHeight*2.2) + addPt);
         loadingBar->setScale(2.f);
     }
     
     // 加流动的光
     m_clipNode = CCClipNode::create(m_barClipNode->getContentSize().width, m_barClipNode->getContentSize().height);
     m_clipNode->setAnchorPoint(ccp(0, 0));
-    m_clipNode->setPosition(ccp((size.width-lpsz.width)/2,lbBGsz.height*1.5-30) + addPt);
+    m_clipNode->setPosition(ccp((size.width-lpsz.width)/2,baseHeight-30) + addPt);
     auto tmpSpr = CCLoadSprite::createSprite("Loading_bar_glow.png");
     tmpSpr->setAnchorPoint(ccp(0, 0));
     tmpSpr->setPosition(ccp(-tmpSpr->getContentSize().width, 8) + addPt);
@@ -260,20 +261,20 @@ bool LoadingScene::init()
     addChild(m_clipNode);
     if (CCCommonUtils::isIosAndroidPad())
     {
-        m_clipNode->setPosition(ccp((size.width-lpsz.width*2)/2,(lbBGsz.height*1.5-30)*2.4) + addPt);
+        m_clipNode->setPosition(ccp((size.width-lpsz.width*2)/2,(baseHeight-30)*2.4) + addPt);
         m_clipNode->setScale(2.f);
     }
     
     // 加进度条头上的光效
     m_headParticleNode = CCNode::create();
-    m_headParticleNode->setPosition(ccp((size.width-lpsz.width)/2,lbBGsz.height*1.5) + addPt);
+    m_headParticleNode->setPosition(ccp((size.width-lpsz.width)/2,baseHeight) + addPt);
     for (int i=1; i<=3; i++) {
         auto particle = ParticleController::createParticle(CCString::createWithFormat("Loading_%d",i)->getCString());
         m_headParticleNode->addChild(particle);
     }
     if (CCCommonUtils::isIosAndroidPad())
     {
-        m_headParticleNode->setPosition(ccp((size.width-lpsz.width)/2,lbBGsz.height*1.5*2.35) + addPt);
+        m_headParticleNode->setPosition(ccp((size.width-lpsz.width)/2,baseHeight*2.35) + addPt);
         m_headParticleNode->setScale(2.f);
     }
     addChild(m_headParticleNode);

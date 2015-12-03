@@ -42,7 +42,6 @@ bool C3DShowView::init(const char* modelPath, const char* texPath)
     auto renderTexture = NBGRenderTarget::create(200, 200, cocos2d::Texture2D::PixelFormat::RGBA4444);
     auto pNode = CCNode::create();
     pNode->setRotation3D(Vec3(Vec3(22, 0, 0)));
-    pNode->setScale(0.7);
     pNode->addChild(m_Model);
     renderTexture->addChild(pNode);
     m_modelPos->addChild(renderTexture);
