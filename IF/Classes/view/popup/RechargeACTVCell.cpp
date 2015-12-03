@@ -335,7 +335,8 @@ bool ActivityBox::initActivityBox()
                 initChunjieParticle();
             }
         }else{
-            CCBLoadFile("ActivityBox",this,this);
+            CCBLoadFile("ActivityBox",this,this); //d by ljf
+            //loadSpine();//a by ljf
         }
         
         if(popImg == "month"){
@@ -411,6 +412,7 @@ bool ActivityBox::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const c
 {
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_timeLabel", CCLabelIF*, this->m_timeLabel);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_contentNode", CCNode*, this->m_contentNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_ani", CCNode*, this->m_ani);
     return false;
 }
 
@@ -521,3 +523,29 @@ void ActivityBox::initChunjieParticle(){
     addChild(particle16);
     particle16->setPosition(ccp(-45,-18));
 }
+
+//begin a by ljf
+void ActivityBox::loadSpine()
+{
+    const string spineJsonName = "Spine/Imperial/activitybox.json";
+    const string spineAtlasName = "Imperial/Imperial_30.atlas";
+    
+    if (CCFileUtils::sharedFileUtils()->isFileExist(spineJsonName) &&
+        CCFileUtils::sharedFileUtils()->isFileExist(spineAtlasName))
+    {
+        //cocos2d::CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(spineAtlasName);
+        IFSkeletonAnimation * m_spineAni = new IFSkeletonAnimation(spineJsonName.c_str(), spineAtlasName.c_str());
+        if (m_spineAni && m_ani )
+        {
+            
+            m_ani->addChild(m_spineAni);
+            //m_spineAni->setVisible(false);
+            //m_spineAni->setCameraMask((unsigned short)CameraFlag::USER4, true);
+            spTrackEntry* entry = m_spineAni->setAnimation(0, "loop", true);
+            //m_spineAni->setTimeScale(entry->endTime/8.0f);
+            //m_spineAni->setTimeScale(0.2);
+        }
+    }
+
+}
+//end a by ljf
