@@ -5,6 +5,13 @@
 
 --------------------------------
 -- 
+-- @function [parent=#CSLoader] setJsonPath 
+-- @param self
+-- @param #string jsonPath
+-- @return CSLoader#CSLoader self (return value: cc.CSLoader)
+        
+--------------------------------
+-- 
 -- @function [parent=#CSLoader] createNodeFromJson 
 -- @param self
 -- @param #string filename
@@ -35,10 +42,9 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- 
--- @function [parent=#CSLoader] setJsonPath 
+--  @deprecated Use method destroyInstance() instead 
+-- @function [parent=#CSLoader] purge 
 -- @param self
--- @param #string jsonPath
 -- @return CSLoader#CSLoader self (return value: cc.CSLoader)
         
 --------------------------------

@@ -6,9 +6,22 @@
 
 --------------------------------
 -- 
+-- @function [parent=#ColorFrame] getAlpha 
+-- @param self
+-- @return unsigned char#unsigned char ret (return value: unsigned char)
+        
+--------------------------------
+-- 
 -- @function [parent=#ColorFrame] getColor 
 -- @param self
 -- @return color3b_table#color3b_table ret (return value: color3b_table)
+        
+--------------------------------
+--  @deprecated Use method setAlpha() and getAlpha() of AlphaFrame instead 
+-- @function [parent=#ColorFrame] setAlpha 
+-- @param self
+-- @param #unsigned char alpha
+-- @return ColorFrame#ColorFrame self (return value: ccs.ColorFrame)
         
 --------------------------------
 -- 

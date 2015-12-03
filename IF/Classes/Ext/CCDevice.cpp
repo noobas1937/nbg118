@@ -168,6 +168,27 @@ string CCDevice::getVersionName()
 #endif
 }
 
+string CCDevice::getDLCVersionName()
+{
+    static string ret;
+    if (!ret.empty())
+        return ret;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    JniMethodInfo minfo;
+    if (!JniHelper::getStaticMethodInfo(minfo, "org/cocos2dx/ext/Device", "getDLCVersionName", "()Ljava/lang/String;")) {
+        CCLOGFUNC("jni: no method");
+        return "";
+    }
+    jstring retFromJava = (jstring)minfo.env->CallStaticObjectMethod(minfo.classID, minfo.methodID);
+    minfo.env->DeleteLocalRef(minfo.classID);
+    ret=JniHelper::jstring2string(retFromJava);
+    minfo.env->DeleteLocalRef(retFromJava);
+    return ret;
+#else
+    return "unimplemented";
+#endif
+}
+
 string CCDevice::getHandSetInfo()
 {
     static string ret;

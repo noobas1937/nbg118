@@ -60,6 +60,12 @@
 -- @return color4b_table#color4b_table ret (return value: color4b_table)
         
 --------------------------------
+-- deprecated Use `getLineHeight` instead.
+-- @function [parent=#Label] getCommonLineHeight 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
 -- Makes the Label exactly this untransformed width.<br>
 -- The Label's width be used for text align if the value not equal zero.
 -- @function [parent=#Label] setWidth 
@@ -189,6 +195,12 @@
 
 --------------------------------
 -- 
+-- @function [parent=#Label] getFontDefinition 
+-- @param self
+-- @return FontDefinition#FontDefinition ret (return value: cc.FontDefinition)
+        
+--------------------------------
+-- 
 -- @function [parent=#Label] getDimensions 
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)
@@ -212,6 +224,13 @@
 -- @function [parent=#Label] setVerticalAlignment 
 -- @param self
 -- @param #int vAlignment
+-- @return Label#Label self (return value: cc.Label)
+        
+--------------------------------
+-- 
+-- @function [parent=#Label] setFontSize 
+-- @param self
+-- @param #float fontSize
 -- @return Label#Label self (return value: cc.Label)
         
 --------------------------------
@@ -310,6 +329,13 @@
 -- @return Label#Label self (return value: cc.Label)
         
 --------------------------------
+-- 
+-- @function [parent=#Label] setFontDefinition 
+-- @param self
+-- @param #cc.FontDefinition textDefinition
+-- @return Label#Label self (return value: cc.Label)
+        
+--------------------------------
 -- @overload self, int, int         
 -- @overload self, int         
 -- @function [parent=#Label] setAlignment
@@ -343,12 +369,18 @@
 -- @return Label#Label ret (return value: cc.Label)
         
 --------------------------------
--- Allocates and initializes a Label, with default settings.<br>
--- return An automatically released Label object.
--- @function [parent=#Label] create 
+-- @overload self, string, string, float, size_table, int, int         
+-- @overload self         
+-- @function [parent=#Label] create
 -- @param self
+-- @param #string text
+-- @param #string font
+-- @param #float fontSize
+-- @param #size_table dimensions
+-- @param #int hAlignment
+-- @param #int vAlignment
 -- @return Label#Label ret (return value: cc.Label)
-        
+
 --------------------------------
 -- @overload self, cc.Texture2D, int, int, int         
 -- @overload self, string, int, int, int         

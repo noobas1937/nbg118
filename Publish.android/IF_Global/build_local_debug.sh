@@ -1,4 +1,5 @@
 #!/bin/sh
+sh_path=$PWD
 sourceroot=../
 packageroot=../../package
 soRootPath=../../package-so
@@ -42,7 +43,7 @@ echo ""
 
 echo "building start with log:$logfileName"
 echo "*************************************************"
-oldBuildNumber=999
+# oldBuildNumber=999
 # guo jiang local
 # sed -i.bak 's/'$oldBuildNumber'/'$BUILD_NUMBER'/g' AndroidManifest.xml
 rm -rf *.bak
@@ -50,12 +51,16 @@ rm -rf *.bak
 cd ../../Android_Resource >/dev/null 2>/dev/null
 rm -rf *
 
-cd ../CCB/IF >/dev/null 2>/dev/null
 echo "0.pack_all.command..."
+# cd ../CCB/LuaCCB >/dev/null 2>/dev/null
+# sh pack_android.sh
+cp -r ../CCB/LuaCCB/tps ../CCB/IF/res
+cd ../CCB/IF >/dev/null 2>/dev/null
 sh pack_android.sh
 # guo jiang todo
 cp  -rf ./Imperial/Imperial_41/*.png ../../Android_Resource/Imperial/
 cp  -rf ../../IF/Resources/World/footprintsingle.png ../../Android_Resource/World/
+rm -rf ./res
 echo "[Done]"
 echo ""
 
@@ -74,7 +79,7 @@ echo ""
 cd .. >/dev/null 2>/dev/null
 echo "2.Building for libgame.so..."
 #echo $logfileName
-sh build_native.sh  #>$logfileName.log 2>$logfileName.err
+sh copy_assets.sh  #>$logfileName.log 2>$logfileName.err
 python build_native.py -b debug
 if [ -f "$soPath" ]; then
 	echo "[Done]"
@@ -84,8 +89,12 @@ else
 	echo "[Failed]:$errorMsg"
 	exit -1
 fi
+rm -rf assets_tmp
 
-cd ../Publish.android/IF_Global/assets
+cd ../tools/DLC 2>/dev/null
+python genDLC.py "http://50.22.64.208/dragon_clans_dlc/Android_debug/" "debug" "Android" "$sh_path/AndroidManifest.xml"
+
+cd ../../Publish.android/IF_Global/assets
 
 rm -rf Battle/_alpha_Battle_a034_alpha.pkm
 rm -rf Battle/_alpha_Battle_a034.pkm
@@ -181,8 +190,6 @@ echo ""
 # echo ""
 
 echo "*************************************************"
-
-
 
 errorMsg=`cat $logfileName.err`
 if [ ! -n "$errorMsg" ]; then

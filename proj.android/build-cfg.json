@@ -7,7 +7,7 @@
     ],
     "copy_resources": [
         {
-            "from": "../Resources",
+            "from": "assets_tmp",
             "to": ""
         }
     ]

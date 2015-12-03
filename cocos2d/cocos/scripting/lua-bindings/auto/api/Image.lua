@@ -22,6 +22,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#Image] getBitPerPixel 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
+-- 
 -- @function [parent=#Image] hasAlpha 
 -- @param self
 -- @return bool#bool ret (return value: bool)
@@ -55,15 +61,28 @@
         
 --------------------------------
 -- 
--- @function [parent=#Image] getBitPerPixel 
+-- @function [parent=#Image] isPremultipliedAlpha 
 -- @param self
--- @return int#int ret (return value: int)
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 
 -- @function [parent=#Image] getFileType 
 -- @param self
 -- @return int#int ret (return value: int)
+        
+--------------------------------
+-- NBG for water shader
+-- @function [parent=#Image] useInitWithImageFileThreadSafe 
+-- @param self
+-- @param #string fullpath
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#Image] getFilePath 
+-- @param self
+-- @return string#string ret (return value: string)
         
 --------------------------------
 -- 

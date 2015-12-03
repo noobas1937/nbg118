@@ -3,6 +3,7 @@
 echo 'LOCAL_SRC_FILES := main.cpp \' > Sources.mk
 #find ../../IF/libs/LibJson -name "*.cpp"|awk '{print $1,"\\"}' >> Sources.mk
 find ../../IF/Classes -name "*.cpp"|awk '{print $1,"\\"}' >> Sources.mk
+find ../../IF/Classes -name "*.c"|awk '{print $1,"\\"}' >> Sources.mk
 #find ../../cocos2d/cocos/crashDumper -name "*.cpp"|awk '{print $1,"\\"}' >> Sources.mk
 find ../../IF/libs/rapidxml -name "*.cpp"|awk '{print $1,"\\"}' >> Sources.mk
 find ../../IF/libs/extensions -name "*.cpp"|awk '{print $1,"\\"}' >> Sources.mk

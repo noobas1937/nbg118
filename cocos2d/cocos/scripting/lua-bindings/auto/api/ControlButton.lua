@@ -95,6 +95,13 @@
         
 --------------------------------
 -- 
+-- @function [parent=#ControlButton] setEffectStr 
+-- @param self
+-- @param #string clickEffecSound
+-- @return ControlButton#ControlButton self (return value: cc.ControlButton)
+        
+--------------------------------
+-- 
 -- @function [parent=#ControlButton] setPreferredSize 
 -- @param self
 -- @param #size_table var

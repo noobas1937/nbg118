@@ -210,7 +210,7 @@ bool SpeBuild::initSpeBuild(int itemId)
             m_spTextNode->addChild(biaoTiBg);
             
             m_timeEventlabel = CCLabelIFTTF::create();
-            m_timeEventlabel->setFntFile("Arial_Bold_Border.fnt");
+            m_timeEventlabel->setFntFile(getNBFont(NB_FONT_Bold_Border));
             m_timeEventlabel->setColor({255,198,0});
             m_timeEventlabel->setAnchorPoint(ccp(0.5,0.5));
             m_timeEventlabel->setFontSize(20);
@@ -220,7 +220,7 @@ bool SpeBuild::initSpeBuild(int itemId)
             m_timeEventlabel->setPosition(ccp(m_upEffectNode->getPosition().x - 30,m_upEffectNode->getPosition().y+67));
             
 //            m_timelabel = CCLabelIF::create("",18);
-//            m_timelabel->setFntFile("Arial_Bold_Border.fnt");
+//            m_timelabel->setFntFile(getNBFont(NB_FONT_Bold_Border));
 //            m_timelabel->setColor({255,198,0});
 //            m_timelabel->setAnchorPoint(ccp(0.5,0.5));
 //            m_upEffectNode->addChild(m_timelabel);
@@ -256,7 +256,7 @@ bool SpeBuild::initSpeBuild(int itemId)
         m_textNode->addChild(sprite9, 1, 1);
         sprite9->setPositionY(-80);
         m_timeEventlabel = CCLabelIFTTF::create();
-        m_timeEventlabel->setFntFile("Arial_Bold_Border.fnt");
+        m_timeEventlabel->setFntFile(getNBFont(NB_FONT_Bold_Border));
         m_timeEventlabel->setColor({255,198,0});
         m_timeEventlabel->setAnchorPoint(ccp(0.5,0.5));
         m_timeEventlabel->setFontSize(20);
@@ -277,7 +277,7 @@ bool SpeBuild::initSpeBuild(int itemId)
         CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(SpeBuild::checkLeftTime), this, 1,kCCRepeatForever, 0.0f, false);
     }else if(itemId == SPE_BUILD_GOLD) {
         m_timelabel = CCLabelIF::create(_lang("107000").c_str(),24);
-        m_timelabel->setFntFile("Arial_Bold_Border.fnt");
+        m_timelabel->setFntFile(getNBFont(NB_FONT_Bold_Border));
         m_timelabel->setColor({255,198,0});
         m_timelabel->setAnchorPoint(ccp(0.5,0.5));
         m_timelabel->setPosition(ccp(-130,-100));

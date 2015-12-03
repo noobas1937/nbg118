@@ -5,6 +5,14 @@
 -- @parent_module cc
 
 --------------------------------
+--  Output to CCLOG the current contents of this CCTextureCache<br>
+-- This will attempt to calculate the size of each texture, and the total texture memory in use<br>
+-- since v1.0
+-- @function [parent=#TextureCache] dumpCachedTextureInfo 
+-- @param self
+-- @return TextureCache#TextureCache self (return value: cc.TextureCache)
+        
+--------------------------------
 --  Reload texture from the image file.<br>
 -- If the file image hasn't loaded before, load it.<br>
 -- Otherwise the texture will be reloaded from the file image.<br>
@@ -14,6 +22,16 @@
 -- @param self
 -- @param #string fileName
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+--  Purges the dictionary of loaded textures.<br>
+-- Call this method if you receive the "Memory Warning".<br>
+-- In the short term: it will free some resources preventing your app from being killed.<br>
+-- In the medium term: it will allocate more resources.<br>
+-- In the long term: it will be the same.
+-- @function [parent=#TextureCache] removeAllTextures 
+-- @param self
+-- @return TextureCache#TextureCache self (return value: cc.TextureCache)
         
 --------------------------------
 --  Unbind all bound image asynchronous load callbacks.<br>
@@ -32,14 +50,25 @@
 -- @return TextureCache#TextureCache self (return value: cc.TextureCache)
         
 --------------------------------
---  Purges the dictionary of loaded textures.<br>
--- Call this method if you receive the "Memory Warning".<br>
--- In the short term: it will free some resources preventing your app from being killed.<br>
--- In the medium term: it will allocate more resources.<br>
--- In the long term: it will be the same.
--- @function [parent=#TextureCache] removeAllTextures 
+-- 
+-- @function [parent=#TextureCache] addUIImage 
 -- @param self
--- @return TextureCache#TextureCache self (return value: cc.TextureCache)
+-- @param #cc.Image image
+-- @param #string key
+-- @return Texture2D#Texture2D ret (return value: cc.Texture2D)
+        
+--------------------------------
+-- 
+-- @function [parent=#TextureCache] snapshotTextures 
+-- @param self
+-- @return __Dictionary#__Dictionary ret (return value: cc.__Dictionary)
+        
+--------------------------------
+-- 
+-- @function [parent=#TextureCache] textureForKey 
+-- @param self
+-- @param #string key
+-- @return Texture2D#Texture2D ret (return value: cc.Texture2D)
         
 --------------------------------
 -- js NA<br>
@@ -115,6 +144,39 @@
 -- @function [parent=#TextureCache] waitForQuit 
 -- @param self
 -- @return TextureCache#TextureCache self (return value: cc.TextureCache)
+        
+--------------------------------
+--  @deprecated Use getInstance() instead. 
+-- @function [parent=#TextureCache] sharedTextureCache 
+-- @param self
+-- @return TextureCache#TextureCache ret (return value: cc.TextureCache)
+        
+--------------------------------
+--  Purges the cache. It releases the retained instance.<br>
+-- since v0.99.0
+-- @function [parent=#TextureCache] destroyInstance 
+-- @param self
+-- @return TextureCache#TextureCache self (return value: cc.TextureCache)
+        
+--------------------------------
+--  @deprecated Use destroyInstance() instead. 
+-- @function [parent=#TextureCache] purgeSharedTextureCache 
+-- @param self
+-- @return TextureCache#TextureCache self (return value: cc.TextureCache)
+        
+--------------------------------
+--  Reload all textures.<br>
+-- Should not call it, called by frame work.<br>
+-- Now the function do nothing, use VolatileTextureMgr::reloadAllTextures.
+-- @function [parent=#TextureCache] reloadAllTextures 
+-- @param self
+-- @return TextureCache#TextureCache self (return value: cc.TextureCache)
+        
+--------------------------------
+--  Returns the shared instance of the cache. 
+-- @function [parent=#TextureCache] getInstance 
+-- @param self
+-- @return TextureCache#TextureCache ret (return value: cc.TextureCache)
         
 --------------------------------
 -- js ctor

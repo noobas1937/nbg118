@@ -115,7 +115,7 @@ bool ImperialScene::init()
     m_touchLayer = CCLayer::create();
     m_bgParticleLayer = CCLayer::create();
     m_nightLayer = CCLayer::create();
-    m_nameLayer =CCLabelBatchNode::create("Arial_Bold.fnt");
+    m_nameLayer =CCLabelBatchNode::create(getNBFont(NB_FONT_Bold));
     m_popLayer = CCLayer::create();
     m_signLayer = CCLayer::create();
     m_funLayer = CCLayer::create();
@@ -339,10 +339,12 @@ bool ImperialScene::init()
         CCUserDefault::sharedUserDefault()->setStringForKey(ACCOUNT_IP, S2_ACCOUNT_IP);
         CCUserDefault::sharedUserDefault()->flush();
     }
-    // tao.yu xml更新关闭  NBTODO @Guojiang
-    if (false) { // (!GlobalData::shared()->isXMLInitFlag) {
-        scheduleOnce(schedule_selector(ImperialScene::downloadXML), 3);
-    }
+    
+    // guojiang : remove below, using LoadingScene::getDownloadContents()
+//    // tao.yu xml更新关闭  NBTODO @Guojiang
+//    if (false) { // (!GlobalData::shared()->isXMLInitFlag) {
+//        scheduleOnce(schedule_selector(ImperialScene::downloadXML), 3);
+//    }
 //    m_sprBG1->visit();
     CCLOG("ImperialScene Init finish %lu",clock() - ulc);
 //    playWatchGlow();
@@ -357,13 +359,13 @@ bool ImperialScene::init()
     //end a by ljf
     return true;
 }
-void ImperialScene::downloadXML(float _time)
-{
-    GlobalData::shared()->isXMLInitFlag = true;
-    GameController::getInstance()->m_manager = new UpdateManager();
-    GameController::getInstance()->m_manager->setDelegate(GameController::getInstance());
-    GameController::getInstance()->m_manager->update();
-}
+//void ImperialScene::downloadXML(float _time)
+//{
+//    GlobalData::shared()->isXMLInitFlag = true;
+//    GameController::getInstance()->m_manager = new UpdateManager();
+//    GameController::getInstance()->m_manager->setDelegate(GameController::getInstance());
+//    GameController::getInstance()->m_manager->update();
+//}
 
 void ImperialScene::buildingCallBack(CCObject* params)
 {

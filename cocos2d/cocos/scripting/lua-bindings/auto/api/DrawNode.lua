@@ -93,6 +93,23 @@
 -- @return DrawNode#DrawNode self (return value: cc.DrawNode)
         
 --------------------------------
+--  draw a quadratic bezier curve with color and number of segments, use drawQuadBezier instead.<br>
+-- param from The origin of the bezier path.<br>
+-- param control The control of the bezier path.<br>
+-- param to The destination of the bezier path.<br>
+-- param segments The The number of segments.<br>
+-- param color The quadratic bezier color.<br>
+-- js NA
+-- @function [parent=#DrawNode] drawQuadraticBezier 
+-- @param self
+-- @param #vec2_table from
+-- @param #vec2_table control
+-- @param #vec2_table to
+-- @param #unsigned int segments
+-- @param #color4f_table color
+-- @return DrawNode#DrawNode self (return value: cc.DrawNode)
+        
+--------------------------------
 -- @overload self, vec2_table, float, float, unsigned int, bool, color4f_table         
 -- @overload self, vec2_table, float, float, unsigned int, bool, float, float, color4f_table         
 -- @function [parent=#DrawNode] drawCircle

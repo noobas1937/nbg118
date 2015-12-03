@@ -138,6 +138,14 @@
 -- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
+--  @deprecated<br>
+-- Polls input events. Subclass must implement methods if platform<br>
+-- does not provide event callbacks.
+-- @function [parent=#GLView] pollInputEvents 
+-- @param self
+-- @return GLView#GLView self (return value: cc.GLView)
+        
+--------------------------------
 --  When the window is closed, it will return false if the platforms is Ios or Android.<br>
 -- If the platforms is windows or Mac,it will return true.<br>
 -- return In ios and android it will return false,if in windows or Mac it will return true.

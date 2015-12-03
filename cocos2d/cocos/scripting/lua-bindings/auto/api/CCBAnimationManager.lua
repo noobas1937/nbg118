@@ -210,6 +210,16 @@
 -- @return CCBAnimationManager#CCBAnimationManager self (return value: cc.CCBAnimationManager)
         
 --------------------------------
+-- @overload self, char         
+-- @overload self, char, float         
+-- @overload self, int, float         
+-- @function [parent=#CCBAnimationManager] runAnimations
+-- @param self
+-- @param #int nSeqId
+-- @param #float fTweenDuraiton
+-- @return CCBAnimationManager#CCBAnimationManager self (return value: cc.CCBAnimationManager)
+
+--------------------------------
 -- 
 -- @function [parent=#CCBAnimationManager] runAnimationsForSequenceNamed 
 -- @param self

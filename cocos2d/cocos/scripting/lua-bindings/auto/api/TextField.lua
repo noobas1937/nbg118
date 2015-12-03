@@ -27,6 +27,14 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
+-- Query the content of TextField.<br>
+-- deprecated Use @see `getString` instead.<br>
+-- return The string value of TextField.
+-- @function [parent=#TextField] getStringValue 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
 -- brief Change password style text.<br>
 -- param styleText The styleText for password mask, the default value is "*".
 -- @function [parent=#TextField] setPasswordStyleText 
@@ -272,11 +280,13 @@
 -- @return TextField#TextField self (return value: ccui.TextField)
         
 --------------------------------
--- brief Inquire the horizontal alignment<br>
--- return The horizontal alignment
--- @function [parent=#TextField] getTextVerticalAlignment 
+-- Change content of TextField.<br>
+-- deprecated Use @see `setString(const std::string&)` instead.<br>
+-- param text A string content.
+-- @function [parent=#TextField] setText 
 -- @param self
--- @return int#int ret (return value: int)
+-- @param #string text
+-- @return TextField#TextField self (return value: ccui.TextField)
         
 --------------------------------
 -- brief Toggle enable touch area.<br>
@@ -309,6 +319,13 @@
 -- @function [parent=#TextField] getTouchSize 
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)
+        
+--------------------------------
+-- brief Inquire the horizontal alignment<br>
+-- return The horizontal alignment
+-- @function [parent=#TextField] getTextVerticalAlignment 
+-- @param self
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- @overload self, string, string, int         

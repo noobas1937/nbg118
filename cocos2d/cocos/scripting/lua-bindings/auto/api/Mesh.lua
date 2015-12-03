@@ -94,7 +94,7 @@
 -- get mesh vertex attribute count
 -- @function [parent=#Mesh] getMeshVertexAttribCount 
 -- @param self
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- 

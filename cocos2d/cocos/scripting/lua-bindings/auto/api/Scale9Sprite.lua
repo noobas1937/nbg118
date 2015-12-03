@@ -79,12 +79,13 @@
 -- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
--- Query the current bright state.<br>
--- return @see `State`<br>
--- since v3.7
--- @function [parent=#Scale9Sprite] getState 
+-- Returns the blending function that is currently being used.<br>
+-- return A BlendFunc structure with source and destination factor which specified pixel arithmetic.<br>
+-- js NA<br>
+-- lua NA
+-- @function [parent=#Scale9Sprite] getBlendFunc 
 -- @param self
--- @return int#int ret (return value: int)
+-- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
         
 --------------------------------
 -- Change the state of 9-slice sprite.<br>
@@ -161,14 +162,24 @@
 -- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
--- Returns the blending function that is currently being used.<br>
--- return A BlendFunc structure with source and destination factor which specified pixel arithmetic.<br>
--- js NA<br>
--- lua NA
--- @function [parent=#Scale9Sprite] getBlendFunc 
+-- Query the current bright state.<br>
+-- return @see `State`<br>
+-- since v3.7
+-- @function [parent=#Scale9Sprite] getState 
 -- @param self
--- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
+-- @return int#int ret (return value: int)
         
+--------------------------------
+-- @overload self, cc.SpriteBatchNode, rect_table, rect_table         
+-- @overload self, cc.SpriteBatchNode, rect_table, bool, rect_table         
+-- @function [parent=#Scale9Sprite] initWithBatchNode
+-- @param self
+-- @param #cc.SpriteBatchNode batchnode
+-- @param #rect_table rect
+-- @param #bool rotated
+-- @param #rect_table capInsets
+-- @return bool#bool ret (return value: bool)
+
 --------------------------------
 -- brief Query the bottom sprite's cap inset.<br>
 -- return The bottom sprite's cap inset.
@@ -189,6 +200,22 @@
 -- js NA
 -- @function [parent=#Scale9Sprite] isScale9Enabled 
 -- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- brief Update Scale9Sprite with a specified sprite.<br>
+-- deprecated Use @see `updateWithSprite` instead.<br>
+-- param sprite A sprite pointer.<br>
+-- param originalRect A delimitation zone.<br>
+-- param rotated Whether the sprite is rotated or not.<br>
+-- param capInsets The Values to use for the cap insets.<br>
+-- return True if update success, false otherwise.
+-- @function [parent=#Scale9Sprite] updateWithBatchNode 
+-- @param self
+-- @param #cc.SpriteBatchNode batchnode
+-- @param #rect_table originalRect
+-- @param #bool rotated
+-- @param #rect_table capInsets
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------

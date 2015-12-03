@@ -120,7 +120,7 @@ bool WorldBossRewardMailView::init(){
 
     this->m_bg->setContentSize(CCSize(m_bg->getContentSize().width, m_bg->getContentSize().height + dh));
     this->m_totalNode->removeChild(this->m_rewardNode);
-    this->m_titleText->setFntFile("Arial_Bold.fnt");
+    this->m_titleText->setFntFile(getNBFont(NB_FONT_Bold));
     this->m_titleText->setString(m_info.title.c_str());
     this->m_timeText->setString(CCCommonUtils::timeStampToDate(m_info.createTime).c_str());
     int w = m_contentContainer->getContentSize().width;

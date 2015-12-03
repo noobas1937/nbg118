@@ -95,3 +95,5 @@ do
 	)
 done
 
+cd ../../tools
+python remove_texturepacker_smartupdate.py
