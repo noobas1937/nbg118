@@ -56,16 +56,51 @@ bool BuildUpgradeView::init(int buildId, int pos)
     auto tmpCCB = CCBLoadFile("Upgrade",this,this);
     this->setContentSize(tmpCCB->getContentSize());
     
-//    int addHeight = getExtendHeight();
+    
+    this->getArcModelLayer()->setVisible(false);
+    
+    int addHeight = getExtendHeight();
+    
+    auto wSize = Director::getInstance()->getWinSize();
+    
+    if (wSize.height/wSize.width>1.6) {//fusheng 手机
+        auto oldR =m_msg_BG->getBoundingBox();
+        
+        auto oldS = m_msg_BG->getScaleY();
+        
+        m_msg_BG->setScaleY(1);
+        
+        auto newR =m_msg_BG->getBoundingBox();
+        
+        if (newR.size.height - newR.size.height>addHeight/2) {//fusheng 调整大小后大于infoNode移动距离时 不放缩
+            m_msg_BG->setScaleY(oldS);
+        }
+        else
+        {
+            BGNode2->setPositionY(BGNode2->getPositionY()-(newR.size.height - oldR.size.height));
+            m_buildBG2->setPositionY(m_buildBG2->getPositionY()-(newR.size.height - oldR.size.height));
+            m_nbNameNode->setPositionY(m_nbNameNode->getPositionY()-(newR.size.height - oldR.size.height));
+            m_info_BG->setPositionY(m_info_BG->getPositionY()-addHeight/2);
+            m_infoList->setPositionY(m_infoList->getPositionY()-addHeight/2);
+
+        }
+        
+    }
+    else
+    {
+        
+    }
+    
+    
 //    int oldBgWidth = m_buildBG->getContentSize().width;
 //    int oldBgHeight = m_buildBG->getContentSize().height;
 //    int newBgHeight = addHeight/2+oldBgHeight;
 //    m_buildBG->setContentSize(CCSizeMake(oldBgWidth, newBgHeight));
 //    int oldWidth = m_infoList->getContentSize().width;
 //    int oldHeight = m_infoList->getContentSize().height;
-//    m_infoList->setPositionY(m_infoList->getPositionY()-addHeight/2);
+
 //    m_infoList->setContentSize(CCSizeMake(oldWidth, oldHeight+addHeight/2));
-//    m_btnNode->setPositionY(m_btnNode->getPositionY()-addHeight/2);
+    m_btnNode->setPositionY(m_btnNode->getPositionY()-addHeight);
     
     m_upBtnMsgLabel->setString(_lang("102104").c_str());
     m_btnMsgLabel->setString(_lang("102127").c_str());
@@ -468,6 +503,15 @@ SEL_CCControlHandler BuildUpgradeView::onResolveCCBCCControlSelector(cocos2d::CC
 
 bool BuildUpgradeView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode)
 {
+    
+
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nbNameNode", CCNode*, this->m_nbNameNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_buildBG2", CCScale9Sprite*, this->m_buildBG2);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "BGNode2", CCNode*, this->BGNode2);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_msg_BG", CCSprite*, this->m_msg_BG);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_info_BG", CCScale9Sprite*, this->m_info_BG);
+    
+    
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_mainNode", CCNode*, this->m_mainNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_upBtn", CCControlButton*, this->m_upBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_instantBtn", CCControlButton*, this->m_instantBtn);
@@ -816,7 +860,7 @@ void BuildUpgradeView::onShowNextUnlockItem()
             CCLoadSprite::doResourceByCommonIndex(5, false);
         });
     }
-    else if (itemId == FUN_BUILD_BARRACK1 || itemId == FUN_BUILD_BARRACK2 || itemId == FUN_BUILD_BARRACK3 || itemId == FUN_BUILD_BARRACK4) {
+    else if (itemId == FUN_BUILD_BARRACK1 || itemId == FUN_BUILD_BARRACK2 || itemId == FUN_BUILD_BARRACK3 || itemId == FUN_BUILD_BARRACK4 || itemId ==FUN_BUILD_FORT) {
         CCLoadSprite::doResourceByCommonIndex(204, true);
         setCleanFunction([](){
             CCLoadSprite::doResourceByCommonIndex(204, false);

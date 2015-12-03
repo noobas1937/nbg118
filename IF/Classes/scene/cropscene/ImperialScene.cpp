@@ -2671,8 +2671,10 @@ void ImperialScene::onMoveToBuildAndOpen(int itemId, int type, float dt, bool bo
             build = dynamic_cast<FunBuild*>(node->getChildren().at(0));
         }
         
-        m_curBuildPosx = build->getParent()->getPositionX() + build->mainWidth/2 ;
-        m_curBuildPosy = build->getParent()->getPositionY() + build->mainHeight/2;
+//        m_curBuildPosx = build->getParent()->getPositionX() + build->mainWidth/2 ;
+//        m_curBuildPosy = build->getParent()->getPositionY() + build->mainHeight/2;
+        m_curBuildPosx = build->getParent()->getPositionX();
+        m_curBuildPosy = build->getParent()->getPositionY();
         if (CCCommonUtils::isIosAndroidPad())
         {
             m_curBuildPosy = build->getParent()->getPositionY() + build->mainHeight;
@@ -2703,7 +2705,8 @@ void ImperialScene::onMoveToPos(float x, float y, int type, float dt, float scal
     }
     else if (type == TYPE_POS_MID_UP) {
         _wf = 0.5;
-        _hf = 0.6;
+//        _hf = 0.6;
+        _hf = 0.7;
     }
     
     float f = scale;

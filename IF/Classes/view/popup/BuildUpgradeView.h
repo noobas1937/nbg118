@@ -69,6 +69,12 @@ private:
     CCSafeObject<CCLabelIF> m_inBtnGoldNum;
     CCSafeObject<CCScale9Sprite> m_buildBG;
     
+    CCSafeObject<CCScale9Sprite> m_info_BG;
+    CCSafeObject<CCScale9Sprite> m_buildBG2;
+    CCSafeObject<CCNode> BGNode2;
+    CCSafeObject<CCNode> m_nbNameNode;
+    CCSafeObject<CCSprite> m_msg_BG;
+    
     CCSafeObject<CCLabelIF> m_lvLabel;
     CCSafeObject<CCLabelIF> m_nameLabel;
     CCSafeObject<CCLabelIF> m_nextLabel;

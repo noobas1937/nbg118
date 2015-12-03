@@ -63,6 +63,12 @@ private:
     CCSafeObject<CCLabelIF> m_nextLvLabel;
     CCSafeObject<CCLabelIF> m_nextMsgLabel;
     
+    CCSafeObject<CCScale9Sprite> m_info_BG;
+    CCSafeObject<CCScale9Sprite> m_buildBG2;
+    CCSafeObject<CCNode> BGNode2;
+    CCSafeObject<CCNode> m_nbNameNode;
+    CCSafeObject<CCSprite> m_msg_BG;
+    
     int m_buildId;
     int m_resType;
     int m_openNum;

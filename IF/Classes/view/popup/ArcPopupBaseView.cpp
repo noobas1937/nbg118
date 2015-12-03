@@ -38,7 +38,8 @@ void ArcPopupBaseView::showArcModel(int type)
         _hf = 0.63;
     }else if(type == TYPE_POS_MID_UP){
         _wf = 0.5;
-        _hf = 0.60;
+//        _hf = 0.60;
+        _hf = 0.7;
     }else if(type == TYPE_POS_MID){
         _wf = 0.5;
         _hf = 0.5;
@@ -67,4 +68,9 @@ void ArcPopupBaseView::showArcModel(int type)
         m_selfModelLayer->getSprite()->setOpacity(0);
         m_selfModelLayer->getSprite()->runAction(CCFadeTo::create(0.25, 230));
     }
+}
+
+CCSafeObject<CCRenderTexture> ArcPopupBaseView::getArcModelLayer()
+{
+    return m_selfModelLayer;
 }

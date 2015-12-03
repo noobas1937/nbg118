@@ -25,6 +25,7 @@ class ArcPopupBaseView : public PopupBaseView
 {
 public:
     bool init(int type=TYPE_POS_DEF);
+    CCSafeObject<CCRenderTexture> getArcModelLayer();
 private:
     void showArcModel(int type);
     CCSafeObject<CCRenderTexture> m_selfModelLayer;
