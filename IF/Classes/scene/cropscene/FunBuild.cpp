@@ -417,11 +417,11 @@ void FunBuild::unLockTile(CCObject* params)
         if (itemId == m_buildingKey && m_tile) {
             m_tile->setOpacity(0);
             //begin a by ljf
-            CCSpriteFrame* newSp = CCLoadSprite::getSF("build_tile.png");
+            CCSpriteFrame* newSp = CCLoadSprite::getSF("res_tile_1.png");
             m_tile->stopAllActions();
             m_tile->setDisplayFrame(newSp);
             m_tile->getTexture()->setAntiAliasTexParameters();
-            m_tile->setScale(0.75);
+//            m_tile->setScale(0.75);
             //end a by ljf
             m_tile->setVisible(true);
             auto delate = CCDelayTime::create(0.5); //m by ljf, 1.6 to 0.5
