@@ -29,7 +29,7 @@
 #include "C3DShowView.hpp"
 #include "IFSkeletonAnimation.h"
 #include "ArcGalleryCell.hpp"
-
+#include "NBGRenderTarget.h"
 ProductionSoldiersView::ProductionSoldiersView(int buildingId)
 :m_buildingId(buildingId)
 ,m_waitInterface(NULL)
@@ -340,23 +340,32 @@ void ProductionSoldiersView::addSoldierIcon(){
     pic->getModel().getObject()->setScale(m_info->getModelScale());
     if(btype == FUN_BUILD_FORT){
         pic->getModel().getObject()->setRotation3D(Vec3(0,35,0));
+        if (m_info->getModelName() == "3d/soldier/ico107902.c3b") {
+//            auto water = C3DShowView::create("3d/soldier/trap_water.c3b","3d/soldier/trap_water.jpg");
+            auto water = NBSprite3D::create("3d/soldier/trap_water.c3b");
+            water->setTexture("3d/soldier/trap_water.jpg");
+            water->setScale(m_info->getModelScale());
+            water->setOpacity(180);
+
+            auto renderTexture = NBGRenderTarget::create(200, 200, cocos2d::Texture2D::PixelFormat::RGBA4444);
+            auto pNode = CCNode::create();
+            pNode->setRotation3D(Vec3(Vec3(22, 0, 0)));
+            pNode->addChild(water);
+            renderTexture->addChild(pNode);
+            pic->addChild(renderTexture);
+            auto waterAct = Animation3D::create("3d/soldier/trap_water.c3b");
+            if (waterAct) {
+                auto pAnim = Animate3D::createWithFrames(waterAct, 0, 100);
+                if (pAnim) {
+                    auto act = RepeatForever::create(pAnim);
+                    water->runAction(act);
+                }
+            }
+        }
     }
     pic->setPosition3D(Vec3(pos.x,pos.y,200));
     pic->setAnchorPoint(Vec2(0.5,0));
     
-//    // TODO
-//    srand((unsigned int)time(0));
-//    int random_variable = rand() % 100;
-//    string c3b = "3d/soldier/c3d10000_idle.c3b";
-//    int startFrame = 10;
-//    int endFrame = 85;
-//    if (random_variable < 50)
-//    {
-//        c3b = "3d/soldier/c3d10000_stand.c3b";
-//        startFrame = 10;
-//        endFrame = 100;
-//    }
-//    Sequence* pSeq = nullptr;
     Repeat* act1 = nullptr;
     Repeat* act2 = nullptr;
 
@@ -449,8 +458,6 @@ void ProductionSoldiersView::refreshResource(CCObject* p)
 
 void ProductionSoldiersView::refresh(CCObject* p){
     ArmyInfo* m_info = getCurArmy();
-    m_soldierIconNode->removeAllChildrenWithCleanup(true);
-    m_particleNode->removeAllChildrenWithCleanup(true);
 
     m_stoneNode->setVisible(FunBuildController::getInstance()->getMainCityLv()>=FunBuildController::getInstance()->building_base_k4);
     m_ironNode->setVisible(FunBuildController::getInstance()->getMainCityLv()>=FunBuildController::getInstance()->building_base_k3);
@@ -502,12 +509,10 @@ void ProductionSoldiersView::refresh(CCObject* p){
         m_resBGNode->setVisible(false);
         m_bottomNode->setVisible(false);
         m_numValueTxt->setString("0");
-        this->addSoldierIcon();
         m_lockTxt->setVisible(true);
         m_sliderNode->setVisible(false);
         return ;
     }
-    this->addSoldierIcon();
 
     if(m_isFort){
         std::string particleName = "WeaponsFire_Wood";
@@ -812,7 +817,6 @@ void ProductionSoldiersView::AsyLoadRes2(CCObject* p){
         // 滚动条正中间有两个小箭头，在ccb中编辑的，需要置顶
         m_arcLayer->getChildByTag(9991)->setZOrder(9991);
         m_arcLayer->getChildByTag(9992)->setZOrder(9992);
-        
         refreshGalleryCells();
         refresh();
 //        m_arcScroll = ArcScrollView::create(m_arcArmys,2,m_pos);
@@ -1448,6 +1452,8 @@ void ProductionSoldiersView::ClearCD()
 
 void ProductionSoldiersView::refreshGalleryCells()
 {
+    m_soldierIconNode->removeAllChildrenWithCleanup(true);
+    m_particleNode->removeAllChildrenWithCleanup(true);
     for(int i=0;i<m_armyIds.size();i++){
         int resIndex = 204;
         ArmyInfo aInfo;
@@ -1518,6 +1524,7 @@ void ProductionSoldiersView::refreshGalleryCells()
             pItemCCBNode->m_buttonTxt->setDimensions(CCSize(300, 0));
         }
     }
+    addSoldierIcon();
 
 }
 
