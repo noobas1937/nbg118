@@ -17,6 +17,8 @@
 #include "GoldExchangeView.h"
 #include "EquipmentController.h"
 
+static int CELL_WIGHT = 616;
+
 AchievementDetailPopUpView *AchievementDetailPopUpView::create(QuestInfo* quest){
     AchievementDetailPopUpView *ret = new AchievementDetailPopUpView(quest);
     if(ret && ret->init()){
@@ -53,6 +55,15 @@ bool AchievementDetailPopUpView::init(){
         changeBGHeight(m_buildBG);
         int dh = m_buildBG->getContentSize().height - preHeight;
         
+        Size temp = m_buildBG1->getContentSize();
+        temp.height = temp.height + dh - 10;
+        m_buildBG1->setContentSize(temp);
+        CELL_WIGHT = temp.width;
+        
+        temp = m_buildBG2->getContentSize();
+        temp.height = temp.height + dh - 10;
+        m_buildBG2->setContentSize(temp);
+        
         if (dh>0) {
             int num = dh/177+1;
             for (int i=0; i<num; i++) {
@@ -79,10 +90,10 @@ bool AchievementDetailPopUpView::init(){
      //   m_rewardListBG->setPositionY(m_rewardListBG->getPositionY()-10);
         m_nameTxt->setString(m_info->name);
         m_descTxt->setString(m_info->description);
-        std::string str = CC_CMDITOA(m_info->curValue>m_info->maxValue?m_info->maxValue:m_info->curValue);
-        str.append("/");
+        std::string str = "/";
         str.append(CC_CMDITOA(m_info->maxValue));
-        m_progressTxt->setString(str);
+        m_progressTxt->setString(CC_CMDITOA(m_info->curValue>m_info->maxValue?m_info->maxValue:m_info->curValue));
+        m_progressTotalTxt->setString(str);
         m_rewardTitle->setString(_lang("107516"));
         int max = m_info->maxValue;
         max = MAX(max, m_info->curValue);
@@ -265,6 +276,7 @@ bool AchievementDetailPopUpView::onAssignCCBMemberVariable(cocos2d::CCObject * p
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_viewBg", CCScale9Sprite*, this->m_viewBg);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_progress", CCScale9Sprite*, this->m_progress);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_progressTxt", CCLabelIF*, this->m_progressTxt);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_progressTotalTxt", CCLabelIF*, this->m_progressTotalTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_titleTxt", CCLabelIF*, this->m_titleTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_nameText", CCLabelIF*, this->m_nameTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_descTxt", CCLabelIF*, this->m_descTxt);
@@ -273,6 +285,8 @@ bool AchievementDetailPopUpView::onAssignCCBMemberVariable(cocos2d::CCObject * p
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_downNode", CCNode*, this->m_downNode);
    // CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bg", CCScale9Sprite*, this->m_bg);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_buildBG", CCScale9Sprite*, this->m_buildBG);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_buildBG1", CCScale9Sprite*, this->m_buildBG1);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_buildBG2", CCScale9Sprite*, this->m_buildBG2);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_rewardListNode", CCNode*, this->m_rewardListNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_rewardListBG", CCScale9Sprite*, this->m_rewardListBG);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_headNode", CCNode*, this->m_headNode);
@@ -300,7 +314,7 @@ cocos2d::CCSize AchievementDetailPopUpView::gridSizeForTable(cocos2d::extension:
         return CCSize(1536, 138);
     }
     
-    return CCSize(240, 70);
+    return CCSize(240, 44);
 }
 
 CCTableViewCell* AchievementDetailPopUpView::gridAtIndex(cocos2d::extension::CCMultiColTableView *table, unsigned int idx){
@@ -350,6 +364,8 @@ void AchievementDetailRewardCell::setData(QuestInfo* info, int index){
     auto dic = dynamic_cast<CCDictionary*>(m_info->reward->objectAtIndex(m_index));
     int type = dic->valueForKey("type")->intValue();
     
+    m_bg_color->setVisible(m_index % 2 == 0);
+    
     if (type == R_EQUIP) {
         int itemId = 0;
         auto dict = _dict(dic->objectForKey("value"));
@@ -389,7 +405,7 @@ void AchievementDetailRewardCell::setData(QuestInfo* info, int index){
             value = dic->valueForKey("value")->intValue();
         }
         
-        auto icon = CCLoadSprite::createScale9Sprite(RewardController::getInstance()->getPicByType(type, value).c_str());
+        auto icon = CCLoadSprite::createSprite(RewardController::getInstance()->getPicByType(type, value).c_str());
         m_picNode->addChild(icon);
         icon->setAnchorPoint(ccp(0.5, 0.5));
         std::string str = CC_ITOA(value);
@@ -420,6 +436,7 @@ bool AchievementDetailRewardCell::onAssignCCBMemberVariable(cocos2d::CCObject * 
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_nameText", CCLabelIF*, this->m_nameText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_numText", CCLabelIF*, this->m_numText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_picNode", CCNode*, this->m_picNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_bg_color", LayerColor*, this->m_bg_color);
   // CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_btn", CCControlButton*, this->m_btn);
     return false;
 }
