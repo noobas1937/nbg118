@@ -1061,8 +1061,6 @@
 						<false/>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>
@@ -5963,8 +5961,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>2628.113037109375</real>
-									<real>1146.870361328125</real>
+									<real>2602.35302734375</real>
+									<real>1103.910400390625</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -6001,6 +5999,8 @@
 								<false/>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>

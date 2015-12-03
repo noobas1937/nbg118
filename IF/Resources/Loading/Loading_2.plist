@@ -7,7 +7,7 @@
             <key>FAQ_line.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,4},{4,1}}</string>
+                <string>{{970,63},{4,1}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -20,80 +20,67 @@
             <key>Loading_bar_glow.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{523,42},{97,42}}</string>
+                <string>{{401,63},{97,42}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{97,42}}</string>
                 <key>sourceSize</key>
                 <string>{97,42}</string>
             </dict>
-            <key>loading.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{4,177},{747,1136}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{747,1136}}</string>
-                <key>sourceSize</key>
-                <string>{747,1136}</string>
-            </dict>
             <key>loading_bar.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,23},{459,13}}</string>
+                <string>{{449,63},{515,19}}</string>
                 <key>offset</key>
-                <string>{0,0}</string>
+                <string>{1,1}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{27,3},{459,13}}</string>
+                <string>{{45,16},{515,19}}</string>
                 <key>sourceSize</key>
-                <string>{513,19}</string>
+                <string>{603,53}</string>
             </dict>
             <key>loading_bar_BG.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,42},{513,19}}</string>
-                <key>offset</key>
-                <string>{0,-2}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,4},{513,19}}</string>
-                <key>sourceSize</key>
-                <string>{513,23}</string>
-            </dict>
-            <key>loading_progress.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{14,4},{459,13}}</string>
+                <string>{{401,4},{603,53}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{27,3},{459,13}}</string>
+                <string>{{0,0},{603,53}}</string>
                 <key>sourceSize</key>
-                <string>{513,19}</string>
+                <string>{603,53}</string>
             </dict>
-            <key>loading_tips_bg.png</key>
+            <key>loading_progress.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,90},{551,81}}</string>
+                <string>{{401,166},{515,19}}</string>
                 <key>offset</key>
-                <string>{16,0}</string>
+                <string>{1,1}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{54,4},{551,81}}</string>
+                <string>{{45,16},{515,19}}</string>
                 <key>sourceSize</key>
-                <string>{627,89}</string>
+                <string>{603,53}</string>
+            </dict>
+            <key>logo.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{4,4},{391,182}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{391,182}}</string>
+                <key>sourceSize</key>
+                <string>{391,182}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -103,9 +90,9 @@
             <key>realTextureFileName</key>
             <string>Loading_2.pvr.ccz</string>
             <key>size</key>
-            <string>{755,1317}</string>
+            <string>{1008,190}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:--REMOVED----------------------------</string>
+            <string>$TexturePacker:SmartUpdate:8ab85c07dc8beea505a86da4c219bb00:1/1$</string>
             <key>textureFileName</key>
             <string>Loading_2.pvr.ccz</string>
         </dict>

@@ -168,6 +168,10 @@ std::string ArmyInfo::getModelTexName(){
 //    return "3d/soldier/c3d10000.jpg";
 }
 
+float ArmyInfo::getModelScale(){
+    std::string itemId = getRealItemId();
+    return atof(CCCommonUtils::getPropById(itemId, "scale").c_str());
+}
 
 void ArmyInfo::getModelAniByName(int actIndex, std::vector<std::string>& ret){
     // tao.yu  ret的三个string分别是 动作名 起始帧数 结束帧数
