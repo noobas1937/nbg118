@@ -43,6 +43,14 @@ private:
     CCSafeObject<CCControlButton> m_upBtn;
     CCSafeObject<CCNode> m_infoList;
     
+    CCSafeObject<CCScale9Sprite> m_info_BG;
+    CCSafeObject<CCScale9Sprite> m_buildBG2;
+    CCSafeObject<CCNode> BGNode2;
+    CCSafeObject<CCNode> m_nbNameNode;
+    CCSafeObject<CCSprite> m_msg_BG;
+    
+    CCSafeObject<CCNode> m_bottomNodeNB;
+    
 //    CCSafeObject<CCNode> m_inBtnNode;
 //    CCSafeObject<CCLabelIF> m_timeLabel;
 //    CCSafeObject<CCLabelIF> m_btnMsgLabel;
