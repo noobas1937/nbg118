@@ -6300,33 +6300,35 @@ void UIComponent::addParticleToBatch(cocos2d::CCParticleSystemQuad *particle) {
 
 void UIComponent::setSerchCoordState(){
     if(GlobalData::shared()->playerInfo.isInSelfServer()){
-        m_xCoordLabel->setPositionX(-78);
-        m_xCoordText->setPositionX(-38);
-        m_xBG->setPositionX(-38);
-        
-        m_yCoordLabel->setPositionX(20);
-        m_yCoordText->setPositionX(58);
-        m_yBG->setPositionX(58);
+//        m_xCoordLabel->setPositionX(-78);
+//        m_xCoordText->setPositionX(-38);
+//        m_xBG->setPositionX(-38);
+//        
+//        m_yCoordLabel->setPositionX(20);
+//        m_yCoordText->setPositionX(58);
+//        m_yBG->setPositionX(58);
 
-        m_findIcon->setPositionX(m_xCoordLabel->getPositionX() - 50);
+//        m_findIcon->setPositionX(m_xCoordLabel->getPositionX() - 50);
+        
         m_zCoordLabel->setVisible(false);
         m_zCoordText->setVisible(false);
         m_kingdomBG->setVisible(false);
         m_serverNode->setVisible(false);
     }else{
-        m_findIcon->setPositionX(m_zCoordLabel->getPositionX() - 50);
-        m_zCoordLabel->setVisible(true);
-        m_zCoordText->setVisible(true);
-        m_kingdomBG->setVisible(false);
-        m_xCoordLabel->setPositionX(-22);
-        m_xCoordText->setPositionX(14);
-        m_xBG->setPositionX(14);
-        
-        m_yCoordLabel->setPositionX(76);
-        m_yCoordText->setPositionX(114);
-        m_yBG->setPositionX(114);
-        m_serverNode->setVisible(true);
-        setServerText(GlobalData::shared()->playerInfo.currentServerId);
+        // guojiang TODO
+//        m_findIcon->setPositionX(m_zCoordLabel->getPositionX() - 50);
+//        m_zCoordLabel->setVisible(true);
+//        m_zCoordText->setVisible(true);
+//        m_kingdomBG->setVisible(false);
+//        m_xCoordLabel->setPositionX(-22);
+//        m_xCoordText->setPositionX(14);
+//        m_xBG->setPositionX(14);
+//        
+//        m_yCoordLabel->setPositionX(76);
+//        m_yCoordText->setPositionX(114);
+//        m_yBG->setPositionX(114);
+//        m_serverNode->setVisible(true);
+//        setServerText(GlobalData::shared()->playerInfo.currentServerId);
     }
 }
 
