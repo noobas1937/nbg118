@@ -81,6 +81,7 @@
 #define  MSG_ALLIACNE_FUN_POSITION       "msg_alliance_fun_position"
 #define  MSG_TROOPS_CHANGE       "msg_troops_change"
 #define  MSG_TROOPS_BACK       "msg_troops_back"
+#define  MSG_TRAPS_CHANGE       "msg_traps_change"
 #define  MSG_UPDATE_ALLIANCE_HELP_DATA      "msg_update_alliance_help_data"
 #define  MSG_ALERT_ALLIANCE_VIEW_CLOSE      "msg_alert_alliance_view_close"
 #define  MSG_ALLIACNE_HELP_NUM_CHANGE       "msg_alliance_help_num_change"
