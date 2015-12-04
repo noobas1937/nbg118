@@ -39,7 +39,13 @@ string NBG::md5(const char* in, string& out)
     return out;
 }
 
-int NBG::get_COCOS2D_DEBUG() { return COCOS2D_DEBUG; }
+int NBG::get_COCOS2D_DEBUG() {
+#ifndef COCOS2D_DEBUG
+    return 0;
+#else
+    return COCOS2D_DEBUG;
+#endif
+}
 
 long long NBG::getCurrentMillisecond()
 {

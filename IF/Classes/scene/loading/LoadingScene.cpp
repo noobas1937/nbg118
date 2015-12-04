@@ -105,14 +105,14 @@ void LoadingScene::addLoadingTips()
     
     Size tipsSize = CCSizeMake(640, 90);
     m_loadingTips = CCLabelIF::create("loading...");
-    m_loadingTips->setColor({0,181,255});
+    m_loadingTips->setColor({25,25,25});
     m_loadingTips->enableStroke(ccBLACK, 1.0);
     m_loadingTips->setFontSize(24);
     m_loadingTips->setDimensions(CCSizeMake(tipsSize.width*0.85, tipsSize.height*1.8));
     m_loadingTips->setHorizontalAlignment(kCCTextAlignmentCenter);
     m_loadingTips->setVerticalAlignment(kCCVerticalTextAlignmentCenter);
-    m_loadingTips->setAnchorPoint(ccp(0.5, 1));
-    m_loadingTips->setPosition(ccp(size.width/2, size.height-15));
+    m_loadingTips->setAnchorPoint(ccp(0.5, 0.5));
+    m_loadingTips->setPosition(ccp(size.width/2, m_barClipNode->getPositionY()));
     addChild(m_loadingTips);
 }
 
@@ -214,7 +214,7 @@ bool LoadingScene::init()
     auto loadingBar = CCLoadSprite::createSprite("loading_bar.png");
     loadingBar->setTag(LOADING_2);
     CCSize lbBGsz = loadingBar->getContentSize();
-    float baseHeight = lbBGsz.height*1.5;
+    float baseHeight = lbBGsz.height*3;
     loadingBar->setPosition(ccp(size.width/2,baseHeight) + addPt);
     addChild(loadingBar);
     
