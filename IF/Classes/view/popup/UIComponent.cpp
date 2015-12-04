@@ -1037,7 +1037,7 @@ void UIComponent::onEnter()
         
         m_nbXHD->setOpacity(0);
         
-        float cycleTime = 1;
+        float cycleTime = 2;
         
         m_nbXHD->runAction(RepeatForever::create(Sequence::createWithTwoActions(FadeIn::create(cycleTime/2), FadeOut::create(cycleTime/2))));
         
