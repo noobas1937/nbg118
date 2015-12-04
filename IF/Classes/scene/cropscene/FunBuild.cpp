@@ -3337,7 +3337,7 @@ bool FunBuildState::init(int itemId)
             }
             
             string pic = "";
-//            pic = "icon_zaobing.png";  //fusheng 暂时不确定有什么兵种  先使用icon_zaobing.png代替
+            pic = "icon_zaobing.png";  //fusheng 暂时不确定有什么兵种  先使用icon_zaobing.png代替
             if (buildType == FUN_BUILD_BARRACK1) {
                 pic = "icon_bubing.png";
             }
@@ -3350,9 +3350,9 @@ bool FunBuildState::init(int itemId)
             else if (buildType == FUN_BUILD_BARRACK4) {
                 pic = "icon_chebing.png";
             }
-//            else if (buildType == FUN_BUILD_FORT) {
-//                pic = "icon_xianjing.png";
-//            }
+            else if (buildType == FUN_BUILD_FORT) {
+                pic = "icon_trapComplete.png";
+            }
 //            else if (buildType == FUN_BUILD_SCIENE) {
 //                pic = "icon_keji.png";
 //            }
