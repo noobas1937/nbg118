@@ -1995,6 +1995,7 @@ bool UnLockItemCell::init(int type, string itemId, CCNode* node)
     m_touchNode = node;
     
     m_iconPath = "";
+    CCSprite* bg = nullptr;//fusheng 背景
     if (m_type == FUN_BUILD_MAIN) {
         m_iconPath = CCCommonUtils::getPropById(m_itemId, "pic");
         m_iconPath = m_iconPath+"_" + CC_ITOA(GlobalData::shared()->contryResType)+".png";
@@ -2041,17 +2042,26 @@ bool UnLockItemCell::init(int type, string itemId, CCNode* node)
         auto& aInfo = GlobalData::shared()->armyList[m_itemId];
         m_iconPath = aInfo.getHeadIcon();
         
-        auto bg = CCLoadSprite::createSprite("bnt_02.png");
+        bg = CCLoadSprite::createSprite("zb_bp_xuanzhong.png");
         bg->setPosition(ccp(sizeWidth/2, sizeHeight/2));
-        CCCommonUtils::setSpriteMaxSize(bg, 120, true);
-        if (CCCommonUtils::isIosAndroidPad()) {
-            CCCommonUtils::setSpriteMaxSize(bg, 273, true);
-        }
+//        CCCommonUtils::setSpriteMaxSize(bg, 125, true);
+//        if (CCCommonUtils::isIosAndroidPad()) {
+////            CCCommonUtils::setSpriteMaxSize(bg, 273, true);
+//        }
         this->addChild(bg);
     }
     else if (m_type == FUN_BUILD_FORT)
     {
         m_iconPath = CCCommonUtils::getPropById(m_itemId, "icon").append("_small.png");
+        
+        bg = CCLoadSprite::createSprite("zb_bp_xuanzhong.png");
+        bg->setPosition(ccp(sizeWidth/2, sizeHeight/2));
+//        CCCommonUtils::setSpriteMaxSize(bg, 125, true);
+//        if (CCCommonUtils::isIosAndroidPad()) {
+////            CCCommonUtils::setSpriteMaxSize(bg, 273, true);
+//        }
+        this->addChild(bg);
+
     }
     else {
         m_iconPath = CCCommonUtils::getIcon(m_itemId);
@@ -2063,6 +2073,11 @@ bool UnLockItemCell::init(int type, string itemId, CCNode* node)
     }
     icon->setPosition(ccp(sizeWidth/2, sizeHeight/2));
     this->addChild(icon);
+    
+    if(bg)
+    {
+        bg->setScale(icon->getScale());
+    }
     
     return true;
 }

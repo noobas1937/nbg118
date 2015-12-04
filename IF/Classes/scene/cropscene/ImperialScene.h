@@ -93,6 +93,8 @@ public:
     void onBridgeClose();
     void changeBridgeState(CCNode* p);
     
+    void onRefreshOutsideTraps();
+    
     void onUpdateInfo();
     void onCreateBuild(int itemId);
     void onOpenBuild(int itemId);
@@ -469,6 +471,9 @@ private:
     CCSafeObject<CCNode> m_bridgeTouchNode;
     CCSafeObject<CCNode> m_waterNode_L;
     CCSafeObject<CCNode> m_waterNode_R;
+    // tao.yu traps outside wall
+    CCSafeObject<Node> m_trapsRootNode();
+    CCSafeObject<Node> m_nodeTraps[30];
     
     bool m_bridgeOpened;
     bool m_isBridgeCanClick;

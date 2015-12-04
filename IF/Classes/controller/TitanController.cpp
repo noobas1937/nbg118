@@ -218,3 +218,33 @@ void TitanController::update(float dt)
     
     
 }
+
+bool TitanController::checkCanFeedFree()
+{
+    TitanInfo &ti =GlobalData::shared()->titanInfo;
+    
+    if (ti.feedNum>=ti.feedMaxNum) {
+        return false;
+    }
+    else
+    {
+        FunBuildInfo& fbiInfo = FunBuildController::getInstance()->getFunbuildById(FUN_BUILD_MAIN_CITY_ID);
+        
+        if (fbiInfo.state == FUN_BUILD_UPING) {
+            return false;
+        }
+        else
+        {
+            long feedTime = ti.feedcdfix - GlobalData::shared()->getWorldTime();
+            
+            if (feedTime<0) {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
+        }
+    }
+}

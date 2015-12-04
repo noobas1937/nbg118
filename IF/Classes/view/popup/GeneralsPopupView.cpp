@@ -499,19 +499,23 @@ void GeneralsPopupView::refreshView(){
     m_bustPic->addChild(sprite);
 //    sprite->runAction(CCFadeIn::create(0.5));
     
-    sprite->runAction(Sequence::createWithTwoActions( CCFadeIn::create(0.5),CallFunc::create([this]
-                                                                                             {
-                                                                                                 m_particleNodeNB->removeAllChildren();
-                                                                                                 
-                                                                                                 auto particle = ParticleController::createParticle("HeroBg");
-                                                                                                 
-                                                                                                 m_particleNodeNB->addChild(particle);
-
-                                                                                             })));
+    sprite->runAction(CCFadeIn::create(0.5));
+    
+    
+    this->runAction(Sequence::createWithTwoActions(DelayTime::create(0.5), CallFunc::create([this]
+                                                                                          {
+                                                                                              m_particleNodeNB->removeAllChildren();
+                                                                                              
+                                                                                              auto particle = ParticleController::createParticle("HeroBg");
+                                                                                              
+                                                                                              m_particleNodeNB->addChild(particle);
+                                                                                              
+                                                                                          })));
+    
     
 
 
-//    m_particleNodeNB->
+
     
     onRefreshEquip();
 }
