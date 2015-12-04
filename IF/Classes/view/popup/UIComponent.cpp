@@ -161,6 +161,7 @@
 #include "JoinRecAllianceTipView.h"
 
 #include "GeneralTitanPopupView.h"//fusheng
+#include "TitanController.h"
 
 //UIComponentOldTitle
 UIComponentOldTitle* UIComponentOldTitle::create(OldTitleType type)
@@ -867,6 +868,8 @@ void UIComponent::onEnter()
     CCLayer::onEnter();
     
     
+  
+    
     
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(UIComponent::updateDragonStatus), MSG_TITAN_UPGRADE_COMPLETE, NULL);
     
@@ -1028,15 +1031,35 @@ void UIComponent::onEnter()
     
     updateDragonStatus(nullptr);
     
+    if(m_nbXHD)
+    {
+        m_nbXHD->stopAllActions();
+        
+        m_nbXHD->setOpacity(0);
+        
+        float cycleTime = 1;
+        
+        m_nbXHD->runAction(RepeatForever::create(Sequence::createWithTwoActions(FadeIn::create(cycleTime/2), FadeOut::create(cycleTime/2))));
+        
+        m_nbXHD->setVisible(false);
+    }
+    
+    
 #if(CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
     ChatServiceCocos2dx::postUIShow();
 #endif
 }
 
+void UIComponent::showCanFeedRedPoint(bool isShow)
+{
+    if(m_nbXHD)
+        m_nbXHD->setVisible(isShow);
+}
+
 void UIComponent::onEnterFrame(float dt)
 
 {
-
+    UIComponent::showCanFeedRedPoint(TitanController::getInstance()->checkCanFeedFree());
     //    if(FunBuildController::getInstance()->curFoodOutPreSed < 0)
     
     //    {
@@ -2693,6 +2716,8 @@ bool UIComponent::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const c
 {
     
 //    CCLOG("ccbi control name %s",pMemberVariableName);
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nbXHD", CCSprite*, this->m_nbXHD);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_dragonIcon", CCSprite*, this->m_dragonIcon);
     
@@ -6304,33 +6329,35 @@ void UIComponent::addParticleToBatch(cocos2d::CCParticleSystemQuad *particle) {
 
 void UIComponent::setSerchCoordState(){
     if(GlobalData::shared()->playerInfo.isInSelfServer()){
-        m_xCoordLabel->setPositionX(-78);
-        m_xCoordText->setPositionX(-38);
-        m_xBG->setPositionX(-38);
-        
-        m_yCoordLabel->setPositionX(20);
-        m_yCoordText->setPositionX(58);
-        m_yBG->setPositionX(58);
+//        m_xCoordLabel->setPositionX(-78);
+//        m_xCoordText->setPositionX(-38);
+//        m_xBG->setPositionX(-38);
+//        
+//        m_yCoordLabel->setPositionX(20);
+//        m_yCoordText->setPositionX(58);
+//        m_yBG->setPositionX(58);
 
-        m_findIcon->setPositionX(m_xCoordLabel->getPositionX() - 50);
+//        m_findIcon->setPositionX(m_xCoordLabel->getPositionX() - 50);
+        
         m_zCoordLabel->setVisible(false);
         m_zCoordText->setVisible(false);
         m_kingdomBG->setVisible(false);
         m_serverNode->setVisible(false);
     }else{
-        m_findIcon->setPositionX(m_zCoordLabel->getPositionX() - 50);
-        m_zCoordLabel->setVisible(true);
-        m_zCoordText->setVisible(true);
-        m_kingdomBG->setVisible(false);
-        m_xCoordLabel->setPositionX(-22);
-        m_xCoordText->setPositionX(14);
-        m_xBG->setPositionX(14);
-        
-        m_yCoordLabel->setPositionX(76);
-        m_yCoordText->setPositionX(114);
-        m_yBG->setPositionX(114);
-        m_serverNode->setVisible(true);
-        setServerText(GlobalData::shared()->playerInfo.currentServerId);
+        // guojiang TODO
+//        m_findIcon->setPositionX(m_zCoordLabel->getPositionX() - 50);
+//        m_zCoordLabel->setVisible(true);
+//        m_zCoordText->setVisible(true);
+//        m_kingdomBG->setVisible(false);
+//        m_xCoordLabel->setPositionX(-22);
+//        m_xCoordText->setPositionX(14);
+//        m_xBG->setPositionX(14);
+//        
+//        m_yCoordLabel->setPositionX(76);
+//        m_yCoordText->setPositionX(114);
+//        m_yBG->setPositionX(114);
+//        m_serverNode->setVisible(true);
+//        setServerText(GlobalData::shared()->playerInfo.currentServerId);
     }
 }
 

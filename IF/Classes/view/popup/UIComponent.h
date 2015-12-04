@@ -406,6 +406,12 @@ public:
     void showCloseBtn(bool show);
     void showEquipOrBagBtn(int type);
     void hideReturnBtn();
+    
+    void showCanFeedRedPoint(bool isShow);
+    
+    CCSafeObject<CCSprite> m_nbXHD;
+    
+    
     CCSafeObject<CCLabelIF> m_xCoordLabel;
     CCSafeObject<CCLabelIF> m_yCoordLabel;
     CCSafeObject<CCLabelIF> m_zCoordLabel;

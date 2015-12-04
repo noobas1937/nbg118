@@ -50,6 +50,8 @@ private:
     CCSafeObject<CCArray> m_data;
     CCSafeObject<CCNode> m_downNode;
     CCSafeObject<CCScale9Sprite> m_buildBG;
+    CCSafeObject<CCScale9Sprite> m_buildBG1;
+    CCSafeObject<CCScale9Sprite> m_buildBG2;
    // CCSafeObject<CCScale9Sprite> m_bg;
     CCSafeObject<CCMultiColTableView> m_tabView;
     CCSafeObject<CCArray> m_cells;
@@ -58,6 +60,7 @@ private:
     CCSafeObject<CCLabelIF> m_nameTxt;
     CCSafeObject<CCLabelIF> m_descTxt;
     CCSafeObject<CCLabelIF> m_progressTxt;
+    CCSafeObject<CCLabelIF> m_progressTotalTxt;
     CCSafeObject<CCLabelIF> m_rewardTitle;
     CCSafeObject<CCControlButton> m_rewardBtn;
     CCSafeObject<CCScale9Sprite> m_progress;
@@ -91,6 +94,7 @@ private:
     CCSafeObject<CCNode> m_picNode;
     CCSafeObject<CCLabelIF> m_nameText;
     CCSafeObject<CCLabelIF> m_numText;
+    CCSafeObject<LayerColor> m_bg_color;
     //CCSafeObject<CCControlButton> m_btn;
     QuestInfo* m_info;
     int m_index;

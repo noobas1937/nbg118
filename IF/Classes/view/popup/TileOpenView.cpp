@@ -29,7 +29,9 @@ TileOpenView* TileOpenView::create(int tileId){
 
 bool TileOpenView::init(int tileId)
 {
-    if (!ArcPopupBaseView::init(TYPE_POS_UP)) {
+//    if (!ArcPopupBaseView::init(TYPE_POS_UP)) {
+    if (!ArcPopupBaseView::init(TYPE_POS_TO_UP)) {
+        
         return false;
     }
     setIsHDPanel(true);
@@ -44,10 +46,47 @@ bool TileOpenView::init(int tileId)
     m_scrollView->setDirection(kCCScrollViewDirectionVertical);
     m_infoList->addChild(m_scrollView);
     
-    this->changeBGMaxHeight(this);
+//    this->changeBGMaxHeight(this);
     
     updateInfo();
     m_openNum=0;
+    
+    
+    this->getArcModelLayer()->setVisible(false);
+    
+    int addHeight = getExtendHeight();
+    
+    auto wSize = Director::getInstance()->getWinSize();
+    
+    if (wSize.height/wSize.width>1.6) {//fusheng 手机
+        auto oldR =m_msg_BG->getBoundingBox();
+        
+        auto oldS = m_msg_BG->getScaleY();
+        
+        m_msg_BG->setScaleY(1);
+        
+        auto newR =m_msg_BG->getBoundingBox();
+        
+        if (newR.size.height - newR.size.height>addHeight/2) {//fusheng 调整大小后大于infoNode移动距离时 不放缩
+            m_msg_BG->setScaleY(oldS);
+        }
+        else
+        {
+            BGNode2->setPositionY(BGNode2->getPositionY()-(newR.size.height - oldR.size.height));
+            m_buildBG2->setPositionY(m_buildBG2->getPositionY()-(newR.size.height - oldR.size.height));
+
+            m_info_BG->setPositionY(m_info_BG->getPositionY()-addHeight/2);
+            m_infoList->setPositionY(m_infoList->getPositionY()-addHeight/2);
+            
+        }
+        
+    }
+    else
+    {
+        
+    }
+    
+    m_bottomNodeNB->setPositionY(m_bottomNodeNB->getPositionY()-addHeight);
     
   //  m_mainNode->setPositionY(m_mainNode->getPositionY()-200);
 //    CCActionInterval * moveBy2 = CCMoveBy::create(0.25, ccp(0,200));
@@ -226,6 +265,15 @@ SEL_CCControlHandler TileOpenView::onResolveCCBCCControlSelector(cocos2d::CCObje
 
 bool TileOpenView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode)
 {
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bottomNodeNB", CCNode*, this->m_bottomNodeNB);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_buildBG2", CCScale9Sprite*, this->m_buildBG2);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "BGNode2", CCNode*, this->BGNode2);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_msg_BG", CCSprite*, this->m_msg_BG);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_info_BG", CCScale9Sprite*, this->m_info_BG);
+    
+    
+    
+    
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_mainNode", CCNode*, this->m_mainNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_upBtn", CCControlButton*, this->m_upBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_infoList", CCNode*, this->m_infoList);

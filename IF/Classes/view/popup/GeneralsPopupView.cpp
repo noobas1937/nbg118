@@ -142,6 +142,8 @@ bool GeneralsPopupView::init()
     CCLoadSprite::doResourceByGeneralIndex(1, true);//亮光放在这里
     CCLoadSprite::doResourceByGeneralIndex(2, true);
     CCLoadSprite::doResourceByGeneralIndex(3, true);
+    CCLoadSprite::doResourceByGeneralIndex(4, true);//fusheng 粒子特效
+    
     
     //fusheng end
     
@@ -434,6 +436,7 @@ bool GeneralsPopupView::init()
         CCLoadSprite::doResourceByGeneralIndex(1, false);
         CCLoadSprite::doResourceByGeneralIndex(2, false);
         CCLoadSprite::doResourceByGeneralIndex(3, false);
+         CCLoadSprite::doResourceByGeneralIndex(4, false);
     });
     
     if (!CCCommonUtils::isIosAndroidPad())
@@ -494,7 +497,25 @@ void GeneralsPopupView::refreshView(){
     sprite->setOpacity(0);
     sprite->setPositionX(-7);
     m_bustPic->addChild(sprite);
+//    sprite->runAction(CCFadeIn::create(0.5));
+    
     sprite->runAction(CCFadeIn::create(0.5));
+    
+    
+    this->runAction(Sequence::createWithTwoActions(DelayTime::create(0.5), CallFunc::create([this]
+                                                                                          {
+                                                                                              m_particleNodeNB->removeAllChildren();
+                                                                                              
+                                                                                              auto particle = ParticleController::createParticle("HeroBg");
+                                                                                              
+                                                                                              m_particleNodeNB->addChild(particle);
+                                                                                              
+                                                                                          })));
+    
+    
+
+
+
     
     onRefreshEquip();
 }
@@ -538,6 +559,8 @@ void GeneralsPopupView::loadResource(){
     CCLoadSprite::doResourceByCommonIndex(7, true);
 }
 
+
+
 void GeneralsPopupView::onEnter(){
     PopupBaseView::onEnter();
     m_count = 0;
@@ -559,6 +582,11 @@ void GeneralsPopupView::onEnter(){
     }
     
     this->getAnimationManager()->runAnimationsForSequenceNamed("FadeIn");
+    
+    this->getAnimationManager()->setAnimationCompletedCallback(this, callfunc_selector(GeneralsPopupView::animationFuncForFadeIn));
+
+    
+    
     setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
     setTouchEnabled(true);
     //CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, Touch_Default, false);
@@ -669,6 +697,8 @@ void GeneralsPopupView::onSkillBtnClick(CCObject * pSender, Control::EventType p
 bool GeneralsPopupView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode)
 {
 
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_particleNodeNB", CCNode*, this->m_particleNodeNB);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nbTouchNodeForChangeAvatar", CCNode*, this->m_nbTouchNodeForChangeAvatar);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_ChangeAvatarNode", CCNode*, this->m_ChangeAvatarNode);
@@ -894,7 +924,7 @@ void GeneralsPopupView::fadeOut(){
     m_receiveGlow->removeFromParent();
     this->getAnimationManager()->setAnimationCompletedCallback(this, callfunc_selector(GeneralsPopupView::animationFunc1));
     this->getAnimationManager()->runAnimationsForSequenceNamed("FadeOut");
-    
+    m_particleNodeNB->removeAllChildren();
     CCNode* pic = m_bustPic->getChildByTag(0);
     if (pic) {
         CCSprite* icon = dynamic_cast<CCSprite*>(pic);
@@ -915,6 +945,11 @@ void GeneralsPopupView::animationFunc1(){
     this->getAnimationManager()->setAnimationCompletedCallback(this, NULL);
     PopupViewController::getInstance()->goBackPopupView();
 }
+void GeneralsPopupView::animationFuncForFadeIn(){
+    this->getAnimationManager()->setAnimationCompletedCallback(this, NULL);
+    this->getAnimationManager()->runAnimationsForSequenceNamed("Loop");
+}
+
 
 bool GeneralsPopupView::onTouchBegan(CCTouch *pTouch, CCEvent *pEvent){
     if(isTouchInside(m_touchNode, pTouch) && isTouchInside(m_infoNode, pTouch)){
@@ -1671,7 +1706,6 @@ void GeneralsPopupView::equipLoopGlowCallBack(){
     }
 //    curGlow++;
 //    curGlow%=glowVect.size();
-    this->getAnimationManager()->runAnimationsForSequenceNamed("Loop");
 }
 
 ////////////////////////////////

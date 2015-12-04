@@ -495,7 +495,6 @@ void ImperialScene::buildingCallBack(CCObject* params)
     this->titanChangeStatus(NULL);
     onEnterFrame(0);
     initBigTile();
-
     onOpenNewBuild(NULL);
     //发生 22资源释放不掉的 区域 end end end end end end
     
@@ -1491,6 +1490,65 @@ void ImperialScene::changeBridgeState(CCNode* p)
 //    }
 }
 
+void ImperialScene::onRefreshOutsideTraps()
+{
+    auto getTrapsPicNum = [](int num)
+    {
+        //小于等于这个值  1;999;1999;2999;3999;4999;9999;19999;39999;80000 分别对应1～10个陷阱的显示。
+        int baseArr[11] = {0,1,999,1999,2999,3999,4999,9999,19999,39999,80000};
+        int i = 0;
+        int curNum = baseArr[i];
+        
+        while (num > curNum) {
+            curNum = baseArr[i];
+            ++i;
+        }
+        i = i > 10 ? 10 : i;
+        return i;
+    };
+    int type1 = 0;
+    int type2 = 0;
+    int type3 = 0;
+    // 计算每种类型的陷阱
+    map<std::string, ArmyInfo>::iterator it = GlobalData::shared()->fortList.begin();
+    while (it != GlobalData::shared()->fortList.end()){
+        std::string iconName = CCCommonUtils::getPropById(it->second.getRealItemId(), "icon");
+        if (iconName == "ico107900") {
+            type1 += it->second.free;
+        }
+        else if (iconName == "ico107901") {
+            type2 += it->second.free;
+        }
+        else if (iconName == "ico107902") {
+            type3 += it->second.free;
+        }
+        ++it;
+    }
+    
+    for (int i = 0; i < getTrapsPicNum(type1); ++i) {
+        auto spr = CCLoadSprite::createSprite("outside107900.png");
+        auto pos = m_nodeTraps[i]->getPosition();
+        m_resbatchNode->addChild(spr);
+        spr->setPosition(pos);
+    }
+    for (int i = 0; i < getTrapsPicNum(type2); ++i) {
+        auto spr = CCLoadSprite::createSprite("outside107901.png");
+        auto pos = m_nodeTraps[i+10]->getPosition();
+        m_resbatchNode->addChild(spr);
+        spr->setPosition(pos);
+    }
+    for (int i = 0; i < getTrapsPicNum(type3); ++i) {
+        std::string picName = "outside107902_1.png";
+        if (i >= 5) {
+            picName = "outside107902_2.png";
+        }
+        auto spr = CCLoadSprite::createSprite(picName.c_str());
+        auto pos = m_nodeTraps[i+20]->getPosition();
+        m_resbatchNode->addChild(spr);
+        spr->setPosition(pos);
+    }
+    
+}
 
 void ImperialScene::wallCallBack(CCObject* params)
 {
@@ -2632,8 +2690,10 @@ void ImperialScene::onMoveToBuildAndOpen(int itemId, int type, float dt, bool bo
             build = dynamic_cast<FunBuild*>(node->getChildren().at(0));
         }
         
-        m_curBuildPosx = build->getParent()->getPositionX() + build->mainWidth/2 ;
-        m_curBuildPosy = build->getParent()->getPositionY() + build->mainHeight/2;
+//        m_curBuildPosx = build->getParent()->getPositionX() + build->mainWidth/2 ;
+//        m_curBuildPosy = build->getParent()->getPositionY() + build->mainHeight/2;
+        m_curBuildPosx = build->getParent()->getPositionX();
+        m_curBuildPosy = build->getParent()->getPositionY();
         if (CCCommonUtils::isIosAndroidPad())
         {
             m_curBuildPosy = build->getParent()->getPositionY() + build->mainHeight;
@@ -2664,7 +2724,8 @@ void ImperialScene::onMoveToPos(float x, float y, int type, float dt, float scal
     }
     else if (type == TYPE_POS_MID_UP) {
         _wf = 0.5;
-        _hf = 0.6;
+//        _hf = 0.6;
+        _hf = 0.7;
     }
     
     float f = scale;
@@ -4274,6 +4335,17 @@ bool ImperialScene::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const
         m_bigTileNodes[idx] = pNode;
         return true;
     }
+    else if (pTarget == this && strncmp(pMemberVariableName, "m_trap_",7) == 0 ) {
+        char index[5] = "";
+        strncpy(index, pMemberVariableName + 7, strlen(pMemberVariableName) - 7);
+        
+        int trapIndex = atoi(index);
+        if (trapIndex < 30) {
+            m_nodeTraps[trapIndex] = pNode;
+            m_nodeTraps[trapIndex]->retain();
+        }
+        return true;
+    }
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vikingNode", CCNode*, this->m_vikingNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_mcNode1", CCNode*, this->m_mcNode1);
@@ -4939,6 +5011,9 @@ void ImperialScene::playPowerAni(float _time){
 
 void ImperialScene::refreshSoldiers(CCObject* obj)
 {
+    // tao.yu add traps
+    onRefreshOutsideTraps();
+    
     if (!m_soldierBatchNode) {
         return;
     }
