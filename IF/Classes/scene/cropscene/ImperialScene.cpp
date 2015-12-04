@@ -1483,7 +1483,7 @@ void ImperialScene::onRefreshOutsideTraps()
     auto getTrapsPicNum = [](int num)
     {
         //小于等于这个值  1;999;1999;2999;3999;4999;9999;19999;39999;80000 分别对应1～10个陷阱的显示。
-        int baseArr[11] = {0,1,999,1999,2999,3999,4999,9999,19999,39999,80000};
+        int baseArr[13] = {0,1,499,999,1999,2499,2999,3999,4999,9999,19999,39999,80000};
         int i = 0;
         int curNum = baseArr[i];
         
@@ -1491,7 +1491,7 @@ void ImperialScene::onRefreshOutsideTraps()
             curNum = baseArr[i];
             ++i;
         }
-        i = i > 10 ? 10 : i;
+        i = i > 12 ? 12 : i;
         return i;
     };
     int type1 = 0;
@@ -1521,7 +1521,7 @@ void ImperialScene::onRefreshOutsideTraps()
     }
     for (int i = 0; i < getTrapsPicNum(type2); ++i) {
         auto spr = CCLoadSprite::createSprite("outside107901.png");
-        auto pos = m_nodeTraps[i+10]->getPosition();
+        auto pos = m_nodeTraps[i+12]->getPosition();
         m_resbatchNode->addChild(spr);
         spr->setPosition(pos);
     }
@@ -1531,7 +1531,7 @@ void ImperialScene::onRefreshOutsideTraps()
             picName = "outside107902_2.png";
         }
         auto spr = CCLoadSprite::createSprite(picName.c_str());
-        auto pos = m_nodeTraps[i+20]->getPosition();
+        auto pos = m_nodeTraps[i+24]->getPosition();
         m_resbatchNode->addChild(spr);
         spr->setPosition(pos);
     }

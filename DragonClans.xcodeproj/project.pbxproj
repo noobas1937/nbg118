@@ -7410,7 +7410,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "checkFile () {\n    touch -cm $1\n    if [[ -d $1 ]]; then\n        for file in \"$1/\"*\n        do (\n            checkFile $file\n        )\n        done\n    fi\n}\n\ntargetDir=\"${SRCROOT}/IF/Resources\"\ncheckFile $targetDir\nif [ ! -d \"${targetDir}/manifest\" ]; then\n    mkdir ${targetDir}/manifest\nfi\n\nif [ \"${CONFIGURATION}\" = \"Release\" ]; then\n    luaSrcDir=\"${SRCROOT}/IF/Resources/src\"\n    luaSrcDir_tmp=\"${SRCROOT}/IF/Resources/src_tmp\"\n    pack_files_Dir=\"${SRCROOT}/tools/pack_files\"\n    mv ${luaSrcDir} ${luaSrcDir_tmp}\n    cd ${DIR}\n    ./pack_files/pack_files.sh -i ${luaSrcDir_tmp} -o ${luaSrcDir} -ek n_77wDDolqz -es i900_gFymA\nfi\n";
+			shellScript = "checkFile () {\n    touch -cm $1\n    if [[ -d $1 ]]; then\n        for file in \"$1/\"*\n        do (\n            checkFile $file\n        )\n        done\n    fi\n}\n\ntargetDir=\"${SRCROOT}/IF/Resources\"\ncheckFile $targetDir\nif [ ! -d \"${targetDir}/manifest\" ]; then\n    mkdir ${targetDir}/manifest\nfi\n\n# if [ \"${CONFIGURATION}\" = \"Release\" ]; then\n#     luaSrcDir=\"${SRCROOT}/IF/Resources/src\"\n#     luaSrcDir_tmp=\"${SRCROOT}/IF/Resources/src_tmp\"\n#     pack_files_Dir=\"${SRCROOT}/tools/pack_files\"\n#     mv ${luaSrcDir} ${luaSrcDir_tmp}\n#     cd ${DIR}\n#     ./pack_files/pack_files.sh -i ${luaSrcDir_tmp} -o ${luaSrcDir} -ek n_77wDDolqz -es i900_gFymA\n# fi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

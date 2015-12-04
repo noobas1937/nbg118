@@ -214,7 +214,7 @@ bool LoadingScene::init()
     auto loadingBar = CCLoadSprite::createSprite("loading_bar.png");
     loadingBar->setTag(LOADING_2);
     CCSize lbBGsz = loadingBar->getContentSize();
-    float baseHeight = lbBGsz.height*1.5;
+    float baseHeight = lbBGsz.height*3;
     loadingBar->setPosition(ccp(size.width/2,baseHeight) + addPt);
     addChild(loadingBar);
     
