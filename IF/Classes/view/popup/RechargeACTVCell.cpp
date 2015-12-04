@@ -540,7 +540,7 @@ void ActivityBox::initChunjieParticle(){
 void ActivityBox::loadSpine()
 {
     const string spineJsonName = "Spine/Imperial/activitybox.json";
-    const string spineAtlasName = "Common/Common_7.atlas";
+    const string spineAtlasName = "Imperial/Imperial_30.atlas";
     
     if (CCFileUtils::sharedFileUtils()->isFileExist(spineJsonName) &&
         CCFileUtils::sharedFileUtils()->isFileExist(spineAtlasName))
