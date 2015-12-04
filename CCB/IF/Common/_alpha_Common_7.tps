@@ -20,7 +20,7 @@
         <key>dpi</key>
         <uint>72</uint>
         <key>dataFormat</key>
-        <string>cocos2d</string>
+        <string>libgdx</string>
         <key>textureFileName</key>
         <filename>../../../IF/Resources/Common/Common_7.pvr.ccz</filename>
         <key>flipPVR</key>
@@ -111,7 +111,7 @@
             <enum type="AndEngine::MagFilter">MagLinear</enum>
         </struct>
         <key>dataFileName</key>
-        <filename>../../../IF/Resources/Common/Common_7.plist</filename>
+        <filename>../../../IF/Resources/Common/Common_7.atlas</filename>
         <key>multiPack</key>
         <false/>
         <key>mainExtension</key>

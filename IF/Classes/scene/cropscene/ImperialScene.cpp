@@ -356,7 +356,7 @@ bool ImperialScene::init()
     m_isVikingShipMove = false;
     mVikingShipDict = CCDictionary::create();
     mShipLevel = 0;
-    loadSpineActivityBox(); //放在这里加载没有问题，如果在ActivityBox初始化时加载会有问题。
+    
     //end a by ljf
     return true;
 }
@@ -731,6 +731,18 @@ void ImperialScene::loadSpineActivityBox()
         activityBox->loadSpine();
     }
         
+}
+
+void ImperialScene::unLoadSpineActivityBox()
+{
+    UIComponent * uiLayer = UIComponent::getInstance();
+    
+    auto activityBox = uiLayer->getActivityBox();
+    if(activityBox)
+    {
+        activityBox->unLoadSpine();
+    }
+    
 }
 
 void ImperialScene::updateVikingsShipNum()
@@ -1667,6 +1679,11 @@ void ImperialScene::onEnter()
     //    GuideController::share()->start();
     BranchController::getInstance()->excute("InviteForGift");
     
+    //begin a by ljf
+    //loadSpineActivityBox(); //放在这里加载没有问题，如果在ActivityBox初始化时加载会有问题。
+    UIComponent::getInstance()->loadSpineActivityBox();
+    
+    //end a by ljf
     
     
 //    if (m_Titan) {//fusheng 龙的形象
@@ -2173,6 +2190,8 @@ void ImperialScene::onExit()
 {
     m_exit = true;
     //begin a by ljf
+    UIComponent::getInstance()->unLoadSpineActivityBox();
+    //unLoadSpineActivityBox();
     m_walkerBatchNode->removeAllChildren();
     m_jianBatchNode->removeAllChildren();
     //m_walkerArray->removeAllObjects();

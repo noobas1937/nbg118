@@ -189,7 +189,7 @@
 								<string>FloatScale</string>
 								<key>value</key>
 								<array>
-									<real>20</real>
+									<real>16</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -223,7 +223,7 @@
 								<key>type</key>
 								<string>IntegerLabeled</string>
 								<key>value</key>
-								<integer>0</integer>
+								<integer>1</integer>
 							</dict>
 							<dict>
 								<key>name</key>
@@ -231,7 +231,7 @@
 								<key>type</key>
 								<string>IntegerLabeled</string>
 								<key>value</key>
-								<integer>0</integer>
+								<integer>1</integer>
 							</dict>
 							<dict>
 								<key>name</key>
@@ -239,9 +239,11 @@
 								<key>type</key>
 								<string>Text</string>
 								<key>value</key>
-								<string>23:59:59</string>
+								<string>2d 23:59:59</string>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -303,8 +305,6 @@
 								<false/>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 				</array>
 				<key>customClass</key>

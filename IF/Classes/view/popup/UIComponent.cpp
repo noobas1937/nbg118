@@ -6135,7 +6135,7 @@ void UIComponent::setActivityStatus(){
 void UIComponent::resetGoldActivityBox(CCObject* p){
     // tao.yu 第一个版本关闭充值
     
-    if (true) {
+    if (false) {
         this->m_rechargeNode->setVisible(false);
         return;
     }
@@ -6154,6 +6154,10 @@ void UIComponent::resetGoldActivityBox(CCObject* p){
     for (map<string, GoldExchangeItem*>::iterator it = GlobalData::shared()->goldExchangeList.begin(); it != GlobalData::shared()->goldExchangeList.end(); it++) {
         if(!it->second)
             continue;
+        //begin a by ljf
+        //it->second->popup_image = "hot_sale";
+        //it->second->item = "200200;5|200300;5|200330;5|200390;5|";
+        //end a by ljf
         if(it->second->type == "5"){
         }else{
             if(it->second->type == "3"){
