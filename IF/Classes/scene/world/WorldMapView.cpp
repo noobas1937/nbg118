@@ -6240,10 +6240,13 @@ void WorldMapView::addBatchItem(BatchTagType type, unsigned int index,CCObject* 
         }
             break;
         case MonsterProBG1:{
-            item = CCLoadSprite::createSprite("world_lv_bg.png");
-            item->setPosition(ccp(pos.x - 45, pos.y-55));
+            item = CCLoadSprite::createSprite("world_name.png");
+            item->setPosition(ccp(pos.x + 35, pos.y-55));
             zorder = 3;
             
+            auto lv_bg = CCLoadSprite::createSprite("world_lv_bg.png");
+            lv_bg->setPosition(45, 29);
+            item->addChild(lv_bg);
         }
             break;
         case LevelTag:{
@@ -6301,7 +6304,7 @@ void WorldMapView::addBatchItem(BatchTagType type, unsigned int index,CCObject* 
             break;
         case NameTag1:{
             item = CCLoadSprite::createSprite("name_bg_title.png");
-            item->setPosition(ccp(pos.x, pos.y));
+            item->setPosition(ccp(pos.x, pos.y + 22));
             zorder = 3;
         }
             break;

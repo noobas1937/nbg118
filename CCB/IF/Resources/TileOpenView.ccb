@@ -971,7 +971,7 @@
 												<key>value</key>
 												<array>
 													<real>50</real>
-													<real>125</real>
+													<real>75</real>
 													<integer>0</integer>
 												</array>
 											</dict>
@@ -1099,7 +1099,7 @@
 												<key>value</key>
 												<array>
 													<real>50</real>
-													<real>10</real>
+													<real>-40</real>
 													<integer>0</integer>
 												</array>
 											</dict>
@@ -1226,8 +1226,8 @@
 												<string>Position</string>
 												<key>value</key>
 												<array>
-													<real>-94.713348388671875</real>
-													<real>44</real>
+													<real>-104.71334838867188</real>
+													<real>-23</real>
 													<integer>0</integer>
 												</array>
 											</dict>
@@ -1286,6 +1286,8 @@
 												</array>
 											</dict>
 										</array>
+										<key>selected</key>
+										<true/>
 									</dict>
 								</array>
 								<key>customClass</key>
@@ -2155,8 +2157,6 @@
 				<true/>
 			</dict>
 		</array>
-		<key>selected</key>
-		<true/>
 	</dict>
 	<key>notes</key>
 	<array/>
