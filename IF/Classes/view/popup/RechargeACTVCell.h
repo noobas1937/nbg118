@@ -66,6 +66,7 @@ public:
     void setData();
     
     void loadSpine();
+    void unLoadSpine();
     
 protected:
     void onEnterFrame(float dt);

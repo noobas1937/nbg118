@@ -41,6 +41,7 @@ bool GoldExchangeSaleView::init()
         CCLoadSprite::doResourceByCommonIndex(102, false);
         CCLoadSprite::releaseDynamicResourceByType(CCLoadSpriteType_GOODS);
     });
+    /* d by ljf, 目前只提供了一个界面
     if(m_dataItem->popup_image=="thanksgiving"){
         CCBLoadFile("GoldThanksGivingSaleActView",this,this);
     } else if(m_dataItem->popup_image=="winter") {
@@ -61,6 +62,8 @@ bool GoldExchangeSaleView::init()
     }else{
         CCBLoadFile("GoldExchangeSaleActView",this,this);
     }
+    */
+    CCBLoadFile("GoldExchangeSaleActView",this,this);
     this->setContentSize(CCSizeMake(640, 852));
     
 //    m_titleLabel->setColor(ccc3(70,186,68));
@@ -70,10 +73,11 @@ bool GoldExchangeSaleView::init()
         m_titleLabel->setString(_lang(m_dataItem->name).c_str());
     }
     m_getLabel->setString(_lang_1("115073",""));
-    m_getLabel1->setString(_lang_1("101237",""));
+    
+    //m_getLabel1->setString(_lang_1("101237","")); //d by ljf, 新版界面未提供此控件
     m_timeLabel->setString("23:59:59");
   //  CCCommonUtils::setButtonTitle(m_moreBtn, _lang("102162").c_str());
-    m_moreLabel->setString(_lang("102162").c_str());
+    //m_moreLabel->setString(_lang("102162").c_str()); //d by ljf, 新版界面未提供此控件
     if(m_parentType==1){
         m_listNode->setContentSize(CCSize(m_listNode->getContentSize().width, m_listNode->getContentSize().height+60 ));
     }
@@ -128,14 +132,17 @@ bool GoldExchangeSaleView::init()
     m_getGoldNumText->setString(strPercent.c_str());
     if(m_parentType==1){
  
-        m_moreNode->setVisible(false);
+        //m_moreNode->setVisible(false); //d by ljf, 新版无此
         m_scrollView->setTouchEnabled(true);
     }else{
 
-        m_moreNode->setVisible(true);
+        //m_moreNode->setVisible(true); //d by ljf, 新版无此
          m_scrollView->setTouchEnabled(false);
     }
     int curY = 0;
+    int offX = 10;
+    
+    int cellSize = 90;
     if (m_dataItem->item != "") {
         vector<string> vector1;
         vector<string> vector2;
@@ -152,9 +159,9 @@ bool GoldExchangeSaleView::init()
                 CCCommonUtils::splitString(vector1[j], ";", vector2);
                 if (vector2.size()==2) {
                     auto cell = GoldExchangeSaleCell::create(atoi(vector2[0].c_str()), atoi(vector2[1].c_str()),m_dataItem->popup_image,0);
-                    cell->setPosition(ccp(0, curY));
+                    cell->setPosition(ccp(0 + offX, curY));
                     m_scrollView->cocos2d::CCNode::addChild(cell);
-                    curY += 60;
+                    curY += cellSize;
                 }
                 j++;
             }
@@ -166,9 +173,9 @@ bool GoldExchangeSaleView::init()
                 CCCommonUtils::splitString(vector1[i], ";", vector2);
                 if (vector2.size()==2) {
                     auto cell = GoldExchangeSaleCell::create(atoi(vector2[0].c_str()), atoi(vector2[1].c_str()),m_dataItem->popup_image,0);
-                    cell->setPosition(ccp(0, curY));
+                    cell->setPosition(ccp(0 + offX, curY));
                     m_scrollView->cocos2d::CCNode::addChild(cell);
-                    curY += 60;
+                    curY += cellSize;
                 }
                 i++;
             }
@@ -186,16 +193,18 @@ bool GoldExchangeSaleView::init()
                 CCCommonUtils::splitString(vector1[i], ";", vector2);
                 if (vector2.size()==2) {
                     auto cell = GoldExchangeSaleCell::create(atoi(vector2[0].c_str()), atoi(vector2[1].c_str()),m_dataItem->popup_image,1);
-                    cell->setPosition(ccp(0, curY));
+                    cell->setPosition(ccp(0 + offX, curY));
                     m_scrollView->addChild(cell);
-                    curY += 60;
+                    curY += cellSize;
                 }
                 i++;
             }
         }
     }
-    m_scrollView->setContentSize(CCSize(m_listNode->getContentSize().width,curY));
-    m_scrollView->setContentOffset(ccp(0, m_listNode->getContentSize().height - curY));
+    m_scrollView->setContentSize(CCSize(m_listNode->getContentSize().width, curY ));
+    m_scrollView->setContentOffset(ccp(0, m_listNode->getContentSize().height - curY ));
+    
+    
     
     m_soleOutSpr->setVisible(false);
     m_costBtn->setEnabled(true);
@@ -206,9 +215,9 @@ bool GoldExchangeSaleView::init()
     
     onEnterFrame(0);
     if(m_dataItem->popup_image=="thanksgiving" || m_dataItem->popup_image=="winter"){
-        m_moreSpr->setVisible(false);
+        m_moreSpr->setVisible(false); //d by ljf, 新版无此
         m_oldPriceLabel->setVisible(false);
-        m_getLabel1->setVisible(false);
+        //m_getLabel1->setVisible(false); //d by ljf,
 //        m_titleLabel->setVisible(false);
         m_soleOutSpr->setVisible(false);
         m_percentLabel->setScale(1.6);
@@ -218,7 +227,7 @@ bool GoldExchangeSaleView::init()
     m_animNode->setPosition(m_costBtn->getPosition());
     CCSize btnSize = m_costBtn->getContentSize();
     ButtonLightEffect* btnEffect = ButtonLightEffect::create(btnSize);
-    m_animNode->addChild(btnEffect);
+    //m_animNode->addChild(btnEffect);
 //    CCSprite* Spr = CCSprite::create();
 //    m_animNode->addChild(Spr);
 //    string curPath = "ButtonLight_%d.png";
@@ -287,27 +296,27 @@ SEL_CCControlHandler GoldExchangeSaleView::onResolveCCBCCControlSelector(cocos2d
 
 bool GoldExchangeSaleView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode)
 {
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titleLabel", CCLabelIF*, this->m_titleLabel);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_percentLabel", CCLabelBMFont*, this->m_percentLabel);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titleLabel", CCLabelIF*, this->m_titleLabel); //标题
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_percentLabel", CCLabelBMFont*, this->m_percentLabel); //折扣
     
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_getGoldNumText", CCLabelBMFont*, this->m_getGoldNumText);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_getGoldNumText", CCLabelBMFont*, this->m_getGoldNumText);//钻石旁边的钱
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_timeLabel", CCLabelIF*, this->m_timeLabel);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_oldPriceLabel", CCLabelIF*, this->m_oldPriceLabel);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_newPriceLabel", CCLabelIF*, this->m_newPriceLabel);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_getLabel", CCLabelIF*, this->m_getLabel);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_getLabel1", CCLabelIF*, this->m_getLabel1);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_moreLabel", CCLabelIF*, this->m_moreLabel);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_getLabel", CCLabelIF*, this->m_getLabel); //底下按钮上的
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_getLabel1", CCLabelIF*, this->m_getLabel1);//条幅上提示only once的
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_moreLabel", CCLabelIF*, this->m_moreLabel); //提示有更多的文本
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_listNode", CCNode*, this->m_listNode);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_costBtn", CCControlButton*, this->m_costBtn);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_moreBtn", CCControlButton*, this->m_moreBtn);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_soleOutSpr", CCSprite*, this->m_soleOutSpr);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_moreSpr", CCSprite*, this->m_moreSpr);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_touchNode", CCNode*, this->m_touchNode);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_touchMoreNode", CCNode*, this->m_touchMoreNode);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_moreNode", CCNode*, this->m_moreNode);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nodeBuy", CCNode*, this->m_nodeBuy);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_btnGivePackage", CCControlButton*, this->m_btnGivePackage);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_costBtn", CCControlButton*, this->m_costBtn); //底下按钮
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_moreBtn", CCControlButton*, this->m_moreBtn); //提示列表还有更多的按钮
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_soleOutSpr", CCSprite*, this->m_soleOutSpr); //底下按钮上的sole out
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_moreSpr", CCSprite*, this->m_moreSpr); //提示向下滚动的箭头
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_touchNode", CCNode*, this->m_touchNode); //覆盖整个界面，接受点击事件？
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_touchMoreNode", CCNode*, this->m_touchMoreNode); //覆盖列表区域，
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_moreNode", CCNode*, this->m_moreNode);//更多箭头的父结点
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nodeBuy", CCNode*, this->m_nodeBuy); //底下按钮的父结点
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_btnGivePackage", CCControlButton*, this->m_btnGivePackage); //礼物包按钮
     return false;
 }
 
@@ -415,11 +424,14 @@ GoldExchangeSaleCell* GoldExchangeSaleCell::create(int itemId, int num,string po
 
 bool GoldExchangeSaleCell::init(int itemId, int num,string popUpImage,int type)
 {
+    /* //d by ljf, 目前只有一个界面
     if(popUpImage=="thanksgiving" || popUpImage=="winter"){
         CCBLoadFile("RechargeSaleCell",this,this);
     } else {
         CCBLoadFile("GoldHalloweenSaleCell",this,this);
     }
+    */
+    CCBLoadFile("RechargeSaleCell",this,this);
     string name ="";
     string picStr = "";
     if(type == 0){

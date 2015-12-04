@@ -26,6 +26,10 @@
 #include "BaoZangView.h"
 #include "NewPlayerQianDaoView.h"
 
+//begin a by ljf
+#include "IFLoadingSceneArmyNode.h"
+//end a by ljf
+
 
 using namespace cocos2d;
 
@@ -213,7 +217,7 @@ bool RechargeACTVCell::initRechargeACTVCell()
                     GoldExchangeSaleView* cell =  GoldExchangeSaleView::create(dataItem, 1);
                     cell->ignoreAnchorPointForPosition(false);
                     cell->setAnchorPoint(ccp(0.5, 0.5));
-                    cell->setPosition(ccp(winSize.width/2, winSize.height/2));
+                    cell->setPosition(ccp(winSize.width/2, 852/2));
                     this->addChild(cell);
                 }
             }
@@ -225,10 +229,13 @@ bool RechargeACTVCell::initRechargeACTVCell()
             GoldExchangeSaleView* cell =  GoldExchangeSaleView::create(dataItemNormal, 1);
             cell->ignoreAnchorPointForPosition(false); //ljf
             cell->setAnchorPoint(ccp(0.5, 0.5));
-            cell->setPosition(ccp(winSize.width/2, winSize.height/2));
+            cell->setPosition(ccp(winSize.width/2, 852/2));
             this->addChild(cell);
         }
     }
+    
+    
+    
     
     return true;
 }
@@ -288,8 +295,10 @@ bool ActivityBox::initActivityBox()
         CCNode* a = CCNode::create();
         this->addChild(a);
         LuaController::getInstance()->createExchangeIcon(a, info);
-    }else{
+    }
+    else{
     //    m_dataItem = GlobalData::shared()->goldExchangeList["9010"];
+        /* //d by ljf, 目前没有这些资源
         if(popImg=="newyear"){
             CCBLoadFile("ActivitiesNewYear",this,this);
         }else if (popImg=="christmas"){
@@ -338,7 +347,8 @@ bool ActivityBox::initActivityBox()
             CCBLoadFile("ActivityBox",this,this); //d by ljf
             //loadSpine();//a by ljf
         }
-        
+        */
+        CCBLoadFile("ActivityBox",this,this);  //a by ljf
         if(popImg == "month"){
         }else{
             onEnterFrame(0);
@@ -393,11 +403,13 @@ void ActivityBox::onEnter() {
     CCNode::onEnter();
     setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
     setTouchEnabled(true);
+    //loadSpine();
 
     //CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, Touch_Default, true);
 //    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ActivityBox::setData), "GoldExchange.Change", NULL);
 }
 void ActivityBox::onExit() {
+    //unLoadSpine();
     setTouchEnabled(false);
   //      CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, "GoldExchange.Change");
     CCNode::onExit();
@@ -528,24 +540,48 @@ void ActivityBox::initChunjieParticle(){
 void ActivityBox::loadSpine()
 {
     const string spineJsonName = "Spine/Imperial/activitybox.json";
-    const string spineAtlasName = "Imperial/Imperial_30.atlas";
+    const string spineAtlasName = "Common/Common_7.atlas";
     
     if (CCFileUtils::sharedFileUtils()->isFileExist(spineJsonName) &&
         CCFileUtils::sharedFileUtils()->isFileExist(spineAtlasName))
     {
-        //cocos2d::CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(spineAtlasName);
+        
         IFSkeletonAnimation * m_spineAni = new IFSkeletonAnimation(spineJsonName.c_str(), spineAtlasName.c_str());
         if (m_spineAni && m_ani )
         {
             
+            //m_spineAni->setVisibleStop(true);
+            
             m_ani->addChild(m_spineAni);
-            //m_spineAni->setVisible(false);
-            //m_spineAni->setCameraMask((unsigned short)CameraFlag::USER4, true);
             spTrackEntry* entry = m_spineAni->setAnimation(0, "loop", true);
-            //m_spineAni->setTimeScale(entry->endTime/8.0f);
-            //m_spineAni->setTimeScale(0.2);
+            m_spineAni->setTimeScale(1);
+            m_spineAni->setTag(88022);
+            
+            m_spineAni->setScale(0.8);
+            
+            
+            //m_spineAni->retain();
+            
+            
         }
+        
+        /*
+        auto kingSpine = IFLoadingSceneArmyNode::create(spineAtlasName.c_str(), spineJsonName.c_str(), "loop", 1);
+        if(kingSpine && m_ani)
+        {
+            m_ani->addChild(kingSpine);
+        }
+        */
     }
 
+    
+}
+
+void ActivityBox::unLoadSpine()
+{
+    if(m_ani && m_ani->getChildByTag(88022))
+    {
+        m_ani->getChildByTag(88022)->removeFromParent();
+    }
 }
 //end a by ljf

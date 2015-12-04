@@ -358,6 +358,20 @@ public:
     UIComponent();
     //begin a by ljf
     ActivityBox * getActivityBox(){return mActivityBox;}
+    void loadSpineActivityBox(){
+        
+        if(mActivityBox)
+        {
+            mActivityBox->loadSpine();
+        }
+    }
+    void unLoadSpineActivityBox(){
+        
+        if(mActivityBox)
+        {
+            mActivityBox->unLoadSpine();
+        }
+    }
     //end a by ljf
     static UIComponent* getInstance();
     static void purgeData();
