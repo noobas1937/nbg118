@@ -1637,7 +1637,7 @@ public class ChatFragment extends ActionBarFragment
 			try
 			{
 				// guojiang
-//				showJoinAlliancePopup();
+				showJoinAlliancePopup();
 			}
 			catch (Exception e)
 			{
