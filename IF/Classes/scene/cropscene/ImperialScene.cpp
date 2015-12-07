@@ -1492,6 +1492,9 @@ void ImperialScene::changeBridgeState(CCNode* p)
 
 void ImperialScene::onRefreshOutsideTraps()
 {
+    if (!m_resbatchNode) {
+        return;
+    }
     auto getTrapsPicNum = [](int num)
     {
         //小于等于这个值  1;999;1999;2999;3999;4999;9999;19999;39999;80000 分别对应1～10个陷阱的显示。
@@ -5013,10 +5016,11 @@ void ImperialScene::refreshSoldiers(CCObject* obj)
 {
     // tao.yu add traps
     onRefreshOutsideTraps();
-    
+
     if (!m_soldierBatchNode) {
         return;
     }
+
     m_soldierBatchNode->removeAllChildren();
     m_soldierArray->removeAllObjects();
     
