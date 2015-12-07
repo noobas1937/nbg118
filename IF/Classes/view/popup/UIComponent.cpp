@@ -3835,8 +3835,8 @@ void UIComponent::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEven
         }
             
         case 17:{
-            CCCommonUtils::flyHint("", "", _lang("E100008"));
-//            onAllianceBtnClick(NULL,Control::EventType::TOUCH_DOWN);
+//            CCCommonUtils::flyHint("", "", _lang("E100008"));
+            onAllianceBtnClick(NULL,Control::EventType::TOUCH_DOWN);
             break;
             
         }

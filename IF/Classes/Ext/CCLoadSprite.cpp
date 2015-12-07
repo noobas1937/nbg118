@@ -392,6 +392,7 @@ void CCLoadSprite::doLoadResource(const char* path, int index, bool frameLoad)
 {
     if (!path) return;
     
+#ifdef USING_DLC
     // guojiang
     // NBDLCController::create 会增加下载目录到 SearchPath，所以在加载资源前调用
     if (strcmp(path, COMMON_PATH) == 0)
@@ -415,6 +416,7 @@ void CCLoadSprite::doLoadResource(const char* path, int index, bool frameLoad)
             });
         }
     }
+#endif
     
     if (CCTexture2D::useDownloadResource() == true)
     {
