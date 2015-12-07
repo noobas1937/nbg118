@@ -2650,8 +2650,20 @@ void UIComponent::updateNewChatNews(int num){
     //    m_chatNewAlert->setVisible(num>0);
     
 }
-
-
+//begin a by ljf
+void UIComponent::loadSpineActivityBox(){
+    if(mActivityBox)
+    {
+        mActivityBox->loadSpine();
+    }
+}
+void UIComponent::unLoadSpineActivityBox(){
+    if(mActivityBox)
+    {
+        mActivityBox->unLoadSpine();
+    }
+}
+//end a by ljf
 #pragma mark UIComponent CCB
 SEL_CCControlHandler UIComponent::onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName)
 {

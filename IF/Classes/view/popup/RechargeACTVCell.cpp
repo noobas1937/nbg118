@@ -349,6 +349,7 @@ bool ActivityBox::initActivityBox()
         }
         */
         CCBLoadFile("ActivityBox",this,this);  //a by ljf
+        loadSpine();//a by ljf
         if(popImg == "month"){
         }else{
             onEnterFrame(0);
