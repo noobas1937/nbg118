@@ -663,22 +663,21 @@ public class ChatFragment extends ActionBarFragment
 		
 		buttonJoinAlliance = (Button) view.findViewById(ResUtil.getId(this.activity, "id", "joinAllianceBtn"));
 		// guojiang
-		buttonJoinAlliance.setVisibility(Button.INVISIBLE);
-//		buttonJoinAlliance.setText(LanguageManager.getLangByKey(LanguageKeys.MENU_JOIN));
-//			
-//		buttonJoinAlliance.setOnClickListener(new View.OnClickListener()
-//		{
-//
-//			@Override
-//			public void onClick(View v)
-//			{			
-//				ChatServiceController.doHostAction("joinAllianceBtnClick", "", "", "", true);
-//			}
-//		});
+//		buttonJoinAlliance.setVisibility(Button.INVISIBLE);
+		buttonJoinAlliance.setText(LanguageManager.getLangByKey(LanguageKeys.MENU_JOIN));
+			
+		buttonJoinAlliance.setOnClickListener(new View.OnClickListener()
+		{
+
+			@Override
+			public void onClick(View v)
+			{			
+				ChatServiceController.doHostAction("joinAllianceBtnClick", "", "", "", true);
+			}
+		});
 
 		noAllianceTipText = ((TextView) view.findViewById(ResUtil.getId(this.activity, "id", "joinAllianceTipText")));
-		noAllianceTipText.setText("Coming Soon!");
-//		noAllianceTipText.setText(LanguageManager.getLangByKey(LanguageKeys.TIP_JOIN_ALLIANCE));
+		noAllianceTipText.setText(LanguageManager.getLangByKey(LanguageKeys.TIP_JOIN_ALLIANCE));
 
 		refreshSendButton();
 
