@@ -459,6 +459,8 @@ void CCCommonUtils::createGoodsIcon(int toolID, cocos2d::CCNode *mParent,CCSize 
             mParent->addChild(iconBg);
             iconBg->setTag(GOODS_BG_TAG);
             CCCommonUtils::setSpriteMaxSize(pic, defSize.width - 5,true);
+            
+            iconBg->setScale(pic->getScale());//fusheng add 使用相同的放缩比
             mParent->addChild(pic);
             pic->setTag(GOODS_ICON_TAG);
             

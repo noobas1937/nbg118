@@ -119,7 +119,7 @@ bool GoldExchangeMoreListView::init(int itemId)
                 auto cell = GoldExchangeMoreListCell::create(itemId, num,0);
                 cell->setPosition(ccp(8, curY));
                 m_scrollView->cocos2d::CCNode::addChild(cell);
-                curY += 80;
+                curY += 95;
             }
             i++;
         }
@@ -227,10 +227,11 @@ bool GoldExchangeMoreListCell::init(int itemId, int num,int type)
             picStr = CCCommonUtils::getResourceIconByType(itemId);
             name = CCCommonUtils::getResourceNameByType(itemId);
             auto iconBg = CCLoadSprite::createSprite(CCCommonUtils::getToolBgByColor(2).c_str());
-            CCCommonUtils::setSpriteMaxSize(iconBg, 65,true);
+//            CCCommonUtils::setSpriteMaxSize(iconBg, 65,true);
             m_iconNode->addChild(iconBg);
             auto icon =CCLoadSprite::createSprite(picStr.c_str(),true,CCLoadSpriteType_DEFAULT);
             CCCommonUtils::setSpriteMaxSize(icon, 60, true);
+            icon->setScale(iconBg->getScale());
             m_iconNode->addChild(icon);
             m_nameLabel->setString(name);
             string str = CC_ITOA(num);
