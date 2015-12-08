@@ -85,6 +85,7 @@ $(LOCAL_PATH)/../../IF/Classes/scene/cropscene \
 $(LOCAL_PATH)/../../IF/Classes/scene/dragon \
 $(LOCAL_PATH)/../../IF/Classes/scene/loading \
 $(LOCAL_PATH)/../../IF/Classes/scene/titan \
+$(LOCAL_PATH)/../../IF/Classes/scene/vikingship \
 $(LOCAL_PATH)/../../IF/Classes/scene/world \
 $(LOCAL_PATH)/../../IF/Classes/scene/world/map \
 $(LOCAL_PATH)/../../IF/Classes/view \

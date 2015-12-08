@@ -356,7 +356,7 @@ bool ImperialScene::init()
     m_isVikingShipMove = false;
     mVikingShipDict = CCDictionary::create();
     mShipLevel = 0;
-    
+    //UIComponent::getInstance()->loadSpineActivityBox();
     //end a by ljf
     return true;
 }
@@ -720,30 +720,6 @@ void ImperialScene::onCreateVikingsShip(int level)
 }
 
 //begin a by ljf
-void ImperialScene::loadSpineActivityBox()
-{
-    UIComponent * uiLayer = UIComponent::getInstance();
-    
-    auto activityBox = uiLayer->getActivityBox();
-    if(activityBox)
-    {
-        activityBox->loadSpine();
-    }
-        
-}
-
-void ImperialScene::unLoadSpineActivityBox()
-{
-    UIComponent * uiLayer = UIComponent::getInstance();
-    
-    auto activityBox = uiLayer->getActivityBox();
-    if(activityBox)
-    {
-        activityBox->unLoadSpine();
-    }
-    
-}
-
 void ImperialScene::updateVikingsShipNum()
 {
     int maxMarchCount = WorldController::getInstance()->getMaxMarchCount();
@@ -1492,6 +1468,9 @@ void ImperialScene::changeBridgeState(CCNode* p)
 
 void ImperialScene::onRefreshOutsideTraps()
 {
+    if (!m_resbatchNode) {
+        return;
+    }
     auto getTrapsPicNum = [](int num)
     {
         //小于等于这个值  1;999;1999;2999;3999;4999;9999;19999;39999;80000 分别对应1～10个陷阱的显示。
@@ -1739,7 +1718,7 @@ void ImperialScene::onEnter()
     
     //begin a by ljf
     //loadSpineActivityBox(); //放在这里加载没有问题，如果在ActivityBox初始化时加载会有问题。
-    UIComponent::getInstance()->loadSpineActivityBox();
+    //UIComponent::getInstance()->loadSpineActivityBox();
     
     //end a by ljf
     
@@ -2248,7 +2227,7 @@ void ImperialScene::onExit()
 {
     m_exit = true;
     //begin a by ljf
-    UIComponent::getInstance()->unLoadSpineActivityBox();
+    //UIComponent::getInstance()->unLoadSpineActivityBox();
     //unLoadSpineActivityBox();
     m_walkerBatchNode->removeAllChildren();
     m_jianBatchNode->removeAllChildren();
@@ -5013,10 +4992,11 @@ void ImperialScene::refreshSoldiers(CCObject* obj)
 {
     // tao.yu add traps
     onRefreshOutsideTraps();
-    
+
     if (!m_soldierBatchNode) {
         return;
     }
+
     m_soldierBatchNode->removeAllChildren();
     m_soldierArray->removeAllObjects();
     

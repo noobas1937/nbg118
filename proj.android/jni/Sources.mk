@@ -520,6 +520,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../IF/Classes/scene/titan/NBSprite3D.cpp \
 ../../IF/Classes/scene/titan/Titan.cpp \
 ../../IF/Classes/scene/titan/TitanInView.cpp \
+../../IF/Classes/scene/vikingship/VikingShip.cpp \
 ../../IF/Classes/scene/world/AAreaBuildCCB.cpp \
 ../../IF/Classes/scene/world/ActBossPopUp.cpp \
 ../../IF/Classes/scene/world/AddFavorite.cpp \

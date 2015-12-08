@@ -172,6 +172,7 @@ bool LuaController::showNoramlIcon(std::string popImg){
     return false;
 }
 bool LuaController::checkLuaValid(std::string popImg,std::string md5,std::string type){
+    return false; //a by ljf
     if(m_isDownload==true)
         return false;
     

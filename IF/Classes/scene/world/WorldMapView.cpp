@@ -995,13 +995,13 @@ void WorldMapView::onEnter() {
 
     ShakeController::getInstance()->addAccelerometer();
     //begin a by ljf
-    UIComponent::getInstance()->loadSpineActivityBox();
+    //UIComponent::getInstance()->loadSpineActivityBox();
     //end a by ljf
 }
 
 void WorldMapView::onExit() {
     //begin a by ljf
-    UIComponent::getInstance()->unLoadSpineActivityBox();
+    //UIComponent::getInstance()->unLoadSpineActivityBox();
     //end a by ljf
     setTouchEnabled(false);
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_POPUP_VIEW_IN);
