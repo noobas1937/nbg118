@@ -45,7 +45,8 @@ bool StoreBuyConfirmDialog::init(const char* url, const char* title,const char* 
         CCLabelIF* label = CCLabelIF::create();
         label->setDimensions(CCSize(maxWidth, 0));
         label->setString(desc);
-        label->setColor(ccc3(169, 132, 71));
+//        label->setColor(ccc3(169, 132, 71));
+        label->setColor(ccWHITE);
         label->setFontSize(24);
         if (CCCommonUtils::isIosAndroidPad())
         {
