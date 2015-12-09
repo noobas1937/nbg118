@@ -68,24 +68,26 @@ public:
     // tao.yu vikings
     void onCreateVikingsShip(int level);
     //begin a by ljf
-    void loadSpineActivityBox();
-    void unLoadSpineActivityBox();
     int getVikingsShipModelLevel(int level);
     void onUpgradeVikingsShip(int level);
     void shipActionAfterMove(CCNode* pNode, void *pObj);
-    void createOneVikingsShip(int seq, CCNode * posCCBNode, CCNode * touchCCBNode, int level);
+    void createOneVikingsShip(int seq,   int level);
     void destroyOneVikingsShip(int seq);
     void updateVikingsShipNum();
     int mShipLevel;
     void onVikingsShipMove(VikingShip * pShipInfo);
     
     bool onVikingsShipTouched(CCTouch* pTouch);
+    bool onVikingsShipLockTouched(CCTouch* pTouch);
     
     void createWalker(float t);
     void createEnemy(float t);
     void shootArrow(float t);
     void openBridge(float t);
     void closeBridge(float t);
+    void updateVikingsShipLock(int seq, bool isShow);
+    CCNode * getVikingsShipCCBPosNodeBySeq(int seq);
+    CCNode * getVikingsShipCCBTouchNodeBySeq(int seq);
     //end a by ljf
     
     void onCreateBridge();

@@ -1956,8 +1956,8 @@
 												<string>Position</string>
 												<key>value</key>
 												<array>
-													<real>49.659862518310547</real>
-													<real>53.061222076416016</real>
+													<real>59.154930114746094</real>
+													<real>45.669292449951172</real>
 													<integer>4</integer>
 												</array>
 											</dict>
@@ -2034,13 +2034,21 @@
 										<array>
 											<dict>
 												<key>name</key>
+												<string>visible</string>
+												<key>type</key>
+												<string>Check</string>
+												<key>value</key>
+												<false/>
+											</dict>
+											<dict>
+												<key>name</key>
 												<string>position</string>
 												<key>type</key>
 												<string>Position</string>
 												<key>value</key>
 												<array>
-													<real>50.340137481689453</real>
-													<real>8.1632652282714844</real>
+													<real>59.154930114746094</real>
+													<real>-19.685039520263672</real>
 													<integer>4</integer>
 												</array>
 											</dict>

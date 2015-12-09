@@ -356,7 +356,7 @@ bool ImperialScene::init()
     m_isVikingShipMove = false;
     mVikingShipDict = CCDictionary::create();
     mShipLevel = 0;
-    
+    //UIComponent::getInstance()->loadSpineActivityBox();
     //end a by ljf
     return true;
 }
@@ -692,57 +692,99 @@ void ImperialScene::onCreateTitan()
 
 void ImperialScene::onCreateVikingsShip(int level)
 {
+    /*
+    m_lockIcon = CCLoadSprite::createSprite("build_lock.png");
+    */
     mShipLevel = level;
     int maxMarchCount = WorldController::getInstance()->getMaxMarchCount();
     int currentMarchCount = WorldController::getInstance()->getCurrentMarchCount();
     int showShipNum = maxMarchCount-currentMarchCount;
     
+    /*
     if(showShipNum > 0)
     {
-        createOneVikingsShip(1, m_vikingNode, m_vikingTouchNode, level);
+        createOneVikingsShip(1,   level);
     }
     if(showShipNum > 1)
     {
-        createOneVikingsShip(2, m_vikingNode2, m_vikingTouchNode2, level);
+        createOneVikingsShip(2,   level);
     }
     if(showShipNum > 2)
     {
-        createOneVikingsShip(3, m_vikingNode3, m_vikingTouchNode3, level);
+        createOneVikingsShip(3,   level);
     }
     if(showShipNum > 3)
     {
-        createOneVikingsShip(4, m_vikingNode4, m_vikingTouchNode4, level);
+        createOneVikingsShip(4,   level);
     }
     if(showShipNum > 4)
     {
-        createOneVikingsShip(5, m_vikingNode5, m_vikingTouchNode5, level);
+        createOneVikingsShip(5,   level);
     }
-    
+    */
+    for(int i = 0; i < showShipNum; i++)
+    {
+        createOneVikingsShip(i + 1,   level);
+    }
 }
 
 //begin a by ljf
-void ImperialScene::loadSpineActivityBox()
+CCNode * ImperialScene::getVikingsShipCCBPosNodeBySeq(int seq)
 {
-    UIComponent * uiLayer = UIComponent::getInstance();
+    if(seq == 1)
+        return m_vikingNode;
+    if(seq == 2)
+        return m_vikingNode2;
+    if(seq == 3)
+        return m_vikingNode3;
+    if(seq == 4)
+        return m_vikingNode4;
+    if(seq == 5)
+        return m_vikingNode5;
     
-    auto activityBox = uiLayer->getActivityBox();
-    if(activityBox)
-    {
-        activityBox->loadSpine();
-    }
-        
 }
 
-void ImperialScene::unLoadSpineActivityBox()
+CCNode * ImperialScene::getVikingsShipCCBTouchNodeBySeq(int seq)
 {
-    UIComponent * uiLayer = UIComponent::getInstance();
+    if(seq == 1)
+        return m_vikingTouchNode;
+    if(seq == 2)
+        return m_vikingTouchNode2;
+    if(seq == 3)
+        return m_vikingTouchNode3;
+    if(seq == 4)
+        return m_vikingTouchNode4;
+    if(seq == 5)
+        return m_vikingTouchNode5;
     
-    auto activityBox = uiLayer->getActivityBox();
-    if(activityBox)
+}
+
+//void updateShipLock(int seq, CCNode * posCCBNode, bool isShow)
+void ImperialScene::updateVikingsShipLock(int seq, bool isShow)
+{
+    CCNode * posCCBNode = getVikingsShipCCBPosNodeBySeq(seq);
+    if(!posCCBNode)
+        return;
+    int lockTag = 832389;
+    if(isShow == true)
     {
-        activityBox->unLoadSpine();
+        auto pNode = posCCBNode->getChildByTag(lockTag);
+        if (!pNode)
+        {
+            pNode = CCLoadSprite::createSprite("build_lock.png");
+            pNode->setPosition(13, 34);
+            posCCBNode->addChild(pNode);
+            pNode->setTag(lockTag);
+        }
+        
+        pNode->setVisible(true);
     }
-    
+    if(isShow == false)
+    {
+        auto pNode = posCCBNode->getChildByTag(lockTag);
+        if(pNode)
+            pNode->setVisible(false);
+    }
 }
 
 void ImperialScene::updateVikingsShipNum()
@@ -753,27 +795,43 @@ void ImperialScene::updateVikingsShipNum()
     for(int i = showShipNum + 1; i <= maxMarchCount; i++)
     {
         destroyOneVikingsShip(i);
+        
     }
+    for(int i = 0; i < showShipNum ; i++)
+    {
+        createOneVikingsShip(i + 1, mShipLevel);
+        
+    }
+    for(int i = 1; i <= maxMarchCount ; i++)
+    {
+        updateVikingsShipLock(i, false);
+    }
+    for(int i = maxMarchCount + 1; i <= 5; i++)
+    {
+        updateVikingsShipLock(i, true);
+    }
+    /*
     if(showShipNum > 0)
     {
-        createOneVikingsShip(1, m_vikingNode, m_vikingTouchNode, mShipLevel);
+        createOneVikingsShip(1,  m_vikingTouchNode, mShipLevel);
     }
     if(showShipNum > 1)
     {
-        createOneVikingsShip(2, m_vikingNode2, m_vikingTouchNode2, mShipLevel);
+        createOneVikingsShip(2,  m_vikingTouchNode2, mShipLevel);
     }
     if(showShipNum > 2)
     {
-        createOneVikingsShip(3, m_vikingNode3, m_vikingTouchNode3, mShipLevel);
+        createOneVikingsShip(3,  m_vikingTouchNode3, mShipLevel);
     }
     if(showShipNum > 3)
     {
-        createOneVikingsShip(4, m_vikingNode4, m_vikingTouchNode4, mShipLevel);
+        createOneVikingsShip(4,  m_vikingTouchNode4, mShipLevel);
     }
     if(showShipNum > 4)
     {
-        createOneVikingsShip(5, m_vikingNode5, m_vikingTouchNode5, mShipLevel);
+        createOneVikingsShip(5,  m_vikingTouchNode5, mShipLevel);
     }
+    */
 }
 
 void ImperialScene::destroyOneVikingsShip(int seq)
@@ -854,8 +912,13 @@ void ImperialScene::onUpgradeVikingsShip(int level)
     }
 }
 
-void ImperialScene::createOneVikingsShip(int seq,  CCNode * pPosCCBNode, CCNode * pTouchCCBNode, int level)
+void ImperialScene::createOneVikingsShip(int seq,   int level)
+//void ImperialScene::createOneVikingsShip(int seq,  CCNode * pPosCCBNode, CCNode * pTouchCCBNode, int level)
 {
+    CCNode * pPosCCBNode = getVikingsShipCCBPosNodeBySeq(seq);
+    CCNode * pTouchCCBNode = getVikingsShipCCBTouchNodeBySeq(seq);
+    if((!pPosCCBNode) || (!pTouchCCBNode))
+        return;
     if(mVikingShipDict->objectForKey(seq) != nullptr)
     {
         return;
@@ -942,6 +1005,49 @@ bool ImperialScene::onVikingsShipTouched(CCTouch* pTouch)
 }
 
 
+bool ImperialScene::onVikingsShipLockTouched(CCTouch* pTouch)
+{
+    int lockTag = 832389;
+    for(int i = 1; i <= 5; i++)
+    {
+        auto posCCBNode = getVikingsShipCCBPosNodeBySeq(i);
+        if(!posCCBNode)
+            continue;
+        auto pSpr = posCCBNode->getChildByTag(lockTag);
+        if(!pSpr || pSpr->isVisible() == false)
+        {
+            continue;
+        }
+        
+        Vec2 touchPoint = pSpr->convertToNodeSpace(pTouch->getLocation());
+        // 下面的touch点转换是为了让点击区域在模型内
+        float originX = -1 * pSpr->getContentSize().width * pSpr->getAnchorPoint().x;
+        float originY = -1 * pSpr->getContentSize().height * pSpr->getAnchorPoint().y;
+        touchPoint.x = touchPoint.x + originX;
+        touchPoint.y = touchPoint.y + originY;
+        
+        Rect boundingBox(originX, originY, pSpr->getContentSize().width, pSpr->getContentSize().height);
+        //    Rect boundingBox = this->getBoundingBox();
+        bool isTouched = boundingBox.containsPoint(touchPoint);
+        if (!isTouched)
+        {
+            continue;
+        }
+        else
+        {
+            unsigned int current =  WorldController::getInstance()->getCurrentMarchCount();
+            unsigned int max = WorldController::getInstance()->getMaxMarchCount();
+            //if (current >= max)
+            {
+                WorldController::getInstance()->showMarchAlert(max);
+                //return;
+            }
+
+            return true;
+        }
+    }
+    return false;
+}
 
 
 
@@ -1746,7 +1852,7 @@ void ImperialScene::onEnter()
     
     //begin a by ljf
     //loadSpineActivityBox(); //放在这里加载没有问题，如果在ActivityBox初始化时加载会有问题。
-    UIComponent::getInstance()->loadSpineActivityBox();
+    //UIComponent::getInstance()->loadSpineActivityBox();
     
     //end a by ljf
     
@@ -2255,7 +2361,7 @@ void ImperialScene::onExit()
 {
     m_exit = true;
     //begin a by ljf
-    UIComponent::getInstance()->unLoadSpineActivityBox();
+    //UIComponent::getInstance()->unLoadSpineActivityBox();
     //unLoadSpineActivityBox();
     m_walkerBatchNode->removeAllChildren();
     m_jianBatchNode->removeAllChildren();
@@ -2962,6 +3068,11 @@ void ImperialScene::onSingleTouchEnd(CCTouch* pTouch)
     {
         return;
     }
+    if(onVikingsShipLockTouched(pTouch))
+    {
+        return;
+    }
+
     //end a by ljf
     if (onBridgeTouched(pTouch)) {
         return;

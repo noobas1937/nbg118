@@ -575,6 +575,7 @@ void LoadingScene::onLoginTimeout(float t)
     string _platformUID = GlobalData::shared()->platformUID;
     string _Country = GlobalData::shared()->fromCountry;
     string _gameUid = CCUserDefault::sharedUserDefault()->getStringForKey(GAME_UID,"");
+    //string _gameUid = "145412096000001";
     string _lang = LocalController::shared()->getLanguageFileName();
     string _serverId = CCUserDefault::sharedUserDefault()->getStringForKey(SERVER_ID, "");
     string _serverIp = CCUserDefault::sharedUserDefault()->getStringForKey(ACCOUNT_IP, "");

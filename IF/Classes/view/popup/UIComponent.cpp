@@ -1037,9 +1037,9 @@ void UIComponent::onEnter()
         
         m_nbXHD->setOpacity(0);
         
-        float cycleTime = 2;
+        float cycleTime = 3;
         
-        m_nbXHD->runAction(RepeatForever::create(Sequence::createWithTwoActions(FadeIn::create(cycleTime/2), FadeOut::create(cycleTime/2))));
+        m_nbXHD->runAction(RepeatForever::create(Sequence::create(FadeIn::create(cycleTime/3),DelayTime::create(cycleTime/3), FadeOut::create(cycleTime/3),nullptr)));
         
         m_nbXHD->setVisible(false);
     }
@@ -2650,8 +2650,20 @@ void UIComponent::updateNewChatNews(int num){
     //    m_chatNewAlert->setVisible(num>0);
     
 }
-
-
+//begin a by ljf
+void UIComponent::loadSpineActivityBox(){
+    if(mActivityBox)
+    {
+        mActivityBox->loadSpine();
+    }
+}
+void UIComponent::unLoadSpineActivityBox(){
+    if(mActivityBox)
+    {
+        mActivityBox->unLoadSpine();
+    }
+}
+//end a by ljf
 #pragma mark UIComponent CCB
 SEL_CCControlHandler UIComponent::onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName)
 {

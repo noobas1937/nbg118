@@ -73,6 +73,7 @@ bool StoreView::init()
 //    }
     
     m_BGNode->setPreferredSize(Size(tmpCCB->getContentSize().width, tmpCCB->getContentSize().height + addHeight)); // guo.jiang
+    m_BGNode->setVisible(false);
     
     CCCommonUtils::setButtonTitle(m_storeBtn, _lang("104900").c_str());
     CCCommonUtils::setButtonTitle(m_bagBtn, _lang("104901").c_str());
