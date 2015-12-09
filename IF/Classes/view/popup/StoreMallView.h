@@ -202,4 +202,138 @@ private:
 };
 
 
+
+
+class StoreMallCellNew :
+public CCBSelectorResolver
+
+,public CCBMemberVariableAssigner
+,public CCTableViewTouchIFCell
+{
+public:
+    static StoreMallCellNew* create(int itemId,int index, CCNode* touchNode);
+    StoreMallCellNew();
+    void setData(int itemId);
+private:
+    bool init(int itemId, int index,CCNode* touchNode);
+    virtual void onEnter();
+    virtual void onExit();
+    
+    bool onTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent);
+    void onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent);
+    
+    void refreashData(CCObject* obj);
+    
+    virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(cocos2d::CCObject * pTarget, const char * pSelectorName){return NULL;}
+    virtual SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName);
+    virtual bool onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode);
+    
+    void onClickBuyBtn1(CCObject * pSender, Control::EventType pCCControlEvent);
+
+    void onYes();
+    void onCloseConfirm();
+    void onBuyTool1(CCObject *ccObj = NULL);
+
+    void onRetBuyTool();
+    void setDesNode(int itemId,int index);
+    void setLeft(float dt);
+
+    void setLeftHot(bool ishot,int num);
+
+    
+    CCSafeObject<CCLabelIF> m_nameLabel1;
+
+    CCSafeObject<CCLabelIF> m_priceLabel1;
+
+    CCSafeObject<CCNode> m_picNode1;
+
+    CCSafeObject<CCNode> m_itemNode1;
+
+    CCSafeObject<CCSprite> m_picBG1;
+
+    CCSafeObject<CCNode> m_desNode;
+    CCSafeObject<CCLabelIF> m_desName;
+    CCSafeObject<CCLabelIF> m_desLabel;
+    CCSafeObject<CCScale9Sprite> m_buyBtnSpr1;
+
+    CCSafeObject<CCScale9Sprite> m_buyBtngraySpr1;
+
+    CCSafeObject<CCScale9Sprite> m_saleoutSpr1;
+
+    CCSafeObject<CCSprite> m_goldSpr1;
+
+    
+    CCSafeObject<CCNode> m_itemHotNode1;
+    CCSafeObject<CCSprite> m_hotSpr1;
+    CCSafeObject<CCSprite> m_hotgraySpr1;
+    CCSafeObject<CCSprite> m_hotNumSpr1;
+    CCSafeObject<CCSprite> m_hotNumgraySpr1;
+    CCSafeObject<CCLabelIF> m_hotdesText1;
+    CCSafeObject<CCLabelIF> m_hotNum1Text;
+    CCSafeObject<CCScale9Sprite> m_hotLineSpr1;
+    CCSafeObject<CCLabelIF> m_hotpriceLabel1;
+    
+
+    
+    CCNode* m_touchNode;
+    int m_itemId;
+
+    int m_price;
+    int m_boostBid;
+    bool m_clickInSide;
+    bool m_isClick;
+    CCPoint m_startPoint;
+    int m_num;
+    int index;
+};
+
+
+class StoreMallCells: //fusheng 由一行改成一个个单独的 创建一个类管理一行3个个体
+
+public CCTableViewTouchIFCell
+{
+public:
+    static StoreMallCells* create(int itemId1,int itemId2,int itemId3, CCNode* touchNode);
+   
+    StoreMallCells();
+    
+    void setData(int itemId1,int itemId2,int itemId3);
+    
+    bool init(int itemId1,int itemId2,int itemId3, CCNode* touchNode);
+private:
+    int m_itemId1;
+    int m_itemId2;
+    int m_itemId3;
+    
+    StoreMallCellNew* cellLeft;
+    StoreMallCellNew* cellCenter;
+    StoreMallCellNew* cellRight;
+    
+};
+
+
+
+class StoreMallCellTipNB :
+public CCBSelectorResolver
+
+,public CCBMemberVariableAssigner
+,public Node
+{
+public:
+    static StoreMallCellTipNB* create(int itemId);
+    StoreMallCellTipNB();
+private:
+    bool init(int itemId);
+
+    
+    virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(cocos2d::CCObject * pTarget, const char * pSelectorName){return NULL;}
+    virtual SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName){return NULL;}
+    virtual bool onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode);
+    
+
+    
+    CCSafeObject<CCNode> m_desNode;
+    CCSafeObject<CCLabelIF> m_desName;
+    CCSafeObject<CCLabelIF> m_desLabel;
+};
 #endif /* defined(__IF__StoreMallView__) */

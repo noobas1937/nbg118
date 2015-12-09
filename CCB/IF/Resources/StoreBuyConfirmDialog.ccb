@@ -339,8 +339,6 @@
 						<string>Sample Text</string>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>
@@ -3226,9 +3224,9 @@
 														<string>Color3</string>
 														<key>value</key>
 														<array>
-															<integer>255</integer>
-															<integer>225</integer>
-															<integer>0</integer>
+															<integer>40</integer>
+															<integer>123</integer>
+															<integer>45</integer>
 														</array>
 													</dict>
 													<dict>
@@ -4089,7 +4087,7 @@
 												<key>value</key>
 												<array>
 													<real>-77.800003051757812</real>
-													<real>8</real>
+													<real>18</real>
 													<integer>0</integer>
 												</array>
 											</dict>
