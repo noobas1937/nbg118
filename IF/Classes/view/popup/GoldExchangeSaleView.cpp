@@ -299,7 +299,8 @@ bool GoldExchangeSaleView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titleLabel", CCLabelIF*, this->m_titleLabel); //标题
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_percentLabel", CCLabelBMFont*, this->m_percentLabel); //折扣
     
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_getGoldNumText", CCLabelBMFont*, this->m_getGoldNumText);//钻石旁边的钱
+    //CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_getGoldNumText", CCLabelBMFont*, this->m_getGoldNumText);//钻石旁边的钱
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_getGoldNumText", CCLabelIF*, this->m_getGoldNumText);//钻石旁边的钱
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_timeLabel", CCLabelIF*, this->m_timeLabel);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_oldPriceLabel", CCLabelIF*, this->m_oldPriceLabel);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_newPriceLabel", CCLabelIF*, this->m_newPriceLabel);
