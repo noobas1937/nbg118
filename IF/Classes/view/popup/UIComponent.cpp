@@ -2709,6 +2709,7 @@ void UIComponent::updateDragonStatus(CCObject *params)
 {
     string icon = CCCommonUtils::getPropById(CC_ITOA(GlobalData::shared()->titanInfo.tid), "dragonUI");
 //    m_dragonIcon->setTexture(icon);
+    icon.append(".png");
     m_dragonIcon->setSpriteFrame(icon);
 }
 

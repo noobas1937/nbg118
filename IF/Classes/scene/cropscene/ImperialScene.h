@@ -94,7 +94,7 @@ public:
     void onBridgeClose();
     void changeBridgeState(CCNode* p);
     
-    void onRefreshOutsideTraps();
+    void onRefreshOutsideTraps(CCObject* obj);
     
     void onUpdateInfo();
     void onCreateBuild(int itemId);

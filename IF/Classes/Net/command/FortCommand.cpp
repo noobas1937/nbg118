@@ -27,7 +27,8 @@ bool FortStartCommand::handleRecieve(cocos2d::CCDictionary *dict){
         QueueController::getInstance()->addQueueInfo(queue);
         callSuccess(NetResult::create());
         CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(ARMY_NUM_CHANGE);
-        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TROOPS_CHANGE);
+//        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TROOPS_CHANGE);
+        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TRAPS_CHANGE);
     }
     return true;
 }
@@ -53,7 +54,8 @@ bool FortEndCommand::handleRecieve(cocos2d::CCDictionary *dict){
         CCCommonUtils::flyHint("", _lang("103675"), _lang_1("103676", name.c_str()));
         ResultParser::parseResult(FORT_END_COMMAND, m_id, params);
         CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(ARMY_NUM_CHANGE);
-        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TROOPS_CHANGE);
+//        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TROOPS_CHANGE);
+        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TRAPS_CHANGE);
         CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_QUICK_TROOPS_HARVEST);
     }
     GlobalData::shared()->playerInfo.addPower = 0;

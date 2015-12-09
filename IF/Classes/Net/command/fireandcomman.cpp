@@ -40,6 +40,7 @@ bool fireandcomman::handleRecieve(cocos2d::CCDictionary *dict){
 
         CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(ARMY_NUM_CHANGE);
         CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TROOPS_CHANGE);
+        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TRAPS_CHANGE);
     }
     return true;
 }
