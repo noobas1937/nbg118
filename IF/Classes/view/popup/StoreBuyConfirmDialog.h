@@ -8,6 +8,7 @@
 #include "CCTypesExt.h"
 #include "PopupBaseView.h"
 #include "CCSliderBar.h"
+#include "NBSlider.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -60,7 +61,9 @@ protected:
     void hideEffect();
     void onOkBuyResource();
     
-    void moveSlider(CCObject * pSender, Control::EventType pCCControlEvent);
+//    void moveSlider(CCObject * pSender, Control::EventType pCCControlEvent);
+    void moveSlider(Ref *pSender, NBSlider::EventType type);
+    
     void setCostString();
     void removeWaitInter(CCObject*);
 private:
@@ -85,7 +88,7 @@ private:
     CCSafeObject<CCNode> m_numNode;
     CCSafeObject<CCNode> m_barNode;
     CCSafeObject<CCNode> m_touchNode;
-    CCSafeObject<CCSliderBar> m_slider;
+    CCSafeObject<NBSlider> m_slider;
     CCSafeObject<CCEditBox> m_editBox;
     int m_price;
     int m_priceType;

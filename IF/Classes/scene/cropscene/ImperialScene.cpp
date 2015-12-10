@@ -571,6 +571,7 @@ void ImperialScene::buildingCallBack(CCObject* params)
     m_touchLayer->addChild(m_soldierBatchNode, 1999);
     
     refreshSoldiers(NULL);
+    onRefreshOutsideTraps(NULL);
     //begin a by ljf
     cocos2d::CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Imperial/Imperial_22.plist");
     m_walkerBatchNode = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("b010_0_N_move_0.png")->getTexture());
@@ -691,35 +692,101 @@ void ImperialScene::onCreateTitan()
 
 void ImperialScene::onCreateVikingsShip(int level)
 {
+    /*
+    m_lockIcon = CCLoadSprite::createSprite("build_lock.png");
+    */
     mShipLevel = level;
     int maxMarchCount = WorldController::getInstance()->getMaxMarchCount();
     int currentMarchCount = WorldController::getInstance()->getCurrentMarchCount();
     int showShipNum = maxMarchCount-currentMarchCount;
     
+    /*
     if(showShipNum > 0)
     {
-        createOneVikingsShip(1, m_vikingNode, m_vikingTouchNode, level);
+        createOneVikingsShip(1,   level);
     }
     if(showShipNum > 1)
     {
-        createOneVikingsShip(2, m_vikingNode2, m_vikingTouchNode2, level);
+        createOneVikingsShip(2,   level);
     }
     if(showShipNum > 2)
     {
-        createOneVikingsShip(3, m_vikingNode3, m_vikingTouchNode3, level);
+        createOneVikingsShip(3,   level);
     }
     if(showShipNum > 3)
     {
-        createOneVikingsShip(4, m_vikingNode4, m_vikingTouchNode4, level);
+        createOneVikingsShip(4,   level);
     }
     if(showShipNum > 4)
     {
-        createOneVikingsShip(5, m_vikingNode5, m_vikingTouchNode5, level);
+        createOneVikingsShip(5,   level);
     }
-    
+    */
+    for(int i = 0; i < showShipNum; i++)
+    {
+        createOneVikingsShip(i + 1,   level);
+    }
 }
 
 //begin a by ljf
+CCNode * ImperialScene::getVikingsShipCCBPosNodeBySeq(int seq)
+{
+    if(seq == 1)
+        return m_vikingNode;
+    if(seq == 2)
+        return m_vikingNode2;
+    if(seq == 3)
+        return m_vikingNode3;
+    if(seq == 4)
+        return m_vikingNode4;
+    if(seq == 5)
+        return m_vikingNode5;
+    
+}
+
+CCNode * ImperialScene::getVikingsShipCCBTouchNodeBySeq(int seq)
+{
+    if(seq == 1)
+        return m_vikingTouchNode;
+    if(seq == 2)
+        return m_vikingTouchNode2;
+    if(seq == 3)
+        return m_vikingTouchNode3;
+    if(seq == 4)
+        return m_vikingTouchNode4;
+    if(seq == 5)
+        return m_vikingTouchNode5;
+    
+}
+
+//void updateShipLock(int seq, CCNode * posCCBNode, bool isShow)
+void ImperialScene::updateVikingsShipLock(int seq, bool isShow)
+{
+    CCNode * posCCBNode = getVikingsShipCCBPosNodeBySeq(seq);
+    if(!posCCBNode)
+        return;
+    int lockTag = 832389;
+    if(isShow == true)
+    {
+        auto pNode = posCCBNode->getChildByTag(lockTag);
+        if (!pNode)
+        {
+            pNode = CCLoadSprite::createSprite("build_lock.png");
+            pNode->setPosition(13, 34);
+            posCCBNode->addChild(pNode);
+            pNode->setTag(lockTag);
+        }
+        
+        pNode->setVisible(true);
+    }
+    if(isShow == false)
+    {
+        auto pNode = posCCBNode->getChildByTag(lockTag);
+        if(pNode)
+            pNode->setVisible(false);
+    }
+}
+
 void ImperialScene::updateVikingsShipNum()
 {
     int maxMarchCount = WorldController::getInstance()->getMaxMarchCount();
@@ -728,27 +795,43 @@ void ImperialScene::updateVikingsShipNum()
     for(int i = showShipNum + 1; i <= maxMarchCount; i++)
     {
         destroyOneVikingsShip(i);
+        
     }
+    for(int i = 0; i < showShipNum ; i++)
+    {
+        createOneVikingsShip(i + 1, mShipLevel);
+        
+    }
+    for(int i = 1; i <= maxMarchCount ; i++)
+    {
+        updateVikingsShipLock(i, false);
+    }
+    for(int i = maxMarchCount + 1; i <= 5; i++)
+    {
+        updateVikingsShipLock(i, true);
+    }
+    /*
     if(showShipNum > 0)
     {
-        createOneVikingsShip(1, m_vikingNode, m_vikingTouchNode, mShipLevel);
+        createOneVikingsShip(1,  m_vikingTouchNode, mShipLevel);
     }
     if(showShipNum > 1)
     {
-        createOneVikingsShip(2, m_vikingNode2, m_vikingTouchNode2, mShipLevel);
+        createOneVikingsShip(2,  m_vikingTouchNode2, mShipLevel);
     }
     if(showShipNum > 2)
     {
-        createOneVikingsShip(3, m_vikingNode3, m_vikingTouchNode3, mShipLevel);
+        createOneVikingsShip(3,  m_vikingTouchNode3, mShipLevel);
     }
     if(showShipNum > 3)
     {
-        createOneVikingsShip(4, m_vikingNode4, m_vikingTouchNode4, mShipLevel);
+        createOneVikingsShip(4,  m_vikingTouchNode4, mShipLevel);
     }
     if(showShipNum > 4)
     {
-        createOneVikingsShip(5, m_vikingNode5, m_vikingTouchNode5, mShipLevel);
+        createOneVikingsShip(5,  m_vikingTouchNode5, mShipLevel);
     }
+    */
 }
 
 void ImperialScene::destroyOneVikingsShip(int seq)
@@ -829,8 +912,13 @@ void ImperialScene::onUpgradeVikingsShip(int level)
     }
 }
 
-void ImperialScene::createOneVikingsShip(int seq,  CCNode * pPosCCBNode, CCNode * pTouchCCBNode, int level)
+void ImperialScene::createOneVikingsShip(int seq,   int level)
+//void ImperialScene::createOneVikingsShip(int seq,  CCNode * pPosCCBNode, CCNode * pTouchCCBNode, int level)
 {
+    CCNode * pPosCCBNode = getVikingsShipCCBPosNodeBySeq(seq);
+    CCNode * pTouchCCBNode = getVikingsShipCCBTouchNodeBySeq(seq);
+    if((!pPosCCBNode) || (!pTouchCCBNode))
+        return;
     if(mVikingShipDict->objectForKey(seq) != nullptr)
     {
         return;
@@ -917,6 +1005,49 @@ bool ImperialScene::onVikingsShipTouched(CCTouch* pTouch)
 }
 
 
+bool ImperialScene::onVikingsShipLockTouched(CCTouch* pTouch)
+{
+    int lockTag = 832389;
+    for(int i = 1; i <= 5; i++)
+    {
+        auto posCCBNode = getVikingsShipCCBPosNodeBySeq(i);
+        if(!posCCBNode)
+            continue;
+        auto pSpr = posCCBNode->getChildByTag(lockTag);
+        if(!pSpr || pSpr->isVisible() == false)
+        {
+            continue;
+        }
+        
+        Vec2 touchPoint = pSpr->convertToNodeSpace(pTouch->getLocation());
+        // 下面的touch点转换是为了让点击区域在模型内
+        float originX = -1 * pSpr->getContentSize().width * pSpr->getAnchorPoint().x;
+        float originY = -1 * pSpr->getContentSize().height * pSpr->getAnchorPoint().y;
+        touchPoint.x = touchPoint.x + originX;
+        touchPoint.y = touchPoint.y + originY;
+        
+        Rect boundingBox(originX, originY, pSpr->getContentSize().width, pSpr->getContentSize().height);
+        //    Rect boundingBox = this->getBoundingBox();
+        bool isTouched = boundingBox.containsPoint(touchPoint);
+        if (!isTouched)
+        {
+            continue;
+        }
+        else
+        {
+            unsigned int current =  WorldController::getInstance()->getCurrentMarchCount();
+            unsigned int max = WorldController::getInstance()->getMaxMarchCount();
+            //if (current >= max)
+            {
+                WorldController::getInstance()->showMarchAlert(max);
+                //return;
+            }
+
+            return true;
+        }
+    }
+    return false;
+}
 
 
 
@@ -1466,21 +1597,23 @@ void ImperialScene::changeBridgeState(CCNode* p)
 //    }
 }
 
-void ImperialScene::onRefreshOutsideTraps()
+void ImperialScene::onRefreshOutsideTraps(CCObject* obj)
 {
     if (!m_resbatchNode) {
         return;
     }
     auto getTrapsPicNum = [](int num)
     {
-        //小于等于这个值  1;999;1999;2999;3999;4999;9999;19999;39999;80000 分别对应1～10个陷阱的显示。
+        //小于等于这个值  1;999;1999;2999;3999;4999;9999;19999;39999;80000 分别对应1～12个陷阱的显示。
         int baseArr[13] = {0,1,499,999,1999,2499,2999,3999,4999,9999,19999,39999,80000};
         int i = 0;
         int curNum = baseArr[i];
         
         while (num > curNum) {
-            curNum = baseArr[i];
-            ++i;
+            if (i <= 12) {
+                curNum = baseArr[i];
+                ++i;
+            }
         }
         i = i > 12 ? 12 : i;
         return i;
@@ -1647,6 +1780,7 @@ void ImperialScene::onEnter()
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::unLockTile), MSG_UNLOCK_TILE, NULL);
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::moveMapToPosition), MSG_MOVE_TO_POSITION, NULL);
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::refreshSoldiers), MSG_TROOPS_CHANGE, NULL);
+    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::onRefreshOutsideTraps), MSG_TRAPS_CHANGE, NULL);
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::guideEnd), GUIDE_END, NULL);
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::onPowerADD), MSG_SCIENCE_POWER_ADD, NULL);
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::checkTileGlow), QUEST_STATE_UPDATE, NULL);
@@ -2258,6 +2392,7 @@ void ImperialScene::onExit()
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_UNLOCK_TILE);
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_MOVE_TO_POSITION);
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_TROOPS_CHANGE);
+    CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_TRAPS_CHANGE);
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, GUIDE_END);
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_SCIENCE_POWER_ADD);
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, QUEST_STATE_UPDATE);
@@ -2933,6 +3068,11 @@ void ImperialScene::onSingleTouchEnd(CCTouch* pTouch)
     {
         return;
     }
+    if(onVikingsShipLockTouched(pTouch))
+    {
+        return;
+    }
+
     //end a by ljf
     if (onBridgeTouched(pTouch)) {
         return;
@@ -4990,8 +5130,6 @@ void ImperialScene::playPowerAni(float _time){
 
 void ImperialScene::refreshSoldiers(CCObject* obj)
 {
-    // tao.yu add traps
-    onRefreshOutsideTraps();
 
     if (!m_soldierBatchNode) {
         return;

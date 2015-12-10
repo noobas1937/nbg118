@@ -160,7 +160,8 @@ void LocalController::init()
     if (false == test_xml)
     {
 //#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-        const char* XMLS[51] = {
+        const int xmlSize = 51;
+        const char* XMLS[xmlSize] = {
             "local/xml/item_ab.xml",
             "local/xml/item_achievement.xml",
             "local/xml/item_activity_panel.xml",
@@ -214,7 +215,7 @@ void LocalController::init()
             "local/xml/loading_tips.xml",
         };
         m_objXMLParser = new CCRapidXMLParser();
-        for (int i = 0; i < 51; i++)
+        for (int i = 0; i < xmlSize; i++)
         {
             std::string filePath = FileUtils::getInstance()->fullPathForFilename(XMLS[i]);
             CCLOG("android m_objXMLParser: %s", filePath.c_str());

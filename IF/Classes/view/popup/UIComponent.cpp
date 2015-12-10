@@ -1037,9 +1037,9 @@ void UIComponent::onEnter()
         
         m_nbXHD->setOpacity(0);
         
-        float cycleTime = 2;
+        float cycleTime = 3;
         
-        m_nbXHD->runAction(RepeatForever::create(Sequence::createWithTwoActions(FadeIn::create(cycleTime/2), FadeOut::create(cycleTime/2))));
+        m_nbXHD->runAction(RepeatForever::create(Sequence::create(FadeIn::create(cycleTime/3),DelayTime::create(cycleTime/3), FadeOut::create(cycleTime/3),nullptr)));
         
         m_nbXHD->setVisible(false);
     }
@@ -2721,6 +2721,7 @@ void UIComponent::updateDragonStatus(CCObject *params)
 {
     string icon = CCCommonUtils::getPropById(CC_ITOA(GlobalData::shared()->titanInfo.tid), "dragonUI");
 //    m_dragonIcon->setTexture(icon);
+    icon.append(".png");
     m_dragonIcon->setSpriteFrame(icon);
 }
 

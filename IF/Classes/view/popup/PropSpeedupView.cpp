@@ -232,28 +232,34 @@ void PropSpeedupView::updateProgressBar(float pUpdate){
     m_progressTxt->setString(CC_SECTOA(curTime));
 }
 void PropSpeedupView::initSliderBar(){
-    auto m_sliderBg = CCLoadSprite::createScale9Sprite("huadongtiao3.png");
-    m_sliderBg->setInsetBottom(5);
-    m_sliderBg->setInsetLeft(5);
-    m_sliderBg->setInsetRight(5);
-    m_sliderBg->setInsetTop(5);
-    m_sliderBg->setAnchorPoint(ccp(0.5,0.5));
-    m_sliderBg->setPosition(ccp(304/2, 25));
-    m_sliderBg->setContentSize(CCSize(304,18));
+//    auto m_sliderBg = CCLoadSprite::createScale9Sprite("huadongtiao3.png");
+//    m_sliderBg->setInsetBottom(5);
+//    m_sliderBg->setInsetLeft(5);
+//    m_sliderBg->setInsetRight(5);
+//    m_sliderBg->setInsetTop(5);
+//    m_sliderBg->setAnchorPoint(ccp(0.5,0.5));
+//    m_sliderBg->setPosition(ccp(304/2, 25));
+//    m_sliderBg->setContentSize(CCSize(304,18));
+//    
+//    auto bgSp = CCLoadSprite::createSprite("huadongtiao4.png");
+//    bgSp->setVisible(false);
+//    auto proSp = CCLoadSprite::createSprite("huadongtiao4.png");
+//    auto thuSp = CCLoadSprite::createSprite("huadongtiao1.png");
+//    
+//    m_trainSlider = CCSliderBar::createSlider(m_sliderBg, proSp, thuSp);
+//    m_trainSlider->setMinimumValue(0.0f);
+//    m_trainSlider->setMaximumValue(1.0f);
+//    m_trainSlider->setProgressScaleX(300/proSp->getContentSize().width);
+//    m_trainSlider->setTag(1);
+//    m_trainSlider->setLimitMoveValue(25);
+//    m_trainSlider->setTouchPriority(0);
+//    m_trainSlider->addTargetWithActionForControlEvents(this, cccontrol_selector(PropSpeedupView::sliderCallBack), CCControlEventValueChanged);
     
-    auto bgSp = CCLoadSprite::createSprite("huadongtiao4.png");
-    bgSp->setVisible(false);
-    auto proSp = CCLoadSprite::createSprite("huadongtiao4.png");
-    auto thuSp = CCLoadSprite::createSprite("huadongtiao1.png");
-    
-    m_trainSlider = CCSliderBar::createSlider(m_sliderBg, proSp, thuSp);
-    m_trainSlider->setMinimumValue(0.0f);
-    m_trainSlider->setMaximumValue(1.0f);
-    m_trainSlider->setProgressScaleX(300/proSp->getContentSize().width);
-    m_trainSlider->setTag(1);
-    m_trainSlider->setLimitMoveValue(25);
-    m_trainSlider->setTouchPriority(0);
-    m_trainSlider->addTargetWithActionForControlEvents(this, cccontrol_selector(PropSpeedupView::sliderCallBack), CCControlEventValueChanged);
+    m_trainSlider = NBSlider::create("nb_bar_bg.png", "nb_bar_pro.png", "nb_cursor_icon.png",NBSlider::TextureResType::PLIST);
+    m_trainSlider->setCapInsets(Rect(8, 1, 30, 13));
+    m_trainSlider->setContentSize(Size(300,15));
+    m_trainSlider->addEventListener(CC_CALLBACK_2(PropSpeedupView::sliderCallBack, this));
+
     m_sliderContainer->addChild(m_trainSlider, 1);
     
     auto editSize = m_editBoxNode->getContentSize();
@@ -437,7 +443,7 @@ void PropSpeedupView::editBoxTextChanged(CCEditBox* editBox, const std::string& 
     std::string aaaa = CC_CMDITOA(a);
     editBox->setText(aaaa.c_str());
 }
-void PropSpeedupView::sliderCallBack(CCObject*sender,CCControlEvent even){
+void PropSpeedupView::sliderCallBack(Ref *pSender, NBSlider::EventType type){
     m_chooseCount = m_trainSlider->getValue() * m_maxCount;
     if(m_chooseCount>m_maxCount){
         m_chooseCount = m_maxCount;
@@ -452,9 +458,9 @@ void PropSpeedupView::sliderCallBack(CCObject*sender,CCControlEvent even){
         CCCommonUtils::setSpriteGray(m_sprBtn, true);
     }
     if(m_maxCount<=0){
-        m_trainSlider->setTouchEnabled(false);
+        m_trainSlider->setEnabled(false);
     }else{
-        m_trainSlider->setTouchEnabled(true);
+        m_trainSlider->setEnabled(true);
     }
     string tip = _lang("102457");
     string time = CC_SECTOA(m_addTime * m_chooseCount);
@@ -485,9 +491,9 @@ void PropSpeedupView::editBoxReturn(CCEditBox *editBox){
         m_trainSlider->setValue(1.0f * num / m_maxCount);
     }
     if(m_maxCount<=0){
-        m_trainSlider->setTouchEnabled(false);
+        m_trainSlider->setEnabled(false);
     }else{
-        m_trainSlider->setTouchEnabled(true);
+        m_trainSlider->setEnabled(true);
     }
 }
 void PropSpeedupView::onUseClick(cocos2d::CCObject *pSender, CCControlEvent pCCControlEvent){
@@ -556,6 +562,7 @@ void PropSpeedupView::useTool(){
         showTip=false;
     }
     if(showTip==true){
+#pragma mark temp
         YesNoDialog::show(_lang("101036").c_str(), CCCallFunc::create(this, callfunc_selector(PropSpeedupView::sureToUseTool)));
     }else{
         sureToUseTool();
