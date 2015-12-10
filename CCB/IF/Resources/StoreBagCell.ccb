@@ -306,7 +306,7 @@
 												<key>type</key>
 												<string>Byte</string>
 												<key>value</key>
-												<integer>128</integer>
+												<integer>255</integer>
 											</dict>
 											<dict>
 												<key>name</key>
@@ -504,8 +504,8 @@
 												<string>Position</string>
 												<key>value</key>
 												<array>
-													<real>56.5</real>
-													<real>102</real>
+													<real>58.5</real>
+													<real>98</real>
 													<integer>0</integer>
 												</array>
 											</dict>
@@ -862,7 +862,7 @@
 												<key>type</key>
 												<string>Byte</string>
 												<key>value</key>
-												<integer>128</integer>
+												<integer>255</integer>
 											</dict>
 											<dict>
 												<key>name</key>
@@ -1060,8 +1060,8 @@
 												<string>Position</string>
 												<key>value</key>
 												<array>
-													<real>201.5</real>
-													<real>102</real>
+													<real>203.5</real>
+													<real>98</real>
 													<integer>0</integer>
 												</array>
 											</dict>
@@ -1418,7 +1418,7 @@
 												<key>type</key>
 												<string>Byte</string>
 												<key>value</key>
-												<integer>128</integer>
+												<integer>255</integer>
 											</dict>
 											<dict>
 												<key>name</key>
@@ -1616,8 +1616,8 @@
 												<string>Position</string>
 												<key>value</key>
 												<array>
-													<real>346</real>
-													<real>102</real>
+													<real>348</real>
+													<real>98</real>
 													<integer>0</integer>
 												</array>
 											</dict>
@@ -1974,7 +1974,7 @@
 												<key>type</key>
 												<string>Byte</string>
 												<key>value</key>
-												<integer>128</integer>
+												<integer>255</integer>
 											</dict>
 											<dict>
 												<key>name</key>
@@ -2172,8 +2172,8 @@
 												<string>Position</string>
 												<key>value</key>
 												<array>
-													<real>491.5</real>
-													<real>102</real>
+													<real>493.5</real>
+													<real>98</real>
 													<integer>0</integer>
 												</array>
 											</dict>
@@ -2210,6 +2210,8 @@
 												<false/>
 											</dict>
 										</array>
+										<key>selected</key>
+										<true/>
 									</dict>
 								</array>
 								<key>customClass</key>
