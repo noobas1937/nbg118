@@ -96,6 +96,7 @@ public:
     void onBridgeClose();
     void changeBridgeState(CCNode* p);
     
+    int getTrapsPicNumber(int num);
     void onRefreshOutsideTraps(CCObject* obj);
     
     void onUpdateInfo();
