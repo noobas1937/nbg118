@@ -46,6 +46,10 @@
 #include "VikingShip.h"
 //end a by ljf
 
+// traps max number
+#define TRAP_MAX_NUMBER 36
+#define TRAP_EVERY_TYPE_NUMBER 12
+
 class ImperialScene:public CCLayer,public ITouchDelegate,public CCBMemberVariableAssigner
 {
 public:
@@ -476,8 +480,8 @@ private:
     CCSafeObject<CCNode> m_waterNode_L;
     CCSafeObject<CCNode> m_waterNode_R;
     // tao.yu traps outside wall
-    CCSafeObject<Node> m_trapsRootNode();
-    CCSafeObject<Node> m_nodeTraps[36];
+    CCSafeObject<Node> m_trapsRootNode;
+    CCSafeObject<Node> m_nodeTraps[TRAP_MAX_NUMBER];
     
     bool m_bridgeOpened;
     bool m_isBridgeCanClick;

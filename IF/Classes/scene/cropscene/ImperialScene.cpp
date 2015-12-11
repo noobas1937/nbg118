@@ -1601,16 +1601,16 @@ void ImperialScene::changeBridgeState(CCNode* p)
 int ImperialScene::getTrapsPicNumber(int num)
 {
     //小于等于这个值  1;999;1999;2999;3999;4999;9999;19999;39999;80000 分别对应1～12个陷阱的显示。
-    static const int baseArr[13] = {0,1,499,999,1999,2499,2999,3999,4999,9999,19999,39999,80000};
+    static const int baseArr[TRAP_EVERY_TYPE_NUMBER+1] = {0,1,499,999,1999,2499,2999,3999,4999,9999,19999,39999,80000};
     int i = 0;
     int curNum = baseArr[i];
     while (num > curNum) {
-        if (i <= 12) {
+        if (i <= TRAP_EVERY_TYPE_NUMBER) {
             ++i;
             curNum = baseArr[i];
         }
     }
-    i = i > 12 ? 12 : i;
+    i = i > TRAP_EVERY_TYPE_NUMBER ? TRAP_EVERY_TYPE_NUMBER : i;
     return i;
 }
 
@@ -1647,17 +1647,17 @@ void ImperialScene::onRefreshOutsideTraps(CCObject* obj)
     }
     for (int i = 0; i < getTrapsPicNumber(type2); ++i) {
         auto spr = CCLoadSprite::createSprite("outside107901.png");
-        auto pos = m_nodeTraps[i+12]->getPosition();
+        auto pos = m_nodeTraps[i+TRAP_EVERY_TYPE_NUMBER]->getPosition();
         m_resbatchNode->addChild(spr);
         spr->setPosition(pos);
     }
     for (int i = 0; i < getTrapsPicNumber(type3); ++i) {
         std::string picName = "outside107902_2.png";
-        if (i >= 5) {
+        if (i >= TRAP_EVERY_TYPE_NUMBER/2) {
             picName = "outside107902_1.png";
         }
         auto spr = CCLoadSprite::createSprite(picName.c_str());
-        auto pos = m_nodeTraps[i+24]->getPosition();
+        auto pos = m_nodeTraps[i+TRAP_EVERY_TYPE_NUMBER*2]->getPosition();
         m_resbatchNode->addChild(spr);
         spr->setPosition(pos);
     }
@@ -4461,7 +4461,7 @@ bool ImperialScene::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const
         strncpy(index, pMemberVariableName + 7, strlen(pMemberVariableName) - 7);
         
         int trapIndex = atoi(index);
-        if (trapIndex < 30) {
+        if (trapIndex < TRAP_MAX_NUMBER) {
             m_nodeTraps[trapIndex] = pNode;
             m_nodeTraps[trapIndex]->retain();
         }
