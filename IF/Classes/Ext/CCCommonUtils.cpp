@@ -468,7 +468,8 @@ void CCCommonUtils::createGoodsIcon(int toolID, cocos2d::CCNode *mParent,CCSize 
                 CCScale9Sprite* numBG = CCLoadSprite::createScale9Sprite("BG_quatnity.png");
                 numBG->setColor(getItemColor(info.color));
                 numBG->setOpacity(200);
-                CCLabelBMFont* numIF = CCLabelBMFont::create(CC_ITOA_K(atol(info.getPara().c_str())), "pve_fnt_boss.fnt");
+//                CCLabelBMFont* numIF = CCLabelBMFont::create(CC_ITOA_K(atol(info.getPara().c_str())), "pve_fnt_boss.fnt");
+                CCLabelBMFont* numIF = CCLabelBMFont::create(CC_ITOA_K(atol(info.getPara().c_str())), "nb_fnt2.fnt");
                 CCSize numSize = numIF->getContentSize();
                 
                 const float constScale = 0.3;
@@ -479,7 +480,7 @@ void CCCommonUtils::createGoodsIcon(int toolID, cocos2d::CCNode *mParent,CCSize 
                 numIF->setScale(scale);
                 numSize.height *= scale;
                 numBG->setPreferredSize(CCSize(defSize.width, defSize.height*constScale));
-                mParent->addChild(numBG);
+//                mParent->addChild(numBG);
                 mParent->addChild(numIF);
                 
                 if(!pSize.equals(CCSizeZero)){

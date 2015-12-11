@@ -626,7 +626,7 @@
 												<string>ScaleLock</string>
 												<key>value</key>
 												<array>
-													<real>0.10000000149011612</real>
+													<real>1</real>
 													<real>1</real>
 													<false/>
 													<integer>0</integer>
@@ -792,6 +792,18 @@
 												<key>value</key>
 												<array>
 													<real>22</real>
+													<integer>0</integer>
+												</array>
+											</dict>
+											<dict>
+												<key>name</key>
+												<string>color</string>
+												<key>type</key>
+												<string>Color3</string>
+												<key>value</key>
+												<array>
+													<integer>152</integer>
+													<integer>91</integer>
 													<integer>0</integer>
 												</array>
 											</dict>
@@ -2117,8 +2129,6 @@
 												<false/>
 											</dict>
 										</array>
-										<key>selected</key>
-										<true/>
 									</dict>
 									<dict>
 										<key>baseClass</key>
