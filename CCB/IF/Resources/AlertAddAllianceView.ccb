@@ -695,8 +695,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>-230.80000305175781</real>
-									<real>113.19999694824219</real>
+									<real>-220.80000305175781</real>
+									<real>-308.79998779296875</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -719,7 +719,7 @@
 								<key>value</key>
 								<array>
 									<real>1</real>
-									<real>1</real>
+									<real>-1</real>
 									<false/>
 									<integer>0</integer>
 								</array>
@@ -755,6 +755,8 @@
 								</array>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -802,7 +804,7 @@
 								<key>value</key>
 								<array>
 									<real>1</real>
-									<real>1</real>
+									<real>-1</real>
 									<false/>
 									<integer>0</integer>
 								</array>
@@ -1122,9 +1124,9 @@
 								<string>Color3</string>
 								<key>value</key>
 								<array>
-									<integer>255</integer>
-									<integer>255</integer>
-									<integer>255</integer>
+									<integer>0</integer>
+									<integer>0</integer>
+									<integer>0</integer>
 								</array>
 							</dict>
 							<dict>
@@ -1145,9 +1147,9 @@
 								<string>Color3</string>
 								<key>value</key>
 								<array>
-									<integer>255</integer>
-									<integer>255</integer>
-									<integer>255</integer>
+									<integer>0</integer>
+									<integer>0</integer>
+									<integer>0</integer>
 								</array>
 							</dict>
 							<dict>
@@ -1168,9 +1170,9 @@
 								<string>Color3</string>
 								<key>value</key>
 								<array>
-									<integer>255</integer>
-									<integer>255</integer>
-									<integer>255</integer>
+									<integer>0</integer>
+									<integer>0</integer>
+									<integer>0</integer>
 								</array>
 							</dict>
 						</array>
