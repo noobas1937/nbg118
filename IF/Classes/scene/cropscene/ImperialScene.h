@@ -477,7 +477,7 @@ private:
     CCSafeObject<CCNode> m_waterNode_R;
     // tao.yu traps outside wall
     CCSafeObject<Node> m_trapsRootNode();
-    CCSafeObject<Node> m_nodeTraps[30];
+    CCSafeObject<Node> m_nodeTraps[36];
     
     bool m_bridgeOpened;
     bool m_isBridgeCanClick;
