@@ -738,6 +738,11 @@ void AllianceInfoView::clickEventCell(CCObject* sender,void* pData){
             break;
         case 9:
         case 10:{
+            CCCommonUtils::flyText(_lang("E100008"));
+            return;
+            
+            //TODO: guojiang 联盟领地入口
+            
             unsigned int index = WorldController::getIndexByPoint(WorldController::getInstance()->selfPoint);
             PopupViewController::getInstance()->addPopupInView(AllianceTerritoryView::create(index,false));
         }
@@ -964,6 +969,11 @@ void AllianceFunCell::clickHandle(CCObject *pSender, CCControlEvent event){
             break;
         case 2:
         {
+            CCCommonUtils::flyText(_lang("E100008"));
+            return;
+            
+            //TODO: guojiang 联盟领地入口
+            
             unsigned int index = WorldController::getIndexByPoint(WorldController::getInstance()->selfPoint);
             PopupViewController::getInstance()->addPopupInView(AllianceTerritoryView::create(index,false));
         }
