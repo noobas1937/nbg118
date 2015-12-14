@@ -249,7 +249,7 @@ bool CreateAllianceView::init()
             m_allianceNameEditBox->setFontSize(22);
         }
         m_allianceNameEditBox->setMaxLength(ALLIANCE_NAME_MAX_LENGTH);
-        m_allianceNameEditBox->setFontColor(ccWHITE);
+        m_allianceNameEditBox->setFontColor(Color3B::BLACK);
         m_allianceNameEditBox->setReturnType(kKeyboardReturnTypeDone);
         m_allianceNameEditBox->setInputFlag(kEditBoxInputFlagInitialCapsSentence);
         m_nameNode->addChild(m_allianceNameEditBox);
@@ -264,7 +264,7 @@ bool CreateAllianceView::init()
             m_allianceIntroEditBox->setFontSize(22);
         }
         m_allianceIntroEditBox->setMaxLength(199);
-        m_allianceIntroEditBox->setFontColor(ccWHITE);
+        m_allianceIntroEditBox->setFontColor(Color3B::BLACK);
         m_allianceIntroEditBox->setReturnType(kKeyboardReturnTypeDone);
         m_allianceIntroEditBox->setInputFlag(kEditBoxInputFlagInitialCapsSentence);
         m_allianceIntroEditBox->setPosition(ccp(322.0, 818));
