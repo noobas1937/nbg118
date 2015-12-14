@@ -376,9 +376,9 @@ void AllianceInfoView::initFun(){
     m_powerTxt->setString(CC_CMDITOAL(m_info->totalForce).c_str());
 
     // tao.yu 第一版不开放联盟领地和联盟科技
-//    const char* titles3[6] = {"115190","115301","115159","115206","115077","115929"};
-//    const char* icons3[6] = {"allianceWar.png","AllianceTerritory.png","allianceScience.png","allianceShop.png","allianceHelp.png","icon_comment.png"};
-//    
+    const char* titles3[6] = {"115190","115301","115159","115206","115077","115929"};
+    const char* icons3[6] = {"allianceWar.png","AllianceTerritory.png","allianceScience.png","allianceShop.png","allianceHelp.png","icon_comment.png"};
+
     int num =6;
     int totalH = 85* num+30 + 85 +140;
     if(CCCommonUtils::isIosAndroidPad())
@@ -400,23 +400,24 @@ void AllianceInfoView::initFun(){
             eventCell->setPosition(ccp(5, totalH - 84));
         m_scrollView->addChild(eventCell);
     }
-//    for (int i=0; i<num; i++) {
-//        const char*  title = titles3[i];
-//        const char*  iconStr = icons3[i];
-//        AllianceFunCell* cell = AllianceFunCell::create(_lang(title), m_info,iconStr,m_funList,i+1);
-//        if(CCCommonUtils::isIosAndroidPad())
-//            cell->setPosition(ccp(5, totalH-(i+1)*85*2. - 84*2.));
-//        else
-//            cell->setPosition(ccp(5, totalH-(i+1)*85 - 84));
-//        m_scrollView->addChild(cell);
-//    }
+    for (int i=0; i<num; i++) {
+        const char*  title = titles3[i];
+        const char*  iconStr = icons3[i];
+        AllianceFunCell* cell = AllianceFunCell::create(_lang(title), m_info,iconStr,m_funList,i+1);
+        if(CCCommonUtils::isIosAndroidPad())
+            cell->setPosition(ccp(5, totalH-(i+1)*85*2. - 84*2.));
+        else
+            cell->setPosition(ccp(5, totalH-(i+1)*85 - 84));
+        m_scrollView->addChild(cell);
+    }
     m_scrollView->setContentSize(CCSize(m_funList->getContentSize().width,totalH));
     m_scrollView->setContentOffset(ccp(0, m_funList->getContentSize().height - totalH));
     
-//    m_btnNode->removeFromParent();
-//    m_btnNode->setPositionY(22);
-//    m_scrollView->addChild(m_btnNode);
-    //m_scrollView->setTouchEnabled(totalH < m_funList->getContentSize().height);
+    m_btnNode->removeFromParent();
+    m_btnNode->setPositionY(22);
+    m_scrollView->addChild(m_btnNode);
+    m_scrollView->setTouchEnabled(totalH < m_funList->getContentSize().height);
+    
     m_allianceIcon->removeAllChildren();
     AllianceFlagPar* flag = AllianceFlagPar::create(m_info->getAllianceIcon().c_str());
     m_allianceIcon->addChild(flag);
@@ -933,23 +934,24 @@ void AllianceFunCell::onTouchMoved(CCTouch *pTouch, CCEvent *pEvent){
 void AllianceFunCell::clickHandle(CCObject *pSender, CCControlEvent event){
 
     std::string uid = m_info->uid;
-    int buildId = FunBuildController::getInstance()->getMaxLvBuildByType(FUN_BUILD_TAVERN);
-    bool haveMarket = false;
-    if (buildId>0) {
-        FunBuildInfo& info = FunBuildController::getInstance()->getFunbuildById(buildId);
-        if(&info!=NULL){
-            haveMarket = true;
-        }
-    }
+//    int buildId = FunBuildController::getInstance()->getMaxLvBuildByType(FUN_BUILD_TAVERN);
+//    bool haveMarket = false;
+//    if (buildId>0) {
+//        FunBuildInfo& info = FunBuildController::getInstance()->getFunbuildById(buildId);
+//        if(&info!=NULL){
+//            haveMarket = true;
+//        }
+//    }
+//    
+//    int warBuildId = FunBuildController::getInstance()->getMaxLvBuildByType(FUN_BUILD_SMITHY);
+//    bool haveWarBuild = false;
+//    if (warBuildId>0) {
+//        FunBuildInfo& info = FunBuildController::getInstance()->getFunbuildById(warBuildId);
+//        if(&info!=NULL){
+//            haveWarBuild = true;
+//        }
+//    }
     
-    int warBuildId = FunBuildController::getInstance()->getMaxLvBuildByType(FUN_BUILD_SMITHY);
-    bool haveWarBuild = false;
-    if (warBuildId>0) {
-        FunBuildInfo& info = FunBuildController::getInstance()->getFunbuildById(warBuildId);
-        if(&info!=NULL){
-            haveWarBuild = true;
-        }
-    }
     switch (m_index) {
         case 0:
         {
@@ -959,6 +961,11 @@ void AllianceFunCell::clickHandle(CCObject *pSender, CCControlEvent event){
             break;
         case 1:
         {
+            CCCommonUtils::flyText(_lang("E100008"));
+            return;
+            
+            //TODO: guojiang
+            
             //            if(haveWarBuild){
             //
             //            }else{
@@ -979,9 +986,19 @@ void AllianceFunCell::clickHandle(CCObject *pSender, CCControlEvent event){
         }
             break;
         case 3:
+            CCCommonUtils::flyText(_lang("E100008"));
+            return;
+            
+            //TODO: guojiang
+            
             PopupViewController::getInstance()->addPopupInView(AllianceScienceView::create());
             break;
         case 4:
+            CCCommonUtils::flyText(_lang("E100008"));
+            return;
+            
+            //TODO: guojiang
+            
             //  CCCommonUtils::flyHint("", "", _lang("E100008"));
             PopupViewController::getInstance()->addPopupInView(AllianceShopView::create());
             break;
