@@ -4,6 +4,19 @@
     <dict>
         <key>frames</key>
         <dict>
+            <key>Cloud.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{652,4},{248,169}}</string>
+                <key>offset</key>
+                <string>{-1,1}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,1},{248,169}}</string>
+                <key>sourceSize</key>
+                <string>{250,173}</string>
+            </dict>
             <key>chuzheng_frame01.png</key>
             <dict>
                 <key>frame</key>
@@ -25,9 +38,9 @@
             <key>realTextureFileName</key>
             <string>Common_3.pvr.ccz</string>
             <key>size</key>
-            <string>{650,209}</string>
+            <string>{904,209}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:--REMOVED----------------------------</string>
+            <string>$TexturePacker:SmartUpdate:c2c606485c61f7ce03caf073e6531a4b:1/1$</string>
             <key>textureFileName</key>
             <string>Common_3.pvr.ccz</string>
         </dict>
