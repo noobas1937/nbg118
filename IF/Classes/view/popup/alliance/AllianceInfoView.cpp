@@ -413,9 +413,6 @@ void AllianceInfoView::initFun(){
     m_scrollView->setContentSize(CCSize(m_funList->getContentSize().width,totalH));
     m_scrollView->setContentOffset(ccp(0, m_funList->getContentSize().height - totalH));
     
-    m_btnNode->removeFromParent();
-    m_btnNode->setPositionY(22);
-    m_scrollView->addChild(m_btnNode);
     m_scrollView->setTouchEnabled(totalH < m_funList->getContentSize().height);
     
     m_allianceIcon->removeAllChildren();
