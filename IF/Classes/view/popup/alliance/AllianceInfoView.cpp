@@ -736,7 +736,7 @@ void AllianceInfoView::clickEventCell(CCObject* sender,void* pData){
             break;
         case 9:
         case 10:{
-            CCCommonUtils::flyText(_lang("E100008"));
+            CCCommonUtils::flyHint("", "", _lang("E100008"));
             return;
             
             //TODO: guojiang 联盟领地入口
@@ -958,7 +958,7 @@ void AllianceFunCell::clickHandle(CCObject *pSender, CCControlEvent event){
             break;
         case 1:
         {
-            CCCommonUtils::flyText(_lang("E100008"));
+            CCCommonUtils::flyHint("", "", _lang("E100008"));
             return;
             
             //TODO: guojiang
@@ -973,7 +973,7 @@ void AllianceFunCell::clickHandle(CCObject *pSender, CCControlEvent event){
             break;
         case 2:
         {
-            CCCommonUtils::flyText(_lang("E100008"));
+            CCCommonUtils::flyHint("", "", _lang("E100008"));
             return;
             
             //TODO: guojiang 联盟领地入口
@@ -983,7 +983,7 @@ void AllianceFunCell::clickHandle(CCObject *pSender, CCControlEvent event){
         }
             break;
         case 3:
-            CCCommonUtils::flyText(_lang("E100008"));
+            CCCommonUtils::flyHint("", "", _lang("E100008"));
             return;
             
             //TODO: guojiang
@@ -991,7 +991,7 @@ void AllianceFunCell::clickHandle(CCObject *pSender, CCControlEvent event){
             PopupViewController::getInstance()->addPopupInView(AllianceScienceView::create());
             break;
         case 4:
-            CCCommonUtils::flyText(_lang("E100008"));
+            CCCommonUtils::flyHint("", "", _lang("E100008"));
             return;
             
             //TODO: guojiang

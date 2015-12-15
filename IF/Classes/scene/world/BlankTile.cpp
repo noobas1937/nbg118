@@ -169,7 +169,7 @@ void BlankTile::onClickInviteTeleport(cocos2d::CCObject *pSender, Control::Event
 }
 void BlankTile::onClickPlace(cocos2d::CCObject *pSender, Control::EventType pCCControlEvent)
 {
-    CCCommonUtils::flyText(_lang("E100008"));
+    CCCommonUtils::flyHint("", "", _lang("E100008"));
     return;
     
     //TODO: guojiang 联盟领地入口
