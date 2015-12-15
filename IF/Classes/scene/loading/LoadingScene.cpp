@@ -287,12 +287,12 @@ bool LoadingScene::init()
     addChild(m_headParticleNode);
     
     
-//    auto logo = CCLoadSprite::createSprite("logo.png");
-//    logo->setAnchorPoint(ccp(0.5, 0));
-//    
-//    logo->setPosition(ccp(size.width * 0.5, size.height * 0.75));//
-//    logo->setTag(LOADING_LOGO_TAG);
-//    addChild(logo,10000);
+    auto logo = CCLoadSprite::createSprite("logo.png");
+    logo->setAnchorPoint(ccp(0.5, 0));
+    
+    logo->setPosition(ccp(size.width * 0.5, size.height * 0.75));//
+    logo->setTag(LOADING_LOGO_TAG);
+    addChild(logo,10000);
     
     addLoadingTips();
     addPlatformLogo();
