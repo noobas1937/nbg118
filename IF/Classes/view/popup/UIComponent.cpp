@@ -808,9 +808,9 @@ bool UIComponent::init(CCSize size)
     }
     // tao.yu 第一版不开放vip功能
     // guo.jiang 等美术数字字体完成后设置数字
-    m_vipText->setVisible(false);
+    m_vipText->setVisible(true);
 //    m_sprVip->setVisible(false);
-    m_sprVipHui->setVisible(false);
+    m_sprVipHui->setVisible(true);
     // ---------------
     
     
@@ -908,7 +908,7 @@ void UIComponent::onEnter()
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(UIComponent::playAddPowerAni), MSG_COLLECT_SOLDIER_ADD_POWER, NULL);
     
     // tao.yu 第一版不开放vip功能
-//    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(UIComponent::refreshVIPStatus), VIP_REFRESH, NULL);
+    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(UIComponent::refreshVIPStatus), VIP_REFRESH, NULL);
     
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(UIComponent::updateActivityEvent), MSG_UPDATE_ACTIVITY_EVENT, NULL);
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(UIComponent::resetGoldActivityBox), GOLDEXCHANGE_LIST_CHANGE, NULL);
@@ -1020,7 +1020,7 @@ void UIComponent::onEnter()
     
     CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(UIComponent::onEnterFrame), this, 1.0f,kCCRepeatForever, 0.0f, false);
     // tao.yu 第一版不开放vip功能
-//    refreshVIPStatus(0.0);
+    refreshVIPStatus(0.0);
     
     showFlygold();
     resetGoldActivityBox(NULL);
@@ -1428,7 +1428,7 @@ void UIComponent::onExit()
 //    CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_HAS_NEW_GOOD);
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, "showEquipTips");
     // tao.yu 第一版本不开放vip
-//    this->unschedule(schedule_selector(UIComponent::refreshVIPStatus));
+    this->unschedule(schedule_selector(UIComponent::refreshVIPStatus));
     
     CCLayer::onExit();
     
@@ -1726,6 +1726,12 @@ void UIComponent::showPopupView(UIPopupViewType type, bool isHD)
             this->m_popupReturnBtn->setVisible(true);
 //            this->m_popupTitleName->setVisible(type==7?false:true);
             this->m_popupTitleName->setVisible(false); // guo.jiang
+            //begin a by ljf
+            if(type==UIPopupViewType_Tool_Store)
+            {
+                this->m_popupTitleName->setVisible(true);
+            }
+            //end a by ljf
         }
 
         
@@ -2700,7 +2706,7 @@ SEL_CCControlHandler UIComponent::onResolveCCBCCControlSelector(cocos2d::CCObjec
     
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onActivityClick", UIComponent::onActivityClick);
     // tao.yu 第一版不开放vip
-//    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onVipBtnClick", UIComponent::onVipBtnClick);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onVipBtnClick", UIComponent::onVipBtnClick);
     
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onFaceClick", UIComponent::onFaceClick);
     
@@ -4709,7 +4715,7 @@ void UIComponent::onVipBtnClick(CCObject * pSender, Control::EventType pCCContro
 
 {
     // tao.yu 第一版不开放vip功能
-    if (true) {
+    if (false) {
         return;
     }
     onCancelMoveBuild();

@@ -125,7 +125,7 @@ bool GoldExchangeSaleView::init()
     m_percentLabel->setString(dollarPercent.c_str());
     //m_percentLabel->setFontSize(22.0);
     //m_percentLabel->setFontSize(22);
-    m_percentLabel->setScale(1.2);
+    //m_percentLabel->setScale(1.2); //d by ljf
 
     int tmpPercent = atoi(m_dataItem->gold_doller.c_str());
     string strPercent = CC_CMDITOA(tmpPercent);

@@ -50,7 +50,8 @@ bool UseToolView::init(string type, CCDictionary* dict,string title)
     });
     m_type = type;
     m_dict = dict;
-    auto tmpCCB = CCBLoadFile("UseToolView",this,this);
+    //auto tmpCCB = CCBLoadFile("UseToolView",this,this); //d by ljf
+    auto tmpCCB = CCBLoadFile("UseToolViewNew",this,this); //a by ljf
     this->setContentSize(tmpCCB->getContentSize());
     
     int oldBgHeight = m_buildBG->getContentSize().height;
@@ -309,6 +310,7 @@ CCTableViewCell* UseToolView::gridAtIndex(cocos2d::extension::CCMultiColTableVie
 
 ssize_t UseToolView::numberOfCellsInTableView(cocos2d::extension::CCMultiColTableView *table){
     int num = ceil(m_curList.size() / numPerRow);
+    
     return num;
 }
 
@@ -332,7 +334,8 @@ OneToolCell* OneToolCell::create(int itemId, string type, CCDictionary* dict, CC
 bool OneToolCell::init(int itemId, string type, CCDictionary* dict, CCNode* listNode)
 {
     bool ret = true;
-    CCBLoadFile("UseToolCell",this,this);
+    //CCBLoadFile("UseToolCell",this,this); //d by ljf
+    CCBLoadFile("UseToolCellNew",this,this); //a by ljf
     m_waitInterface = NULL;
     m_listNode = listNode;
     setData(itemId, type, dict);
