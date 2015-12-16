@@ -110,9 +110,9 @@
         <ItemSpec id="200347" name="104337" icon="item408" description="105097" type="3" type2="4" lv="1" lv_limit="1" para="20" color="0" page="3" use="1" useall="1" order_num="3402" price_hot="5"/>
         <ItemSpec id="200348" name="104338" icon="item408" description="105097" type="3" type2="4" lv="1" lv_limit="1" para="40" color="0" page="3" use="1" useall="1" order_num="3403" price_hot="10"/>
         <ItemSpec id="200349" name="104339" icon="item408" description="105097" type="3" type2="4" lv="1" lv_limit="1" para="300" color="0" page="3" use="1" useall="1" order_num="3405" price_hot="75"/>
-        <ItemSpec id="200350" name="104054" icon="item405" description="104055" type="3" type2="11" lv="1" lv_limit="1" para="100" color="2" page="4" pages="4" use="1" useall="1" order_num="1202" store_order="403" alliance_order="9" price_hot="0"/>
-        <ItemSpec id="200351" name="104056" icon="item405" description="104057" type="3" type2="11" lv="1" lv_limit="1" para="300" color="3" page="4" pages="4" use="1" useall="1" order_num="1203" store_order="404" price_hot="0"/>
-        <ItemSpec id="200352" name="104058" icon="item405" description="104059" type="3" type2="11" lv="1" lv_limit="1" para="1000" color="4" page="4" pages="4" use="1" useall="1" order_num="1204" store_order="405" price_hot="0"/>
+        <ItemSpec id="200350" name="104054" icon="item405" description="104055" type="3" type2="11" lv="1" lv_limit="1" para="100" color="2" page="4" pages="4" use="1" useall="1" order_num="1202" store_order="403" alliance_order="9" price="150" price_all="30000" price_hot="150"/>
+        <ItemSpec id="200351" name="104056" icon="item405" description="104057" type="3" type2="11" lv="1" lv_limit="1" para="300" color="3" page="4" pages="4" use="1" useall="1" order_num="1203" store_order="404" price="400" price_hot="400"/>
+        <ItemSpec id="200352" name="104058" icon="item405" description="104059" type="3" type2="11" lv="1" lv_limit="1" para="1000" color="4" page="4" pages="4" use="1" useall="1" order_num="1204" store_order="405" price="1000" price_hot="1000"/>
         <ItemSpec id="200353" name="104263" icon="item405" description="104264" type="3" type2="11" lv="1" lv_limit="1" para="10" color="1" page="4" use="1" useall="1" order_num="1201" price_hot="15"/>
         <ItemSpec id="200360" name="104203" icon="item406" description="105098" type="3" type2="10" lv="1" lv_limit="1" para="5" color="1" page="3" use="1" useall="1" order_num="201"/>
         <ItemSpec id="200361" name="104204" icon="item406" description="105098" type="3" type2="10" lv="1" lv_limit="1" para="10" color="2" page="3" use="1" useall="1" order_num="202"/>
@@ -121,9 +121,9 @@
         <ItemSpec id="200364" name="104207" icon="item406" description="105098" type="3" type2="10" lv="1" lv_limit="1" para="100" color="3" page="3" use="1" useall="1" order_num="205"/>
         <ItemSpec id="200365" name="104208" icon="item406" description="105098" type="3" type2="10" lv="1" lv_limit="1" para="200" color="3" page="3" use="1" useall="1" order_num="206"/>
         <ItemSpec id="200366" name="104029" icon="item406" description="105098" type="3" type2="10" lv="1" lv_limit="1" para="1000" color="4" page="3" use="1" useall="1" order_num="207"/>
-        <ItemSpec id="200370" name="104096" icon="item513" description="104097" type="3" type2="12" lv="1" lv_limit="1" color="3" page="4" pages="4" use="1" order_num="1103" store_order="406" price_hot="0"/>
-        <ItemSpec id="200371" name="104098" icon="item513" description="104099" type="3" type2="12" lv="1" lv_limit="1" color="4" page="4" pages="4" use="1" order_num="1104" store_order="407" price_hot="0"/>
-        <ItemSpec id="200372" name="104100" icon="item513" description="104101" type="3" type2="12" lv="1" lv_limit="1" color="5" page="4" pages="4" use="1" order_num="1105" store_order="408" price_hot="0"/>
+        <ItemSpec id="200370" name="104096" icon="item513" description="104097" type="3" type2="12" lv="1" lv_limit="1" color="3" page="4" pages="4" use="1" order_num="1103" store_order="406" price="250" price_hot="250"/>
+        <ItemSpec id="200371" name="104098" icon="item513" description="104099" type="3" type2="12" lv="1" lv_limit="1" color="4" page="4" pages="4" use="1" order_num="1104" store_order="407" price="1500" price_hot="1500"/>
+        <ItemSpec id="200372" name="104100" icon="item513" description="104101" type="3" type2="12" lv="1" lv_limit="1" color="5" page="4" pages="4" use="1" order_num="1105" store_order="408" price="4000" price_hot="4000"/>
         <ItemSpec id="200373" name="104184" icon="item513" description="104185" type="3" type2="12" lv="1" lv_limit="1" color="1" page="4" use="1" order_num="1101" price_hot="0"/>
         <ItemSpec id="200374" name="104186" icon="item513" description="104187" type="3" type2="12" lv="1" lv_limit="1" color="2" page="4" use="1" order_num="1102"/>
         <ItemSpec id="200380" name="104922" icon="item407" description="105099" type="3" type2="13" lv="1" lv_limit="1" para="10" color="3" page="4" use="1" order_num="2301" price_hot="40"/>

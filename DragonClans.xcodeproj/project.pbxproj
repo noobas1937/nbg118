@@ -1219,6 +1219,8 @@
 		ED8509631BE07AFD002E1B2C /* NBWaterMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED8509611BE07AFD002E1B2C /* NBWaterMap.cpp */; };
 		ED929BF71BFC650E005A44C9 /* Enemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED929BF51BFC650E005A44C9 /* Enemy.cpp */; };
 		EDAEDDF21C0BEE1D00F4DA59 /* VikingShip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDAEDDF01C0BEE1D00F4DA59 /* VikingShip.cpp */; };
+		EDC5D3CA1C1EF072006037D9 /* eeeq_0.png in Resources */ = {isa = PBXBuildFile; fileRef = EDC5D3C81C1EF072006037D9 /* eeeq_0.png */; };
+		EDC5D3CB1C1EF072006037D9 /* eeeq.fnt in Resources */ = {isa = PBXBuildFile; fileRef = EDC5D3C91C1EF072006037D9 /* eeeq.fnt */; };
 		F429408C1B67AE7000078155 /* ComposeView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F429408A1B67AE7000078155 /* ComposeView.cpp */; };
 		F45EFC621B6B63AA00B0C19F /* ComposeAni.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45EFC601B6B63AA00B0C19F /* ComposeAni.cpp */; };
 		F45EFC651B6B820E00B0C19F /* MatetialAni.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45EFC631B6B820E00B0C19F /* MatetialAni.cpp */; };
@@ -3584,6 +3586,8 @@
 		ED929BF61BFC650E005A44C9 /* Enemy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Enemy.h; sourceTree = "<group>"; };
 		EDAEDDF01C0BEE1D00F4DA59 /* VikingShip.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VikingShip.cpp; path = vikingship/VikingShip.cpp; sourceTree = "<group>"; };
 		EDAEDDF11C0BEE1D00F4DA59 /* VikingShip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VikingShip.h; path = vikingship/VikingShip.h; sourceTree = "<group>"; };
+		EDC5D3C81C1EF072006037D9 /* eeeq_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = eeeq_0.png; path = Resources/eeeq_0.png; sourceTree = "<group>"; };
+		EDC5D3C91C1EF072006037D9 /* eeeq.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = eeeq.fnt; path = Resources/eeeq.fnt; sourceTree = "<group>"; };
 		F429408A1B67AE7000078155 /* ComposeView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ComposeView.cpp; sourceTree = "<group>"; };
 		F429408B1B67AE7000078155 /* ComposeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComposeView.h; sourceTree = "<group>"; };
 		F45EFC601B6B63AA00B0C19F /* ComposeAni.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ComposeAni.cpp; sourceTree = "<group>"; };
@@ -6010,6 +6014,8 @@
 		DB9F590717CD9A520037F7E5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				EDC5D3C81C1EF072006037D9 /* eeeq_0.png */,
+				EDC5D3C91C1EF072006037D9 /* eeeq.fnt */,
 				B81B73EC1C02FF790092774E /* res */,
 				B81B73EA1C02DE150092774E /* src */,
 				B8813C161BFACE5D00BED7A7 /* manifest */,
@@ -7244,6 +7250,7 @@
 				272AB61E1B15C7BC0052E896 /* InfoPlist.strings in Resources */,
 				272AB6301B15C7BC0052E896 /* chat_bottom_keyboard_nor.png in Resources */,
 				272AB64E1B15C7BC0052E896 /* g045.png in Resources */,
+				EDC5D3CB1C1EF072006037D9 /* eeeq.fnt in Resources */,
 				272AB6231B15C7BC0052E896 /* alliance_01_full.png in Resources */,
 				1C4950701AA0576200333C5E /* Spine in Resources */,
 				B81B73EB1C02DE150092774E /* src in Resources */,
@@ -7282,6 +7289,7 @@
 				272AB6361B15C7BC0052E896 /* chat_right_bg_normal.png in Resources */,
 				59D7F0321AF0BF85000120F9 /* HS-Attachment@2x.png in Resources */,
 				59D7F0301AF0BF85000120F9 /* HelpshiftLocalizable.strings in Resources */,
+				EDC5D3CA1C1EF072006037D9 /* eeeq_0.png in Resources */,
 				272AB65E1B15C7BC0052E896 /* mail_battlereport.png in Resources */,
 				DB3548A01B6A336C001B7FA0 /* number.fnt in Resources */,
 				B8813C171BFACE5D00BED7A7 /* manifest in Resources */,
