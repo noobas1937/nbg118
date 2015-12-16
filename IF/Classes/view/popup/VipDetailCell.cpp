@@ -326,9 +326,9 @@ void VipEffectCell::setData(string type1,int value1,string type2,int value2, int
     head->setScale(scale);
     head1->setScale(scale);
     if(value1==0){
-        head->setColor({90,85,81});
-        m_leftText->setColor({90,85,81});
-        m_leftValueText->setColor({173,44,35});
+        head->setColor({100,100,100});
+        m_leftText->setColor({200,200,200});
+        m_leftValueText->setColor({255,20,20});
     }
     string value1str = "";
 
