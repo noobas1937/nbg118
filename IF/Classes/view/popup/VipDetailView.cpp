@@ -71,6 +71,7 @@ bool VipDetailView::onAssignCCBMemberVariable(cocos2d::CCObject *pTarget, const 
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_avatarFrame", CCSprite*, this->m_avatarFrame);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_avatarFlowerLeft", CCSprite*, this->m_avatarFlowerLeft);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_avatarFlowerRight", CCSprite*, this->m_avatarFlowerRight);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "mTopTouchNode", CCNode*, this->mTopTouchNode);
     //end a by ljf
     return true;
 }
@@ -99,12 +100,10 @@ void VipDetailView::onAddPointBtnClick(cocos2d::CCObject *pSender, Control::Even
     // PopupViewController::getInstance()->addPopupInView(StoreView::create());
     auto dict = CCDictionary::create();
     PopupViewController::getInstance()->addPopupInView(UseToolView::create(USE_TOOL_VIP_PIC,dict,"103002"));
-    
 }
 void VipDetailView::onActivityPointBtnClick(cocos2d::CCObject *pSender, Control::EventType pCCControlEvent){
     auto dict = CCDictionary::create();
     PopupViewController::getInstance()->addPopupInView(UseToolView::create(USE_TOOL_VIP_ACTIVITY,dict,"103004"));
-    //PopupViewController::getInstance()->addPopupInView(StoreView::create());
 }
 
 VipDetailView* VipDetailView::create(){
@@ -577,12 +576,19 @@ bool VipDetailView::onTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEv
             return true;
         }
     }
+    //begin a by ljf
+    if (!m_ismoving&&isTouchInside(mTopTouchNode,pTouch)){
+        m_touchState = 1;
+        return true;
+    }
+    //end a by ljf
     m_touchState = 0;
     m_touchPoint = pTouch->getLocation();
     if (!m_ismoving&&isTouchInside(m_listContainer,pTouch)){
        // m_ListPoint = m_listNode->getPosition();
         return true;
     }
+    
     return false;
 }
 void VipDetailView::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent){

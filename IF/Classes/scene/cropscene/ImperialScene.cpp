@@ -934,7 +934,7 @@ void ImperialScene::createOneVikingsShip(int seq,   int level)
     //m_vikings3D->setTexture("3d/ship/ship_3.jpg");
     NBSprite3D * m_vikings3D = NBSprite3D::create(modelPath);
     m_vikings3D->setTexture(texturePath);
-    m_vikings3D->setScale(1.0);
+    m_vikings3D->setScale(1.1);
     //m_vikings3D->setRotation3D(Vec3(0, -80, 0));
     
     auto vikingsRootNode = CCNode::create();

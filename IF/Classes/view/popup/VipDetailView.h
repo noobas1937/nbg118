@@ -137,6 +137,8 @@ private:
     CCSafeObject<CCSprite> m_avatarFrame;
     CCSafeObject<CCSprite> m_avatarFlowerLeft;
     CCSafeObject<CCSprite> m_avatarFlowerRight;
+    
+    CCSafeObject<CCNode> mTopTouchNode;
     //end a by ljf
 };
 
