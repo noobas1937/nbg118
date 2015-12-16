@@ -587,7 +587,7 @@ void StoreBagCell::setData(string itemIds)
         if (CCCommonUtils::isIosAndroidPad())
             CCCommonUtils::createGoodsIcon(m_a[0], m_picNode1, CCSize(110*1.6, 110*1.6),m_numLabel1);
         else
-            CCCommonUtils::createGoodsIcon(m_a[0], m_picNode1, CCSize(110, 110),m_numLabel1);
+            CCCommonUtils::createGoodsIcon(m_a[0], m_picNode1,CCSize(115, 115),m_numLabel1);
 //        ToolInfo& info = ToolController::getInstance()->getToolInfoById(m_a[0]);
 //        m_numLabel1->setString(CC_CMDITOA(info.getCNT()));
 //        auto pic = CCLoadSprite::createSprite(CCCommonUtils::getIcon(CC_ITOA(info.itemId)).c_str(),true,CCLoadSpriteType_GOODS);
@@ -606,7 +606,7 @@ void StoreBagCell::setData(string itemIds)
         if (CCCommonUtils::isIosAndroidPad())
             CCCommonUtils::createGoodsIcon(m_a[1], m_picNode2, CCSize(127*1.6, 127*1.6),m_numLabel2);
         else
-            CCCommonUtils::createGoodsIcon(m_a[1], m_picNode2, CCSize(127, 127),m_numLabel2);
+            CCCommonUtils::createGoodsIcon(m_a[1], m_picNode2, CCSize(115, 115),m_numLabel2);
 //        ToolInfo& info1 = ToolController::getInstance()->getToolInfoById(m_a[1]);
 //        m_numLabel2->setString(CC_CMDITOA(info1.getCNT()));
 //        auto pic = CCLoadSprite::createSprite(CCCommonUtils::getIcon(CC_ITOA(info1.itemId)).c_str(),true,CCLoadSpriteType_GOODS);
@@ -625,7 +625,7 @@ void StoreBagCell::setData(string itemIds)
         if (CCCommonUtils::isIosAndroidPad())
             CCCommonUtils::createGoodsIcon(m_a[2], m_picNode3, CCSize(127*1.6, 127*1.6),m_numLabel3);
         else
-            CCCommonUtils::createGoodsIcon(m_a[2], m_picNode3, CCSize(127, 127),m_numLabel3);
+            CCCommonUtils::createGoodsIcon(m_a[2], m_picNode3, CCSize(115, 115),m_numLabel3);
 //        ToolInfo& info2 = ToolController::getInstance()->getToolInfoById(m_a[2]);
 //        m_numLabel3->setString(CC_CMDITOA(info2.getCNT()));
 //        auto pic = CCLoadSprite::createSprite(CCCommonUtils::getIcon(CC_ITOA(info2.itemId)).c_str(),true,CCLoadSpriteType_GOODS);
@@ -644,7 +644,7 @@ void StoreBagCell::setData(string itemIds)
         if (CCCommonUtils::isIosAndroidPad())
             CCCommonUtils::createGoodsIcon(m_a[3], m_picNode4, CCSize(127*1.6, 127*1.6),m_numLabel4);
         else
-            CCCommonUtils::createGoodsIcon(m_a[3], m_picNode4, CCSize(127, 127),m_numLabel4);
+            CCCommonUtils::createGoodsIcon(m_a[3], m_picNode4, CCSize(115, 115),m_numLabel4);
 //        ToolInfo& info3 = ToolController::getInstance()->getToolInfoById(m_a[3]);
 //        m_numLabel4->setString(CC_CMDITOA(info3.getCNT()));
 //        auto pic = CCLoadSprite::createSprite(CCCommonUtils::getIcon(CC_ITOA(info3.itemId)).c_str(),true,CCLoadSpriteType_GOODS);

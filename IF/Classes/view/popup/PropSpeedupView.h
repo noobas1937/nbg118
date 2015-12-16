@@ -8,6 +8,7 @@
 #include "PopupBaseView.h"
 #include "WaitInterface.h"
 #include "CCSliderBar.h"
+#include "NBSlider.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -47,7 +48,7 @@ protected:
     void onUseClick(CCObject * pSender, CCControlEvent pCCControlEvent);
     void onAddClick(CCObject * pSender, CCControlEvent pCCControlEvent);
     void onSubClick(CCObject * pSender, CCControlEvent pCCControlEvent);
-    void sliderCallBack(CCObject*sender,CCControlEvent even);
+    void sliderCallBack(Ref *pSender, NBSlider::EventType type);
     void editBoxReturn(CCEditBox *editBox);
     void editBoxEditingDidBegin(CCEditBox* editBox) {m_editOpen = true;}
     
@@ -77,7 +78,7 @@ private:
     CCSafeObject<CCSprite> m_sprBtn;
 //    CCSafeObject<CCLabelIF> m_lblBtn;
     CCSafeObject<CCControlButton> m_useBtn;
-    CCSafeObject<CCSliderBar> m_trainSlider;
+    CCSafeObject<NBSlider> m_trainSlider;
     CCSafeObject<CCEditBox> m_editBox;
     CCSafeObject<CCNode> m_editBoxNode;
     CCSafeObject<CCNode> m_sliderContainer;

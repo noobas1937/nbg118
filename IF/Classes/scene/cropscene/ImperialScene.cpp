@@ -571,6 +571,7 @@ void ImperialScene::buildingCallBack(CCObject* params)
     m_touchLayer->addChild(m_soldierBatchNode, 1999);
     
     refreshSoldiers(NULL);
+    onRefreshOutsideTraps(NULL);
     //begin a by ljf
     cocos2d::CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Imperial/Imperial_22.plist");
     m_walkerBatchNode = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("b010_0_N_move_0.png")->getTexture());
@@ -1596,25 +1597,29 @@ void ImperialScene::changeBridgeState(CCNode* p)
 //    }
 }
 
-void ImperialScene::onRefreshOutsideTraps()
+
+int ImperialScene::getTrapsPicNumber(int num)
+{
+    //小于等于这个值  1;999;1999;2999;3999;4999;9999;19999;39999;80000 分别对应1～12个陷阱的显示。
+    static const int baseArr[TRAP_EVERY_TYPE_NUMBER+1] = {0,1,499,999,1999,2499,2999,3999,4999,9999,19999,39999,80000};
+    int i = 0;
+    int curNum = baseArr[i];
+    while (num > curNum) {
+        if (i <= TRAP_EVERY_TYPE_NUMBER) {
+            ++i;
+            curNum = baseArr[i];
+        }
+    }
+    i = i > TRAP_EVERY_TYPE_NUMBER ? TRAP_EVERY_TYPE_NUMBER : i;
+    return i;
+}
+
+void ImperialScene::onRefreshOutsideTraps(CCObject* obj)
 {
     if (!m_resbatchNode) {
         return;
     }
-    auto getTrapsPicNum = [](int num)
-    {
-        //小于等于这个值  1;999;1999;2999;3999;4999;9999;19999;39999;80000 分别对应1～10个陷阱的显示。
-        int baseArr[13] = {0,1,499,999,1999,2499,2999,3999,4999,9999,19999,39999,80000};
-        int i = 0;
-        int curNum = baseArr[i];
-        
-        while (num > curNum) {
-            curNum = baseArr[i];
-            ++i;
-        }
-        i = i > 12 ? 12 : i;
-        return i;
-    };
+    
     int type1 = 0;
     int type2 = 0;
     int type3 = 0;
@@ -1634,25 +1639,25 @@ void ImperialScene::onRefreshOutsideTraps()
         ++it;
     }
     
-    for (int i = 0; i < getTrapsPicNum(type1); ++i) {
+    for (int i = 0; i < getTrapsPicNumber(type1); ++i) {
         auto spr = CCLoadSprite::createSprite("outside107900.png");
         auto pos = m_nodeTraps[i]->getPosition();
         m_resbatchNode->addChild(spr);
         spr->setPosition(pos);
     }
-    for (int i = 0; i < getTrapsPicNum(type2); ++i) {
+    for (int i = 0; i < getTrapsPicNumber(type2); ++i) {
         auto spr = CCLoadSprite::createSprite("outside107901.png");
-        auto pos = m_nodeTraps[i+12]->getPosition();
+        auto pos = m_nodeTraps[i+TRAP_EVERY_TYPE_NUMBER]->getPosition();
         m_resbatchNode->addChild(spr);
         spr->setPosition(pos);
     }
-    for (int i = 0; i < getTrapsPicNum(type3); ++i) {
-        std::string picName = "outside107902_1.png";
-        if (i >= 5) {
-            picName = "outside107902_2.png";
+    for (int i = 0; i < getTrapsPicNumber(type3); ++i) {
+        std::string picName = "outside107902_2.png";
+        if (i >= TRAP_EVERY_TYPE_NUMBER/2) {
+            picName = "outside107902_1.png";
         }
         auto spr = CCLoadSprite::createSprite(picName.c_str());
-        auto pos = m_nodeTraps[i+24]->getPosition();
+        auto pos = m_nodeTraps[i+TRAP_EVERY_TYPE_NUMBER*2]->getPosition();
         m_resbatchNode->addChild(spr);
         spr->setPosition(pos);
     }
@@ -1777,6 +1782,7 @@ void ImperialScene::onEnter()
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::unLockTile), MSG_UNLOCK_TILE, NULL);
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::moveMapToPosition), MSG_MOVE_TO_POSITION, NULL);
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::refreshSoldiers), MSG_TROOPS_CHANGE, NULL);
+    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::onRefreshOutsideTraps), MSG_TRAPS_CHANGE, NULL);
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::guideEnd), GUIDE_END, NULL);
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::onPowerADD), MSG_SCIENCE_POWER_ADD, NULL);
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::checkTileGlow), QUEST_STATE_UPDATE, NULL);
@@ -2388,6 +2394,7 @@ void ImperialScene::onExit()
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_UNLOCK_TILE);
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_MOVE_TO_POSITION);
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_TROOPS_CHANGE);
+    CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_TRAPS_CHANGE);
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, GUIDE_END);
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_SCIENCE_POWER_ADD);
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, QUEST_STATE_UPDATE);
@@ -4454,7 +4461,7 @@ bool ImperialScene::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const
         strncpy(index, pMemberVariableName + 7, strlen(pMemberVariableName) - 7);
         
         int trapIndex = atoi(index);
-        if (trapIndex < 30) {
+        if (trapIndex < TRAP_MAX_NUMBER) {
             m_nodeTraps[trapIndex] = pNode;
             m_nodeTraps[trapIndex]->retain();
         }
@@ -5125,8 +5132,6 @@ void ImperialScene::playPowerAni(float _time){
 
 void ImperialScene::refreshSoldiers(CCObject* obj)
 {
-    // tao.yu add traps
-    onRefreshOutsideTraps();
 
     if (!m_soldierBatchNode) {
         return;

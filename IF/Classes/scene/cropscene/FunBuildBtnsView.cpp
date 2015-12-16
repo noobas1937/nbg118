@@ -211,7 +211,7 @@ void FunBuildBtnsView::onShow(int buildId)
     if (btnIcons.size() >= 1) {
         m_icon3Node->removeAllChildren();
         auto icon = CCLoadSprite::createSprite(btnIcons[0].c_str());
-//        CCCommonUtils::setSpriteMaxSize(icon, 90, true); //fusheng 使用图片原大小
+//        CCCommonUtils::setSpriteMaxSize(icon, 90, true); //fusheng 
         m_icon3Node->addChild(icon);
         m_btn3Node->setVisible(true);
         m_btn3->setEnabled(true);
@@ -1127,7 +1127,7 @@ bool FunBuildBtnsView::onUpdateToolBtn(int type)
     m_toolInfoId = toolId;
     m_icon5Node->removeAllChildren();
     auto icon = CCLoadSprite::createSprite(CCCommonUtils::getIcon(CC_ITOA(toolId)).c_str());
-    //CCCommonUtils::setSpriteMaxSize(icon, 90, true); //fusheng 使用图片原大小
+    CCCommonUtils::setSpriteMaxSize(icon, 77, true); //fusheng 加速按钮
     m_icon5Node->addChild(icon);
     m_btn5Node->setVisible(true);
     m_btn5->setEnabled(true);

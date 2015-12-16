@@ -1545,11 +1545,20 @@ void FunBuild::onClickThis(float _time)
                      auto layer = dynamic_cast<ImperialScene*>(SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE));
                      int tx = parentX ;
                      int ty = parentY ;
-                     float _scale = 0.8;
+//                     float _scale = 0.8;
+                     float _scale = 1.5;
                      if (CCCommonUtils::isIosAndroidPad())
                      {
                         _scale = 1.2;
                      }
+                    
+//                     tx = this->getParent()->getPositionX();
+//                     ty = this->getParent()->getPositionY();
+ 
+//                     onMoveToPos(m_curBuildPosx, m_curBuildPosy, type, dt, endS, bound);
+
+                     ty-=50;
+                     
                      layer->onMoveToPos(tx, ty, TYPE_POS_UP, 0.25, _scale);
                  
                      //PopupViewController::getInstance()->addPopupInView(TileOpenView::create(m_buildingKey));
