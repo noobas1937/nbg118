@@ -112,7 +112,7 @@ void LoadingScene::addLoadingTips()
     
     Size tipsSize = CCSizeMake(640, 90);
     m_loadingTips = CCLabelIF::create("loading...");
-    m_loadingTips->setColor({193,249,238});
+    m_loadingTips->setColor({229,246,160});
     m_loadingTips->enableStroke(ccBLACK, 1.0);
     m_loadingTips->setFontSize(24);
     m_loadingTips->setDimensions(CCSizeMake(tipsSize.width*0.85, tipsSize.height*1.8));

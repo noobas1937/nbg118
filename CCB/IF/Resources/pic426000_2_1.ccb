@@ -7,7 +7,7 @@
 	<key>currentResolution</key>
 	<integer>0</integer>
 	<key>currentSequenceId</key>
-	<integer>0</integer>
+	<integer>1</integer>
 	<key>fileType</key>
 	<string>CocosBuilder</string>
 	<key>fileVersion</key>
@@ -99,8 +99,6 @@
 								<false/>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -700,8 +698,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>180</real>
-											<real>223</real>
+											<real>0.0</real>
+											<real>10</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -728,8 +726,8 @@
 										<string>ScaleLock</string>
 										<key>value</key>
 										<array>
-											<real>0.80000001192092896</real>
-											<real>0.80000001192092896</real>
+											<real>1</real>
+											<real>1</real>
 											<false/>
 											<integer>0</integer>
 										</array>
@@ -742,7 +740,7 @@
 										<key>type</key>
 										<string>Degrees</string>
 										<key>value</key>
-										<real>30</real>
+										<real>0.0</real>
 									</dict>
 									<dict>
 										<key>name</key>
@@ -1008,8 +1006,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>180</real>
-											<real>223</real>
+											<real>0.0</real>
+											<real>10</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -1036,8 +1034,8 @@
 										<string>ScaleLock</string>
 										<key>value</key>
 										<array>
-											<real>0.80000001192092896</real>
-											<real>0.80000001192092896</real>
+											<real>1</real>
+											<real>1</real>
 											<false/>
 											<integer>0</integer>
 										</array>
@@ -1050,7 +1048,7 @@
 										<key>type</key>
 										<string>Degrees</string>
 										<key>value</key>
-										<real>-10</real>
+										<real>0.0</real>
 									</dict>
 									<dict>
 										<key>name</key>
@@ -1301,8 +1299,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>178.88888549804688</real>
-											<real>220.66667175292969</real>
+											<real>0.0</real>
+											<real>10</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -1329,8 +1327,8 @@
 										<string>ScaleLock</string>
 										<key>value</key>
 										<array>
-											<real>0.80000001192092896</real>
-											<real>0.80000001192092896</real>
+											<real>1</real>
+											<real>1</real>
 											<false/>
 											<integer>0</integer>
 										</array>
@@ -1343,7 +1341,7 @@
 										<key>type</key>
 										<string>Degrees</string>
 										<key>value</key>
-										<real>28.888889312744141</real>
+										<real>0.0</real>
 									</dict>
 									<dict>
 										<key>name</key>
@@ -1372,7 +1370,7 @@
 										<key>type</key>
 										<string>Byte</string>
 										<key>value</key>
-										<integer>36</integer>
+										<integer>0</integer>
 									</dict>
 									<dict>
 										<key>name</key>
@@ -2197,8 +2195,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>56</real>
-									<real>44</real>
+									<real>15</real>
+									<real>67</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -2258,7 +2256,7 @@
 								<key>type</key>
 								<string>Byte</string>
 								<key>value</key>
-								<integer>0</integer>
+								<integer>255</integer>
 							</dict>
 							<dict>
 								<key>name</key>
@@ -3037,8 +3035,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>-10</real>
-									<real>17</real>
+									<real>-23</real>
+									<real>49</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -3098,7 +3096,7 @@
 								<key>type</key>
 								<string>Byte</string>
 								<key>value</key>
-								<integer>0</integer>
+								<integer>255</integer>
 							</dict>
 							<dict>
 								<key>name</key>
@@ -3408,9 +3406,9 @@
 			<key>name</key>
 			<string>Loop</string>
 			<key>offset</key>
-			<real>3.6582386493682861</real>
+			<real>0.0</real>
 			<key>position</key>
-			<real>8.3000001907348633</real>
+			<real>0.0</real>
 			<key>resolution</key>
 			<real>30</real>
 			<key>scale</key>

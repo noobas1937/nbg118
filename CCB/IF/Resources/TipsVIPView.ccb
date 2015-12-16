@@ -94,7 +94,7 @@
 								<key>value</key>
 								<array>
 									<string>Common/Common_1.plist</string>
-									<string>UI_paper_3.png</string>
+									<string>UI_Popup_BG.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -248,7 +248,7 @@
 								<key>type</key>
 								<string>String</string>
 								<key>value</key>
-								<string></string>
+								<string>OK</string>
 							</dict>
 							<dict>
 								<key>name</key>
@@ -308,7 +308,7 @@
 								<key>value</key>
 								<array>
 									<string>Common/Common_1.plist</string>
-									<string>btn_green3.png</string>
+									<string>nb_but_2.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -318,9 +318,9 @@
 								<string>Color3</string>
 								<key>value</key>
 								<array>
-									<integer>255</integer>
-									<integer>255</integer>
-									<integer>255</integer>
+									<integer>158</integer>
+									<integer>99</integer>
+									<integer>29</integer>
 								</array>
 							</dict>
 							<dict>
@@ -331,7 +331,7 @@
 								<key>value</key>
 								<array>
 									<string>Common/Common_1.plist</string>
-									<string>btn_green3.png</string>
+									<string>nb_but_2.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -341,9 +341,9 @@
 								<string>Color3</string>
 								<key>value</key>
 								<array>
-									<integer>255</integer>
-									<integer>255</integer>
-									<integer>255</integer>
+									<integer>158</integer>
+									<integer>99</integer>
+									<integer>29</integer>
 								</array>
 							</dict>
 							<dict>
@@ -354,7 +354,7 @@
 								<key>value</key>
 								<array>
 									<string>Common/Common_1.plist</string>
-									<string>btn_green3.png</string>
+									<string>nb_but_2.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -364,12 +364,14 @@
 								<string>Color3</string>
 								<key>value</key>
 								<array>
-									<integer>255</integer>
-									<integer>255</integer>
-									<integer>255</integer>
+									<integer>158</integer>
+									<integer>99</integer>
+									<integer>29</integer>
 								</array>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -445,7 +447,7 @@
 								<string>FloatScale</string>
 								<key>value</key>
 								<array>
-									<real>20</real>
+									<real>18</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -456,9 +458,9 @@
 								<string>Color3</string>
 								<key>value</key>
 								<array>
-									<integer>77</integer>
-									<integer>37</integer>
-									<integer>0</integer>
+									<integer>206</integer>
+									<integer>217</integer>
+									<integer>255</integer>
 								</array>
 							</dict>
 							<dict>
@@ -498,8 +500,6 @@
 								<string>Sample Text Sample T555555555555555555555555555</string>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -521,6 +521,14 @@
 								<integer>0</integer>
 								<key>properties</key>
 								<array>
+									<dict>
+										<key>name</key>
+										<string>visible</string>
+										<key>type</key>
+										<string>Check</string>
+										<key>value</key>
+										<false/>
+									</dict>
 									<dict>
 										<key>name</key>
 										<string>position</string>
@@ -663,7 +671,7 @@
 										<string>FloatScale</string>
 										<key>value</key>
 										<array>
-											<real>22</real>
+											<real>24</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -674,9 +682,9 @@
 										<string>Color3</string>
 										<key>value</key>
 										<array>
-											<integer>230</integer>
-											<integer>192</integer>
-											<integer>150</integer>
+											<integer>254</integer>
+											<integer>255</integer>
+											<integer>255</integer>
 										</array>
 									</dict>
 									<dict>

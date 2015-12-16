@@ -23,16 +23,17 @@ public:
     static const float CELL_WIDTH;
     static const float CELL_HEIGHT;
     
-    static VipDetailCell* create(int index);
-    VipDetailCell(int index):m_index(index){};
+    static VipDetailCell* create(int index, int curLevel);
+    VipDetailCell(int index, int curLevel):m_index(index), mCurrentVipLevel(curLevel){};
     
     ~VipDetailCell()
     {
         
     }
     
-    void setData(int index);
+    void setData(int index, int curLevel);
     float getHG();
+    float getTopCellHeight();
 private:
     bool init();
     virtual void onEnter();
@@ -53,6 +54,8 @@ private:
     
     //CCScrollView* m_infoScrollView;
     int m_index;
+    float mTopCellHeight;
+    int mCurrentVipLevel;
     
 };
 
@@ -63,16 +66,20 @@ class VipEffectCell :public CCNode
 {
 public:
 
-    static VipEffectCell* create(string type1,int value1,string type2,int value2);
-    VipEffectCell(string type1,int value1,string type2,int value2):m_type1(type1),m_value1(value1),m_type2(type2),m_value2(value2){};
+    static VipEffectCell* create(string type1,int value1,string type2,int value2, string posType, int index, int curLevel);
+    VipEffectCell(string type1,int value1,string type2,int value2, string posType, int index, int curLevel):m_type1(type1),m_value1(value1),m_type2(type2),m_value2(value2), mPositionType(posType), mIndex(index), mCurrentLevel(curLevel){};
     
     ~VipEffectCell()
     {
         
     }
     
-    void setData(string type1,int value1,string type2,int value2);
+    void setData(string type1,int value1,string type2,int value2, int index, int curLevel);
+
     float getHG();
+    
+    //void setLevel(int curLevel);
+    
 private:
     bool init();
     virtual void onEnter();
@@ -98,6 +105,15 @@ private:
     int m_value1;
     int m_value2;
     string m_type2;
+    string mPositionType;
+    
+    //begin a by ljf
+    int mIndex;
+    int mCurrentLevel;
+    CCSafeObject<CCLabelBMFont> m_curVIPLevel;
+    CCSafeObject<CCLabelBMFont> m_nextVIPLevel;
+    CCSafeObject<CCSprite> m_currentLVBg;
+    //end a by ljf
     
 };
 #endif /* defined(__IF__VipDetailCell__) */

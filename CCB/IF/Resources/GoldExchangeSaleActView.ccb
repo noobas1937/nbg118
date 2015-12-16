@@ -328,8 +328,6 @@
 										</array>
 									</dict>
 								</array>
-								<key>selected</key>
-								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>
@@ -856,8 +854,8 @@
 												<string>ScaleLock</string>
 												<key>value</key>
 												<array>
-													<real>1</real>
-													<real>1</real>
+													<real>0.75</real>
+													<real>0.75</real>
 													<false/>
 													<integer>0</integer>
 												</array>
@@ -876,7 +874,18 @@
 												<key>type</key>
 												<string>FntFile</string>
 												<key>value</key>
-												<string>pve_fnt_title.fnt</string>
+												<string>eeeq.fnt</string>
+											</dict>
+											<dict>
+												<key>name</key>
+												<string>blendFunc</string>
+												<key>type</key>
+												<string>Blendmode</string>
+												<key>value</key>
+												<array>
+													<integer>770</integer>
+													<integer>771</integer>
+												</array>
 											</dict>
 											<dict>
 												<key>name</key>
@@ -887,6 +896,8 @@
 												<string>4600%</string>
 											</dict>
 										</array>
+										<key>selected</key>
+										<true/>
 									</dict>
 									<dict>
 										<key>baseClass</key>

@@ -120,6 +120,9 @@ public:
     bool showEquip;//是否装备别人可见
     int materialBackup;
     long winPoint;
+    //begin a by ljf
+    string getVipPic();
+    //end a by ljf
 };
 
 struct LoginServerInfo{

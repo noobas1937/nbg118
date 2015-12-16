@@ -265,6 +265,17 @@ string PlayerInfo::getPic(){
     return head;
 }
 
+//begin a by ljf
+string PlayerInfo::getVipPic(){
+    if(pic=="" || pic=="0"){
+        return "g044_vip.png";
+    }
+    std::string head = pic;
+    head.append("_vip.png");
+    return head;
+}
+//end a by ljf
+
 string PlayerInfo::getBodyPic(){
     if(pic=="" || pic=="0"){
 //        return "g044_bust.png";

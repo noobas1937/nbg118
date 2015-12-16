@@ -56,8 +56,7 @@ bool ActBossPopUp::init(){
         
         m_iconNode->removeAllChildren();
         int picAddX = 0;
-        std::string icon = "waiting_0.png";
-//        std::string icon = CCCommonUtils::getPropById(m_info.fieldMonsterInfo.monsterId, "monster") + "_bust.png";
+        std::string icon = CCCommonUtils::getPropById(m_info.fieldMonsterInfo.monsterId, "monster") + "_bust.png";
         auto sprite  = CCLoadSprite::createSprite(icon.c_str(),true,CCLoadSpriteType_MONSTERLAYERBUST);
         m_iconNode->addChild(sprite);
         sprite->setPositionX(picAddX);
