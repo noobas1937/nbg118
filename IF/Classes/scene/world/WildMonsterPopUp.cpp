@@ -24,14 +24,15 @@ bool WildMonsterPopUp::init(){
     bool ret = false;
     if(PopupBaseView::init()){
         setIsHDPanel(true);
-        auto bg = CCBLoadFile("MonsterAttackCCB", this, this);
-        this->setContentSize(bg->getContentSize());
         
         CCLoadSprite::doResourceByCommonIndex(206, true);
         setCleanFunction([](){
             CCLoadSprite::doResourceByCommonIndex(206, false);
             CCLoadSprite::releaseDynamicResourceByType(CCLoadSpriteType_MONSTERLAYERBUST);
         });
+        
+        auto bg = CCBLoadFile("MonsterAttackCCB", this, this);
+        this->setContentSize(bg->getContentSize());
         
         this->setModelLayerTouchCallback([&](cocos2d::CCTouch *pTouch){
             if(!isTouchInside(m_tileBg, pTouch) && (!isTouchInside(m_btn, pTouch) || !m_btn->isVisible())){
@@ -54,8 +55,7 @@ bool WildMonsterPopUp::init(){
         
         m_iconNode->removeAllChildren();
         int picAddX = 0;
-//        std::string icon = CCCommonUtils::getPropById(m_info.fieldMonsterInfo.monsterId, "monster") + "_bust.png";
-        std::string icon = "waiting_0.png";
+        std::string icon = CCCommonUtils::getPropById(m_info.fieldMonsterInfo.monsterId, "monster") + "_bust.png";
         auto sprite  = CCLoadSprite::createSprite(icon.c_str(),true,CCLoadSpriteType_MONSTERLAYERBUST);
         m_iconNode->addChild(sprite);
         
@@ -72,11 +72,11 @@ bool WildMonsterPopUp::init(){
         }
         this->m_descriptionText->setString(showTip);
         if(m_btn->isVisible()){
-            this->m_btn->setPositionY(-220 - this->m_descriptionText->getContentSize().height);
-            if (CCCommonUtils::isIosAndroidPad())
-            {
-                m_btn->setPositionY(-480 - this->m_descriptionText->getContentSize().height);
-            }
+//            this->m_btn->setPositionY(-220 - this->m_descriptionText->getContentSize().height);
+//            if (CCCommonUtils::isIosAndroidPad())
+//            {
+//                m_btn->setPositionY(-480 - this->m_descriptionText->getContentSize().height);
+//            }
         }
         if(!WorldController::isInSelfServer(m_info.tileServerId)){
             this->m_btn->setEnabled(false);
