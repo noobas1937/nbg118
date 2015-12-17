@@ -691,7 +691,7 @@ bool UIComponent::init(CCSize size)
     
     int vipLv = VipUtil::getVipLevel(GlobalData::shared()->playerInfo.vipPoints);
     
-    this->m_vipText->setFntFile("pve_fnt_title.fnt");
+    //this->m_vipText->setFntFile("pve_fnt_title.fnt");
     
     this->m_vipText->setString(CC_ITOA(vipLv)); //_lang_1("103001", CC_ITOA(vipLv)));
     
@@ -2861,8 +2861,13 @@ bool UIComponent::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const c
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_sprVipHui", CCSprite*, this->m_sprVipHui);
     
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vipText", CCLabelIFBMFont*, this->m_vipText);
+    //CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vipText", CCLabelIFBMFont*, this->m_vipText);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vipText", CCLabelIF*, this->m_vipText);
     
+    //begin a by ljf
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vipFgGray", CCSprite*, this->m_vipFgGray);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vipFg", CCSprite*, this->m_vipFg);
+    //end a by ljf
     
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_uiTitle", CCNode*, this->m_uiTitle);
@@ -6092,12 +6097,19 @@ void UIComponent::refreshVIPStatus(float t){
     
     if(dtime>0){
         
-        //m_vipText->setColor({255,255,255});
+        
         this->unschedule(schedule_selector(UIComponent::refreshVIPStatus));
         this->scheduleOnce(schedule_selector(UIComponent::refreshVIPStatus),dtime+2);
         m_sprVipHui->setVisible(false);
         
         m_sprVip->setVisible(true);
+        //begin a by ljf
+        m_vipText->setColor({90,62,22});
+        if(m_vipFg)
+            m_vipFg->setVisible(true);
+        if(m_vipFgGray)
+            m_vipFgGray->setVisible(false);
+        //end a by ljf
         
     }else{
         
@@ -6105,7 +6117,13 @@ void UIComponent::refreshVIPStatus(float t){
         
         m_sprVip->setVisible(false);
         
-        // m_vipText->setColor({90,85,81});
+        //begin a by ljf
+        m_vipText->setColor({55,54,51});
+        if(m_vipFg)
+            m_vipFg->setVisible(false);
+        if(m_vipFgGray)
+            m_vipFgGray->setVisible(true);
+        //end a by ljf
         
     }
     

@@ -801,7 +801,12 @@ private:
     CCSafeObject<CCScale9Sprite> m_stamineBar;
     CCSafeObject<CCSprite> m_sprVip;
     CCSafeObject<CCSprite> m_sprVipHui;
-    CCSafeObject<CCLabelIFBMFont> m_vipText;
+    //begin a by ljf
+    CCSafeObject<CCSprite> m_vipFgGray;
+    CCSafeObject<CCSprite> m_vipFg;
+    //end a by ljf
+    //CCSafeObject<CCLabelIFBMFont> m_vipText;
+    CCSafeObject<CCLabelIF> m_vipText;
     CCSafeObject<CCNode> m_testFeedBackNode;
     CCSafeObject<CCLabelIF> m_lblTestFeedBack;
     CCSafeObject<CCNode> m_lotteryNode;
