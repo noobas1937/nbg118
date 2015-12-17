@@ -85,7 +85,7 @@ void LoadingScene::addVersionLabel()
     GlobalData::shared()->version = cocos2d::extension::CCDevice::getVersionName();
     
     // tao.yu 版本号暂时不显示
-    string _version = "";//GlobalData::shared()->version.c_str();
+    string _version = GlobalData::shared()->version.c_str();
     //        _version = _version.substr(0,_version.length()-3);
 #if COCOS2D_DEBUG > 0
     CCLabelIF* label = CCLabelIF::create(CCString::createWithFormat("Inner-V: %s \n hudson Code: %s \n deviceID: %s",_version.c_str(),cocos2d::extension::CCDevice::getVersionCode().c_str(),_uuid.c_str())->getCString());
