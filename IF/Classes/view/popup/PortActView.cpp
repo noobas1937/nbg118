@@ -40,7 +40,7 @@ bool PortActView::init()
         addH = CCDirector::sharedDirector()->getWinSize().height - 2048;
     }
     m_bgContainer->setPositionY(m_bgContainer->getPositionY() - addH);
-    addBG();
+//    addBG();//fusheng 去掉背景
     if (PortActController::getInstance()->m_isNewTimeRwd) {
         setTitleName(_lang("105081"));
     } else {
