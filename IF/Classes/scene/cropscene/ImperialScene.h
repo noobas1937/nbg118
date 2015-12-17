@@ -94,6 +94,9 @@ public:
     CCNode * getVikingsShipCCBTouchNodeBySeq(int seq);
     //end a by ljf
     
+    
+    void createDockShip();//fusheng 码头的船
+    
     void onCreateBridge();
     bool onBridgeTouched(CCTouch* pTouch);
     void onBridgeOpen();

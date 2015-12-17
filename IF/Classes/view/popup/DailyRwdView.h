@@ -156,6 +156,8 @@ private:
     CCSafeObject<CCNode> m_picNode;
     CCSafeObject<CCNode> m_particleNode;
     CCSafeObject<CCNode> m_touchNode;
+    CCSafeObject<CCSprite> m_itemBG;
+    CCSafeObject<CCSprite> m_numBG;
     CCNode* m_clickArea;
     CCPoint m_startPos;
     

@@ -477,7 +477,9 @@ void SpeBuildBtnsView::onClickFunc(int idx)
         if(key == "133187"){
             PopupViewController::getInstance()->addPopupInView(PortActView::create());
         }else if( key == "101283"){
-            PopupViewController::getInstance()->addPopupInView(MonthCardView::create());
+#pragma mark monthCard
+             CCCommonUtils::flyHint("", "", _lang("E100008"));
+//            PopupViewController::getInstance()->addPopupInView(MonthCardView::create());
         }
     }
 }

@@ -1167,6 +1167,7 @@ void ActivityController::showEnterView(){
             bDaily=false;
         }
     }
+//    bDaily = true;//fusheng
     bool bGuideDaily = false;
     if(PortActController::getInstance()->canPopNewRDView()){
         bGuideDaily=true;
@@ -1290,6 +1291,12 @@ void ActivityController::showEnterView(){
     }
 }
 void ActivityController::showEnterViewByType(string popup){
+    //fusheng 不响应出了sign_pop之外的别的弹窗
+//    popup = "sign_pop";
+    if(popup.compare("sign_pop") != 0)
+    {
+        return;
+    }
     if(popup.compare("sign_pop_guide") == 0){
         PopupViewController::getInstance()->addPopupView(RechargeACTVCell::createDailyGuideRwd(14));
     }else if(popup.compare("sign_pop") == 0){

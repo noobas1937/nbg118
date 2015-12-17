@@ -457,10 +457,10 @@ void ImperialScene::buildingCallBack(CCObject* params)
 //        innerWall->setPosition(ccp(554, 856));
 //        m_touchLayer->addChild(innerWall,2000);
         // tao.yu 船 第一版本不开放
-//        auto chrTree = CCLoadSprite::loadResource("pichuochuan_01.png");
-//        chrTree->getTexture()->setAntiAliasTexParameters();
-//        m_chrTreeBatchNode = CCSpriteBatchNode::createWithTexture(chrTree->getTexture());
-//        m_touchLayer->addChild(m_chrTreeBatchNode,250);
+        auto chrTree = CCLoadSprite::loadResource("pichuochuan_01.png");
+        chrTree->getTexture()->setAntiAliasTexParameters();
+        m_chrTreeBatchNode = CCSpriteBatchNode::createWithTexture(chrTree->getTexture());
+        m_touchLayer->addChild(m_chrTreeBatchNode,250);
 //        // tao.yu 船的光
 //        auto chrBlentTree = CCLoadSprite::loadResource("pichuochuanGlow.png");
 //        chrBlentTree->getTexture()->setAntiAliasTexParameters();
@@ -910,6 +910,32 @@ void ImperialScene::onUpgradeVikingsShip(int level)
                 pShip->playMove();
         }
     }
+}
+
+void ImperialScene::createDockShip()
+{
+    NBSprite3D * cargoShip = NBSprite3D::create("3d/ship/ship_gem.c3b");
+    cargoShip->setTexture("3d/ship/ship_gem.jpg");
+    
+    auto cargoShipRootNode = CCNode::create();
+    cargoShipRootNode->addChild(cargoShip);
+    
+    cargoShipRootNode->setPosition(m_touchLayer->convertToNodeSpace(m_shipNode->convertToWorldSpace(Point(0, 0))));
+    
+    auto a3d = Animation3D::create("3d/ship/ship_gem.c3b");
+    
+    cargoShip->runAction(RepeatForever::create(Animate3D::create(a3d)));
+    
+    m_node3d->addChild(cargoShipRootNode);
+    
+    cargoShipRootNode->setRotation3D(Vec3(38, 39, -24));
+    
+    
+    m_touchLayer->setCameraMask((unsigned short)CameraFlag::USER4, true);
+   
+    m_node3d->setCameraMask((unsigned short) CameraFlag::USER2, true);
+
+
 }
 
 void ImperialScene::createOneVikingsShip(int seq,   int level)
@@ -1730,6 +1756,7 @@ void ImperialScene::startGuide(float _time)
     UserUpgradeView*  pop = dynamic_cast<UserUpgradeView*>(PopupViewController::getInstance()->getCurrentPopupView());
     
 // tao.yu 第一版不需要活动界面
+//fusheng 12.17 先关闭
     if (false) {
         if (m_isLogin && !GuideController::share()->isInTutorial() && pop==NULL) {//没有弹开有升级界面才弹活动界面
             if(GlobalData::shared()->analyticID != "common"){
@@ -4780,12 +4807,16 @@ void ImperialScene::initBigTile()
     }
     
     // tao.yu 第一版不开放码头
+    //fusheng 可以开放 12.17先关闭
     if (false) {
+        
         m_shipBuild = SpeBuild::create(SPE_BUILD_SHIP);
         m_shipNode->addChild(m_shipBuild);
         int hod = m_shipNode->getZOrder();
         m_shipBuild->setNamePos(m_shipNode->getPositionX(), m_shipNode->getPositionY(), m_signLayer, m_arrbatchNode, m_chrTreeBatchNode, hod);
         m_shipBuild->updateShipState();
+        createDockShip();
+//        createCargoShip();
     }
     // tao.yu 第一版不开放旅行商人
     if(false) {
@@ -4809,7 +4840,7 @@ void ImperialScene::initBigTile()
         m_newRDBuild->setNamePos(m_newRDNode->getPositionX(), m_newRDNode->getPositionY(), m_signLayer, m_arrbatchNode, m_resbatchNode, hod);
     }
     // tao.yu 第一版本不开放在线时间奖励
-    if (false && PortActController::getInstance()->m_isNewTimeRwd) {
+    if (false&&PortActController::getInstance()->m_isNewTimeRwd) {
         m_cargoBuild = SpeBuild::create(SPE_BUILD_CARGO);
         m_cargoNode->addChild(m_cargoBuild);
         int hod = m_cargoNode->getZOrder();
