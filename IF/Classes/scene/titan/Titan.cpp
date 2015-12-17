@@ -55,7 +55,7 @@ struct sModelPram{
 bool Titan::initWithFile(int tid)
 {
     _tid = tid;
-    int nModelScale = atoi(CCCommonUtils::getPropById(CC_ITOA(_tid), "scale").c_str());
+    float nModelScale = atof(CCCommonUtils::getPropById(CC_ITOA(_tid), "scale").c_str());
     // 设置当前node的contentSize 用于点击事件
     setContentSize(Size(500,550));
     setAnchorPoint(Vec2(0.5,0));
