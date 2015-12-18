@@ -30,6 +30,7 @@
 #include "ShowStatusItemCommand.h"
 #include "ImperialScene.h"
 #include "DynamicTiledMap.h"
+#include "TitanController.h"
 
 static ToolController *_instance = NULL;
 
@@ -971,6 +972,14 @@ void ToolController::retUseTool(CCDictionary* dict)
                 WorldController::getInstance()->currentStamine = effectObj->valueForKey("stamina")->intValue();
                 WorldController::getInstance()->lastStamineTime = effectObj->valueForKey("lastStaminaTime")->doubleValue();
                 CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_CURRENT_STAMINE);
+            }
+            
+            if(effectObj->objectForKey("titanInfo")){
+//                WorldController::getInstance()->currentStamine = effectObj->valueForKey("stamina")->intValue();
+//                WorldController::getInstance()->lastStamineTime = effectObj->valueForKey("lastStaminaTime")->doubleValue();
+//                CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_CURRENT_STAMINE);
+                
+                TitanController::getInstance()->parse(dynamic_cast<CCDictionary*>(effectObj->objectForKey("titanInfo")));
             }
             
             if (effectObj->objectForKey("remainGold")) { //"delta" 是金币差值

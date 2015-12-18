@@ -223,6 +223,8 @@ bool DailyRwdView::init(int type)
         m_friendBtn->setTouchPriority(0);
         m_rwdBtn->setTouchPriority(0);
         m_friendBtn->setOpacity(20);
+        
+        m_rwdBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::DISABLED)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);//fusheng add
     }else{
         bg = CCBLoadFile("qiandaoView",this,this);
         GameController::getInstance()->callXCApi("action=loginDay_7rwd_click");
@@ -295,6 +297,7 @@ bool DailyRwdView::init(int type)
         m_selectBtn->setTouchPriority(Touch_Popup);
         m_friendBtn->setTouchPriority(Touch_Popup);
         m_rwdBtn->setTouchPriority(Touch_Popup);
+        m_rwdBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::DISABLED)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);//fusheng add
         
         m_scrollView = CCScrollView::create(m_scNode->getContentSize());
         m_scrollView->setDirection(kCCScrollViewDirectionVertical);
@@ -473,22 +476,29 @@ void DailyRwdView::generateData(CCObject *p)
         //m_data->addObject(CCInteger::create(i));
         DailyCell* cell =DailyCell::create(i,m_scNode);
         
-//        if (CCCommonUtils::isIosAndroidPad())
-//        {
-//            if(i<=4){
-//                cell->setPosition(ccp(i*255-100, 361));
+
+        
+        
+//        if(i<=4){
+//                cell->setPosition(ccp(i*140 - 125, 190));
 //            }else{
-//                cell->setPosition(ccp((i-4)*300 , 50));
+//                cell->setPosition(ccp((i-4)*140 -50 , 20));
 //            }
-//        }
-//        else
-//        {
-            if(i<=4){
-                cell->setPosition(ccp(i*140 - 125, 190));
-            }else{
-                cell->setPosition(ccp((i-4)*140 -50 , 20));
-            }
-//        }
+        
+        
+        
+        if(i<=4){
+            cell->setPosition(ccp(i*143 - 132 -11, 190 - 50));
+        }
+        else if(i==7)
+        {
+            cell->setPosition(ccp((i-4)*143 - 57 -13, 20 - 84 - 15));
+        }
+        else{
+            cell->setPosition(ccp((i-4)*143 -132 -11, 20 - 84 - 15));
+        }
+        
+        
         
         m_listNode->addChild(cell);
         
@@ -509,7 +519,7 @@ void DailyRwdView::gridTouched(cocos2d::extension::CCMultiColTableView* table, C
 
 CCSize DailyRwdView::gridSizeForTable(cocos2d::extension::CCMultiColTableView *table)
 {
-    return CCSize(114, 112 + 25);
+    return CCSize(136+2 , 196 + 25);
 }
 
 CCTableViewCell* DailyRwdView::gridAtIndex(cocos2d::extension::CCMultiColTableView *table, unsigned int idx)
@@ -859,18 +869,15 @@ DailyCell* DailyCell::create(int itemId,CCNode* clickArea)
 bool DailyCell::init(int itemId)
 {
     CCBLoadFile("qiandaoCell",this,this);
-//    if (CCCommonUtils::isIosAndroidPad())
-//    {
-//        setContentSize(CCSize(228, 224 + 25));
-//        m_touchNode->setPosition(228 / 2, 25 + 224 / 2);
-//        m_particleNode->setPosition(228 / 2, 27 + 224 / 2);
-//    }
-//    else
-//    {
-        setContentSize(CCSize(114, 112 + 25));
-        m_touchNode->setPosition(114 / 2, 25 + 112 / 2);
-        m_particleNode->setPosition(114 / 2, 27 + 112 / 2);
-//    }
+
+//    setContentSize(CCSize(114, 112 + 25));
+//    m_touchNode->setPosition(114 / 2, 25 + 112 / 2);
+//    m_particleNode->setPosition(114 / 2, 27 + 112 / 2);
+    
+        setContentSize(CCSize(136+2, 196 + 25));
+        m_touchNode->setPosition(138 / 2, 25 + 196 / 2);
+//        m_particleNode->setPosition(138 / 2, 27 + 196 / 2);
+
     setData(itemId);
     return true;
 }
@@ -891,6 +898,26 @@ void DailyCell::setData(int itemId)
     m_particleNode->setVisible(false);
     
     m_itemId = itemId;
+    
+    if(m_itemId == 7)//fusheng 第七天 特殊处理
+    {
+        m_itemBG->setSpriteFrame("nb_common11_itembg7.png");
+        m_particleNode->removeAllChildren();
+        
+        auto sp = CCLoadSprite::createSprite("nb_common11_itembg7_grow.png");
+        
+        m_numBG->setPositionX(m_numBG->getPositionX() + 45);
+        
+        m_numLabel->setPositionX(m_numLabel->getPositionX() + 45);
+        
+        m_particleNode->addChild(sp);
+    }
+    
+    //fusheng test
+//    PortActController::getInstance()->m_loginDay = 7;
+//    PortActController::getInstance()->m_isRdLoginDay = 0;
+//    PortActController::getInstance()->m_isVipRdLoginDay = 1;
+    
     if (!PortActController::getInstance()->m_loginDayMap[m_itemId].reward) {
         return;
     }
@@ -911,7 +938,7 @@ void DailyCell::setData(int itemId)
     
     if (arr->count() > 1)
     {
-        m_particleNode->setScale(1.3);
+//        m_particleNode->setScale(1.3);
         m_dayLabel->setString(_lang_1("111058", CC_ITOA(m_itemId)));
         m_rdNode->setVisible(true);
         
@@ -972,7 +999,17 @@ void DailyCell::setData(int itemId)
 //            CCCommonUtils::setSpriteMaxSize(m_picSpr, 90*2, true);
 //        }
 //        else
-            CCCommonUtils::setSpriteMaxSize(m_picSpr, 90, true);
+//            CCCommonUtils::setSpriteMaxSize(m_picSpr, 90, true);
+        
+        
+        if(m_itemId == 7)//fusheng 第七天 特殊处理
+        {
+            CCCommonUtils::setSpriteMaxSize(m_picSpr, 152, true);
+        }
+        else
+        {
+            CCCommonUtils::setSpriteMaxSize(m_picSpr, 110, true);
+        }
         
         m_bgNode->addChild(m_bgSpr);
         m_picNode->addChild(m_picSpr);
@@ -988,9 +1025,15 @@ void DailyCell::setData(int itemId)
         
         CCCommonUtils::setSpriteGray(m_bgSpr, false);
         CCCommonUtils::setSpriteGray(m_picSpr, false);
+        CCCommonUtils::setSpriteGray(m_itemBG, false);
+        
         if (m_itemId < PortActController::getInstance()->m_loginDay) {
             CCCommonUtils::setSpriteGray(m_bgSpr, true);
             CCCommonUtils::setSpriteGray(m_picSpr, true);
+            CCCommonUtils::setSpriteGray(m_itemBG, true);
+            
+            m_dayLabel->setColor(ccWHITE);
+            
             m_flashSpr->setVisible(true);
             m_particleNode->setVisible(false);
         } else if (m_itemId == PortActController::getInstance()->m_loginDay){
@@ -998,12 +1041,20 @@ void DailyCell::setData(int itemId)
             {
                 CCCommonUtils::setSpriteGray(m_bgSpr, false);
                 CCCommonUtils::setSpriteGray(m_picSpr, false);
+                CCCommonUtils::setSpriteGray(m_itemBG, false);
+                
+                
+
                 m_flashSpr->setVisible(false);
                 m_particleNode->setVisible(true);
             }
             else {
                 CCCommonUtils::setSpriteGray(m_bgSpr, true);
                 CCCommonUtils::setSpriteGray(m_picSpr, true);
+                CCCommonUtils::setSpriteGray(m_itemBG, true);
+
+                m_dayLabel->setColor(ccWHITE);
+                
                 m_flashSpr->setVisible(true);
                 m_particleNode->setVisible(false);
             }
@@ -1011,6 +1062,9 @@ void DailyCell::setData(int itemId)
             if (PortActController::getInstance()->m_isRdLoginDay == 0 && PortActController::getInstance()->m_isVipRdLoginDay == 0) {//这一天啥奖也没领
                 CCCommonUtils::setSpriteGray(m_bgSpr, false);
                 CCCommonUtils::setSpriteGray(m_picSpr, false);
+                CCCommonUtils::setSpriteGray(m_itemBG, false);
+                
+                
                 m_flashSpr->setVisible(false);
                 m_particleNode->setVisible(true);
             }
@@ -1122,6 +1176,8 @@ void DailyCell::refreshRd(CCObject* params)
         } else {
             if (m_bgSpr) {
                 CCCommonUtils::setSpriteGray(m_bgSpr, true);
+                CCCommonUtils::setSpriteGray(m_itemBG, true);
+
             }
             if (m_picSpr) {
                 CCCommonUtils::setSpriteGray(m_picSpr, true);
@@ -1129,6 +1185,8 @@ void DailyCell::refreshRd(CCObject* params)
             if (m_rdNode->isVisible()) {
                 onRefreshBaoXiang(true);
             }
+            
+            m_dayLabel->setColor(ccWHITE);
             
             m_flashSpr->setVisible(true);
             m_particleNode->setVisible(false);
@@ -1148,10 +1206,18 @@ void DailyCell::onRefreshBaoXiang(bool st)
         CCCommonUtils::setSpriteGray(m_spr3, st);
     }
     CCCommonUtils::setSpriteGray(m_wenhao, st);
+    CCCommonUtils::setSpriteGray(m_itemBG, st);//fusheng add
+    if(st)
+        m_dayLabel->setColor(ccWHITE);
+    
 }
 
 bool DailyCell::onAssignCCBMemberVariable(cocos2d::CCObject *pTarget, const char *pMemberVariableName, cocos2d::CCNode *pNode)
 {
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_numBG", CCSprite*, m_numBG);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_itemBG", CCSprite*, m_itemBG);
+    
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_numLabel", CCLabelIF*, m_numLabel);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_dayLabel", CCLabelIF*, m_dayLabel);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_flashSpr", CCSprite*, m_flashSpr);

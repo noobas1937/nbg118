@@ -582,8 +582,18 @@ void NBWorldMonster::createMonsterBatchItem(BatchTagType type, unsigned int inde
                 }
             }
             
-            auto octopus = Sprite::createWithSpriteFrameName("attack_0.png");
-            auto *ac1 = NBWorldNPC::createAnimation("World/World_5.plist", "attack_%d.png", 0, 7);
+            const char * startFrame = "attack_0.png";
+            const char * frames = "attack_%d.png";
+            int lastFrameIdx = 7;
+            if (monsterIcon == "Kulou")
+            {
+                startFrame = "skeleton_attack_0.png";
+                frames = "skeleton_attack_%d.png";
+                lastFrameIdx = 8;
+            }
+            
+            auto octopus = Sprite::createWithSpriteFrameName(startFrame);
+            auto *ac1 = NBWorldNPC::createAnimation("World/World_5.plist", frames, 0, lastFrameIdx);
             octopus->runAction(ac1);
         
             octopus->setScaleX(monsterNode->getScaleX());
@@ -593,8 +603,18 @@ void NBWorldMonster::createMonsterBatchItem(BatchTagType type, unsigned int inde
         }
         else if (type != MonsterDead)
         {
-            auto octopus = Sprite::createWithSpriteFrameName("waiting_0.png");
-            auto *ac1 = NBWorldNPC::createAnimation("World/World_5.plist", "waiting_%d.png", 0, 11);
+            const char * startFrame = "waiting_0.png";
+            const char * frames = "waiting_%d.png";
+            int lastFrameIdx = 11;
+            if (monsterIcon == "Kulou")
+            {
+                startFrame = "skeleton_waiting_0.png";
+                frames = "skeleton_waiting_%d.png";
+                lastFrameIdx = 7;
+            }
+            
+            auto octopus = Sprite::createWithSpriteFrameName(startFrame);
+            auto *ac1 = NBWorldNPC::createAnimation("World/World_5.plist", frames, 0, lastFrameIdx);
             octopus->runAction(ac1);
             
             octopus->setScaleX(monsterNode->getScaleX());

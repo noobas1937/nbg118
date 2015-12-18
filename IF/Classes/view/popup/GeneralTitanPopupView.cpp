@@ -1349,6 +1349,9 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
             
             float ratio =((float)m_titanInfo.exp)/m_titanInfo.nextExp;
             
+            if(ratio > 1)
+                ratio = 1;
+            
             auto size = this->m_ProTitanExt->getContentSize();
             
             size.width = m_ProTitanExtMaxWidth*ratio;

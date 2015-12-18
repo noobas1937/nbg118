@@ -71,6 +71,7 @@ bool VipDetailView::onAssignCCBMemberVariable(cocos2d::CCObject *pTarget, const 
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_avatarFrame", CCSprite*, this->m_avatarFrame);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_avatarFlowerLeft", CCSprite*, this->m_avatarFlowerLeft);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_avatarFlowerRight", CCSprite*, this->m_avatarFlowerRight);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "mTopTouchNode", CCNode*, this->mTopTouchNode);
     //end a by ljf
     return true;
 }
@@ -99,12 +100,10 @@ void VipDetailView::onAddPointBtnClick(cocos2d::CCObject *pSender, Control::Even
     // PopupViewController::getInstance()->addPopupInView(StoreView::create());
     auto dict = CCDictionary::create();
     PopupViewController::getInstance()->addPopupInView(UseToolView::create(USE_TOOL_VIP_PIC,dict,"103002"));
-    
 }
 void VipDetailView::onActivityPointBtnClick(cocos2d::CCObject *pSender, Control::EventType pCCControlEvent){
     auto dict = CCDictionary::create();
     PopupViewController::getInstance()->addPopupInView(UseToolView::create(USE_TOOL_VIP_ACTIVITY,dict,"103004"));
-    //PopupViewController::getInstance()->addPopupInView(StoreView::create());
 }
 
 VipDetailView* VipDetailView::create(){
@@ -326,12 +325,12 @@ void VipDetailView::setVipProgress(CCObject* obj){
     int currLvPoint = VipUtil::getVipItemValueByKey(CC_ITOA(m_vipLevel+7000-1), "point");
     int nextLvPoint = VipUtil::getVipItemValueByKey(CC_ITOA(m_vipLevel+7000), "point");
     //m_vipLastPointNumText->setString("("+CC_CMDITOA(currLvPoint)+")"); //d by ljf
-    m_vipNextPointNumText->setString("/" + CC_CMDITOA(nextLvPoint) + ")");
-    m_vipCurrentPointNumText->setString(CC_CMDITOA(playerInfo.vipPoints));
+    //m_vipNextPointNumText->setString("/" + CC_CMDITOA(nextLvPoint) + ")"); //m by ljf
+    //m_vipCurrentPointNumText->setString(CC_CMDITOA(playerInfo.vipPoints)); //m by ljf
     
     //begin a by ljf
     //m_vipCurrentPointNumText->setPositionX(m_leftBranch->getPositionX() + m_leftBranch->getContentSize().width * m_leftBranch->getOriginScaleY());
-    m_vipNextPointNumText->setPositionX(m_vipCurrentPointNumText->getPositionX() + m_vipCurrentPointNumText->getContentSize().width * m_vipCurrentPointNumText->getOriginScaleY());
+    //m_vipNextPointNumText->setPositionX(m_vipCurrentPointNumText->getPositionX() + m_vipCurrentPointNumText->getContentSize().width * m_vipCurrentPointNumText->getOriginScaleY());
     //end a by ljf
     
     this->m_currentVIPText->setString(CC_ITOA(m_vipLevel));
@@ -374,6 +373,12 @@ void VipDetailView::setVipProgress(CCObject* obj){
         needPoint = 1.0;
     }
     float sacle =point/(needPoint*1.0);
+    
+    //让这两个值显示得跟进度条一致，这一点跟cok不一样, ljf
+    m_vipCurrentPointNumText->setString(CC_CMDITOA(point));
+    m_vipNextPointNumText->setString("/" + CC_CMDITOA(needPoint) + ")");
+    m_vipNextPointNumText->setPositionX(m_vipCurrentPointNumText->getPositionX() + m_vipCurrentPointNumText->getContentSize().width * m_vipCurrentPointNumText->getOriginScaleY());
+    
     sacle = sacle>1.0?1.0:sacle;
     float total = VIP_PROGRESS_BAR_WIDTH * sacle;
     if (CCCommonUtils::isIosAndroidPad()) {
@@ -577,12 +582,19 @@ bool VipDetailView::onTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEv
             return true;
         }
     }
+    //begin a by ljf
+    if (!m_ismoving&&isTouchInside(mTopTouchNode,pTouch)){
+        m_touchState = 1;
+        return true;
+    }
+    //end a by ljf
     m_touchState = 0;
     m_touchPoint = pTouch->getLocation();
     if (!m_ismoving&&isTouchInside(m_listContainer,pTouch)){
        // m_ListPoint = m_listNode->getPosition();
         return true;
     }
+    
     return false;
 }
 void VipDetailView::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent){
