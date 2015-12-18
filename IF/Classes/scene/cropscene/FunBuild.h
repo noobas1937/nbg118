@@ -28,6 +28,8 @@
 #define MSG_PLAY_BUILD_SHADOW "msg_play_build_shadow"
 #define MSG_STOP_BUILD_SHADOW "msg_stop_build_shadow"
 
+#define MSG_UPDATE_STOREHOUSE_DISPLAY "msg_update_storehouse_display"
+
 class FunBuildState;
 
 class FunBuild: public CCAniNode
@@ -98,6 +100,9 @@ public:
     void showFlyOut(float _time);
     
     void canShowState();
+    
+    
+    void updateStorehouseDisplay(CCObject* obj);
     void setNamePos(int x, int y, CCLayer* sginLayer, CCLayer* popLayer, CCSpriteBatchNode* popBatchNode, CCSpriteBatchNode* batchNode, int zOrder, CCSpriteBatchNode* blentbatch=NULL);
     void setSpineLayer(CCLayer* spineLayer);
     void addTips();
@@ -115,6 +120,11 @@ public:
     CCSafeObject<CCSprite> m_tile;
     CCSafeObject<CCSprite> m_moveFrame;
     CCSafeObject<CCSprite> m_spr;
+    
+    CCSafeObject<CCSprite> m_foodSpr;
+    CCSafeObject<CCSprite> m_woodSpr;
+    CCSafeObject<CCSprite> m_ironSpr;
+    CCSafeObject<CCSprite> m_stoneSpr;
     
     //custom skin
     CCSafeObject<CCSprite> m_spr1;

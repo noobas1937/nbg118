@@ -32,6 +32,7 @@ GlobalData* GlobalData::shared()
         _sharedInstance->cnReplayFlag = 0;
         _sharedInstance->sceneResourceStepLoad = 0;
         _sharedInstance->isChatOpen = true;
+        _sharedInstance->storeHouseBuildId = -1;//仓库id
     }
     return _sharedInstance;
 }
