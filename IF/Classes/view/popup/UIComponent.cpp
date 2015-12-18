@@ -2621,6 +2621,10 @@ void UIComponent::updateResStatus()
     this->m_dragonFood->setString(CC_ITOA_K(GlobalData::shared()->resourceInfo.lDragonFood));
     
     setOldResource();
+#pragma mark MSG_UPDATE_STOREHOUSE_DISPLAY
+    //fusheng post MSG_UPDATE_STOREHOUSE_DISPLAY
+    CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_UPDATE_STOREHOUSE_DISPLAY, nullptr);
+
 }
 
 

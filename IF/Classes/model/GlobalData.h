@@ -348,6 +348,7 @@ public:
     string inviteFriendsInfo;//邀请的朋友数据
     string installFriendsInfo;//安装了的朋友数据
     string medalid;//玩家选择的勋章id;
+    int storeHouseBuildId;
 
     map<std::string, ArmyInfo> armyList;
     map<std::string, ArmyInfo> fortList;
