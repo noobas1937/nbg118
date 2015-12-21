@@ -1762,7 +1762,7 @@ void ImperialScene::startGuide(float _time)
     
 // tao.yu 第一版不需要活动界面
 //fusheng 12.17 先关闭
-    if (false) {
+    if (true) {
         if (m_isLogin && !GuideController::share()->isInTutorial() && pop==NULL) {//没有弹开有升级界面才弹活动界面
             if(GlobalData::shared()->analyticID != "common"){
                 if (!CCCommonUtils::isIosAndroidPad()) {
@@ -4815,7 +4815,7 @@ void ImperialScene::initBigTile()
     
     // tao.yu 第一版不开放码头
     //fusheng 可以开放 12.17先关闭
-    if (false) {
+    if (true) {
         
         m_shipBuild = SpeBuild::create(SPE_BUILD_SHIP);
         m_shipNode->addChild(m_shipBuild);
