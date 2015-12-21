@@ -20,7 +20,7 @@ MonthCardView* MonthCardView::create(){
     }
     return ret;
 }
-MonthCardView::MonthCardView():m_scrollView(NULL){
+MonthCardView::MonthCardView():m_rootNode(NULL){
     
 }
 MonthCardView::~MonthCardView(){
@@ -60,22 +60,7 @@ bool MonthCardView::init(){
         }
     }
     else {
-        setContentSize(tmpCCB->getContentSize());
-        int oldBgHeight = m_buildBG->getContentSize().height;
-        changeBGHeight(m_buildBG);
-        int newBgHeight = m_buildBG->getContentSize().height;
-        int addHeight = newBgHeight - oldBgHeight;
-        int oldWidth = m_infoList->getContentSize().width;
-        int oldHeight = m_infoList->getContentSize().height;
-        int bgcount = newBgHeight/100+1;
-        for (int i = 0; i<=bgcount; i++) {
-            auto pic = CCLoadSprite::createSprite("technology_09.png");
-            pic->setPositionY(-i*100);
-            pic->setScaleX(0.98);
-            m_BGNode->addChild(pic);
-        }
-        //    m_infoList->setPositionY(m_infoList->getPositionY()-addHeight);
-        m_infoList->setContentSize(CCSizeMake(oldWidth, oldHeight+addHeight));
+        setContentSize(CCDirector::sharedDirector()->getWinSize());
     }
 
     m_lblDes->setString(_lang("101021"));
@@ -86,18 +71,15 @@ bool MonthCardView::init(){
         }
         ++iter;
     }
-    
-    m_scrollView = CCScrollView::create(m_infoList->getContentSize());
-    m_scrollView->setDirection(kCCScrollViewDirectionVertical);
-    m_scrollView->setTouchPriority(Touch_Default);
-    m_infoList->addChild(m_scrollView);
+    m_rootNode = Node::create();
+    m_infoList->addChild(m_rootNode);
     setTitleName("");
     generateData();
     return true;
 }
 void MonthCardView::generateData(){
-    if(m_scrollView->getContainer()){
-        m_scrollView->getContainer()->removeAllChildren();
+    if(m_rootNode->getChildrenCount()){
+        m_rootNode->removeAllChildren();
     }
     float offsetY = 0;
     auto iter1 = mCardID.begin();
@@ -112,31 +94,18 @@ void MonthCardView::generateData(){
         }
         if(isBuy == true){
             auto *node = MonthCardRewardNode::create(cardid);
-            m_scrollView->addChild(node);
-            float tmpY = m_infoList->getContentSize().height - offsetY - node->getContentSize().height;
-            node->setPosition(ccp(0, tmpY));
-            offsetY += node->getContentSize().height;
+            m_rootNode->addChild(node);
         }else{
             auto *node = MonthCardBuyNode::create(cardid);
-            m_scrollView->addChild(node);
-            float tmpY = m_infoList->getContentSize().height - offsetY - node->getContentSize().height;
-            node->setPosition(ccp(0, tmpY));
-            offsetY += node->getContentSize().height;
+            m_rootNode->addChild(node);
         }
         ++iter1;
-    }
-    CCSize scrollSize = m_scrollView->getContentSize();
-    m_scrollView->setContentSize(CCSize(scrollSize.width, offsetY));
-    if(offsetY < m_infoList->getContentSize().height){
-        m_scrollView->setTouchEnabled(false);
-    }else{
-        m_scrollView->setTouchEnabled(true);
     }
 }
 bool MonthCardView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode){
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_infoList", CCNode*, this->m_infoList);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_lblDes", CCLabelIF*, this->m_lblDes);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_buildBG", CCScale9Sprite*, this->m_buildBG)
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_buildBG", CCScale9Sprite*, this->m_buildBG)
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_BGNode", CCNode*, this->m_BGNode);
     return false;
 }
@@ -465,8 +434,6 @@ bool MonthCardBuyNode::init(string cardid){
 bool MonthCardBuyNode::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode){
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_lblTitle1", CCLabelIF*, this->m_lblTitle1);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_lblTitle2", CCLabelIF*, this->m_lblTitle2);
-//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_lblDes", CCLabelIF*, this->m_lblDes);
-//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_lblCost", CCLabelIF*, this->m_lblCost);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_btnBuy", CCControlButton*, m_btnBuy);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_picNode1", CCNode*, this->m_picNode[0]);

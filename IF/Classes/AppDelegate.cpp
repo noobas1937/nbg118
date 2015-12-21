@@ -94,7 +94,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 #endif
     
     // set FPS. the default value is 1.0/60 if you don't call this
-    pDirector->setAnimationInterval(1.0 / 15);
+    pDirector->setAnimationInterval(1.0 / 30);
     
 //    CCLOG("Time profiler: [%ld] ,line: [%d]",CCMathUtils::getCurrentTime(),__LINE__);
     

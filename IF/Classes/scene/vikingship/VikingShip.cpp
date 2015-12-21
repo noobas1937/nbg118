@@ -49,7 +49,7 @@ void VikingShip::playIdle()
         //auto anim_stand = Animation3D::create("3d/ship/ship_3_stand.c3b");
         auto anim_stand = Animation3D::create(modelPath);
         if (anim_stand) {
-            auto pAnim = Animate3D::createWithFrames(anim_stand, 1, 100);
+            auto pAnim = Animate3D::create(anim_stand);
             if (pAnim) {
                 auto act = RepeatForever::create(pAnim);
                 mVikings3D->stopAllActions();
@@ -73,7 +73,7 @@ void VikingShip::playMove()
     //auto anim_stand = Animation3D::create("3d/ship/ship_3_stand.c3b");
     auto anim_stand = Animation3D::create(modelPath);
     if (anim_stand) {
-        auto pAnim = Animate3D::createWithFrames(anim_stand, 0, 60);
+        auto pAnim = Animate3D::create(anim_stand);
         if (pAnim) {
             auto act = RepeatForever::create(pAnim);
             mVikings3D->stopAllActions();
