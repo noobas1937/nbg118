@@ -45,10 +45,14 @@ bool AlertAddAllianceView::init(){
     bool ret = false;
     if(PopupBaseView::init()){
         this->setIsHDPanel(true);
+        CCLoadSprite::doResourceByCommonIndex(6, true);
         CCLoadSprite::doResourceByCommonIndex(7, true);
-//        setCleanFunction([](){
+        CCLoadSprite::doResourceByCommonIndex(206, true);
+        setCleanFunction([](){
 //            CCLoadSprite::doResourceByCommonIndex(7, false);
-//        });
+            CCLoadSprite::doResourceByCommonIndex(6, false);
+            CCLoadSprite::doResourceByCommonIndex(206, false);
+        });
         
         auto node = CCBLoadFile("AlertAddAllianceView", this, this);
         this->setContentSize(node->getContentSize());
@@ -73,7 +77,7 @@ bool AlertAddAllianceView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_btnJoin", CCControlButton*, this->m_btnJoin);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_txt1", CCLabelIF*, this->m_txt1);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_txt3", CCLabelIF*, this->m_txt3);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_txt2", CCLabelBMFont*, this->m_txt2);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_txt2", CCLabelIF*, this->m_txt2);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_clickNode", CCNode*, this->m_clickNode);
     return false;
 }

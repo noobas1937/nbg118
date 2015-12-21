@@ -1162,22 +1162,22 @@ public class ChatFragment extends ActionBarFragment
 		isJoinAlliancePopupShowing = true;
 		Window window = dlg.getWindow();
 		window.setBackgroundDrawable(new ColorDrawable());
-		window.setContentView(R.layout.cs__first_alliance_popup);
+		window.setContentView(R.layout.nb_1st_alliance_popup);
 		window.setLayout(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 
-		ImageView bgImageView2 = (ImageView) window.findViewById(R.id.bg2);
-		ViewHelper.setRotationY(bgImageView2, 180);
+		// ImageView bgImageView2 = (ImageView) window.findViewById(R.id.bg2);
+		// ViewHelper.setRotationY(bgImageView2, 180);
 
 		TextView joinAllianceTipText = (TextView) window.findViewById(R.id.joinAllianceTipText);
 		joinAllianceTipText.setText(LanguageManager.getLangByKey(LanguageKeys.TIP_ADDALLIANCE_REWARD));
 
 		TextView joinAllianceRewardText = (TextView) window.findViewById(R.id.joinAllianceRewardText);
-		joinAllianceRewardText.setText(LanguageManager.getLangByKey(LanguageKeys.TIP_ADDALLIANCE_COIN, "100"));
+		joinAllianceRewardText.setText(LanguageManager.getLangByKey(LanguageKeys.TIP_ADDALLIANCE_COIN, "200"));
 
 		TextView sendMethodText = (TextView) window.findViewById(R.id.sendMethodText);
 		sendMethodText.setText(LanguageManager.getLangByKey(LanguageKeys.TIP_ADDALLIANCE_REWARD_SENDBYMAIL));
 
-		RelativeLayout firstJoinAllianceLayout = (RelativeLayout) window.findViewById(R.id.firstAllianceLayout);
+		RelativeLayout firstJoinAllianceLayout = (RelativeLayout) window.findViewById(R.id.nb1stAllianceLayout);
 
 		firstJoinAllianceLayout.setOnTouchListener(new OnTouchListener()
 		{

@@ -42,7 +42,7 @@ private:
     CCSafeObject<CCControlButton> m_btnJoin;
     CCSafeObject<CCNode> m_clickNode;
     CCSafeObject<CCLabelIF> m_txt1;
-    CCSafeObject<CCLabelBMFont> m_txt2;
+    CCSafeObject<CCLabelIF> m_txt2;
     CCSafeObject<CCLabelIF> m_txt3;
 };
 #endif /* defined(__IF__AlertAddAllianceView__) */
