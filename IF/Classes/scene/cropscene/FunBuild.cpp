@@ -172,6 +172,11 @@ bool FunBuild::initFunBuild(int itemId, CCLabelBatchNode* nameLayer)
     m_buildingKey = itemId;
     m_nameLayer = nameLayer;
     
+    if(m_buildingKey/1000 == FUN_BUILD_CELLAR)//fusheng 把仓库的id记录下来
+    {
+        GlobalData::shared()->storeHouseBuildId = m_buildingKey;
+    }
+    
     m_signNode = CCNode::create();   //这两行代码前移，避免return 后  m_signNode和m_upEffectNode没有构建
     m_upEffectNode = CCNode::create();
     m_forgeEffectNode = CCNode::create();
@@ -369,6 +374,12 @@ bool FunBuild::initFunBuild(int itemId, CCLabelBatchNode* nameLayer)
         m_forgeEffectNode->addChild(particle);
     }
     
+    
+    
+    if(m_buildingKey/1000 == FUN_BUILD_CELLAR)//fusheng
+    {
+        updateStorehouseDisplay(nullptr);
+    }
     
     
     return true;
@@ -1236,6 +1247,12 @@ void FunBuild::onEnter() {
     {
         this->scheduleOnce(schedule_selector(FunBuild::playFortSkillEffect), 0.45);
     }
+    
+    
+    if(m_buildingKey/1000 == FUN_BUILD_CELLAR)//fusheng 仓库监听更新
+    {
+        CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(FunBuild::updateStorehouseDisplay), MSG_UPDATE_STOREHOUSE_DISPLAY, NULL);
+    }
 }
 
 void FunBuild::onExit() {
@@ -1254,6 +1271,12 @@ void FunBuild::onExit() {
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_PLAY_BUILD_SHADOW);
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_STOP_BUILD_SHADOW);
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, "addFunBuildState");
+    
+    
+    if(m_buildingKey/1000 == FUN_BUILD_CELLAR)//fusheng 仓库移除监听
+    {
+        CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_UPDATE_STOREHOUSE_DISPLAY);
+    }
     
     CCNode::onExit();
 }
@@ -2582,7 +2605,165 @@ int FunBuild::getCurPos()
         }
     }
 }
+void FunBuild::updateStorehouseDisplay(CCObject* obj)
+{
+    if (m_buildingKey/1000 == FUN_BUILD_CELLAR) {//fusheng 仓库
+        
+        int resFullNum = 0;//fusheng 有几类资源到达保护上限
+        int showResNum = 2;//fusheng 当期显示几类资源
+        
+        auto m_info = FunBuildController::getInstance()->getFunbuildById(m_buildingKey);
+       
+        int mlv = FunBuildController::getInstance()->getMainCityLv();
+        int addValue = CCCommonUtils::getEffectValueByNum(72);//固定提升值
+        float proValue = 1+CCCommonUtils::getEffectValueByNum(38)/100.0;//提升百分比
+        string addInfo = "";
+        
+        if (mlv>=FunBuildController::getInstance()->building_base_k4) {//第四个资源  15级解锁
+            int oStoneValue = atoi(m_info.para[2].c_str());
+           
+            
+            float stoneProtectCount = (oStoneValue+addValue)*proValue;
+           
+            showResNum++;
+            
+            if (CCCommonUtils::getCurResourceByType(Stone)>stoneProtectCount ) {
+                
+                resFullNum++;
+                
+                float resNum = CCCommonUtils::getCurResourceByType(Stone)-stoneProtectCount;
+                
+                if (resNum < 1000) {
+                    m_stoneSpr->setSpriteFrame("nb_stone_status0.png");
+                }
+                else if (resNum < 20000)
+                {
+                    m_stoneSpr->setSpriteFrame("nb_stone_status1.png");
+                }
+                else
+                {
+                    m_stoneSpr->setSpriteFrame("nb_stone_status2.png");
+                }
+                
+            }
+            else
+            {
+                m_ironSpr->setSpriteFrame("nb_stone_status0.png");
+            }
+            m_stoneSpr->setVisible(true);
+        }
+        else
+        {
+            m_stoneSpr->setVisible(false);
+        }
+        
+        if (mlv>=FunBuildController::getInstance()->building_base_k3) {//第三个资源  10级解锁
+            int oIronValue = atoi(m_info.para[3].c_str());
+            
+            float ironProtectCount = (oIronValue+addValue)*proValue;
+            
+            showResNum++;
+            
+            if (CCCommonUtils::getCurResourceByType(Iron)>ironProtectCount ) {
+                resFullNum++;
+                
+                float resNum = CCCommonUtils::getCurResourceByType(Iron)-ironProtectCount;
+                
+                if (resNum < 5000) {
+                    m_ironSpr->setSpriteFrame("nb_iron_status0.png");
+                }
+                else if (resNum < 100000)
+                {
+                    m_ironSpr->setSpriteFrame("nb_iron_status1.png");
+                }
+                else
+                {
+                    m_ironSpr->setSpriteFrame("nb_iron_status2.png");
+                }
+                
 
+                
+            }
+            else
+            {
+                m_ironSpr->setSpriteFrame("nb_iron_status0.png");
+            }
+            m_ironSpr->setVisible(true);
+        }
+        else
+        {
+            m_ironSpr->setVisible(false);
+        }
+        
+        int oFoodValue = atoi(m_info.para[4].c_str());//粮食
+        
+        float foodProtectCount = (oFoodValue+addValue)*proValue;
+        
+        if (CCCommonUtils::getCurResourceByType(Food)>foodProtectCount ) {
+            resFullNum++;
+            
+            float resNum = CCCommonUtils::getCurResourceByType(Food)-foodProtectCount;
+            
+            if (resNum < 50000) {
+                m_foodSpr->setSpriteFrame("nb_food_status0.png");
+            }
+            else if (resNum < 1000000)
+            {
+                m_foodSpr->setSpriteFrame("nb_food_status1.png");
+            }
+            else
+            {
+                m_foodSpr->setSpriteFrame("nb_food_status2.png");
+            }
+        }
+        else
+        {
+            m_foodSpr->setSpriteFrame("nb_food_status0.png");
+        }
+       
+        
+        int oWoodValue = atoi(m_info.para[1].c_str());//木头
+        
+        float woodProtectCount = (oWoodValue+addValue)*proValue;
+        
+        
+        if (CCCommonUtils::getCurResourceByType(Wood)>woodProtectCount ) {
+            resFullNum++;
+            
+            float resNum = CCCommonUtils::getCurResourceByType(Wood)-woodProtectCount;
+            
+            if (resNum < 50000) {
+                m_woodSpr->setSpriteFrame("nb_wood_status0.png");
+            }
+            else if (resNum < 1000000)
+            {
+                m_woodSpr->setSpriteFrame("nb_wood_status1.png");
+            }
+            else
+            {
+                m_woodSpr->setSpriteFrame("nb_wood_status2.png");
+            }
+        }
+        else
+        {
+            m_woodSpr->setSpriteFrame("nb_wood_status0.png");
+        }
+
+        
+        if (resFullNum == 0) {
+            m_spr->setSpriteFrame("nb_storehouse_status0.png");
+        }
+        else if(resFullNum == showResNum)
+        {
+            m_spr->setSpriteFrame("pic404000_2.png");
+        }
+        else
+        {
+            m_spr->setSpriteFrame("nb_storehouse_status1.png");
+        }
+        
+    }
+}
 #pragma mark -
 #pragma mark CocosBuilder Part
 SEL_MenuHandler FunBuild::onResolveCCBCCMenuItemSelector(cocos2d::CCObject * pTarget, const char * pSelectorName)
@@ -2607,6 +2788,13 @@ bool FunBuild::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_spineNode", CCNode*, this->m_spineNode);
     //CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_particleNode", CCNode*, this->m_particleNode);
     //end a by ljf
+    
+    //fusheng begin
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_foodSpr", CCSprite*, this->m_foodSpr);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_woodSpr", CCSprite*, this->m_woodSpr);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_ironSpr", CCSprite*, this->m_ironSpr);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_stoneSpr", CCSprite*, this->m_stoneSpr);
+    //fusheng end
     return false;
 }
 

@@ -582,6 +582,7 @@ void NBWorldMonster::createMonsterBatchItem(BatchTagType type, unsigned int inde
                 }
             }
             
+            std::string monsterIcon = CCCommonUtils::getPropById(info.fieldMonsterInfo.monsterId, "monster");
             const char * startFrame = "attack_0.png";
             const char * frames = "attack_%d.png";
             int lastFrameIdx = 7;
@@ -603,6 +604,7 @@ void NBWorldMonster::createMonsterBatchItem(BatchTagType type, unsigned int inde
         }
         else if (type != MonsterDead)
         {
+            std::string monsterIcon = CCCommonUtils::getPropById(info.fieldMonsterInfo.monsterId, "monster");
             const char * startFrame = "waiting_0.png";
             const char * frames = "waiting_%d.png";
             int lastFrameIdx = 11;

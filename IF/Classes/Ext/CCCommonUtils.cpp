@@ -469,7 +469,7 @@ void CCCommonUtils::createGoodsIcon(int toolID, cocos2d::CCNode *mParent,CCSize 
                 numBG->setColor(getItemColor(info.color));
                 numBG->setOpacity(200);
 //                CCLabelBMFont* numIF = CCLabelBMFont::create(CC_ITOA_K(atol(info.getPara().c_str())), "pve_fnt_boss.fnt");
-                CCLabelBMFont* numIF = CCLabelBMFont::create(CC_ITOA_K(atol(info.getPara().c_str())), "nb_fnt2.fnt");
+                CCLabelBMFont* numIF = CCLabelBMFont::create(CC_ITOA_K(atol(info.getPara().c_str())), "eeeq.fnt");
                 CCSize numSize = numIF->getContentSize();
                 
                 const float constScale = 0.3;
