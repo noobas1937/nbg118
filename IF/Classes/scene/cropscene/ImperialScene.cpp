@@ -574,6 +574,11 @@ void ImperialScene::buildingCallBack(CCObject* params)
     onRefreshOutsideTraps(NULL);
     //begin a by ljf
     cocos2d::CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Imperial/Imperial_22.plist");
+    
+    //fusheng 添加一张图片
+    if(m_tempBlock)
+        m_tempBlock->setSpriteFrame("build_hide.png");
+    
     m_walkerBatchNode = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("b010_0_N_move_0.png")->getTexture());
     m_touchLayer->addChild(m_walkerBatchNode, 1999);
     
@@ -4494,6 +4499,8 @@ bool ImperialScene::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const
         }
         return true;
     }
+   
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_tempBlock", CCSprite*, this->m_tempBlock);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vikingNode", CCNode*, this->m_vikingNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_mcNode1", CCNode*, this->m_mcNode1);

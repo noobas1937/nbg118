@@ -406,6 +406,7 @@ private:
     CCSafeObject<SpeBuildBtnsView> m_speBuildBtnsView;
     CCLabelIF* m_feedlabel;
     CCSafeObject<CCSprite> m_feedBackHead;
+    CCSafeObject<CCSprite> m_tempBlock;
     
     CCSafeObject<TalkNoticeCell> m_talkACTCell;
     CCSafeObject<TalkNoticeCell> m_talkACTCell2;
