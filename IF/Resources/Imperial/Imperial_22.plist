@@ -4801,45 +4801,6 @@
                 <key>sourceSize</key>
                 <string>{79,74}</string>
             </dict>
-            <key>nb_ Iron_status0.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{1562,860},{128,70}}</string>
-                <key>offset</key>
-                <string>{19,-29}</string>
-                <key>rotated</key>
-                <true/>
-                <key>sourceColorRect</key>
-                <string>{{49,65},{128,70}}</string>
-                <key>sourceSize</key>
-                <string>{188,142}</string>
-            </dict>
-            <key>nb_ Iron_status1.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{857,576},{128,96}}</string>
-                <key>offset</key>
-                <string>{19,-16}</string>
-                <key>rotated</key>
-                <true/>
-                <key>sourceColorRect</key>
-                <string>{{49,39},{128,96}}</string>
-                <key>sourceSize</key>
-                <string>{188,142}</string>
-            </dict>
-            <key>nb_ Iron_status2.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{1516,1907},{128,136}}</string>
-                <key>offset</key>
-                <string>{19,3}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{49,0},{128,136}}</string>
-                <key>sourceSize</key>
-                <string>{188,142}</string>
-            </dict>
             <key>nb_food_status0.png</key>
             <dict>
                 <key>frame</key>
@@ -4876,6 +4837,45 @@
                 <true/>
                 <key>sourceColorRect</key>
                 <string>{{22,6},{164,130}}</string>
+                <key>sourceSize</key>
+                <string>{188,142}</string>
+            </dict>
+            <key>nb_iron_status0.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{1562,860},{128,70}}</string>
+                <key>offset</key>
+                <string>{19,-29}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{49,65},{128,70}}</string>
+                <key>sourceSize</key>
+                <string>{188,142}</string>
+            </dict>
+            <key>nb_iron_status1.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{857,576},{128,96}}</string>
+                <key>offset</key>
+                <string>{19,-16}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{49,39},{128,96}}</string>
+                <key>sourceSize</key>
+                <string>{188,142}</string>
+            </dict>
+            <key>nb_iron_status2.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{1516,1907},{128,136}}</string>
+                <key>offset</key>
+                <string>{19,3}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{49,0},{128,136}}</string>
                 <key>sourceSize</key>
                 <string>{188,142}</string>
             </dict>
@@ -6007,7 +6007,7 @@
             <key>size</key>
             <string>{2048,2048}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:--REMOVED----------------------------</string>
+            <string>$TexturePacker:SmartUpdate:34495df460c2b142dbb17dc20fe46bbe:1/1$</string>
             <key>textureFileName</key>
             <string>Imperial_22.pvr.ccz</string>
         </dict>
