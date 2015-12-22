@@ -6892,7 +6892,7 @@
 										<key>value</key>
 										<array>
 											<string>Common/Common_1.plist</string>
-											<string>btn_Orange.png</string>
+											<string>nb_but_2_green.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -6915,7 +6915,7 @@
 										<key>value</key>
 										<array>
 											<string>Common/Common_1.plist</string>
-											<string>btn_Orange.png</string>
+											<string>nb_but_2_green.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -6938,7 +6938,7 @@
 										<key>value</key>
 										<array>
 											<string>Common/Common_1.plist</string>
-											<string>Btn_grey.png</string>
+											<string>nb_but_2_green.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -6970,6 +6970,14 @@
 								<integer>2</integer>
 								<key>properties</key>
 								<array>
+									<dict>
+										<key>name</key>
+										<string>visible</string>
+										<key>type</key>
+										<string>Check</string>
+										<key>value</key>
+										<false/>
+									</dict>
 									<dict>
 										<key>name</key>
 										<string>position</string>
@@ -7100,7 +7108,7 @@
 										<key>value</key>
 										<array>
 											<string>Common/Common_1.plist</string>
-											<string>btn_Orange.png</string>
+											<string>nb_but_2_green.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -7123,7 +7131,7 @@
 										<key>value</key>
 										<array>
 											<string>Common/Common_1.plist</string>
-											<string>btn_Orange.png</string>
+											<string>nb_but_2_green.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -7146,7 +7154,7 @@
 										<key>value</key>
 										<array>
 											<string>Common/Common_1.plist</string>
-											<string>Btn_grey.png</string>
+											<string>nb_but_2_green.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -7162,6 +7170,8 @@
 										</array>
 									</dict>
 								</array>
+								<key>selected</key>
+								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>
@@ -7178,6 +7188,14 @@
 								<integer>2</integer>
 								<key>properties</key>
 								<array>
+									<dict>
+										<key>name</key>
+										<string>visible</string>
+										<key>type</key>
+										<string>Check</string>
+										<key>value</key>
+										<false/>
+									</dict>
 									<dict>
 										<key>name</key>
 										<string>position</string>
@@ -7308,7 +7326,7 @@
 										<key>value</key>
 										<array>
 											<string>Common/Common_1.plist</string>
-											<string>Btn_grey.png</string>
+											<string>nb_but_2_green.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -7331,7 +7349,7 @@
 										<key>value</key>
 										<array>
 											<string>Common/Common_1.plist</string>
-											<string>Btn_grey.png</string>
+											<string>nb_but_2_green.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -7354,7 +7372,7 @@
 										<key>value</key>
 										<array>
 											<string>Common/Common_1.plist</string>
-											<string>Btn_grey.png</string>
+											<string>nb_but_2_green.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -7691,8 +7709,6 @@ f
 								<false/>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>

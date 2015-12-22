@@ -165,7 +165,11 @@ void CreateAllianceView::onChooseAllianceSymbolBtnClick(CCObject *pSender, CCCon
     CCCallFuncO* callback = CCCallFuncO::create(this, callfuncO_selector(CreateAllianceView::iconSelected), NULL);
 }
 
-void CreateAllianceView::ontClickCreate(CCObject *pSender, CCControlEvent event){
+void CreateAllianceView::ontClickCreate(CCObject *pSender, CCControlEvent event)
+{
+    m_allianceNameEditBox->setEnabled(false);
+    m_allianceIntroEditBox->setEnabled(false);
+    
     std::string allianceName = m_allianceNameEditBox->getText();
     if(allianceName=="" || allianceName.length()<=0) return ;
 //    SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
@@ -186,9 +190,13 @@ void CreateAllianceView::ontClickCreate(CCObject *pSender, CCControlEvent event)
     addLoadingAni();
 }
 
-void CreateAllianceView::createFail(CCObject* obj){
+void CreateAllianceView::createFail(CCObject* obj)
+{
+    m_allianceNameEditBox->setEnabled(true);
+    m_allianceIntroEditBox->setEnabled(true);
     m_btnCreate->setEnabled(true);
-    if(m_loadingIcon){
+    if (m_loadingIcon)
+    {
         m_loadingIcon->removeFromParent();
     }
 }
