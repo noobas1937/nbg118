@@ -1565,44 +1565,44 @@ void AllianceOneMembersCell::setData(AllianceInfoMember* member)
     m_nameTxt->setString(m_info->getName().c_str());
     m_powerTxt->setString(_lang("102163").c_str());
     m_powerValue->setString(CC_CMDITOAL(m_info->getPower()));
-    if(m_info->getOnline()){
-        m_powerValue->setColor({255,235,191});
-        std::string lang = cocos2d::extension::CCDevice::getLanguage();
-        if (lang=="en") {
-            m_powerTxt->setColor({255,255,255});
-        }else{
-            m_powerTxt->setColor({239,211,0});
-        }
-    }else{
-        m_powerTxt->setColor({172,172,172});
-        m_powerValue->setColor({172,172,172});
-    }
+//    if(m_info->getOnline()){
+//        m_powerValue->setColor({255,235,191});
+//        std::string lang = cocos2d::extension::CCDevice::getLanguage();
+//        if (lang=="en") {
+//            m_powerTxt->setColor({255,255,255});
+//        }else{
+//            m_powerTxt->setColor({239,211,0});
+//        }
+//    }else{
+//        m_powerTxt->setColor({172,172,172});
+//        m_powerValue->setColor({172,172,172});
+//    }
     
     m_titleFlag->setVisible(m_info->getRank()>1);
     if(m_info->getRank()>1){
         m_titleFlag->initWithSpriteFrame(CCLoadSprite::loadResource(CCString::createWithFormat("icon_Alliance_0%d.png",m_info->getRank())->getCString()));
     }
-    m_flagBg->initWithSpriteFrame(CCLoadSprite::loadResource(CCString::createWithFormat("Alliance_Flag_0%d.png",m_info->getRank())->getCString()));
+//    m_flagBg->initWithSpriteFrame(CCLoadSprite::loadResource(CCString::createWithFormat("Alliance_Flag_0%d.png",m_info->getRank())->getCString()));
     m_offLineTime->setString("");
-    m_onLineBg->setVisible(false);
+//    m_onLineBg->setVisible(false);
     if(m_info->getOnline()|| m_info->getRank()==0){
         int rank = m_info->getRank();
         rank = MAX(rank, 1);
-        m_flagBg->initWithSpriteFrame(CCLoadSprite::loadResource(CCString::createWithFormat("Alliance_Flag_0%d.png",rank)->getCString()));
+//        m_flagBg->initWithSpriteFrame(CCLoadSprite::loadResource(CCString::createWithFormat("Alliance_Flag_0%d.png",rank)->getCString()));
         if(GlobalData::shared()->playerInfo.isInAlliance() && GlobalData::shared()->playerInfo.allianceInfo.uid == m_info->getAllianceId()){
-            m_onLineBg->setVisible(true);
+//            m_onLineBg->setVisible(true);
             m_offLineTime->setString(_lang("115242"));
-            m_offLineTime->setColor({110,222,0});
+//            m_offLineTime->setColor({110,222,0});
         }else{
-            m_onLineBg->setVisible(false);
+//            m_onLineBg->setVisible(false);
             m_offLineTime->setString("");
-            m_offLineTime->setColor({110,222,0});
+//            m_offLineTime->setColor({110,222,0});
         }
     }else{
         if (m_info->getRank()==5) {
-            m_flagBg->initWithSpriteFrame(CCLoadSprite::loadResource(CCString::createWithFormat("Alliance_Flag_Grey_05.png")->getCString()));
+//            m_flagBg->initWithSpriteFrame(CCLoadSprite::loadResource(CCString::createWithFormat("Alliance_Flag_Grey_05.png")->getCString()));
         }else{
-            m_flagBg->initWithSpriteFrame(CCLoadSprite::loadResource(CCString::createWithFormat("Alliance_Flag_Gre.png")->getCString()));
+//            m_flagBg->initWithSpriteFrame(CCLoadSprite::loadResource(CCString::createWithFormat("Alliance_Flag_Gre.png")->getCString()));
         }
         auto dt = GlobalData::shared()->getWorldTime()-GlobalData::shared()->changeTime(m_info->getOffLineTime()/1000);
         dt = dt;
@@ -1627,7 +1627,7 @@ void AllianceOneMembersCell::setData(AllianceInfoMember* member)
         timestr.append(" ");
         timestr.append(_lang("105593"));
         this->m_offLineTime->setString(timestr);
-        m_offLineTime->setColor({172,172,172});
+//        m_offLineTime->setColor({172,172,172});
     }
     
 }
@@ -1643,7 +1643,7 @@ bool AllianceOneMembersCell::onAssignCCBMemberVariable(cocos2d::CCObject *pTarge
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_flagBg", CCSprite*, this->m_flagBg);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_clickNode1", CCNode*, this->m_clickNode1);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_clickNode2", CCNode*, this->m_clickNode2);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_onLineBg", CCNode*, this->m_onLineBg);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_onLineBg", CCNode*, this->m_onLineBg);
     return false;
 }
 

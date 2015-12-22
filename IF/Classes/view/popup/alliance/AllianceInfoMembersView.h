@@ -300,7 +300,7 @@ private:
     CCSafeObject<CCSprite> m_flagBg;
     CCSafeObject<CCNode> m_clickNode1;
     CCSafeObject<CCNode> m_clickNode2;
-    CCSafeObject<CCNode> m_onLineBg;
+//    CCSafeObject<CCNode> m_onLineBg;
     AllianceInfoMember* m_info;
     CCPoint m_touchPos;
     
