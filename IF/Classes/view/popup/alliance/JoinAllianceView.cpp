@@ -108,8 +108,8 @@ bool JoinAllianceView::init()
 //    m_tabView->setBounceable(false);//fusheng 去掉弹性
     m_allianceList->addChild(m_tabView);
     
-    auto sprite9 = CCLoadSprite::createScale9Sprite("world_title_3.png");
-    CCSize s = CCSize(420, 45);
+    auto sprite9 = CCLoadSprite::createScale9Sprite("nb_alliance_search_bg.png");
+    CCSize s = CCSize(451, 52);
     if (CCCommonUtils::isIosAndroidPad()) {
         s = m_searchNode->getContentSize();
     }
@@ -196,11 +196,11 @@ void JoinAllianceView::updateAlliances(CCObject* data){
     auto params = _dict(result->getData());
     CCArray* arr =  (CCArray*)params->objectForKey("list");
     m_total_receive = params->valueForKey("total")->intValue();
-//    m_total_receive = m_total_receive*40;//fusheng test
+//    m_total_receive = m_total_receive*3;//fusheng test
     allianceArray->removeAllObjects();
     AllianceManager::getInstance()->maxAlliancePage = m_total_receive/20+(m_total_receive%20==0?0:1);
     int num = arr->count();
-//    for (int j = 0 ;j<40;j++)//fusheng test
+//    for (int j = 0 ;j<3;j++)//fusheng test
     for (int i=0; i<num; i++) {
         CCDictionary* dicAlliance = (CCDictionary*)arr->objectAtIndex(i);
         AllianceInfo* alliance = new AllianceInfo();
@@ -500,15 +500,15 @@ void JoinAllianceView::scrollViewDidScroll(CCScrollView* view){
     //fusheng add 保留滑动手感
     auto layout = view -> getContainer();
     
-    if (layout -> getContentSize().height - view -> getViewSize().height<0) {//fusheng 当ContentSize小于ViewSize时不处理
-        return;
-    }
-    
     float currentY = layout -> getPositionY();
+   
+   
+//fusheng 需要上拉更新数据
+//    if (currentY > 0 && layout -> getContentSize().height - view -> getViewSize().height >= 0) {
+//        view -> setContentOffset(Vec2(0, 0));
+//    }
     
-    if (currentY > 0) {
-        view -> setContentOffset(Vec2(0, 0));
-    }
+   
     if (-currentY > layout -> getContentSize().height - view -> getViewSize().height)      {
         view -> setContentOffset(Vec2(0, -layout -> getContentSize().height + view -> getViewSize().height));
     }
