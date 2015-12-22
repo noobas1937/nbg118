@@ -1292,7 +1292,7 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string>Common/Common_1.plist</string>
+									<string>Common/Common_2.plist</string>
 									<string>Alliance_title.png</string>
 								</array>
 							</dict>
@@ -1308,6 +1308,8 @@
 								</array>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
