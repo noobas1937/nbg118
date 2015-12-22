@@ -204,7 +204,8 @@ bool AllianceInviteView::init(){
         }
         m_infoList->setContentSize(CCSize(m_infoList->getContentSize().width,m_infoList->getContentSize().height+add));
         m_infoList->setPositionY(m_infoList->getPositionY()-add);
-        m_moreTxt->setPositionY(m_moreTxt->getPositionY()-add);
+//        m_moreTxt->setPositionY(m_moreTxt->getPositionY()-add);
+        m_bottom_node->setPositionY(-add);
         m_viewBg->setVisible(false);
         
         m_data = CCArray::create();
@@ -216,7 +217,7 @@ bool AllianceInviteView::init(){
         m_tabView->setMultiColTableViewDelegate(this);
         m_infoList->addChild(m_tabView);
         
-        auto spriteText = CCLoadSprite::createScale9Sprite("world_title_3.png");
+        auto spriteText = CCLoadSprite::createScale9Sprite("nb_alliance_search_bg.png");
         if (!CCCommonUtils::isIosAndroidPad()) {
             m_inputName = CCEditBox::create(CCSizeMake(420,44),spriteText);
         } else {
@@ -229,7 +230,7 @@ bool AllianceInviteView::init(){
             m_inputName->setFontSize(52);
             m_inputName->setAnchorPoint(CCPointZero);
         }
-        m_inputName->setFontColor(ccBLACK);
+        m_inputName->setFontColor({196, 207, 255});
         m_inputName->setReturnType(kKeyboardReturnTypeDone);
         m_inputName->setInputFlag(kEditBoxInputFlagInitialCapsSentence);
         m_inputName->setText("");
@@ -487,6 +488,7 @@ bool AllianceInviteView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, 
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_moreTxt", CCLabelIF*, this->m_moreTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_tipTxt", CCLabelIF*, this->m_tipTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_waitNode", CCNode*, this->m_waitNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_bottom_node", CCNode*, this->m_bottom_node);
     return false;
 }
 
@@ -793,30 +795,29 @@ void AllianceUserCell::setData(AllianceInfoMember* member,CCNode* clickArea,int 
     m_nameTxt->setString(m_info->getName().c_str());
     m_powerTxt->setString(_lang("102163").c_str());
     m_powerValue->setString(CC_CMDITOAL(m_info->getPower()));
-    if(m_info->getOnline()){
-        m_powerValue->setColor({255,235,191});
-        std::string lang = cocos2d::extension::CCDevice::getLanguage();
-        if (lang=="en") {
-            m_powerTxt->setColor({255,255,255});
-        }else{
-            m_powerTxt->setColor({239,211,0});
-        }
-    }else{
-        m_powerTxt->setColor({172,172,172});
-        m_powerValue->setColor({172,172,172});
-    }
+//    if(m_info->getOnline()){
+//        m_powerValue->setColor({255,235,191});
+//        std::string lang = cocos2d::extension::CCDevice::getLanguage();
+//        if (lang=="en") {
+//            m_powerTxt->setColor({255,255,255});
+//        }else{
+//            m_powerTxt->setColor({239,211,0});
+//        }
+//    }else{
+//        m_powerTxt->setColor({172,172,172});
+//        m_powerValue->setColor({172,172,172});
+//    }
     
     m_titleFlag->setVisible(false);
-    m_flagBg->initWithSpriteFrame(CCLoadSprite::loadResource(CCString::createWithFormat("Alliance_Flag_01.png")->getCString()));
+//    m_flagBg->initWithSpriteFrame(CCLoadSprite::loadResource(CCString::createWithFormat("Alliance_Flag_01.png")->getCString()));
     if(officeId!=0 || m_panelType == KINGSGIFT){
         m_offLineTime->setString(m_info->getAbbr());
     }else{
         m_offLineTime->setString(CCCommonUtils::getLanguageFNByLocalSN(m_info->getLang()).c_str());
     }
     
-    m_onLineBg->setVisible(false);
-    m_offLineTime->setColor({111,161,70});
-    m_offLineTime->setPositionY(-27);
+//    m_offLineTime->setColor({111,161,70});
+//    m_offLineTime->setPositionY(-27);
     
     bool showShine = false;
     if(m_panelType==ITEM_DONATE){
@@ -845,7 +846,6 @@ bool AllianceUserCell::onAssignCCBMemberVariable(cocos2d::CCObject *pTarget, con
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_flagBg", CCSprite*, this->m_flagBg);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_clickNode1", CCNode*, this->m_clickNode1);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_clickNode2", CCNode*, this->m_clickNode2);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_onLineBg", CCNode*, this->m_onLineBg);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nodeHide1", CCNode*, this->m_nodeHide[0]);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nodeHide2", CCNode*, this->m_nodeHide[1]);
     return false;

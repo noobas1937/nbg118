@@ -78,6 +78,7 @@ private:
     CCSafeObject<CCLabelIF> m_moreTxt;
     CCSafeObject<CCLabelIF> m_tipTxt;
     CCSafeObject<CCNode> m_waitNode;
+    CCSafeObject<CCNode> m_bottom_node;
     
     WaitInterface* m_waitInterface;
     CCSafeObject<CCMultiColTableView> m_tabView;
@@ -142,9 +143,9 @@ private:
     CCSafeObject<CCSprite> m_flagBg;
     CCSafeObject<CCNode> m_clickNode1;
     CCSafeObject<CCNode> m_clickNode2;
-    CCSafeObject<CCNode> m_onLineBg;
     CCSafeObject<CCNode> m_ccbNode;
     CCSafeObject<CCNode> m_nodeHide[2];
+    
     CCNode* m_clickArea;
     AllianceInfoMember* m_info;
     CCPoint m_touchPos;
