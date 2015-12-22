@@ -104,6 +104,9 @@ private:
     CCSafeObject<CCArray> allianceArray;
     CCSafeObject<CCSprite> m_iconGold;
     CCSafeObject<CCNode> m_shakeGuideNode;
+    CCSafeObject<CCScale9Sprite> m_allianceListBG;
+    
+
     
     float m_operateAreaHeight;
     int currentPage;
@@ -126,6 +129,8 @@ public:
     void updateAllianceInfo(AllianceInfo* info);
     void setHighlight();
     void unHighlight();
+    
+    void setIsFirst(bool isFirst);//fusheng tableView 第一个元素和其他的不一样
     
 private:
     bool init();
@@ -166,6 +171,11 @@ private:
     CCSafeObject<CCScale9Sprite> m_bg;
     CCSafeObject<CCLabelIFTTF> m_language;
     CCSafeObject<CCLabelIFTTF> m_allianceTxt;
+    
+    CCSafeObject<CCNode> m_liantiao1;
+    CCSafeObject<CCNode> m_liantiao2;
+    
+    
    
     
     
