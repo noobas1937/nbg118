@@ -70,7 +70,12 @@ void LoadingScene::addLoadingBG(Point& addPt)
         loadingBG->setPositionY(size.height/2);
         
         this->addChild(loadingBG);
-
+        
+        Vec2 arrowPos = loadingBG->convertToWorldSpace(Vec2(470,190));
+        auto loadingArrow = CCLoadSprite::createSprite("loading_arrow.png");
+        loadingArrow->setAnchorPoint(ccp(0.5,0.5));
+        loadingArrow->setPosition(arrowPos);
+        this->addChild(loadingArrow,99999);
 //        auto kingSpine = IFLoadingSceneArmyNode::create("Loading/Loading_3.atlas", "Spine/Loading/loading.json", "loop", 1);
 //        this->addChild(kingSpine);
     }

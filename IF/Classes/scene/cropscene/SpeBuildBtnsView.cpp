@@ -478,8 +478,8 @@ void SpeBuildBtnsView::onClickFunc(int idx)
             PopupViewController::getInstance()->addPopupInView(PortActView::create());
         }else if( key == "101283"){
 #pragma mark monthCard
-             CCCommonUtils::flyHint("", "", _lang("E100008"));
-//            PopupViewController::getInstance()->addPopupInView(MonthCardView::create());
+//             CCCommonUtils::flyHint("", "", _lang("E100008"));
+            PopupViewController::getInstance()->addPopupView(MonthCardView::create());
         }
     }
 }

@@ -7,7 +7,7 @@
             <key>FAQ_line.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{409,944},{4,1}}</string>
+                <string>{{1136,757},{4,1}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -20,11 +20,11 @@
             <key>Loading_bar_glow.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{409,757},{97,42}}</string>
+                <string>{{409,894},{97,42}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{97,42}}</string>
                 <key>sourceSize</key>
@@ -43,10 +43,23 @@
                 <key>sourceSize</key>
                 <string>{747,1136}</string>
             </dict>
+            <key>loading_arrow.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{409,757},{112,131}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{112,131}}</string>
+                <key>sourceSize</key>
+                <string>{112,131}</string>
+            </dict>
             <key>loading_bar.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{457,757},{515,19}}</string>
+                <string>{{512,919},{515,19}}</string>
                 <key>offset</key>
                 <string>{1,1}</string>
                 <key>rotated</key>
@@ -59,7 +72,7 @@
             <key>loading_bar_BG.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{409,860},{603,53}}</string>
+                <string>{{527,757},{603,53}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -72,7 +85,7 @@
             <key>loading_progress.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{409,919},{515,19}}</string>
+                <string>{{512,894},{515,19}}</string>
                 <key>offset</key>
                 <string>{1,1}</string>
                 <key>rotated</key>

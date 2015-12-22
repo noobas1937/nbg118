@@ -919,21 +919,21 @@ void ImperialScene::onUpgradeVikingsShip(int level)
 
 void ImperialScene::createDockShip()
 {
-    NBSprite3D * cargoShip = NBSprite3D::create("3d/ship/ship_gem.c3b");
-    cargoShip->setTexture("3d/ship/ship_gem.jpg");
+    NBSprite3D * dockShip = NBSprite3D::create("3d/ship/ship_gem.c3b");
+    dockShip->setTexture("3d/ship/ship_gem.jpg");
     
-    auto cargoShipRootNode = CCNode::create();
-    cargoShipRootNode->addChild(cargoShip);
+    auto dockShipRootNode = CCNode::create();
+    dockShipRootNode->addChild(dockShip);
     
-    cargoShipRootNode->setPosition(m_touchLayer->convertToNodeSpace(m_shipNode->convertToWorldSpace(Point(0, 0))));
+    dockShipRootNode->setPosition(m_touchLayer->convertToNodeSpace(m_shipNode->convertToWorldSpace(Point(0, 0))));
     
     auto a3d = Animation3D::create("3d/ship/ship_gem.c3b");
     
-    cargoShip->runAction(RepeatForever::create(Animate3D::create(a3d)));
+    dockShip->runAction(RepeatForever::create(Animate3D::create(a3d)));
     
-    m_node3d->addChild(cargoShipRootNode);
+    m_node3d->addChild(dockShipRootNode);
     
-    cargoShipRootNode->setRotation3D(Vec3(38, 39, -24));
+    dockShipRootNode->setRotation3D(Vec3(38, 39, -24));
     
     
     m_touchLayer->setCameraMask((unsigned short)CameraFlag::USER4, true);
@@ -1762,7 +1762,7 @@ void ImperialScene::startGuide(float _time)
     
 // tao.yu 第一版不需要活动界面
 //fusheng 12.17 先关闭
-    if (false) {
+    if (true) {
         if (m_isLogin && !GuideController::share()->isInTutorial() && pop==NULL) {//没有弹开有升级界面才弹活动界面
             if(GlobalData::shared()->analyticID != "common"){
                 if (!CCCommonUtils::isIosAndroidPad()) {
@@ -4815,7 +4815,7 @@ void ImperialScene::initBigTile()
     
     // tao.yu 第一版不开放码头
     //fusheng 可以开放 12.17先关闭
-    if (false) {
+    if (true) {
         
         m_shipBuild = SpeBuild::create(SPE_BUILD_SHIP);
         m_shipNode->addChild(m_shipBuild);
@@ -4823,7 +4823,6 @@ void ImperialScene::initBigTile()
         m_shipBuild->setNamePos(m_shipNode->getPositionX(), m_shipNode->getPositionY(), m_signLayer, m_arrbatchNode, m_chrTreeBatchNode, hod);
         m_shipBuild->updateShipState();
         createDockShip();
-//        createCargoShip();
     }
     // tao.yu 第一版不开放旅行商人
     if(false) {
@@ -4847,7 +4846,8 @@ void ImperialScene::initBigTile()
         m_newRDBuild->setNamePos(m_newRDNode->getPositionX(), m_newRDNode->getPositionY(), m_signLayer, m_arrbatchNode, m_resbatchNode, hod);
     }
     // tao.yu 第一版本不开放在线时间奖励
-    if (false&&PortActController::getInstance()->m_isNewTimeRwd) {
+    //fusheng edit 开放时间奖励
+    if (true&&PortActController::getInstance()->m_isNewTimeRwd) {
         m_cargoBuild = SpeBuild::create(SPE_BUILD_CARGO);
         m_cargoNode->addChild(m_cargoBuild);
         int hod = m_cargoNode->getZOrder();

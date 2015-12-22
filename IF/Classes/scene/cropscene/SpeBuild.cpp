@@ -1172,7 +1172,7 @@ void SpeBuild::onClickThis(float _time)
         
         SoundController::sharedSound()->playEffects(Music_Sfx_city_building);
         if (m_clickNameKey == "monthcard") {
-            PopupViewController::getInstance()->addPopupInView(MonthCardView::create());
+            PopupViewController::getInstance()->addPopupView(MonthCardView::create());
         }else if (m_clickNameKey == "qiandao") {
             PopupViewController::getInstance()->addPopupInView(PortActView::create());
         }else {

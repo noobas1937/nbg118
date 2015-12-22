@@ -1693,8 +1693,14 @@ void FunBuild::onClickThis(float _time)
                 if (m_buildingKey==FUN_BUILD_MAIN_CITY_ID) {
                     dh = 100;
                 }
+                int dw = 0;
+                if (m_info->type == FUN_BUILD_CELLAR)
+                {
+                    dw = -30;
+                    dh = 50;
+                }
                 if (!m_info->is_Dirc && layer) {
-                    layer->onShowBtnsView(parentX, parentY+dh, m_buildingKey);
+                    layer->onShowBtnsView(parentX+dw, parentY+dh, m_buildingKey);
                     playShadow();
                 }
             }
