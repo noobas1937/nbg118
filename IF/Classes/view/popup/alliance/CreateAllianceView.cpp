@@ -223,6 +223,11 @@ bool CreateAllianceView::init()
 {
     if(PopupBaseView::init())
     {
+        CCLoadSprite::doResourceByCommonIndex(6, true);
+        setCleanFunction([](){
+            CCLoadSprite::doResourceByCommonIndex(6, false);
+        });
+        
         setIsHDPanel(true);
         CCScrollView* scrollView = CCScrollView::create();
         scrollView->setDirection(kCCScrollViewDirectionVertical);
@@ -230,7 +235,7 @@ bool CreateAllianceView::init()
         scrollView->setAnchorPoint(CCPoint(0,0));
         scrollView->setPosition(0, BOTTOM_BUTTON_AREA_HEIGHT);
         
-        CCNode* node = CCBLoadFile("AllianceCreateAllianceView", this, this);
+        CCNode* node = CCBLoadFile("AllianceCreateView", this, this);
         const CCSize& contentSize = node->getContentSize();
         this->setContentSize(contentSize);
         scrollView->setContentOffset(CCPoint(0, m_operateAreaHeight-contentSize.height));
@@ -239,7 +244,12 @@ bool CreateAllianceView::init()
         
         addChild(scrollView);
         
-        auto sprite9 = CCLoadSprite::createScale9Sprite("UI_Alliance_text02.png");
+        auto sprite9 = CCLoadSprite::createScale9Sprite("nb_vip_detail_list_bg.png");
+        sprite9->setInsetBottom(15);
+        sprite9->setInsetLeft(15);
+        sprite9->setInsetRight(15);
+        sprite9->setInsetTop(15);
+        
         if (CCCommonUtils::isIosAndroidPad())
         {
             m_allianceNameEditBox = CCEditBox::create(CCSizeMake(880,80),sprite9);
@@ -249,12 +259,17 @@ bool CreateAllianceView::init()
             m_allianceNameEditBox->setFontSize(22);
         }
         m_allianceNameEditBox->setMaxLength(ALLIANCE_NAME_MAX_LENGTH);
-        m_allianceNameEditBox->setFontColor(Color3B::BLACK);
+        m_allianceNameEditBox->setFontColor(Color3B(196, 207, 255));
         m_allianceNameEditBox->setReturnType(kKeyboardReturnTypeDone);
         m_allianceNameEditBox->setInputFlag(kEditBoxInputFlagInitialCapsSentence);
         m_nameNode->addChild(m_allianceNameEditBox);
         
-        auto spriteText = CCLoadSprite::createScale9Sprite("UI_Alliance_text02.png");
+        auto spriteText = CCLoadSprite::createScale9Sprite("nb_vip_detail_list_bg.png");
+        spriteText->setInsetBottom(15);
+        spriteText->setInsetLeft(15);
+        spriteText->setInsetRight(15);
+        spriteText->setInsetTop(15);
+        
         if (CCCommonUtils::isIosAndroidPad())
         {
             m_allianceIntroEditBox = CCEditBox::create(CCSizeMake(880,90),spriteText);
@@ -264,10 +279,10 @@ bool CreateAllianceView::init()
             m_allianceIntroEditBox->setFontSize(22);
         }
         m_allianceIntroEditBox->setMaxLength(199);
-        m_allianceIntroEditBox->setFontColor(Color3B::BLACK);
+        m_allianceIntroEditBox->setFontColor(Color3B(196, 207, 255));
         m_allianceIntroEditBox->setReturnType(kKeyboardReturnTypeDone);
         m_allianceIntroEditBox->setInputFlag(kEditBoxInputFlagInitialCapsSentence);
-        m_allianceIntroEditBox->setPosition(ccp(322.0, 818));
+        m_allianceIntroEditBox->setPosition(ccp(322.0, 690));
         if (CCCommonUtils::isIosAndroidPad())
         {
             m_allianceIntroEditBox->setPosition(ccp(644, 818 * 2));
