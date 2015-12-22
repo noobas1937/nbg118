@@ -68,16 +68,36 @@ void LoadingScene::addLoadingBG(Point& addPt)
         loadingBG->setAnchorPoint(ccp(0.5, 0.5));
         loadingBG->setPositionX(size.width/2);
         loadingBG->setPositionY(size.height/2);
-        
+        float scale = max(size.width / loadingBG->getContentSize().width,size.height / loadingBG->getContentSize().height);
+        loadingBG->setScale(scale);
         this->addChild(loadingBG);
         
-        Vec2 arrowPos = loadingBG->convertToWorldSpace(Vec2(470,190));
-        auto loadingArrow = CCLoadSprite::createSprite("loading_arrow.png");
-        loadingArrow->setAnchorPoint(ccp(0.5,0.5));
-        loadingArrow->setPosition(arrowPos);
-        this->addChild(loadingArrow,99999);
+//        // tao.yu 进度条上的弓箭
+//        Vec2 arrowPos = loadingBG->convertToWorldSpace(Vec2(470,190));
+//        auto loadingArrow = CCLoadSprite::createSprite("loading_arrow.png");
+//        loadingArrow->setAnchorPoint(ccp(0.5,0.5));
+//        loadingArrow->setPosition(arrowPos);
+//        this->addChild(loadingArrow,99999);
+        
+        // tao.yu 圣诞节礼物
+        Vec2 gift1Pos = loadingBG->convertToWorldSpace(Vec2(470,210));
+        auto gift1 = CCLoadSprite::createSprite("loading_gift1.png");
+        gift1->setAnchorPoint(ccp(0.5,0.5));
+        gift1->setPosition(gift1Pos);
+        gift1->setScale(0.9);
+        this->addChild(gift1,99999);
+        
+        Vec2 gift2Pos = loadingBG->convertToWorldSpace(Vec2(115,935));
+        auto gift2 = CCLoadSprite::createSprite("loading_gift2.png");
+        gift2->setAnchorPoint(ccp(0.5,0.5));
+        gift2->setPosition(gift2Pos);
+        this->addChild(gift2,99999);
+        
+        // tao.yu 动画效果
 //        auto kingSpine = IFLoadingSceneArmyNode::create("Loading/Loading_3.atlas", "Spine/Loading/loading.json", "loop", 1);
 //        this->addChild(kingSpine);
+        
+        
     }
 }
 
@@ -117,6 +137,7 @@ void LoadingScene::addLoadingTips()
     
     Size tipsSize = CCSizeMake(640, 90);
     m_loadingTips = CCLabelIF::create("loading...");
+    m_loadingTips->setFntFile(getNBFont(NB_FONT_Bold_Outline));
     m_loadingTips->setColor({229,246,160});
     m_loadingTips->enableStroke(ccBLACK, 1.0);
     m_loadingTips->setFontSize(24);
@@ -293,9 +314,9 @@ bool LoadingScene::init()
     
     
     auto logo = CCLoadSprite::createSprite("logo.png");
-    logo->setAnchorPoint(ccp(0.5, 0));
-    
-    logo->setPosition(ccp(size.width * 0.5, size.height * 0.75));//
+    logo->setAnchorPoint(ccp(0.5, 0.5));
+    logo->setScale(0.8);
+    logo->setPosition(ccp(size.width * 0.3, size.height * 0.85));//
     logo->setTag(LOADING_LOGO_TAG);
     addChild(logo,10000);
     
