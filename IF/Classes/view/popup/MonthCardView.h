@@ -19,6 +19,8 @@ public:
     ~MonthCardView();
     
     void refreshData(CCObject *ccObj);
+    
+    void onClickClose(cocos2d::CCObject *pSender, CCControlEvent pCCControlEvent);
 protected:
     void generateData();
 private:

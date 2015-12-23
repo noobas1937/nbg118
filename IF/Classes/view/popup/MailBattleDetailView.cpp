@@ -610,11 +610,11 @@ bool DetailBattleCellCCB::init(){
         m_picHead->setVisible(true);
        CCCommonUtils::setSpriteMaxSize(spr, 90);
     }
-//    m_nameTxt->setFntFile(getNBFont(NB_FONT_Bold_Regular));
-//    m_numTxt->setFntFile(getNBFont(NB_FONT_Bold_Regular));
-//    m_lostTxt->setFntFile(getNBFont(NB_FONT_Bold_Regular));
-//    m_killTxt->setFntFile(getNBFont(NB_FONT_Bold_Regular));
-//    m_hurtTxt->setFntFile(getNBFont(NB_FONT_Bold_Regular));
+//    m_nameTxt->setFntFile(getNBFont(NB_FONT_Bold));
+//    m_numTxt->setFntFile(getNBFont(NB_FONT_Bold));
+//    m_lostTxt->setFntFile(getNBFont(NB_FONT_Bold));
+//    m_killTxt->setFntFile(getNBFont(NB_FONT_Bold));
+//    m_hurtTxt->setFntFile(getNBFont(NB_FONT_Bold));
     return true;
 }
 

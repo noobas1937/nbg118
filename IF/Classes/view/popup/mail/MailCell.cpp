@@ -848,7 +848,7 @@ void MailCell::addRewardIcon(){
     
     //4个文本框
     auto label = CCLabelTTF::create();
-//    label->setFntFile(getNBFont(NB_FONT_Bold_Regular));
+//    label->setFntFile(getNBFont(NB_FONT_Bold));
     if (CCCommonUtils::isIosAndroidPad()) {
         label->setFontSize(48);
     }
@@ -863,7 +863,7 @@ void MailCell::addRewardIcon(){
     m_rewardNode1->addChild(label);
     
     auto label1 = CCLabelIF::create();
-    label1->setFntFile(getNBFont(NB_FONT_Bold_Regular));
+    label1->setFntFile(getNBFont(NB_FONT_Bold));
     if (CCCommonUtils::isIosAndroidPad()) {
         label1->setFontSize(48);
     }
@@ -873,7 +873,7 @@ void MailCell::addRewardIcon(){
     m_rewardNode1->addChild(label1);
     
     auto label2 = CCLabelIF::create();
-    label2->setFntFile(getNBFont(NB_FONT_Bold_Regular));
+    label2->setFntFile(getNBFont(NB_FONT_Bold));
     if (CCCommonUtils::isIosAndroidPad()) {
         label2->setFontSize(48);
     }
@@ -883,7 +883,7 @@ void MailCell::addRewardIcon(){
     m_rewardNode1->addChild(label2);
     
     auto label3 = CCLabelIF::create();
-    label3->setFntFile(getNBFont(NB_FONT_Bold_Regular));
+    label3->setFntFile(getNBFont(NB_FONT_Bold));
     if (CCCommonUtils::isIosAndroidPad()) {
         label3->setFontSize(48);
     }

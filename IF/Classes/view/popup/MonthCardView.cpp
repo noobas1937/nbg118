@@ -111,8 +111,12 @@ bool MonthCardView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const
 }
 
 SEL_CCControlHandler MonthCardView::onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName){
-//    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onTipClick", RepayView::onTipClick);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onClickClose", MonthCardView::onClickClose);
     return NULL;
+}
+
+void MonthCardView::onClickClose(cocos2d::CCObject *pSender, CCControlEvent pCCControlEvent){
+    closeSelf();
 }
 
 void MonthCardView::refreshData(cocos2d::CCObject *ccObj){
