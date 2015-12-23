@@ -1215,6 +1215,7 @@
 		E6FC9B27181E541900BAFCFF /* MailReadCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6FC9B26181E541900BAFCFF /* MailReadCommand.cpp */; };
 		E6FC9B2A181E957A00BAFCFF /* MailPush.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6FC9B29181E957900BAFCFF /* MailPush.cpp */; };
 		E6FE9EB7182738E3000020FA /* TipsView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6FE9EB5182738E3000020FA /* TipsView.cpp */; };
+		ED15CBAD1C27CDB900C665C5 /* NBGPostEffectLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED15CBAB1C27CDB900C665C5 /* NBGPostEffectLayer.cpp */; };
 		ED2608C41BF42FE400D6BD14 /* Walker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED2608C21BF42FE400D6BD14 /* Walker.cpp */; };
 		ED8509631BE07AFD002E1B2C /* NBWaterMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED8509611BE07AFD002E1B2C /* NBWaterMap.cpp */; };
 		ED929BF71BFC650E005A44C9 /* Enemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED929BF51BFC650E005A44C9 /* Enemy.cpp */; };
@@ -3578,6 +3579,8 @@
 		E6FC9B29181E957900BAFCFF /* MailPush.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MailPush.cpp; sourceTree = "<group>"; };
 		E6FE9EB5182738E3000020FA /* TipsView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TipsView.cpp; sourceTree = "<group>"; };
 		E6FE9EB6182738E3000020FA /* TipsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TipsView.h; sourceTree = "<group>"; };
+		ED15CBAB1C27CDB900C665C5 /* NBGPostEffectLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NBGPostEffectLayer.cpp; path = IF/Classes/scene/titan/NBGPostEffectLayer.cpp; sourceTree = SOURCE_ROOT; };
+		ED15CBAC1C27CDB900C665C5 /* NBGPostEffectLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBGPostEffectLayer.h; path = IF/Classes/scene/titan/NBGPostEffectLayer.h; sourceTree = SOURCE_ROOT; };
 		ED2608C21BF42FE400D6BD14 /* Walker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Walker.cpp; sourceTree = "<group>"; };
 		ED2608C31BF42FE400D6BD14 /* Walker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Walker.h; sourceTree = "<group>"; };
 		ED8509611BE07AFD002E1B2C /* NBWaterMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBWaterMap.cpp; sourceTree = "<group>"; };
@@ -6628,6 +6631,8 @@
 		FD6F415817CDD218008FDB9C /* Ext */ = {
 			isa = PBXGroup;
 			children = (
+				ED15CBAB1C27CDB900C665C5 /* NBGPostEffectLayer.cpp */,
+				ED15CBAC1C27CDB900C665C5 /* NBGPostEffectLayer.h */,
 				3676B3171BB393AC00120B78 /* CCGallery.cpp */,
 				3676B3181BB393AC00120B78 /* CCGallery.h */,
 				2AB5E0491B687E2B001E0A7E /* cocosextV3.h */,
@@ -8021,6 +8026,7 @@
 				961A2AA61B730C0600752BC7 /* LianShengView.cpp in Sources */,
 				7C0E551B17F7C1E60079A7BB /* ServerInfo.cpp in Sources */,
 				1DEE97A91AA002AE006F5D71 /* GmController.cpp in Sources */,
+				ED15CBAD1C27CDB900C665C5 /* NBGPostEffectLayer.cpp in Sources */,
 				7C0E552517F801690079A7BB /* UserBindCommand.cpp in Sources */,
 				7C97265117F9648E0099DBC4 /* ResourceInfo.cpp in Sources */,
 				E6924A7E1803D56C00630D20 /* EquipInfo.cpp in Sources */,
