@@ -21,17 +21,25 @@ varying vec4 v_waterLightSea;
 varying vec4 v_waterLightShore;
 varying vec4 v_waterDarkSea;
 varying vec4 v_waterDarkShore;
-
+varying float v_reflectionPower; //a by ljf
 uniform highp float u_time;
 
 void main()
 {
 #ifdef SIMPLE
     vec4 normalMapValue = texture2D(normal, v_normalCoord1.xy);
-    gl_FragColor = mix(v_waterDarkSea, v_waterLightSea, (normalMapValue.y * v_result) + (normalMapValue.w + (-v_result * normalMapValue.w))); //d by ljf
+    //gl_FragColor = mix(v_waterDarkSea, v_waterLightSea, (normalMapValue.y * v_result) + (normalMapValue.w + (-v_result * normalMapValue.w))); //d by ljf
     //gl_FragColor = mix(v_waterDarkSea, v_waterLightSea, (normalMapValue.y * 0.5) + (normalMapValue.w + (-0.5 * normalMapValue.w)));
     //gl_FragColor = v_waterDarkSea;
 //    gl_FragColor = mix(v_waterDarkSea, v_waterLightSea, (normalMapValue.y * v_result) + (normalMapValue.w * (1.0 - v_result)));
+
+	//gl_FragColor = mix(v_waterDarkSea, v_waterLightSea, (normalMapValue.y * v_result) + (normalMapValue.w + (-v_result * normalMapValue.w)))
+	//gl_FragColor.rgb = mix(v_waterLightSea, v_waterDarkSea, (normalMapValue.x * v_result) + (normalMapValue.y * (1.0 - v_result))).rgb;
+	gl_FragColor.rgb = mix(v_waterDarkSea, v_waterLightSea, (normalMapValue.y * v_result) + (normalMapValue.w + (-v_result * normalMapValue.w))).rgb
+        + (min(0.4, exp2(log2(((normalMapValue.z * v_result) + (normalMapValue.w * (1.0 - v_result))) * v_reflectionPower * 0.95) * 13.0)));
+        //+ (min(0.4, exp2(log2(((normalMapValue.z * v_result) + (normalMapValue.w * (1.0 - v_result))) * v_reflectionPower ) * 5.0)));
+    gl_FragColor.a = 1.0;
+    
 #else
 	#ifdef MEDIUM
 	float shoreFactor = texture2D(texture0, v_texcoord0).b;

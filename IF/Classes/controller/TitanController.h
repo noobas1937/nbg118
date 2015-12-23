@@ -38,7 +38,14 @@ public:
     
     void update(float dt);
     
+    bool checkCanFeedFree();
+    
     bool isUpdate;
+private:
+    
+    bool isCanFeedFree;
+    
+    
 };
 
 #endif /* defined(__IF__TitanController__) */

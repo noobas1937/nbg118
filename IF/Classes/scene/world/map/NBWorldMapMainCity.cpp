@@ -10,9 +10,6 @@
 #include "WorldController.h"
 
 static const char* ISLANDS_0[] = {"island_001.png", "island_002.png", "island_003.png", "island_004.png",};
-static const char* ISLANDS_1[] = {"island_005.png", "island_006.png", "island_007.png", "island_008.png",};
-static const char* ISLANDS_2[] = {"island_009.png", "island_010.png", "island_011.png", "island_012.png",};
-static const char* ISLANDS_3[] = {"island_013.png", "island_014.png", "island_015.png", "island_016.png",};
 
 int NBWorldMapMainCity::getMainCityIslandImageIndex(const WorldCityInfo* info, int level, int nSpecialId)
 {
@@ -45,17 +42,34 @@ int NBWorldMapMainCity::getMainCityIslandImageIndex(const WorldCityInfo* info, i
     return -1;
 }
 
-const char * NBWorldMapMainCity::getMainCityIslandImage(int island_index, int x, int y)
+Node * NBWorldMapMainCity::getMainCityIslandImage(int island_index, int x, int y)
 {
     // 根据坐标和城市开始索引计算岛的外观，不用存储数据到服务器
-    int random_variable = (x + y) % 4;
+    int random_variable = (x + y) % 3;
     
-    const char** ISLANDS = ISLANDS_0;
-    if (random_variable == 1) ISLANDS = ISLANDS_1;
-    else if (random_variable == 2) ISLANDS = ISLANDS_2;
-    else if (random_variable == 3) ISLANDS = ISLANDS_3;
+    int offsetx = 128;
+    int offsety = 128;
+    Vec2 positon(offsetx - 204, offsety - 120);
+    const char* ISLANDS = "z_island_001.png";
+    if (random_variable == 1)
+    {
+        positon.setPoint(offsetx - 172, offsety - 84);
+        ISLANDS = "z_island_002.png";
+    }
+    else if (random_variable == 2)
+    {
+        positon.setPoint(offsetx - 197, offsety - 112);
+        ISLANDS = "z_island_003.png";
+    }
 
-    return ISLANDS[island_index];
+    auto island = CCLoadSprite::createSprite( ISLANDS );
+    if (island && island->getTexture())
+    {
+        island->getTexture()->setAliasTexParameters();
+        island->setAnchorPoint(Vec2(0, 0));
+        island->setPosition(positon);
+    }
+    return island;
 }
 
 Node * NBWorldMapMainCity::getMainCity(int island_index, int level, int nSpecialId)
@@ -65,9 +79,9 @@ Node * NBWorldMapMainCity::getMainCity(int island_index, int level, int nSpecial
     if (island_index == 0)
     {
         picStr = "lv1.png";
-        // 美术给出的坐标为 x：-111，y：-51
-        house_pos.x = 256 / 2 - 111;
-        house_pos.y = 81;
+        // 美术给出的坐标为 x：-180，y：-120
+        house_pos.x = 180 - 180;
+        house_pos.y = 120 - 32;
     }
     
     auto house = CCLoadSprite::createSprite(picStr.c_str());
@@ -94,7 +108,7 @@ int NBWorldMapMainCity::getMainCityId(int level, bool isKing, int nSpecialId)
     int startIndex = -1;
     int mainCityIndex = atoi(CCCommonUtils::getPropById(CC_ITOA(id), "Basics").c_str()); // [0, 6]
     int startBaseIndex = 41;
-    int defaultStartBaseIndex = 41;
+//    int defaultStartBaseIndex = 41;
     int baseNumPerCity = 4;
     if (mainCityIndex != -1)
     {

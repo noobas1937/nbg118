@@ -38,6 +38,8 @@
 #include "BuildUpgradeView.h"
 #include "TitanController.h"
 
+#include "NBCommonUtils.h"
+
 const float numPerRow = 1.0;
 BattleView* BattleView::create(unsigned int startIndex ,unsigned int targetIndex,unsigned int haveOwner,float slow,int rally,int bType,int wtIndex,std::string other, int targetType){
     BattleView* ret = new BattleView();
@@ -48,6 +50,8 @@ BattleView* BattleView::create(unsigned int startIndex ,unsigned int targetIndex
     }
     return ret;
 }
+
+BattleView::BattleView():m_startIndex(0),m_targetIndex(0),m_haveOwner(0),m_rally(0),m_bType(-1),m_wtIndex(0),m_other(string()),m_targetType(0),m_slow(1.0),isBegin(true),selectDragon(false){};
 BattleView::~BattleView()
 {
     WorldController::getInstance()->alertProectFlag = false;
@@ -95,7 +99,7 @@ bool BattleView::init(unsigned int startIndex,unsigned int targetIndex,unsigned 
     }
     m_bg->setPreferredSize(m_bg->getContentSize() + CCSize(0, -dy));
     m_renderBG->setPreferredSize(m_renderBG->getContentSize() + CCSize(0, -dy));
-    m_renderBG->setPositionY(m_renderBG->getPositionY() + dy / 2);
+    m_renderBG->setPositionY(m_renderBG->getPositionY() + dy);
     m_downNode->setPositionY(m_downNode->getPositionY() + dy);
     m_infoList->setPositionY(m_infoList->getPositionY() + dy);
     m_infoList->setContentSize(m_infoList->getContentSize() - CCSize(0, dy));
@@ -105,7 +109,7 @@ bool BattleView::init(unsigned int startIndex,unsigned int targetIndex,unsigned 
     m_tabView->setMultiColTableViewDelegate(this);
 //    m_tabView->setTouchPriority(Touch_Popup);
     m_infoList->addChild(m_tabView);
-    changeBGMaxHeight(m_bg);//fusheng
+//    changeBGMaxHeight(m_bg);//fusheng
 //    m_box = CheckBox::create();
 //    this->m_checkBoxContainer->addChild(m_box);
 //    auto &generalInfo = GlobalData::shared()->generals.begin()->second;
@@ -190,6 +194,76 @@ bool BattleView::init(unsigned int startIndex,unsigned int targetIndex,unsigned 
     }
     onClickQuickBtn(NULL, Control::EventType::TOUCH_DOWN);
     SoundController::sharedSound()->playEffects(Music_Sfx_world_click_attack);
+    
+    
+    auto listener = EventListenerTouchOneByOne::create();
+    listener->onTouchBegan = [this](Touch* touch, Event* evt)
+    {
+        if (isTouchInside(m_2touchBtnBg, touch)) {
+            return true;
+        }
+        return false;
+    };
+    
+    listener->onTouchEnded = [this](Touch* touch, Event* evt)
+    {
+//        CCCommonUtils::flyHint("", "", "hehe");
+        auto armyInfo = GlobalData::shared()->armyList[GlobalData::shared()->titanInfo.titanId];
+        if(armyInfo.free == 0)
+        {
+            return ;
+        }
+        if (selectDragon) {
+            
+            selectDragon = false;//
+            
+            this->refreshDragonNumStatus();
+            
+        }
+        else
+        {
+            //fusheng 需要判断是否可以点击派出龙   出征部队人数已满
+
+            
+            SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
+
+            
+            TroopsController::getInstance()->changeArrTime();
+            
+            int maxForceNum = TroopsController::getInstance()->getMaxSoilder();
+            if (m_bType == MethodUnion || m_bType == MethodYuanSolider)
+            {
+                maxForceNum = MIN(m_rally, maxForceNum);
+            }
+            
+            int total = 0;
+            map<string, int>::iterator it;
+            for (it = TroopsController::getInstance()->m_tmpBattleInfos.begin(); it != TroopsController::getInstance()->m_tmpBattleInfos.end(); it++) {
+                if (TroopsController::getInstance()->m_tmpBattleInfos[it->first] > 0) {
+                    total += TroopsController::getInstance()->m_tmpBattleInfos[it->first];
+                }
+            }
+            
+            int d = maxForceNum - total - 1;
+            if(d >= 0){
+                selectDragon = true;
+                this->refreshDragonNumStatus();
+            }
+            
+                 
+        }
+        
+         return ;
+    };
+    
+    listener->setSwallowTouches(true);
+    
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, m_bg);
+    
+    m_ProTiTanAPMaxWidth = m_ProTiTanAP->getContentSize().width;
+    m_dragonMarchingLable->setString(_lang("500020"));
+    refreshDragonStatus(nullptr);
+  
     return true;
 }
 
@@ -202,12 +276,12 @@ void BattleView::setAddBtnState(){
     if(CCCommonUtils::getEffectValueByNum(COMMAND_EFFECT,false) > FLT_EPSILON){
         this->m_addBtn->setVisible(false);
         this->m_addIcon->setVisible(false);
-        this->m_addIcon1->setVisible(false);
+
         this->m_msg3Label->setColor(ccc3(86, 180, 29));
     }else{
         this->m_addBtn->setVisible(true);
         this->m_addIcon->setVisible(true);
-        this->m_addIcon1->setVisible(true);
+
         this->m_msg3Label->setColor(ccc3(255, 247, 255));
         this->getAnimationManager()->runAnimationsForSequenceNamed("Default Timeline");
     }
@@ -229,9 +303,17 @@ void BattleView::generateData(){
             if (it->first != GlobalData::shared()->titanInfo.titanId) {
                 continue;
             }
+            else
+            {
+                TroopsController::getInstance()->m_tmpFreeSoldiers[it->first] = (it->second).free;
+                TroopsController::getInstance()->m_tmpConfSoldiers[it->first] = (it->second).free;
+                continue;
+            }
         }
         TroopsController::getInstance()->m_tmpFreeSoldiers[it->first] = (it->second).free;
         TroopsController::getInstance()->m_tmpConfSoldiers[it->first] = (it->second).free;
+        
+       
         int index = 0;
         bool addFlag = false;
         while (index < m_tmpArray->count()) {
@@ -294,55 +376,92 @@ void BattleView::onExit()
 }
 void BattleView::titanInfoChange(CCObject* obj)
 {
+//    auto& children = m_tabView->getContainer()->getChildren();
+//    for (auto child : children)
+//    {
+//        auto& childrenArr = child->getChildren();
+//        SoldierCell *cell = dynamic_cast<SoldierCell*>(childrenArr.at(0));
+//        if(cell){
+//           
+//            int sid = atoi(cell->m_soldierId.c_str());
+//            if(sid>=107401&&sid<=107430)//fusheng 存在泰坦
+//            {
+//                string oldID = cell->m_soldierId;
+//                cell->m_soldierId = GlobalData::shared()->titanInfo.titanId;
+//                
+//                if (oldID == GlobalData::shared()->titanInfo.titanId) {
+//                    CCLOG("march titan ti li hui fu");
+//                }
+//                else
+//                {
+//                    if (TroopsController::getInstance()->m_tmpBattleInfos.find(oldID)!=TroopsController::getInstance()->m_tmpBattleInfos.end()) {
+//                        
+//                        TroopsController::getInstance()->m_tmpBattleInfos[cell->m_soldierId] = TroopsController::getInstance()->m_tmpBattleInfos[oldID];
+//                        
+//                        TroopsController::getInstance()->m_tmpBattleInfos[oldID] = 0;
+//                        
+//                        TroopsController::getInstance()->m_tmpFreeSoldiers[cell->m_soldierId] = TroopsController::getInstance()->m_tmpFreeSoldiers[oldID];
+//                        
+//                        TroopsController::getInstance()->m_tmpFreeSoldiers[oldID] = 0;
+//                        
+//                        TroopsController::getInstance()->m_tmpConfSoldiers[cell->m_soldierId] = TroopsController::getInstance()->m_tmpConfSoldiers[oldID];
+//                        
+//                        TroopsController::getInstance()->m_tmpConfSoldiers[oldID] = 0;
+//                        
+//                        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_COUNT_CHANGE
+//                                                                                               , CCInteger::create(TroopsController::getInstance()->m_tmpBattleInfos[cell->m_soldierId])); //计算体力是否充足
+//                        
+//                        CCLOG("march update titan");
+//                    }
+//                }
+//                
+//                
+//                
+//                cell->refresh();
+//            }
+//            
+//        }
+//    }
     
-    auto& children = m_tabView->getContainer()->getChildren();
-    for (auto child : children)
+    auto armyInfo = GlobalData::shared()->armyList[GlobalData::shared()->titanInfo.titanId];
+    if(armyInfo.free != 0)//士兵里有龙
     {
-        auto& childrenArr = child->getChildren();
-        SoldierCell *cell = dynamic_cast<SoldierCell*>(childrenArr.at(0));
-        if(cell){
-           
-            int sid = atoi(cell->m_soldierId.c_str());
-            if(sid>=107401&&sid<=107430)//fusheng 存在泰坦
-            {
-                string oldID = cell->m_soldierId;
-                cell->m_soldierId = GlobalData::shared()->titanInfo.titanId;
-                
-                if (oldID == GlobalData::shared()->titanInfo.titanId) {
-                    CCLOG("march titan ti li hui fu");
-                }
-                else
-                {
-                    if (TroopsController::getInstance()->m_tmpBattleInfos.find(oldID)!=TroopsController::getInstance()->m_tmpBattleInfos.end()) {
-                        
-                        TroopsController::getInstance()->m_tmpBattleInfos[cell->m_soldierId] = TroopsController::getInstance()->m_tmpBattleInfos[oldID];
-                        
-                        TroopsController::getInstance()->m_tmpBattleInfos[oldID] = 0;
-                        
-                        TroopsController::getInstance()->m_tmpFreeSoldiers[cell->m_soldierId] = TroopsController::getInstance()->m_tmpFreeSoldiers[oldID];
-                        
-                        TroopsController::getInstance()->m_tmpFreeSoldiers[oldID] = 0;
-                        
-                        TroopsController::getInstance()->m_tmpConfSoldiers[cell->m_soldierId] = TroopsController::getInstance()->m_tmpConfSoldiers[oldID];
-                        
-                        TroopsController::getInstance()->m_tmpConfSoldiers[oldID] = 0;
-                        
-                        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_COUNT_CHANGE
-                                                                                               , CCInteger::create(TroopsController::getInstance()->m_tmpBattleInfos[cell->m_soldierId])); //计算体力是否充足
-                        
-                        CCLOG("march update titan");
-                    }
-                }
-                
-                
-                
-
-                
-                cell->refresh();
-            }
+        if (GlobalData::shared()->titanInfo.level == 1)
+        {
             
         }
+        else
+        {
+            string oldID = CCString::createWithFormat("%d", GlobalData::shared()->titanInfo.level + 107400 - 1)->getCString();
+            
+            if (TroopsController::getInstance()->m_tmpBattleInfos.find(oldID)!=TroopsController::getInstance()->m_tmpBattleInfos.end()) {
+                
+                TroopsController::getInstance()->m_tmpBattleInfos[GlobalData::shared()->titanInfo.titanId] = TroopsController::getInstance()->m_tmpBattleInfos[oldID];
+                
+                TroopsController::getInstance()->m_tmpBattleInfos[oldID] = 0;
+                
+                TroopsController::getInstance()->m_tmpFreeSoldiers[GlobalData::shared()->titanInfo.titanId] = TroopsController::getInstance()->m_tmpFreeSoldiers[oldID];
+                
+                TroopsController::getInstance()->m_tmpFreeSoldiers[oldID] = 0;
+                
+                TroopsController::getInstance()->m_tmpConfSoldiers[GlobalData::shared()->titanInfo.titanId] = TroopsController::getInstance()->m_tmpConfSoldiers[oldID];
+                
+                TroopsController::getInstance()->m_tmpConfSoldiers[oldID] = 0;
+                
+                CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_COUNT_CHANGE
+                                                                                       , CCInteger::create(TroopsController::getInstance()->m_tmpBattleInfos[GlobalData::shared()->titanInfo.titanId])); //计算体力是否充足
+                
+                CCLOG("march update titan");
+                
+                //fusheng 需要刷新龙相关的节点
+            }
+           
+        }
+       
     }
+    
+
+    refreshDragonStatus(nullptr);
     TroopsController::getInstance()->changeArrTime();
 }
 
@@ -453,6 +572,8 @@ void BattleView::titanNumChange(CCObject* obj)
     
 }
 
+
+
 SEL_CCControlHandler BattleView::onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName)
 {
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onClickQuickBtn", BattleView::onClickQuickBtn);
@@ -467,6 +588,23 @@ SEL_CCControlHandler BattleView::onResolveCCBCCControlSelector(cocos2d::CCObject
 
 bool BattleView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode)
 {
+    
+
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_dragonPicNode", CCNode*, this->m_dragonPicNode);
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_dragonPicNode2", CCNode*, this->m_dragonPicNode2);
+    
+      CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_dragonMarchingNode", CCNode*, this->m_dragonMarchingNode);
+      CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_dragonMarchingLable", CCLabelIF*, this->m_dragonMarchingLable);
+      CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_dragonNode", CCNode*, this->m_dragonNode);
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_dragonName", CCLabelIF*, this->m_dragonName);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanAPTxt_0", CCLabelIF*, this->m_titanAPTxt_0);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanAPTxt_1", CCLabelIF*, this->m_titanAPTxt_1);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titanAPTxt_2", CCLabelIF*, this->m_titanAPTxt_2);
+    
+      CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_ProTiTanAP", CCScale9Sprite*, this->m_ProTiTanAP);
+    
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_marchBtn", CCControlButton*, this->m_marchBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_quickBtn", CCControlButton*, this->m_quickBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_msg1Label", CCLabelIF*, this->m_msg1Label);
@@ -485,11 +623,14 @@ bool BattleView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const ch
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_hintText1", CCLabelIF*, m_hintText1);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_addBtn", CCControlButton*, m_addBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_addIcon", CCSprite*, m_addIcon);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_addIcon1", CCSprite*, m_addIcon1);
+  
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_helpBtn", CCControlButton*, m_helpBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_formationBtn1", CCControlButton*, m_formationBtn1);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_formationBtn2", CCControlButton*, m_formationBtn2);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_stamineNode", CCNode*, this->m_stamineNode);
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_2touchBtnBg", CCSprite*, this->m_2touchBtnBg);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_2touchBtn", CCSprite*, this->m_2touchBtn);
     return false;
 }
 
@@ -540,10 +681,30 @@ void BattleView::onFormation1Click(CCObject *pSender, CCControlEvent event){
             if (vector2.size() == 2) {
                 int selNum = atoi(vector2[1].c_str());
                 int totalNum = TroopsController::getInstance()->m_tmpFreeSoldiers[vector2[0]] + TroopsController::getInstance()->m_tmpBattleInfos[vector2[0]];
-                if (selNum > totalNum) {
-                    hintFlag = true;
-                    break;
+                
+                
+                int sid = atoi(vector2[0].c_str());
+                
+                if(sid>=107401&&sid<=107430)//fusheng 存在泰坦
+                {
+                    auto armyInfo = GlobalData::shared()->armyList[GlobalData::shared()->titanInfo.titanId];
+                    if(armyInfo.free == 0 && selNum != 0)//士兵里没有龙
+                    {
+                        hintFlag = true;
+                        break;
+                    }
+                    
                 }
+                else
+                {
+                    if (selNum > totalNum) {
+                        hintFlag = true;
+                        break;
+                    }
+                }
+
+                
+                
             }
             else {
                 CCCommonUtils::flyText(_lang("103686"));
@@ -563,7 +724,25 @@ void BattleView::onFormation1Click(CCObject *pSender, CCControlEvent event){
                 vector<std::string> vector2;
                 CCCommonUtils::splitString(vector1[i], ",", vector2);
                 if (vector2.size() == 2) {
-                    TroopsController::getInstance()->updateTmpBattleData(vector2[0], atoi(vector2[1].c_str()), vector2[0]);
+                    int sid = atoi(vector2[0].c_str());
+                    
+                    if(sid>=107401&&sid<=107430)//fusheng 存在泰坦
+                    {
+                        auto armyInfo = GlobalData::shared()->armyList[GlobalData::shared()->titanInfo.titanId];
+                        if(armyInfo.free != 0 )//士兵里有龙
+                        {
+                            
+                            selectDragon = atoi(vector2[1].c_str()) == 1?true:false;
+                            
+                            this->refreshDragonNumStatus();
+
+                        }
+                        
+                    }
+                    else
+                    {
+                        TroopsController::getInstance()->updateTmpBattleData(vector2[0], atoi(vector2[1].c_str()), vector2[0]);
+                    }
                 }
                 else {
                     CCCommonUtils::flyText(_lang("103686"));
@@ -625,10 +804,28 @@ void BattleView::onFormation2Click(CCObject *pSender, CCControlEvent event){
             if (vector2.size() == 2) {
                 int selNum = atoi(vector2[1].c_str());
                 int totalNum = TroopsController::getInstance()->m_tmpFreeSoldiers[vector2[0]] + TroopsController::getInstance()->m_tmpBattleInfos[vector2[0]];
-                if (selNum > totalNum) {
-                    hintFlag = true;
-                    break;
+                
+                int sid = atoi(vector2[0].c_str());
+                
+                if(sid>=107401&&sid<=107430)//fusheng 存在泰坦
+                {
+                    auto armyInfo = GlobalData::shared()->armyList[GlobalData::shared()->titanInfo.titanId];
+                    if(armyInfo.free == 0 && selNum != 0)//士兵里没有龙
+                    {
+                        hintFlag = true;
+                        break;
+                    }
+                    
                 }
+                else
+                {
+                    if (selNum > totalNum) {
+                        hintFlag = true;
+                        break;
+                    }
+                }
+                
+               
             }
             else {
                 CCCommonUtils::flyText(_lang("103686"));
@@ -648,7 +845,32 @@ void BattleView::onFormation2Click(CCObject *pSender, CCControlEvent event){
                 vector<std::string> vector2;
                 CCCommonUtils::splitString(vector1[i], ",", vector2);
                 if (vector2.size() == 2) {
-                    TroopsController::getInstance()->updateTmpBattleData(vector2[0], atoi(vector2[1].c_str()), vector2[0]);
+                    
+                    
+                    int sid = atoi(vector2[0].c_str());
+                    
+                    if(sid>=107401&&sid<=107430)//fusheng 存在泰坦
+                    {
+                        auto armyInfo = GlobalData::shared()->armyList[GlobalData::shared()->titanInfo.titanId];
+                        if(armyInfo.free != 0 )//士兵里有龙
+                        {
+                            
+                            selectDragon = atoi(vector2[1].c_str()) == 1?true:false;
+                            
+                            this->refreshDragonNumStatus();
+                            
+                        }
+                        
+                    }
+                    else
+                    {
+                         TroopsController::getInstance()->updateTmpBattleData(vector2[0], atoi(vector2[1].c_str()), vector2[0]);
+                    }
+
+                    
+                    
+                    
+                   
                 }
                 else {
                     CCCommonUtils::flyText(_lang("103686"));
@@ -673,7 +895,7 @@ void BattleView::onClickMarchBtn(CCObject * pSender, Control::EventType pCCContr
     if( this->m_marchBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::NORMAL)->getState() == cocos2d::ui::Scale9Sprite::State::GRAY)
     {
         
-        CCCommonUtils::flyHint("", "", "Insufficient Titan manual");//fusheng 需要文本
+        CCCommonUtils::flyHint("", "", _lang("500010"));//fusheng 需要文本
         return ;
     }
     
@@ -768,6 +990,21 @@ void BattleView::updateArmyNumber(CCObject* obj)
         if(!it->second.isArmy){
             continue;
         }
+        int sid = atoi(it->second.armyId.c_str());
+        if(sid>=107401&&sid<=107430)//fusheng 加一个保障
+        {
+            if (it->first != GlobalData::shared()->titanInfo.titanId) {
+                continue;
+            }
+            else
+            {
+                TroopsController::getInstance()->m_tmpFreeSoldiers[it->first] = (it->second).free;
+                TroopsController::getInstance()->m_tmpConfSoldiers[it->first] = (it->second).free;
+                continue;
+            }
+        }
+
+        
         if((it->second).free != TroopsController::getInstance()->m_tmpConfSoldiers[it->first])
         {
             int count = (it->second).free-TroopsController::getInstance()->m_tmpConfSoldiers[it->first];
@@ -795,6 +1032,7 @@ void BattleView::updateArmyNumber(CCObject* obj)
         }
     }
     updateInfo();
+    refreshDragonStatus(nullptr);
 }
 
 void BattleView::march()
@@ -942,19 +1180,48 @@ void BattleView::selectAll(){
             totalResource = info->second.resource.sum+3;//防止采集剩余容错3个资源量
         }
     }
+
+    if(isBegin)
+    {
+        isBegin = false;
+      
+    }
+    else
+    {
+        auto armyInfo = GlobalData::shared()->armyList[GlobalData::shared()->titanInfo.titanId];
+        if(armyInfo.free != 0 && maxForceNum>0)//士兵里有龙
+        {
+            totalNum = 1;
+            
+            selectDragon = true;
+            
+            refreshDragonNumStatus();
+            
+            
+            
+            
+            
+            if(m_targetType==ActBossTile || (info != WorldController::getInstance()->getCityInfos().end() && (info->second.cityType == FieldMonster || info->second.cityType == MonsterTile || info->second.cityType == MonsterRange || info->second.cityType == ActBossTile))){
+                
+                if(GlobalData::shared()->titanInfo.currentManual<GlobalData::shared()->titanInfo.costmanual)
+                {
+                    this->m_marchBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::NORMAL)->setState(cocos2d::ui::Scale9Sprite::State::GRAY); //fusheng onEnter之后注册通知函数  第一次在这里还没注册
+                    this->m_marchBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::HIGH_LIGHTED)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
+                    this->m_marchBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::SELECTED)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
+                }
+                
+            } //fusheng 花费体力的出征
+            
+            
+        }
+    }
     
-    for (int i = 0; i<m_tmpArray->count(); i++) {
+    
+    for (int i = 0; i<m_tmpArray->count(); i++) {//fusheng 只判断m_tmpArray里的
         std::string m_soldierId = dynamic_cast<CCString*>(m_tmpArray->objectAtIndex(i))->getCString();
         int sid = CCString::create(m_soldierId)->intValue();
         
-        if(sid>=107401&&sid<=107430)
-        {
-            if(isBegin)
-            {
-                isBegin = false;
-                continue;
-            }
-        }
+        
         int tmpCntNum = 0;
         tmpCntNum = TroopsController::getInstance()->m_tmpConfSoldiers[m_soldierId];
         tmpCntNum = totalNum + tmpCntNum >= maxForceNum ? maxForceNum - totalNum : tmpCntNum;
@@ -968,16 +1235,7 @@ void BattleView::selectAll(){
         TroopsController::getInstance()->updateTmpBattleData(m_soldierId, tmpCntNum, m_soldierId);
         auto info = WorldController::getInstance()->getCityInfos().find(m_targetIndex);
         
-        if(m_targetType==ActBossTile || (info != WorldController::getInstance()->getCityInfos().end() && (info->second.cityType == FieldMonster || info->second.cityType == MonsterTile || info->second.cityType == MonsterRange || info->second.cityType == ActBossTile))){
-            
-            if(sid>=107401&&sid<=107430&&GlobalData::shared()->titanInfo.currentManual<GlobalData::shared()->titanInfo.costmanual)
-            {
-                this->m_marchBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::NORMAL)->setState(cocos2d::ui::Scale9Sprite::State::GRAY); //fusheng onEnter之后注册通知函数  第一次在这里还没注册
-                this->m_marchBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::HIGH_LIGHTED)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
-                this->m_marchBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::SELECTED)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
-            }
-
-        } //fusheng 花费体力的出征
+        
         
         if(totalNum + tmpCntNum >= maxForceNum){
             break;
@@ -987,8 +1245,8 @@ void BattleView::selectAll(){
         }
         totalNum += tmpCntNum;
     }
-    CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE
-                                                                           , CCString::createWithFormat("ED_quick"));
+//    CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE
+//                                                                           , CCString::createWithFormat("ED_quick"));//fushegn del
 }
 
 void BattleView::unselectAll(){
@@ -1002,6 +1260,9 @@ void BattleView::unselectAll(){
         std::string m_soldierId = dynamic_cast<CCString*>(m_tmpArray->objectAtIndex(i))->getCString();
         TroopsController::getInstance()->updateTmpBattleData(m_soldierId, 0, m_soldierId);
     }
+    
+    selectDragon = false;
+    refreshDragonNumStatus();
 }
 
 void BattleView::onAddClick(CCObject * pSender, Control::EventType pCCControlEvent){
@@ -1156,6 +1417,119 @@ CCNode* BattleView::getGuideNode(string _key)
     return NULL;
 }
 
+void BattleView::refreshDragonNumStatus()
+{
+    auto armyInfo = GlobalData::shared()->armyList[GlobalData::shared()->titanInfo.titanId];
+    if(armyInfo.free != 0 )//士兵里有龙
+    {
+   
+        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_COUNT_CHANGE
+                                                                               , CCInteger::create(selectDragon?1:0));
+    
+        m_2touchBtn->setPositionX(selectDragon?94:20);
+        
+        
+        m_2touchBtn->setSpriteFrame(selectDragon?"nb_checkboxBlockON.png":"nb_checkboxBlockOFF.png");
+        
+        m_2touchBtnBg->setSpriteFrame(selectDragon?"nb_checkboxBGSend.png":"nb_checkboxBGStay.png");
+    
+        TroopsController::getInstance()->updateTmpBattleData(GlobalData::shared()->titanInfo.titanId, selectDragon?1:0, GlobalData::shared()->titanInfo.titanId);
+    }
+}
+
+void BattleView::refreshDragonStatus(CCObject* obj)
+{
+    auto armyInfo = GlobalData::shared()->armyList[GlobalData::shared()->titanInfo.titanId];
+    if(armyInfo.free != 0)//士兵里有龙
+    {
+        m_dragonNode->setVisible(true);
+        m_dragonMarchingNode->setVisible(false);
+       
+        string name = CCCommonUtils::getNameById(GlobalData::shared()->titanInfo.titanId);
+        m_dragonName->setString(name);
+   
+        
+        string id = CC_ITOA(GlobalData::shared()->titanInfo.tid);
+        
+        string picName = CCCommonUtils::getPropById(id, "dragonMarchUI");
+        picName.append(".png");
+        auto spr = CCLoadSprite::createSprite(picName.c_str());
+       
+        m_dragonPicNode->removeAllChildren();
+        m_dragonPicNode->addChild(spr);
+        
+        if(GlobalData::shared()->titanInfo.maxManual!=0)
+        {
+            float ratio =((float)GlobalData::shared()->titanInfo.currentManual)/GlobalData::shared()->titanInfo.maxManual;
+            
+            auto size = this->m_ProTiTanAP->getContentSize();
+            
+            size.width = m_ProTiTanAPMaxWidth * ratio;
+            
+            
+            m_ProTiTanAP->setVisible(ratio != 0);
+            
+            auto oriSize = m_ProTiTanAP->getOriginalSize();
+            
+            if (size.width<oriSize.width) {
+                
+                this->m_ProTiTanAP->setContentSize(oriSize);
+                
+            }
+            else
+            {
+                this->m_ProTiTanAP->setContentSize(size);
+                
+            }
+            
+            
+            
+           
+            this->m_titanAPTxt_0->setString("(");
+            this->m_titanAPTxt_1->setString(CCString::createWithFormat("%d",GlobalData::shared()->titanInfo.currentManual<0?0:GlobalData::shared()->titanInfo.currentManual)->getCString());
+            this->m_titanAPTxt_2->setString(CCString::createWithFormat("/%d)",GlobalData::shared()->titanInfo.maxManual)->getCString());
+            
+            vector<cocos2d::CCLabelIF *> labels;
+            labels.push_back(m_titanAPTxt_0);
+            labels.push_back(m_titanAPTxt_1);
+            labels.push_back(m_titanAPTxt_2);
+            
+            NBCommonUtils::arrangeLabel(labels);
+
+            
+        }
+        else
+        {
+            
+            auto size = this->m_ProTiTanAP->getContentSize();
+            size.width = 0;
+            this->m_ProTiTanAP->setContentSize(size);
+
+            
+        }
+        
+        
+        
+
+    }
+    else
+    {
+        
+        string id = CC_ITOA(GlobalData::shared()->titanInfo.tid);
+        
+        string picName = CCCommonUtils::getPropById(id, "dragonMarchUI");
+        picName.append(".png");
+        auto spr = CCLoadSprite::createSprite(picName.c_str());
+        
+        m_dragonPicNode2->removeAllChildren();
+        m_dragonPicNode2->addChild(spr);
+        
+        
+        m_dragonNode->setVisible(false);
+        m_dragonMarchingNode->setVisible(true);
+    }
+}
+
 #pragma mark -
 #pragma mark HeroCell Part
 
@@ -1264,32 +1638,21 @@ void SoldierCell::setData(string itemId, int num, int type, int rally)
         m_picBg2->setVisible(id % 4 == 2);
         m_picBg3->setVisible(id % 4 == 3);
     }
-    else
-    {
-        auto pic = CCLoadSprite::createSprite("cz_long1.png");
-        CCCommonUtils::setSpriteMaxSize(pic, 110);
-        m_picNode->addChild(pic);
-        pic->setPositionY(-10);
-        
-        m_picBg0->setVisible(false);
-        m_picBg1->setVisible(false);
-        m_picBg2->setVisible(false);
-        m_picBg3->setVisible(false);
-    }
+
     
     this->m_levelNode->removeAllChildren();
     string num1 = m_soldierId.substr(m_soldierId.size()-2);
     
-    if (id>= 107401 && id<= 107430) {//fusheng 泰坦 计算罗马数字时不加一
-        auto pic1= CCCommonUtils::getRomanSprite(atoi(num1.c_str()));
-        m_levelNode->addChild(pic1);
-    }
-    else
-    {
-        auto pic1= CCCommonUtils::getRomanSprite(atoi(num1.c_str())+1);
-        m_levelNode->addChild(pic1);
-    }
-    
+//    if (id>= 107401 && id<= 107430) {//fusheng 泰坦 计算罗马数字时不加一
+//        auto pic1= CCCommonUtils::getRomanSprite(atoi(num1.c_str()));
+//        m_levelNode->addChild(pic1);
+//    }
+//    else
+//    {
+//            }
+    auto pic1= CCCommonUtils::getRomanSprite(atoi(num1.c_str())+1);
+    m_levelNode->addChild(pic1);
+
     
     float pro = 0;
     if (m_cntNum>0) {
@@ -1359,13 +1722,13 @@ void SoldierCell::valueChange(Ref *pSender, NBSlider::EventType type)
     
     int soldierId = CCString::create(m_soldierId)->intValue();
     
-    if (soldierId<=107430&&soldierId>=107401) {
-        //fusheng 改变泰坦个数
-        if (numChange) {
-            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_COUNT_CHANGE
-                                                                                   , CCInteger::create(retNum));
-        }
-    }
+//    if (soldierId<=107430&&soldierId>=107401) {
+//        //fusheng 改变泰坦个数
+//        if (numChange) {
+//            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_COUNT_CHANGE
+//                                                                                   , CCInteger::create(retNum));
+//        }
+//    }
 }
 
 void SoldierCell::onEnter() {
@@ -1392,11 +1755,11 @@ void SoldierCell::onSubClick(CCObject * pSender, Control::EventType pCCControlEv
     
     int soldierId = CCString::create(m_soldierId)->intValue();
     
-    if (soldierId<=107430&&soldierId>=107401) {
-        //fusheng 改变泰坦个数
-        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_COUNT_CHANGE
-                                                                               , CCInteger::create(num));
-    }
+//    if (soldierId<=107430&&soldierId>=107401) {
+//        //fusheng 改变泰坦个数
+//        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_COUNT_CHANGE
+//                                                                               , CCInteger::create(num));
+//    }
 }
 
 void SoldierCell::onAddClick(CCObject * pSender, Control::EventType pCCControlEvent){
@@ -1408,11 +1771,11 @@ void SoldierCell::onAddClick(CCObject * pSender, Control::EventType pCCControlEv
     
     int soldierId = CCString::create(m_soldierId)->intValue();
     
-    if (soldierId<=107430&&soldierId>=107401) {
-        //fusheng 改变泰坦个数
-        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_COUNT_CHANGE
-                                                                               , CCInteger::create(num));
-    }
+//    if (soldierId<=107430&&soldierId>=107401) {
+//        //fusheng 改变泰坦个数
+//        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_COUNT_CHANGE
+//                                                                               , CCInteger::create(num));
+//    }
 }
 
 bool SoldierCell::onAssignCCBMemberVariable(cocos2d::CCObject *pTarget, const char *pMemberVariableName, cocos2d::CCNode *pNode) {

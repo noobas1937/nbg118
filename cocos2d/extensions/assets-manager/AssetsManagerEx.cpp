@@ -41,10 +41,6 @@ using namespace std;
 
 NS_CC_EXT_BEGIN
 
-#define VERSION_FILENAME        "version.manifest"
-#define TEMP_MANIFEST_FILENAME  "project.manifest.temp"
-#define MANIFEST_FILENAME       "project.manifest"
-
 #define BUFFER_SIZE    8192
 #define MAX_FILENAME   512
 
@@ -56,7 +52,12 @@ const std::string AssetsManagerEx::BATCH_UPDATE_ID = "@batch_update";
 
 // Implementation of AssetsManagerEx
 
-AssetsManagerEx::AssetsManagerEx(const std::string& manifestUrl, const std::string& storagePath)
+AssetsManagerEx::AssetsManagerEx(
+                                 const std::string& manifestUrl,
+                                 const std::string& storagePath,
+                                 std::string version_filename,
+                                 std::string temp_manifest_filename,
+                                 std::string manifest_filename)
 : _updateState(State::UNCHECKED)
 , _assets(nullptr)
 , _storagePath("")
@@ -92,9 +93,12 @@ AssetsManagerEx::AssetsManagerEx(const std::string& manifestUrl, const std::stri
                                          std::placeholders::_4);
     _downloader->_onSuccess = std::bind(&AssetsManagerEx::onSuccess, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
     setStoragePath(storagePath);
-    _cacheVersionPath = _storagePath + VERSION_FILENAME;
-    _cacheManifestPath = _storagePath + MANIFEST_FILENAME;
-    _tempManifestPath = _storagePath + TEMP_MANIFEST_FILENAME;
+    _version_filename = version_filename;
+    _temp_manifest_filename = temp_manifest_filename;
+    _manifest_filename = manifest_filename;
+    _cacheVersionPath = _storagePath + version_filename;
+    _cacheManifestPath = _storagePath + manifest_filename;
+    _tempManifestPath = _storagePath + temp_manifest_filename;
 
     initManifests(manifestUrl);
 }
@@ -111,9 +115,14 @@ AssetsManagerEx::~AssetsManagerEx()
     CC_SAFE_RELEASE(_remoteManifest);
 }
 
-AssetsManagerEx* AssetsManagerEx::create(const std::string& manifestUrl, const std::string& storagePath)
+AssetsManagerEx* AssetsManagerEx::create(
+                                         const std::string& manifestUrl,
+                                         const std::string& storagePath,
+                                         std::string version_filename,
+                                         std::string temp_manifest_filename,
+                                         std::string manifest_filename)
 {
-    AssetsManagerEx* ret = new (std::nothrow) AssetsManagerEx(manifestUrl, storagePath);
+    AssetsManagerEx* ret = new (std::nothrow) AssetsManagerEx(manifestUrl, storagePath, version_filename, temp_manifest_filename, manifest_filename);
     if (ret)
     {
         ret->autorelease();
@@ -199,8 +208,10 @@ void AssetsManagerEx::loadLocalManifest(const std::string& manifestUrl)
     if (_localManifest->isLoaded())
     {
         // Compare with cached manifest to determine which one to use
-        if (cachedManifest) {
-            if (strcmp(_localManifest->getVersion().c_str(), cachedManifest->getVersion().c_str()) > 0)
+        if (cachedManifest)
+        {
+            // if (strcmp(_localManifest->getVersion().c_str(), cachedManifest->getVersion().c_str()) > 0)
+            if (true == isNewVersion(_localManifest->getVersion(), cachedManifest->getVersion()))
             {
                 // Recreate storage, to empty the content
                 _fileUtils->removeDirectory(_storagePath);
@@ -467,7 +478,7 @@ void AssetsManagerEx::parseVersion()
     }
     else
     {
-        if (_localManifest->versionEquals(_remoteManifest))
+        if (true == isNewVersion(_localManifest->getVersion(), _remoteManifest->getVersion()) || _localManifest->versionEquals(_remoteManifest))
         {
             _updateState = State::UP_TO_DATE;
             dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ALREADY_UP_TO_DATE);
@@ -523,7 +534,7 @@ void AssetsManagerEx::parseManifest()
     }
     else
     {
-        if (_localManifest->versionEquals(_remoteManifest))
+        if (true == isNewVersion(_localManifest->getVersion(), _remoteManifest->getVersion()) || _localManifest->versionEquals(_remoteManifest))
         {
             _updateState = State::UP_TO_DATE;
             dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ALREADY_UP_TO_DATE);
@@ -577,7 +588,7 @@ void AssetsManagerEx::startUpdate()
         _tempManifest = _remoteManifest;
         
         std::unordered_map<std::string, Manifest::AssetDiff> diff_map = _localManifest->genDiff(_remoteManifest);
-        if (diff_map.size() == 0)
+        if (diff_map.size() == 0 || true == isNewVersion(_localManifest->getVersion(), _remoteManifest->getVersion()))
         {
             updateSucceed();
         }
@@ -634,7 +645,7 @@ void AssetsManagerEx::updateSucceed()
 {
     // Every thing is correctly downloaded, do the following
     // 1. rename temporary manifest to valid manifest
-    _fileUtils->renameFile(_storagePath, TEMP_MANIFEST_FILENAME, MANIFEST_FILENAME);
+    _fileUtils->renameFile(_storagePath, _temp_manifest_filename, _manifest_filename);
     // 2. swap the localManifest
     if (_localManifest != nullptr)
         _localManifest->release();
@@ -940,6 +951,65 @@ void AssetsManagerEx::destroyDownloadedVersion()
 {
     _fileUtils->removeFile(_cacheVersionPath);
     _fileUtils->removeFile(_cacheManifestPath);
+}
+
+
+#pragma mark *
+
+int split(const string& str, vector<string>& ret_, string sep = ",")
+{
+    if (str.empty())
+    {
+        return 0;
+    }
+    
+    string tmp;
+    string::size_type pos_begin = str.find_first_not_of(sep);
+    string::size_type comma_pos = 0;
+    
+    while (pos_begin != string::npos)
+    {
+        comma_pos = str.find(sep, pos_begin);
+        if (comma_pos != string::npos)
+        {
+            tmp = str.substr(pos_begin, comma_pos - pos_begin);
+            pos_begin = comma_pos + sep.length();
+        }
+        else
+        {
+            tmp = str.substr(pos_begin);
+            pos_begin = comma_pos;
+        }
+        
+        if (!tmp.empty())
+        {
+            ret_.push_back(tmp);
+            tmp.clear();
+        }
+    }
+    return 0;
+}
+
+bool AssetsManagerEx::isNewVersion(std::string aVersion, std::string bVersion)
+{
+    vector<string> a_versions;
+    split(aVersion, a_versions, ".");
+    
+    vector<string> b_versions;
+    split(bVersion, b_versions, ".");
+    
+    bool is_a_new = true;
+    for (int i = 0; i < a_versions.size() && i < b_versions.size(); ++i)
+    {
+        int v = atoi(a_versions[i].c_str()) - atoi(b_versions[i].c_str());
+        is_a_new = v > 0;
+        if (v > 0)
+        {
+            break;
+        }
+    }
+    
+    return is_a_new;
 }
 
 NS_CC_EXT_END

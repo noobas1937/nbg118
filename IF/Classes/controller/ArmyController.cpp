@@ -317,6 +317,7 @@ void ArmyController::refreshFortFreeNum(CCDictionary *dict){
     if(it != GlobalData::shared()->fortList.end()){
         it->second.free = free;
     }
+    CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TRAPS_CHANGE);
 }
 
 void ArmyController::refreshArmyFreeNum(CCDictionary *dict,bool refresh){

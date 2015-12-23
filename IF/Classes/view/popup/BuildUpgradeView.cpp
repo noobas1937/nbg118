@@ -56,16 +56,51 @@ bool BuildUpgradeView::init(int buildId, int pos)
     auto tmpCCB = CCBLoadFile("Upgrade",this,this);
     this->setContentSize(tmpCCB->getContentSize());
     
-//    int addHeight = getExtendHeight();
+    
+    this->getArcModelLayer()->setVisible(false);
+    
+    int addHeight = getExtendHeight();
+    
+    auto wSize = Director::getInstance()->getWinSize();
+    
+    if (wSize.height/wSize.width>1.6) {//fusheng 手机
+        auto oldR =m_msg_BG->getBoundingBox();
+        
+        auto oldS = m_msg_BG->getScaleY();
+        
+        m_msg_BG->setScaleY(1);
+        
+        auto newR =m_msg_BG->getBoundingBox();
+        
+        if (newR.size.height - newR.size.height>addHeight/2) {//fusheng 调整大小后大于infoNode移动距离时 不放缩
+            m_msg_BG->setScaleY(oldS);
+        }
+        else
+        {
+            BGNode2->setPositionY(BGNode2->getPositionY()-(newR.size.height - oldR.size.height));
+            m_buildBG2->setPositionY(m_buildBG2->getPositionY()-(newR.size.height - oldR.size.height));
+            m_nbNameNode->setPositionY(m_nbNameNode->getPositionY()-(newR.size.height - oldR.size.height));
+            m_info_BG->setPositionY(m_info_BG->getPositionY()-addHeight/2);
+            m_infoList->setPositionY(m_infoList->getPositionY()-addHeight/2);
+
+        }
+        
+    }
+    else
+    {
+        
+    }
+    
+    
 //    int oldBgWidth = m_buildBG->getContentSize().width;
 //    int oldBgHeight = m_buildBG->getContentSize().height;
 //    int newBgHeight = addHeight/2+oldBgHeight;
 //    m_buildBG->setContentSize(CCSizeMake(oldBgWidth, newBgHeight));
 //    int oldWidth = m_infoList->getContentSize().width;
 //    int oldHeight = m_infoList->getContentSize().height;
-//    m_infoList->setPositionY(m_infoList->getPositionY()-addHeight/2);
+
 //    m_infoList->setContentSize(CCSizeMake(oldWidth, oldHeight+addHeight/2));
-//    m_btnNode->setPositionY(m_btnNode->getPositionY()-addHeight/2);
+    m_btnNode->setPositionY(m_btnNode->getPositionY()-addHeight);
     
     m_upBtnMsgLabel->setString(_lang("102104").c_str());
     m_btnMsgLabel->setString(_lang("102127").c_str());
@@ -468,6 +503,15 @@ SEL_CCControlHandler BuildUpgradeView::onResolveCCBCCControlSelector(cocos2d::CC
 
 bool BuildUpgradeView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode)
 {
+    
+
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nbNameNode", CCNode*, this->m_nbNameNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_buildBG2", CCScale9Sprite*, this->m_buildBG2);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "BGNode2", CCNode*, this->BGNode2);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_msg_BG", CCSprite*, this->m_msg_BG);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_info_BG", CCScale9Sprite*, this->m_info_BG);
+    
+    
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_mainNode", CCNode*, this->m_mainNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_upBtn", CCControlButton*, this->m_upBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_instantBtn", CCControlButton*, this->m_instantBtn);
@@ -816,7 +860,7 @@ void BuildUpgradeView::onShowNextUnlockItem()
             CCLoadSprite::doResourceByCommonIndex(5, false);
         });
     }
-    else if (itemId == FUN_BUILD_BARRACK1 || itemId == FUN_BUILD_BARRACK2 || itemId == FUN_BUILD_BARRACK3 || itemId == FUN_BUILD_BARRACK4) {
+    else if (itemId == FUN_BUILD_BARRACK1 || itemId == FUN_BUILD_BARRACK2 || itemId == FUN_BUILD_BARRACK3 || itemId == FUN_BUILD_BARRACK4 || itemId ==FUN_BUILD_FORT) {
         CCLoadSprite::doResourceByCommonIndex(204, true);
         setCleanFunction([](){
             CCLoadSprite::doResourceByCommonIndex(204, false);
@@ -1402,8 +1446,8 @@ void UpgradeCell::refresh()
         m_picNode->addChild(pic);
     }
     
-    m_nameLabel->setColor(ccWHITE);
-    m_valueLabel->setColor(ccWHITE);
+    m_nameLabel->setColor(Color3B(196,207,255));
+    m_valueLabel->setColor(Color3B(196,207,255));
     
     m_nameLabel->setString(tmpCellName.c_str());
     if (m_type == 2) {
@@ -1421,7 +1465,7 @@ void UpgradeCell::refresh()
     else if (m_type == 3) {
         m_tmpName = tmpCellName;
         m_nameLabel->setFontSize(16);
-        
+        m_nameLabel->setDimensions(CCSizeMake(210, 0));
         if (CCCommonUtils::isIosAndroidPad())
         {
             m_nameLabel->setFontSize(40);
@@ -1429,6 +1473,7 @@ void UpgradeCell::refresh()
         }
         m_nameLabel->setString(m_tmpName+" "+CC_SECTOA(tmpTime));
         m_valueLabel->setString("");
+        
     }
     else if (m_type == 7) {
         m_tmpName = tmpCellName;
@@ -1444,18 +1489,31 @@ void UpgradeCell::refresh()
     }
     else if (m_type == 0) {
         if(m_isShow) {
+            
+            if (!m_isOk) {
+                m_nameLabel->setColor(Color3B(255,84,84));
+                
+                m_nameLabel->setFontSize(16);//fusheng 换字体大小
+                
+                m_valueLabel->setFontSize(16);
+            }
+            else
+            {
+                m_nameLabel->setFontSize(20);
+                
+                m_valueLabel->setFontSize(20);
+            }
+            
             m_nameLabel->setString(CC_CMDITOA(tmpSumValue).c_str());
             m_valueLabel->setString(CCString::createWithFormat("/%s",CC_CMDITOA(tmpCellValue).c_str())->getCString());
-            if (!m_isOk) {
-                m_nameLabel->setColor(ccRED);
-            }
+            
             m_valueLabel->setPositionX(m_nameLabel->getPositionX()+m_nameLabel->getContentSize().width*m_nameLabel->getOriginScaleX());
         }
         else {
             m_nameLabel->setString("");
             m_valueLabel->setString(CCString::createWithFormat("%s",CC_CMDITOA(tmpCellValue).c_str())->getCString());
             if (!m_isOk) {
-                m_valueLabel->setColor(ccRED);
+                m_valueLabel->setColor(Color3B(255,84,84));
             }
             m_valueLabel->setPositionX(m_nameLabel->getPositionX());
         }
@@ -1483,12 +1541,12 @@ void UpgradeCell::refresh()
             m_nameLabel->setDimensions(CCSizeMake(510, 0));
         }
         if (!m_isOk) {
-            m_nameLabel->setColor(ccRED);
+            m_nameLabel->setColor(Color3B(255,84,84));
        
         }
         else
         {
-            m_nameLabel->setColor(ccWHITE);
+            m_nameLabel->setColor(Color3B(196,207,255));
 
         }
 
@@ -1508,6 +1566,10 @@ void UpgradeCell::refresh()
     if (m_isOk) {
         m_yesSprite->setVisible(true);
         m_noSprite->setVisible(false);
+        
+        if ((m_type == 3||m_type == 0) && m_isShow) {
+            m_moveNode->setPositionX(0);
+        }
     }
     else {
         m_yesSprite->setVisible(false);
@@ -1516,6 +1578,13 @@ void UpgradeCell::refresh()
 //            m_noSprite->setVisible(false);
             m_btn->setVisible(true);
             m_btnLabel->setString(_lang("102153"));
+            if (m_isShow) {//fusheng 不显示按钮
+//                m_btn->setVisible(false);
+//                m_btnLabel->setString("");
+                if (!m_isOk) {
+                    m_moveNode->setPositionX(-90);
+                }
+            }
         }
         else if (m_type == 1) {
 //            m_noSprite->setVisible(false);
@@ -1535,6 +1604,10 @@ void UpgradeCell::refresh()
 //            m_noSprite->setVisible(false);
             m_btn->setVisible(true);
             m_btnLabel->setString(_lang("104903"));
+            
+            if (m_isShow) {
+                m_moveNode->setPositionX(-90);
+            }
         }
         else if (m_type == 7) {
             //            m_noSprite->setVisible(false);
@@ -1565,8 +1638,8 @@ void UpgradeCell::refresh()
         }
         
         if(m_type == 1 || m_type == 2 || m_type == 3 || m_type == 5 || m_type == 6 || m_type == 7) {
-            m_nameLabel->setColor(ccRED);
-            m_valueLabel->setColor(ccRED);
+            m_nameLabel->setColor(Color3B(255,84,84));
+            m_valueLabel->setColor(Color3B(255,84,84));
         }
     }
     
@@ -1618,20 +1691,20 @@ void UpgradeCell::onEnterFrame(float dt)
         if (m_isShow) {
             m_nameLabel->setString(CC_CMDITOA(tmpSumValue).c_str());
             if (!t_isOk) {
-                m_nameLabel->setColor(ccRED);
+                m_nameLabel->setColor(Color3B(255,84,84));
             }
             else {
-                m_nameLabel->setColor(ccWHITE);
+                m_nameLabel->setColor(Color3B(196,207,255));
             }
             m_valueLabel->setPositionX(m_nameLabel->getPositionX()+m_nameLabel->getContentSize().width*m_nameLabel->getOriginScaleX());
         }
         else {
             m_nameLabel->setString("");
             if (!t_isOk) {
-                m_valueLabel->setColor(ccRED);
+                m_valueLabel->setColor(Color3B(255,84,84));
             }
             else {
-                m_valueLabel->setColor(ccWHITE);
+                m_valueLabel->setColor(Color3B(196,207,255));
             }
             m_valueLabel->setPositionX(m_nameLabel->getPositionX());
         }
@@ -1688,7 +1761,7 @@ void UpgradeCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEven
             }
             else
             {
-                if (m_buildId == 400000000) {
+                if (m_buildId == FUN_BUILD_MAIN_CITY_ID) {
 //                    UIComponent::getInstance()->OnHomeBackBtnClick(NULL, CCControlEvent::TOUCH_DOWN);
                     if (CCCommonUtils::isIosAndroidPad())
                     {
@@ -1744,7 +1817,7 @@ void UpgradeCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEven
         }
         else if (m_type == 8) {
             
-            PopupViewController::getInstance()->goBackPopupView();
+//            PopupViewController::getInstance()->goBackPopupView();
             
             auto view = PopupViewController::getInstance()->getCurrentPopupView();
             
@@ -1790,6 +1863,9 @@ bool UpgradeCell::onAssignCCBMemberVariable(cocos2d::CCObject *pTarget, const ch
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_btn", CCScale9Sprite*, m_btn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_btnLabel", CCLabelIF*, m_btnLabel);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_touchBtn", CCNode*, m_touchBtn);
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_moveNode", CCNode*, m_moveNode);
+    
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_rectPic", CCScale9Sprite*, m_rectPic);
     return false;
@@ -1919,6 +1995,7 @@ bool UnLockItemCell::init(int type, string itemId, CCNode* node)
     m_touchNode = node;
     
     m_iconPath = "";
+    CCSprite* bg = nullptr;//fusheng 背景
     if (m_type == FUN_BUILD_MAIN) {
         m_iconPath = CCCommonUtils::getPropById(m_itemId, "pic");
         m_iconPath = m_iconPath+"_" + CC_ITOA(GlobalData::shared()->contryResType)+".png";
@@ -1965,17 +2042,26 @@ bool UnLockItemCell::init(int type, string itemId, CCNode* node)
         auto& aInfo = GlobalData::shared()->armyList[m_itemId];
         m_iconPath = aInfo.getHeadIcon();
         
-        auto bg = CCLoadSprite::createSprite("bnt_02.png");
+        bg = CCLoadSprite::createSprite("zb_bp_xuanzhong.png");
         bg->setPosition(ccp(sizeWidth/2, sizeHeight/2));
-        CCCommonUtils::setSpriteMaxSize(bg, 120, true);
-        if (CCCommonUtils::isIosAndroidPad()) {
-            CCCommonUtils::setSpriteMaxSize(bg, 273, true);
-        }
+//        CCCommonUtils::setSpriteMaxSize(bg, 125, true);
+//        if (CCCommonUtils::isIosAndroidPad()) {
+////            CCCommonUtils::setSpriteMaxSize(bg, 273, true);
+//        }
         this->addChild(bg);
     }
     else if (m_type == FUN_BUILD_FORT)
     {
         m_iconPath = CCCommonUtils::getPropById(m_itemId, "icon").append("_small.png");
+        
+        bg = CCLoadSprite::createSprite("zb_bp_xuanzhong.png");
+        bg->setPosition(ccp(sizeWidth/2, sizeHeight/2));
+//        CCCommonUtils::setSpriteMaxSize(bg, 125, true);
+//        if (CCCommonUtils::isIosAndroidPad()) {
+////            CCCommonUtils::setSpriteMaxSize(bg, 273, true);
+//        }
+        this->addChild(bg);
+
     }
     else {
         m_iconPath = CCCommonUtils::getIcon(m_itemId);
@@ -1987,6 +2073,11 @@ bool UnLockItemCell::init(int type, string itemId, CCNode* node)
     }
     icon->setPosition(ccp(sizeWidth/2, sizeHeight/2));
     this->addChild(icon);
+    
+    if(bg)
+    {
+        bg->setScale(icon->getScale());
+    }
     
     return true;
 }

@@ -81,7 +81,7 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string>Common/Common_3.plist</string>
+									<string>Common/Common_1.plist</string>
 									<string>zb_bp_xuanzhong.png</string>
 								</array>
 							</dict>
@@ -230,7 +230,7 @@
 										<string>SpriteFrame</string>
 										<key>value</key>
 										<array>
-											<string>Common/Common_3.plist</string>
+											<string>Common/Common_1.plist</string>
 											<string>zb_bp_1_hui.png</string>
 										</array>
 									</dict>
@@ -313,7 +313,7 @@
 										<string>SpriteFrame</string>
 										<key>value</key>
 										<array>
-											<string>Common/Common_3.plist</string>
+											<string>Common/Common_1.plist</string>
 											<string>zb_bp_2_hui.png</string>
 										</array>
 									</dict>
@@ -779,7 +779,7 @@
 										<string>SpriteFrame</string>
 										<key>value</key>
 										<array>
-											<string>Common/Common_3.plist</string>
+											<string>Common/Common_1.plist</string>
 											<string>zb_bp_1.png</string>
 										</array>
 									</dict>
@@ -920,9 +920,11 @@
 										<key>type</key>
 										<string>Text</string>
 										<key>value</key>
-										<string>attackdddd</string>
+										<string>Warrior Lv.1</string>
 									</dict>
 								</array>
+								<key>selected</key>
+								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>

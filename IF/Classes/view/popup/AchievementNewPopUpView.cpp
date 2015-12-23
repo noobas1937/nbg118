@@ -374,7 +374,7 @@ void AchievementNewPopUpView::updateRecommendTask()
             string tmpstr = "+";
             tmpstr = tmpstr + CC_ITOA_K(r_num);
             m_rewardNum->setString(tmpstr.c_str());
-            m_rewardNum->setFntFile("pve_fnt_boss.fnt");
+            m_rewardNum->setFntFile("nb_fnt2.fnt");
         }
     }
 }
@@ -455,7 +455,7 @@ CCSize AchievementNewPopUpView::tableCellSizeForIndex(CCTableView *table, ssize_
         return CCSize(1536, 370);
     }
     
-    return CCSize(620, 210);
+    return CCSize(630, 168);
 }
 
 CCSize AchievementNewPopUpView::cellSizeForTable(CCTableView *table)
@@ -465,7 +465,7 @@ CCSize AchievementNewPopUpView::cellSizeForTable(CCTableView *table)
         return CCSize(1536, 370);
     }
     
-    return CCSize(620, 210);
+    return CCSize(630, 168);
 }
 
 CCTableViewCell* AchievementNewPopUpView::tableCellAtIndex(CCTableView *table, ssize_t idx)
@@ -644,7 +644,7 @@ void AchievementNewTaskCell::animationCallBack()
     }
     m_nameTxt->setString(m_info->name);
     //    std::string str = _lang("107526")+CC_CMDITOA(m_info->curValue>m_info->maxValue?m_info->maxValue:m_info->curValue);
-    std::string str = CC_CMDITOA(m_info->curValue>m_info->maxValue?m_info->maxValue:m_info->curValue);
+    std::string str;
     str.append("/");
     str.append(CC_CMDITOA(m_info->maxValue));
     m_titleTxt->setString(_lang("107529"));
@@ -692,7 +692,8 @@ void AchievementNewTaskCell::animationCallBack()
     float pro = m_info->curValue*1.0/m_info->maxValue;
     pro = pro>1?1:pro;
     m_progress->setScaleX(pro);
-    m_progressTxt->setString(str);
+    m_progressTxt->setString(CC_CMDITOA(m_info->curValue>m_info->maxValue?m_info->maxValue:m_info->curValue));
+    m_progressTotalTxt->setString(str);
     
     if ((m_info->itemId == "2900101" || m_info->itemId == "2900102" || m_info->itemId == "2900103") && m_info->state == ACCEPT) {
         CCCommonUtils::setButtonTitle(m_btnReward, _lang("2000214").c_str());
@@ -729,6 +730,7 @@ bool AchievementNewTaskCell::onAssignCCBMemberVariable(cocos2d::CCObject * pTarg
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_picHead", CCNode*, this->m_picHead);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_progress", CCScale9Sprite*, this->m_progress);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_progressTxt", CCLabelIF*, this->m_progressTxt);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_progressTotalTxt", CCLabelIF*, this->m_progressTotalTxt);
     return false;
 }
 

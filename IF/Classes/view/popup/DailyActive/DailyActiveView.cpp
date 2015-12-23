@@ -97,7 +97,7 @@ bool DailyActiveView::init()
         else
             sp->setPositionY(30.0f);
         m_headNode2->addChild(sp, 1);
-        CCLabelIFBMFont* labelBm = CCLabelIFBMFont::create("", "Arial_Bold_Border.fnt");
+        CCLabelIFBMFont* labelBm = CCLabelIFBMFont::create("", getNBFont(NB_FONT_Bold_Border));
         labelBm->setDimensions(CCSize(0,30));
         labelBm->setColor({255,255,255});
         labelBm->setAnchorPoint(ccp(0.5,0.5));

@@ -13,6 +13,16 @@
 #include "cocosextV3.h"
 //#include "../../../extensions/CCBReader/CCNodeLoader.h"
 
+// font
+enum NB_FONT
+{
+    NB_FONT_Bold_Border,
+    NB_FONT_Bold_Outline,
+    NB_FONT_Bold,
+    NB_FONT_Gradient
+};
+const char * getNBFont(NB_FONT f);
+
 USING_NS_CC;
 using namespace cocosbuilder;
 class CCLabelIFBMFont : public CCLabelBMFont

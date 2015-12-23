@@ -215,7 +215,7 @@
             <key>skill2_601600.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{848,984},{130,134}}</string>
+                <string>{{848,980},{130,134}}</string>
                 <key>offset</key>
                 <string>{4,-6}</string>
                 <key>rotated</key>
@@ -319,7 +319,7 @@
             <key>skill2_602400.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{916,612},{104,104}}</string>
+                <string>{{916,608},{104,104}}</string>
                 <key>offset</key>
                 <string>{-14,-10}</string>
                 <key>rotated</key>
@@ -371,41 +371,41 @@
             <key>skill2_603103.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{758,1352},{94,94}}</string>
+                <string>{{658,1346},{84,86}}</string>
                 <key>offset</key>
-                <string>{0,0}</string>
+                <string>{-1,-3}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{94,94}}</string>
+                <string>{{12,15},{84,86}}</string>
                 <key>sourceSize</key>
-                <string>{94,94}</string>
+                <string>{110,110}</string>
             </dict>
             <key>skill2_606201.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{528,1362},{94,94}}</string>
+                <string>{{904,1344},{86,88}}</string>
                 <key>offset</key>
-                <string>{0,0}</string>
+                <string>{0,-1}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{94,94}}</string>
+                <string>{{12,12},{86,88}}</string>
                 <key>sourceSize</key>
-                <string>{94,94}</string>
+                <string>{110,110}</string>
             </dict>
             <key>skill2_606202.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{658,1346},{94,94}}</string>
+                <string>{{806,1248},{94,86}}</string>
                 <key>offset</key>
-                <string>{0,0}</string>
+                <string>{0,-7}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{94,94}}</string>
+                <string>{{8,19},{94,86}}</string>
                 <key>sourceSize</key>
-                <string>{94,94}</string>
+                <string>{110,110}</string>
             </dict>
             <key>skill2_610000.png</key>
             <dict>
@@ -436,7 +436,7 @@
             <key>skill2_610200.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{836,1120},{130,126}}</string>
+                <string>{{836,1116},{130,126}}</string>
                 <key>offset</key>
                 <string>{3,-4}</string>
                 <key>rotated</key>
@@ -540,7 +540,7 @@
             <key>skill2_611000.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{878,864},{114,136}}</string>
+                <string>{{878,860},{114,136}}</string>
                 <key>offset</key>
                 <string>{-2,-4}</string>
                 <key>rotated</key>
@@ -774,7 +774,7 @@
             <key>skill2_620700.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{900,722},{136,120}}</string>
+                <string>{{900,718},{136,120}}</string>
                 <key>offset</key>
                 <string>{-1,3}</string>
                 <key>rotated</key>
@@ -904,7 +904,7 @@
             <key>skill2_621700.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,1364},{108,102}}</string>
+                <string>{{4,1460},{108,102}}</string>
                 <key>offset</key>
                 <string>{-3,-16}</string>
                 <key>rotated</key>
@@ -943,7 +943,7 @@
             <key>skill2_622000.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{628,1446},{94,90}}</string>
+                <string>{{118,1466},{94,90}}</string>
                 <key>offset</key>
                 <string>{0,-1}</string>
                 <key>rotated</key>
@@ -956,7 +956,7 @@
             <key>skill2_622100.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{906,1252},{94,94}}</string>
+                <string>{{924,508},{94,94}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -969,7 +969,7 @@
             <key>skill2_622200.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{528,1462},{92,90}}</string>
+                <string>{{906,1248},{92,90}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -982,80 +982,93 @@
             <key>skill2_650000.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{806,1252},{94,94}}</string>
+                <string>{{750,1434},{86,76}}</string>
                 <key>offset</key>
-                <string>{0,0}</string>
+                <string>{-2,-4}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{94,94}}</string>
+                <string>{{10,21},{86,76}}</string>
                 <key>sourceSize</key>
-                <string>{94,94}</string>
+                <string>{110,110}</string>
             </dict>
             <key>skill2_650205.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,1472},{94,94}}</string>
+                <string>{{4,1364},{110,90}}</string>
                 <key>offset</key>
-                <string>{0,0}</string>
+                <string>{0,-2}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{94,94}}</string>
+                <string>{{0,12},{110,90}}</string>
                 <key>sourceSize</key>
-                <string>{94,94}</string>
+                <string>{110,110}</string>
             </dict>
             <key>skill2_650400.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{118,1466},{94,94}}</string>
+                <string>{{528,1362},{82,86}}</string>
                 <key>offset</key>
-                <string>{0,0}</string>
+                <string>{-1,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{94,94}}</string>
+                <string>{{13,12},{82,86}}</string>
                 <key>sourceSize</key>
-                <string>{94,94}</string>
+                <string>{110,110}</string>
             </dict>
             <key>skill2_650403.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{250,1460},{94,94}}</string>
+                <string>{{250,1460},{98,92}}</string>
                 <key>offset</key>
-                <string>{0,0}</string>
+                <string>{0,-2}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{94,94}}</string>
+                <string>{{6,11},{98,92}}</string>
                 <key>sourceSize</key>
-                <string>{94,94}</string>
+                <string>{110,110}</string>
             </dict>
             <key>skill2_650405.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{924,512},{94,94}}</string>
+                <string>{{620,1436},{82,82}}</string>
                 <key>offset</key>
-                <string>{0,0}</string>
+                <string>{-1,-6}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{94,94}}</string>
+                <string>{{13,20},{82,82}}</string>
                 <key>sourceSize</key>
-                <string>{94,94}</string>
+                <string>{110,110}</string>
             </dict>
             <key>skill2_652205.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{924,412},{94,94}}</string>
+                <string>{{924,412},{96,90}}</string>
                 <key>offset</key>
-                <string>{0,0}</string>
+                <string>{0,-2}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{94,94}}</string>
+                <string>{{7,12},{96,90}}</string>
                 <key>sourceSize</key>
-                <string>{94,94}</string>
+                <string>{110,110}</string>
+            </dict>
+            <key>skill2_680000.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{806,1340},{92,88}}</string>
+                <key>offset</key>
+                <string>{0,-6}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{9,17},{92,88}}</string>
+                <key>sourceSize</key>
+                <string>{110,110}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -1067,7 +1080,7 @@
             <key>size</key>
             <string>{1024,2048}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:a06126318fa497c7155c0cc29161ba3f:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:--REMOVED----------------------------</string>
             <key>textureFileName</key>
             <string>Common_105.pvr.ccz</string>
         </dict>

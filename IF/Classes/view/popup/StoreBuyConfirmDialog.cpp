@@ -45,7 +45,8 @@ bool StoreBuyConfirmDialog::init(const char* url, const char* title,const char* 
         CCLabelIF* label = CCLabelIF::create();
         label->setDimensions(CCSize(maxWidth, 0));
         label->setString(desc);
-        label->setColor(ccc3(169, 132, 71));
+//        label->setColor(ccc3(169, 132, 71));
+        label->setColor(ccWHITE);
         label->setFontSize(24);
         if (CCCommonUtils::isIosAndroidPad())
         {
@@ -495,37 +496,48 @@ void StoreBuyConfirmDialog::showSliderBar(int max){
     m_numAll = max;
     m_numCurrent = 1;
     CCSize size = m_barNode->getContentSize();
-    auto m_sliderBg = CCLoadSprite::createScale9Sprite("huadongtiao3.png");
-    m_sliderBg->setInsetBottom(5);
-    m_sliderBg->setInsetLeft(5);
-    m_sliderBg->setInsetRight(5);
-    m_sliderBg->setInsetTop(5);
-    m_sliderBg->setAnchorPoint(ccp(0.5,0.5));
-    m_sliderBg->setContentSize(CCSize(size.width,18));
-    m_sliderBg->setPosition(ccp(size.width*0.5,size.height*0.5+9));
-    
-//    auto bgSp = CCLoadSprite::createSprite("huadongtiao2.png");
-//    bgSp->setVisible(false);
-    auto proSp = CCLoadSprite::createSprite("huadongtiao2.png");
-    auto thuSp = CCLoadSprite::createSprite("huadongtiao1.png");
-    
-    m_slider = CCSliderBar::createSlider(m_sliderBg, proSp, thuSp);
-    if (CCCommonUtils::isIosAndroidPad())
-    {
-       auto __ThumbSprite = m_slider->getThumbSprite();
-        __ThumbSprite->setScaleX(0.7);
-//         __ThumbSprite->setScaleY(0.5);
-    }
+//    auto m_sliderBg = CCLoadSprite::createScale9Sprite("huadongtiao3.png");
+//    m_sliderBg->setInsetBottom(5);
+//    m_sliderBg->setInsetLeft(5);
+//    m_sliderBg->setInsetRight(5);
+//    m_sliderBg->setInsetTop(5);
+//    m_sliderBg->setAnchorPoint(ccp(0.5,0.5));
+//    m_sliderBg->setContentSize(CCSize(size.width,18));
+//    m_sliderBg->setPosition(ccp(size.width*0.5,size.height*0.5+9));
+//    
+////    auto bgSp = CCLoadSprite::createSprite("huadongtiao2.png");
+////    bgSp->setVisible(false);
+//    auto proSp = CCLoadSprite::createSprite("huadongtiao2.png");
+//    auto thuSp = CCLoadSprite::createSprite("huadongtiao1.png");
+//    
+//    m_slider = CCSliderBar::createSlider(m_sliderBg, proSp, thuSp);
+//    if (CCCommonUtils::isIosAndroidPad())
+//    {
+//       auto __ThumbSprite = m_slider->getThumbSprite();
+//        __ThumbSprite->setScaleX(0.7);
+////         __ThumbSprite->setScaleY(0.5);
+//    }
     float minVal = m_numCurrent*1.0/m_numAll;
-    m_slider->setMinimumValue(minVal);
-    m_slider->setMaximumValue(1.0f);
+//    m_slider->setMinimumValue(minVal);
+//    m_slider->setMaximumValue(1.0f);
+//    m_slider->setValue(minVal);
+//    m_slider->setProgressScaleX(size.width/proSp->getContentSize().width);
+//    m_slider->setTag(1);
+//    m_slider->setLimitMoveValue(20);
+//    m_slider->setPosition(ccp(size.width*0.5,size.height*0.5+10));
+//    m_slider->addTargetWithActionForControlEvents(this, cccontrol_selector(StoreBuyConfirmDialog::moveSlider), CCControlEventValueChanged);
+//    m_barNode->addChild(m_slider);
+    
+    int sliderW = m_barNode->getContentSize().width;
+    
+    m_slider = NBSlider::create("nb_bar_bg.png", "nb_bar_pro.png", "nb_cursor_icon.png",NBSlider::TextureResType::PLIST);
+    m_slider->setCapInsets(Rect(8, 1, 30, 13));
+    m_slider->setContentSize(Size(sliderW,15));
     m_slider->setValue(minVal);
-    m_slider->setProgressScaleX(size.width/proSp->getContentSize().width);
-    m_slider->setTag(1);
-    m_slider->setLimitMoveValue(20);
-    m_slider->setPosition(ccp(size.width*0.5,size.height*0.5+10));
-    m_slider->addTargetWithActionForControlEvents(this, cccontrol_selector(StoreBuyConfirmDialog::moveSlider), CCControlEventValueChanged);
-    m_barNode->addChild(m_slider);
+    
+    m_slider->addEventListener(CC_CALLBACK_2(StoreBuyConfirmDialog::moveSlider, this));
+    m_barNode->addChild(m_slider, 1);
+
     
     auto editSize = m_editNode->getContentSize();
     auto editpic =CCLoadSprite::createScale9Sprite("frame_text2.png");
@@ -546,7 +558,7 @@ void StoreBuyConfirmDialog::showSliderBar(int max){
     m_editNode->addChild(m_editBox);
     m_numNode->setVisible(true);
 }
-void StoreBuyConfirmDialog::moveSlider(CCObject * pSender, Control::EventType pCCControlEvent) {
+void StoreBuyConfirmDialog::moveSlider(Ref *pSender, NBSlider::EventType type) {
     float percent = MAX(m_slider->getValue(),m_slider->getMinimumValue());
     percent = MIN(percent, m_slider->getMaximumValue());
     int num = round(percent * m_numAll);
@@ -560,23 +572,23 @@ void StoreBuyConfirmDialog::setCostString(){
     m_costNum->setString(CC_CMDITOA(costVal));
     if (m_priceType == -1) {
         if (GlobalData::shared()->playerInfo.allianceInfo.alliancepoint < costVal) {
-            m_costNum->setColor(ccRED);
+//            m_costNum->setColor(ccRED); //fusheng 颜色
         } else {
-            m_costNum->setColor({255, 225, 0});
+//            m_costNum->setColor({255, 225, 0});
         }
     }
     else if(m_priceType<WorldResource_Max){
         if (!CCCommonUtils::isEnoughResourceByType(m_priceType,costVal)){
-            m_costNum->setColor(ccRED);
+//            m_costNum->setColor(ccRED);
         }else{
-            m_costNum->setColor(ccWHITE);
+//            m_costNum->setColor(ccWHITE);
         }
     }else{
         auto &info = ToolController::getInstance()->getToolInfoById(m_priceType);
         if (info.getCNT()<costVal) {
-            m_costNum->setColor(ccRED);
+//            m_costNum->setColor(ccRED);
         }else{
-            m_costNum->setColor(ccWHITE);
+//            m_costNum->setColor(ccWHITE);
         }
     }
 }

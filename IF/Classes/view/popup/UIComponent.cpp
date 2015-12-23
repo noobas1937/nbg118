@@ -161,6 +161,7 @@
 #include "JoinRecAllianceTipView.h"
 
 #include "GeneralTitanPopupView.h"//fusheng
+#include "TitanController.h"
 
 //UIComponentOldTitle
 UIComponentOldTitle* UIComponentOldTitle::create(OldTitleType type)
@@ -307,6 +308,7 @@ bool UIComponentOldTitle::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget,
     
     
     //    CCLOG("ccbi control name %s",pMemberVariableName);
+    
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_ironIcon", CCSprite*, this->m_ironIcon);
     
@@ -530,13 +532,16 @@ UIComponent::~UIComponent(){
 
 
 
-UIComponent::UIComponent():m_bUIShowFlag(true),m_goldNum(NULL){
+UIComponent::UIComponent():m_bUIShowFlag(true),m_goldNum(NULL),uiStatus(UIStatus::UINOMOVE),moveBackTime(0){
     
     m_CanClickTarget = false;
     
     m_recommandQuest = NULL;
     setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
     m_titleOldTitle = NULL;
+    //begin a by ljf
+    mActivityBox = NULL;
+    //end by ljf
 }
 
 
@@ -570,12 +575,12 @@ bool UIComponent::init(CCSize size)
 //        CCBLoadFile("_gameUI",this,this,true);
         CCBLoadFile("_game_ui", this, this, true);
     }
-    m_questRecSpr->setVisible(false);
+
     CanShowQuestPrc = false;
     
     this->setContentSize(CCSizeMake(size.width, size.height));
     
-    m_power->setFntFile("Arial_Bold_Border.fnt");
+    m_power->setFntFile(getNBFont(NB_FONT_Bold_Border));
     
     setFavoriteIconVisible(false);
     this->m_gold->setString(CC_CMDITOA(GlobalData::shared()->playerInfo.gold).c_str());
@@ -676,9 +681,6 @@ bool UIComponent::init(CCSize size)
     
     this->m_questName->setString(_lang("107500").c_str());
     
-    this->m_questTitle->setString(_lang("107527").c_str());
-    this->m_questTitle->setMaxScaleXByWidth(70.0);
-    
     this->m_homeBackBtnTitle->setString(_lang("108538").c_str());
     
     this->m_worldBtnTitle->setString(_lang("105601").c_str());
@@ -689,7 +691,7 @@ bool UIComponent::init(CCSize size)
     
     int vipLv = VipUtil::getVipLevel(GlobalData::shared()->playerInfo.vipPoints);
     
-    this->m_vipText->setFntFile("pve_fnt_title.fnt");
+    //this->m_vipText->setFntFile("pve_fnt_title.fnt");
     
     this->m_vipText->setString(CC_ITOA(vipLv)); //_lang_1("103001", CC_ITOA(vipLv)));
     
@@ -709,7 +711,7 @@ bool UIComponent::init(CCSize size)
     
     m_cdBG->setVisible(false);
     
-    m_homeBack->setVisible(false);
+    m_homeBG_NB->setVisible(false);
     
     
     
@@ -777,6 +779,7 @@ bool UIComponent::init(CCSize size)
     m_giftNode2->addChild(particle2);
 
     this->schedule(schedule_selector(UIComponent::updateTime), 1);
+    this->scheduleUpdate();
     this->updateTime(0);
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(UIComponent::refreshInit), MSG_INIT_FINISH, NULL);//init之后 如果ui已经创建修改ui属性
 
@@ -793,7 +796,7 @@ bool UIComponent::init(CCSize size)
 //    MailController::getInstance()->quitChatRoom( "388327000001");
 //    MailController::getInstance()->sendChatRoomMsg("hello everyone", "399237000001");
 
-    m_flyArrow = CCLoadSprite::createSprite("UI_hand.png");//guide_arrow_new.png
+    m_flyArrow = CCLoadSprite::createSprite("UI_hand.png");
     m_flyArrow->setAnchorPoint(ccp(0, 0));
     m_flyArrow->setVisible(false);
     m_csNode->removeAllChildrenWithCleanup(true);
@@ -805,9 +808,9 @@ bool UIComponent::init(CCSize size)
     }
     // tao.yu 第一版不开放vip功能
     // guo.jiang 等美术数字字体完成后设置数字
-    m_vipText->setVisible(false);
+    m_vipText->setVisible(true);
 //    m_sprVip->setVisible(false);
-    m_sprVipHui->setVisible(false);
+    m_sprVipHui->setVisible(true);
     // ---------------
     
     
@@ -864,6 +867,12 @@ void UIComponent::onEnter()
     
     CCLayer::onEnter();
     
+    
+  
+    
+    
+    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(UIComponent::updateDragonStatus), MSG_TITAN_UPGRADE_COMPLETE, NULL);
+    
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(UIComponent::onCityResoureceUpdate), MSG_CITY_RESOURCES_UPDATE, NULL);
     
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(UIComponent::onSceneChanged), MSG_SCENE_CHANGED, NULL);
@@ -899,7 +908,7 @@ void UIComponent::onEnter()
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(UIComponent::playAddPowerAni), MSG_COLLECT_SOLDIER_ADD_POWER, NULL);
     
     // tao.yu 第一版不开放vip功能
-//    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(UIComponent::refreshVIPStatus), VIP_REFRESH, NULL);
+    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(UIComponent::refreshVIPStatus), VIP_REFRESH, NULL);
     
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(UIComponent::updateActivityEvent), MSG_UPDATE_ACTIVITY_EVENT, NULL);
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(UIComponent::resetGoldActivityBox), GOLDEXCHANGE_LIST_CHANGE, NULL);
@@ -1011,7 +1020,7 @@ void UIComponent::onEnter()
     
     CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(UIComponent::onEnterFrame), this, 1.0f,kCCRepeatForever, 0.0f, false);
     // tao.yu 第一版不开放vip功能
-//    refreshVIPStatus(0.0);
+    refreshVIPStatus(0.0);
     
     showFlygold();
     resetGoldActivityBox(NULL);
@@ -1019,15 +1028,38 @@ void UIComponent::onEnter()
     //提示可打造并穿戴装备
     updateEquipTips(NULL);
     
+    
+    updateDragonStatus(nullptr);
+    
+    if(m_nbXHD)
+    {
+        m_nbXHD->stopAllActions();
+        
+        m_nbXHD->setOpacity(0);
+        
+        float cycleTime = 3;
+        
+        m_nbXHD->runAction(RepeatForever::create(Sequence::create(FadeIn::create(cycleTime/3),DelayTime::create(cycleTime/3), FadeOut::create(cycleTime/3),nullptr)));
+        
+        m_nbXHD->setVisible(false);
+    }
+    
+    
 #if(CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
     ChatServiceCocos2dx::postUIShow();
 #endif
 }
 
+void UIComponent::showCanFeedRedPoint(bool isShow)
+{
+    if(m_nbXHD)
+        m_nbXHD->setVisible(isShow);
+}
+
 void UIComponent::onEnterFrame(float dt)
 
 {
-
+    UIComponent::showCanFeedRedPoint(TitanController::getInstance()->checkCanFeedFree());
     //    if(FunBuildController::getInstance()->curFoodOutPreSed < 0)
     
     //    {
@@ -1038,7 +1070,7 @@ void UIComponent::onEnterFrame(float dt)
     
     //    }
     
-    if(true || (CanShowQuestPrc && !m_questRecSpr->isVisible())) {
+    if(CanShowQuestPrc) {
         QuestPrcTimes ++;
         if (QuestPrcTimes>=7) {
             QuestPrcTimes = 0;
@@ -1228,9 +1260,9 @@ void UIComponent::onQuestStateUpdate(CCObject* p){
             m_questGoldNode->addChild(goldAni);
         }
         
-        if (!m_questContextBG1->isVisible()) {
-            playQuestRect();
-        }
+//        if (!m_questContextBG1->isVisible()) {
+//            playQuestRect();
+//        }
         
     }else{
         
@@ -1338,6 +1370,7 @@ void UIComponent::onExit()
     
     onHideFrameEff(NULL);
     
+    CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_TITAN_UPGRADE_COMPLETE);
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MAIL_LIST_DELETE);
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MAIL_SAVE_LIST_CHANGE);
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_REPAY_INFO_INIT);
@@ -1395,7 +1428,7 @@ void UIComponent::onExit()
 //    CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_HAS_NEW_GOOD);
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, "showEquipTips");
     // tao.yu 第一版本不开放vip
-//    this->unschedule(schedule_selector(UIComponent::refreshVIPStatus));
+    this->unschedule(schedule_selector(UIComponent::refreshVIPStatus));
     
     CCLayer::onExit();
     
@@ -1486,7 +1519,7 @@ void UIComponent::questIconAction()
     
     m_UIQuestNode->setPosition(m_questPt.x, m_questPt.y);
     
-    m_questContextBG1->setVisible(false);
+//    m_questContextBG1->setVisible(false);
     m_questTipNpcNode->setVisible(false);
     m_questContextBG->setScaleX(0);
     
@@ -1664,10 +1697,9 @@ void UIComponent::showPopupView(UIPopupViewType type, bool isHD)
         this->m_mainControlNode->setVisible(false);
         this->m_faveNode->setVisible(false);
         this->m_miniNode->setVisible(false);
-        m_homeBack->setVisible(false);
-        this->m_world->setVisible(false);
-        m_homeBack->setVisible(false);
-        this->m_world->setVisible(false);
+        m_homeBG_NB->setVisible(false);
+        m_world->setVisible(false);
+
         m_worldUINode->setVisible(false);
     }else if (type==UIPopupViewType_NONE||type==UIPopupViewType_Mail||type==UIPopupViewType_Tool_Store||type==UIPopupViewType_Sacrifice||type==UIPopupViewType_Merchant||type==UIPopupViewType_Repay_Lottery||type==9||type==10||type==UIPopupViewType_GeneralTitan) {
         if (CCCommonUtils::isIosAndroidPad() && !CCCommonUtils::getIsHDViewPort())
@@ -1694,6 +1726,12 @@ void UIComponent::showPopupView(UIPopupViewType type, bool isHD)
             this->m_popupReturnBtn->setVisible(true);
 //            this->m_popupTitleName->setVisible(type==7?false:true);
             this->m_popupTitleName->setVisible(false); // guo.jiang
+            //begin a by ljf
+            if(type==UIPopupViewType_Tool_Store)
+            {
+                this->m_popupTitleName->setVisible(true);
+            }
+            //end a by ljf
         }
 
         
@@ -1745,7 +1783,7 @@ void UIComponent::showPopupView(UIPopupViewType type, bool isHD)
         this->m_miniNode->setVisible(false);
         if (SceneController::getInstance()->currentSceneId == SCENE_ID_MAIN) {
             
-            m_homeBack->setVisible(true);
+            m_homeBG_NB->setVisible(true);
             
             this->m_world->setVisible(false);
         }
@@ -1754,7 +1792,7 @@ void UIComponent::showPopupView(UIPopupViewType type, bool isHD)
             
         {
             
-            m_homeBack->setVisible(false);
+            m_homeBG_NB->setVisible(false);
             
             this->m_world->setVisible(true);
             
@@ -1842,7 +1880,7 @@ void UIComponent::showPopupView(UIPopupViewType type, bool isHD)
         this->m_miniNode->setVisible(false);
         if (SceneController::getInstance()->currentSceneId == SCENE_ID_MAIN) {
             
-            m_homeBack->setVisible(false);
+            m_homeBG_NB->setVisible(false);
             this->m_world->setVisible(true);
             
         }
@@ -1851,7 +1889,7 @@ void UIComponent::showPopupView(UIPopupViewType type, bool isHD)
             
         {
             
-            m_homeBack->setVisible(true);
+            m_homeBG_NB->setVisible(true);
             this->m_world->setVisible(false);
             
         }
@@ -1962,7 +2000,7 @@ void UIComponent::onSceneChanged(CCObject* params){
 //    this->m_UIQuestNode->setVisible(true);
     CheckGuideUIShow();
     
-    this->m_homeBack->setVisible(false);
+    this->m_homeBG_NB->setVisible(false);
     
     this->m_homeBackBtnTitle->setVisible(false);
     
@@ -2022,7 +2060,7 @@ void UIComponent::onSceneChanged(CCObject* params){
         
         
         
-        this->m_homeBack->setVisible(true);
+        this->m_homeBG_NB->setVisible(true);
         
         //        this->m_PVE->setVisible(false);
         
@@ -2048,7 +2086,7 @@ void UIComponent::onSceneChanged(CCObject* params){
         
         
         
-        this->m_homeBack->setVisible(true);
+        this->m_homeBG_NB->setVisible(true);
         
         //        this->m_PVE->setVisible(false);
         
@@ -2065,7 +2103,7 @@ void UIComponent::onSceneChanged(CCObject* params){
         
         this->m_UIQuestNode->setVisible(false);
         
-        this->m_homeBack->setVisible(true);
+        this->m_homeBG_NB->setVisible(true);
         
         //        this->m_PVE->setVisible(false);
         
@@ -2087,7 +2125,7 @@ void UIComponent::onSceneChanged(CCObject* params){
         
     }else if(currentSceneId==SCENE_ID_IMPERIAL){
         
-        this->m_homeBack->setVisible(true);
+        this->m_homeBG_NB->setVisible(true);
         
     } else if(currentSceneId == SCENE_ID_WORLD) {
         
@@ -2114,7 +2152,7 @@ void UIComponent::onSceneChanged(CCObject* params){
         
         this->m_worldBtnTitle->setVisible(false);
         
-        this->m_homeBack->setVisible(true);
+        this->m_homeBG_NB->setVisible(true);
         
         this->m_homeBackBtnTitle->setVisible(true);
         
@@ -2583,6 +2621,10 @@ void UIComponent::updateResStatus()
     this->m_dragonFood->setString(CC_ITOA_K(GlobalData::shared()->resourceInfo.lDragonFood));
     
     setOldResource();
+#pragma mark MSG_UPDATE_STOREHOUSE_DISPLAY
+    //fusheng post MSG_UPDATE_STOREHOUSE_DISPLAY
+    CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_UPDATE_STOREHOUSE_DISPLAY, nullptr);
+
 }
 
 
@@ -2618,8 +2660,20 @@ void UIComponent::updateNewChatNews(int num){
     //    m_chatNewAlert->setVisible(num>0);
     
 }
-
-
+//begin a by ljf
+void UIComponent::loadSpineActivityBox(){
+    if(mActivityBox)
+    {
+        mActivityBox->loadSpine();
+    }
+}
+void UIComponent::unLoadSpineActivityBox(){
+    if(mActivityBox)
+    {
+        mActivityBox->unLoadSpine();
+    }
+}
+//end a by ljf
 #pragma mark UIComponent CCB
 SEL_CCControlHandler UIComponent::onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName)
 {
@@ -2656,7 +2710,7 @@ SEL_CCControlHandler UIComponent::onResolveCCBCCControlSelector(cocos2d::CCObjec
     
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onActivityClick", UIComponent::onActivityClick);
     // tao.yu 第一版不开放vip
-//    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onVipBtnClick", UIComponent::onVipBtnClick);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onVipBtnClick", UIComponent::onVipBtnClick);
     
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onFaceClick", UIComponent::onFaceClick);
     
@@ -2673,11 +2727,22 @@ SEL_CCControlHandler UIComponent::onResolveCCBCCControlSelector(cocos2d::CCObjec
     return NULL;
     
 }
+void UIComponent::updateDragonStatus(CCObject *params)
+{
+    string icon = CCCommonUtils::getPropById(CC_ITOA(GlobalData::shared()->titanInfo.tid), "dragonUI");
+//    m_dragonIcon->setTexture(icon);
+    icon.append(".png");
+    m_dragonIcon->setSpriteFrame(icon);
+}
 
 bool UIComponent::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode)
 {
     
 //    CCLOG("ccbi control name %s",pMemberVariableName);
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nbXHD", CCSprite*, this->m_nbXHD);
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_dragonIcon", CCSprite*, this->m_dragonIcon);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_general", CCSprite*, this->m_general);
     
@@ -2755,7 +2820,6 @@ bool UIComponent::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const c
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_questBG2", CCNode*, this->m_questBG2);
     
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_questRecSpr", CCScale9Sprite*, this->m_questRecSpr);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_questRecNode", CCNode*, this->m_questRecNode);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_storeBG", CCSprite*, this->m_storeBG);
@@ -2801,8 +2865,13 @@ bool UIComponent::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const c
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_sprVipHui", CCSprite*, this->m_sprVipHui);
     
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vipText", CCLabelIFBMFont*, this->m_vipText);
+    //CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vipText", CCLabelIFBMFont*, this->m_vipText);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vipText", CCLabelIF*, this->m_vipText);
     
+    //begin a by ljf
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vipFgGray", CCSprite*, this->m_vipFgGray);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vipFg", CCSprite*, this->m_vipFg);
+    //end a by ljf
     
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_uiTitle", CCNode*, this->m_uiTitle);
@@ -2916,7 +2985,7 @@ bool UIComponent::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const c
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_questIcon", CCNode*, m_questIcon);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_questContextBG", CCScale9Sprite*, m_questContextBG);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_questContextBG1", CCScale9Sprite*, m_questContextBG1);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_questContextBG1", CCScale9Sprite*, m_questContextBG1);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_questTipNpcNode", CCNode*, m_questTipNpcNode);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_goldNewNode", CCNode*, this->m_goldNewNode);
@@ -2991,8 +3060,6 @@ bool UIComponent::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const c
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_power", CCLabelIFBMFont*, this->m_power);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_questName", CCLabelIF*, this->m_questName);
-    
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_questTitle", CCLabelIF*, this->m_questTitle);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_questTipNum", CCLabelIF*, this->m_questTipNum);
     
@@ -3297,7 +3364,7 @@ bool UIComponent::onTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEven
         
         return true;
         
-    }else if(isTouchInside(this->m_questBG2, pTouch) && m_mainControlNode->isVisible()){
+    }else if(isTouchInside(this->quest_bg, pTouch) && m_mainControlNode->isVisible()){
         
         hintType = 8;
         
@@ -3355,7 +3422,7 @@ bool UIComponent::onTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEven
     
     //    }
     
-    else if(m_mainControlNode->isVisible() && isTouchInside(this->m_homeBG_NB, pTouch))//fusheng 修改未NB
+    else if(m_mainControlNode->isVisible() && isTouchInside(this->m_homeBG, pTouch))
         
     {
         
@@ -3759,7 +3826,7 @@ void UIComponent::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEven
             
         case 14:{
             
-            if (m_homeBack->isVisible())
+            if (m_homeBG_NB->isVisible())
                 
             {
                 
@@ -4658,7 +4725,7 @@ void UIComponent::onVipBtnClick(CCObject * pSender, Control::EventType pCCContro
 
 {
     // tao.yu 第一版不开放vip功能
-    if (true) {
+    if (false) {
         return;
     }
     onCancelMoveBuild();
@@ -6034,12 +6101,19 @@ void UIComponent::refreshVIPStatus(float t){
     
     if(dtime>0){
         
-        //m_vipText->setColor({255,255,255});
+        
         this->unschedule(schedule_selector(UIComponent::refreshVIPStatus));
         this->scheduleOnce(schedule_selector(UIComponent::refreshVIPStatus),dtime+2);
         m_sprVipHui->setVisible(false);
         
         m_sprVip->setVisible(true);
+        //begin a by ljf
+        m_vipText->setColor({90,62,22});
+        if(m_vipFg)
+            m_vipFg->setVisible(true);
+        if(m_vipFgGray)
+            m_vipFgGray->setVisible(false);
+        //end a by ljf
         
     }else{
         
@@ -6047,7 +6121,13 @@ void UIComponent::refreshVIPStatus(float t){
         
         m_sprVip->setVisible(false);
         
-        // m_vipText->setColor({90,85,81});
+        //begin a by ljf
+        m_vipText->setColor({55,54,51});
+        if(m_vipFg)
+            m_vipFg->setVisible(false);
+        if(m_vipFgGray)
+            m_vipFgGray->setVisible(true);
+        //end a by ljf
         
     }
     
@@ -6120,10 +6200,12 @@ void UIComponent::setActivityStatus(){
 }
 void UIComponent::resetGoldActivityBox(CCObject* p){
     // tao.yu 第一个版本关闭充值
-    if (true) {
+    
+    if (false) {
         this->m_rechargeNode->setVisible(false);
         return;
     }
+    
     this->m_rechargeNode->removeAllChildren();
     if(GlobalData::shared()->analyticID == "common"){
         this->m_rechargeNode->setVisible(false);
@@ -6138,6 +6220,10 @@ void UIComponent::resetGoldActivityBox(CCObject* p){
     for (map<string, GoldExchangeItem*>::iterator it = GlobalData::shared()->goldExchangeList.begin(); it != GlobalData::shared()->goldExchangeList.end(); it++) {
         if(!it->second)
             continue;
+        //begin a by ljf
+        //it->second->popup_image = "hot_sale";
+        //it->second->item = "200200;5|200300;5|200330;5|200390;5|";
+        //end a by ljf
         if(it->second->type == "5"){
         }else{
             if(it->second->type == "3"){
@@ -6149,11 +6235,13 @@ void UIComponent::resetGoldActivityBox(CCObject* p){
                     break;
                 }
             }else if(it->second->type == "1"){
-                if(it->second->bought|| it->second->popup_image=="hide" || it->second->popup_image.empty()){
+                //if(it->second->bought|| it->second->popup_image=="hide" || it->second->popup_image.empty()){ //d by ljf
+                if(it->second->bought|| it->second->popup_image=="hide" || it->second->popup_image.empty()  ){ //a by ljf
                     continue;
                 }
                 if(it->second->end>GlobalData::shared()->getWorldTime()){
-                    if(LuaController::getInstance()->showNoramlIcon(it->second->popup_image)){
+                    //if(LuaController::getInstance()->showNoramlIcon(it->second->popup_image)){ //d by ljf
+                    if(true){
                         isEnd = false;
                         break;
                     }
@@ -6166,11 +6254,21 @@ void UIComponent::resetGoldActivityBox(CCObject* p){
     }else{
         this->m_rechargeNode->setVisible(true);
     }
-    auto activityBox = ActivityBox::create(goldExchangeType);
+    
+    
+    /*
+    auto activityBox = ActivityBox::create(goldExchangeType, this->m_rechargeNode);
     if(activityBox) {
         activityBox->setPosition(ccp(43, 43));
         this->m_rechargeNode->addChild(activityBox);
     }
+    */
+    mActivityBox = ActivityBox::create(goldExchangeType);
+    if(mActivityBox) {
+        mActivityBox->setPosition(ccp(43, 43));
+        this->m_rechargeNode->addChild(mActivityBox);
+    }
+
 //    if (CCCommonUtils::isIosAndroidPad()) {
 //        this->m_rechargeNode->setVisible(false);
 //    }
@@ -6206,7 +6304,7 @@ void UIComponent::checkShowQuestPrc()
 {
     CanShowQuestPrc = false;
     QuestPrcTimes = 0;
-    m_questRecSpr->setVisible(false);
+
     if (m_recommandQuest==NULL) {
         return;
     }
@@ -6226,8 +6324,8 @@ void UIComponent::checkShowQuestPrc()
 void UIComponent::playQuestRect()
 {
     if (m_recommandQuest && !GuideController::share()->isInTutorial() && m_questContextBG->getScaleX()==1 && (m_recommandQuest->isShow==1||m_recommandQuest->isShow==2)) {
-        m_questContextBG1->stopAllActions();
-        m_questContextBG1->setVisible(!true); // guo.jiang
+//        m_questContextBG1->stopAllActions();
+//        m_questContextBG1->setVisible(!true); // guo.jiang
         
         if (m_recommandQuest->isShow==2) {
             m_questTipNpcNode->setVisible(true);
@@ -6240,59 +6338,14 @@ void UIComponent::playQuestRect()
             CCActionInterval * repeat = CCRepeat::create(CCSequence::create(moveTo1, moveTo2, NULL), 7);
             m_questTipNpcNode->runAction(repeat);
         }
-        
-        CCActionInterval * fadein = CCFadeIn::create(0.7);
-        CCActionInterval * fadeout = CCFadeOut::create(0.7);
-        CCActionInterval * sequence = CCSequence::create(fadein, fadeout, NULL);
-        CCActionInterval * repeat = CCRepeat::create(sequence, 5);
-        CCCallFunc * endFunCall= CCCallFunc::create(this, callfunc_selector(UIComponent::hideQuestRect));
-        m_questContextBG1->runAction(CCSequence::create(repeat, endFunCall, NULL));
     }
     return;
-    m_questRecSpr->setVisible(true);
-//    CCActionInterval * fadein = CCFadeIn::create(0.5);
-//    CCActionInterval * fadeout = CCFadeOut::create(0.5);
-//    CCActionInterval * repeat = CCRepeat::create(CCSequence::create(fadein, fadeout, NULL), 10);
-    CCCallFunc * funcall= CCCallFunc::create(this, callfunc_selector(UIComponent::hideQuestRect));
-    m_questRecSpr->runAction(CCSequence::create(CCDelayTime::create(10), funcall, NULL) );
-    
-    CCRect tmp_rect = cocos2d::CCRect(0, 0, 520, 80);
-    string tmpStart = "ShowFire_";
-    int maxP = tmp_rect.size.width/3;
-    for (int i=1; i<=5; i++) {
-        auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(), CCPointZero,maxP);
-        particle->setPosVar(ccp(tmp_rect.size.width/2, 0));
-        particle->setPosition(ccp(tmp_rect.origin.x+tmp_rect.size.width/2, tmp_rect.origin.y));
-        addParticleToBatch(particle);
-        
-        auto particle1 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(),CCPointZero,maxP);
-        particle1->setPosVar(ccp(tmp_rect.size.width/2, 0));
-        particle1->setPosition(ccp(tmp_rect.origin.x+tmp_rect.size.width/2, tmp_rect.origin.y+tmp_rect.size.height-7.5));
-        addParticleToBatch(particle1);
-    }
-    
-    tmpStart = "ShowFireUp_";
-    maxP = tmp_rect.size.height/3;
-    for (int i=1; i<=5; i++) {
-        auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(),CCPointZero,maxP);
-        particle->setPosVar(ccp(0, tmp_rect.size.height/2));
-        particle->setPosition(ccp(tmp_rect.origin.x, tmp_rect.origin.y+tmp_rect.size.height/2));
-        addParticleToBatch(particle);
-        
-        auto particle1 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(),CCPointZero,maxP);
-        particle1->setPosVar(ccp(0, tmp_rect.size.height/2));
-        particle1->setPosition(ccp(tmp_rect.origin.x+tmp_rect.size.width, tmp_rect.origin.y+tmp_rect.size.height/2));
-        addParticleToBatch(particle1);
-    }
 }
 
 void UIComponent::hideQuestRect()
 {
     QuestPrcTimes = 0;
     m_parVec.clear();
-    m_questRecSpr->stopAllActions();
-    m_questRecSpr->setVisible(false);
-    m_questRecNode->removeAllChildren();
     m_questTipNpcNode->setVisible(false);
 }
 
@@ -6317,33 +6370,35 @@ void UIComponent::addParticleToBatch(cocos2d::CCParticleSystemQuad *particle) {
 
 void UIComponent::setSerchCoordState(){
     if(GlobalData::shared()->playerInfo.isInSelfServer()){
-        m_xCoordLabel->setPositionX(-78);
-        m_xCoordText->setPositionX(-38);
-        m_xBG->setPositionX(-38);
-        
-        m_yCoordLabel->setPositionX(20);
-        m_yCoordText->setPositionX(58);
-        m_yBG->setPositionX(58);
+//        m_xCoordLabel->setPositionX(-78);
+//        m_xCoordText->setPositionX(-38);
+//        m_xBG->setPositionX(-38);
+//        
+//        m_yCoordLabel->setPositionX(20);
+//        m_yCoordText->setPositionX(58);
+//        m_yBG->setPositionX(58);
 
-        m_findIcon->setPositionX(m_xCoordLabel->getPositionX() - 50);
+//        m_findIcon->setPositionX(m_xCoordLabel->getPositionX() - 50);
+        
         m_zCoordLabel->setVisible(false);
         m_zCoordText->setVisible(false);
         m_kingdomBG->setVisible(false);
         m_serverNode->setVisible(false);
     }else{
-        m_findIcon->setPositionX(m_zCoordLabel->getPositionX() - 50);
-        m_zCoordLabel->setVisible(true);
-        m_zCoordText->setVisible(true);
-        m_kingdomBG->setVisible(false);
-        m_xCoordLabel->setPositionX(-22);
-        m_xCoordText->setPositionX(14);
-        m_xBG->setPositionX(14);
-        
-        m_yCoordLabel->setPositionX(76);
-        m_yCoordText->setPositionX(114);
-        m_yBG->setPositionX(114);
-        m_serverNode->setVisible(true);
-        setServerText(GlobalData::shared()->playerInfo.currentServerId);
+        // guojiang TODO
+//        m_findIcon->setPositionX(m_zCoordLabel->getPositionX() - 50);
+//        m_zCoordLabel->setVisible(true);
+//        m_zCoordText->setVisible(true);
+//        m_kingdomBG->setVisible(false);
+//        m_xCoordLabel->setPositionX(-22);
+//        m_xCoordText->setPositionX(14);
+//        m_xBG->setPositionX(14);
+//        
+//        m_yCoordLabel->setPositionX(76);
+//        m_yCoordText->setPositionX(114);
+//        m_yBG->setPositionX(114);
+//        m_serverNode->setVisible(true);
+//        setServerText(GlobalData::shared()->playerInfo.currentServerId);
     }
 }
 
@@ -6980,6 +7035,8 @@ void UIComponent::moveOut()
 {
     float totalSecend = 0.5;
     
+    float dt = 0;//fusheng 时间以top为主
+    
     if(main_ui_top)
     {
 
@@ -6991,10 +7048,12 @@ void UIComponent::moveOut()
         
         if (maxLength != 0) {
             
-            float dt = (curPos - movePosTop).length()/maxLength*totalSecend;
+            dt = (curPos - movePosTop).length()/maxLength*totalSecend;
             if (dt != 0) {
                 
-                auto mt = MoveTo::create(dt, movePosTop);
+                auto mt = Sequence::createWithTwoActions( MoveTo::create(dt, movePosTop),CallFunc::create([this]{
+                    uiStatus = UIStatus::UIMOVED;
+                }));
                 
                 mt->setTag(89757);
                 
@@ -7016,7 +7075,7 @@ void UIComponent::moveOut()
         
         if (maxLength != 0) {
             
-            float dt = (curPos - movePosLeft).length()/maxLength*totalSecend;
+//            float dt = (curPos - movePosLeft).length()/maxLength*totalSecend;
             if (dt != 0) {
                 
                 auto mt = MoveTo::create(dt, movePosLeft);
@@ -7041,7 +7100,7 @@ void UIComponent::moveOut()
         
         if (maxLength != 0) {
             
-            float dt = (curPos - movePosRight).length()/maxLength*totalSecend;
+//            float dt = (curPos - movePosRight).length()/maxLength*totalSecend;
             if (dt != 0) {
                 
                 auto mt = MoveTo::create(dt, movePosRight);
@@ -7067,7 +7126,7 @@ void UIComponent::moveOut()
         
         if (maxLength != 0) {
             
-            float dt = (curPos - movePosBottom).length()/maxLength*totalSecend;
+//            float dt = (curPos - movePosBottom).length()/maxLength*totalSecend;
             if (dt != 0) {
                 
                 auto mt = MoveTo::create(dt, movePosBottom);
@@ -7081,10 +7140,140 @@ void UIComponent::moveOut()
     }
 }
 
+
+void UIComponent::handleTouchEvent(UITouchEvent event)//fusheng 处理点击事件
+{
+    switch (uiStatus) {
+       
+        case UIStatus::UINOMOVE :
+            
+            
+            switch (event) {
+                case UITouchEvent::UITOUCHBEGIN :
+                    
+                    uiStatus = UIStatus::UIMOVEOUTTING;
+                    moveOut();
+                    
+                    break;
+                case UITouchEvent::UITOUCHEND://fusheng 不处理
+                    
+                    break;
+                    
+            }
+            
+            
+            break;
+        case UIStatus::UIMOVEOUTTING :
+            
+            switch (event) {
+                case UITouchEvent::UITOUCHBEGIN ://fusheng 不处理
+                    this->stopActionByTag(446688);
+                    moveOut();
+                    break;
+                case UITouchEvent::UITOUCHEND:
+                    this->stopActionByTag(446688);
+                    auto seq = Sequence::createWithTwoActions(CCDelayTime::create(0.5), CallFunc::create([this]{
+                        uiStatus = UIStatus::UIMOVEBACKING;
+                        
+                        this->moveIn();
+                    }));
+                    
+                    seq->setTag(446688);
+                    
+                    this->runAction(seq);
+                    
+//                    uiStatus = UIMOVEBACKING;
+//                    moveIn();
+                    
+                    break;
+                    
+            }
+            
+            break;
+
+            
+        
+            
+        case UIStatus::UIMOVED :
+            
+            switch (event) {
+                case UITouchEvent::UITOUCHBEGIN :
+                    
+//                    this->stopActionByTag(886644);
+                    this->stopActionByTag(446688);
+                    break;
+                case UITouchEvent::UITOUCHEND:
+                    
+//                    this->stopActionByTag(886644);
+//                    auto seq = Sequence::createWithTwoActions(CCDelayTime::create(0.5), CallFunc::create([this]{
+//                        uiStatus = UIStatus::UIMOVEBACKING;
+//                        
+//                        this->moveIn();
+//                    }));
+//                    
+//                    seq->setTag(886644);
+//                    
+//                    this->runAction(seq);
+                    
+                    break;
+                    
+            }
+            
+            break;
+            
+        case UIStatus::UIMOVEBACKING :
+            
+            switch (event) {
+                case UITouchEvent::UITOUCHBEGIN :
+                    uiStatus = UIStatus::UIMOVEOUTTING;
+                    moveOut();
+                    
+                    break;
+                case UITouchEvent::UITOUCHEND://fusheng 不处理
+                    
+                    break;
+                    
+            }
+            
+            break;
+        
+       
+    }
+}
+
+void UIComponent::update(float dt)
+{
+    if(uiStatus == UIStatus::UIMOVED)
+    {
+        moveBackTime += dt;
+        
+        if(moveBackTime>0.5)
+        {
+            uiStatus = UIStatus::UIMOVEBACKING;
+            this->moveIn();
+            moveBackTime = 0;
+        }
+        
+    }
+}
+
+void UIComponent::holdMoved()
+{
+    if(uiStatus == UIStatus::UIMOVED)
+    {
+        moveBackTime = 0;
+        
+    }
+
+}
+
 void UIComponent::moveIn()
 {
     float totalSecend = 0.5;
 //    if(isMoveAction())
+    
+
+    float dt = 0; //时间以top为主
     if(true)
     {
         if(main_ui_top)
@@ -7098,10 +7287,13 @@ void UIComponent::moveIn()
             
             if (maxLength != 0) {
                 
-                float dt = (curPos - originPosTop).length()/maxLength*totalSecend;
+                dt = (curPos - originPosTop).length()/maxLength*totalSecend;
                 if (dt != 0) {
                     
-                    auto mt = MoveTo::create(dt, originPosTop);
+                    uiStatus = UIStatus::UIMOVEBACKING;
+                    auto mt = Sequence::createWithTwoActions( MoveTo::create(dt, originPosTop),CallFunc::create([this]{
+                        uiStatus = UIStatus::UINOMOVE;
+                    }));
                     
                     mt->setTag(89757);
                     
@@ -7123,7 +7315,7 @@ void UIComponent::moveIn()
             
             if (maxLength != 0) {
                 
-                float dt = (curPos - originPosLeft).length()/maxLength*totalSecend;
+//                float dt = (curPos - originPosLeft).length()/maxLength*totalSecend;
                 if (dt != 0) {
                     
                     auto mt = MoveTo::create(dt, originPosLeft);
@@ -7148,7 +7340,7 @@ void UIComponent::moveIn()
             
             if (maxLength != 0) {
                 
-                float dt = (curPos - originPosRight).length()/maxLength*totalSecend;
+//                float dt = (curPos - originPosRight).length()/maxLength*totalSecend;
                 if (dt != 0) {
                     
                     auto mt = MoveTo::create(dt, originPosRight);
@@ -7174,7 +7366,7 @@ void UIComponent::moveIn()
             
             if (maxLength != 0) {
                 
-                float dt = (curPos - originPosBottom).length()/maxLength*totalSecend;
+//                float dt = (curPos - originPosBottom).length()/maxLength*totalSecend;
                 if (dt != 0) {
                     
                     auto mt = MoveTo::create(dt, originPosBottom);

@@ -23,11 +23,9 @@ bool SceneContainer::init() {
         //场景层，在3d物体下面，通过自定义相机实现，设置depth值控制显示层级关系
         auto s = Director::getInstance()->getWinSize();
         
-        auto under3DCamera = Camera::createOrthographic(s.width, s.height, -10240, 10240); //1024会导致3d船部分被裁剪， 1024000会导致部分Android设备上小龙眼皮不对
+        auto under3DCamera = Camera::createOrthographic(s.width, s.height, -10240, 10240); //ljf, 如果是1024000， 在部分Android机型上会出现龙眼皮不对的问题
         under3DCamera->setPosition3D(Vec3(0.0f, 0.0f, 0.0f));
         under3DCamera->setRotation3D(Vec3(0.f, 0.f, 0.f));
-        
-        //auto under3DCamera = Camera::create();
         under3DCamera->setCameraFlag(CameraFlag::USER4);
         
         under3DCamera->setDepth(-10);
@@ -40,7 +38,7 @@ bool SceneContainer::init() {
         //auto just3DCamera = Camera::create();
         
         float zeye = Director::getInstance()->getZEye();
-        
+        auto just3DCamera = Camera::createOrthographic(s.width, s.height, -10240, 10240); //ljf,如果是1024000， 在部分Android机型上会出现龙眼皮不对的问题
         //auto just3DCamera = Camera::createPerspective(60, (GLfloat)s.width / s.height, 10, zeye + s.height / 2.0f);
         
         //Vec3 eye(s.width/2.0f , s.height/2.0f , zeye), center(s.width/2 , s.height/2 , 0.0f), up(0.0f, 1.0f, 0.0f);
@@ -49,23 +47,20 @@ bool SceneContainer::init() {
         Vec3 eye(0.0f, 0.0f, zeye);
         Vec3 center(0.0f , 0.0f , 0.0f);
         Vec3 up(0.0f, 1.0f, 0.0f);
-        /*
-        auto just3DCamera = Camera::createOrthographic(s.width, s.height, -1024000, 1024000);
-        //just3DCamera->setPosition3D(eye);
-        //just3DCamera->lookAt(center, up);
-        just3DCamera->setPosition3D(Vec3(0.0f, 0.0f, 0.0f));
-        just3DCamera->setRotation3D(Vec3(0.f, 0.f, 0.f));
-        */
-        //just3DCamera->setRotation3D(Vec3(32, 39, -24));
-        
-        
-        auto just3DCamera = Camera::createOrthographic(s.width, s.height, -10240, 10240); //1024会导致3d船部分被裁剪， 1024000会导致部分Android设备上小龙眼皮不对
         just3DCamera->setPosition3D(eye);
         just3DCamera->lookAt(center, up);
         //just3DCamera->setPosition3D(Vec3(0.0f, 0.0f, 0.0f));
         //just3DCamera->setRotation3D(Vec3(0.f, 0.f, 0.f));
+        float eyex = eye.x;
+        float eyey = eye.y;
+        float eyez = eye.z;
+        //just3DCamera->setRotation3D(Vec3(38, 39, -24));
         
-        //auto just3DCamera = Camera::create();
+        /*
+        auto just3DCamera = Camera::createOrthographic(s.width, s.height, -1024000, 1024000);
+        just3DCamera->setPosition3D(Vec3(0.0f, 0.0f, 0.0f));
+        just3DCamera->setRotation3D(Vec3(0.f, 0.f, 0.f));
+        */
         just3DCamera->setCameraFlag(CameraFlag::USER2);
         just3DCamera->setDepth(-9);
         this->addChild(just3DCamera);

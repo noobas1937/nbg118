@@ -45,39 +45,23 @@ bool CityDefenseView::init(int buildId)
     });
     m_buildId = buildId;
     m_st = 0;
-    //m_smokeNode = CCLayer::create();
-   CCNode* __tmpNode = CCBLoadFile("CityDefenseView",this,this);
+
+    CCNode* __tmpNode = CCBLoadFile("CityDefenseView",this,this);
     
     this->setContentSize(CCDirector::sharedDirector()->getWinSize());
 
-//    changeBGHeight(m_buildBG);
-//    auto size = CCDirector::sharedDirector()->getWinSize();
-//    m_smokeNode->setAnchorPoint(ccp(0.5, 0.5));
-//    m_smokeNode->setPosition(0, 0);
-//    m_mainNode->addChild(m_smokeNode);
-//    this->addChild(m_smokeNode);
-    
-    int addHeight = getExtendHeight();
-    m_mainNode->setPositionY(m_mainNode->getPositionY()+addHeight);
-//    m_bNode->setPositionY(m_bNode->getPositionY()-addHeight);
+//    int addHeight = getExtendHeight();
+//    m_mainNode->setPositionY(m_mainNode->getPositionY()+addHeight);
+    m_mainNode->setPositionY(CCDirector::sharedDirector()->getWinSize().height/2);
 
     m_fullbar->setVisible(false);
-    //m_defMsgLabel->setString(_lang("102307")+"\n"+_lang("102308")+"\n"+_lang("102309")+"\n"+_lang("102310"));
+
     m_defMsgLabel->setString(_lang("102341"));
     m_defLabel->setString(_lang("102303"));
-    //CCCommonUtils::setButtonTitle(m_defBtn, _lang("102305").c_str());
     
     FunBuildInfo& m_info = FunBuildController::getInstance()->getFunbuildById(m_buildId);
     setTitleName(_lang("102206"));
     
-//    for (int i=1; i<=4; i++) {
-//        auto particle = ParticleController::createParticle(CCString::createWithFormat("UiFire_%d",i)->getCString());
-//        m_fireNode1->addChild(particle);
-//        
-//        auto particle1 = ParticleController::createParticle(CCString::createWithFormat("UiFire_%d",i)->getCString());
-//        m_fireNode2->addChild(particle1);
-//    }
-    string str = _lang("102335");
     m_statusTxt->setString(_lang("102335"));
     int per = 0;
     if (GlobalData::shared()->alliance_territory_negative_effect > 0) {//联盟领地减益

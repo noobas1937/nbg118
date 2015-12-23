@@ -16,7 +16,7 @@ public:
     static float getRandomWithKey(float min, float max,int key);
 	static int getRandomPlusOrMinus();
 	static float getAngle(CCPoint from, CCPoint to);
-    static int getCurrentTime();//取得的是毫秒
+    static long getCurrentTime();//取得的是毫秒
 };
 
 class CircleDoubleRect

@@ -19,6 +19,8 @@ public:
     ~MonthCardView();
     
     void refreshData(CCObject *ccObj);
+    
+    void onClickClose(cocos2d::CCObject *pSender, CCControlEvent pCCControlEvent);
 protected:
     void generateData();
 private:
@@ -34,8 +36,9 @@ private:
 //    virtual void onTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
 //    virtual void onTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
     
-    CCScrollView *m_scrollView;
-    CCSafeObject<CCScale9Sprite> m_buildBG;
+//    CCScrollView *m_scrollView;
+    Node* m_rootNode;
+//    CCSafeObject<CCScale9Sprite> m_buildBG;
     CCSafeObject<CCNode> m_BGNode;
     CCSafeObject<CCNode> m_infoList;
     CCSafeObject<CCLabelIF> m_lblDes;

@@ -18,6 +18,9 @@
 #include "FlyCBuildView.h"
 #include "HFHeadImgNode.h"
 #include "ChatInfo.h"
+//begin a by ljf
+#include "RechargeACTVCell.h"
+//end a by ljf
 
 enum BtnIndex{
     BTN_GENERAL,
@@ -37,6 +40,20 @@ enum OldTitleType
     UIComponentOldTitle_FIVE_TYPE,
     UIComponentOldTitle_SIX_TYPE,
     UIComponentOldTitle_SEVEN_TYPE,
+};
+
+enum UIStatus//fusheng UI状态
+{
+    UINOMOVE,//UI没有移动
+    UIMOVEOUTTING,//UI往外移动中
+    UIMOVED,//UI已经移出去
+    UIMOVEBACKING,//UI往回移动中
+};
+
+enum UITouchEvent//fusheng
+{
+    UITOUCHBEGIN,
+    UITOUCHEND
 };
 
 class UIComponent;
@@ -189,7 +206,6 @@ public:
     CCSafeObject<CCNode> m_UserResBg;
     CCSafeObject<CCScale9Sprite> m_rightResBg;
     
-    CCSafeObject<CCScale9Sprite> m_questRecSpr;
     CCSafeObject<CCNode> m_questRecNode;
     CCSafeObject<CCSprite> m_chatBG;
     CCSafeObject<CCNode> m_questBG;
@@ -217,7 +233,6 @@ public:
     CCSafeObject<CCLabelIF> m_powerName;
     CCSafeObject<CCLabelIFBMFont> m_power;
     CCSafeObject<CCLabelIF> m_questName;
-    CCSafeObject<CCLabelIF> m_questTitle;
     CCSafeObject<CCLabelIF> m_questTipNum;
     
     CCSafeObject<CCNode> m_queueCell;
@@ -247,7 +262,7 @@ public:
     CCSafeObject<CCNode> m_questIcon;
     CCSafeObject<CCNode> m_questAnimNode;
     CCSafeObject<CCScale9Sprite> m_questContextBG;
-    CCSafeObject<CCScale9Sprite> m_questContextBG1;
+//    CCSafeObject<CCScale9Sprite> m_questContextBG1;
     CCSafeObject<CCNode> m_questTipNpcNode;
     
     CCSafeObject<CCScale9Sprite> m_stamineBar;
@@ -341,6 +356,10 @@ class UIComponent: public CCLayer
 public:
     ~UIComponent();
     UIComponent();
+    //begin a by ljf
+    void loadSpineActivityBox();
+    void unLoadSpineActivityBox();
+    //end a by ljf
     static UIComponent* getInstance();
     static void purgeData();
     void setUserData();
@@ -363,6 +382,9 @@ public:
     void updateBuildState(bool st=false, int qid=0);
     void loadMailResource();
     
+    
+    void updateDragonStatus(CCObject* params);
+    
     void refreshUIComponent();
     void refreshChatInfo(int type);
     void refreshChatInfoIOS(ChatInfo info);
@@ -371,6 +393,12 @@ public:
     void showCloseBtn(bool show);
     void showEquipOrBagBtn(int type);
     void hideReturnBtn();
+    
+    void showCanFeedRedPoint(bool isShow);
+    
+    CCSafeObject<CCSprite> m_nbXHD;
+    
+    
     CCSafeObject<CCLabelIF> m_xCoordLabel;
     CCSafeObject<CCLabelIF> m_yCoordLabel;
     CCSafeObject<CCLabelIF> m_zCoordLabel;
@@ -476,6 +504,15 @@ public:
     void showShakeGuideLayer();
     CC_SYNTHESIZE(int, m_queueCount, queueCount);
     void removeShakeGuide();
+    
+    UIStatus uiStatus;
+    void handleTouchEvent(UITouchEvent event);
+    
+    void holdMoved();//保持在外部
+    
+    void update(float dt);
+    
+    float moveBackTime;
 public:
     void onPopupReturnClick(CCObject * pSender, CCControlEvent pCCControlEvent);
     void onCancelDelMailClick(CCObject * pSender, CCControlEvent pCCControlEvent);
@@ -612,6 +649,8 @@ private:
     CCSafeObject<CCSprite> m_alliance;
     CCSafeObject<CCSprite> m_homeBack;
     CCSafeObject<CCSprite> m_configSet;
+    
+    CCSafeObject<CCSprite>  m_dragonIcon;
 
     CCSafeObject<CCNode> m_homeBG;
     CCSafeObject<CCSprite> m_homeBG_NB;//fusheng 添加一个新的回城按钮
@@ -701,7 +740,6 @@ private:
     CCSafeObject<CCNode> m_UserResBg;
     CCSafeObject<CCScale9Sprite> m_rightResBg;
     
-    CCSafeObject<CCScale9Sprite> m_questRecSpr;
     CCSafeObject<CCNode> m_questRecNode;
     CCSafeObject<CCScale9Sprite> m_chatBG;
     CCSafeObject<CCNode> m_questBG;
@@ -728,7 +766,6 @@ private:
     
     CCSafeObject<CCLabelIFBMFont> m_power;
     CCSafeObject<CCLabelIF> m_questName;
-    CCSafeObject<CCLabelIF> m_questTitle;
     CCSafeObject<CCLabelIF> m_questTipNum;
 
     CCSafeObject<CCNode> m_queueCell;
@@ -758,13 +795,18 @@ private:
     CCSafeObject<CCNode> m_questIcon;
     CCSafeObject<CCNode> m_questAnimNode;
     CCSafeObject<CCScale9Sprite> m_questContextBG;
-    CCSafeObject<CCScale9Sprite> m_questContextBG1;
+//    CCSafeObject<CCScale9Sprite> m_questContextBG1;
     CCSafeObject<CCNode> m_questTipNpcNode;
     
     CCSafeObject<CCScale9Sprite> m_stamineBar;
     CCSafeObject<CCSprite> m_sprVip;
     CCSafeObject<CCSprite> m_sprVipHui;
-    CCSafeObject<CCLabelIFBMFont> m_vipText;
+    //begin a by ljf
+    CCSafeObject<CCSprite> m_vipFgGray;
+    CCSafeObject<CCSprite> m_vipFg;
+    //end a by ljf
+    //CCSafeObject<CCLabelIFBMFont> m_vipText;
+    CCSafeObject<CCLabelIF> m_vipText;
     CCSafeObject<CCNode> m_testFeedBackNode;
     CCSafeObject<CCLabelIF> m_lblTestFeedBack;
     CCSafeObject<CCNode> m_lotteryNode;
@@ -865,6 +907,9 @@ private:
     bool m_UIQuestNodeStat;
     int m_showPower;
     vector<CCParticleBatchNode*> m_parVec;
+    //begin a by ljf
+    ActivityBox * mActivityBox;
+    //end a by ljf
 };
 
 #endif /* defined(__IF__UIComponent__) */

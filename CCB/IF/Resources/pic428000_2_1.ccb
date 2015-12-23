@@ -49,8 +49,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>15.483795166015625</real>
-									<real>6.3202171325683594</real>
+									<real>-103</real>
+									<real>-123</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -99,6 +99,8 @@
 								<false/>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>animatedProperties</key>
@@ -122,25 +124,13 @@
 						<array>
 							<dict>
 								<key>name</key>
-								<string>position</string>
-								<key>type</key>
-								<string>Position</string>
-								<key>value</key>
-								<array>
-									<real>-49</real>
-									<real>-13</real>
-									<integer>0</integer>
-								</array>
-							</dict>
-							<dict>
-								<key>name</key>
 								<string>anchorPoint</string>
 								<key>type</key>
 								<string>Point</string>
 								<key>value</key>
 								<array>
-									<real>0.0</real>
-									<real>0.0</real>
+									<real>0.5</real>
+									<real>0.5</real>
 								</array>
 							</dict>
 							<dict>
@@ -210,8 +200,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>237.12730407714844</real>
-									<real>70.873458862304688</real>
+									<real>116.12730407714844</real>
+									<real>-55.126541137695312</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -270,8 +260,6 @@
 								</array>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>animatedProperties</key>
@@ -300,8 +288,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>268.14224243164062</real>
-									<real>83.848159790039062</real>
+									<real>147.14224243164062</real>
+									<real>-42.151840209960938</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -360,8 +348,6 @@
 								</array>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -385,8 +371,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>268.10000610351562</real>
-									<real>83.800003051757812</real>
+									<real>147.10000610351562</real>
+									<real>-42.199996948242188</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -423,8 +409,6 @@
 								<false/>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -448,8 +432,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>242.10000610351562</real>
-									<real>73.900001525878906</real>
+									<real>121.10000610351562</real>
+									<real>-52.099998474121094</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -486,8 +470,6 @@
 								<false/>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 				</array>
 				<key>customClass</key>
@@ -639,7 +621,7 @@
 			<key>offset</key>
 			<real>0.0</real>
 			<key>position</key>
-			<real>0.0</real>
+			<real>1.2333333492279053</real>
 			<key>resolution</key>
 			<real>30</real>
 			<key>scale</key>
@@ -673,7 +655,7 @@
 			<key>offset</key>
 			<real>0.0</real>
 			<key>position</key>
-			<real>0.36666667461395264</real>
+			<real>2</real>
 			<key>resolution</key>
 			<real>30</real>
 			<key>scale</key>

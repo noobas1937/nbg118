@@ -126,6 +126,7 @@ private:
     CCSafeObject<CCControlButton> m_btnReward;
     CCSafeObject<CCScale9Sprite> m_progress;
     CCSafeObject<CCLabelIF> m_progressTxt;
+    CCSafeObject<CCLabelIF> m_progressTotalTxt;
     WaitInterface* m_waitInterface;
     CCPoint m_touchPoint;
     QuestInfo* m_info;

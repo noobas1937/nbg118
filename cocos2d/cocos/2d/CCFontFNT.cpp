@@ -270,9 +270,13 @@ void BMFontConfiguration::purgeFontDefDictionary()
 
 std::set<unsigned int>* BMFontConfiguration::parseConfigFile(const std::string& controlFile)
 {
+   
     Data data = FileUtils::getInstance()->getDataFromFile(controlFile);
     CCASSERT((!data.isNull()), "BMFontConfiguration::parseConfigFile | Open file error.");
-
+    
+    if (data.isNull()) {
+        return nullptr;
+    }
     if (memcmp("BMF", data.getBytes(), 3) == 0) {
         std::set<unsigned int>* ret = parseBinaryConfigFile(data.getBytes(), data.getSize(), controlFile);
         return ret;

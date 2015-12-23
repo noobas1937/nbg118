@@ -279,7 +279,7 @@ bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType) {
     m_heiqishiLvBgBachNode = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("building_level_overlay.png")->getTexture(), 448);
     m_layers[WM_ROAD]->addChild(m_heiqishiLvBgBachNode, roadIndex++);
     
-    m_heiqishiLvLbNode = CCLabelBatchNode::create("Arial_Bold_Regular.fnt");
+    m_heiqishiLvLbNode = CCLabelBatchNode::create(getNBFont(NB_FONT_Bold));
     m_layers[WM_ROAD]->addChild(m_heiqishiLvLbNode, roadIndex++);
     
     m_spinLabelNode = CCNode::create();
@@ -395,10 +395,10 @@ bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType) {
     //    m_mapMonsterBossNode = IFSkeletonBatchLayer::create();
     //    m_layers[WM_CITY]->addChild(m_mapMonsterBossNode, 12);
     
-    m_labelNode = CCLabelBatchNode::create("Arial_Bold_Regular.fnt");
+    m_labelNode = CCLabelBatchNode::create(getNBFont(NB_FONT_Bold));
     m_layers[WM_CITY]->addChild(m_labelNode, 10);
     
-    m_labelNode1 = CCLabelBatchNode::create("Arial_Bold_Border.fnt");
+    m_labelNode1 = CCLabelBatchNode::create(getNBFont(NB_FONT_Bold_Border));
     m_layers[WM_CITY]->addChild(m_labelNode1, 11);
     
     m_unBatchLabelNode = CCNode::create();
@@ -994,9 +994,15 @@ void WorldMapView::onEnter() {
     setTouchEnabled(true);
 
     ShakeController::getInstance()->addAccelerometer();
+    //begin a by ljf
+    //UIComponent::getInstance()->loadSpineActivityBox();
+    //end a by ljf
 }
 
 void WorldMapView::onExit() {
+    //begin a by ljf
+    //UIComponent::getInstance()->unLoadSpineActivityBox();
+    //end a by ljf
     setTouchEnabled(false);
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_POPUP_VIEW_IN);
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_POPUP_VIEW_OUT);
@@ -4219,16 +4225,22 @@ CCSprite* WorldMapView::createMarchSprite(MarchInfo& info) {
             if (info.targetType == ResourceTile || info.targetType == tile_superMine) {
                 tmpName = CCString::createWithFormat("CJ_shadow_%s_0.png",CC_ITOA(direction))->getCString();
                 auto body = CCLoadSprite::createSprite(tmpName);
-//                auto cloth = CCLoadSprite::createSprite(tmpName);
                 auto shadow = CCLoadSprite::createSprite(tmpName);
                 auto bodyAni = createMarchAni(AniCollect,direction);
-//                auto clothAni = createMarchAni(AniCollectCloth,direction);
+            
+                for (int i = 0; i < info.marchSoldier.size(); ++i) {
+                    if (info.marchSoldier[i].type == TITAN) {
+                        auto titan = Sprite::create();
+                        auto titanAni = createMarchAni(AniCollectTitan,direction);
+                        titan->runAction(titanAni);
+                        sp->addChild(titan,1000);
+                        titan->setPosition(0,100);
+                    }
+                }
+
                 body->runAction(bodyAni);
-//                cloth->runAction(clothAni);
                 sp->addChild(body);
-//                sp->addChild(cloth);
                 sp->addChild(shadow,-1);
-//                cloth->setColor(info.getMarchColor());
             }else{
                 bool inMapFlag = false;
                 MarchArmy *march = NULL;
@@ -4373,45 +4385,71 @@ CCAnimate* WorldMapView::createMarchAni(MarchAniType type,int direction, float d
             frameCount = 8;
         }
             break;
-        case AniCollectCloth:{
-            temp = "CJ_yifu_%s_%d.png";
-            frameCount = 0;
+        case AniCollectTitan:{
+            // 龙的方向，因为龙的贴图命名不是按角度的45 而是按方向"N,S,W,NW,SW"来命名，所以这里需要转化一次
+            directionStr = "N";
+            switch (direction) {
+                case -90:
+                    directionStr = "N";
+                    break;
+                case 90:
+                    directionStr = "S";
+                    break;
+                case 0:
+                    directionStr = "W";
+                    break;
+                case -45:
+                    directionStr = "NW";
+                    break;
+                case 45:
+                    directionStr = "SW";
+                    break;
+                default:
+                    break;
+            }
+            temp = "dragon_%d_%s_move_%d.png";
+            frameCount = 9;
         }
             break;
+//        case AniCollectCloth:{
+//            temp = "CJ_yifu_%s_%d.png";
+//            frameCount = 0;
+//        }
+//            break;
         case AniDeal:{
             frameCount = 8;
             temp = "JY_body_%s_%d.png";
         }
             break;
-        case AniDealCloth:{
-            frameCount = 0;
-            temp = "JY_yifu_%s_%d.png";
-        }
-            break;
+//        case AniDealCloth:{
+//            frameCount = 0;
+//            temp = "JY_yifu_%s_%d.png";
+//        }
+//            break;
         case AniScout:{
             frameCount = 8;
             temp = "ZC_body_%s_%d.png";
         }
             break;
-        case AniScoutCloth:{
-            frameCount = 0;
-            temp = "ZC_yifu_%s_%d.png";
-        }
-            break;
-        case AniCityProtect:{
-            frameCount = 8;
-            frameStart = 1;
-            directionStr = "";
-            temp = "Protect_B_%s%d.png";
-        }
-            break;
-        case AniCityResourceProtect:{
-            frameCount = 8;
-            frameStart = 1;
-            directionStr = "";
-            temp = "Protect_Y_%s%d.png";
-        }
-            break;
+//        case AniScoutCloth:{
+//            frameCount = 0;
+//            temp = "ZC_yifu_%s_%d.png";
+//        }
+//            break;
+//        case AniCityProtect:{
+//            frameCount = 8;
+//            frameStart = 1;
+//            directionStr = "";
+//            temp = "Protect_B_%s%d.png";
+//        }
+//            break;
+//        case AniCityResourceProtect:{
+//            frameCount = 8;
+//            frameStart = 1;
+//            directionStr = "";
+//            temp = "Protect_Y_%s%d.png";
+//        }
+//            break;
         case AniEdgy:{
             frameCount = 7;
             directionStr = "";
@@ -4477,7 +4515,16 @@ CCAnimate* WorldMapView::createMarchAni(MarchAniType type,int direction, float d
         }
         if(type == AniMonsterBreath){
             tmpAniArr.pushBack(CCLoadSprite::loadResource(CCString::createWithFormat(temp.c_str(),directionStr,(i + randIndex) % frameCount)->getCString()));
-        }else{
+        }
+        else if (type == AniCollectTitan){
+            // tao.yu 这是一个很屎的代码，龙的等级小于等于3级用动画1，大于3用动画2
+            int picIndex = 1;
+            if (GlobalData::shared()->titanInfo.level > 3) {
+                picIndex = 2;
+            }
+            tmpAniArr.pushBack(CCLoadSprite::loadResource(CCString::createWithFormat(temp.c_str(),picIndex,directionStr,i)->getCString()));
+        }
+        else{
             tmpAniArr.pushBack(CCLoadSprite::loadResource(CCString::createWithFormat(temp.c_str(),directionStr,i)->getCString()));
         }
     }
@@ -4828,7 +4875,7 @@ void WorldMapView::addUnderNode(unsigned int index) {
             m_cityItem[index].push_back(under);
             m_cityBatchNode->addChild(under, index);
             
-            auto island = CCLoadSprite::createSprite("decor_island_100.png");
+            auto island = CCLoadSprite::createSprite("z_decor_002.png");
             island->setAnchorPoint(Vec2(0, 0));
             under->addChild(island);
 
@@ -5194,10 +5241,14 @@ void WorldMapView::addUnderNode(unsigned int index) {
                     int island_idx = NBWorldMapMainCity::getMainCityIslandImageIndex(&info, player.cityLv, -1);
                     if (island_idx >= 0)
                     {
-                        auto island = CCLoadSprite::createSprite(NBWorldMapMainCity::getMainCityIslandImage(island_idx, pos.x, pos.y));
-                        if (island->getTexture()) island->getTexture()->setAliasTexParameters();
-                        island->setAnchorPoint(Vec2(0, 0));
-                        under->addChild(island);
+                        if (island_idx == 0)
+                        {
+                            auto island = NBWorldMapMainCity::getMainCityIslandImage(island_idx, pos.x, pos.y);
+                            if (island)
+                            {
+                                under->addChild(island);
+                            }
+                        }
                         
                         house = NBWorldMapMainCity::getMainCity(island_idx, player.cityLv, -1);
                     }
@@ -6195,10 +6246,13 @@ void WorldMapView::addBatchItem(BatchTagType type, unsigned int index,CCObject* 
         }
             break;
         case MonsterProBG1:{
-            item = CCLoadSprite::createSprite("world_lv_bg.png");
-            item->setPosition(ccp(pos.x - 45, pos.y-55));
+            item = CCLoadSprite::createSprite("world_name.png");
+            item->setPosition(ccp(pos.x + 35, pos.y-55));
             zorder = 3;
             
+            auto lv_bg = CCLoadSprite::createSprite("world_lv_bg.png");
+            lv_bg->setPosition(45, 29);
+            item->addChild(lv_bg);
         }
             break;
         case LevelTag:{
@@ -6256,7 +6310,7 @@ void WorldMapView::addBatchItem(BatchTagType type, unsigned int index,CCObject* 
             break;
         case NameTag1:{
             item = CCLoadSprite::createSprite("name_bg_title.png");
-            item->setPosition(ccp(pos.x, pos.y));
+            item->setPosition(ccp(pos.x, pos.y + 22));
             zorder = 3;
         }
             break;

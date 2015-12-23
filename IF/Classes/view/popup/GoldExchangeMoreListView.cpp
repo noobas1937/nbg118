@@ -61,18 +61,23 @@ bool GoldExchangeMoreListView::init(int itemId)
     m_oldPriceLabel->setString(PayController::getInstance()->getDollarText(m_dataItem->oldprice,""));
     m_newPriceLabel->setString(dollar);
 
+
     m_goldNumText->setString(m_dataItem->gold_doller.c_str());
     m_soleOutSpr->setVisible(false);
     if (m_dataItem->bought) {
         m_soleOutSpr->setVisible(true);
         m_costBtn->setEnabled(false);
     }
-    m_animNode = CCNode::create();
-    m_costBtn->getParent()->addChild(m_animNode);
-    m_animNode->setPosition(m_costBtn->getPosition());
-    CCSize btnSize = m_costBtn->getContentSize();
-    ButtonLightEffect* btnEffect = ButtonLightEffect::create(btnSize);
-    m_animNode->addChild(btnEffect);
+    
+    m_liBaoName->setString(_lang(m_dataItem->name));
+    //fusheng d begin
+//    m_animNode = CCNode::create();
+//    m_costBtn->getParent()->addChild(m_animNode);
+//    m_animNode->setPosition(m_costBtn->getPosition());
+//    CCSize btnSize = m_costBtn->getContentSize();
+//    ButtonLightEffect* btnEffect = ButtonLightEffect::create(btnSize);
+//    m_animNode->addChild(btnEffect);
+    //fusheng d end
     
 //    CCSprite* Spr = CCSprite::create();
 //    m_animNode->addChild(Spr);
@@ -114,7 +119,7 @@ bool GoldExchangeMoreListView::init(int itemId)
                 auto cell = GoldExchangeMoreListCell::create(itemId, num,0);
                 cell->setPosition(ccp(8, curY));
                 m_scrollView->cocos2d::CCNode::addChild(cell);
-                curY += 80;
+                curY += 95;
             }
             i++;
         }
@@ -177,10 +182,13 @@ bool GoldExchangeMoreListView::onAssignCCBMemberVariable(cocos2d::CCObject * pTa
 {
    // CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_okBtn", CCControlButton*, this->m_okBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_infoList", CCNode*, this->m_infoList);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_goldNumText", CCLabelBMFont*, this->m_goldNumText);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_goldNumText", CCLabelIF*, this->m_goldNumText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_oldPriceLabel", CCLabelIF*, this->m_oldPriceLabel);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_newPriceLabel", CCLabelIF*, this->m_newPriceLabel);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_getLabel", CCLabelIF*, this->m_getLabel);
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_liBaoName", CCLabelIF*, this->m_liBaoName);
+    
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_costBtn", CCControlButton*, this->m_costBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_buildBG", CCScale9Sprite*, this->m_buildBG);
@@ -219,17 +227,25 @@ bool GoldExchangeMoreListCell::init(int itemId, int num,int type)
             picStr = CCCommonUtils::getResourceIconByType(itemId);
             name = CCCommonUtils::getResourceNameByType(itemId);
             auto iconBg = CCLoadSprite::createSprite(CCCommonUtils::getToolBgByColor(2).c_str());
-            CCCommonUtils::setSpriteMaxSize(iconBg, 65,true);
+//            CCCommonUtils::setSpriteMaxSize(iconBg, 65,true);
             m_iconNode->addChild(iconBg);
             auto icon =CCLoadSprite::createSprite(picStr.c_str(),true,CCLoadSpriteType_DEFAULT);
             CCCommonUtils::setSpriteMaxSize(icon, 60, true);
+            icon->setScale(iconBg->getScale());
             m_iconNode->addChild(icon);
             m_nameLabel->setString(name);
-            m_numLabel->setString(CC_ITOA(num));
+            string str = CC_ITOA(num);
+            str = "X" + str;
+            m_numLabel->setString(str);
         }
         else {//道具
             CCCommonUtils::createGoodsIcon(itemId, m_iconNode, CCSize(65, 65),NULL,m_nameLabel);
-            m_numLabel->setString(CC_ITOA(num));
+            
+            string str = CC_ITOA(num);
+            str = "X" + str;
+            m_numLabel->setString(str);
+
+//            m_numLabel->setString(CC_ITOA(num));
 //            auto& toolInfo = ToolController::getInstance()->getToolInfoById(itemId);
 //            name = _lang(toolInfo.name);
 //            picStr = CCCommonUtils::getIcon(CC_ITOA(itemId));
@@ -242,7 +258,9 @@ bool GoldExchangeMoreListCell::init(int itemId, int num,int type)
         auto& eInfo = EquipmentController::getInstance()->EquipmentInfoMap[itemId];
         name = _lang(eInfo.name);
         m_nameLabel->setString(name);
-        m_numLabel->setString(CC_ITOA(num));
+        string str = CC_ITOA(num);
+        str = "X" + str;
+        m_numLabel->setString(str);
         string bgPath = CCCommonUtils::getToolBgByColor(eInfo.color);
         auto iconBg = CCLoadSprite::createSprite(bgPath.c_str());
         CCCommonUtils::setSpriteMaxSize(iconBg, 55, true);

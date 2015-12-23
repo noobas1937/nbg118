@@ -22,6 +22,8 @@ varying vec4 v_waterLightShore;
 varying vec4 v_waterDarkSea;
 varying vec4 v_waterDarkShore;
 
+varying float v_reflectionPower; //a by ljf
+
 uniform highp float u_time;
 
 void main()
@@ -55,7 +57,8 @@ void main()
 	//end d by ljf
 	//begin a by ljf
 	//v_result = 0.5 * sin(x * 50.0 * 3.1416 - u_time) + 0.5;
-	v_result = 0.5 * sin(x * 50.0 * 3.1416 - u_time) + 0.5;
+	//v_result = 0.5 * sin(x * 100.0 * 3.1416 - u_time) + 0.5;
+	v_result = 0.5 * sin(x * 100.0 * 3.1416 - u_time) + 0.5;
 	//end a by ljf
 	//begin d by ljf
 	//v_normalCoord1 = v_texcoord0 * 25.0;
@@ -99,4 +102,9 @@ void main()
 	v_waterDarkSea = mix(v_waterDarkSea, v_waterDarkShore, temppi);
 	v_waterLightSea = mix(v_waterLightSea, v_waterLightShore, temppi);
 	#endif
+
+	//begin a by ljf
+    float ystretch = 0.2;//0.4
+    v_reflectionPower = clamp((1.0 - length(vec2(v_position.x * 0.7 + (v_texcoord0.x - 0.5) * 1.5, v_position.y * ystretch) - vec2(0.0, ystretch))) * 3.0, 1.3, 1.6);
+    //end a by ljf
 }

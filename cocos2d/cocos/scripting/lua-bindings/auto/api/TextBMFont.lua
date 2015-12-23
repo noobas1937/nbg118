@@ -5,6 +5,34 @@
 -- @parent_module ccui
 
 --------------------------------
+-- Gets the string length of the label.<br>
+-- Note: This length will be larger than the raw string length,<br>
+-- if you want to get the raw string length, you should call this->getString().size() instead<br>
+-- return  string length.
+-- @function [parent=#TextBMFont] getStringLength 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
+-- 
+-- @function [parent=#TextBMFont] getString 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+--  get string value for labelbmfont
+-- @function [parent=#TextBMFont] getStringValue 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+--  set string value for labelbmfont
+-- @function [parent=#TextBMFont] setText 
+-- @param self
+-- @param #string value
+-- @return TextBMFont#TextBMFont self (return value: ccui.TextBMFont)
+        
+--------------------------------
 --  init a bitmap font atlas with an initial string and the FNT file 
 -- @function [parent=#TextBMFont] setFntFile 
 -- @param self
@@ -12,26 +40,11 @@
 -- @return TextBMFont#TextBMFont self (return value: ccui.TextBMFont)
         
 --------------------------------
--- Gets the string length of the label.<br>
--- Note: This length will be larger than the raw string length,<br>
--- if you want to get the raw string length, you should call this->getString().size() instead<br>
--- return  string length.
--- @function [parent=#TextBMFont] getStringLength 
--- @param self
--- @return long#long ret (return value: long)
-        
---------------------------------
 -- 
 -- @function [parent=#TextBMFont] setString 
 -- @param self
 -- @param #string value
 -- @return TextBMFont#TextBMFont self (return value: ccui.TextBMFont)
-        
---------------------------------
--- 
--- @function [parent=#TextBMFont] getString 
--- @param self
--- @return string#string ret (return value: string)
         
 --------------------------------
 -- @overload self, string, string         

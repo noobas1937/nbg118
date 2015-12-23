@@ -67,6 +67,7 @@ private:
     CCSafeObject<CCSprite> m_pageflag;
     CCSafeObject<CCArray> m_data;
     CCSafeObject<CCNode> m_animNode;
+    CCSafeObject<CCLayerColor> m_touchLayer;
     CCTableView* m_tabView;
 
     void generateData();
@@ -184,6 +185,7 @@ private:
     
     CCSafeObject<CCLabelBMFont> m_getGoldNumText;
     CCSafeObject<CCLabelIF> m_percentLabel;
+     CCSafeObject<CCLabelIF> m_percentLabel2;
     CCSafeObject<CCLabelIF> m_timeLabel;
     CCSafeObject<CCLabelIF> m_desLabel;
     CCSafeObject<CCLabelIF> m_moreLabel;

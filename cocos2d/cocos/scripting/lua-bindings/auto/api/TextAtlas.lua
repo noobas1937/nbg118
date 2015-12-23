@@ -11,11 +11,18 @@
 -- return  string length.
 -- @function [parent=#TextAtlas] getStringLength 
 -- @param self
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- 
 -- @function [parent=#TextAtlas] getString 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- Get string value for labelatlas.<br>
+-- return The string value of TextAtlas.
+-- @function [parent=#TextAtlas] getStringValue 
 -- @param self
 -- @return string#string ret (return value: string)
         
@@ -46,6 +53,14 @@
 -- js NA
 -- @function [parent=#TextAtlas] adaptRenderers 
 -- @param self
+-- @return TextAtlas#TextAtlas self (return value: ccui.TextAtlas)
+        
+--------------------------------
+-- Set string value for labelatlas.<br>
+-- param value A given string needs to be displayed.
+-- @function [parent=#TextAtlas] setStringValue 
+-- @param self
+-- @param #string value
 -- @return TextAtlas#TextAtlas self (return value: ccui.TextAtlas)
         
 --------------------------------

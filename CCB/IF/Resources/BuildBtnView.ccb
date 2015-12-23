@@ -1040,7 +1040,7 @@
 														<key>value</key>
 														<array>
 															<string>Common/Common_1.plist</string>
-															<string>ui_gold.png</string>
+															<string>icon_gemSpeedUp.png</string>
 														</array>
 													</dict>
 													<dict>
@@ -3677,6 +3677,14 @@
 												<array>
 													<dict>
 														<key>name</key>
+														<string>visible</string>
+														<key>type</key>
+														<string>Check</string>
+														<key>value</key>
+														<false/>
+													</dict>
+													<dict>
+														<key>name</key>
 														<string>position</string>
 														<key>type</key>
 														<string>Position</string>
@@ -3705,9 +3713,9 @@
 														<string>ScaleLock</string>
 														<key>value</key>
 														<array>
-															<real>0.69999998807907104</real>
-															<real>0.69999998807907104</real>
-															<false/>
+															<real>1</real>
+															<real>1</real>
+															<true/>
 															<integer>0</integer>
 														</array>
 													</dict>
@@ -3727,7 +3735,7 @@
 														<key>value</key>
 														<array>
 															<string>Common/Common_1.plist</string>
-															<string>ui_gold.png</string>
+															<string>ui_speedup_gem.png</string>
 														</array>
 													</dict>
 													<dict>
@@ -3752,6 +3760,8 @@
 														</array>
 													</dict>
 												</array>
+												<key>selected</key>
+												<true/>
 											</dict>
 											<dict>
 												<key>animatedProperties</key>
@@ -7609,8 +7619,8 @@
 												<string>Color3</string>
 												<key>value</key>
 												<array>
-													<integer>215</integer>
-													<integer>220</integer>
+													<integer>254</integer>
+													<integer>255</integer>
 													<integer>255</integer>
 												</array>
 											</dict>
@@ -7728,7 +7738,7 @@
 								<key>value</key>
 								<array>
 									<real>0.0</real>
-									<real>-93.599998474121094</real>
+									<real>-100</real>
 									<integer>0</integer>
 								</array>
 							</dict>

@@ -18,7 +18,7 @@ NS_CC_BEGIN
 #endif
 
 static const float _defaultBMFontSize = 30.0;
-#define BMFONT_NAME "Arial_Bold.fnt"
+#define BMFONT_NAME getNBFont(NB_FONT_Bold)
 
 bool CCLabelIF::m_useBMFont = true;
 bool CCLabelIF::m_useRichFont = false;
@@ -777,8 +777,11 @@ CCLabelIF * CCLabelIF::create(const char *str) {
 
 CCLabelIF * CCLabelIF::create(const char *str, float fontSize) {
     auto label = CCLabelIF::create(str,BMFONT_NAME);
-    label->setFontSize(fontSize);
-    return label;
+    if (label) {
+        label->setFontSize(fontSize);
+        return label;
+    }
+    return NULL;
 }
 
 CCLabelIF * CCLabelIF::create(const char *str, const char *fntFile, float width, CCTextAlignment alignment)
@@ -794,8 +797,11 @@ CCLabelIF * CCLabelIF::create(const char *str, const char *fontName, float fontS
 CCLabelIF * CCLabelIF::create(const char *str, const char *fntFile)
 {
     auto ret = CCLabelIF::create(str, fntFile, kCCLabelAutomaticWidth, kCCTextAlignmentLeft, CCPointZero);
-    ret->setFontSize(24);
-    return ret;
+    if (ret) {
+        ret->setFontSize(24);
+        return ret;
+    }
+    return NULL;
 }
 
 CCLabelIF * CCLabelIF::create(const char *fontName, float fontSize, CCTextAlignment alignment){

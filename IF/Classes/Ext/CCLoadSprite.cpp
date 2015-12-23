@@ -9,6 +9,10 @@
 #include "CCLoadSprite.h"
 #include "SceneController.h"
 #include "DynamicResourceController.h"
+#include "NBDLCController.hpp"
+#include <map>
+
+static std::map<std::string, bool> map_NBDLCController;
 
 #define CC_2x2_WHITE_IMAGE_KEY  "cc_2x2_white_image"
 static unsigned char cc_2x2_white_image[] = {
@@ -25,6 +29,12 @@ static unsigned char cc_2x2_white_image[] = {
 #define WORLD_COUNT 4
 
 USING_NS_CC;
+
+void CCLoadSprite::init()
+{
+    map_NBDLCController.clear();
+}
+
 void CCLoadSprite::doLoadCommonResourceAsync(){
 //    CCLog("android_test_doLoadCommonResourceAsync");
 //#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
@@ -94,8 +104,8 @@ CCScale9Sprite* CCLoadSprite::createScale9Sprite(const char *fileName) {
 
 cocos2d::CCSpriteFrame* CCLoadSprite::loadResource(const char *fileName) {
     auto ret = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(fileName);
-    CCLOG("CCLoadSprite loadResource: No file found in spriteFrames : %s. Possible missing file.", fileName);
     if (ret == NULL) {
+        CCLOG("CCLoadSprite loadResource: No file found in spriteFrames : %s. Possible missing file.", fileName);
         // Gets the texture by key firstly.
         auto texture = CCTextureCache::sharedTextureCache()->textureForKey(CC_2x2_WHITE_IMAGE_KEY);
         // If texture wasn't in cache, create it from RAW data.
@@ -248,21 +258,7 @@ void CCLoadSprite::parseLoadOrRelease(bool isLoad,int sceneId, CCDictionary *dic
     switch (sceneId) {
         case SCENE_ID_LOADING:{
             const char* path = LOADING_PATH;
-            if (!dict) {
-                for (int i=1; i<3; i++) {
-                    actor(path,i);
-                }
-//                actor(path,12);
-            } else {
-//                CCDictElement* pElement = NULL;
-//                CCDICT_FOREACH(dict, pElement){
-//                    int index = dynamic_cast<CCInteger*>(pElement->getObject())->getValue();
-//                    actor(path,index);
-//                }
-                for (int i=4; i<6; i++) {
-                    actor(path,i);
-                }
-            }
+            actor(path, 2);
         }
             break;
         case SCENE_ID_WORLD:{
@@ -273,7 +269,7 @@ void CCLoadSprite::parseLoadOrRelease(bool isLoad,int sceneId, CCDictionary *dic
                 }
                 actor("World/nb_ocean.plist", 0); // guo.jiang
                 actor("World/World_5.plist", 0); // guo.jiang
-                DynamicResourceController::getInstance()->loadNameTypeResource(DynamicResource_SERVERFIGHT_TEXTURE,isLoad);
+//                DynamicResourceController::getInstance()->loadNameTypeResource(DynamicResource_SERVERFIGHT_TEXTURE,isLoad);
             } else {
             }
         }
@@ -392,37 +388,71 @@ void CCLoadSprite::parseLoadOrRelease(bool isLoad,int sceneId, CCDictionary *dic
     }
 }
 
-void CCLoadSprite::doLoadResource(const char* path, int index, bool frameLoad) {
-if (CCTexture2D::useDownloadResource() == true){
-        if (path) {
-            char buffer[256];
-            sprintf(buffer,path,index);
-            string tmpFile(buffer);
-            string tmpPath;
-            auto iter = tmpFile.find_last_of(".");
-            if(iter!=string::npos){
-                tmpFile = tmpFile.substr(0,iter);
-            }
-            iter = tmpFile.find_last_of("/");
-            if(iter!=string::npos){
-                tmpPath = tmpFile.substr(0,iter);
-                tmpFile = tmpFile.substr(iter+1);
-            }
-            if(DynamicResourceController::getInstance()->checkCommonResource(tmpFile)){
-                DynamicResourceController::getInstance()->loadNameTypeResource(tmpFile, false);
-            }else{
-                cocos2d::CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(buffer);
-            }
+void CCLoadSprite::doLoadResource(const char* path, int index, bool frameLoad)
+{
+    if (!path) return;
+    
+    // guojiang
+    // NBDLCController::create 会增加下载目录到 SearchPath，所以在加载资源前调用
+    if (strcmp(path, COMMON_PATH) == 0)
+    {
+        char buffer[32];
+        sprintf(buffer, "%d", index);
+        
+        string idx = (const char*)buffer;
+        string manifest_file_path = "manifest/Common_" + idx + "_main.manifest";
+        string version_filename = "Common_" + idx + "_version.manifest";
+        string temp_manifest_filename = "Common_" + idx + "_project.manifest.temp";
+        string manifest_filename = "Common_" + idx + "_project.manifest";
+        
+        auto it = map_NBDLCController.find(manifest_file_path.c_str());
+        if (it == map_NBDLCController.end())
+        {
+            auto dlc = NBDLCController::create(manifest_file_path, version_filename, temp_manifest_filename, manifest_filename);
+            map_NBDLCController[manifest_file_path.c_str()] = true;
+            dlc->start(manifest_file_path, [](string manifest_file_path_as_key, EventAssetsManagerEx * event){
+                
+            });
         }
-    }else{
-        if (path) {
-            char buffer[256];
-            sprintf(buffer,path,index);
-            if(frameLoad){
-                FrameSpriteLoader::getInstance()->addToLoadArr(buffer);
-            }else{
-                cocos2d::CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(buffer);
-            }
+    }
+    
+    if (CCTexture2D::useDownloadResource() == true)
+    {
+        char buffer[256];
+        sprintf(buffer,path,index);
+        string tmpFile(buffer);
+        string tmpPath;
+        auto iter = tmpFile.find_last_of(".");
+        if (iter!=string::npos)
+        {
+            tmpFile = tmpFile.substr(0,iter);
+        }
+        iter = tmpFile.find_last_of("/");
+        if (iter!=string::npos)
+        {
+            tmpPath = tmpFile.substr(0,iter);
+            tmpFile = tmpFile.substr(iter+1);
+        }
+        if (DynamicResourceController::getInstance()->checkCommonResource(tmpFile))
+        {
+            DynamicResourceController::getInstance()->loadNameTypeResource(tmpFile, false);
+        }
+        else
+        {
+            cocos2d::CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(buffer);
+        }
+    }
+    else
+    {
+        char buffer[256];
+        sprintf(buffer,path,index);
+        if (frameLoad)
+        {
+            FrameSpriteLoader::getInstance()->addToLoadArr(buffer);
+        }
+        else
+        {
+            cocos2d::CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(buffer);
         }
     }
 }

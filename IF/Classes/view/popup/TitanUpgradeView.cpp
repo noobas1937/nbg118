@@ -655,7 +655,7 @@ void TitanUpgradeView::onOkInstantUp()
                 
                 if (biter!=GlobalData::shared()->imperialInfo.end()) {
                     
-                    FunBuildController::getInstance()->completeUpOrCreate(FUN_BUILD_MAIN_CITY_ID);//fusheng 主城数据刷新
+                    FunBuildController::getInstance()->completeUpOrCreate(FUN_BUILD_MAIN_CITY_ID,false,true);//fusheng 主城数据刷新
                     biter->second.state = FUN_BUILD_UPING_END;//fusheng  设置状态 保证正常逻辑
                 }
             }

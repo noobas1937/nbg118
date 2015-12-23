@@ -92,7 +92,7 @@ bool MainCityArmy::init(CCLayer* parent, CCSpriteBatchNode* soldierBatch, int bu
         m_stopCnt = 0;
         for(int i=0;i<m_soldierCnt;i++){
             MackSoldier(soldierType, i);
-        }
+        } 
         
     }
     return bRet;
@@ -177,32 +177,39 @@ void MainCityArmy::restart(){
 }
 
 bool MainCityArmy::MackSoldier(int type, int idx){
+    float shadow_scale = 0.5;
+    
     // tao.yu 跑路的兵
     string m_icon = "";
     int tmpPx = 70;
     int tmpPy = 40;
-    float scale = 1.5;
+    float scale = 1;
     switch (type) {
         case 0://步兵
             m_icon = "a010";
             break;
         case 1://弓兵
             m_icon = "a060";
+            shadow_scale = 0.75 * 0.65;
             break;
         case 2://骑兵
             m_icon = "a020";
+            shadow_scale = 0.65;
             break;
         case 3://战车
             m_icon = "zhanche";
             break;
         case 4://长弓兵
             m_icon = "a060";
+            shadow_scale = 0.75 * 0.65;
             break;
         case 5:
             m_icon = "a020";
+            shadow_scale = 0.65;
             break;
         default:
             m_icon = "a020";
+            shadow_scale = 0.65;
             break;
     }
     
@@ -234,22 +241,34 @@ bool MainCityArmy::MackSoldier(int type, int idx){
         }
         
         vector<cocos2d::CCPoint> posV = m_posV;
-        for(int i=0; i<posV.size(); i++) {
-            posV[i].x += addx;
-            posV[i].y += addy;
-        }
+        // guojiang 删除 路太窄，只能排一队走
+//        for(int i=0; i<posV.size(); i++) {
+//            posV[i].x += addx;
+//            posV[i].y += addy;
+//        }
         
         BattleSoldier2* soldier = BattleSoldier2::create(m_curBatch, NULL,0,0,m_icon,"NE",false);
+        soldier->getIconSpr()->setVisible(false);
+        soldier->getShadow()->setVisible(false);
+        soldier->getShadow()->setScale(shadow_scale);
         soldier->setSoldierPosition(posV[0]);
-        soldier->setAnchorPoint(ccp(0.5, 0.5));
+        soldier->setAnchorPoint(ccp(0.5, 0));// guojiang 路太窄，只能排一队走
         this->addChild(soldier);
         soldier->setSprScale(scale);
-        soldier->playAnimation(ACTION_MOVE);
         float spd = 130;
         if (m_isInGuide) {
             spd = 200;
         }
-        soldier->moveToPosition(posV,idx/9*1.3, spd);
+        // guojiang 路太窄，只能排一队走
+        auto delay = DelayTime::create(idx * 0.5);
+        auto func = CallFunc::create([soldier, posV, idx, spd](){
+            soldier->getIconSpr()->setVisible(true);
+            soldier->getShadow()->setVisible(true);
+            soldier->playAnimation(ACTION_MOVE);
+            soldier->moveToPosition(posV, idx / 9 * 1.3, spd);
+        });
+        auto s = Sequence::create(delay, func, NULL);
+        soldier->runAction(s);
     }
     return true;
 }

@@ -433,7 +433,7 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>decor_island_100.png</key>
+            <key>decor_island_025.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1314,540},{256,128}}</string>
@@ -446,7 +446,7 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>island_001.png</key>
+            <key>decor_island_026.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1576,540},{256,128}}</string>
@@ -459,7 +459,7 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>island_002.png</key>
+            <key>decor_island_027.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{4,674},{256,128}}</string>
@@ -472,7 +472,7 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>island_003.png</key>
+            <key>decor_island_028.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{266,674},{256,128}}</string>
@@ -485,7 +485,7 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>island_004.png</key>
+            <key>decor_island_029.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{528,674},{256,128}}</string>
@@ -498,7 +498,7 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>island_005.png</key>
+            <key>decor_island_030.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{790,674},{256,128}}</string>
@@ -511,7 +511,7 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>island_006.png</key>
+            <key>decor_island_031.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1052,674},{256,128}}</string>
@@ -524,7 +524,7 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>island_007.png</key>
+            <key>decor_island_032.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1314,674},{256,128}}</string>
@@ -537,7 +537,7 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>island_008.png</key>
+            <key>sea.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1576,674},{256,128}}</string>
@@ -550,7 +550,7 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>island_009.png</key>
+            <key>surface_battlefield_001.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{4,808},{256,128}}</string>
@@ -563,7 +563,7 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>island_010.png</key>
+            <key>surface_battlefield_002.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{266,808},{256,128}}</string>
@@ -576,7 +576,7 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>island_011.png</key>
+            <key>surface_battlefield_003.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{528,808},{256,128}}</string>
@@ -589,7 +589,7 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>island_012.png</key>
+            <key>surface_battlefield_004.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{790,808},{256,128}}</string>
@@ -602,7 +602,7 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>island_013.png</key>
+            <key>surface_battlefield_005.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1052,808},{256,128}}</string>
@@ -615,7 +615,7 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>island_014.png</key>
+            <key>surface_battlefield_006.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1314,808},{256,128}}</string>
@@ -628,7 +628,7 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>island_015.png</key>
+            <key>surface_battlefield_007.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1576,808},{256,128}}</string>
@@ -641,7 +641,7 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>island_016.png</key>
+            <key>surface_battlefield_008.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{4,942},{256,128}}</string>
@@ -654,7 +654,7 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>sea.png</key>
+            <key>surface_battlefield_009.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{266,942},{256,128}}</string>
@@ -667,7 +667,7 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>surface_battlefield_001.png</key>
+            <key>surface_bolder_001.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{528,942},{256,128}}</string>
@@ -680,127 +680,10 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>surface_battlefield_002.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{790,942},{256,128}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{256,128}}</string>
-                <key>sourceSize</key>
-                <string>{256,128}</string>
-            </dict>
-            <key>surface_battlefield_003.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{1052,942},{256,128}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{256,128}}</string>
-                <key>sourceSize</key>
-                <string>{256,128}</string>
-            </dict>
-            <key>surface_battlefield_004.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{1314,942},{256,128}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{256,128}}</string>
-                <key>sourceSize</key>
-                <string>{256,128}</string>
-            </dict>
-            <key>surface_battlefield_005.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{1576,942},{256,128}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{256,128}}</string>
-                <key>sourceSize</key>
-                <string>{256,128}</string>
-            </dict>
-            <key>surface_battlefield_006.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{4,1076},{256,128}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{256,128}}</string>
-                <key>sourceSize</key>
-                <string>{256,128}</string>
-            </dict>
-            <key>surface_battlefield_007.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{266,1076},{256,128}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{256,128}}</string>
-                <key>sourceSize</key>
-                <string>{256,128}</string>
-            </dict>
-            <key>surface_battlefield_008.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{528,1076},{256,128}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{256,128}}</string>
-                <key>sourceSize</key>
-                <string>{256,128}</string>
-            </dict>
-            <key>surface_battlefield_009.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{790,1076},{256,128}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{256,128}}</string>
-                <key>sourceSize</key>
-                <string>{256,128}</string>
-            </dict>
-            <key>surface_bolder_001.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{1052,1076},{256,128}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{256,128}}</string>
-                <key>sourceSize</key>
-                <string>{256,128}</string>
-            </dict>
             <key>surface_bolder_002.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1314,1076},{255,128}}</string>
+                <string>{{790,942},{255,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -813,7 +696,7 @@
             <key>surface_bolder_003.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1575,1076},{256,128}}</string>
+                <string>{{1051,942},{256,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -826,7 +709,7 @@
             <key>surface_bolder_004.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,1210},{255,128}}</string>
+                <string>{{1313,942},{255,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -839,7 +722,7 @@
             <key>surface_bolder_005.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{265,1210},{256,128}}</string>
+                <string>{{1574,942},{256,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -852,7 +735,7 @@
             <key>surface_bolder_006.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{527,1210},{256,128}}</string>
+                <string>{{4,1076},{256,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -865,7 +748,7 @@
             <key>surface_bolder_007.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{789,1210},{256,128}}</string>
+                <string>{{266,1076},{256,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -878,7 +761,7 @@
             <key>surface_bolder_008.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1051,1210},{256,128}}</string>
+                <string>{{528,1076},{256,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -891,7 +774,7 @@
             <key>surface_bolder_009.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1313,1210},{256,128}}</string>
+                <string>{{790,1076},{256,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -904,7 +787,7 @@
             <key>surface_bolder_093.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1575,1210},{256,128}}</string>
+                <string>{{1052,1076},{256,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -917,7 +800,7 @@
             <key>surface_bolder_094.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,1344},{256,128}}</string>
+                <string>{{1314,1076},{256,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -930,7 +813,7 @@
             <key>surface_bolder_095.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{266,1344},{256,128}}</string>
+                <string>{{1576,1076},{256,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -940,31 +823,96 @@
                 <key>sourceSize</key>
                 <string>{256,128}</string>
             </dict>
-            <key>zz_decor_004.png</key>
+            <key>z_decor_001.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{528,1344},{112,92}}</string>
+                <string>{{4,1210},{256,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{112,92}}</string>
+                <string>{{0,0},{256,128}}</string>
                 <key>sourceSize</key>
-                <string>{112,92}</string>
+                <string>{256,128}</string>
             </dict>
-            <key>zz_decor_005.png</key>
+            <key>z_decor_002.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{646,1344},{150,131}}</string>
+                <string>{{266,1210},{256,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{150,131}}</string>
+                <string>{{0,0},{256,128}}</string>
                 <key>sourceSize</key>
-                <string>{150,131}</string>
+                <string>{256,128}</string>
+            </dict>
+            <key>z_decor_003.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{528,1210},{164,101}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{164,101}}</string>
+                <key>sourceSize</key>
+                <string>{164,101}</string>
+            </dict>
+            <key>z_decor_004.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{698,1210},{256,128}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{256,128}}</string>
+                <key>sourceSize</key>
+                <string>{256,128}</string>
+            </dict>
+            <key>z_island_001.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{960,1210},{413,212}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{413,212}}</string>
+                <key>sourceSize</key>
+                <string>{413,212}</string>
+            </dict>
+            <key>z_island_002.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{1379,1210},{350,184}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{350,184}}</string>
+                <key>sourceSize</key>
+                <string>{350,184}</string>
+            </dict>
+            <key>z_island_003.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{4,1428},{412,214}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{412,214}}</string>
+                <key>sourceSize</key>
+                <string>{412,214}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -976,7 +924,7 @@
             <key>size</key>
             <string>{2048,2048}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:359a3f281d03f0e70dc47e5d04df5100:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:--REMOVED----------------------------</string>
             <key>textureFileName</key>
             <string>nb_ocean.pvr.ccz</string>
         </dict>

@@ -5,6 +5,14 @@
 -- @parent_module cc
 
 --------------------------------
+-- 
+-- @function [parent=#SpriteFrameCache] addSpriteFramesWithDictionary 
+-- @param self
+-- @param #map_table dictionary
+-- @param #cc.Texture2D texture
+-- @return SpriteFrameCache#SpriteFrameCache self (return value: cc.SpriteFrameCache)
+        
+--------------------------------
 --  Adds multiple Sprite Frames from a plist file content. The texture will be associated with the created sprite frames. <br>
 -- js NA<br>
 -- lua addSpriteFrames<br>
@@ -26,6 +34,13 @@
 -- @param #cc.SpriteFrame frame
 -- @param #string frameName
 -- @return SpriteFrameCache#SpriteFrameCache self (return value: cc.SpriteFrameCache)
+        
+--------------------------------
+--  @deprecated use getSpriteFrameByName() instead 
+-- @function [parent=#SpriteFrameCache] spriteFrameByName 
+-- @param self
+-- @param #string name
+-- @return SpriteFrame#SpriteFrame ret (return value: cc.SpriteFrame)
         
 --------------------------------
 -- @overload self, string, string         
@@ -133,6 +148,20 @@
 -- @function [parent=#SpriteFrameCache] destroyInstance 
 -- @param self
 -- @return SpriteFrameCache#SpriteFrameCache self (return value: cc.SpriteFrameCache)
+        
+--------------------------------
+--  @deprecated Use destroyInstance() instead <br>
+-- js NA
+-- @function [parent=#SpriteFrameCache] purgeSharedSpriteFrameCache 
+-- @param self
+-- @return SpriteFrameCache#SpriteFrameCache self (return value: cc.SpriteFrameCache)
+        
+--------------------------------
+--  @deprecated Use getInstance() instead <br>
+-- js NA 
+-- @function [parent=#SpriteFrameCache] sharedSpriteFrameCache 
+-- @param self
+-- @return SpriteFrameCache#SpriteFrameCache ret (return value: cc.SpriteFrameCache)
         
 --------------------------------
 --  Returns the shared instance of the Sprite Frame cache.<br>

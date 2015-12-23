@@ -8,8 +8,8 @@
 
 #include "AppDelegate.h"
 #include "SimpleAudioEngine.h"
+#include "CCMathUtils.h"
 #include "GlobalData.h"
-#include "LoadingScene.h"
 #include "SceneContainer.h"
 #include "SceneController.h"
 #include "CCSafeNotificationCenter.h"
@@ -25,6 +25,9 @@
     #include "AppLibHelper.h"
     #include "TestinCrashHelper.h"
 #endif
+
+#include "CCLuaEngine.h"
+#include "lua_module_register.h"
 
 #define IS_HD 1  // 1 是HD版本 0 不是
 
@@ -55,34 +58,21 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     // initialize director
     Director* pDirector = Director::getInstance();
-//    pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());//400ms
     auto glview = pDirector->getOpenGLView();
-    if(!glview) {
-        glview = GLViewImpl::create("Clash of king");
-        pDirector->setOpenGLView(glview);
+    if (!glview)
+    {
+        glview = GLViewImpl::create("Dragon Clans");
     }
-    
     pDirector->setOpenGLView(glview);
-    // set PVR enable
     CCTexture2D::PVRImagesHavePremultipliedAlpha(false);
-    // set resolution size (width free adjust , width fixed 768)
-//    CCEGLView::sharedOpenGLView()->setDesignResolutionSize(640, 852, kResolutionFixedWidth);
     
-
     if (CCCommonUtils::isIOSPad() || CCCommonUtils::isAdriodPad())
     {
         CCCommonUtils::setIsUseHD(IS_HD); // 客户端开关
         CCCommonUtils::setServerHDSwitch();// 设置上次登录服务器给的开关
     }
     
-    if(CCCommonUtils::isIosAndroidPad()) {
-        CCCommonUtils::setIsHDViewPort(true);
-//        CCEGLView::sharedOpenGLView()->setDesignResolutionSize(1536, 2048, kResolutionFixedWidth);
-
-    }else{
-        CCCommonUtils::setIsHDViewPort(false);
-//        CCEGLView::sharedOpenGLView()->setDesignResolutionSize(640, 852, kResolutionFixedWidth);
-    }
+    CCCommonUtils::setIsHDViewPort(CCCommonUtils::isIosAndroidPad());
     
 #if COCOS2D_DEBUG > 0
     // 打开这个测多分辨率
@@ -104,33 +94,36 @@ bool AppDelegate::applicationDidFinishLaunching()
 #endif
     
     // set FPS. the default value is 1.0/60 if you don't call this
-    pDirector->setAnimationInterval(1.0 / 15);
+    pDirector->setAnimationInterval(1.0 / 30);
     
-    //xml init
-    LocalController::shared();//600ms
-//    pDirector->setDisplayStats(true);
-    // load common resource
-    CCLoadSprite::loadCommonResource();//2200ms
-    CCLoadSprite::doResourceByGeneralIndex(100, true);//450ms
-//    auto sp = Sprite::create("3d/nb_main_menu_btn_bg.png");
-//    auto sp2 = Sprite::create("3d/but_03");
-
-    // register lua engine
-    //CCLuaEngine* pEngine = CCLuaEngine::defaultEngine();
-    //CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
-    // register lua ccb
-    //tolua_extensions_ccb_open(pEngine->getLuaStack()->getLuaState());
+//    CCLOG("Time profiler: [%ld] ,line: [%d]",CCMathUtils::getCurrentTime(),__LINE__);
     
+// ------------------------------------------------------------------------------------
+    // register lua module
+    auto engine = LuaEngine::getInstance();
+    ScriptEngineManager::getInstance()->setScriptEngine(engine);
+    lua_State* L = engine->getLuaStack()->getLuaState();
+    lua_module_register(L);
+    
+    LuaStack* stack = engine->getLuaStack();
+    stack->setXXTEAKeyAndSign("n_77wDDolqz", strlen("n_77wDDolqz"), "i900_gFymA", strlen("i900_gFymA"));
+    
+    if (engine->executeScriptFile("src/main.lua"))
+    {
+        CCLOG("Lua init Error");
+    }
+    
+// ------------------------------------------------------------------------------------
     // run
+    CCLoadSprite::init();
     pDirector->runWithScene(SceneContainer::create());
-//#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
-//    CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(NetControllerSFSC::updateEvent), NetControllerSFSC::getInstance(), 0, false);
-//#endif
-    CCLOG("WritablePath:[%s]", FileUtils::getInstance()->getWritablePath().c_str());
     SceneController::getInstance()->gotoLoading();//2300ms
+    
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     AppLibHelper::initLibs();
 #endif
+    
+    CCLOG("WritablePath:[%s]", FileUtils::getInstance()->getWritablePath().c_str());
     return true;
 }
 
@@ -140,11 +133,12 @@ void AppDelegate::applicationDidEnterBackground()
     CCLOG("applicationDidEnterBackground");
     cocos2d::CCDirector::sharedDirector()->pause();
     CCDirector::sharedDirector()->stopAnimation();
-    SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
-    SimpleAudioEngine::sharedEngine()->pauseAllEffects();
+    SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+    SimpleAudioEngine::getInstance()->pauseAllEffects();
     GlobalData::shared()->isPause = true;
     GlobalData::shared()->pauseTime = GlobalData::shared()->getWorldTime();
-    if (SceneController::getInstance()->currentSceneId != SCENE_ID_LOADING) {
+    if (SceneController::getInstance()->currentSceneId != SCENE_ID_LOADING)
+    {
         cocos2d::extension::CCDevice::pushNotice(987, 60);
     }
 }
@@ -158,9 +152,9 @@ void AppDelegate::applicationWillEnterForeground()
     CCDirector::sharedDirector()->startAnimation();
     if (CCUserDefault::sharedUserDefault()->getBoolForKey(BG_MUSIC_ON, true))
     {
-        SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+        SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
     }
-    SimpleAudioEngine::sharedEngine()->resumeAllEffects();
+    SimpleAudioEngine::getInstance()->resumeAllEffects();
     GlobalData::shared()->isPause = false;
     GlobalData::shared()->isPressedHomeKey = true;
     CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_APP_FOREGROUND);

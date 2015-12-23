@@ -358,14 +358,14 @@ public final class MessagesAdapter extends ArrayAdapter<MsgItem>
 			@Override
 			public void onClick(final View view)
 			{
-				if(!item.isSystemHornMsg())
-				{
-					System.out.println("getHeadImageContainer onClick ChatServiceController.isContactMod:"+ChatServiceController.isContactMod);
-					if(ChatServiceController.isContactMod)
-						ChatServiceController.doHostAction("showPlayerInfo@mod", item.uid, item.getName(), "", true);
-					else
-						ChatServiceController.doHostAction("showPlayerInfo", item.uid, item.getName(), "", true);
-				}
+				// if(!item.isSystemHornMsg())
+				// {
+				// 	System.out.println("getHeadImageContainer onClick ChatServiceController.isContactMod:"+ChatServiceController.isContactMod);
+				// 	if(ChatServiceController.isContactMod)
+				// 		ChatServiceController.doHostAction("showPlayerInfo@mod", item.uid, item.getName(), "", true);
+				// 	else
+				// 		ChatServiceController.doHostAction("showPlayerInfo", item.uid, item.getName(), "", true);
+				// }
 			}
 		});
 

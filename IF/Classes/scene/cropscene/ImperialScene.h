@@ -43,14 +43,19 @@
 
 //begin a by ljf
 #define IMPERIAL_SCENE_TOUCH_LAYER_TAG 89217
+#include "VikingShip.h"
 //end a by ljf
+
+// traps max number
+#define TRAP_MAX_NUMBER 36
+#define TRAP_EVERY_TYPE_NUMBER 12
 
 class ImperialScene:public CCLayer,public ITouchDelegate,public CCBMemberVariableAssigner
 {
 public:
     ImperialScene():lastTouchBuildId(-1),curTouchBuildId(-1),m_count(0),m_singleTouchState(false),m_mainPatPlayTime(0),m_waterType(0)
     ,m_curBuildId(0),m_curBuildPosx(0),m_curBuildPosy(0),m_tmpMoveX(0),m_tmpMoveY(0),m_canClick(true),m_buildingInitState(false)
-    ,m_oldScale(1.0),m_oldPosX(0),m_oldPosY(0),m_isOnlyPower(0),m_isSave(false),m_tmpBuildPos(0),m_removeSpeBId(0),m_curGuideEnd(false),m_isLogin(false),m_beginTouchType(0),m_forceMove(false),m_exit(false),m_isDay(false),m_isRain(false),m_sysTime(0),m_talkTime(0), m_lotteryBuild(NULL),mActionManager(NULL),m_nightLights(NULL),m_rescustombatchNode(NULL),m_Titan(NULL){};
+    ,m_oldScale(1.0),m_oldPosX(0),m_oldPosY(0),m_isOnlyPower(0),m_isSave(false),m_tmpBuildPos(0),m_removeSpeBId(0),m_curGuideEnd(false),m_isLogin(false),m_beginTouchType(0),m_forceMove(false),m_exit(false),m_isDay(false),m_isRain(false),m_sysTime(0),m_talkTime(0), m_lotteryBuild(NULL),mActionManager(NULL),m_nightLights(NULL),m_rescustombatchNode(NULL),m_Titan(NULL),m_bridgeOpened(false),m_bridge3D_Up(NULL),m_bridge3D_Down(NULL),m_isBridgeCanClick(true){};
     
     virtual ~ImperialScene(){};
     CREATE_FUNC(ImperialScene);
@@ -65,12 +70,41 @@ public:
     // tao.yu titan
     void onCreateTitan();
     // tao.yu vikings
-    void onCreateVikingsShip();
+    void onCreateVikingsShip(int level);
     //begin a by ljf
-    void onVikingsShipMove(NBSprite3D * pSprite3d);
-    void onVikingsShipIdle(NBSprite3D * pSprite3d);
+    int getVikingsShipModelLevel(int level);
+    void onUpgradeVikingsShip(int level);
+    void shipActionAfterMove(CCNode* pNode, void *pObj);
+    void createOneVikingsShip(int seq,   int level);
+    void destroyOneVikingsShip(int seq);
+    void updateVikingsShipNum();
+    int mShipLevel;
+    void onVikingsShipMove(VikingShip * pShipInfo);
+    
     bool onVikingsShipTouched(CCTouch* pTouch);
+    bool onVikingsShipLockTouched(CCTouch* pTouch);
+    
+    void createWalker(float t);
+    void createEnemy(float t);
+    void shootArrow(float t);
+    void openBridge(float t);
+    void closeBridge(float t);
+    void updateVikingsShipLock(int seq, bool isShow);
+    CCNode * getVikingsShipCCBPosNodeBySeq(int seq);
+    CCNode * getVikingsShipCCBTouchNodeBySeq(int seq);
     //end a by ljf
+    
+    
+    void createDockShip();//fusheng 码头的船
+    
+    void onCreateBridge();
+    bool onBridgeTouched(CCTouch* pTouch);
+    void onBridgeOpen();
+    void onBridgeClose();
+    void changeBridgeState(CCNode* p);
+    
+    int getTrapsPicNumber(int num);
+    void onRefreshOutsideTraps(CCObject* obj);
     
     void onUpdateInfo();
     void onCreateBuild(int itemId);
@@ -190,7 +224,7 @@ private:
     void clearGuideState(float _time);
     void playFlyTroopParticle(float _time);
     void playPowerAni(float _time);
-    void downloadXML(float _time);
+//    void downloadXML(float _time);
     
     void onFinishMoveBuild(CCObject* obj);
     
@@ -328,6 +362,11 @@ private:
     CCSafeObject<CCSpriteBatchNode> m_rescustombatchNode;
     CCSafeObject<CCSpriteBatchNode> m_resBlentBatchNode;
     CCSafeObject<CCSpriteBatchNode> m_soldierBatchNode;
+    //begin a by ljf
+    CCSafeObject<CCSpriteBatchNode> m_walkerBatchNode;
+    CCSafeObject<CCSpriteBatchNode> m_jianBatchNode;
+    CCSafeObject<CCLayer> m_walkerLayer;
+    //end a by ljf
     CCSafeObject<CCSpriteBatchNode> m_chrTreeBatchNode;
     CCSafeObject<CCSpriteBatchNode> m_chrTreeBlentBatchNode;
     CCSafeObject<CCSpriteBatchNode> m_cludeBatchNode;
@@ -342,6 +381,9 @@ private:
     CCSafeObject<CCPointArray> m_ptArrowClick;
     CCSafeObject<CCPointArray> m_pt2Array;
     CCSafeObject<CCArray> m_soldierArray;
+    //begin a by ljf
+    //CCSafeObject<CCArray> m_walkerArray;
+    //end a by ljf
     
     vector<CCParticleBatchNode*> m_parVec;
     vector<CCParticleBatchNode*> m_cloudVec;
@@ -364,6 +406,7 @@ private:
     CCSafeObject<SpeBuildBtnsView> m_speBuildBtnsView;
     CCLabelIF* m_feedlabel;
     CCSafeObject<CCSprite> m_feedBackHead;
+    CCSafeObject<CCSprite> m_tempBlock;
     
     CCSafeObject<TalkNoticeCell> m_talkACTCell;
     CCSafeObject<TalkNoticeCell> m_talkACTCell2;
@@ -396,9 +439,23 @@ private:
     CCSafeObject<CCNode> m_vikingPath2;
     CCSafeObject<CCNode> m_vikingPath3;
     CCSafeObject<CCNode> m_vikingPath4;
-    CCSafeObject<NBSprite3D> m_vikings3D;
+    CCSafeObject<CCNode> m_vikingPath5;
+    //CCSafeObject<NBSprite3D> m_vikings3D;
+    //CCSafeObject<NBSprite3D> m_vikings3D2;
+    //CCSafeObject<NBSprite3D> m_vikings3D3;
+    //CCSafeObject<NBSprite3D> m_vikings3D4;
+    //CCSafeObject<NBSprite3D> m_vikings3D5;
     CCSafeObject<CCNode> m_vikingTouchNode;
-    CCSafeObject<CCNode> m_vikingsParticleNode;
+    //CCSafeObject<CCNode> m_vikingsParticleNode;
+    CCSafeObject<CCNode> m_vikingNode2;
+    CCSafeObject<CCNode> m_vikingTouchNode2;
+    CCSafeObject<CCNode> m_vikingNode3;
+    CCSafeObject<CCNode> m_vikingTouchNode3;
+    CCSafeObject<CCNode> m_vikingNode4;
+    CCSafeObject<CCNode> m_vikingTouchNode4;
+    CCSafeObject<CCNode> m_vikingNode5;
+    CCSafeObject<CCNode> m_vikingTouchNode5;
+    CCSafeObject<CCDictionary> mVikingShipDict;
     //end a by ljf
     // tao.yu titan move path
     CCSafeObject<CCNode> m_tpath_1;
@@ -418,6 +475,20 @@ private:
     
     // tao.yu
     CCSafeObject<CCNode> m_cityBgNode;
+    
+    // tao.yu bridge
+    CCSafeObject<NBSprite3D> m_bridge3D_Up;
+    CCSafeObject<NBSprite3D> m_bridge3D_Down;
+    CCSafeObject<CCNode> m_bridgeNode;
+    CCSafeObject<CCNode> m_bridgeTouchNode;
+    CCSafeObject<CCNode> m_waterNode_L;
+    CCSafeObject<CCNode> m_waterNode_R;
+    // tao.yu traps outside wall
+    CCSafeObject<Node> m_trapsRootNode;
+    CCSafeObject<Node> m_nodeTraps[TRAP_MAX_NUMBER];
+    
+    bool m_bridgeOpened;
+    bool m_isBridgeCanClick;
     
     std::map<int, CCSpriteBatchNode*> m_wallBatchs;
     

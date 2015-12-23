@@ -455,10 +455,12 @@ void CCCommonUtils::createGoodsIcon(int toolID, cocos2d::CCNode *mParent,CCSize 
         CCSize pSize = mParent->getContentSize();
         if (pic) {
             auto iconBg = CCLoadSprite::createSprite(CCCommonUtils::getToolBgByColor(info.color).c_str());
-            CCCommonUtils::setSpriteMaxSize(iconBg, defSize.width,true);
+//            CCCommonUtils::setSpriteMaxSize(iconBg, defSize.width,true);//fusheng d
             mParent->addChild(iconBg);
             iconBg->setTag(GOODS_BG_TAG);
             CCCommonUtils::setSpriteMaxSize(pic, defSize.width - 5,true);
+            
+            iconBg->setScale(pic->getScale());//fusheng add 使用相同的放缩比
             mParent->addChild(pic);
             pic->setTag(GOODS_ICON_TAG);
             
@@ -466,7 +468,8 @@ void CCCommonUtils::createGoodsIcon(int toolID, cocos2d::CCNode *mParent,CCSize 
                 CCScale9Sprite* numBG = CCLoadSprite::createScale9Sprite("BG_quatnity.png");
                 numBG->setColor(getItemColor(info.color));
                 numBG->setOpacity(200);
-                CCLabelBMFont* numIF = CCLabelBMFont::create(CC_ITOA_K(atol(info.getPara().c_str())), "pve_fnt_boss.fnt");
+//                CCLabelBMFont* numIF = CCLabelBMFont::create(CC_ITOA_K(atol(info.getPara().c_str())), "pve_fnt_boss.fnt");
+                CCLabelBMFont* numIF = CCLabelBMFont::create(CC_ITOA_K(atol(info.getPara().c_str())), "eeeq.fnt");
                 CCSize numSize = numIF->getContentSize();
                 
                 const float constScale = 0.3;
@@ -477,7 +480,7 @@ void CCCommonUtils::createGoodsIcon(int toolID, cocos2d::CCNode *mParent,CCSize 
                 numIF->setScale(scale);
                 numSize.height *= scale;
                 numBG->setPreferredSize(CCSize(defSize.width, defSize.height*constScale));
-                mParent->addChild(numBG);
+//                mParent->addChild(numBG);
                 mParent->addChild(numIF);
                 
                 if(!pSize.equals(CCSizeZero)){

@@ -13,6 +13,7 @@
 #include "CCMathUtils.h"
 #include "ParticleController.h"
 #include "NBWorldNPC.hpp"
+#include "NBWorldUtils.hpp"
 
 #define WORLD_MAP_VIEW WorldMapView::instance()
 #define TILED_MAP WorldMapView::instance()->m_map
@@ -54,6 +55,19 @@ void WorldMapView::monsterDeathCB(CCObject* obj)
             CCCallFuncO* callFunc = CCCallFuncO::create(this, callfuncO_selector(WorldMapView::refreshMonster), CCInteger::create(index));
             CCSequence* seq = CCSequence::create(delayTime, fadeOut, callFunc, nullptr);
             monster->runAction(seq);
+            
+            for (int i = MonsterAttack; i <= MonsterBreath; i++)
+            {
+                int tag = 1000000 * 100 + WORLD_MAP_VIEW->getBatchTag(BatchTagType(i), index);
+                auto c = WORLD_MAP_VIEW->m_mapMonstersNode->getChildByTag(tag);
+                if (c)
+                {
+                    CCDelayTime* delayTime = CCDelayTime::create(3.0f);
+                    CCFadeOut* fadeOut = CCFadeOut::create(2.0f);
+                    CCSequence* seq = CCSequence::create(delayTime, fadeOut, nullptr);
+                    c->runAction(seq);
+                }
+            }
         }
         
         CC_SAFE_RELEASE_NULL(arr);
@@ -63,6 +77,17 @@ void WorldMapView::monsterDeathCB(CCObject* obj)
 void WorldMapView::refreshMonster(CCObject *obj){
     CCInteger *in = dynamic_cast<CCInteger*>(obj);
     if(in){
+        
+        for (int i = MonsterAttack; i <= MonsterBreath; i++)
+        {
+            int tag = 1000000 * 100 + WORLD_MAP_VIEW->getBatchTag(BatchTagType(i), in->getValue());
+            auto c = WORLD_MAP_VIEW->m_mapMonstersNode->getChildByTag(tag);
+            if (c)
+            {
+                c->removeFromParent();
+            }
+        }
+        
         auto city = m_cityInfo.find(in->getValue());
         if(city != m_cityInfo.end()){
             if(city->second.fieldMonsterInfo.currentHp == 0 && city->second.cityType == MonsterTile){
@@ -137,13 +162,13 @@ void NBWorldMonster::addFieldMonsterUnderNode(const WorldCityInfo& info, const V
     WORLD_MAP_VIEW->addBatchItem(MonsterProBG1, index);
     auto lv = CCLabelBatch::create(CCCommonUtils::getPropById(info.fieldMonsterInfo.monsterId, "level").c_str(), WORLD_MAP_VIEW->m_labelNode);
     lv->setScale(MapGlobalScale);
-    lv->setColor(ccc3(255, 235, 180));
+    lv->setColor(ccc3(255, 255, 255));
     lv->setPosition(ccp(pos.x - 45, pos.y-55));
     WORLD_MAP_VIEW->m_cityItem[index].push_back(lv);
     std::string nameStr = CCCommonUtils::getNameById(info.fieldMonsterInfo.monsterId);
     auto nameText = CCLabelIFTTF::create();
     WORLD_MAP_VIEW->m_unBatchLabelNode->addChild(nameText);
-    nameText->setColor(ccc3(225, 174, 101));
+    nameText->setColor(ccc3(255, 255, 255));
     nameText->setFontSize(17);
     nameText->setAnchorPoint(ccp(0, 0.5));
     nameText->setPosition(ccp(-20, -55)+pos);
@@ -168,13 +193,13 @@ void NBWorldMonster::addActBossTileUnderNode(const WorldCityInfo& info, const Ve
     WORLD_MAP_VIEW->addBatchItem(MonsterProBG1, index);
     auto lv = CCLabelBatch::create(CCCommonUtils::getPropById(info.fieldMonsterInfo.monsterId, "level").c_str() , WORLD_MAP_VIEW->m_labelNode);
     lv->setScale(MapGlobalScale);
-    lv->setColor(ccc3(255, 235, 180));
+    lv->setColor(ccc3(255, 255, 255));
     lv->setPosition(ccp(pos.x - 45, pos.y-55));
     WORLD_MAP_VIEW->m_cityItem[index].push_back(lv);
     std::string nameStr = CCCommonUtils::getNameById(info.fieldMonsterInfo.monsterId);
     auto nameText = CCLabelIFTTF::create();
     WORLD_MAP_VIEW->m_unBatchLabelNode->addChild(nameText);
-    nameText->setColor(ccc3(225, 174, 101));
+    nameText->setColor(ccc3(255, 255, 255));
     nameText->setFontSize(17);
     nameText->setAnchorPoint(ccp(0, 0.5));
     nameText->setPosition(ccp(-20, -55)+pos);
@@ -548,9 +573,17 @@ void NBWorldMonster::createMonsterBatchItem(BatchTagType type, unsigned int inde
         
         if (type == MonsterAttack)
         {
-            auto octopus = Sprite::createWithSpriteFrameName("attack_0.png");
-            auto *ac1 = NBWorldNPC::createAnimation("World/World_5.plist", "attack_%d.png", 0, 7);
-            octopus->runAction(ac1);
+            for (int i = MonsterAttack; i <= MonsterBreath; i++)
+            {
+                int tag = 1000000 * 100 + WORLD_MAP_VIEW->getBatchTag(BatchTagType(i), index);
+                auto c = WORLD_MAP_VIEW->m_mapMonstersNode->getChildByTag(tag);
+                if (c)
+                {
+                    c->removeFromParent();
+                }
+            }
+            
+            auto octopus = NBWorldUtils::createSeaMonsterAndAttackAnimation(info.fieldMonsterInfo.monsterId);
         
             octopus->setScaleX(monsterNode->getScaleX());
             octopus->setPosition(monsterNode->getPosition() + Vec2(octopus->getContentSize().width * 0, octopus->getContentSize().height / 4));
@@ -559,9 +592,7 @@ void NBWorldMonster::createMonsterBatchItem(BatchTagType type, unsigned int inde
         }
         else if (type != MonsterDead)
         {
-            auto octopus = Sprite::createWithSpriteFrameName("waiting_0.png");
-            auto *ac1 = NBWorldNPC::createAnimation("World/World_5.plist", "waiting_%d.png", 0, 7);
-            octopus->runAction(ac1);
+            auto octopus = NBWorldUtils::createSeaMonsterAndWaitingAnimation(info.fieldMonsterInfo.monsterId);
             
             octopus->setScaleX(monsterNode->getScaleX());
             octopus->setPosition(monsterNode->getPosition() + Vec2(octopus->getContentSize().width * 0, octopus->getContentSize().height / 4));

@@ -65,30 +65,35 @@ bool ScienceView::init(int buildId, int scienceType)
     setCleanFunction([](){
         CCLoadSprite::doResourceByCommonIndex(4, false);
         CCLoadSprite::doResourceByCommonIndex(5, false);
+        CCLoadSprite::doResourceByCommonIndex(6, false);//fusheng
     });
     
-    auto tbg = CCLoadSprite::loadResource("technology_09.png");
-    auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
-    int maxHight = CCDirector::sharedDirector()->getWinSize().height;
-    int curHight = -500;
-    while (curHight<maxHight) {
-        auto bg = CCLoadSprite::createSprite("technology_09.png");
-        if (CCCommonUtils::isIosAndroidPad()) {
-            bg->setScale(2.4);
-        }
-        bg->setAnchorPoint(ccp(0, 1));
-        bg->setPosition(ccp(0, curHight));
-        curHight += bg->getContentSize().height;
-        tBatchNode->addChild(bg);
-    }
-    this->addChild(tBatchNode);
-    
+//    auto tbg = CCLoadSprite::loadResource("technology_09.png");//fusheng 背景图片
+//    auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
+//    int maxHight = CCDirector::sharedDirector()->getWinSize().height;
+//    int curHight = -500;
+//    while (curHight<maxHight) {
+//        auto bg = CCLoadSprite::createSprite("technology_09.png");
+//        if (CCCommonUtils::isIosAndroidPad()) {
+//            bg->setScale(2.4);
+//        }
+//        bg->setAnchorPoint(ccp(0, 1));
+//        bg->setPosition(ccp(0, curHight));
+//        curHight += bg->getContentSize().height;
+//        tBatchNode->addChild(bg);
+//    }
+//    this->addChild(tBatchNode);
+    CCLoadSprite::doResourceByCommonIndex(4, true);
+    CCLoadSprite::doResourceByCommonIndex(5, true);
+    CCLoadSprite::doResourceByCommonIndex(6, true);
     auto tmpCCB = CCBLoadFile("ScienceTreeView",this,this);//ScienceView
     if (CCCommonUtils::isIosAndroidPad()) {
         this->setContentSize(CCDirector::sharedDirector()->getWinSize());
     }
     else
         this->setContentSize(tmpCCB->getContentSize());
+    
+    changeBGMaxHeight(m_buildBG);
     
     setTitleName(CCCommonUtils::getNameById(CC_ITOA(m_scienceType)));
     
@@ -98,6 +103,7 @@ bool ScienceView::init(int buildId, int scienceType)
         int oldHeight = m_infoList->getContentSize().height;
         m_infoList->setContentSize(CCSizeMake(oldWidth, oldHeight+addHeight));
         m_infoList->setPositionY(m_infoList->getPositionY()-addHeight);
+        m_huaWenBottom->setPositionY(m_huaWenBottom->getPositionY()-addHeight);//fusheng
         m_bottomNode->setPositionY(m_bottomNode->getPositionY() - addHeight);
         this->m_bgContainer->setPositionY(this->m_bgContainer->getPositionY() - addHeight);
 
@@ -107,27 +113,32 @@ bool ScienceView::init(int buildId, int scienceType)
     m_scrollView->setTouchPriority(Touch_Default);
     m_infoList->addChild(m_scrollView);
     m_desLabel->setString(_lang("121990"));
-    reInitView();
-    addBGPic();
     
-    for (int i=1; i<=4; i++) {
-        auto particle = ParticleController::createParticle(CCString::createWithFormat("UiFire_%d",i)->getCString());
-        m_fireNode1->addChild(particle);
-        
-        auto particle1 = ParticleController::createParticle(CCString::createWithFormat("UiFire_%d",i)->getCString());
-        m_fireNode2->addChild(particle1);
-    }
+    
+    float m_kejiBG33Top  = m_kejiBG33->convertToWorldSpaceAR(Vec2::ZERO).y;
+    float m_kejiBG33Bottom = m_kjBG33BottomNode->convertToWorldSpaceAR(Vec2::ZERO).y;
+    m_kejiBG33->setContentSize(Size(m_kejiBG33->getContentSize().width,m_kejiBG33Top-m_kejiBG33Bottom));
+    reInitView();
+//    addBGPic();//fusheng 这里会崩溃 "UI_UseSkill_picture_blackwhite.png"  图片丢失
+    
+//    for (int i=1; i<=4; i++) {
+//        auto particle = ParticleController::createParticle(CCString::createWithFormat("UiFire_%d",i)->getCString());
+//        m_fireNode1->addChild(particle);
+//        
+//        auto particle1 = ParticleController::createParticle(CCString::createWithFormat("UiFire_%d",i)->getCString());
+//        m_fireNode2->addChild(particle1);
+//    }
 
     return true;
 }
 
-void ScienceView::reInitView()
+void ScienceView::reInitView(CCObject* obj)
 {
-    CCLoadSprite::doResourceByCommonIndex(4, true);
-    CCLoadSprite::doResourceByCommonIndex(5, true);
+
     
     auto spLine = CCLoadSprite::loadResource("kji_line.png");//science_line.png
-    m_lineBatch = CCSpriteBatchNode::createWithTexture(spLine->getTexture());
+//    m_lineBatch = CCSpriteBatchNode::createWithTexture(spLine->getTexture());
+    m_lineBatch = Node::create();//fusheng 修改为Node
     m_scrollView->addChild(m_lineBatch);
     
     auto sp = CCLoadSprite::loadResource("technology_08.png");//science_line.png
@@ -159,7 +170,8 @@ void ScienceView::updateInfo(CCObject* obj)
     std::vector<string> sciList;
     CCCommonUtils::splitString(scienceIds, ";", sciList);
     
-    std::vector<int> idList;
+    idList.clear();//fusheng 先清一下
+   
     int maxPosY = 0;
     for (int i=0; i<sciList.size(); i++) {
         int scienceId = atoi(sciList[i].c_str());
@@ -187,18 +199,37 @@ void ScienceView::updateInfo(CCObject* obj)
     }
     else
         maxHeight += 50;
-    m_scrollView->setContentSize(CCSize(m_infoList->getContentSize().width,maxHeight));
-    m_scrollView->setContentOffset(ccp(0, m_infoList->getContentSize().height - maxHeight));
     
+    if(isFirst)
+    {
+        this->m_scrollView->setContentSize(CCSize(m_infoList->getContentSize().width,maxHeight));
+        this->m_scrollView->setContentOffset(ccp(0, m_infoList->getContentSize().height - maxHeight));
+        isFirst = false;
+    }
     for (int i=0; i<idList.size(); i++) {
+        
+        
         auto& info = GlobalData::shared()->scienceInfo.infoMap[idList[i]];
-        string relation = info.relation;
-        int posx = curX + (info.posX-1)*_itemW;
-        int posy = curY + (maxPosY - info.posY)*_itemH;
-        auto cell = ScienceCell::create(idList[i], m_commonBatch, m_iconBatch, posx, posy);
-        cell->setPosition(ccp(posx,posy));
-        cell->setTouchNode(m_infoList);
-        m_scrollView->addChild(cell);
+        
+        auto cellTemp = cells[info.posX*10 + info.posY];
+        if(cellTemp)
+        {
+            cellTemp->refreash(obj);
+        }
+        else
+        {
+            string relation = info.relation;
+            int posx = curX + (info.posX-1)*_itemW;
+            int posy = curY + (maxPosY - info.posY)*_itemH;
+            auto cell = ScienceCell::create(idList[i], m_commonBatch, m_iconBatch, posx, posy);
+            cell->setPosition(ccp(posx,posy));
+            cell->setTouchNode(m_infoList);
+            m_scrollView->addChild(cell);
+            
+            cells[info.posX*10 + info.posY] = cell;//fusheng 把cell存起来  x*10+y
+        }
+        
+       
     }
     newAddLine(&idList, maxPosY);
 }
@@ -212,7 +243,10 @@ const int st_H_HD = 280;
 
 void ScienceView::newAddLine(vector<int>* idList, int maxHeight)
 {
-    auto addLine = [](const CCPoint &startPt, std::vector<CCPoint> &endPt, std::vector<bool> openFlag, CCNode *parent, int maxH){
+    
+    m_lineBatch->removeAllChildrenWithCleanup(true);//fusheng 删除原本的sprite
+    
+    auto addLine = [this](const CCPoint &startPt, std::vector<CCPoint> &endPt, std::vector<bool> openFlag, CCNode *parent, int maxH,int index){
         if (CCCommonUtils::isIosAndroidPad()) {
             int curX = 140;
             int curY = -120;
@@ -223,6 +257,7 @@ void ScienceView::newAddLine(vector<int>* idList, int maxHeight)
                 auto endRealPt = ccp((pt.x) * st_w_HD + curX, (maxH - pt.y) * st_h_HD + st_H_HD + curY);
                 auto len = ccpDistance(endRealPt, startRealPt);
                 auto lineBG = CCLoadSprite::createSprite("kji_line.png");
+               
                 parent->addChild(lineBG);
                 lineBG->setAnchorPoint(ccp(0.5, 0));
                 lineBG->setPosition(startRealPt);
@@ -230,6 +265,8 @@ void ScienceView::newAddLine(vector<int>* idList, int maxHeight)
                 lineBG->setRotation(angle);
                 float s = len / lineBG->getContentSize().height;
                 lineBG->setScaleY(s);
+                
+              
                 
                 index++;
             }
@@ -249,6 +286,21 @@ void ScienceView::newAddLine(vector<int>* idList, int maxHeight)
                 lineBG->setRotation(angle);
                 float s = len / lineBG->getContentSize().height;
                 lineBG->setScaleY(s);
+                
+                
+                auto cell = this->cells[pt.x*10+pt.y];
+                
+                if (cell&&cell->m_isOpen) {
+                    auto lineBG2 = CCLoadSprite::createSprite("kji_line2.png");
+                    parent->addChild(lineBG2);
+                    lineBG2->setAnchorPoint(ccp(0.5, 0));
+                    lineBG2->setPosition(startRealPt);
+                    lineBG2->setRotation(angle);
+                    lineBG2->setScaleY(s);
+                }
+                
+                
+
                 
                 index++;
             }
@@ -272,14 +324,14 @@ void ScienceView::newAddLine(vector<int>* idList, int maxHeight)
         CCCommonUtils::splitString(relation, "|", relationPts);
         for (int j=0; j<relationPts.size(); j++) {
             vector<string> tmpPt;
-            CCCommonUtils::splitString(relationPts[j], ";", tmpPt);
+            CCCommonUtils::splitString(relationPts[j], ";", tmpPt);//fusheng  耍我啊  y在前 x在后
             
             int ptX = atoi(tmpPt[1].c_str());
             int ptY = atoi(tmpPt[0].c_str());
             endVec.push_back(ccp(ptX, ptY));
             relVec.push_back(isOpen);
         }
-        addLine(ccp(info.posX, info.posY), endVec, relVec, m_lineBatch, maxHeight);
+        addLine(ccp(info.posX, info.posY), endVec, relVec, m_lineBatch, maxHeight,i);
     }
 }
 
@@ -291,6 +343,8 @@ void ScienceView::onEnter()
     
     setTitleName(CCCommonUtils::getNameById(CC_ITOA(m_scienceType)));
     
+    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ScienceView::updateInfo), MSG_SCIENCE_RESEARCH_FINISH, NULL);
+    
     if(m_openNum>0) {
         PopupViewController::getInstance()->removePopupView(this);
         PopupViewController::getInstance()->addPopupInView(ScienceView::create(m_buildId, m_scienceType));
@@ -301,6 +355,9 @@ void ScienceView::onEnter()
 void ScienceView::onExit()
 {
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_SCIENCE_DATA_REFRESH);
+    CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_SCIENCE_RESEARCH_FINISH);
+   
+    
     if (m_openNum<=1) {
         m_scrollView->removeAllChildren();
         m_lineBatch = NULL;
@@ -349,7 +406,11 @@ bool ScienceView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const c
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bottomNode", CCNode*, this->m_bottomNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_fireNode1", CCNode*, this->m_fireNode1);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_fireNode2", CCNode*, this->m_fireNode2);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_huaWenBottom", CCSprite*, this->m_huaWenBottom);
+    
 
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_kejiBG33", CCScale9Sprite*, this->m_kejiBG33);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_kjBG33BottomNode", CCNode*, this->m_kjBG33BottomNode);
     return false;
 }
 
@@ -544,7 +605,7 @@ void ScienceCell::refreash(CCObject* obj)
             }
             m_isInit = true;
             m_isOpen = true;
-            
+            CCCommonUtils::setSpriteGray(m_bg, false);//fusheng 刷新时原本 灰度图 没有变回去
             auto& m_info = GlobalData::shared()->scienceInfo.infoMap[m_scienceId];
             resItems.clear();
             CCCommonUtils::splitString(m_info.resCondition, "|", resItems);
@@ -660,15 +721,17 @@ void ScienceCell::onEnter() {
     setTouchEnabled(true);
 
     //CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, Touch_Popup, true);
-    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ScienceCell::refreash), MSG_SCIENCE_RESEARCH_FINISH, NULL);
-    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ScienceCell::refreashState), MSG_SCIENCE_CELL_STATE, NULL);
+//    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ScienceCell::refreash), MSG_SCIENCE_RESEARCH_FINISH, NULL);
+    
+
+
 }
 
 void ScienceCell::onExit() {
     CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(ScienceCell::onEnterFrame), this);
     setTouchEnabled(false);
-    CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_SCIENCE_RESEARCH_FINISH);
-    CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_SCIENCE_CELL_STATE);
+//    CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_SCIENCE_RESEARCH_FINISH);
+
     
     if(m_picNode) {
         m_picNode->removeAllChildren();
@@ -719,13 +782,13 @@ void ScienceCell::onEnterFrame(float dt)
             if(m_type != 1) {
                 m_type=1;
                 m_particleNode->removeAllChildren();
-//                string tmpStart = "ScienceGlow_";
-//                int count = 4;
-//                for (int i=1; i<count; i++) {
-//                    auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString());
-//                    m_particleNode->addChild(particle);
-//                }
-                this->getAnimationManager()->runAnimationsForSequenceNamed("ResearchFadeIn_Yellow");
+                string tmpStart = "ScienceGlow_";
+                int count = 4;
+                for (int i=1; i<count; i++) {
+                    auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString());
+                    m_particleNode->addChild(particle);
+                }
+//                this->getAnimationManager()->runAnimationsForSequenceNamed("ResearchFadeIn_Yellow");
             }
         }
         else {
@@ -754,12 +817,14 @@ void ScienceCell::onEnterFrame(float dt)
             m_lockSpr->setVisible(_tmpLock);
             
             if (m_isOk) {
-                m_nameLabel->setColor(ccc3(164, 127, 55));
-                m_lvLabel->setColor(ccc3(164, 127, 55));
+                m_nameLabel->setColor(ccc3(183, 194, 254));
+                m_lvLabel->setColor(ccc3(0, 0, 0));
             }
             else {
-                m_nameLabel->setColor(ccc3(164, 28, 28));
-                m_lvLabel->setColor(ccc3(164, 28, 28));
+//                m_nameLabel->setColor(ccc3(164, 28, 28));
+//                m_lvLabel->setColor(ccc3(164, 28, 28));
+                m_nameLabel->setColor(ccc3(183, 194, 254));
+                m_lvLabel->setColor(ccc3(0, 0, 0));
             }
             
             if(m_type != 0 && m_type != 2) {
@@ -792,11 +857,14 @@ bool SciencePopupView::init(int scienceId) {
         setIsHDPanel(true);
         setModelLayerTouchPriority(Touch_Popup_Item);
         m_scienceId = scienceId;
+        
         CCBLoadFile("ScienceUpView",this,this);//SciencePopupView
         CCSize size=CCDirector::sharedDirector()->getWinSize();
         setContentSize(size);
         
         CCLoadSprite::doResourceByCommonIndex(5, true);
+
+        
         
         m_scrollView = CCScrollView::create(m_infoList->getContentSize());
         m_scrollView->setDirection(kCCScrollViewDirectionVertical);
@@ -805,6 +873,12 @@ bool SciencePopupView::init(int scienceId) {
         updateInfo(NULL);
         ret = true;
     }
+    m_instantBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::DISABLED)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
+    
+    m_upBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::DISABLED)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
+    
+    m_confitionLabel->setString(_lang("102138"));
+ 
     return ret;
 }
 
@@ -857,7 +931,7 @@ void SciencePopupView::updateInfo(CCObject* obj)
             m_btnMsgLabel->setMaxScaleXByWidth(180.0);
         m_infoNode->setVisible(false);
         CCCommonUtils::setButtonTitle(m_instantBtn, _lang("108532").c_str());
-        CCCommonUtils::setButtonSprite(m_instantBtn, "mail_red_btn.png");
+//        CCCommonUtils::setButtonSprite(m_instantBtn, "mail_red_btn.png");//fusheng 竟然换图片
         m_isUping = true;
         type = 1;
     }
@@ -874,7 +948,7 @@ void SciencePopupView::updateInfo(CCObject* obj)
         else
             m_btnMsgLabel->setMaxScaleXByWidth(180.0);
         CCCommonUtils::setButtonTitle(m_instantBtn, "");
-        CCCommonUtils::setButtonSprite(m_instantBtn, "btn_green3.png");
+//        CCCommonUtils::setButtonSprite(m_instantBtn, "btn_green3.png");//fusheng 竟然换图片
         m_infoNode->setVisible(true);
         m_isUping = false;
     }
@@ -1003,7 +1077,7 @@ void SciencePopupView::onUpdateRes(int type)
             
             if (!item1->m_isOk && !m_isUping) {
                 isCanUp = false;
-                m_instantBtn->setBackgroundSpriteForState(CCLoadSprite::createScale9Sprite("Btn_grey.png"), CCControlStateDisabled);
+//                m_instantBtn->setBackgroundSpriteForState(CCLoadSprite::createScale9Sprite("Btn_grey.png"), CCControlStateDisabled);
                 m_instantBtn->setEnabled(false);
             }
         }
@@ -1012,7 +1086,7 @@ void SciencePopupView::onUpdateRes(int type)
         if(QID_MAX == qid)
         {
             int qid = QueueController::getInstance()->getMinTimeQidByType(TYPE_SCIENCE);
-            auto itemQueue = UpgradeCell::create(3, Food, qid);
+            auto itemQueue = UpgradeCell::create(3, Food, qid,true);
             itemQueue->setPosition(ccp(curX, curY));
             itemQueue->setTouchNode(m_infoList,m_scienceId, 1);
             m_scrollView->addChild(itemQueue);
@@ -1075,7 +1149,7 @@ void SciencePopupView::onUpdateRes(int type)
     else {
         if (!_isOpen) {
             m_upBtn->setEnabled(false);
-            m_instantBtn->setBackgroundSpriteForState(CCLoadSprite::createScale9Sprite("Btn_grey.png"), CCControlStateDisabled);
+//            m_instantBtn->setBackgroundSpriteForState(CCLoadSprite::createScale9Sprite("Btn_grey.png"), CCControlStateDisabled);
             m_instantBtn->setEnabled(false);
         }
     }
@@ -1089,6 +1163,8 @@ void SciencePopupView::onChangeBG(int type)
         m_bigBG->setVisible(false);
         m_smallBG->setVisible(true);
         m_listBG->setVisible(false);
+        m_timeNode->setPosition(Vec2::ZERO);
+        
         if (type==1) {//正在升级
             m_upBtn->setPositionX(0);
             m_infoNode->setPosition(m_upBtn->getPosition());
@@ -1112,6 +1188,8 @@ void SciencePopupView::onChangeBG(int type)
         m_bigBG->setVisible(true);
         m_smallBG->setVisible(false);
         m_listBG->setVisible(true);
+        
+        m_timeNode->setPosition(Vec2(110,-40));
         m_maxMsgLabel->setString("");
     }
 }
@@ -1173,6 +1251,10 @@ bool SciencePopupView::onAssignCCBMemberVariable(cocos2d::CCObject *pTarget, con
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bar", CCScale9Sprite*, m_bar);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_timeBar", CCScale9Sprite*, m_timeBar);
     
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_confitionLabel", CCLabelIF*, m_confitionLabel);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_timeNode", CCNode*, m_timeNode);
+    
+    
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nameLabel", CCLabelIF*, m_nameLabel);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_desLabel", CCLabelIF*, m_desLabel);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_barLabel", CCLabelIF*, m_barLabel);
@@ -1193,8 +1275,8 @@ bool SciencePopupView::onAssignCCBMemberVariable(cocos2d::CCObject *pTarget, con
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_smallNode", CCNode*, m_smallNode);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_maxMsgLabel", CCLabelIF*, m_maxMsgLabel);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bigBG", CCScale9Sprite*, m_bigBG);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_smallBG", CCScale9Sprite*, m_smallBG);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bigBG", CCNode*, m_bigBG);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_smallBG", CCNode*, m_smallBG);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_listBG", CCScale9Sprite*, m_listBG);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_btnNode", CCNode*, m_btnNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_mainNode", CCNode*, m_mainNode);

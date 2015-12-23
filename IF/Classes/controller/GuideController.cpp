@@ -619,14 +619,31 @@ void GuideController::addGuideView(bool movingFlag){
     }
     else if(opers.size()>0 && opers[0] == "MC")
     {
-        if (!CCCommonUtils::isIosAndroidPad())
-        {
-            dx -= 20;
-            dy -= 10;
-        }
         
-        w += 40;
-        h += 20;
+        int itemID =  atoi(opers[1].c_str());
+        
+        if(itemID<1000)
+        {
+            if (!CCCommonUtils::isIosAndroidPad())//fusheng edit  地块的偏移量
+            {
+                dx -= 40;
+                dy -= 30;
+            }
+            
+            w += 20;
+            h += 20;
+        }
+        else
+        {
+//            if (!CCCommonUtils::isIosAndroidPad())//fusheng edit  建筑物的偏移量
+//            {
+//                dx -= 20;
+//                dy += 10;
+//            }
+//            
+//            w += 40;
+//            h += 10;
+        }
     }
     else if(opers.size()>=3 && opers[2] == "collect")
     {
@@ -890,23 +907,6 @@ CCNode* GuideController::getNode(std::string str){
                 CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat(str.c_str()));//fusheng 不在这个界面 就直接认为完成
                 node = NULL;
             }
-        }
-        if(str == "TitanUp_End") {
-            FunBuildInfo& fbiInfo = FunBuildController::getInstance()->getFunbuildById(FUN_BUILD_MAIN_CITY_ID);
-            if(fbiInfo.state != FUN_BUILD_UPING && fbiInfo.level==1)//fusheng 1级且不在升级中
-            {
-                TitanUpgradeView *curView = dynamic_cast<TitanUpgradeView*>(PopupViewController::getInstance()->getCurrentPopupView());
-                if(curView && curView->isAniComplete()){
-                    node = curView->getGuideNode(str);
-                }
-            }
-            else
-            {
-                CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("TitanUp_End"));
-                node = NULL;
-            }
-            
-
         }
     }
     

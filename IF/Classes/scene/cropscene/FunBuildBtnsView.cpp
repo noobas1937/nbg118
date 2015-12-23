@@ -61,16 +61,16 @@ bool FunBuildBtnsView::init()
     CCBLoadFile("BuildBtnView",this,this);
     m_name1->setString(_lang("102271"));
     m_name2->setString(_lang("102270"));
-    m_name1->setFntFile("Arial_Bold_Border.fnt");
-    m_name2->setFntFile("Arial_Bold_Border.fnt");
-    m_name3->setFntFile("Arial_Bold_Border.fnt");
-    m_name4->setFntFile("Arial_Bold_Border.fnt");
-    m_msg5->setFntFile("Arial_Bold_Border.fnt");
-    m_goldLabel->setFntFile("Arial_Bold_Border.fnt");
-    m_IncreasedGlodTxt->setFntFile("Arial_Bold_Border.fnt");
-    m_name5->setFntFile("Arial_Bold_Border.fnt");
-    m_IncreasedTime->setFntFile("Arial_Bold_Border.fnt");
-    m_msgV5->setFntFile("Arial_Bold_Border.fnt");
+    m_name1->setFntFile(getNBFont(NB_FONT_Bold_Border));
+    m_name2->setFntFile(getNBFont(NB_FONT_Bold_Border));
+    m_name3->setFntFile(getNBFont(NB_FONT_Bold_Border));
+    m_name4->setFntFile(getNBFont(NB_FONT_Bold_Border));
+    m_msg5->setFntFile(getNBFont(NB_FONT_Bold_Border));
+    m_goldLabel->setFntFile(getNBFont(NB_FONT_Bold_Border));
+    m_IncreasedGlodTxt->setFntFile(getNBFont(NB_FONT_Bold_Border));
+    m_name5->setFntFile(getNBFont(NB_FONT_Bold_Border));
+    m_IncreasedTime->setFntFile(getNBFont(NB_FONT_Bold_Border));
+    m_msgV5->setFntFile(getNBFont(NB_FONT_Bold_Border));
     
     this->getAnimationManager()->setAnimationCompletedCallback(this, callfunc_selector(FunBuildBtnsView::animationFunc));
     return true;
@@ -127,7 +127,20 @@ void FunBuildBtnsView::onShow(int buildId)
         m_name4->setString(_lang("102350"));
     }
     else if(buildType == FUN_BUILD_BARRACK1 || buildType == FUN_BUILD_BARRACK2 || buildType == FUN_BUILD_BARRACK3 || buildType == FUN_BUILD_BARRACK4){
-        btnIcons.push_back("shangBing.png");
+        
+        if (buildType == FUN_BUILD_BARRACK1) { //fusheng add 以前士兵统一使用shangBing.png
+            btnIcons.push_back("shangBing.png");
+        }
+        else if (buildType == FUN_BUILD_BARRACK2) {
+            btnIcons.push_back("icon_trainQi.png");
+        }
+        else if (buildType == FUN_BUILD_BARRACK3) {
+            btnIcons.push_back("icon_trainGong.png");
+        }
+        else if (buildType == FUN_BUILD_BARRACK4) {
+            btnIcons.push_back("icon_trainChe.png");
+        }
+        
         m_name3->setString(_lang("102276"));
     }
     else if (buildType == FUN_BUILD_WAR) {
@@ -198,7 +211,7 @@ void FunBuildBtnsView::onShow(int buildId)
     if (btnIcons.size() >= 1) {
         m_icon3Node->removeAllChildren();
         auto icon = CCLoadSprite::createSprite(btnIcons[0].c_str());
-//        CCCommonUtils::setSpriteMaxSize(icon, 90, true); //fusheng 使用图片原大小
+//        CCCommonUtils::setSpriteMaxSize(icon, 90, true); //fusheng 
         m_icon3Node->addChild(icon);
         m_btn3Node->setVisible(true);
         m_btn3->setEnabled(true);
@@ -209,7 +222,7 @@ void FunBuildBtnsView::onShow(int buildId)
             double effectTime = m_info->effectTime;
             double gapTime = effectTime - GlobalData::shared()->getWorldTime();
             if(gapTime<=0){
-                m_IncreasedGold->setVisible(true);
+//                m_IncreasedGold->setVisible(true);
                 m_IncreasedGlodTxt->setString(m_info->para[3].c_str());
                 int k6 = FunBuildController::getInstance()->building_base_k6;
                 m_IncreasedTime->setString(CCCommonUtils::changeTimeAddUnit(k6));
@@ -282,8 +295,8 @@ bool FunBuildBtnsView::onShowInfo()
     
     if (m_info->state == FUN_BUILD_NORMAL) {
         if (m_qid == QID_MAX) {
-            m_toolNode->setPositionY(-93.6+60);
-            m_nameNode->setPositionY(250);
+            m_toolNode->setPositionY(-100);
+            m_nameNode->setPositionY(300);
             if (buildType == FUN_BUILD_WOOD || buildType == FUN_BUILD_STONE || buildType == FUN_BUILD_IRON || buildType == FUN_BUILD_FOOD || buildType == FUN_BUILD_BARRACK || buildType == FUN_BUILD_HOSPITAL){
                 m_nameNode->setPositionY(150);
             }
@@ -318,10 +331,10 @@ bool FunBuildBtnsView::onShowInfo()
             }
         }
         else {//建筑正在造兵 或者 正在研究
-            m_toolNode->setPositionY(-93.6);
-            m_nameNode->setPositionY(250+60);
+            m_toolNode->setPositionY(-100-60);
+            m_nameNode->setPositionY(300+60);
             if (buildType == FUN_BUILD_HOSPITAL){
-                m_nameNode->setPositionY(150+60);
+                m_nameNode->setPositionY(120+60);
             }
             m_spdNode->setVisible(true);
             m_icon1Node->removeAllChildren();
@@ -362,10 +375,10 @@ bool FunBuildBtnsView::onShowInfo()
     }
     else {//升级 或者 建造中， 显示 秒建筑的 cd按钮
         m_qid = QueueController::getInstance()->getMinTimeQidByType(TYPE_BUILDING, CC_ITOA(m_buildingKey));
-        m_toolNode->setPositionY(-93.6);
-        m_nameNode->setPositionY(250+60);
+        m_toolNode->setPositionY(-100-60);
+        m_nameNode->setPositionY(300+60);
         if (buildType == FUN_BUILD_WOOD || buildType == FUN_BUILD_STONE || buildType == FUN_BUILD_IRON || buildType == FUN_BUILD_FOOD || buildType == FUN_BUILD_BARRACK || buildType == FUN_BUILD_HOSPITAL){
-            m_nameNode->setPositionY(150+60);
+            m_nameNode->setPositionY(120+60);
         }
         m_spdNode->setVisible(true);
         m_icon1Node->removeAllChildren();
@@ -1114,7 +1127,7 @@ bool FunBuildBtnsView::onUpdateToolBtn(int type)
     m_toolInfoId = toolId;
     m_icon5Node->removeAllChildren();
     auto icon = CCLoadSprite::createSprite(CCCommonUtils::getIcon(CC_ITOA(toolId)).c_str());
-    //CCCommonUtils::setSpriteMaxSize(icon, 90, true); //fusheng 使用图片原大小
+    CCCommonUtils::setSpriteMaxSize(icon, 77, true); //fusheng 加速按钮
     m_icon5Node->addChild(icon);
     m_btn5Node->setVisible(true);
     m_btn5->setEnabled(true);

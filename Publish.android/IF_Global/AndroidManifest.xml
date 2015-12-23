@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     android:installLocation="preferExternal"
     package="com.nbg.gp"
-    android:versionCode="999"
-    android:versionName="0.0.1" >
+    android:versionCode="0000"
+    android:versionName="0.0.0" >
 
     <supports-screens android:smallScreens="true"
         android:normalScreens="true"
@@ -199,7 +199,7 @@
         <!-- GCM 需求 START -->
         <meta-data
             android:name="com.parse.push.gcm_sender_id"
-            android:value="id:312229299745" />
+            android:value="id:664052380024" />
         <receiver android:name="com.parse.GcmBroadcastReceiver" android:permission="com.google.android.c2dm.permission.SEND" >
 		  <intent-filter>
 		    <action android:name="com.google.android.c2dm.intent.RECEIVE" />

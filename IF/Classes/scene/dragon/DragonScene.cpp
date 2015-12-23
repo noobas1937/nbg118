@@ -78,7 +78,7 @@ bool DragonScene::init()
     int sumHight = 1020+1020;
     
     m_touchLayer = CCLayer::create();
-    m_nameLayer = CCLabelBatchNode::create();//("Arial_Bold.fnt");
+    m_nameLayer = CCLabelBatchNode::create();//(getNBFont(NB_FONT_Bold));
     m_popLayer = CCLayer::create();
     m_signLayer = CCLayer::create();
     m_funLayer = CCLayer::create();
@@ -113,7 +113,7 @@ bool DragonScene::init()
     m_touchLayer->addChild(m_popLayer,10008);
     m_touchLayer->addChild(m_funLayer,10015);
     
-    m_flyArrow = CCLoadSprite::createSprite("UI_hand.png");//guide_arrow_new.png
+    m_flyArrow = CCLoadSprite::createSprite("UI_hand.png");
     m_flyArrow->setAnchorPoint(ccp(0, 0.5));
     m_flyArrow->setVisible(false);
     m_touchLayer->addChild(m_flyArrow,10012);

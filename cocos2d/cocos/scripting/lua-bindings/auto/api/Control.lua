@@ -68,6 +68,13 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- 
+-- @function [parent=#Control] setSwallowsTouches 
+-- @param self
+-- @param #bool swallowsTouches
+-- @return Control#Control self (return value: cc.Control)
+        
+--------------------------------
 --  A Boolean value that determines whether the control is highlighted. 
 -- @function [parent=#Control] setHighlighted 
 -- @param self

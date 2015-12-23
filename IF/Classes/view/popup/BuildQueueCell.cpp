@@ -53,7 +53,7 @@ bool BuildQueueCell::initBuildQueueCell(int qid)
     pic->setScale(1.5);
     m_hammerNode->addChild(pic);
     
-    m_timeLabel->setFntFile("Arial_Bold_Border.fnt");
+    m_timeLabel->setFntFile(getNBFont(NB_FONT_Bold_Border));
     
     m_proTimer = CCProgressTimer::create(CCLoadSprite::createSprite("icon_jindutiao.png"));
     m_proTimer->setType(kCCProgressTimerTypeRadial);

@@ -172,6 +172,11 @@ bool FunBuild::initFunBuild(int itemId, CCLabelBatchNode* nameLayer)
     m_buildingKey = itemId;
     m_nameLayer = nameLayer;
     
+    if(m_buildingKey/1000 == FUN_BUILD_CELLAR)//fusheng 把仓库的id记录下来
+    {
+        GlobalData::shared()->storeHouseBuildId = m_buildingKey;
+    }
+    
     m_signNode = CCNode::create();   //这两行代码前移，避免return 后  m_signNode和m_upEffectNode没有构建
     m_upEffectNode = CCNode::create();
     m_forgeEffectNode = CCNode::create();
@@ -287,11 +292,11 @@ bool FunBuild::initFunBuild(int itemId, CCLabelBatchNode* nameLayer)
         m_buildState = NULL;
         
         m_moveFrame = CCLoadSprite::createSprite("Tile_frame.png");
-        m_moveFrame->setPosition(ccp(93, 56));
+//        m_moveFrame->setPosition(ccp(93, 56));
         m_moveFrame->setVisible(false);
         if ((m_info->pos>=6 && m_info->pos<=16) || (m_info->pos>=52 && m_info->pos<=53)) {
             m_moveFrame->setScale(1.3);
-            m_moveFrame->setPosition(ccp(131, 67));
+//            m_moveFrame->setPosition(ccp(131, 67));
         }
         
         //begin a by ljf
@@ -342,21 +347,21 @@ bool FunBuild::initFunBuild(int itemId, CCLabelBatchNode* nameLayer)
         m_tile = CCLoadSprite::createSprite(tileName.c_str());
         m_tile->getTexture()->setAntiAliasTexParameters();
         this->setContentSize(m_tile->getContentSize());
-        m_tile->setAnchorPoint(ccp(0,0));
+        m_tile->setAnchorPoint(ccp(0.5,0.5));
         mainWidth = m_tile->getContentSize().width;
         mainHeight = m_tile->getContentSize().height;
         m_moveFrame = CCLoadSprite::createSprite("Tile_frame.png");
-        m_moveFrame->setPosition(ccp(93, 56));
+//        m_moveFrame->setPosition(ccp(0, 0));
         m_moveFrame->setVisible(false);
         if ((itemId>=6 && itemId<=16) || (itemId>=52 && itemId<=53)) {
             m_moveFrame->setScale(1.3);
-            m_moveFrame->setPosition(ccp(131, 67));
+//            m_moveFrame->setPosition(ccp(131, 67));
         }
         
         return true;
     }
     this->setContentSize(CCSizeMake(mainWidth, mainHeight));
-    this->setAnchorPoint(ccp(0,0));
+    this->setAnchorPoint(ccp(0.5,0.5));
     
     
     if(this->getAnimationManager()->getSequenceId("Default Timeline") >=0) {
@@ -369,6 +374,12 @@ bool FunBuild::initFunBuild(int itemId, CCLabelBatchNode* nameLayer)
         m_forgeEffectNode->addChild(particle);
     }
     
+    
+    
+    if(m_buildingKey/1000 == FUN_BUILD_CELLAR)//fusheng
+    {
+        updateStorehouseDisplay(nullptr);
+    }
     
     
     return true;
@@ -417,11 +428,11 @@ void FunBuild::unLockTile(CCObject* params)
         if (itemId == m_buildingKey && m_tile) {
             m_tile->setOpacity(0);
             //begin a by ljf
-            CCSpriteFrame* newSp = CCLoadSprite::getSF("build_tile.png");
+            CCSpriteFrame* newSp = CCLoadSprite::getSF("res_tile_1.png");
             m_tile->stopAllActions();
             m_tile->setDisplayFrame(newSp);
             m_tile->getTexture()->setAntiAliasTexParameters();
-            m_tile->setScale(0.75);
+//            m_tile->setScale(0.75);
             //end a by ljf
             m_tile->setVisible(true);
             auto delate = CCDelayTime::create(0.5); //m by ljf, 1.6 to 0.5
@@ -515,7 +526,7 @@ void FunBuild::addTips(){
         introTip->setTag(9);
         m_tipNode->addChild(introTip);
         introTip->setAnimationAndPlay(3,5);
-        m_tipNode->setPosition(ccp(parentX+mainWidth/2, parentY + mainHeight));
+        m_tipNode->setPosition(ccp(parentX, parentY + mainHeight));
         m_popLayer->addChild(m_tipNode,m_zOrder);
     }
 }
@@ -549,8 +560,8 @@ void FunBuild::setNamePos(int x, int y, CCLayer* sginLayer, CCLayer* popLayer, C
     }
     
     m_signNode->setPosition(ccp(x,y));
-    m_upEffectNode->setPosition(ccp(x+mainWidth/2,y+mainHeight/2));
-    m_forgeEffectNode->setPosition(ccp(x+mainWidth/2,y+mainHeight/2));
+    m_upEffectNode->setPosition(ccp(x,y));
+    m_forgeEffectNode->setPosition(ccp(x,y));
     sginLayer->addChild(m_signNode);
     sginLayer->addChild(m_upEffectNode);
     sginLayer->addChild(m_forgeEffectNode);
@@ -907,7 +918,7 @@ void FunBuild::addWorkShopBuildState(CCObject* param){
     if (m_popLayer && m_buildState==NULL && btype==FUN_BUILD_WORKSHOP) {
         removeTips();
         m_buildState = FunBuildState::create(m_buildingKey);
-        m_buildState->setPosition(ccp(parentX+mainWidth/2, parentY));
+        m_buildState->setPosition(ccp(parentX, parentY));
         m_popLayer->addChild(m_buildState,m_zOrder);
         
         isEffectRunning = false;
@@ -920,9 +931,9 @@ void FunBuild::addFunBuildState()
     if (m_popLayer && m_buildState==NULL) {
         removeTips();
         m_buildState = FunBuildState::create(m_buildingKey);
-        m_buildState->setPosition(ccp(parentX+mainWidth/2, parentY));
+        m_buildState->setPosition(ccp(parentX, parentY));
         if (m_buildingKey == FUN_BUILD_MAIN_CITY_ID) {
-            m_buildState->setPosition(ccp(parentX+mainWidth/2, parentY+100));
+            m_buildState->setPosition(ccp(parentX, parentY+100));
         }
         m_popLayer->addChild(m_buildState,m_zOrder);
     }
@@ -998,16 +1009,26 @@ void FunBuild::showUping()
     int tmppX = 0;
     int tmppY = 0;
     if (m_info->type == FUN_BUILD_MAIN) {
-        m_buildCCB = BuildCCB::create(1);
-        tmppY = -mainHeight/2+90;
+//        m_buildCCB = BuildCCB::create(1);
+        tmppY = 90;
+    }
+    else if (m_info->type == FUN_BUILD_WALL) {
+        m_buildCCB = BuildCCB::create(3);
+        tmppX = -30;
+        tmppY = -120;
+    }
+    else if (m_info->type == FUN_BUILD_ARROW_TOWER) {
+        m_buildCCB = BuildCCB::create(4);
+//        tmppX = 0;
+//        tmppY = 0;
+    }
+    else if (m_info->type == FUN_BUILD_FOOD || m_info->type == FUN_BUILD_WOOD || m_info->type == FUN_BUILD_IRON || m_info->type == FUN_BUILD_STONE || m_info->type == FUN_BUILD_HOSPITAL || m_info->type == FUN_BUILD_BARRACK) {
+        m_buildCCB = BuildCCB::create(2);
+//        tmppY = 50;
     }
     else {
         m_buildCCB = BuildCCB::create(0);
-        tmppY = -mainHeight/2+70;
-        if (m_info->type == FUN_BUILD_FOOD || m_info->type == FUN_BUILD_WOOD || m_info->type == FUN_BUILD_IRON || m_info->type == FUN_BUILD_STONE || m_info->type == FUN_BUILD_HOSPITAL || m_info->type == FUN_BUILD_BARRACK) {
-            tmppY = -mainHeight/2+50;
-        }
-        tmppX = -20;
+//        tmppY = 50;
     }
     int tmpOffx = parentX;
     int tmpOffy = parentY;
@@ -1019,10 +1040,10 @@ void FunBuild::showUping()
         tmpOffx = 0;
         tmpOffy = 0;
     }
-    m_buildCCB->setNamePos(tmpOffx+mainWidth/2+tmppX, tmpOffy+mainHeight/2+tmppY, m_signLayer, m_batchNode, m_zOrder);
-    m_signNode->addChild(m_buildCCB);
-    
-    
+    if (m_buildCCB) {
+        m_buildCCB->setNamePos(tmpOffx + mainWidth/2 + tmppX, tmpOffy + tmppY, m_signLayer, m_batchNode, m_zOrder);
+        m_signNode->addChild(m_buildCCB);
+    }
 //    string upBgPic = "inner_create.png";
 //    if (m_info->type == FUN_BUILD_MAIN) {
 //        upBgPic = "main_city_up.png";
@@ -1034,14 +1055,15 @@ void FunBuild::showUping()
 //    m_signNode->addChild(_cbg);
     
     auto sprAni = CCSprite::create();
-    CCCommonUtils::makeEffectSpr(sprAni, "inner_risk_%d.png", 18);
-    sprAni->setAnchorPoint(ccp(0.5, 0.5));
-    sprAni->setScale(2.0);
-    int tmpY = 108;//_cbg->getContentSize().height;
-    if (m_info->type == FUN_BUILD_MAIN) {
-        tmpY = 220;
-    }
-    sprAni->setPosition(ccp(mainWidth/2, tmpY-40));
+//    CCCommonUtils::makeEffectSpr(sprAni, "inner_risk_%d.png", 18);
+//    sprAni->setAnchorPoint(ccp(0.5, 0.5));
+//    sprAni->setScale(2.0);
+//    int tmpY = 108;//_cbg->getContentSize().height;
+//    if (m_info->type == FUN_BUILD_MAIN) {
+//        tmpY = 190;
+//    }
+    sprAni->setPosition(ccp(mainWidth/2+40, 70));
+    CCBLoadFile("CityBuild_CuiZi",sprAni,this);
     
     auto garyCloud1 = CCSprite::create();
     CCCommonUtils::makeEffectSpr(garyCloud1, "gary_cloud_%d.png", 13);
@@ -1225,6 +1247,12 @@ void FunBuild::onEnter() {
     {
         this->scheduleOnce(schedule_selector(FunBuild::playFortSkillEffect), 0.45);
     }
+    
+    
+    if(m_buildingKey/1000 == FUN_BUILD_CELLAR)//fusheng 仓库监听更新
+    {
+        CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(FunBuild::updateStorehouseDisplay), MSG_UPDATE_STOREHOUSE_DISPLAY, NULL);
+    }
 }
 
 void FunBuild::onExit() {
@@ -1243,6 +1271,12 @@ void FunBuild::onExit() {
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_PLAY_BUILD_SHADOW);
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_STOP_BUILD_SHADOW);
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, "addFunBuildState");
+    
+    
+    if(m_buildingKey/1000 == FUN_BUILD_CELLAR)//fusheng 仓库移除监听
+    {
+        CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_UPDATE_STOREHOUSE_DISPLAY);
+    }
     
     CCNode::onExit();
 }
@@ -1458,6 +1492,10 @@ void FunBuild::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
             }else if (cnt == 1){
                 int firstPos = FunBuildController::getInstance()->WillMovePos[0];
                 if (firstPos>16 && firstPos<52 && pos>16 && pos<52 && firstPos!=pos) {
+                    auto& tileInfo = FunBuildController::getInstance()->m_tileMap[m_buildingKey];
+                    if (tileInfo.state == FUN_BUILD_LOCK || tileInfo.xmlOpen == FUN_BUILD_HIDE) {
+                        return;
+                    }
                     FunBuildController::getInstance()->SetMoveBuildPos(pos);
                 }else if ( ((firstPos<=16 && firstPos>=6) || (firstPos>=52 && firstPos<=53)) && firstPos!=pos) {
                     if ((pos<=16 && pos>=6) || (pos>=52 && pos<=53)) {
@@ -1530,11 +1568,20 @@ void FunBuild::onClickThis(float _time)
                      auto layer = dynamic_cast<ImperialScene*>(SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE));
                      int tx = parentX ;
                      int ty = parentY ;
-                     float _scale = 0.8;
+//                     float _scale = 0.8;
+                     float _scale = 1.5;
                      if (CCCommonUtils::isIosAndroidPad())
                      {
                         _scale = 1.2;
                      }
+                    
+//                     tx = this->getParent()->getPositionX();
+//                     ty = this->getParent()->getPositionY();
+ 
+//                     onMoveToPos(m_curBuildPosx, m_curBuildPosy, type, dt, endS, bound);
+
+                     ty-=50;
+                     
                      layer->onMoveToPos(tx, ty, TYPE_POS_UP, 0.25, _scale);
                  
                      //PopupViewController::getInstance()->addPopupInView(TileOpenView::create(m_buildingKey));
@@ -1627,7 +1674,7 @@ void FunBuild::onClickThis(float _time)
                 }
                 
                 if(layer) {
-                    auto pt = layer->onGetSceenPt(parentX+mainWidth/2, parentY);
+                    auto pt = layer->onGetSceenPt(parentX, parentY);
                     auto movePt = IsNeedMove(pt.x, pt.y, layer->onGetTouchLayerScale());
                     if(movePt.x>0 || movePt.y>0) {
                         int ex = pt.x;
@@ -1638,7 +1685,7 @@ void FunBuild::onClickThis(float _time)
                         if (movePt.y>0) {
                             ey = movePt.y;
                         }
-                        layer->onMoveToPosDir(parentX+mainWidth/2, parentY, ex, ey);
+                        layer->onMoveToPosDir(parentX, parentY, ex, ey);
                     }
                 }
                 
@@ -1646,8 +1693,14 @@ void FunBuild::onClickThis(float _time)
                 if (m_buildingKey==FUN_BUILD_MAIN_CITY_ID) {
                     dh = 100;
                 }
+                int dw = 0;
+                if (m_info->type == FUN_BUILD_CELLAR)
+                {
+                    dw = -30;
+                    dh = 50;
+                }
                 if (!m_info->is_Dirc && layer) {
-                    layer->onShowBtnsView(parentX+mainWidth/2, parentY+dh, m_buildingKey);
+                    layer->onShowBtnsView(parentX+dw, parentY+dh, m_buildingKey);
                     playShadow();
                 }
             }
@@ -2168,7 +2221,8 @@ void FunBuild::canShowState()
                 if(m_info->type == FUN_BUILD_WOOD)
                 {
                     m_spineAni->setToSetupPose();
-                    m_spineAni->setAnimation(0, "Working", false);
+//                    m_spineAni->setAnimation(0, "Working", false);
+                    m_spineAni->setAnimation(0, "Finish", true);
                     m_spineAni->update(0.00001);
                 }
                 m_effectState = 6;
@@ -2429,7 +2483,12 @@ void FunBuild::onMoveBuild(CCObject* param)
         if (!m_tile->isVisible()) {
             return;
         }
+        auto& tileInfo = FunBuildController::getInstance()->m_tileMap[m_buildingKey];
+        if (tileInfo.state == FUN_BUILD_LOCK || tileInfo.xmlOpen == FUN_BUILD_HIDE) {
+            return;
+        }
     }
+    
     
     int pos = getCurPos();
     if (pos < 0) {
@@ -2552,7 +2611,165 @@ int FunBuild::getCurPos()
         }
     }
 }
+void FunBuild::updateStorehouseDisplay(CCObject* obj)
+{
+    if (m_buildingKey/1000 == FUN_BUILD_CELLAR) {//fusheng 仓库
+        
+        int resFullNum = 0;//fusheng 有几类资源到达保护上限
+        int showResNum = 2;//fusheng 当期显示几类资源
+        
+        auto m_info = FunBuildController::getInstance()->getFunbuildById(m_buildingKey);
+       
+        int mlv = FunBuildController::getInstance()->getMainCityLv();
+        int addValue = CCCommonUtils::getEffectValueByNum(72);//固定提升值
+        float proValue = 1+CCCommonUtils::getEffectValueByNum(38)/100.0;//提升百分比
+        string addInfo = "";
+        
+        if (mlv>=FunBuildController::getInstance()->building_base_k4) {//第四个资源  15级解锁
+            int oStoneValue = atoi(m_info.para[2].c_str());
+           
+            
+            float stoneProtectCount = (oStoneValue+addValue)*proValue;
+           
+            showResNum++;
+            
+            if (CCCommonUtils::getCurResourceByType(Stone)>stoneProtectCount ) {
+                
+                resFullNum++;
+                
+                float resNum = CCCommonUtils::getCurResourceByType(Stone)-stoneProtectCount;
+                
+                if (resNum < 1000) {
+                    m_stoneSpr->setSpriteFrame("nb_stone_status0.png");
+                }
+                else if (resNum < 20000)
+                {
+                    m_stoneSpr->setSpriteFrame("nb_stone_status1.png");
+                }
+                else
+                {
+                    m_stoneSpr->setSpriteFrame("nb_stone_status2.png");
+                }
+                
+            }
+            else
+            {
+                m_ironSpr->setSpriteFrame("nb_stone_status0.png");
+            }
+            m_stoneSpr->setVisible(true);
+        }
+        else
+        {
+            m_stoneSpr->setVisible(false);
+        }
+        
+        if (mlv>=FunBuildController::getInstance()->building_base_k3) {//第三个资源  10级解锁
+            int oIronValue = atoi(m_info.para[3].c_str());
+            
+            float ironProtectCount = (oIronValue+addValue)*proValue;
+            
+            showResNum++;
+            
+            if (CCCommonUtils::getCurResourceByType(Iron)>ironProtectCount ) {
+                resFullNum++;
+                
+                float resNum = CCCommonUtils::getCurResourceByType(Iron)-ironProtectCount;
+                
+                if (resNum < 5000) {
+                    m_ironSpr->setSpriteFrame("nb_iron_status0.png");
+                }
+                else if (resNum < 100000)
+                {
+                    m_ironSpr->setSpriteFrame("nb_iron_status1.png");
+                }
+                else
+                {
+                    m_ironSpr->setSpriteFrame("nb_iron_status2.png");
+                }
+                
 
+                
+            }
+            else
+            {
+                m_ironSpr->setSpriteFrame("nb_iron_status0.png");
+            }
+            m_ironSpr->setVisible(true);
+        }
+        else
+        {
+            m_ironSpr->setVisible(false);
+        }
+        
+        int oFoodValue = atoi(m_info.para[4].c_str());//粮食
+        
+        float foodProtectCount = (oFoodValue+addValue)*proValue;
+        
+        if (CCCommonUtils::getCurResourceByType(Food)>foodProtectCount ) {
+            resFullNum++;
+            
+            float resNum = CCCommonUtils::getCurResourceByType(Food)-foodProtectCount;
+            
+            if (resNum < 50000) {
+                m_foodSpr->setSpriteFrame("nb_food_status0.png");
+            }
+            else if (resNum < 1000000)
+            {
+                m_foodSpr->setSpriteFrame("nb_food_status1.png");
+            }
+            else
+            {
+                m_foodSpr->setSpriteFrame("nb_food_status2.png");
+            }
+        }
+        else
+        {
+            m_foodSpr->setSpriteFrame("nb_food_status0.png");
+        }
+       
+        
+        int oWoodValue = atoi(m_info.para[1].c_str());//木头
+        
+        float woodProtectCount = (oWoodValue+addValue)*proValue;
+        
+        
+        if (CCCommonUtils::getCurResourceByType(Wood)>woodProtectCount ) {
+            resFullNum++;
+            
+            float resNum = CCCommonUtils::getCurResourceByType(Wood)-woodProtectCount;
+            
+            if (resNum < 50000) {
+                m_woodSpr->setSpriteFrame("nb_wood_status0.png");
+            }
+            else if (resNum < 1000000)
+            {
+                m_woodSpr->setSpriteFrame("nb_wood_status1.png");
+            }
+            else
+            {
+                m_woodSpr->setSpriteFrame("nb_wood_status2.png");
+            }
+        }
+        else
+        {
+            m_woodSpr->setSpriteFrame("nb_wood_status0.png");
+        }
+
+        
+        if (resFullNum == 0) {
+            m_spr->setSpriteFrame("nb_storehouse_status0.png");
+        }
+        else if(resFullNum == showResNum)
+        {
+            m_spr->setSpriteFrame("pic404000_2.png");
+        }
+        else
+        {
+            m_spr->setSpriteFrame("nb_storehouse_status1.png");
+        }
+        
+    }
+}
 #pragma mark -
 #pragma mark CocosBuilder Part
 SEL_MenuHandler FunBuild::onResolveCCBCCMenuItemSelector(cocos2d::CCObject * pTarget, const char * pSelectorName)
@@ -2577,6 +2794,13 @@ bool FunBuild::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_spineNode", CCNode*, this->m_spineNode);
     //CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_particleNode", CCNode*, this->m_particleNode);
     //end a by ljf
+    
+    //fusheng begin
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_foodSpr", CCSprite*, this->m_foodSpr);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_woodSpr", CCSprite*, this->m_woodSpr);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_ironSpr", CCSprite*, this->m_ironSpr);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_stoneSpr", CCSprite*, this->m_stoneSpr);
+    //fusheng end
     return false;
 }
 
@@ -2772,7 +2996,7 @@ void FunBuild::onShowParticleByType(int type)
             for(int i=1;i<=3;i++)
             {
                 auto particle = ParticleController::createParticle(CCString::createWithFormat("Smithy_%d",i)->getCString());
-                particle->setPosition(ccp(parentX+mainWidth/2, parentY+100));
+                particle->setPosition(ccp(parentX, parentY+100));
                 addParticleToBatch(particle);
             }
         }else if (m_info->type == FUN_BUILD_WORKSHOP) {
@@ -2799,7 +3023,7 @@ void FunBuild::onShowParticleByType(int type)
             int count = 4;
             for (int i=1; i<=count; i++) {
                 auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString());
-                particle->setPosition(ccp(parentX+mainWidth/2, parentY+100));
+                particle->setPosition(ccp(parentX, parentY+100));
                 addParticleToBatch(particle);
             }
         }
@@ -2809,7 +3033,7 @@ void FunBuild::onShowParticleByType(int type)
         int count = 2;
         for (int i=1; i<=count; i++) {
             auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString());
-            particle->setPosition(ccp(parentX+mainWidth/2, parentY+100));
+            particle->setPosition(ccp(parentX, parentY+100));
             addParticleToBatch(particle);
         }
     }
@@ -2818,7 +3042,7 @@ void FunBuild::onShowParticleByType(int type)
         int count = 3;
         for (int i=1; i<=count; i++) {
             auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString());
-            particle->setPosition(ccp(parentX+mainWidth/2, parentY+60));
+            particle->setPosition(ccp(parentX, parentY+60));
             addParticleToBatch(particle);
         }
     }
@@ -2867,7 +3091,7 @@ void FunBuild::onPlayParticle()
 //    onHideParticle();
     auto layer = dynamic_cast<ImperialScene*>(SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE));
     if (layer) {
-        auto pt = layer->onGetSceenPt(parentX+mainWidth/2, parentY+mainHeight);
+        auto pt = layer->onGetSceenPt(parentX, parentY+mainHeight);
         if(m_buildingKey/1000!=FUN_BUILD_FORGE && m_buildingKey/1000!=FUN_BUILD_WORKSHOP)
         {
             layer->onFlyTroopParticle(pt.x, pt.y, 1);
@@ -2991,6 +3215,7 @@ void FunBuild::checkIncreasedStatus(){
         m_gainSpr = CCSprite::create();
         CCCommonUtils::makeEffectSpr(m_gainSpr, "Gain_%d.png", 16,0.1);
         m_gainSpr->setScale(scale);
+        m_gainSpr->setAnchorPoint(Vec2(0.5,0.5));
 //        m_gainSpr->setPosition(ccp(tmpBatchPosX-30+offX, tmpBatchPosY-30+offY));
         m_gainSpr->setPosition(ccp(tmpBatchPosX+0+offX, tmpBatchPosY+0+offY));
         m_gainSpr->setOpacity(175);
@@ -3002,7 +3227,7 @@ void FunBuild::checkIncreasedStatus(){
         for (int i=1; i<count; i++) {
             auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString());
 //            particle->setPosition(ccp(parentX+70+offX, parentY+30+offY));
-            particle->setPosition(ccp(parentX+100+offX, parentY+60+offY));
+            particle->setPosition(ccp(parentX+offX, parentY+offY));
             addSpeParticleToBatch(particle);
         }
     }else{
@@ -3316,21 +3541,21 @@ bool FunBuildState::init(int itemId)
             
             string pic = "";
             pic = "icon_zaobing.png";  //fusheng 暂时不确定有什么兵种  先使用icon_zaobing.png代替
-//            if (buildType == FUN_BUILD_BARRACK1) {
-//                pic = "icon_bubing.png";
-//            }
-//            else if (buildType == FUN_BUILD_BARRACK2) {
-//                pic = "icon_qibing.png";
-//            }
-//            else if (buildType == FUN_BUILD_BARRACK3) {
-//                pic = "icon_gongbing.png";
-//            }
-//            else if (buildType == FUN_BUILD_BARRACK4) {
-//                pic = "icon_chebing.png";
-//            }
-//            else if (buildType == FUN_BUILD_FORT) {
-//                pic = "icon_xianjing.png";
-//            }
+            if (buildType == FUN_BUILD_BARRACK1) {
+                pic = "icon_bubing.png";
+            }
+            else if (buildType == FUN_BUILD_BARRACK2) {
+                pic = "icon_qibing.png";
+            }
+            else if (buildType == FUN_BUILD_BARRACK3) {
+                pic = "icon_gongbing.png";
+            }
+            else if (buildType == FUN_BUILD_BARRACK4) {
+                pic = "icon_chebing.png";
+            }
+            else if (buildType == FUN_BUILD_FORT) {
+                pic = "icon_trapComplete.png";
+            }
 //            else if (buildType == FUN_BUILD_SCIENE) {
 //                pic = "icon_keji.png";
 //            }
@@ -3348,7 +3573,7 @@ bool FunBuildState::init(int itemId)
             
             string recPic = "shangBing.png";
             if (buildType == FUN_BUILD_FORT) {
-                recPic = "icon_trap.png";
+                recPic = "icon_trapComplete.png";
             }else if (buildType == FUN_BUILD_FORGE) {
                 recPic = "icon_equip.png";
             }else if (buildType == FUN_BUILD_WORKSHOP) {
@@ -3358,8 +3583,18 @@ bool FunBuildState::init(int itemId)
                 if (vec.size()>0) {
                     recPic = CCCommonUtils::getIcon(vec[0]);
                 }
+            }else if (buildType == FUN_BUILD_BARRACK1) { //fusheng add 以前士兵统一使用shangBing.png
+                recPic = "icon_bubing.png";
             }
-            auto utIcon = CCLoadSprite::createSprite(recPic.c_str());
+            else if (buildType == FUN_BUILD_BARRACK2) {
+                recPic = "icon_qibing.png";
+            }
+            else if (buildType == FUN_BUILD_BARRACK3) {
+                recPic = "icon_gongbing.png";
+            }
+            else if (buildType == FUN_BUILD_BARRACK4) {
+                recPic = "icon_chebing.png";
+            }            auto utIcon = CCLoadSprite::createSprite(recPic.c_str());
             m_recIcon->addChild(utIcon);
         }
     }
@@ -3367,7 +3602,7 @@ bool FunBuildState::init(int itemId)
     if(bType==FUN_BUILD_WOOD || bType==FUN_BUILD_FOOD || bType==FUN_BUILD_IRON || bType==FUN_BUILD_STONE || bType==FUN_BUILD_HOSPITAL || bType==FUN_BUILD_BARRACK) {
         m_freeNode->setPositionY(115);
         m_helpNode->setPositionY(115);
-        m_getNode->setPositionY(100);
+        m_getNode->setPositionY(30);
     } else {
         m_freeNode->setPositionY(195);
         m_helpNode->setPositionY(195);
@@ -3509,7 +3744,9 @@ void FunBuildState::onEnterFrame(float dt)
                         particle->setPosition(ccp(66, 66));
                         m_freeTouchNode->addChild(particle);
                     }
-                    m_freeNode->setVisible(true);
+                    if (m_info->type != FUN_BUILD_MAIN) {
+                        m_freeNode->setVisible(true);
+                    }
                     m_helpNode->setVisible(false);
                     onPlayCanRec(1);
                 }

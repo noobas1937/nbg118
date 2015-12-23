@@ -40,7 +40,7 @@
 								<key>customClass</key>
 								<string></string>
 								<key>displayName</key>
-								<string>CCSprite</string>
+								<string>m_coordBG</string>
 								<key>memberVarAssignmentName</key>
 								<string>m_coordBG</string>
 								<key>memberVarAssignmentType</key>
@@ -77,8 +77,8 @@
 										<string>ScaleLock</string>
 										<key>value</key>
 										<array>
-											<real>2</real>
-											<real>1.7000000476837158</real>
+											<real>1.2000000476837158</real>
+											<real>1</real>
 											<false/>
 											<integer>0</integer>
 										</array>
@@ -214,7 +214,7 @@
 								<key>customClass</key>
 								<string></string>
 								<key>displayName</key>
-								<string>CCControlButton</string>
+								<string>m_findIcon</string>
 								<key>memberVarAssignmentName</key>
 								<string>m_findIcon</string>
 								<key>memberVarAssignmentType</key>
@@ -228,7 +228,7 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>-164</real>
+											<real>-104</real>
 											<real>-102</real>
 											<integer>0</integer>
 										</array>
@@ -251,8 +251,8 @@
 										<string>ScaleLock</string>
 										<key>value</key>
 										<array>
-											<real>0.69999998807907104</real>
-											<real>0.69999998807907104</real>
+											<real>1</real>
+											<real>1</real>
 											<true/>
 											<integer>0</integer>
 										</array>
@@ -330,8 +330,8 @@
 										<string>Size</string>
 										<key>value</key>
 										<array>
-											<real>51</real>
-											<real>65</real>
+											<real>45</real>
+											<real>44</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -422,7 +422,7 @@
 								<key>customClass</key>
 								<string></string>
 								<key>displayName</key>
-								<string>CCSprite</string>
+								<string>m_yBG</string>
 								<key>memberVarAssignmentName</key>
 								<string>m_yBG</string>
 								<key>memberVarAssignmentType</key>
@@ -513,7 +513,7 @@
 								<key>customClass</key>
 								<string></string>
 								<key>displayName</key>
-								<string>CCSprite</string>
+								<string>m_xBG</string>
 								<key>memberVarAssignmentName</key>
 								<string>m_xBG</string>
 								<key>memberVarAssignmentType</key>
@@ -604,7 +604,7 @@
 								<key>customClass</key>
 								<string></string>
 								<key>displayName</key>
-								<string>CCSprite</string>
+								<string>m_kingdomBG</string>
 								<key>memberVarAssignmentName</key>
 								<string>m_kingdomBG</string>
 								<key>memberVarAssignmentType</key>
@@ -709,8 +709,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>-22.639999389648438</real>
-											<real>-104</real>
+											<real>-60.639999389648438</real>
+											<real>-102.55999755859375</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -772,9 +772,9 @@
 										<string>Color3</string>
 										<key>value</key>
 										<array>
-											<integer>221</integer>
-											<integer>221</integer>
-											<integer>221</integer>
+											<integer>254</integer>
+											<integer>255</integer>
+											<integer>255</integer>
 										</array>
 									</dict>
 									<dict>
@@ -814,6 +814,8 @@
 										<string>X</string>
 									</dict>
 								</array>
+								<key>selected</key>
+								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>
@@ -837,8 +839,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>14.360000610351562</real>
-											<real>-104</real>
+											<real>-23.639999389648438</real>
+											<real>-102.55999755859375</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -900,9 +902,9 @@
 										<string>Color3</string>
 										<key>value</key>
 										<array>
-											<integer>145</integer>
-											<integer>145</integer>
-											<integer>145</integer>
+											<integer>254</integer>
+											<integer>255</integer>
+											<integer>255</integer>
 										</array>
 									</dict>
 									<dict>
@@ -965,8 +967,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>114.36000061035156</real>
-											<real>-104</real>
+											<real>76.360000610351562</real>
+											<real>-102.55999755859375</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -1028,9 +1030,9 @@
 										<string>Color3</string>
 										<key>value</key>
 										<array>
-											<integer>145</integer>
-											<integer>145</integer>
-											<integer>145</integer>
+											<integer>254</integer>
+											<integer>255</integer>
+											<integer>255</integer>
 										</array>
 									</dict>
 									<dict>
@@ -1093,8 +1095,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>76.360000610351562</real>
-											<real>-104</real>
+											<real>38.360000610351562</real>
+											<real>-102.55999755859375</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -1156,9 +1158,9 @@
 										<string>Color3</string>
 										<key>value</key>
 										<array>
-											<integer>221</integer>
-											<integer>221</integer>
-											<integer>221</integer>
+											<integer>254</integer>
+											<integer>255</integer>
+											<integer>255</integer>
 										</array>
 									</dict>
 									<dict>
@@ -1222,7 +1224,7 @@
 										<key>value</key>
 										<array>
 											<real>-121</real>
-											<real>104</real>
+											<real>150</real>
 											<integer>1</integer>
 										</array>
 									</dict>
@@ -1323,7 +1325,7 @@
 										<key>type</key>
 										<string>Text</string>
 										<key>value</key>
-										<string>X</string>
+										<string>Z</string>
 									</dict>
 								</array>
 							</dict>
@@ -1350,7 +1352,7 @@
 										<key>value</key>
 										<array>
 											<real>-81.400001525878906</real>
-											<real>-104</real>
+											<real>-150</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -1412,9 +1414,9 @@
 										<string>Color3</string>
 										<key>value</key>
 										<array>
-											<integer>145</integer>
-											<integer>145</integer>
-											<integer>145</integer>
+											<integer>254</integer>
+											<integer>255</integer>
+											<integer>255</integer>
 										</array>
 									</dict>
 									<dict>
@@ -2042,8 +2044,6 @@
 				<true/>
 			</dict>
 		</array>
-		<key>selected</key>
-		<true/>
 	</dict>
 	<key>notes</key>
 	<array/>

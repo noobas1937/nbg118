@@ -46,15 +46,15 @@ SpeBuildBtnsView* SpeBuildBtnsView::create()
 bool SpeBuildBtnsView::init()
 {
     CCBLoadFile("BuildBtnView",this,this);
-    m_name1->setFntFile("Arial_Bold_Border.fnt");
-    m_name2->setFntFile("Arial_Bold_Border.fnt");
-    m_name3->setFntFile("Arial_Bold_Border.fnt");
-    m_name4->setFntFile("Arial_Bold_Border.fnt");
-    m_msg5->setFntFile("Arial_Bold_Border.fnt");
-    m_goldLabel->setFntFile("Arial_Bold_Border.fnt");
-    m_name5->setFntFile("Arial_Bold_Border.fnt");
-    m_msgV5->setFntFile("Arial_Bold_Border.fnt");
-    m_msg5->setFntFile("Arial_Bold_Border.fnt");
+    m_name1->setFntFile(getNBFont(NB_FONT_Bold_Border));
+    m_name2->setFntFile(getNBFont(NB_FONT_Bold_Border));
+    m_name3->setFntFile(getNBFont(NB_FONT_Bold_Border));
+    m_name4->setFntFile(getNBFont(NB_FONT_Bold_Border));
+    m_msg5->setFntFile(getNBFont(NB_FONT_Bold_Border));
+    m_goldLabel->setFntFile(getNBFont(NB_FONT_Bold_Border));
+    m_name5->setFntFile(getNBFont(NB_FONT_Bold_Border));
+    m_msgV5->setFntFile(getNBFont(NB_FONT_Bold_Border));
+    m_msg5->setFntFile(getNBFont(NB_FONT_Bold_Border));
     
     this->getAnimationManager()->setAnimationCompletedCallback(this, callfunc_selector(SpeBuildBtnsView::animationFunc));
     return true;
@@ -477,7 +477,9 @@ void SpeBuildBtnsView::onClickFunc(int idx)
         if(key == "133187"){
             PopupViewController::getInstance()->addPopupInView(PortActView::create());
         }else if( key == "101283"){
-            PopupViewController::getInstance()->addPopupInView(MonthCardView::create());
+#pragma mark monthCard
+//             CCCommonUtils::flyHint("", "", _lang("E100008"));
+            PopupViewController::getInstance()->addPopupView(MonthCardView::create());
         }
     }
 }

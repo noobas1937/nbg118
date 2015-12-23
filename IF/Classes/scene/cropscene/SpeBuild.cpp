@@ -210,7 +210,7 @@ bool SpeBuild::initSpeBuild(int itemId)
             m_spTextNode->addChild(biaoTiBg);
             
             m_timeEventlabel = CCLabelIFTTF::create();
-            m_timeEventlabel->setFntFile("Arial_Bold_Border.fnt");
+            m_timeEventlabel->setFntFile(getNBFont(NB_FONT_Bold_Border));
             m_timeEventlabel->setColor({255,198,0});
             m_timeEventlabel->setAnchorPoint(ccp(0.5,0.5));
             m_timeEventlabel->setFontSize(20);
@@ -220,7 +220,7 @@ bool SpeBuild::initSpeBuild(int itemId)
             m_timeEventlabel->setPosition(ccp(m_upEffectNode->getPosition().x - 30,m_upEffectNode->getPosition().y+67));
             
 //            m_timelabel = CCLabelIF::create("",18);
-//            m_timelabel->setFntFile("Arial_Bold_Border.fnt");
+//            m_timelabel->setFntFile(getNBFont(NB_FONT_Bold_Border));
 //            m_timelabel->setColor({255,198,0});
 //            m_timelabel->setAnchorPoint(ccp(0.5,0.5));
 //            m_upEffectNode->addChild(m_timelabel);
@@ -256,7 +256,7 @@ bool SpeBuild::initSpeBuild(int itemId)
         m_textNode->addChild(sprite9, 1, 1);
         sprite9->setPositionY(-80);
         m_timeEventlabel = CCLabelIFTTF::create();
-        m_timeEventlabel->setFntFile("Arial_Bold_Border.fnt");
+        m_timeEventlabel->setFntFile(getNBFont(NB_FONT_Bold_Border));
         m_timeEventlabel->setColor({255,198,0});
         m_timeEventlabel->setAnchorPoint(ccp(0.5,0.5));
         m_timeEventlabel->setFontSize(20);
@@ -277,7 +277,7 @@ bool SpeBuild::initSpeBuild(int itemId)
         CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(SpeBuild::checkLeftTime), this, 1,kCCRepeatForever, 0.0f, false);
     }else if(itemId == SPE_BUILD_GOLD) {
         m_timelabel = CCLabelIF::create(_lang("107000").c_str(),24);
-        m_timelabel->setFntFile("Arial_Bold_Border.fnt");
+        m_timelabel->setFntFile(getNBFont(NB_FONT_Bold_Border));
         m_timelabel->setColor({255,198,0});
         m_timelabel->setAnchorPoint(ccp(0.5,0.5));
         m_timelabel->setPosition(ccp(-130,-100));
@@ -357,28 +357,28 @@ bool SpeBuild::initSpeBuild(int itemId)
         }
     } else if(itemId == SPE_BUILD_SHIP) {
         auto & arrayChildren = m_mainNode->getChildren();
-        if(arrayChildren.size()>0){
-            CCNode* tmpNode = dynamic_cast<CCNode*>(arrayChildren.at(0));//ccb 中的
-            if(tmpNode && tmpNode->getChildByTag(0) && tmpNode->getChildByTag(0)->getChildByTag(1)){
-                m_shipNode = tmpNode->getChildByTag(0)->getChildByTag(1);
-                if(tmpNode->getChildByTag(0)->getChildByTag(3)){
-                    CCSprite *sprite = dynamic_cast<CCSprite*>(tmpNode->getChildByTag(0)->getChildByTag(3));
-                    ccBlendFunc blendFunc;
-                    blendFunc.src = GL_ONE;
-                    blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
-                    sprite->setBlendFunc(blendFunc);
-                }
-                
-                int idx = 0;
-                while (idx< 2 && tmpNode->getChildByTag(0)->getChildByTag(idx+1)) {
-                    CCNode *node = tmpNode->getChildByTag(0)->getChildByTag(idx+1);
-                    CCPoint point = node->getPosition();
-                    CCSize size = node->getContentSize();
-                    m_shipParticalRect[idx] = CCRect(point.x, point.y, size.width, size.height);
-                    ++idx;
-                }
-                
-            }
+        if(arrayChildren.size()>0){//fusheng  根本找不到下面的tag
+//            CCNode* tmpNode = dynamic_cast<CCNode*>(arrayChildren.at(0));//ccb 中的
+//            if(tmpNode && tmpNode->getChildByTag(0) && tmpNode->getChildByTag(0)->getChildByTag(1)){
+//                m_shipNode = tmpNode->getChildByTag(0)->getChildByTag(1);
+//                if(tmpNode->getChildByTag(0)->getChildByTag(3)){
+//                    CCSprite *sprite = dynamic_cast<CCSprite*>(tmpNode->getChildByTag(0)->getChildByTag(3));
+//                    ccBlendFunc blendFunc;
+//                    blendFunc.src = GL_ONE;
+//                    blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+//                    sprite->setBlendFunc(blendFunc);
+//                }
+//                
+//                int idx = 0;
+//                while (idx< 2 && tmpNode->getChildByTag(0)->getChildByTag(idx+1)) {
+//                    CCNode *node = tmpNode->getChildByTag(0)->getChildByTag(idx+1);
+//                    CCPoint point = node->getPosition();
+//                    CCSize size = node->getContentSize();
+//                    m_shipParticalRect[idx] = CCRect(point.x, point.y, size.width, size.height);
+//                    ++idx;
+//                }
+//                
+//            }
         }
         addShipPop(CCString::create("init"));
     }
@@ -719,7 +719,8 @@ void SpeBuild::setNamePos(int x, int y, CCLayer* sginLayer, CCSpriteBatchNode* p
     m_signNode->setPosition(ccp(x,y));
     m_upEffectNode->setPosition(ccp(x+mainWidth/2,y+mainHeight/2));
     m_textNode->setPosition(ccp(x+mainWidth/2,y+mainHeight/2));
-    m_spTextNode->setPosition(m_upEffectNode->getPosition());
+//    m_spTextNode->setPosition(m_upEffectNode->getPosition());
+     m_spTextNode->setPosition(m_upEffectNode->getPosition()-Vec2(100,0));
     sginLayer->addChild(m_signNode);
     sginLayer->addChild(m_upEffectNode);
     sginLayer->addChild(m_spTextNode,10000000);
@@ -749,6 +750,8 @@ void SpeBuild::setNamePos(int x, int y, CCLayer* sginLayer, CCSpriteBatchNode* p
                             for (int i=0; i<arrSpr.size(); i++) {
                                 CCSprite* tmpSpr = dynamic_cast<CCSprite*>(arrSpr.at(i));
                                 if (tmpSpr) {
+                                    if(tmpSpr->getContentSize().width==0&&tmpSpr->getContentSize().height==0)
+                                        continue;//fusheng ccb死了的图  就不向batchNode里加
                                     tmpSpr->removeFromParent();
                                     tmpSpr->getTexture()->setAntiAliasTexParameters();
                                     tmpSpr->setPosition(ccp(tmpSpr->getPositionX()+tmpOffx, tmpSpr->getPositionY()+tmpOffy));
@@ -800,15 +803,18 @@ void SpeBuild::addSpeBuildState()
             return;
         m_upEffectNode->stopAllActions();
         m_upEffectNode->removeAllChildrenWithCleanup(true);
-        CCControlButton* btn = CCControlButton::create(CCLoadSprite::createScale9Sprite("but_03.png"));
-        btn->setPreferredSize(CCSize(128, 133));
+        CCControlButton* btn = CCControlButton::create(CCLoadSprite::createScale9Sprite("bnt_02.png"));
+        
+        btn->setPreferredSize(CCSize(98, 111));
         btn->setAnchorPoint(ccp(0.5, 0));
-        btn->setPosition(0, 0);
+//        btn->setPosition(0, 0);
+        btn->setPosition(-7, 80);//
         btn->addTargetWithActionForControlEvents(this, cccontrol_selector(SpeBuild::onClickRecBtn), CCControlEventTouchUpInside);
         btn->setTouchPriority(4);
         m_upEffectNode->addChild(btn);
         auto pic = CCLoadSprite::createSprite("icon_cargoOk.png");
-        pic->setPosition(ccp(0, 65));
+//        pic->setPosition(ccp(0, 65));
+        pic->setPosition(ccp(-7, 145));
         pic->setAnchorPoint(ccp(0.5, 0.5));
         m_upEffectNode->addChild(pic);
         auto pos = m_upEffectNode->getPosition();
@@ -1166,13 +1172,15 @@ void SpeBuild::onClickThis(float _time)
         
         SoundController::sharedSound()->playEffects(Music_Sfx_city_building);
         if (m_clickNameKey == "monthcard") {
-            PopupViewController::getInstance()->addPopupInView(MonthCardView::create());
+            PopupViewController::getInstance()->addPopupView(MonthCardView::create());
         }else if (m_clickNameKey == "qiandao") {
             PopupViewController::getInstance()->addPopupInView(PortActView::create());
         }else {
             auto layer = dynamic_cast<ImperialScene*>(SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE));
             if (layer) {
-                layer->onShowSpeBtnsView(parentX+mainWidth/2, parentY+120, m_buildingKey);
+#pragma mark buttonPos
+//                layer->onShowSpeBtnsView(parentX+mainWidth/2, parentY+120, m_buildingKey);
+                layer->onShowSpeBtnsView(parentX+mainWidth/2, parentY+30, m_buildingKey);
             }
         }
     }
@@ -1515,7 +1523,7 @@ void SpeBuild::resetShipAnimation(){
 void SpeBuild::addShipParticle(string state){
     if(m_buildingKey != SPE_BUILD_SHIP)
         return;
-    
+    return;//fusheng 不添加粒子特效
     CCParticleBatchNode *newPBatch =NULL;
     if(!m_signLayer->getChildByTag(19999)){
        newPBatch = ParticleController::createParticleBatch();
@@ -1559,13 +1567,7 @@ void SpeBuild::addShipParticle(string state){
         }
         if(newPBatch){
             newPBatch->removeAllChildren();
-//            auto particle = ParticleController::createParticle("Huochuan_1");
-//            particle->setPosition(ccp(parentX+m_shipParticalRect[1].origin.x + m_shipParticalRect[1].size.width*0.55 ,parentY+m_shipParticalRect[1].origin.y +m_shipParticalRect[1].size.height*0.8));
-//            newPBatch->addChild(particle);
-//            
-//            auto particle1 = ParticleController::createParticle("Huochuan_2");
-//            particle1->setPosition(ccp(parentX+m_shipParticalRect[1].origin.x + m_shipParticalRect[1].size.width*0.55 ,parentY+m_shipParticalRect[1].origin.y +m_shipParticalRect[1].size.height*0.2));
-//            newPBatch->addChild(particle1);
+
         }
     }else{
         if(newPBatch){

@@ -51,6 +51,12 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- 
+-- @function [parent=#TMXMapInfo] getStoringCharacters 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- / parent element
 -- @function [parent=#TMXMapInfo] getParentElement 
 -- @param self
@@ -126,6 +132,13 @@
         
 --------------------------------
 -- 
+-- @function [parent=#TMXMapInfo] setParentTID 
+-- @param self
+-- @param #int var
+-- @return TMXMapInfo#TMXMapInfo self (return value: cc.TMXMapInfo)
+        
+--------------------------------
+-- 
 -- @function [parent=#TMXMapInfo] getTileProperties 
 -- @param self
 -- @return map_table#map_table ret (return value: map_table)
@@ -170,6 +183,12 @@
 -- @param self
 -- @param #map_table tileProperties
 -- @return TMXMapInfo#TMXMapInfo self (return value: cc.TMXMapInfo)
+        
+--------------------------------
+-- 
+-- @function [parent=#TMXMapInfo] getParentTID 
+-- @param self
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- 
@@ -226,11 +245,26 @@
 -- @return TMXMapInfo#TMXMapInfo ret (return value: cc.TMXMapInfo)
         
 --------------------------------
+--  creates a TMX Format with a tmx file 
+-- @function [parent=#TMXMapInfo] formatWithTMXFile 
+-- @param self
+-- @param #char tmxFile
+-- @return TMXMapInfo#TMXMapInfo ret (return value: cc.TMXMapInfo)
+        
+--------------------------------
 --  creates a TMX Format with an XML string and a TMX resource path 
 -- @function [parent=#TMXMapInfo] createWithXML 
 -- @param self
 -- @param #string tmxString
 -- @param #string resourcePath
+-- @return TMXMapInfo#TMXMapInfo ret (return value: cc.TMXMapInfo)
+        
+--------------------------------
+--  creates a TMX Format with an XML string and a TMX resource path 
+-- @function [parent=#TMXMapInfo] formatWithXML 
+-- @param self
+-- @param #char tmxString
+-- @param #char resourcePath
 -- @return TMXMapInfo#TMXMapInfo ret (return value: cc.TMXMapInfo)
         
 --------------------------------

@@ -27,6 +27,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../IF/Classes/controller/MailController.cpp \
 ../../IF/Classes/controller/MazeController.cpp \
 ../../IF/Classes/controller/ModController.cpp \
+../../IF/Classes/controller/NBDLCController.cpp \
 ../../IF/Classes/controller/NetController.cpp \
 ../../IF/Classes/controller/ParticleController.cpp \
 ../../IF/Classes/controller/PayController.cpp \
@@ -114,6 +115,12 @@ LOCAL_SRC_FILES := main.cpp \
 ../../IF/Classes/Ext/SpriteBlur.cpp \
 ../../IF/Classes/Ext/SpriteSheetAni.cpp \
 ../../IF/Classes/Ext/Utf8Utils.cpp \
+../../IF/Classes/Lua/api4lua/LuaCCBNode.cpp \
+../../IF/Classes/Lua/api4lua/NBG.cpp \
+../../IF/Classes/Lua/api4lua/NBGNetManager.cpp \
+../../IF/Classes/Lua/auto/lua_nbg_auto.cpp \
+../../IF/Classes/Lua/ccb/NBGCCBReader.cpp \
+../../IF/Classes/Lua/ccb/NBGNode.cpp \
 ../../IF/Classes/model/AchievementInfo.cpp \
 ../../IF/Classes/model/ActivityEventInfo.cpp \
 ../../IF/Classes/model/ActivityEventObj.cpp \
@@ -493,7 +500,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../IF/Classes/scene/battle/MainCityArmy.cpp \
 ../../IF/Classes/scene/cropscene/Animal.cpp \
 ../../IF/Classes/scene/cropscene/BuildCCB.cpp \
-../../IF/Classes/scene/cropscene/EagleCCB.cpp \
+../../IF/Classes/scene/cropscene/Enemy.cpp \
 ../../IF/Classes/scene/cropscene/FlyCell.cpp \
 ../../IF/Classes/scene/cropscene/FunBuild.cpp \
 ../../IF/Classes/scene/cropscene/FunBuildBtnsView.cpp \
@@ -502,6 +509,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../IF/Classes/scene/cropscene/SpeBuild.cpp \
 ../../IF/Classes/scene/cropscene/SpeBuildBtnsView.cpp \
 ../../IF/Classes/scene/cropscene/TalkNoticeCell.cpp \
+../../IF/Classes/scene/cropscene/Walker.cpp \
 ../../IF/Classes/scene/cropscene/WallBuild.cpp \
 ../../IF/Classes/scene/dragon/DragonBuild.cpp \
 ../../IF/Classes/scene/dragon/DragonBuildBtnsView.cpp \
@@ -879,5 +887,6 @@ LOCAL_SRC_FILES := main.cpp \
 ../../IF/Classes/view/Widget/IFSkeletonBatchLayer.cpp \
 ../../IF/Classes/view/Widget/IFSkeletonDataManager.cpp \
 ../../IF/Classes/view/Widget/IFSkeletonNode.cpp \
+../../IF/Classes/Lua/ext/md5/NB_md5.c \
 ../../IF/libs/extensions/HelpShift/HelpshiftCocos2dx.cpp \
 

@@ -8,8 +8,28 @@
 
 #include "CCLabelIFBMFont.h"
 
+const char * getNBFont(NB_FONT f)
+{
+    switch (f)
+    {
+        case NB_FONT_Bold_Border:
+//            return "adobe_heiti_border.fnt";
+            return "Arial_Bold_Border.fnt";
+        case NB_FONT_Bold_Outline:
+//            return "adobe_heiti_outline.fnt";
+            return "Arial_Bold_Regular.fnt";
+        case NB_FONT_Bold:
+//            return "adobe_heiti.fnt";
+            return "Arial_Bold_Regular.fnt";
+        case NB_FONT_Gradient:
+//            return "adobe_heiti_gradient.fnt";
+            return "Arial_Bold_Gradient.fnt";
+    }
+    return "";
+}
+
 static const float _defaultBMFontSize = 30.0;
-#define BMFONT_NAME "Arial_Bold.fnt"
+#define BMFONT_NAME getNBFont(NB_FONT_Bold)
 
 USING_NS_CC;
 
