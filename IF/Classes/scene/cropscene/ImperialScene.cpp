@@ -921,7 +921,7 @@ void ImperialScene::createDockShip()
 {
     NBSprite3D * dockShip = NBSprite3D::create("3d/ship/ship_gem.c3b");
     dockShip->setTexture("3d/ship/ship_gem.jpg");
-    
+    dockShip->setScale(1.2);
     auto dockShipRootNode = CCNode::create();
     dockShipRootNode->addChild(dockShip);
     

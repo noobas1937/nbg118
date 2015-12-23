@@ -414,7 +414,7 @@ bool AllScienceCell::init(int r_type, int itemId, bool isLock)
     
     m_researshLabel->setString(_lang("115165"));
     m_masterLabel->setString("Master");
-    m_masterLabel->setFntFile(getNBFont(NB_FONT_Gradient));
+    m_masterLabel->setFntFile(getNBFont(NB_FONT_Bold_Border));
     m_bOpen  = false;
     
     m_starBar = CCStarBar::createStarBar(info.sumStars);

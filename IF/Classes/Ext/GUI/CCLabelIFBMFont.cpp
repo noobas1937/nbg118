@@ -13,13 +13,13 @@ const char * getNBFont(NB_FONT f)
     switch (f)
     {
         case NB_FONT_Bold_Border:
-            return "Arial_Bold_Border.fnt";
-        case NB_FONT_Bold_Regular:
-            return "Arial_Bold_Regular.fnt";
+            return "adobe_heiti_border.fnt";
+        case NB_FONT_Bold_Outline:
+            return "adobe_heiti_outline.fnt";
         case NB_FONT_Bold:
-            return "Arial_Bold.fnt";
+            return "adobe_heiti.fnt";
         case NB_FONT_Gradient:
-            return "Arial_Gradient.fnt";
+            return "adobe_heiti_gradient.fnt";
     }
     return "";
 }
