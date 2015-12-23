@@ -7,7 +7,7 @@
 	<key>currentResolution</key>
 	<integer>0</integer>
 	<key>currentSequenceId</key>
-	<integer>3</integer>
+	<integer>1</integer>
 	<key>fileType</key>
 	<string>CocosBuilder</string>
 	<key>fileVersion</key>
@@ -3767,7 +3767,7 @@
 								<key>value</key>
 								<array>
 									<real>210.90872192382812</real>
-									<real>67.699996948242188</real>
+									<real>67.736000061035156</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -13545,8 +13545,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>-50</real>
-									<real>255</real>
+									<real>0.0</real>
+									<real>225</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -13620,6 +13620,8 @@
 								</array>
 							</dict>
 						</array>
+						<key>seqExpanded</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>animatedProperties</key>
@@ -14435,8 +14437,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>-50</real>
-									<real>255</real>
+									<real>0.0</real>
+									<real>225</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -14463,8 +14465,8 @@
 								<string>ScaleLock</string>
 								<key>value</key>
 								<array>
-									<real>1</real>
-									<real>1</real>
+									<real>0.75</real>
+									<real>0.75</real>
 									<true/>
 									<integer>0</integer>
 								</array>
@@ -14506,7 +14508,7 @@
 								<key>type</key>
 								<string>Byte</string>
 								<key>value</key>
-								<integer>255</integer>
+								<integer>0</integer>
 							</dict>
 							<dict>
 								<key>name</key>
@@ -17305,8 +17307,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>0.0</real>
-									<real>-290</real>
+									<real>-155.88795471191406</real>
+									<real>-199.60000610351562</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -17521,9 +17523,9 @@
 			<key>name</key>
 			<string>Up</string>
 			<key>offset</key>
-			<real>0.35546875</real>
+			<real>0.0</real>
 			<key>position</key>
-			<real>1</real>
+			<real>0.0</real>
 			<key>resolution</key>
 			<real>30</real>
 			<key>scale</key>
