@@ -360,6 +360,8 @@ void AllianceInviteView::getAllianceMemberData(CCObject* param){
             }else{
                 pic.append("_middle.png");
             }
+            int userLv = member->valueForKey("level")->intValue();
+            
             AllianceInfoMember* infoMember = new AllianceInfoMember();
             infoMember->setRank(rank);
             infoMember->setName(name);
@@ -377,6 +379,7 @@ void AllianceInviteView::getAllianceMemberData(CCObject* param){
             infoMember->setIsTitle(false);
             infoMember->setLang(lang);
             infoMember->setAbbr(abbr);
+            infoMember->setUserLevel(userLv);
             m_data->addObject(infoMember);
             infoMember->release();
         }
@@ -437,6 +440,8 @@ void AllianceInviteView::updateData(CCObject* param){
             }else{
                 pic.append("_middle.png");
             }
+            int userLv = member->valueForKey("level")->intValue();
+            
             AllianceInfoMember* infoMember = new AllianceInfoMember();
             infoMember->setRank(rank);
             infoMember->setName(name);
@@ -454,6 +459,7 @@ void AllianceInviteView::updateData(CCObject* param){
             infoMember->setIsTitle(false);
             infoMember->setLang(lang);
             infoMember->setAbbr(abbr);
+            infoMember->setUserLevel(userLv);
             m_data->addObject(infoMember);
             infoMember->release();
         }
@@ -612,9 +618,10 @@ bool AllianceUserCell::init()
         CCSize size = m_ccbNode->getContentSize();
         setContentSize(size);
         std::string lang = cocos2d::extension::CCDevice::getLanguage();
-        if(lang=="en"){
-            m_powerTxt->setFntFile("pve_fnt_title.fnt");
-        }
+//        if (lang == "en" || lang == "en-US")
+//        {
+//            m_powerTxt->setFntFile("pve_fnt_title.fnt");
+//        }
         m_inviteId = "";
         return true;
     }
@@ -787,13 +794,17 @@ void AllianceUserCell::setData(AllianceInfoMember* member,CCNode* clickArea,int 
     m_ccbNode->setScale(1.0);
     m_headIcon->removeAllChildrenWithCleanup(true);
     CCSprite* spr = CCLoadSprite::createSprite(m_info->getPic().c_str());
-    spr->setScale(0.8);
-    if (CCCommonUtils::isIosAndroidPad()) {
-        spr->setScale(1);
-    }
+    spr->setAnchorPoint({0.5, 0});
+    spr->setScale(.5);
+//    spr->setScale(0.8);
+//    if (CCCommonUtils::isIosAndroidPad()) {
+//        spr->setScale(1);
+//    }
     m_headIcon->addChild(spr);
     m_nameTxt->setString(m_info->getName().c_str());
-    m_powerTxt->setString(_lang("102163").c_str());
+//    m_powerTxt->setString(_lang("102163").c_str());
+    string lv = "LV."; lv.append(CC_ITOA(m_info->getUserLevel()));
+    m_powerTxt->setString(lv);
     m_powerValue->setString(CC_CMDITOAL(m_info->getPower()));
 //    if(m_info->getOnline()){
 //        m_powerValue->setColor({255,235,191});

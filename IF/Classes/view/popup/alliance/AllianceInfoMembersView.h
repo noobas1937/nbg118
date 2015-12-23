@@ -37,6 +37,7 @@ public:
     CC_SYNTHESIZE(bool, m_open, Open);
     CC_SYNTHESIZE(bool, m_online, Online);
     CC_SYNTHESIZE(int, m_mainCityLv, MainCityLv);
+    CC_SYNTHESIZE(int, m_userLevel, UserLevel);
     CC_SYNTHESIZE(bool, m_isManager, IsManager);
     CC_SYNTHESIZE(int, m_appNum, AppNum);
     CC_SYNTHESIZE(string, m_lang, Lang);

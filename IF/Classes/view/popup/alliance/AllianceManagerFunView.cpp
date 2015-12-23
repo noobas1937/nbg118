@@ -79,14 +79,14 @@ bool AllianceManagerFunView::init(){
         
         //fusheng add
         string nb_picName = m_info->getPic();
-        auto arr1 = CCCommonUtils::split(m_info->getPic().c_str(), "_");
-        if (arr1->count() == 2) {
-            CCString* str = dynamic_cast<CCString*>( arr1->getObjectAtIndex(0));
-            
-            if (str) {
-                nb_picName ="common307_" + str->_string + "_bust.png";
-            }
-        }
+//        auto arr1 = CCCommonUtils::split(m_info->getPic().c_str(), "_");
+//        if (arr1->count() == 2) {
+//            CCString* str = dynamic_cast<CCString*>( arr1->getObjectAtIndex(0));
+//            
+//            if (str) {
+//                nb_picName ="common307_" + str->_string + "_bust.png";
+//            }
+//        }
         m_bodyIcon = CCLoadSprite::createSprite(nb_picName.c_str());
         if (m_bodyIcon->getContentSize().width <=2 && m_bodyIcon->getContentSize().height <=2) {
             m_bodyIcon = CCLoadSprite::createSprite(m_info->getPic().c_str());

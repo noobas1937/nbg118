@@ -692,6 +692,8 @@ void AllianceInfoMembersView::onGetAllianceMembers(CCObject* data)
             }else{
                 pic.append("_middle.png");
             }
+            int userLv = member->valueForKey("level")->intValue();
+            
             AllianceInfoMember infoMember;
             infoMember.setRank(rank);
             infoMember.setName(name);
@@ -715,6 +717,7 @@ void AllianceInfoMembersView::onGetAllianceMembers(CCObject* data)
             if(uid==GlobalData::shared()->playerInfo.uid){
                 selfInfo = infoMember;
             }
+            infoMember.setUserLevel(userLv);
             m_datas.push_back(infoMember);
         }
     }
@@ -1492,9 +1495,10 @@ bool AllianceOneMembersCell::init()
         CCSize size = node->getContentSize();
         setContentSize(size);
         std::string lang = cocos2d::extension::CCDevice::getLanguage();
-        if(lang=="en"){
-            m_powerTxt->setFntFile("pve_fnt_title.fnt");
-        }
+//        if (lang == "en" || lang == "en-US")
+//        {
+//            m_powerTxt->setFntFile("pve_fnt_title.fnt");
+//        }
         return true;
     }
     
@@ -1560,10 +1564,13 @@ void AllianceOneMembersCell::setData(AllianceInfoMember* member)
     if(m_info==NULL) return ;
     m_headIcon->removeAllChildrenWithCleanup(true);
     CCSprite* spr = CCLoadSprite::createSprite(m_info->getPic().c_str());
-    spr->setScale(0.8);
+    spr->setAnchorPoint({0.5, 0});
+    spr->setScale(.5);
     m_headIcon->addChild(spr);
     m_nameTxt->setString(m_info->getName().c_str());
-    m_powerTxt->setString(_lang("102163").c_str());
+//    m_powerTxt->setString(_lang("102163").c_str());
+    string lv = "LV."; lv.append(CC_ITOA(m_info->getUserLevel()));
+    m_powerTxt->setString(lv);
     m_powerValue->setString(CC_CMDITOAL(m_info->getPower()));
 //    if(m_info->getOnline()){
 //        m_powerValue->setColor({255,235,191});

@@ -338,6 +338,8 @@ void ChooseUserView::onGetAllianceMembers(CCObject* data){
             }else{
                 pic.append("_middle.png");
             }
+            int userLv = member->valueForKey("level")->intValue();
+            
             AllianceInfoMember infoMember;
             infoMember.setRank(rank);
             infoMember.setName(name);
@@ -355,6 +357,7 @@ void ChooseUserView::onGetAllianceMembers(CCObject* data){
             infoMember.setIsManager(false);
             infoMember.setIsTitle(false);
             infoMember.setPicVer(picVer);
+            infoMember.setUserLevel(userLv);
             
             auto iter = mDatas.find(rank);
             if(iter !=mDatas.end()){
