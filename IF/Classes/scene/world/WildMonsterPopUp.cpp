@@ -9,6 +9,7 @@
 #include "WildMonsterPopUp.h"
 #include "BattleView.h"
 #include "WorldMapView.h"
+#include "NBWorldUtils.hpp"
 
 WildMonsterPopUp *WildMonsterPopUp::create(WorldCityInfo &info){
     WildMonsterPopUp *ret = new WildMonsterPopUp(info);
@@ -55,7 +56,7 @@ bool WildMonsterPopUp::init(){
         
         m_iconNode->removeAllChildren();
         int picAddX = 0;
-        std::string icon = CCCommonUtils::getPropById(m_info.fieldMonsterInfo.monsterId, "monster") + "_bust.png";
+        std::string icon = NBWorldUtils::getMonsterBustImage(m_info.fieldMonsterInfo.monsterId);
         auto sprite  = CCLoadSprite::createSprite(icon.c_str(),true,CCLoadSpriteType_MONSTERLAYERBUST);
         m_iconNode->addChild(sprite);
         

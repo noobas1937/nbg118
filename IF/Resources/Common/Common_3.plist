@@ -33,33 +33,33 @@
             <key>d_icon_1_1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{950,4},{117,117}}</string>
+                <string>{{1432,125},{115,115}}</string>
                 <key>offset</key>
-                <string>{0,0}</string>
+                <string>{-1,1}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{117,117}}</string>
+                <string>{{0,0},{115,115}}</string>
                 <key>sourceSize</key>
                 <string>{117,117}</string>
             </dict>
             <key>d_icon_1_2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{827,127},{117,117}}</string>
+                <string>{{1434,4},{115,115}}</string>
                 <key>offset</key>
-                <string>{0,0}</string>
+                <string>{-1,1}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{117,117}}</string>
+                <string>{{0,0},{115,115}}</string>
                 <key>sourceSize</key>
                 <string>{117,117}</string>
             </dict>
             <key>d_icon_2_1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1434,125},{115,115}}</string>
+                <string>{{1313,4},{115,115}}</string>
                 <key>offset</key>
                 <string>{-1,1}</string>
                 <key>rotated</key>
@@ -72,7 +72,7 @@
             <key>d_icon_2_2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1436,4},{115,115}}</string>
+                <string>{{1311,125},{115,115}}</string>
                 <key>offset</key>
                 <string>{-1,1}</string>
                 <key>rotated</key>
@@ -85,7 +85,7 @@
             <key>d_icon_2_3.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1315,4},{115,115}}</string>
+                <string>{{1192,4},{115,115}}</string>
                 <key>offset</key>
                 <string>{-1,1}</string>
                 <key>rotated</key>
@@ -98,7 +98,7 @@
             <key>d_icon_3_1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1313,125},{115,115}}</string>
+                <string>{{1190,125},{115,115}}</string>
                 <key>offset</key>
                 <string>{-1,1}</string>
                 <key>rotated</key>
@@ -111,7 +111,7 @@
             <key>d_icon_3_2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1194,4},{115,115}}</string>
+                <string>{{1071,4},{115,115}}</string>
                 <key>offset</key>
                 <string>{-1,1}</string>
                 <key>rotated</key>
@@ -124,7 +124,7 @@
             <key>d_icon_3_3.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1192,125},{115,115}}</string>
+                <string>{{1069,125},{115,115}}</string>
                 <key>offset</key>
                 <string>{-1,1}</string>
                 <key>rotated</key>
@@ -137,7 +137,7 @@
             <key>d_icon_4_1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1073,4},{115,115}}</string>
+                <string>{{950,4},{115,115}}</string>
                 <key>offset</key>
                 <string>{-1,1}</string>
                 <key>rotated</key>
@@ -150,7 +150,7 @@
             <key>d_icon_4_2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1071,127},{115,115}}</string>
+                <string>{{948,127},{115,115}}</string>
                 <key>offset</key>
                 <string>{-1,1}</string>
                 <key>rotated</key>
@@ -163,7 +163,7 @@
             <key>d_icon_4_3.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{950,127},{115,115}}</string>
+                <string>{{827,127},{115,115}}</string>
                 <key>offset</key>
                 <string>{-1,1}</string>
                 <key>rotated</key>
@@ -194,7 +194,7 @@
             <key>realTextureFileName</key>
             <string>Common_3.pvr.ccz</string>
             <key>size</key>
-            <string>{1555,256}</string>
+            <string>{1553,256}</string>
             <key>smartupdate</key>
             <string>$TexturePacker:SmartUpdate:--REMOVED----------------------------</string>
             <key>textureFileName</key>

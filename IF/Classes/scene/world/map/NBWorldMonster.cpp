@@ -13,6 +13,7 @@
 #include "CCMathUtils.h"
 #include "ParticleController.h"
 #include "NBWorldNPC.hpp"
+#include "NBWorldUtils.hpp"
 
 #define WORLD_MAP_VIEW WorldMapView::instance()
 #define TILED_MAP WorldMapView::instance()->m_map
@@ -582,20 +583,7 @@ void NBWorldMonster::createMonsterBatchItem(BatchTagType type, unsigned int inde
                 }
             }
             
-            std::string monsterIcon = CCCommonUtils::getPropById(info.fieldMonsterInfo.monsterId, "monster");
-            const char * startFrame = "attack_0.png";
-            const char * frames = "attack_%d.png";
-            int lastFrameIdx = 7;
-            if (monsterIcon == "Kulou")
-            {
-                startFrame = "skeleton_attack_0.png";
-                frames = "skeleton_attack_%d.png";
-                lastFrameIdx = 8;
-            }
-            
-            auto octopus = Sprite::createWithSpriteFrameName(startFrame);
-            auto *ac1 = NBWorldNPC::createAnimation("World/World_5.plist", frames, 0, lastFrameIdx);
-            octopus->runAction(ac1);
+            auto octopus = NBWorldUtils::createSeaMonsterAndAttackAnimation(info.fieldMonsterInfo.monsterId);
         
             octopus->setScaleX(monsterNode->getScaleX());
             octopus->setPosition(monsterNode->getPosition() + Vec2(octopus->getContentSize().width * 0, octopus->getContentSize().height / 4));
@@ -604,20 +592,7 @@ void NBWorldMonster::createMonsterBatchItem(BatchTagType type, unsigned int inde
         }
         else if (type != MonsterDead)
         {
-            std::string monsterIcon = CCCommonUtils::getPropById(info.fieldMonsterInfo.monsterId, "monster");
-            const char * startFrame = "waiting_0.png";
-            const char * frames = "waiting_%d.png";
-            int lastFrameIdx = 11;
-            if (monsterIcon == "Kulou")
-            {
-                startFrame = "skeleton_waiting_0.png";
-                frames = "skeleton_waiting_%d.png";
-                lastFrameIdx = 7;
-            }
-            
-            auto octopus = Sprite::createWithSpriteFrameName(startFrame);
-            auto *ac1 = NBWorldNPC::createAnimation("World/World_5.plist", frames, 0, lastFrameIdx);
-            octopus->runAction(ac1);
+            auto octopus = NBWorldUtils::createSeaMonsterAndWaitingAnimation(info.fieldMonsterInfo.monsterId);
             
             octopus->setScaleX(monsterNode->getScaleX());
             octopus->setPosition(monsterNode->getPosition() + Vec2(octopus->getContentSize().width * 0, octopus->getContentSize().height / 4));
