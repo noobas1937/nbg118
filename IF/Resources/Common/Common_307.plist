@@ -121,6 +121,58 @@
                 <key>sourceSize</key>
                 <string>{94,94}</string>
             </dict>
+            <key>common307_g012_bust.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{326,553},{168,182}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{168,182}}</string>
+                <key>sourceSize</key>
+                <string>{168,182}</string>
+            </dict>
+            <key>common307_g026_bust.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{387,741},{157,184}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{157,184}}</string>
+                <key>sourceSize</key>
+                <string>{157,184}</string>
+            </dict>
+            <key>common307_g041_bust.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{196,804},{187,185}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{187,185}}</string>
+                <key>sourceSize</key>
+                <string>{187,185}</string>
+            </dict>
+            <key>common307_g045_bust.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{174,602},{146,196}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{146,196}}</string>
+                <key>sourceSize</key>
+                <string>{146,196}</string>
+            </dict>
             <key>g007_middle.png</key>
             <dict>
                 <key>frame</key>
@@ -146,19 +198,6 @@
                 <string>{{0,2},{230,188}}</string>
                 <key>sourceSize</key>
                 <string>{250,190}</string>
-            </dict>
-            <key>g012_bust.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{326,553},{168,182}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{168,182}}</string>
-                <key>sourceSize</key>
-                <string>{168,182}</string>
             </dict>
             <key>g012_middle.png</key>
             <dict>
@@ -199,19 +238,6 @@
                 <key>sourceSize</key>
                 <string>{250,190}</string>
             </dict>
-            <key>g026_bust.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{387,741},{157,184}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{157,184}}</string>
-                <key>sourceSize</key>
-                <string>{157,184}</string>
-            </dict>
             <key>g026_middle.png</key>
             <dict>
                 <key>frame</key>
@@ -251,19 +277,6 @@
                 <key>sourceSize</key>
                 <string>{250,190}</string>
             </dict>
-            <key>g041_bust.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{196,804},{187,185}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <true/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{187,185}}</string>
-                <key>sourceSize</key>
-                <string>{187,185}</string>
-            </dict>
             <key>g041_middle.png</key>
             <dict>
                 <key>frame</key>
@@ -289,19 +302,6 @@
                 <string>{{61,20},{176,170}}</string>
                 <key>sourceSize</key>
                 <string>{250,190}</string>
-            </dict>
-            <key>g045_bust.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{174,602},{146,196}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{146,196}}</string>
-                <key>sourceSize</key>
-                <string>{146,196}</string>
             </dict>
             <key>g045_middle.png</key>
             <dict>
@@ -339,7 +339,7 @@
             <key>size</key>
             <string>{1024,1024}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:f2ff15dc6129c874ab9672921f83bd87:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:8fa70c0d8cc37e5490671f932460304f:1/1$</string>
             <key>textureFileName</key>
             <string>Common_307.pvr.ccz</string>
         </dict>
