@@ -20,7 +20,7 @@
 
 static const float FUNCTION_BUTTON_AREA_HEIGHT = 80;
 
-static const CCSize CELL_SIZE(620, 170);
+static const CCSize CELL_SIZE(605, 125);
 static const CCSize CELL_SIZE_HD(1450, 330);
 
 bool AllianceHelpView::onAssignCCBMemberVariable(cocos2d::CCObject *pTarget, const char *pMemberVariableName, cocos2d::CCNode *pNode){
@@ -558,6 +558,7 @@ void AllianceHelpViewCell::bind(AllianceHelp* allianceHelp)
     }
     else
         CCCommonUtils::setSpriteMaxSize(portrait, 95);
+    portrait->setAnchorPoint({0.5, 0});
     m_picNode->addChild(portrait);
     if (CCCommonUtils::isUseCustomPic(allianceHelp->getPicVer())) {
         if (CCCommonUtils::isIosAndroidPad()) {

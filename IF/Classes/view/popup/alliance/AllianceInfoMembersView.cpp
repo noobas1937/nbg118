@@ -898,6 +898,8 @@ void AllianceInfoMembersView::onGetAppAllianceMembers(CCObject* data){
                 pic.append("_middle.png");
             }
             int pointId = member->valueForKey("pointId")->intValue();
+            int userLv = member->valueForKey("level")->intValue();
+            
             AllianceInfoMember infoMember;
             infoMember.setRank(0);
             infoMember.setName(name);
@@ -911,6 +913,7 @@ void AllianceInfoMembersView::onGetAppAllianceMembers(CCObject* data){
             infoMember.setApplyMessage(applyMessage);
             infoMember.setIsManager(true);
             infoMember.setIsTitle(false);
+            infoMember.setUserLevel(userLv);
             m_appDatas.push_back(infoMember);
         }
     }
