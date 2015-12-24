@@ -118,6 +118,15 @@ private:
     void onHelpClick(CCObject *pSender, CCControlEvent event);
     void onApply(CCObject *pSender, CCControlEvent event);
     void openJoinAlliance(CCObject *pSender, CCControlEvent event);
+    
+    void onClickMailBtn(CCObject *pSender, CCControlEvent event);
+    void onClickInviteBtn(CCObject *pSender, CCControlEvent event);
+    void onClickExitBtn(CCObject *pSender, CCControlEvent event);
+    
+    void dismissAlliance();
+    void onDismissAlliance(CCObject* obj);
+    void secondConfirm();
+    
     void addParticleToBatch(cocos2d::CCParticleSystemQuad *particle);
     
     void exitAlliance();
@@ -311,6 +320,8 @@ private:
 //    CCSafeObject<CCNode> m_onLineBg;
     AllianceInfoMember* m_info;
     CCPoint m_touchPos;
+    
+    CCSafeObject<CCNode> m_nodeHide[2];
     
     int m_clickType;//0 默认； 1 点击cell时发送迁城邀请
 };

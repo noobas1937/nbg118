@@ -34,6 +34,8 @@
 #include "MailController.h"
 #include "AllianceIntroTip.h"
 #include "ChatServiceCocos2dx.h"
+#include "AllianceInviteView.h"
+#include "AllianceTerritoryShowCommand.h"
 
 #define ALLIANCE_RANK_TITLE_CLICK "alliance_rank_title_click"
 
@@ -71,6 +73,11 @@ SEL_CCControlHandler AllianceInfoMembersView::onResolveCCBCCControlSelector(coco
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onHelpClick", AllianceInfoMembersView::onHelpClick);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onApply", AllianceInfoMembersView::onApply);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "openJoinAlliance", AllianceInfoMembersView::openJoinAlliance);
+    
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onClickMailBtn", AllianceInfoMembersView::onClickMailBtn);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onClickInviteBtn", AllianceInfoMembersView::onClickInviteBtn);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onClickExitBtn", AllianceInfoMembersView::onClickExitBtn);
+    
     return NULL;
 }
 
@@ -398,6 +405,64 @@ void AllianceInfoMembersView::onHelpClick(CCObject *pSender, CCControlEvent even
         this->resetPosition();
         m_helpBtn->removeChildByTag(999);
     }
+}
+
+void AllianceInfoMembersView::onClickMailBtn(CCObject *pSender, CCControlEvent event)
+{
+    SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
+    MailController::getInstance()->openMailDialogViewFirst(_lang("105564"), GlobalData::shared()->playerInfo.uid);
+}
+
+void AllianceInfoMembersView::onClickInviteBtn(CCObject *pSender, CCControlEvent event)
+{
+    SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
+    PopupViewController::getInstance()->addPopupInView(AllianceInviteView::create());
+}
+
+void AllianceInfoMembersView::onClickExitBtn(CCObject *pSender, CCControlEvent event)
+{
+    if (GlobalData::shared()->isCrossService)
+    {
+        YesNoDialog::show(_lang("138064").c_str(), NULL);
+        return ;
+    }
+    if (GlobalData::shared()->playerInfo.allianceInfo.rank == 5 && GlobalData::shared()->playerInfo.allianceInfo.currentNum > 1)
+    {
+        CCCommonUtils::flyHint("", "", _lang("115249"));
+    }
+    else if (GlobalData::shared()->playerInfo.allianceInfo.currentNum <= 1 && GlobalData::shared()->playerInfo.allianceInfo.rank == 5)
+    {
+        YesNoDialog::showVariableTitle(_lang("115040").c_str(),CCCallFunc::create(this, callfunc_selector(AllianceInfoMembersView::dismissAlliance)),_lang("confirm").c_str());
+    }else {
+        YesNoDialog::showVariableTitle(_lang("115042").c_str(),CCCallFunc::create(this, callfunc_selector(AllianceInfoMembersView::secondConfirm)),_lang("confirm").c_str());
+    }
+}
+
+void AllianceInfoMembersView::dismissAlliance()
+{
+    DismissAllianceCommand * command = new DismissAllianceCommand();
+    command->setCallback(CCCallFuncO::create(this, callfuncO_selector(AllianceInfoMembersView::onDismissAlliance), NULL));
+    command->sendAndRelease();
+}
+
+void AllianceInfoMembersView::onDismissAlliance(CCObject* obj)
+{
+    UIComponent::getInstance()->changeChatChannel(CHAT_COUNTRY);
+    PopupViewController::getInstance()->removeAllPopupView();
+    ChatController::getInstance()->m_chatAlliancePool.clear();
+    ChatController::getInstance()->m_latestAllianceMsg.sequenceId=0;
+#if(CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
+    ChatServiceCocos2dx::resetPlayerIsInAlliance();
+#elif(CC_TARGET_PLATFORM==CC_PLATFORM_IOS)
+    ChatServiceCocos2dx::resetPlayerIsInAlliance();
+#endif
+    CCUserDefault::sharedUserDefault()->setStringForKey(ALLIANCE_MEMBER_BTN_STATUS, "");
+}
+
+void AllianceInfoMembersView::secondConfirm()
+{
+    AllianceTerritoryCheckIfStorageCommand* cmd = new AllianceTerritoryCheckIfStorageCommand(GlobalData::shared()->playerInfo.uid);
+    cmd->sendAndRelease();
 }
 
 void AllianceInfoMembersView::addParticleToBatch(cocos2d::CCParticleSystemQuad *particle){
@@ -1281,6 +1346,7 @@ bool AllianceInfoMembersCell::init()
     
     if (CCTableViewCell::init()) {
         CCNode* node = CCBLoadFile("AllianceInfoMembersCell", this, this);
+        m_rankSpr->setVisible(false);
         CCSize size = node->getContentSize();
         setContentSize(size);
         CCCommonUtils::setButtonTitle(m_btn1, _lang("115031").c_str());
@@ -1412,6 +1478,7 @@ void AllianceInfoMembersCell::bind(AllianceInfoMember* oneInfo,AllianceInfoMembe
     m_rankNode->setVisible(false);
     m_infoNode->setVisible(false);
     m_btnNode->setVisible(false);
+    m_rankSpr->setVisible(false);
     if (m_oneInfo == NULL && m_twoInfo==NULL) {
         return ;
     }
@@ -1434,60 +1501,63 @@ void AllianceInfoMembersCell::bind(AllianceInfoMember* oneInfo,AllianceInfoMembe
         CCSprite* spr = NULL;
         if(m_oneInfo->getRank()==5){
            spr = CCLoadSprite::createSprite(CCString::createWithFormat("icon_Alliance_0%d.png",m_oneInfo->getRank())->getCString());
-           spr->setScale(0.5);
+//           spr->setScale(0.5);
         }else if(m_oneInfo->getRank()==0){
             std::string str = m_oneInfo->getAllianceTitle();
 //            str.append("(");
 //            str.append(CC_ITOA(m_oneInfo->getAppNum()));
 //            str.append(")");
             m_titleTxt->setString(str.c_str());
-            spr = CCLoadSprite::createSprite(CCString::createWithFormat("newAlliance_icon.png")->getCString());
-            spr->setScale(0.6);
-        }else{
-           spr = CCLoadSprite::createSprite(CCString::createWithFormat("Alliance_R%d.png",m_oneInfo->getRank())->getCString());
+            spr = CCLoadSprite::createSprite(CCString::createWithFormat("nb_0032.png")->getCString());
         }
-        m_rankIcon->addChild(spr);
+        else
+        {
+            m_rankSpr->setVisible(true);
+            spr = CCLoadSprite::createSprite(CCString::createWithFormat("nb_al_R_n%d.png",m_oneInfo->getRank())->getCString());
+            spr->setPositionX(6);
+        }
+        if (spr) m_rankIcon->addChild(spr);
     }else if(m_oneInfo->getRank()==5){
         m_rankNode->setVisible(false);
         m_infoNode->setVisible(true);
-        CCScale9Sprite* spr = CCLoadSprite::createScale9Sprite("Alliance_r5_frame.png");//
+        CCScale9Sprite* spr = CCLoadSprite::createScale9Sprite("nb_al_members_bg.png");//
         spr->setAnchorPoint(ccp(0, 0));
-        spr->setPosition(CCPoint(0,-12));
-        spr->setContentSize(CCSize(640,250));
+        spr->setPosition(CCPoint(0 + 10, -5));
+        spr->setContentSize(CCSize(640 - 20, 235));
         m_infoNode->addChild(spr);
         AllianceOneMembersCell* oneCell = AllianceOneMembersCell::create(m_clickType);
-        oneCell->setScale(1.15);
-        oneCell->setPosition(ccp(130,-5));
+//        oneCell->setScale(1.15);
+        oneCell->setPosition(ccp(130, 0));
         if (CCCommonUtils::isIosAndroidPad()) {
-            spr->setPreferredSize(CCSize(1536, 430));
-            spr->setPosition(0, -25);
-            oneCell->setScale(1.1);
+            spr->setPreferredSize(CCSize(1536 - 20, 430 - 10));
+            spr->setPosition(0 + 10, -25 + 5);
+//            oneCell->setScale(1.1);
             oneCell->setPosition(ccp(371, 0));
         }
         oneCell->setData(m_oneInfo);
         m_infoNode->addChild(oneCell);
-        CCParticleBatchNode *batch = ParticleController::createParticleBatch();
-        batch->setPosition(ccp(130+260,100));
-        if (CCCommonUtils::isIosAndroidPad())
-        {
-            batch->setScale(2);
-            batch->setPosition(ccp(931, 153));
-        }
-        m_infoNode->addChild(batch);
-        string tmpStart = "ScienceGlow_";
-        int count = 4;
-        for (int i=2; i<count; i++) {
-            auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString());
-            batch->addChild(particle);
-        }
+//        CCParticleBatchNode *batch = ParticleController::createParticleBatch();
+//        batch->setPosition(ccp(130+260,100));
+//        if (CCCommonUtils::isIosAndroidPad())
+//        {
+//            batch->setScale(2);
+//            batch->setPosition(ccp(931, 153));
+//        }
+//        m_infoNode->addChild(batch);
+//        string tmpStart = "ScienceGlow_";
+//        int count = 4;
+//        for (int i=2; i<count; i++) {
+//            auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString());
+//            batch->addChild(particle);
+//        }
         
     }else{
         m_rankNode->setVisible(false);
         m_infoNode->setVisible(true);
-        CCScale9Sprite* spr = CCLoadSprite::createScale9Sprite("Alliance_r1234_frame.png");
+        CCScale9Sprite* spr = CCLoadSprite::createScale9Sprite("nb_al_members_bg.png");
         spr->setAnchorPoint(ccp(0, 0));
-        spr->setPosition(CCPoint(0,-10));
-        spr->setContentSize(CCSize(640,250));
+        spr->setPosition(CCPoint(0 + 10, -5));
+        spr->setContentSize(CCSize(640 - 20, 235));
         if (CCCommonUtils::isIosAndroidPad()) {
             spr->setPosition(CCPoint(0, -25));
             spr->setPreferredSize(CCSize(1536, 430));
@@ -1528,6 +1598,7 @@ bool AllianceInfoMembersCell::onAssignCCBMemberVariable(cocos2d::CCObject *pTarg
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_btn2", CCControlButton*, this->m_btn2);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_btn4", CCControlButton*, this->m_btn4);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_numTxt", CCLabelIF*, this->m_numTxt);
+    
     return false;
 }
 //
@@ -1539,6 +1610,9 @@ bool AllianceOneMembersCell::init()
         CCNode* node = CCBLoadFile("NewAllianceMemberCell", this, this);
         CCSize size = node->getContentSize();
         setContentSize(size);
+        
+        m_nodeHide[0]->setVisible(false);
+        
         std::string lang = cocos2d::extension::CCDevice::getLanguage();
 //        if (lang == "en" || lang == "en-US")
 //        {
@@ -1696,6 +1770,10 @@ bool AllianceOneMembersCell::onAssignCCBMemberVariable(cocos2d::CCObject *pTarge
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_clickNode1", CCNode*, this->m_clickNode1);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_clickNode2", CCNode*, this->m_clickNode2);
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_onLineBg", CCNode*, this->m_onLineBg);
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nodeHide1", CCNode*, this->m_nodeHide[0]);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nodeHide2", CCNode*, this->m_nodeHide[1]);
+    
     return false;
 }
 

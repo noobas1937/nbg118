@@ -1609,8 +1609,6 @@
 												<string>OnLine</string>
 											</dict>
 										</array>
-										<key>selected</key>
-										<true/>
 									</dict>
 									<dict>
 										<key>baseClass</key>
@@ -1918,8 +1916,8 @@
 												<string>ScaleLock</string>
 												<key>value</key>
 												<array>
-													<real>1</real>
-													<real>1</real>
+													<real>0.5</real>
+													<real>0.5</real>
 													<true/>
 													<integer>0</integer>
 												</array>
@@ -1940,7 +1938,7 @@
 												<key>value</key>
 												<array>
 													<string>Common/Common_307.plist</string>
-													<string>common307_g012_bust.png</string>
+													<string>g007_middle.png</string>
 												</array>
 											</dict>
 											<dict>
@@ -1955,6 +1953,8 @@
 												</array>
 											</dict>
 										</array>
+										<key>selected</key>
+										<true/>
 									</dict>
 								</array>
 								<key>customClass</key>
