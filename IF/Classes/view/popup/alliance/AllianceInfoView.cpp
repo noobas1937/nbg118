@@ -67,7 +67,9 @@ bool AllianceInfoView::init()
     m_waitInterface = NULL;
     CCLoadSprite::doResourceByCommonIndex(205, true);
     CCLoadSprite::doResourceByCommonIndex(7, true);
-    setCleanFunction([](){
+    setCleanFunction([this](){
+        if (false == m_bReleaseTextureAfterRemove) return;
+        
         CCLoadSprite::doResourceByCommonIndex(205, false);
         CCLoadSprite::doResourceByCommonIndex(7, false);
     });
@@ -456,12 +458,14 @@ void AllianceInfoView::onEnter()
     setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
     setTouchEnabled(true);
     //CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, Touch_Popup, false);
-    CCLoadSprite::doResourceByCommonIndex(7, true);
-    CCLoadSprite::doResourceByCommonIndex(205, true);
-    setCleanFunction([](){
-        CCLoadSprite::doResourceByCommonIndex(7, false);
-        CCLoadSprite::doResourceByCommonIndex(205, false);
-    });
+//    CCLoadSprite::doResourceByCommonIndex(7, true);
+//    CCLoadSprite::doResourceByCommonIndex(205, true);
+//    setCleanFunction([this](){
+//        if (false == m_bReleaseTextureAfterRemove) return;
+//        
+//        CCLoadSprite::doResourceByCommonIndex(7, false);
+//        CCLoadSprite::doResourceByCommonIndex(205, false);
+//    });
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(AllianceInfoView::changeAllicaneIcon), MSG_CHANGE_ALLIANCE_ICON, NULL);
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(AllianceInfoView::updateAnnounce), MSG_CHANGE_ALLIANCE_ANNOUNCE, NULL);
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(AllianceInfoView::updateAllianceEvent), MSG_ADD_ALLIANCE_EVENT, NULL);
@@ -588,11 +592,13 @@ void AllianceInfoView::changeAllicaneIcon(CCObject* param){
     CCLoadSprite::doResourceByCommonIndex(205, true);
     CCLoadSprite::doResourceByCommonIndex(7, true);
 
-    setCleanFunction([](){
-        CCLoadSprite::doResourceByCommonIndex(205, false);
-        CCLoadSprite::doResourceByCommonIndex(7, false);
-
-    });
+//    setCleanFunction([this](){
+//        if (false == m_bReleaseTextureAfterRemove) return;
+//        
+//        CCLoadSprite::doResourceByCommonIndex(205, false);
+//        CCLoadSprite::doResourceByCommonIndex(7, false);
+//
+//    });
     m_allianceIcon->removeAllChildrenWithCleanup(true);
     AllianceFlagPar* spr = AllianceFlagPar::create(m_info->getAllianceIcon().c_str());
     m_allianceIcon->addChild(spr);
@@ -891,12 +897,12 @@ bool AllianceFunCell::init(){
 
 void AllianceFunCell::onEnter(){
     CCNode::onEnter();
-    CCLoadSprite::doResourceByCommonIndex(7, true);
-    CCLoadSprite::doResourceByCommonIndex(205, true);
-    setCleanFunction([](){
-        CCLoadSprite::doResourceByCommonIndex(7, false);
-        CCLoadSprite::doResourceByCommonIndex(205, false);
-    });
+//    CCLoadSprite::doResourceByCommonIndex(7, true);
+//    CCLoadSprite::doResourceByCommonIndex(205, true);
+//    setCleanFunction([](){
+//        CCLoadSprite::doResourceByCommonIndex(7, false);
+//        CCLoadSprite::doResourceByCommonIndex(205, false);
+//    });
     setSwallowsTouches(false);
     setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
     setTouchEnabled(true);
@@ -1464,20 +1470,16 @@ void AllianceBottomNode::onExit()
             if(m_PageTag == AlliancePageTag::ALLIANCE_BTN)
                 return ;
             
+            auto popup = dynamic_cast<PopupBaseView*>(PopupViewController::getInstance()->getCurrentPopupView());
+            if (popup)
+            {
+                popup->setReleaseTextureAfterRemove(false);
+            }
+            
             //fusheng 是否移除上一个界面
             PopupViewController::getInstance()->removeLastPopupView();
             SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
-            
-            auto node = Node::create();
-            UIComponent::getInstance()->addChild(node);
-            auto delay = DelayTime::create(1.0 / 60.0);
-            auto cb = CallFunc::create([node]{
-                node->removeFromParent();
-                auto popup = AllianceInfoView::create(&GlobalData::shared()->playerInfo.allianceInfo);
-                PopupViewController::getInstance()->addPopupInView(popup);
-            });
-            auto se = Sequence::create(delay, cb, NULL);
-            node->runAction(se);
+            PopupViewController::getInstance()->addPopupInView(AllianceInfoView::create(&GlobalData::shared()->playerInfo.allianceInfo));
             
             return;
         }
@@ -1493,20 +1495,17 @@ void AllianceBottomNode::onExit()
             if(m_PageTag == AlliancePageTag::MEMBER_BTN)
                 return ;
             
+            auto popup = dynamic_cast<PopupBaseView*>(PopupViewController::getInstance()->getCurrentPopupView());
+            if (popup)
+            {
+                popup->setReleaseTextureAfterRemove(false);
+            }
+            
             //fusheng 是否移除上一个界面
             PopupViewController::getInstance()->removeLastPopupView();
-            
             SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
+            PopupViewController::getInstance()->addPopupInView(AllianceInfoMembersView::create(GlobalData::shared()->playerInfo.allianceInfo.uid));
             
-            auto node = Node::create();
-            UIComponent::getInstance()->addChild(node);
-            auto delay = DelayTime::create(1.0 / 60.0);
-            auto cb = CallFunc::create([node]{
-                node->removeFromParent();
-                PopupViewController::getInstance()->addPopupInView(AllianceInfoMembersView::create(GlobalData::shared()->playerInfo.allianceInfo.uid));
-            });
-            auto se = Sequence::create(delay, cb, NULL);
-            node->runAction(se);
             return ;
         }
 

@@ -544,7 +544,9 @@ bool AllianceInfoMembersView::init(){
         
         CCLoadSprite::doResourceByCommonIndex(7, true);
         CCLoadSprite::doResourceByCommonIndex(307, true);
-        setCleanFunction([](){
+        setCleanFunction([this](){
+            if (false == m_bReleaseTextureAfterRemove) return;
+            
             CCLoadSprite::doResourceByCommonIndex(307, false);
             CCLoadSprite::doResourceByCommonIndex(7, false);
             

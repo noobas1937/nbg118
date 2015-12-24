@@ -61,6 +61,9 @@ public:
     
     bool getIsHDPanel() {return m_isHDPanel;}
     void setHDPanelFlag(bool flag);
+    
+    CC_SYNTHESIZE(bool, m_bReleaseTextureAfterRemove, ReleaseTextureAfterRemove);
+    
 protected:
     bool m_useAnimation;
     bool m_bcloseAnim;
