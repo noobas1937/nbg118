@@ -56,6 +56,14 @@ bool AllianceInfoMembersView::onAssignCCBMemberVariable(cocos2d::CCObject *pTarg
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_btnJoin", CCControlButton*, this->m_btnJoin);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_introNode", CCNode*, this->m_introNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titleTxt", CCLabelIF*, this->m_titleTxt);
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_postest", CCNode*, this->m_postest);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titleFlag", CCSprite*, this->m_titleFlag);
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_powertxt", CCLabelIF*, this->m_powertxt);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_lvtxt", CCLabelIF*, this->m_lvtxt);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nametxt", CCLabelIF*, this->m_nametxt);
+    
     return true;
 }
 
@@ -460,12 +468,22 @@ bool AllianceInfoMembersView::init(){
     if(PopupBaseView::init())
     {
         setIsHDPanel(true);
+        
+        CCLoadSprite::doResourceByGeneralIndex(1, true);
+        CCLoadSprite::doResourceByGeneralIndex(2, true);
+        CCLoadSprite::doResourceByGeneralIndex(3, true);
+        
         CCLoadSprite::doResourceByCommonIndex(7, true);
         CCLoadSprite::doResourceByCommonIndex(307, true);
         setCleanFunction([](){
             CCLoadSprite::doResourceByCommonIndex(307, false);
             CCLoadSprite::doResourceByCommonIndex(7, false);
+            
+            CCLoadSprite::doResourceByGeneralIndex(1, false);
+            CCLoadSprite::doResourceByGeneralIndex(2, false);
+            CCLoadSprite::doResourceByGeneralIndex(3, false);
         });
+        
         auto tbg = CCLoadSprite::loadResource("technology_09.png");
         auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
         int maxHight = CCDirector::sharedDirector()->getWinSize().height;
@@ -491,6 +509,11 @@ bool AllianceInfoMembersView::init(){
         int dh = m_background->getContentSize().height - preHeight;
         m_background->setVisible(false);
 
+        m_lvtxt->setString("0");
+        m_powertxt->setString("0");
+        m_nametxt->setString("");
+        m_postest->removeAllChildren();
+        
         m_showData = CCArray::create();
         dh += 90;
         if (CCCommonUtils::isIosAndroidPad()) {
@@ -718,6 +741,28 @@ void AllianceInfoMembersView::onGetAllianceMembers(CCObject* data)
                 selfInfo = infoMember;
             }
             infoMember.setUserLevel(userLv);
+            if (i == 0)
+            {
+                m_titleFlag->setVisible(infoMember.getRank()>1);
+                if (infoMember.getRank() > 1)
+                {
+                    m_titleFlag->initWithSpriteFrame(CCLoadSprite::loadResource(CCString::createWithFormat("icon_Alliance_0%d.png",infoMember.getRank())->getCString()));
+                }
+                
+                string lv = "LV."; lv.append(CC_ITOA(infoMember.getUserLevel()));
+                m_lvtxt->setString(lv);
+                m_powertxt->setString(CC_CMDITOAL(infoMember.getPower()));
+                
+                m_nametxt->setString(infoMember.getName());
+                
+                string t = infoMember.getHead() + "_bust.png";
+//                m_postest->initWithSpriteFrame(CCLoadSprite::loadResource(t.c_str()));
+                auto s = CCLoadSprite::createSprite(t.c_str());
+                s->setAnchorPoint({0.5, 1});
+                m_postest->removeAllChildren();
+                m_postest->addChild(s);
+            }
+
             m_datas.push_back(infoMember);
         }
     }

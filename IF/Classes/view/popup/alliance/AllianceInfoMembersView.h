@@ -159,6 +159,13 @@ private:
     CCSafeObject<CCScrollView> m_scrollView;
     CCSafeObject<CCArray> m_cell;
     
+    CCSafeObject<CCNode> m_postest;
+    CCSafeObject<CCSprite> m_titleFlag;
+    
+    CCSafeObject<CCLabelIF> m_powertxt;
+    CCSafeObject<CCLabelIF> m_lvtxt;
+    CCSafeObject<CCLabelIF> m_nametxt;
+    
     InfoMembers m_datas;
     InfoMembers m_appDatas;
     InfoMembers m_titles;
