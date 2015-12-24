@@ -134,6 +134,11 @@ bool AllianceInfoView::init()
     m_memberTxt->setString(_lang("115266"));
     m_managerTxt->setString(_lang("115258"));
     
+    
+    auto abn = AllianceBottomNode::create(m_info, AlliancePageTag::ALLIANCE_BTN);
+    
+    m_nb_allianceBottomNode->addChild(abn);
+    
     m_data = CCArray::create();
     m_srcData = CCArray::create();
     m_dataCells = CCArray::create();
@@ -376,10 +381,13 @@ void AllianceInfoView::initFun(){
     m_powerTxt->setString(CC_CMDITOAL(m_info->totalForce).c_str());
 
     // tao.yu 第一版不开放联盟领地和联盟科技
-    const char* titles3[6] = {"115190","115301","115159","115206","115077","115929"};
-    const char* icons3[6] = {"allianceWar.png","AllianceTerritory.png","allianceScience.png","allianceShop.png","allianceHelp.png","icon_comment.png"};
+    const int nbUseIndex[4] = {1,4,5,6};
+    const char* titles3[7] = {"115190","115301","115159","115206","115077","115929","115258"};
+    const char* icons3[7] = {"allianceWar.png","AllianceTerritory.png","allianceScience.png","allianceShop.png","allianceHelp.png","icon_comment.png","icon_alliance_manger.png"};
 
-    int num =6;
+//    int num =6;
+    int num = 4;
+    
     int totalH = 85* num+30 + 85 +140;
     if(CCCommonUtils::isIosAndroidPad())
     {
@@ -401,9 +409,9 @@ void AllianceInfoView::initFun(){
         m_scrollView->addChild(eventCell);
     }
     for (int i=0; i<num; i++) {
-        const char*  title = titles3[i];
-        const char*  iconStr = icons3[i];
-        AllianceFunCell* cell = AllianceFunCell::create(_lang(title), m_info,iconStr,m_funList,i+1);
+        const char*  title = titles3[nbUseIndex[i]];
+        const char*  iconStr = icons3[nbUseIndex[i]];
+        AllianceFunCell* cell = AllianceFunCell::create(_lang(title), m_info,iconStr,m_funList,nbUseIndex[i]+1);
         if(CCCommonUtils::isIosAndroidPad())
             cell->setPosition(ccp(5, totalH-(i+1)*85*2. - 84*2.));
         else
@@ -600,6 +608,8 @@ bool AllianceInfoView::onTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *
 //        return true;
 //    }
     return true;
+    
+//    return false;
 }
 
 void AllianceInfoView::onTouchMoved(CCTouch *pTouch, CCEvent *pEvent){
@@ -809,6 +819,9 @@ SEL_CCControlHandler AllianceInfoView::onResolveCCBCCControlSelector(cocos2d::CC
 
 bool AllianceInfoView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode)
 {
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nb_allianceBottomNode", CCNode*, this->m_nb_allianceBottomNode);
+    
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_viewBg", CCScale9Sprite*, this->m_viewBg);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_leaderTxt", CCLabelIFTTF*, this->m_leaderTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_powerTxt", CCLabelIF*, this->m_powerTxt);
@@ -1005,6 +1018,9 @@ void AllianceFunCell::clickHandle(CCObject *pSender, CCControlEvent event){
         case 6:
             PopupViewController::getInstance()->addPopupInView(ChatView::create(CHAT_COMMENT,m_info->uid),false);
             break;
+        case 7:
+            PopupViewController::getInstance()->addPopupInView(AllianceFunView::create());
+            break;
     }
 }
 
@@ -1078,20 +1094,20 @@ void AllianceEventCell::setData(AllianceEventInfo* info,AllianceEventInfo* lastI
         typeIcon->setPositionY(-8);
     }
     if(m_info->type==0||m_info->type==1){
-        m_arrow->initWithSpriteFrame(CCLoadSprite::loadResource("Alliance_info_Red_02.png"));
-        m_cellBg->initWithSpriteFrame(CCLoadSprite::loadResource("Alliance_info_Red.png"));
-        //m_timeTxt->setColor({161,90,87});
-        m_contentTxt->setColor({122,60,57});
+//        m_arrow->initWithSpriteFrame(CCLoadSprite::loadResource("Alliance_info_Red_02.png"));
+//        m_cellBg->initWithSpriteFrame(CCLoadSprite::loadResource("Alliance_info_Red.png"));
+//        //m_timeTxt->setColor({161,90,87});
+//        m_contentTxt->setColor({122,60,57});
     }else if(m_info->type==2){
-        m_arrow->initWithSpriteFrame(CCLoadSprite::loadResource("Alliance_info_blue_01.png"));
-        m_cellBg->initWithSpriteFrame(CCLoadSprite::loadResource("Alliance_info_blue.png"));
-        //m_timeTxt->setColor({80,143,159});
-        m_contentTxt->setColor({29,101,131});
+//        m_arrow->initWithSpriteFrame(CCLoadSprite::loadResource("Alliance_info_blue_01.png"));
+//        m_cellBg->initWithSpriteFrame(CCLoadSprite::loadResource("Alliance_info_blue.png"));
+//        //m_timeTxt->setColor({80,143,159});
+//        m_contentTxt->setColor({29,101,131});
     }else{
-        m_arrow->initWithSpriteFrame(CCLoadSprite::loadResource("Alliance_info_green_01.png"));
-        m_cellBg->initWithSpriteFrame(CCLoadSprite::loadResource("Alliance_info_green.png"));
-        m_timeTxt->setColor({141,166,80});
-        m_contentTxt->setColor({90,119,57});
+//        m_arrow->initWithSpriteFrame(CCLoadSprite::loadResource("Alliance_info_green_01.png"));
+//        m_cellBg->initWithSpriteFrame(CCLoadSprite::loadResource("Alliance_info_green.png"));
+//        m_timeTxt->setColor({141,166,80});
+//        m_contentTxt->setColor({90,119,57});
     }
     m_timeTxt->setColor({143,143,143});
     m_node2->setVisible(true);
@@ -1171,20 +1187,20 @@ void AllianceEventCell::showCell(AllianceEventInfo* info){
     m_icon->addChild(typeIcon);
     
     if(m_info->type==0||m_info->type==1){
-        m_arrow->initWithSpriteFrame(CCLoadSprite::loadResource("Alliance_info_Red_02.png"));
-        m_cellBg->initWithSpriteFrame(CCLoadSprite::loadResource("Alliance_info_Red.png"));
-        //m_timeTxt->setColor({161,90,87});
-        m_contentTxt->setColor({122,60,57});
+//        m_arrow->initWithSpriteFrame(CCLoadSprite::loadResource("Alliance_info_Red_02.png"));
+//        m_cellBg->initWithSpriteFrame(CCLoadSprite::loadResource("Alliance_info_Red.png"));
+//        //m_timeTxt->setColor({161,90,87});
+//        m_contentTxt->setColor({122,60,57});
     }else if(m_info->type==2){
-        m_arrow->initWithSpriteFrame(CCLoadSprite::loadResource("Alliance_info_blue_01.png"));
-        m_cellBg->initWithSpriteFrame(CCLoadSprite::loadResource("Alliance_info_blue.png"));
-        //m_timeTxt->setColor({80,143,159});
-        m_contentTxt->setColor({29,101,131});
+//        m_arrow->initWithSpriteFrame(CCLoadSprite::loadResource("Alliance_info_blue_01.png"));
+//        m_cellBg->initWithSpriteFrame(CCLoadSprite::loadResource("Alliance_info_blue.png"));
+//        //m_timeTxt->setColor({80,143,159});
+//        m_contentTxt->setColor({29,101,131});
     }else{
-        m_arrow->initWithSpriteFrame(CCLoadSprite::loadResource("Alliance_info_green_01.png"));
-        m_cellBg->initWithSpriteFrame(CCLoadSprite::loadResource("Alliance_info_green.png"));
-        m_timeTxt->setColor({141,166,80});
-        m_contentTxt->setColor({90,119,57});
+//        m_arrow->initWithSpriteFrame(CCLoadSprite::loadResource("Alliance_info_green_01.png"));
+//        m_cellBg->initWithSpriteFrame(CCLoadSprite::loadResource("Alliance_info_green.png"));
+//        m_timeTxt->setColor({141,166,80});
+//        m_contentTxt->setColor({90,119,57});
     }
     m_timeTxt->setColor({143,143,143});
     m_node2->setVisible(true);
@@ -1266,3 +1282,280 @@ bool AllianceEventCell::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, c
 SEL_CCControlHandler AllianceEventCell::onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName){
     return NULL;
 }
+
+
+
+
+#pragma mark AllianceBottomNode
+AllianceBottomNode::AllianceBottomNode():m_info(NULL)
+{
+    
+}
+
+AllianceBottomNode* AllianceBottomNode::create(AllianceInfo* info,AlliancePageTag tag)
+{
+    AllianceBottomNode* ret = new AllianceBottomNode();
+    ret->m_PageTag = tag;
+    ret->m_info = info;
+    if(ret && ret->init()){
+        ret->autorelease();
+    }else{
+        CC_SAFE_DELETE(ret);
+    }
+    return ret;
+}
+
+bool AllianceBottomNode::init()
+{
+    auto tmpCCB = CCBLoadFile("AllianceBottomNode",this,this);
+
+    
+    m_nb_allianceTxt->setString(_lang("500023"));
+    m_nb_memberTxt->setString(_lang("115266"));
+    m_nb_warTxt->setString(_lang("115190"));
+    m_nb_storeTxt->setString(_lang("115206"));
+    m_nb_scienceTxt->setString(_lang("115159"));
+    
+    auto listener = EventListenerTouchOneByOne::create();
+    listener->setSwallowTouches(true);
+    
+    listener->onTouchBegan = CC_CALLBACK_2(AllianceBottomNode::onTouchBegan, this);
+    listener->onTouchMoved = CC_CALLBACK_2(AllianceBottomNode::onTouchMoved, this);
+    listener->onTouchEnded = CC_CALLBACK_2(AllianceBottomNode::onTouchEnded, this);
+    
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+
+    
+    
+    return true;
+}
+
+void AllianceBottomNode::onEnter()
+{
+    
+    
+    Layer::onEnter();
+    
+    updateNum(NULL);
+    
+//    setTouchEnabled(true);
+    
+    clickPage = ClickAlliancePageTag::ALLIANCE_NONE;
+    
+    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(AllianceBottomNode::updateNum), MSG_CHANGE_ALLIANCE_MILITARY_NUM, NULL);
+}
+void AllianceBottomNode::onExit()
+{
+//    setTouchEnabled(false);
+    
+    CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_CHANGE_ALLIANCE_MILITARY_NUM);
+   
+    clickPage = ClickAlliancePageTag::ALLIANCE_NONE;
+    
+    Layer::onExit();
+}
+ bool AllianceBottomNode::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode)
+{
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "nb_allianceNode", CCNode*, this->nb_allianceNode);
+#pragma mark Alliance_btn
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nb_allianceSpr", CCSprite*, this->m_nb_allianceSpr);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nb_allianceTxt", CCLabelIF*, this->m_nb_allianceTxt);
+
+    
+    
+#pragma mark Member_btn
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nb_memberSpr", CCSprite*, this->m_nb_memberSpr);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nb_memberTxt", CCLabelIF*, this->m_nb_memberTxt);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nb_applyNode", CCNode*, this->m_nb_applyNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nb_applyFlag", CCSprite*, this->m_nb_applyFlag);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nb_applyTipNum", CCLabelIF*, this->m_nb_applyTipNum);
+ 
+    
+    
+#pragma mark War_btn
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nb_warSpr", CCSprite*, this->m_nb_warSpr);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nb_warTxt", CCLabelIF*, this->m_nb_warTxt);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_warNumNode", CCNode*, this->m_warNumNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_warNumberFlag", CCSprite*, this->m_warNumberFlag);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_warTipNum", CCLabelIF*, this->m_warTipNum);
+  
+    
+    
+    
+    
+#pragma mark Store_btn
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nb_storeSpr", CCSprite*, this->m_nb_storeSpr);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nb_storeTxt", CCLabelIF*, this->m_nb_storeTxt);
+
+    
+    
+    
+    
+#pragma mark Science_btn
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nb_scienceSpr", CCSprite*, this->m_nb_scienceSpr);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nb_scienceTxt", CCLabelIF*, this->m_nb_scienceTxt);
+    
+    return false;
+
+}
+ bool AllianceBottomNode::onTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
+{
+
+
+    
+    if(isTouchInside(m_nb_allianceSpr, pTouch)){
+        clickPage = ClickAlliancePageTag::ALLIANCE_CLICK_HOME;
+        return true;
+    }
+
+    if(isTouchInside(m_nb_memberSpr, pTouch)){
+        clickPage = ClickAlliancePageTag::ALLIANCE_CLICK_MEMBER;
+        return true;
+    }
+    
+    if(isTouchInside(m_nb_warSpr, pTouch)){
+        clickPage = ClickAlliancePageTag::ALLIANCE_CLICK_WAR;
+        return true;
+    }
+    
+    if(isTouchInside(m_nb_storeSpr, pTouch)){
+        clickPage = ClickAlliancePageTag::ALLIANCE_CLICK_STORE;
+        return true;
+    }
+    
+    if(isTouchInside(m_nb_scienceSpr, pTouch)){
+        clickPage = ClickAlliancePageTag::ALLIANCE_CLICK_SCIENCE;
+        return true;
+    }
+    
+    return false;
+}
+ void AllianceBottomNode::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
+{
+    if(isTouchInside(m_nb_allianceSpr, pTouch)){
+        
+        if(clickPage == ClickAlliancePageTag::ALLIANCE_CLICK_HOME)
+        {
+            if(m_PageTag == AlliancePageTag::ALLIANCE_BTN)
+                return ;
+            
+            //fusheng 是否移除上一个界面
+//            PopupViewController::getInstance()->removeLastPopupView();
+//             PopupViewController::getInstance()->addPopupInView(AllianceInfoView::create(m_info));
+            
+            return;
+        }
+        
+        
+    }
+    
+    if(isTouchInside(m_nb_memberSpr, pTouch)){
+ 
+        
+        if(clickPage == ClickAlliancePageTag::ALLIANCE_CLICK_MEMBER)
+        {
+            if(m_PageTag == AlliancePageTag::MEMBER_BTN)
+                return ;
+            
+            //fusheng 是否移除上一个界面
+//            PopupViewController::getInstance()->removeLastPopupView();
+            
+            SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
+            PopupViewController::getInstance()->addPopupInView(AllianceInfoMembersView::create(GlobalData::shared()->playerInfo.allianceInfo.uid));
+            return ;
+        }
+
+    }
+    
+    if(isTouchInside(m_nb_warSpr, pTouch)){
+
+        if(clickPage == ClickAlliancePageTag::ALLIANCE_CLICK_WAR)
+        {
+            
+            if(m_PageTag == AlliancePageTag::WAR_BTN)
+                return ;
+            
+            
+            CCCommonUtils::flyHint("", "", _lang("E100008"));
+            return;
+            
+            //fusheng 是否移除上一个界面
+//            PopupViewController::getInstance()->removeLastPopupView();
+
+            PopupViewController::getInstance()->addPopupInView(AllianceWarView::create());
+            return ;
+        }
+
+    }
+    
+    if(isTouchInside(m_nb_storeSpr, pTouch)){
+ 
+        if(clickPage == ClickAlliancePageTag::ALLIANCE_CLICK_STORE)
+        {
+           
+            if(m_PageTag == AlliancePageTag::STORE_BTN)
+                return ;
+            
+            CCCommonUtils::flyHint("", "", _lang("E100008"));
+            return;
+            //fusheng 是否移除上一个界面
+//            PopupViewController::getInstance()->removeLastPopupView();
+
+            
+            PopupViewController::getInstance()->addPopupInView(AllianceShopView::create());
+            return ;
+        }
+
+    }
+    
+    if(isTouchInside(m_nb_scienceSpr, pTouch)){
+       
+        if(clickPage == ClickAlliancePageTag::ALLIANCE_CLICK_SCIENCE)
+        {
+            
+            if(m_PageTag == AlliancePageTag::SCIENCE_BTN)
+                return ;
+            
+            CCCommonUtils::flyHint("", "", _lang("E100008"));
+            return;
+            
+            //TODO: guojiang
+            //fusheng 是否移除上一个界面
+//            PopupViewController::getInstance()->removeLastPopupView();
+            
+            PopupViewController::getInstance()->addPopupInView(AllianceScienceView::create());
+            return ;
+        }
+
+    }
+}
+ void AllianceBottomNode::onTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
+{
+    
+}
+
+void AllianceBottomNode::updateNum(CCObject* param)
+{
+  
+    
+//    if(GlobalData::shared()->playerInfo.isInAlliance() && GlobalData::shared()->playerInfo.allianceInfo.uid == m_info->uid && GlobalData::shared()->playerInfo.allianceInfo.militaryNum>0 ){
+//        m_warNumNode->setVisible(true);
+//        m_warTipNum->setString(CC_ITOA(GlobalData::shared()->playerInfo.allianceInfo.militaryNum));
+//    }else{
+//        m_warNumNode->setVisible(false);
+//    }
+    
+    m_warNumNode->setVisible(false);
+    
+    
+    if (GlobalData::shared()->playerInfo.allianceInfo.uid == m_info->uid && GlobalData::shared()->playerInfo.allianceInfo.rank >= 4 && GlobalData::shared()->playerInfo.allianceInfo.applyNum > 0) {
+        m_nb_applyNode->setVisible(true);
+        m_nb_applyTipNum->setString("N");
+//        playApplyTipAnim();
+    }
+    else
+        m_nb_applyNode->setVisible(false);
+}
+
+
