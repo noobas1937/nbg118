@@ -70,10 +70,10 @@ cocos2d::CCSprite* CCLoadSprite::createSprite(const char* fileName, bool useDefa
                 DynamicResourceController::getInstance()->loadNameTypeResource(DynamicResource_MONSTER_TEXTURE_layer,false);
                 ret = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(fileName);
                 if(!ret){
-                    fileName = "rm_bust.png";
+                    fileName = "ooo_bust.png";
                 }
             }else{
-                fileName = "rm_bust.png";
+                fileName = "ooo_bust.png";
             }
         }
         else if (type == CCLoadSpriteType_MONSTERLAYERLITTLE){
@@ -81,10 +81,10 @@ cocos2d::CCSprite* CCLoadSprite::createSprite(const char* fileName, bool useDefa
                 DynamicResourceController::getInstance()->loadNameTypeResource(DynamicResource_MONSTER_TEXTURE_layer,false);
                 ret = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(fileName);
                 if(!ret){
-                    fileName = "rm.png";
+                    fileName = "ooo.png";
                 }
             }else{
-                fileName = "rm.png";
+                fileName = "ooo.png";
             }
         }
         else{
