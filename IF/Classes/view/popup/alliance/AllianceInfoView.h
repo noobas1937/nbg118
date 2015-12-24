@@ -130,6 +130,8 @@ private:
     //
     CCSafeObject<CCLabelIF> m_titleTxt;
     
+    CCSafeObject<CCSprite> m_nb_alliance_info;
+    
     CCSafeObject<CCNode> m_nb_allianceBottomNode;
     
     WaitInterface* m_waitInterface;

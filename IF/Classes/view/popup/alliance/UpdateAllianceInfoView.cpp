@@ -22,6 +22,7 @@
 #include "checkAllianceRestrictcommamd.h"
 
 #define OPENAGAIN 20
+const float nb_cell_width = 662;
 UpdateAllianceInfoView *UpdateAllianceInfoView::create(int open){
     UpdateAllianceInfoView *ret = new UpdateAllianceInfoView();
     if(ret && ret->init(open)){
@@ -49,7 +50,8 @@ bool UpdateAllianceInfoView::init(int open){
         auto node = CCBLoadFile("UpdateAllianceInfoView", this, this);
         this->setContentSize(node->getContentSize());
         int preHeight = this->m_background->getContentSize().height;
-        changeBGHeight(m_background);
+        changeBGMaxHeight(m_background);
+//        changeBGHeight(m_background);
         int dh = m_background->getContentSize().height - preHeight;
         if (CCCommonUtils::isIosAndroidPad()) {
             dh = CCDirector::sharedDirector()->getWinSize().height - 2048;
@@ -207,6 +209,18 @@ bool AllianceChangeFunCell::init(){
     this->m_nameTxt->setString(m_titleStr.c_str());
     CCCommonUtils::setButtonTitle(m_btnEdit, _lang("115034").c_str());
     CCCommonUtils::setButtonTitle(m_btnSave, _lang("115035").c_str());
+    
+    m_btnEdit->getBackgroundSpriteForState(cocos2d::extension::Control::State::DISABLED)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
+
+    m_btnSave->getBackgroundSpriteForState(cocos2d::extension::Control::State::DISABLED)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
+    
+     m_modifyBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::DISABLED)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
+    
+     m_modifyAbbrBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::DISABLED)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
+    
+     m_rankBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::DISABLED)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
+
+ 
     //announce
     m_announceTxt->setString(m_info->intro.c_str());
     m_touchTxt1->setString(_lang("115053"));
@@ -289,7 +303,7 @@ void AllianceChangeFunCell::showTabView(float t){
     m_langList->addChild(langList);
 }
 void AllianceChangeFunCell::cellEnlarge(){
-    m_bg->setContentSize(CCSize(604,580));   //380
+    m_bg->setContentSize(CCSize(nb_cell_width,580));   //380
     if (CCCommonUtils::isIosAndroidPad())
     {
         m_bg->setContentSize(CCSize(1500, 1190));
@@ -358,7 +372,7 @@ void AllianceChangeFunCell::cellEnlarge(){
 void AllianceChangeFunCell::open(){
     m_open = true;
     m_arrow->setRotation(90);
-    m_bg->setContentSize(CCSize(604,300));
+    m_bg->setContentSize(CCSize(nb_cell_width,300));
     if (CCCommonUtils::isIosAndroidPad()) {
         m_bg->setContentSize(CCSize(1500, 650));
     }
@@ -459,7 +473,7 @@ void AllianceChangeFunCell::open(){
         case 4:
         {
             m_funLangNode->setVisible(true);
-            m_bg->setContentSize(CCSize(604,600));
+            m_bg->setContentSize(CCSize(nb_cell_width,600));
             if (CCCommonUtils::isIosAndroidPad()) {
                 m_bg->setContentSize(CCSize(1500, 1200));
             }
@@ -468,7 +482,7 @@ void AllianceChangeFunCell::open(){
         case 5:
         {
             m_funRankNode->setVisible(true);
-            m_bg->setContentSize(CCSize(604,600));
+            m_bg->setContentSize(CCSize(nb_cell_width,600));
             if (CCCommonUtils::isIosAndroidPad()) {
                 m_bg->setContentSize(CCSize(1500, 950));
             }
@@ -601,7 +615,7 @@ void AllianceChangeFunCell::open(){
             m_lock3->setVisible(true);
             m_lock4->setVisible(true);
             m_lock5->setVisible(true);
-            m_bg->setContentSize(CCSize(604,600));
+            m_bg->setContentSize(CCSize(nb_cell_width,600));
             if (CCCommonUtils::isIosAndroidPad()) {
                 m_bg->setContentSize(CCSize(1500, 930));
             }
@@ -851,7 +865,7 @@ void AllianceChangeFunCell::open(){
         case 7:
         {
             //--sun TODO 获取限制要求信息
-            m_bg->setContentSize(CCSize(604,380));
+            m_bg->setContentSize(CCSize(nb_cell_width,380));
             if (CCCommonUtils::isIosAndroidPad())
             {
                 m_bg->setContentSize(CCSize(1500, 1190));
@@ -917,6 +931,7 @@ void AllianceChangeFunCell::open(){
 
 void AllianceChangeFunCell::onEnter(){
     CCNode::onEnter();
+    setSwallowsTouches(false);
     setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
     setTouchEnabled(true);
 
@@ -1075,7 +1090,7 @@ void AllianceChangeFunCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEv
             CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_ALLIACNE_FUN_POSITION,CCInteger::create(OPENAGAIN));
         }
         else{
-            m_bg->setContentSize(CCSize(604,300));   //380
+            m_bg->setContentSize(CCSize(nb_cell_width,300));   //380
             if (CCCommonUtils::isIosAndroidPad()) {
                 m_bg->setContentSize(CCSize(1500, 650));
             }
@@ -1147,7 +1162,7 @@ void AllianceChangeFunCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEv
             CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_ALLIACNE_FUN_POSITION,CCInteger::create(OPENAGAIN));
         }
         else{
-            m_bg->setContentSize(CCSize(604,300));   //380
+            m_bg->setContentSize(CCSize(nb_cell_width,300));   //380
             if (CCCommonUtils::isIosAndroidPad())
             {
                 m_bg->setContentSize(CCSize(1500, 650));
@@ -1165,7 +1180,7 @@ void AllianceChangeFunCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEv
 void AllianceChangeFunCell::reset(){
     m_arrow->setRotation(0);
     m_open = false;
-    m_bg->setContentSize(CCSize(604,96));
+    m_bg->setContentSize(CCSize(nb_cell_width,96));
     if (CCCommonUtils::isIosAndroidPad())
     {
         m_bg->setContentSize(CCSize(1500, 160));
