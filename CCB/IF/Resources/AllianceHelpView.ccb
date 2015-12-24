@@ -321,8 +321,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>0.0</real>
-									<real>348</real>
+									<real>-486</real>
+									<real>346</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -333,7 +333,7 @@
 								<string>Size</string>
 								<key>value</key>
 								<array>
-									<real>660</real>
+									<real>1000</real>
 									<real>1000</real>
 									<integer>0</integer>
 								</array>
@@ -345,7 +345,7 @@
 								<string>Point</string>
 								<key>value</key>
 								<array>
-									<real>0.5</real>
+									<real>0.0</real>
 									<real>1</real>
 								</array>
 							</dict>
@@ -422,6 +422,8 @@
 								</array>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -1713,8 +1715,6 @@
 										<real>0.0</real>
 									</dict>
 								</array>
-								<key>selected</key>
-								<true/>
 							</dict>
 							<dict>
 								<key>animatedProperties</key>
