@@ -134,6 +134,11 @@ private:
     CCSafeObject<CCScrollView> m_scrollView;
     CCSafeObject<CCArray> m_cell;
     
+    CCSafeObject<CCNode> m_nbTouchNodeForChangeFlag;
+    
+    CCSafeObject<CCNode> m_allianceIcon;
+    CCSafeObject<CCLabelIF> m_lvTxt;
+    
 };
 
 class AllianceChangeFunCell : public Layer

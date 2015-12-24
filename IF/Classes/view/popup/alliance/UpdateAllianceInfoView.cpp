@@ -127,6 +127,38 @@ bool UpdateAllianceInfoView::init(int open){
 
         ret = true;
     }
+    
+    auto listener = EventListenerTouchOneByOne::create();
+    listener->setSwallowTouches(true);
+    listener->onTouchBegan = [this](Touch *touch, Event *event)
+    {
+        if (isTouchInside(m_nbTouchNodeForChangeFlag, touch)) {
+            return true;
+        }
+        return false;
+    };
+    listener->onTouchMoved = [this](Touch *touch, Event *event){};
+    listener->onTouchEnded = [this](Touch *touch, Event *event){
+        if (isTouchInside(m_nbTouchNodeForChangeFlag, touch)) {
+            CCCommonUtils::flyHint("", "", _lang("E100008"));
+            
+            return;
+            
+            
+            
+        }
+    };
+
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+
+    
+    string lv = "Lv.";
+    lv.append(CC_CMDITOAL(GlobalData::shared()->playerInfo.allianceInfo.level).c_str());
+    m_lvTxt->setString(lv);
+
+    
+    
+    
     return ret;
 }
 
@@ -178,6 +210,13 @@ void UpdateAllianceInfoView::updatePosition(CCObject* data){
 }
 
 bool UpdateAllianceInfoView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode){
+    
+    
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_lvTxt", CCLabelIF*, this->m_lvTxt);
+
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_allianceIcon", CCNode*, this->m_allianceIcon);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nbTouchNodeForChangeFlag", CCNode*, this->m_nbTouchNodeForChangeFlag);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_funNode", CCNode*, this->m_funNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_background", CCScale9Sprite*, this->m_background);
     return false;
