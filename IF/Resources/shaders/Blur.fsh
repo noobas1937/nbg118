@@ -15,7 +15,7 @@ void main() {
 	//gl_FragColor = texture2D(CC_Texture0, v_texCoord                 )  * v_fragmentColor;
 	
     
-	float margin = 0.15;
+	float margin = 0.10;
 	float rmargin = 1.0 - margin;
 	if(v_texCoord.x < (1.0 - margin) && v_texCoord.x > margin && v_texCoord.y < (1.0 - margin) && v_texCoord.y > margin )
 	{
@@ -47,7 +47,6 @@ void main() {
 			}
 			
 			
-			
 			if(v_texCoord.y >= (rmargin))
 			{
 				distant2 = v_texCoord.y - rmargin;
@@ -59,7 +58,7 @@ void main() {
 			
 			
 			float distant = (distant1 + distant2) ;
-			distant = distant * distant * 250.0;
+			distant = distant * distant * 1000.0;
 			distant = min(distant, 1.0);
 			vec2 newBlurSize = blurSize;
 			
@@ -77,15 +76,15 @@ void main() {
 			sum += texture2D(CC_Texture0, v_texCoord + 4.0 * newBlurSize) * 0.05;
 			*/
 
-			sum += texture2D(CC_Texture0, vec2(v_texCoord.x - 1.0 * newBlurSize.x, v_texCoord.y )) * 0.12;
-			sum += texture2D(CC_Texture0, vec2(v_texCoord.x + 1.0 * newBlurSize.x, v_texCoord.y )) * 0.12;
-			sum += texture2D(CC_Texture0, vec2(v_texCoord.x , v_texCoord.y - 1.0 * newBlurSize.y  )) * 0.12;
-			sum += texture2D(CC_Texture0, vec2(v_texCoord.x , v_texCoord.y +  1.0 * newBlurSize.y )) * 0.12;
+			sum += texture2D(CC_Texture0, vec2(v_texCoord.x - newBlurSize.x, v_texCoord.y )) * 0.12;
+			sum += texture2D(CC_Texture0, vec2(v_texCoord.x + newBlurSize.x, v_texCoord.y )) * 0.12;
+			sum += texture2D(CC_Texture0, vec2(v_texCoord.x , v_texCoord.y - newBlurSize.y  )) * 0.12;
+			sum += texture2D(CC_Texture0, vec2(v_texCoord.x , v_texCoord.y +  newBlurSize.y )) * 0.12;
 			sum += orign * 0.15;
-			sum += texture2D(CC_Texture0, vec2(v_texCoord.x - 1.0 * newBlurSize.x, v_texCoord.y - 1.0 * newBlurSize.y )) * 0.09;
-			sum += texture2D(CC_Texture0, vec2(v_texCoord.x + 1.0 * newBlurSize.x, v_texCoord.y +  1.0 * newBlurSize.y)) * 0.09;
-			sum += texture2D(CC_Texture0, vec2(v_texCoord.x - 1.0 * newBlurSize.x, v_texCoord.y + 1.0 * newBlurSize.y  )) * 0.09;
-			sum += texture2D(CC_Texture0, vec2(v_texCoord.x +  1.0 * newBlurSize.x, v_texCoord.y -  1.0 * newBlurSize.y )) * 0.09;			
+			sum += texture2D(CC_Texture0, vec2(v_texCoord.x - newBlurSize.x, v_texCoord.y - newBlurSize.y )) * 0.09;
+			sum += texture2D(CC_Texture0, vec2(v_texCoord.x + newBlurSize.x, v_texCoord.y +  newBlurSize.y)) * 0.09;
+			sum += texture2D(CC_Texture0, vec2(v_texCoord.x - newBlurSize.x, v_texCoord.y + newBlurSize.y  )) * 0.09;
+			sum += texture2D(CC_Texture0, vec2(v_texCoord.x +  newBlurSize.x, v_texCoord.y -  newBlurSize.y )) * 0.09;			
 
 			//sum = vec4(1.0, 0.0, 0.0, 1.0);
 			vec4 temp = vec4(0,0,0,0);
