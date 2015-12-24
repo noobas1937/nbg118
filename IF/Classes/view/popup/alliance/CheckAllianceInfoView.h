@@ -85,10 +85,12 @@ private:
     CCSafeObject<CCNode> m_textNode;
     CCSafeObject<WaitInterface> m_waitInterface;
     CCSafeObject<CCNode> m_middleNode;
-    CCSafeObject<CCNode> m_zhandouNode;
+//    CCSafeObject<CCNode> m_zhandouNode;
     CCSafeObject<CCNode> m_renshuNode;
     
     CCSafeObject<CCScrollView> m_scrollView;
     CCSafeObject<AllianceInfo> m_info;
+    
+    CCSafeObject<CCLabelIF> m_lvTxt;
 };
 #endif /* defined(__IF__CheckAllianceInfoView__) */
