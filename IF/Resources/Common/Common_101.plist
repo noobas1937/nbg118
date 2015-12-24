@@ -20,11 +20,11 @@
             <key>quest_Attack_icon2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{596,445},{67,63}}</string>
+                <string>{{865,628},{67,63}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{67,63}}</string>
                 <key>sourceSize</key>
@@ -33,7 +33,7 @@
             <key>quest_Barrack_icon1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{156,688},{154,145}}</string>
+                <string>{{156,851},{154,145}}</string>
                 <key>offset</key>
                 <string>{2,-7}</string>
                 <key>rotated</key>
@@ -59,7 +59,7 @@
             <key>quest_Blacksmith_icon1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{706,142},{136,102}}</string>
+                <string>{{723,766},{136,102}}</string>
                 <key>offset</key>
                 <string>{-1,-16}</string>
                 <key>rotated</key>
@@ -72,7 +72,7 @@
             <key>quest_Build_icon2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{722,280},{88,84}}</string>
+                <string>{{597,493},{88,84}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -111,11 +111,11 @@
             <key>quest_Collect_icon2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{722,370},{82,79}}</string>
+                <string>{{683,493},{82,79}}</string>
                 <key>offset</key>
                 <string>{-3,1}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{82,79}}</string>
                 <key>sourceSize</key>
@@ -137,11 +137,11 @@
             <key>quest_Defense_icon2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{810,214},{72,66}}</string>
+                <string>{{941,566},{72,66}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{72,66}}</string>
                 <key>sourceSize</key>
@@ -150,7 +150,7 @@
             <key>quest_Depot_icon1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{303,688},{152,145}}</string>
+                <string>{{310,515},{152,145}}</string>
                 <key>offset</key>
                 <string>{3,-5}</string>
                 <key>rotated</key>
@@ -176,7 +176,7 @@
             <key>quest_Embassy_icon1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{710,589},{116,100}}</string>
+                <string>{{747,2},{116,100}}</string>
                 <key>offset</key>
                 <string>{3,-6}</string>
                 <key>rotated</key>
@@ -189,7 +189,7 @@
             <key>quest_Farm_icon1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{156,844},{152,147}}</string>
+                <string>{{303,851},{152,147}}</string>
                 <key>offset</key>
                 <string>{3,-12}</string>
                 <key>rotated</key>
@@ -202,7 +202,7 @@
             <key>quest_Food_icon2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{585,720},{74,76}}</string>
+                <string>{{944,490},{74,76}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -215,7 +215,7 @@
             <key>quest_Fortress_icon1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{450,669},{152,133}}</string>
+                <string>{{612,2},{152,133}}</string>
                 <key>offset</key>
                 <string>{3,-19}</string>
                 <key>rotated</key>
@@ -228,7 +228,7 @@
             <key>quest_Hall of War_icon1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{881,126},{130,94}}</string>
+                <string>{{733,176},{130,94}}</string>
                 <key>offset</key>
                 <string>{4,-12}</string>
                 <key>rotated</key>
@@ -241,7 +241,7 @@
             <key>quest_Hospital_icon1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{446,842},{152,137}}</string>
+                <string>{{566,167},{152,137}}</string>
                 <key>offset</key>
                 <string>{3,-17}</string>
                 <key>rotated</key>
@@ -254,7 +254,7 @@
             <key>quest_Iorn_icon2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{709,691},{91,75}}</string>
+                <string>{{597,416},{91,75}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -267,7 +267,7 @@
             <key>quest_Iron Mine_icon1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{310,515},{152,143}}</string>
+                <string>{{310,669},{152,143}}</string>
                 <key>offset</key>
                 <string>{3,-9}</string>
                 <key>rotated</key>
@@ -293,11 +293,11 @@
             <key>quest_Lord_icon1_1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{803,468},{102,55}}</string>
+                <string>{{595,766},{102,55}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{1,1},{102,55}}</string>
                 <key>sourceSize</key>
@@ -306,7 +306,7 @@
             <key>quest_Market_icon1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{878,222},{126,100}}</string>
+                <string>{{865,257},{126,100}}</string>
                 <key>offset</key>
                 <string>{-2,-13}</string>
                 <key>rotated</key>
@@ -319,11 +319,11 @@
             <key>quest_Merchante.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{860,554},{118,102}}</string>
+                <string>{{761,904},{118,102}}</string>
                 <key>offset</key>
                 <string>{-10,-7}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,25},{118,102}}</string>
                 <key>sourceSize</key>
@@ -332,7 +332,7 @@
             <key>quest_Military Tent_icon1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,861},{152,161}}</string>
+                <string>{{156,688},{152,161}}</string>
                 <key>offset</key>
                 <string>{3,-5}</string>
                 <key>rotated</key>
@@ -358,7 +358,7 @@
             <key>quest_Mithril_icon2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{722,451},{79,61}}</string>
+                <string>{{597,961},{79,61}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -371,15 +371,15 @@
             <key>quest_Monster0_icon1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{875,324},{124,124}}</string>
+                <string>{{2,861},{152,161}}</string>
                 <key>offset</key>
-                <string>{7,-7}</string>
+                <string>{3,-4}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{14,14},{124,124}}</string>
+                <string>{{6,9},{152,161}}</string>
                 <key>sourceSize</key>
-                <string>{138,138}</string>
+                <string>{158,171}</string>
             </dict>
             <key>quest_Monster1_icon1.png</key>
             <dict>
@@ -423,7 +423,7 @@
             <key>quest_Output_icon2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{600,625},{107,93}}</string>
+                <string>{{597,321},{107,93}}</string>
                 <key>offset</key>
                 <string>{4,-1}</string>
                 <key>rotated</key>
@@ -449,11 +449,11 @@
             <key>quest_Reclaim_icon2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{661,445},{59,81}}</string>
+                <string>{{678,961},{59,81}}</string>
                 <key>offset</key>
                 <string>{0,1}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{2,1},{59,81}}</string>
                 <key>sourceSize</key>
@@ -462,11 +462,11 @@
             <key>quest_Research_icon2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{806,389},{77,62}}</string>
+                <string>{{944,426},{77,62}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,2},{77,62}}</string>
                 <key>sourceSize</key>
@@ -475,7 +475,7 @@
             <key>quest_Ruins_icon1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{596,307},{136,124}}</string>
+                <string>{{597,823},{136,124}}</string>
                 <key>offset</key>
                 <string>{1,-7}</string>
                 <key>rotated</key>
@@ -501,11 +501,11 @@
             <key>quest_Soldier_icon2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{940,658},{97,76}}</string>
+                <string>{{733,376},{97,76}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{97,76}}</string>
                 <key>sourceSize</key>
@@ -527,11 +527,11 @@
             <key>quest_Torch_icon2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{659,528},{49,95}}</string>
+                <string>{{452,971},{49,95}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,3},{49,95}}</string>
                 <key>sourceSize</key>
@@ -540,11 +540,11 @@
             <key>quest_Trap_icon2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{808,288},{99,65}}</string>
+                <string>{{865,359},{99,65}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{99,65}}</string>
                 <key>sourceSize</key>
@@ -566,11 +566,11 @@
             <key>quest_Upgrade_icon2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{600,514},{57,76}}</string>
+                <string>{{865,501},{57,76}}</string>
                 <key>offset</key>
                 <string>{1,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{6,1},{57,76}}</string>
                 <key>sourceSize</key>
@@ -579,7 +579,7 @@
             <key>quest_Walls_icon1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{305,842},{152,139}}</string>
+                <string>{{456,332},{152,139}}</string>
                 <key>offset</key>
                 <string>{3,-12}</string>
                 <key>rotated</key>
@@ -592,11 +592,11 @@
             <key>quest_Watchtower_icon1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{750,2},{134,129}}</string>
+                <string>{{865,2},{134,129}}</string>
                 <key>offset</key>
                 <string>{12,-8}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{24,29},{134,129}}</string>
                 <key>sourceSize</key>
@@ -618,7 +618,7 @@
             <key>quest_Wood_icon2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{722,514},{77,73}}</string>
+                <string>{{865,426},{77,73}}</string>
                 <key>offset</key>
                 <string>{-1,1}</string>
                 <key>rotated</key>
@@ -631,11 +631,11 @@
             <key>quest_box.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{810,138},{66,74}}</string>
+                <string>{{865,560},{66,74}}</string>
                 <key>offset</key>
                 <string>{3,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{6,0},{66,74}}</string>
                 <key>sourceSize</key>
@@ -644,7 +644,7 @@
             <key>quest_cargo.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{828,658},{110,70}}</string>
+                <string>{{747,104},{110,70}}</string>
                 <key>offset</key>
                 <string>{-1,-8}</string>
                 <key>rotated</key>
@@ -657,7 +657,7 @@
             <key>quest_club.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{870,450},{122,102}}</string>
+                <string>{{733,272},{122,102}}</string>
                 <key>offset</key>
                 <string>{-4,-3}</string>
                 <key>rotated</key>
@@ -670,7 +670,7 @@
             <key>quest_gold_icon1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{455,515},{146,143}}</string>
+                <string>{{452,823},{146,143}}</string>
                 <key>offset</key>
                 <string>{3,-5}</string>
                 <key>rotated</key>
@@ -683,7 +683,7 @@
             <key>quest_merchante_1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{881,2},{122,132}}</string>
+                <string>{{865,133},{122,132}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -696,7 +696,7 @@
             <key>quest_wb_army.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{566,167},{138,138}}</string>
+                <string>{{457,486},{138,138}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -709,7 +709,7 @@
             <key>quest_wb_battle.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{456,332},{138,138}}</string>
+                <string>{{455,669},{138,138}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -722,7 +722,7 @@
             <key>quest_wb_score.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{612,2},{136,138}}</string>
+                <string>{{595,626},{136,138}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -742,7 +742,7 @@
             <key>size</key>
             <string>{1024,1024}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:--REMOVED----------------------------</string>
+            <string>$TexturePacker:SmartUpdate:444e7ff22d7e91f1620ca974f8468f7d:1/1$</string>
             <key>textureFileName</key>
             <string>Common_101.pvr.ccz</string>
         </dict>
