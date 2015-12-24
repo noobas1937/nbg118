@@ -152,13 +152,13 @@ bool ImperialScene::init()
 //    m_touchLayer->setGlobalZOrder(1);
 //    m_touchLayer->addChild(m_Layer2d);
 //    m_touchLayer->addChild(m_Layer3d);
-    this->addChild(m_touchLayer);
+    //this->addChild(m_touchLayer);
     m_touchLayer->setTag(IMPERIAL_SCENE_TOUCH_LAYER_TAG); //a by ljf
     
     //begin a by ljf
-    //auto shaderLayer = NBGPostEffectLayer::create(PostEffectType::POST_EFFECT_BLUR);
-    //shaderLayer->addChild(m_touchLayer);
-    //addChild(shaderLayer);
+    auto shaderLayer = NBGPostEffectLayer::create(PostEffectType::POST_EFFECT_BLUR);
+    shaderLayer->addChild(m_touchLayer);
+    addChild(shaderLayer);
     //end a by ljf
     
     m_sunNode = CCNode::create();//太阳光节点
