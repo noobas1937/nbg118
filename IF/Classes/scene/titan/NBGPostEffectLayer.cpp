@@ -48,6 +48,7 @@ bool NBGPostEffectLayer::init(PostEffectType effectType)
         p = GLProgram::createWithFilenames(vertexShaderFile, pixelShaderFile);
         auto glprogramstate = GLProgramState::getOrCreateWithGLProgram(p);
         glprogramstate->setUniformVec2("blurSize", Vec2(0.002, 0.002));
+        //glprogramstate->setUniformVec2("blurSize", Vec2(1.0 / visibleSize.width, 1.0 / visibleSize.height));
     }
     
     renderTexture = RenderTexture::create(visibleSize.width, visibleSize.height, Texture2D::PixelFormat::RGBA8888, GL_DEPTH_COMPONENT16);
