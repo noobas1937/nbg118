@@ -78,8 +78,7 @@ private:
     CCSafeObject<CCControlButton> m_applyBtn;
     CCSafeObject<CCControlButton> m_joinAlliance;
     CCSafeObject<CCControlButton> m_RestrictApply;
-    CCSafeObject<CCNode> m_fireNode1;
-    CCSafeObject<CCNode> m_fireNode2;
+
     CCSafeObject<CCControlButton> m_btnMail;
     CCSafeObject<CCControlButton> m_btnMember;
     CCSafeObject<CCControlButton> m_btnComment;

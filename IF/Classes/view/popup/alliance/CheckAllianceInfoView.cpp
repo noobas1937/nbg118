@@ -162,13 +162,6 @@ bool CheckAllianceInfoView::init()
         m_scrollView->setContentSize(CCSize(m_funList->getContentSize().width,60));
         m_scrollView->setContentOffset(ccp(0, m_funList->getContentSize().height - 60));
     }
-    
-    ParticleFireAni* par = ParticleFireAni::create();
-    m_fireNode1->addChild(par);
-    
-    ParticleFireAni* par2 = ParticleFireAni::create();
-    m_fireNode2->addChild(par2);
-    
  
     if(!GlobalData::shared()->playerInfo.isInAlliance()){
         m_bottomNode->setVisible(true);
@@ -478,8 +471,7 @@ bool CheckAllianceInfoView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarge
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_joinAlliance", CCControlButton*, this->m_joinAlliance);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_RestrictApply", CCControlButton*, this->m_RestrictApply);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bottomNode", CCNode*, this->m_bottomNode);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_fireNode1", CCNode*, this->m_fireNode1);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_fireNode2", CCNode*, this->m_fireNode2);
+
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_btnMail", CCControlButton*, this->m_btnMail);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_btnMember", CCControlButton*, this->m_btnMember);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_btnComment", CCControlButton*, this->m_btnComment);

@@ -66,6 +66,10 @@ bool AllianceInfoMembersView::onAssignCCBMemberVariable(cocos2d::CCObject *pTarg
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_lvtxt", CCLabelIF*, this->m_lvtxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nametxt", CCLabelIF*, this->m_nametxt);
     
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_mailBtn", CCControlButton*, this->m_mailBtn);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_inviteBtn", CCControlButton*, this->m_inviteBtn);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_exitBtn", CCControlButton*, this->m_exitBtn);
+    
     return true;
 }
 
@@ -578,6 +582,21 @@ bool AllianceInfoMembersView::init(){
         m_powertxt->setString("0");
         m_nametxt->setString("");
         m_postest->removeAllChildren();
+        
+        m_mailBtn->setTitleForState(_lang("115900"), cocos2d::extension::Control::State::NORMAL);
+        m_mailBtn->setTitleForState(_lang("115900"), cocos2d::extension::Control::State::DISABLED);
+        m_mailBtn->setTitleForState(_lang("115900"), cocos2d::extension::Control::State::HIGH_LIGHTED);
+        m_mailBtn->setTitleForState(_lang("115900"), cocos2d::extension::Control::State::SELECTED);
+        
+        m_inviteBtn->setTitleForState(_lang("115265"), cocos2d::extension::Control::State::NORMAL);
+        m_inviteBtn->setTitleForState(_lang("115265"), cocos2d::extension::Control::State::DISABLED);
+        m_inviteBtn->setTitleForState(_lang("115265"), cocos2d::extension::Control::State::HIGH_LIGHTED);
+        m_inviteBtn->setTitleForState(_lang("115265"), cocos2d::extension::Control::State::SELECTED);
+        
+        m_exitBtn->setTitleForState(_lang("115039"), cocos2d::extension::Control::State::NORMAL);
+        m_exitBtn->setTitleForState(_lang("115039"), cocos2d::extension::Control::State::DISABLED);
+        m_exitBtn->setTitleForState(_lang("115039"), cocos2d::extension::Control::State::HIGH_LIGHTED);
+        m_exitBtn->setTitleForState(_lang("115039"), cocos2d::extension::Control::State::SELECTED);
         
         m_showData = CCArray::create();
         dh += 90;

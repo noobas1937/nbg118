@@ -175,6 +175,10 @@ private:
     CCSafeObject<CCLabelIF> m_lvtxt;
     CCSafeObject<CCLabelIF> m_nametxt;
     
+    CCSafeObject<CCControlButton> m_mailBtn;
+    CCSafeObject<CCControlButton> m_inviteBtn;
+    CCSafeObject<CCControlButton> m_exitBtn;
+    
     InfoMembers m_datas;
     InfoMembers m_appDatas;
     InfoMembers m_titles;
