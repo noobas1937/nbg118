@@ -40,6 +40,8 @@
 #include "ChatView.h"
 #include "SoundController.h"
 #include "AllianceTerritoryView.h"
+
+#include "CheckAllianceInfoView.h"
 static const char* iconEvents[15] = {"event_fail.png","event_fail.png","event_science.png","event_add.png","event_exit.png","event_announce.png","event_announce.png","tile_pop_icon21.png","tile_pop_icon21.png","event_announce.png","event_announce.png","","",""};//占领为0，掠夺为1，科技为2，加入联盟为3，退出为4 公告为5
 
 AllianceInfoView* AllianceInfoView::create(AllianceInfo* info){
@@ -674,6 +676,12 @@ void AllianceInfoView::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *
             PopupViewController::getInstance()->addPopupInView(AllianceFunView::create());
         }
     }
+    
+    
+    if(isTouchInside(m_nb_alliance_info, pTouch) && (pos-m_touchPos).length()<20)
+    {
+        PopupViewController::getInstance()->addPopupInView(CheckAllianceInfoView::create(&GlobalData::shared()->playerInfo.allianceInfo));
+    }
     m_allianceIcon->setScale(1.0);
 }
 
@@ -820,6 +828,7 @@ SEL_CCControlHandler AllianceInfoView::onResolveCCBCCControlSelector(cocos2d::CC
 bool AllianceInfoView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode)
 {
     
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nb_alliance_info", CCSprite*, this->m_nb_alliance_info);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nb_allianceBottomNode", CCNode*, this->m_nb_allianceBottomNode);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_viewBg", CCScale9Sprite*, this->m_viewBg);
@@ -1406,26 +1415,33 @@ void AllianceBottomNode::onExit()
     
     if(isTouchInside(m_nb_allianceSpr, pTouch)){
         clickPage = ClickAlliancePageTag::ALLIANCE_CLICK_HOME;
+        m_nb_allianceSpr->setScale(1.1);
         return true;
     }
 
     if(isTouchInside(m_nb_memberSpr, pTouch)){
         clickPage = ClickAlliancePageTag::ALLIANCE_CLICK_MEMBER;
+        m_nb_memberSpr->setScale(1.1);
+
         return true;
     }
     
     if(isTouchInside(m_nb_warSpr, pTouch)){
         clickPage = ClickAlliancePageTag::ALLIANCE_CLICK_WAR;
+        m_nb_warSpr->setScale(1.1);
         return true;
     }
     
     if(isTouchInside(m_nb_storeSpr, pTouch)){
         clickPage = ClickAlliancePageTag::ALLIANCE_CLICK_STORE;
+        m_nb_storeSpr->setScale(1.1);
         return true;
     }
     
     if(isTouchInside(m_nb_scienceSpr, pTouch)){
         clickPage = ClickAlliancePageTag::ALLIANCE_CLICK_SCIENCE;
+        m_nb_scienceSpr->setScale(1.1);
+        
         return true;
     }
     
@@ -1433,6 +1449,14 @@ void AllianceBottomNode::onExit()
 }
  void AllianceBottomNode::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
+    
+    m_nb_allianceSpr->setScale(1);
+    m_nb_memberSpr->setScale(1);
+    m_nb_warSpr->setScale(1);
+    m_nb_storeSpr->setScale(1);
+    m_nb_scienceSpr->setScale(1);
+    
+    
     if(isTouchInside(m_nb_allianceSpr, pTouch)){
         
         if(clickPage == ClickAlliancePageTag::ALLIANCE_CLICK_HOME)
@@ -1549,6 +1573,9 @@ void AllianceBottomNode::onExit()
         }
 
     }
+    
+    
+ 
 }
  void AllianceBottomNode::onTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
 {
