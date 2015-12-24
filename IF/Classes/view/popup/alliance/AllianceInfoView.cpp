@@ -1441,8 +1441,19 @@ void AllianceBottomNode::onExit()
                 return ;
             
             //fusheng 是否移除上一个界面
-//            PopupViewController::getInstance()->removeLastPopupView();
-//             PopupViewController::getInstance()->addPopupInView(AllianceInfoView::create(m_info));
+            PopupViewController::getInstance()->removeLastPopupView();
+            SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
+            
+            auto node = Node::create();
+            UIComponent::getInstance()->addChild(node);
+            auto delay = DelayTime::create(1.0 / 60.0);
+            auto cb = CallFunc::create([node]{
+                node->removeFromParent();
+                auto popup = AllianceInfoView::create(&GlobalData::shared()->playerInfo.allianceInfo);
+                PopupViewController::getInstance()->addPopupInView(popup);
+            });
+            auto se = Sequence::create(delay, cb, NULL);
+            node->runAction(se);
             
             return;
         }
@@ -1459,10 +1470,19 @@ void AllianceBottomNode::onExit()
                 return ;
             
             //fusheng 是否移除上一个界面
-//            PopupViewController::getInstance()->removeLastPopupView();
+            PopupViewController::getInstance()->removeLastPopupView();
             
             SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
-            PopupViewController::getInstance()->addPopupInView(AllianceInfoMembersView::create(GlobalData::shared()->playerInfo.allianceInfo.uid));
+            
+            auto node = Node::create();
+            UIComponent::getInstance()->addChild(node);
+            auto delay = DelayTime::create(1.0 / 60.0);
+            auto cb = CallFunc::create([node]{
+                node->removeFromParent();
+                PopupViewController::getInstance()->addPopupInView(AllianceInfoMembersView::create(GlobalData::shared()->playerInfo.allianceInfo.uid));
+            });
+            auto se = Sequence::create(delay, cb, NULL);
+            node->runAction(se);
             return ;
         }
 

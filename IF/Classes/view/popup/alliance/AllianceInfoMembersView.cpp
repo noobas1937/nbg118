@@ -599,7 +599,7 @@ bool AllianceInfoMembersView::init(){
         m_exitBtn->setTitleForState(_lang("115039"), cocos2d::extension::Control::State::SELECTED);
         
         m_showData = CCArray::create();
-        dh += 90;
+        dh += 90 - 140;
         if (CCCommonUtils::isIosAndroidPad()) {
             dh = CCDirector::sharedDirector()->getWinSize().height - 2048;
         }
@@ -614,6 +614,10 @@ bool AllianceInfoMembersView::init(){
         m_tableView->setVerticalFillOrder(kCCTableViewFillTopDown);
         m_tableView->setTouchPriority(Touch_Popup);
         m_listContainer->addChild(m_tableView);
+        
+        auto abn = AllianceBottomNode::create(&GlobalData::shared()->playerInfo.allianceInfo, AlliancePageTag::MEMBER_BTN);
+        abn->setPositionY(preHeight - m_background->getContentSize().height);
+        addChild(abn);
         
         string statusBtn = CCUserDefault::sharedUserDefault()->getStringForKey(ALLIANCE_MEMBER_BTN_STATUS,"");
         if(statusBtn==""){
@@ -934,7 +938,6 @@ void AllianceInfoMembersView::onEnter(){
     UIComponent::getInstance()->showPopupView(UIPopupViewType_ArcPop_TitanUpgrade);
     PopupBaseView::onEnter();
     this->setTitleName(_lang("115027"));
-    CCLoadSprite::doResourceByCommonIndex(7, true);
     if((m_isApply || GlobalData::shared()->playerInfo.isInAlliance()) && m_datas.size()<=0){
         GetAllianceMembersCommand * command = new GetAllianceMembersCommand();
         command->putParam("allianceId", CCString::create(m_allianceId));
