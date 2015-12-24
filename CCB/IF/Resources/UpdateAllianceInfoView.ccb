@@ -251,11 +251,11 @@
 						<key>customClass</key>
 						<string></string>
 						<key>displayName</key>
-						<string>CCLayerColor</string>
+						<string>m_nb_bg1</string>
 						<key>memberVarAssignmentName</key>
-						<string></string>
+						<string>m_nb_bg1</string>
 						<key>memberVarAssignmentType</key>
-						<integer>0</integer>
+						<integer>2</integer>
 						<key>properties</key>
 						<array>
 							<dict>
@@ -375,11 +375,11 @@
 						<key>customClass</key>
 						<string></string>
 						<key>displayName</key>
-						<string>CCLayerColor</string>
+						<string>m_nb_bg2</string>
 						<key>memberVarAssignmentName</key>
-						<string></string>
+						<string>m_nb_bg2</string>
 						<key>memberVarAssignmentType</key>
-						<integer>0</integer>
+						<integer>2</integer>
 						<key>properties</key>
 						<array>
 							<dict>
@@ -490,8 +490,6 @@
 								</array>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -2438,7 +2436,7 @@
 			<key>offset</key>
 			<real>0.0</real>
 			<key>position</key>
-			<real>0.0</real>
+			<real>2</real>
 			<key>resolution</key>
 			<real>30</real>
 			<key>scale</key>

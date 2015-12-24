@@ -139,6 +139,9 @@ private:
     CCSafeObject<CCNode> m_allianceIcon;
     CCSafeObject<CCLabelIF> m_lvTxt;
     
+    CCSafeObject<CCLayerColor> m_nb_bg1;
+    CCSafeObject<CCLayerColor> m_nb_bg2;
+    
 };
 
 class AllianceChangeFunCell : public Layer

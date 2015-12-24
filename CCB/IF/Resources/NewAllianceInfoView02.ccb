@@ -307,11 +307,11 @@
 						<key>customClass</key>
 						<string></string>
 						<key>displayName</key>
-						<string>CCLayerColor</string>
+						<string>m_nb_bg3</string>
 						<key>memberVarAssignmentName</key>
-						<string></string>
+						<string>m_nb_bg3</string>
 						<key>memberVarAssignmentType</key>
-						<integer>0</integer>
+						<integer>2</integer>
 						<key>properties</key>
 						<array>
 							<dict>
@@ -422,6 +422,8 @@
 								</array>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -772,11 +774,11 @@
 								<key>customClass</key>
 								<string></string>
 								<key>displayName</key>
-								<string>CCLayerColor</string>
+								<string>m_nb_bg1</string>
 								<key>memberVarAssignmentName</key>
-								<string></string>
+								<string>m_nb_bg1</string>
 								<key>memberVarAssignmentType</key>
-								<integer>0</integer>
+								<integer>2</integer>
 								<key>properties</key>
 								<array>
 									<dict>
@@ -896,11 +898,11 @@
 								<key>customClass</key>
 								<string></string>
 								<key>displayName</key>
-								<string>CCLayerColor</string>
+								<string>m_nb_bg2</string>
 								<key>memberVarAssignmentName</key>
-								<string></string>
+								<string>m_nb_bg2</string>
 								<key>memberVarAssignmentType</key>
-								<integer>0</integer>
+								<integer>2</integer>
 								<key>properties</key>
 								<array>
 									<dict>
@@ -1359,13 +1361,13 @@
 									</dict>
 									<dict>
 										<key>baseValue</key>
-										<integer>255</integer>
+										<integer>128</integer>
 										<key>name</key>
 										<string>opacity</string>
 										<key>type</key>
 										<string>Byte</string>
 										<key>value</key>
-										<integer>255</integer>
+										<integer>128</integer>
 									</dict>
 									<dict>
 										<key>name</key>
@@ -2300,6 +2302,89 @@
 							</dict>
 							<dict>
 								<key>baseClass</key>
+								<string>CCSprite</string>
+								<key>children</key>
+								<array/>
+								<key>customClass</key>
+								<string></string>
+								<key>displayName</key>
+								<string>lan</string>
+								<key>memberVarAssignmentName</key>
+								<string></string>
+								<key>memberVarAssignmentType</key>
+								<integer>0</integer>
+								<key>properties</key>
+								<array>
+									<dict>
+										<key>name</key>
+										<string>position</string>
+										<key>type</key>
+										<string>Position</string>
+										<key>value</key>
+										<array>
+											<real>122.66676330566406</real>
+											<real>106.90126037597656</real>
+											<integer>0</integer>
+										</array>
+									</dict>
+									<dict>
+										<key>name</key>
+										<string>anchorPoint</string>
+										<key>type</key>
+										<string>Point</string>
+										<key>value</key>
+										<array>
+											<real>0.5</real>
+											<real>0.5</real>
+										</array>
+									</dict>
+									<dict>
+										<key>name</key>
+										<string>scale</string>
+										<key>type</key>
+										<string>ScaleLock</string>
+										<key>value</key>
+										<array>
+											<real>1</real>
+											<real>1</real>
+											<true/>
+											<integer>0</integer>
+										</array>
+									</dict>
+									<dict>
+										<key>name</key>
+										<string>ignoreAnchorPointForPosition</string>
+										<key>type</key>
+										<string>Check</string>
+										<key>value</key>
+										<false/>
+									</dict>
+									<dict>
+										<key>name</key>
+										<string>displayFrame</string>
+										<key>type</key>
+										<string>SpriteFrame</string>
+										<key>value</key>
+										<array>
+											<string>Common/Common_2.plist</string>
+											<string>icon_language.png</string>
+										</array>
+									</dict>
+									<dict>
+										<key>name</key>
+										<string>blendFunc</string>
+										<key>type</key>
+										<string>Blendmode</string>
+										<key>value</key>
+										<array>
+											<integer>770</integer>
+											<integer>771</integer>
+										</array>
+									</dict>
+								</array>
+							</dict>
+							<dict>
+								<key>baseClass</key>
 								<string>CCLabelTTF</string>
 								<key>children</key>
 								<array/>
@@ -2320,7 +2405,7 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>243.66403198242188</real>
+											<real>143.66403198242188</real>
 											<real>107.77600860595703</real>
 											<integer>0</integer>
 										</array>
@@ -2332,7 +2417,7 @@
 										<string>Point</string>
 										<key>value</key>
 										<array>
-											<real>1</real>
+											<real>0.0</real>
 											<real>0.5</real>
 										</array>
 									</dict>
@@ -2406,7 +2491,7 @@
 										<key>type</key>
 										<string>IntegerLabeled</string>
 										<key>value</key>
-										<integer>1</integer>
+										<integer>0</integer>
 									</dict>
 									<dict>
 										<key>name</key>
@@ -2654,8 +2739,6 @@
 												<false/>
 											</dict>
 										</array>
-										<key>selected</key>
-										<true/>
 									</dict>
 									<dict>
 										<key>baseClass</key>
@@ -5092,7 +5175,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>670</real>
+									<real>0.0</real>
 									<real>-401</real>
 									<integer>0</integer>
 								</array>

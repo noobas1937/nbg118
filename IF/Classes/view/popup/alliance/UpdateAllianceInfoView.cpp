@@ -158,6 +158,9 @@ bool UpdateAllianceInfoView::init(int open){
 
     
     
+    m_nb_bg1->setColor({25,30,44});
+    m_nb_bg2->setColor({38,44,70});
+    
     
     return ret;
 }
@@ -203,14 +206,23 @@ void UpdateAllianceInfoView::updatePosition(CCObject* data){
     }else if(index==4){
         m_scrollView->setContentOffset(ccp(0, m_funNode->getContentSize().height - totalH2 + 110*(num-2) - 110));
         m_scrollView->setTouchEnabled(false);
-    }else{
+    }else if(index == -1){
         m_scrollView->setContentOffset(ccp(0, m_funNode->getContentSize().height - totalH2));
         m_scrollView->setTouchEnabled(true);
+    }
+    else
+    {
+        m_scrollView->setContentOffset(ccp(0, m_funNode->getContentSize().height - totalH2));
+        m_scrollView->setTouchEnabled(false);
+
     }
 }
 
 bool UpdateAllianceInfoView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode){
     
+    
+     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nb_bg1", CCLayerColor*, this->m_nb_bg1);
+     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nb_bg2", CCLayerColor*, this->m_nb_bg2);
     
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_lvTxt", CCLabelIF*, this->m_lvTxt);

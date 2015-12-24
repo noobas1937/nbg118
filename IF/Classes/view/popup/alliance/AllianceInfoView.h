@@ -134,6 +134,11 @@ private:
     
     CCSafeObject<CCNode> m_nb_allianceBottomNode;
     
+    CCSafeObject<CCLayerColor> m_nb_bg1;
+    CCSafeObject<CCLayerColor> m_nb_bg2;
+    CCSafeObject<CCLayerColor> m_nb_bg3;
+
+    
     WaitInterface* m_waitInterface;
     CCPoint m_touchPos;
     int m_eventNum;
