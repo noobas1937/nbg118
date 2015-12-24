@@ -235,14 +235,14 @@
 		3642EC75184DBF8600D49597 /* FBUtilies.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3642EC73184DBF8600D49597 /* FBUtilies.mm */; };
 		3642EC77184DBFBE00D49597 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3642EC76184DBFBE00D49597 /* MessageUI.framework */; };
 		3646A6751BB945D200248935 /* NBSprite3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3646A6731BB945D200248935 /* NBSprite3D.cpp */; };
-		3667513E1C28FAB800447EDE /* adobe_heiti.png in Resources */ = {isa = PBXBuildFile; fileRef = 3667513C1C28FAB800447EDE /* adobe_heiti.png */; };
-		3667513F1C28FAB800447EDE /* adobe_heiti.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 3667513D1C28FAB800447EDE /* adobe_heiti.fnt */; };
-		366751441C291FA500447EDE /* adobe_heiti_border.png in Resources */ = {isa = PBXBuildFile; fileRef = 366751401C291FA500447EDE /* adobe_heiti_border.png */; };
-		366751451C291FA500447EDE /* adobe_heiti_gradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 366751411C291FA500447EDE /* adobe_heiti_gradient.png */; };
-		366751461C291FA500447EDE /* adobe_heiti_border.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 366751421C291FA500447EDE /* adobe_heiti_border.fnt */; };
-		366751471C291FA500447EDE /* adobe_heiti_gradient.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 366751431C291FA500447EDE /* adobe_heiti_gradient.fnt */; };
-		3667514A1C29220700447EDE /* adobe_heiti_outline.png in Resources */ = {isa = PBXBuildFile; fileRef = 366751481C29220700447EDE /* adobe_heiti_outline.png */; };
-		3667514B1C29220700447EDE /* adobe_heiti_outline.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 366751491C29220700447EDE /* adobe_heiti_outline.fnt */; };
+		366751601C2A442900447EDE /* Arial_Bold_Border.png in Resources */ = {isa = PBXBuildFile; fileRef = 366751581C2A442900447EDE /* Arial_Bold_Border.png */; };
+		366751611C2A442900447EDE /* Arial_Bold_Regular.png in Resources */ = {isa = PBXBuildFile; fileRef = 366751591C2A442900447EDE /* Arial_Bold_Regular.png */; };
+		366751621C2A442900447EDE /* Arial_Bold.png in Resources */ = {isa = PBXBuildFile; fileRef = 3667515A1C2A442900447EDE /* Arial_Bold.png */; };
+		366751631C2A442900447EDE /* Arial_Gradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 3667515B1C2A442900447EDE /* Arial_Gradient.png */; };
+		366751641C2A442900447EDE /* Arial_Bold_Border.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 3667515C1C2A442900447EDE /* Arial_Bold_Border.fnt */; };
+		366751651C2A442900447EDE /* Arial_Bold_Regular.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 3667515D1C2A442900447EDE /* Arial_Bold_Regular.fnt */; };
+		366751661C2A442900447EDE /* Arial_Bold.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 3667515E1C2A442900447EDE /* Arial_Bold.fnt */; };
+		366751671C2A442900447EDE /* Arial_Gradient.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 3667515F1C2A442900447EDE /* Arial_Gradient.fnt */; };
 		366A8461180BE37100790261 /* ClippingNodeExt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 366A845F180BE37100790261 /* ClippingNodeExt.cpp */; };
 		366E1C6A17D04FA0006CCCBF /* SoundController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 366E1C6717D04FA0006CCCBF /* SoundController.cpp */; };
 		366E1C6D17D07261006CCCBF /* LocalController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 366E1C6B17D07261006CCCBF /* LocalController.cpp */; };
@@ -1216,6 +1216,7 @@
 		E6FC9B27181E541900BAFCFF /* MailReadCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6FC9B26181E541900BAFCFF /* MailReadCommand.cpp */; };
 		E6FC9B2A181E957A00BAFCFF /* MailPush.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6FC9B29181E957900BAFCFF /* MailPush.cpp */; };
 		E6FE9EB7182738E3000020FA /* TipsView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6FE9EB5182738E3000020FA /* TipsView.cpp */; };
+		ED15CBAD1C27CDB900C665C5 /* NBGPostEffectLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED15CBAB1C27CDB900C665C5 /* NBGPostEffectLayer.cpp */; };
 		ED2608C41BF42FE400D6BD14 /* Walker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED2608C21BF42FE400D6BD14 /* Walker.cpp */; };
 		ED8509631BE07AFD002E1B2C /* NBWaterMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED8509611BE07AFD002E1B2C /* NBWaterMap.cpp */; };
 		ED929BF71BFC650E005A44C9 /* Enemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED929BF51BFC650E005A44C9 /* Enemy.cpp */; };
@@ -1696,14 +1697,14 @@
 		3642EC76184DBFBE00D49597 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		3646A6731BB945D200248935 /* NBSprite3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NBSprite3D.cpp; path = ../scene/titan/NBSprite3D.cpp; sourceTree = "<group>"; };
 		3646A6741BB945D200248935 /* NBSprite3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBSprite3D.h; path = ../scene/titan/NBSprite3D.h; sourceTree = "<group>"; };
-		3667513C1C28FAB800447EDE /* adobe_heiti.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = adobe_heiti.png; path = Resources/adobe_heiti.png; sourceTree = "<group>"; };
-		3667513D1C28FAB800447EDE /* adobe_heiti.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = adobe_heiti.fnt; path = Resources/adobe_heiti.fnt; sourceTree = "<group>"; };
-		366751401C291FA500447EDE /* adobe_heiti_border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = adobe_heiti_border.png; path = Resources/adobe_heiti_border.png; sourceTree = "<group>"; };
-		366751411C291FA500447EDE /* adobe_heiti_gradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = adobe_heiti_gradient.png; path = Resources/adobe_heiti_gradient.png; sourceTree = "<group>"; };
-		366751421C291FA500447EDE /* adobe_heiti_border.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = adobe_heiti_border.fnt; path = Resources/adobe_heiti_border.fnt; sourceTree = "<group>"; };
-		366751431C291FA500447EDE /* adobe_heiti_gradient.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = adobe_heiti_gradient.fnt; path = Resources/adobe_heiti_gradient.fnt; sourceTree = "<group>"; };
-		366751481C29220700447EDE /* adobe_heiti_outline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = adobe_heiti_outline.png; path = Resources/adobe_heiti_outline.png; sourceTree = "<group>"; };
-		366751491C29220700447EDE /* adobe_heiti_outline.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = adobe_heiti_outline.fnt; path = Resources/adobe_heiti_outline.fnt; sourceTree = "<group>"; };
+		366751581C2A442900447EDE /* Arial_Bold_Border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Arial_Bold_Border.png; path = Resources/Arial_Bold_Border.png; sourceTree = "<group>"; };
+		366751591C2A442900447EDE /* Arial_Bold_Regular.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Arial_Bold_Regular.png; path = Resources/Arial_Bold_Regular.png; sourceTree = "<group>"; };
+		3667515A1C2A442900447EDE /* Arial_Bold.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Arial_Bold.png; path = Resources/Arial_Bold.png; sourceTree = "<group>"; };
+		3667515B1C2A442900447EDE /* Arial_Gradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Arial_Gradient.png; path = Resources/Arial_Gradient.png; sourceTree = "<group>"; };
+		3667515C1C2A442900447EDE /* Arial_Bold_Border.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Arial_Bold_Border.fnt; path = Resources/Arial_Bold_Border.fnt; sourceTree = "<group>"; };
+		3667515D1C2A442900447EDE /* Arial_Bold_Regular.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Arial_Bold_Regular.fnt; path = Resources/Arial_Bold_Regular.fnt; sourceTree = "<group>"; };
+		3667515E1C2A442900447EDE /* Arial_Bold.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Arial_Bold.fnt; path = Resources/Arial_Bold.fnt; sourceTree = "<group>"; };
+		3667515F1C2A442900447EDE /* Arial_Gradient.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Arial_Gradient.fnt; path = Resources/Arial_Gradient.fnt; sourceTree = "<group>"; };
 		366A845F180BE37100790261 /* ClippingNodeExt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClippingNodeExt.cpp; sourceTree = "<group>"; };
 		366A8460180BE37100790261 /* ClippingNodeExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClippingNodeExt.h; sourceTree = "<group>"; };
 		366E1C6517D04F8E006CCCBF /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = sounds; path = Resources/sounds; sourceTree = "<group>"; };
@@ -3581,6 +3582,8 @@
 		E6FC9B29181E957900BAFCFF /* MailPush.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MailPush.cpp; sourceTree = "<group>"; };
 		E6FE9EB5182738E3000020FA /* TipsView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TipsView.cpp; sourceTree = "<group>"; };
 		E6FE9EB6182738E3000020FA /* TipsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TipsView.h; sourceTree = "<group>"; };
+		ED15CBAB1C27CDB900C665C5 /* NBGPostEffectLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NBGPostEffectLayer.cpp; path = IF/Classes/scene/titan/NBGPostEffectLayer.cpp; sourceTree = SOURCE_ROOT; };
+		ED15CBAC1C27CDB900C665C5 /* NBGPostEffectLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBGPostEffectLayer.h; path = IF/Classes/scene/titan/NBGPostEffectLayer.h; sourceTree = SOURCE_ROOT; };
 		ED2608C21BF42FE400D6BD14 /* Walker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Walker.cpp; sourceTree = "<group>"; };
 		ED2608C31BF42FE400D6BD14 /* Walker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Walker.h; sourceTree = "<group>"; };
 		ED8509611BE07AFD002E1B2C /* NBWaterMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBWaterMap.cpp; sourceTree = "<group>"; };
@@ -6019,14 +6022,14 @@
 		DB9F590717CD9A520037F7E5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				366751481C29220700447EDE /* adobe_heiti_outline.png */,
-				366751491C29220700447EDE /* adobe_heiti_outline.fnt */,
-				366751401C291FA500447EDE /* adobe_heiti_border.png */,
-				366751411C291FA500447EDE /* adobe_heiti_gradient.png */,
-				366751421C291FA500447EDE /* adobe_heiti_border.fnt */,
-				366751431C291FA500447EDE /* adobe_heiti_gradient.fnt */,
-				3667513C1C28FAB800447EDE /* adobe_heiti.png */,
-				3667513D1C28FAB800447EDE /* adobe_heiti.fnt */,
+				366751581C2A442900447EDE /* Arial_Bold_Border.png */,
+				366751591C2A442900447EDE /* Arial_Bold_Regular.png */,
+				3667515A1C2A442900447EDE /* Arial_Bold.png */,
+				3667515B1C2A442900447EDE /* Arial_Gradient.png */,
+				3667515C1C2A442900447EDE /* Arial_Bold_Border.fnt */,
+				3667515D1C2A442900447EDE /* Arial_Bold_Regular.fnt */,
+				3667515E1C2A442900447EDE /* Arial_Bold.fnt */,
+				3667515F1C2A442900447EDE /* Arial_Gradient.fnt */,
 				EDC5D3C81C1EF072006037D9 /* eeeq_0.png */,
 				EDC5D3C91C1EF072006037D9 /* eeeq.fnt */,
 				B81B73EC1C02FF790092774E /* res */,
@@ -6633,6 +6636,8 @@
 		FD6F415817CDD218008FDB9C /* Ext */ = {
 			isa = PBXGroup;
 			children = (
+				ED15CBAB1C27CDB900C665C5 /* NBGPostEffectLayer.cpp */,
+				ED15CBAC1C27CDB900C665C5 /* NBGPostEffectLayer.h */,
 				3676B3171BB393AC00120B78 /* CCGallery.cpp */,
 				3676B3181BB393AC00120B78 /* CCGallery.h */,
 				2AB5E0491B687E2B001E0A7E /* cocosextV3.h */,
@@ -7249,8 +7254,6 @@
 				272AB6581B15C7BC0052E896 /* icon02.jpg in Resources */,
 				6CD847C01B2EE5C500C8AF0D /* MemberTableCell.xib in Resources */,
 				B15628B318FEB62000902628 /* pve_fnt_title.fnt in Resources */,
-				3667514B1C29220700447EDE /* adobe_heiti_outline.fnt in Resources */,
-				366751471C291FA500447EDE /* adobe_heiti_gradient.fnt in Resources */,
 				272AB6661B15C7BC0052E896 /* toolbar_bottom_bar.png in Resources */,
 				975778DB1C07F97200D6CB14 /* nb_fnt1.fnt in Resources */,
 				272AB65B1B15C7BC0052E896 /* icon_kuang.png in Resources */,
@@ -7281,6 +7284,8 @@
 				272AB62B1B15C7BC0052E896 /* btn_qieye_02.png in Resources */,
 				272AB6151B15C7BC0052E896 /* TipPopUpController.xib in Resources */,
 				272AB6241B15C7BC0052E896 /* alliance_02.png in Resources */,
+				366751671C2A442900447EDE /* Arial_Gradient.fnt in Resources */,
+				366751601C2A442900447EDE /* Arial_Bold_Border.png in Resources */,
 				275A3FCE1B1F005800F3C4D8 /* [sysChat].png in Resources */,
 				DB9F591D17CD9A520037F7E5 /* iTunesArtwork in Resources */,
 				272AB6691B15C7BC0052E896 /* ui_huitiao2.png in Resources */,
@@ -7308,10 +7313,10 @@
 				59D7F0411AF0BF85000120F9 /* HSChatBubbleBlue.png in Resources */,
 				272AB6511B15C7BC0052E896 /* horn_bg_left.png in Resources */,
 				B15628B418FEB62000902628 /* pve_fnt_title.png in Resources */,
-				3667514A1C29220700447EDE /* adobe_heiti_outline.png in Resources */,
 				FDB0D5CF18209D7D00C11959 /* Common in Resources */,
 				272AB6321B15C7BC0052E896 /* chat_bottom_smile_nor.png in Resources */,
 				272AB62C1B15C7BC0052E896 /* btn_yellow.png in Resources */,
+				366751661C2A442900447EDE /* Arial_Bold.fnt in Resources */,
 				272AB5F91B15C7BC0052E896 /* Main.storyboard in Resources */,
 				6C9E82C31B304EB600D7EAB2 /* TopHeadView.xib in Resources */,
 				59D7F0391AF0BF85000120F9 /* HS-delete-button@3x.png in Resources */,
@@ -7328,11 +7333,11 @@
 				59D7F04D1AF0BF85000120F9 /* HSTutorialiPad@2x.png in Resources */,
 				6CD92EC21B42A06F0049B8E1 /* ChattingVC.xib in Resources */,
 				96F6B7E81A79D67C0032D9C0 /* particleImg in Resources */,
+				366751651C2A442900447EDE /* Arial_Bold_Regular.fnt in Resources */,
 				272AB64C1B15C7BC0052E896 /* g044.png in Resources */,
 				59D7F0481AF0BF85000120F9 /* HSConfirmBox@2x.png in Resources */,
 				59D7F0491AF0BF85000120F9 /* HSTutorial.png in Resources */,
 				96F1C259195166B20032C08D /* Battle in Resources */,
-				366751451C291FA500447EDE /* adobe_heiti_gradient.png in Resources */,
 				59D7F0341AF0BF85000120F9 /* HS-camera-button.png in Resources */,
 				59D7F0431AF0BF85000120F9 /* HSChatBubbleBlue@3x.png in Resources */,
 				272AB6381B15C7BC0052E896 /* chat_system_right_bg_normal.png in Resources */,
@@ -7344,6 +7349,7 @@
 				272AB6501B15C7BC0052E896 /* guide_player_icon.png in Resources */,
 				272AB6681B15C7BC0052E896 /* ui_gray_biaotilan.png in Resources */,
 				59D7F03A1AF0BF85000120F9 /* HS-no-connection.png in Resources */,
+				366751631C2A442900447EDE /* Arial_Gradient.png in Resources */,
 				272AB64A1B15C7BC0052E896 /* g038.png in Resources */,
 				975778DD1C07F97200D6CB14 /* nb_fnt2.fnt in Resources */,
 				366E1C7517D09868006CCCBF /* local in Resources */,
@@ -7356,14 +7362,14 @@
 				272AB63E1B15C7BC0052E896 /* chuzheng_frame02.png in Resources */,
 				272AB63B1B15C7BC0052E896 /* chat_to_bg_pressed.png in Resources */,
 				975778DE1C07F97200D6CB14 /* nb_fnt2.png in Resources */,
+				366751641C2A442900447EDE /* Arial_Bold_Border.fnt in Resources */,
 				FDC0AF2217D6DAF7006E79E6 /* ccbi in Resources */,
 				6C8758C51B94064600C20ECC /* InputView.xib in Resources */,
+				366751621C2A442900447EDE /* Arial_Bold.png in Resources */,
 				59D7F04E1AF0BF85000120F9 /* HSTutorialiPad@3x.png in Resources */,
-				3667513F1C28FAB800447EDE /* adobe_heiti.fnt in Resources */,
 				59D7F03E1AF0BF85000120F9 /* HS-powered-by-logo@3x.png in Resources */,
 				272AB6261B15C7BC0052E896 /* alliance_gold2.png in Resources */,
 				272AB6651B15C7BC0052E896 /* tmod.png in Resources */,
-				3667513E1C28FAB800447EDE /* adobe_heiti.png in Resources */,
 				272AB62F1B15C7BC0052E896 /* chat_bg_default.jpg in Resources */,
 				272AB6541B15C7BC0052E896 /* horn_icon.png in Resources */,
 				272AB65F1B15C7BC0052E896 /* mod.png in Resources */,
@@ -7376,7 +7382,6 @@
 				272AB6371B15C7BC0052E896 /* chat_system_left_bg_normal.png in Resources */,
 				59D7F0501AF0BF85000120F9 /* HelpshiftConfigDark.plist in Resources */,
 				272AB6611B15C7BC0052E896 /* smod.png in Resources */,
-				366751461C291FA500447EDE /* adobe_heiti_border.fnt in Resources */,
 				DBB37B1717D7475500C7AB15 /* particle in Resources */,
 				272AB63C1B15C7BC0052E896 /* check_box.png in Resources */,
 				B80D4B2A1BAFA1D800422225 /* nb_world.tmx in Resources */,
@@ -7393,12 +7398,12 @@
 				272AB6341B15C7BC0052E896 /* chat_bottom_textfield.png in Resources */,
 				5736A1AD18225C9D007C431C /* Imperial in Resources */,
 				975778DC1C07F97200D6CB14 /* nb_fnt1.png in Resources */,
-				366751441C291FA500447EDE /* adobe_heiti_border.png in Resources */,
 				59D7F0381AF0BF85000120F9 /* HS-delete-button@2x.png in Resources */,
 				59D7F0311AF0BF85000120F9 /* HS-Attachment.png in Resources */,
 				272AB6491B15C7BC0052E896 /* g032.png in Resources */,
 				272AB66D1B15C7BC0052E896 /* images.zip in Resources */,
 				272AB6331B15C7BC0052E896 /* chat_bottom_smile_press.png in Resources */,
+				366751611C2A442900447EDE /* Arial_Bold_Regular.png in Resources */,
 				6C31E5A61B4A507F00D9C04D /* SearchEditView.xib in Resources */,
 				BAD17E571AA5BDB400163E67 /* TwitterKitResources.bundle in Resources */,
 				59D7F04A1AF0BF85000120F9 /* HSTutorial@2x.png in Resources */,
@@ -8027,6 +8032,7 @@
 				961A2AA61B730C0600752BC7 /* LianShengView.cpp in Sources */,
 				7C0E551B17F7C1E60079A7BB /* ServerInfo.cpp in Sources */,
 				1DEE97A91AA002AE006F5D71 /* GmController.cpp in Sources */,
+				ED15CBAD1C27CDB900C665C5 /* NBGPostEffectLayer.cpp in Sources */,
 				7C0E552517F801690079A7BB /* UserBindCommand.cpp in Sources */,
 				7C97265117F9648E0099DBC4 /* ResourceInfo.cpp in Sources */,
 				E6924A7E1803D56C00630D20 /* EquipInfo.cpp in Sources */,

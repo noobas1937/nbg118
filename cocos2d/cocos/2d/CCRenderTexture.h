@@ -333,6 +333,10 @@ protected:
     Image*     _UITextureImage;
     Texture2D::PixelFormat _pixelFormat;
     
+    //begin a by ljf
+    GLint _oldDepthMask;
+    //end a by ljf
+    
     // code for "auto" update
     GLbitfield   _clearFlags;
     Color4F    _clearColor;
