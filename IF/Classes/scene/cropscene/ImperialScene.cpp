@@ -204,6 +204,7 @@ bool ImperialScene::init()
     m_cargoNode->setZOrder(m_cargoNode->getOrderOfArrival());
     m_newRDNode->setZOrder(m_newRDNode->getOrderOfArrival());
     m_xiongdiNode->setZOrder(m_xiongdiNode->getOrderOfArrival());
+    m_ziyuanmenNode->setZOrder(m_ziyuanmenNode->getOrderOfArrival());
     
     m_wallZOrder_0->setZOrder(m_wallZOrder_0->getOrderOfArrival());
     m_wallZOrder_1->setZOrder(m_wallZOrder_1->getOrderOfArrival());
@@ -505,6 +506,7 @@ void ImperialScene::buildingCallBack(CCObject* params)
     onOpenNewBuild(NULL);
     //发生 22资源释放不掉的 区域 end end end end end end
     
+    initResourceStatistics();
     // tao.yu 砍掉场景下方的树丛 和 云
 //    initBgTree();
     UIComponent::getInstance()->updateBuildState(true);
@@ -1733,6 +1735,16 @@ void ImperialScene::wallCallBack(CCObject* params)
     m_wallNode->addChild(pWall);
 }
 
+void ImperialScene::initResourceStatistics()
+{
+    if (true) {
+        m_ziyuanmenBuild = SpeBuild::create(SPE_BUILD_ZIYUANMEN);
+        m_ziyuanmenNode->addChild(m_ziyuanmenBuild);
+        int hod = m_ziyuanmenNode->getZOrder();
+        m_ziyuanmenBuild->setNamePos(m_ziyuanmenNode->getPositionX(), m_ziyuanmenNode->getPositionY(), m_signLayer, m_arrbatchNode, m_resbatchNode, hod);
+    }
+}
+
 void ImperialScene::onPlayBattle()
 {
     BattlefieldScene* battle = BattlefieldScene::create();
@@ -2509,6 +2521,11 @@ void ImperialScene::onExit()
         m_newRDBuild->removeFromParent();
     }
     
+    if (m_ziyuanmenBuild) {
+        m_ziyuanmenBuild->onBuildDelete();
+        m_ziyuanmenBuild->removeFromParent();
+    }
+    
     if (m_lotteryBuild)
     {
         m_lotteryBuild->onBuildDelete();
@@ -2737,6 +2754,9 @@ void ImperialScene::onMoveToSpeBuildAndPlay(int itemId, bool st)
             break;
         case SPE_BUILD_DRAGON:
             speBuild = m_dragonBuild;
+            break;
+        case SPE_BUILD_ZIYUANMEN:
+            speBuild = m_ziyuanmenBuild;
             break;
         default:
             break;
@@ -3198,6 +3218,10 @@ void ImperialScene::onSingleTouchEnd(CCTouch* pTouch)
         if (st && m_lotteryBuild && m_lotteryBuild->onTouchBegan(pTouch, NULL)) {
             st = false;
             m_lotteryBuild->onTouchEnded(pTouch, NULL);
+        }
+        if (st && m_ziyuanmenBuild && m_ziyuanmenBuild->onTouchBegan(pTouch, nullptr)) {
+            st = false;
+            m_ziyuanmenBuild->onTouchEnded(pTouch, nullptr);
         }
         if (st && (isTouchInside(m_desNode1, pTouch) || (m_HTPHead && m_HTPHead->isVisible() && isTouchInside(m_HTPHead, pTouch)))) {//help
             SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
@@ -4585,6 +4609,8 @@ bool ImperialScene::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bridgeTouchNode", CCNode*, this->m_bridgeTouchNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_waterNode_L", CCNode*, this->m_waterNode_L);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_waterNode_R", CCNode*, this->m_waterNode_R);
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_ziyuanmenNode", CCNode*, this->m_ziyuanmenNode);
     
     
     return false;

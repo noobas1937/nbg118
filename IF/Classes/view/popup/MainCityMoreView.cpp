@@ -32,19 +32,21 @@ bool MainCityMoreView::init(int buildId, int type)
     if (!PopupBaseView::init()) {
         return false;
     }
+    
     setIsHDPanel(true);
     m_buildId = buildId;
     m_type = type;
     auto tmpCCB = CCBLoadFile("MainCityMoreView",this,this);
+    Size winSize = CCDirector::sharedDirector()->getWinSize();
     if (CCCommonUtils::isIosAndroidPad()) {
-        this->setContentSize(CCDirector::sharedDirector()->getWinSize());
+        this->setContentSize(winSize);
     }
     else
         this->setContentSize(tmpCCB->getContentSize());
-    
+
     if (!CCCommonUtils::isIosAndroidPad()) {
         int oldBgHeight = m_buildBG->getContentSize().height;
-        changeBGHeight(m_buildBG);
+        changeBGMaxHeight(m_buildBG);
         int newBgHeight = m_buildBG->getContentSize().height;
         int addHeight = newBgHeight - oldBgHeight;
         int oldWidth = m_infoList->getContentSize().width;
@@ -52,7 +54,7 @@ bool MainCityMoreView::init(int buildId, int type)
         m_infoList->setPositionY(m_infoList->getPositionY()-addHeight);
         m_infoList->setContentSize(CCSizeMake(oldWidth, oldHeight+addHeight));
     }
-    
+
     m_scrollView = CCScrollView::create(m_infoList->getContentSize());
     m_scrollView->setDirection(kCCScrollViewDirectionVertical);
     m_infoList->addChild(m_scrollView);
@@ -462,9 +464,7 @@ bool TmpBuildCell::init(int buildItem, float effValue)
     auto& info = FunBuildController::getInstance()->getFunbuildById(buildItem);
     string pic = info.pic+"_"+CC_ITOA(GlobalData::shared()->contryResType)+".png";
     auto icon = CCLoadSprite::createSprite(pic.c_str());
-    if (CCCommonUtils::isIosAndroidPad()) {
-        icon->setScale(1.5);
-    }
+    icon->setScale(0.85);
     m_iconNode->addChild(icon);
     
     if (info.state == FUN_BUILD_NORMAL) {

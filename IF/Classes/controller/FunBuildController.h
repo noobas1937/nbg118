@@ -92,6 +92,7 @@
 #define SPE_BUILD_XIONGDI 9990012
 #define SPE_BUILD_NEWED 9990013
 #define SPE_BUILD_DRAGON 9990014
+#define SPE_BUILD_ZIYUANMEN 9990015
 
 #define MSG_OPEN_TILE "msg_open_tile"
 #define MSG_UNLOCK_TILE "msg_unlock_tile"

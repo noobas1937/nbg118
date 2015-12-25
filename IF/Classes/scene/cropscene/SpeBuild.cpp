@@ -159,6 +159,10 @@ bool SpeBuild::initSpeBuild(int itemId)
             ccbName = "picxiongdihui";
             isTile = false;
         }
+        else if (itemId == SPE_BUILD_ZIYUANMEN) {
+            ccbName = "piziyuanmen";
+            isTile = false;
+        }
         
         if (isTile) {
             auto tileInfo = FunBuildController::getInstance()->m_bigTileMap[itemId];
@@ -381,12 +385,52 @@ bool SpeBuild::initSpeBuild(int itemId)
 //            }
         }
         addShipPop(CCString::create("init"));
+    } else if (itemId == SPE_BUILD_ZIYUANMEN)
+    {
+        auto node = Node::create();
+        auto spr = CCLoadSprite::createSprite("feedback_head1.png");
+        spr->setAnchorPoint(Vec2(1, 0));
+        spr->setPosition(0, 0);
+        spr->setFlippedX(true);
+        auto bg9Spr = CCLoadSprite::createScale9Sprite("feedback_head.png");
+        bg9Spr->setAnchorPoint(Vec2(0.5, 0));
+        bg9Spr->setPosition(0, 14.4);
+        auto label = CCLabelIF::create((_lang("500027") ).c_str());
+        label->setColor({91, 43, 2});
+        label->setAnchorPoint(Vec2(0.5, 0));
+        label->setFontSize(25);
+        label->setPosition(-2.6, 41.4);
+        label->setDimensions(Size(180, 0));
+        label->setHorizontalAlignment(TextHAlignment::CENTER);
+        label->setVerticalAlignment(TextVAlignment::BOTTOM);
+        float w = label->getContentSize().width * label->getOriginScaleX();
+        float h = label->getContentSize().height * label->getOriginScaleY();
+        h = h + 50;
+        h = h < 50? 50 : h;
+        bg9Spr->setScale(1);
+        bg9Spr->setPreferredSize(Size(210, h));
+        bg9Spr->setContentSize(Size(210, h));
+        node->addChild(bg9Spr);
+        node->addChild(spr);
+        node->addChild(label);
+        node->setPositionY(40);
+        m_textNode->addChild(node);
+        node->setTag(888);
+        node->setVisible(true);
     }
 
     return true;
 }
 
 void SpeBuild::checkLeftTime(float _time) {
+    if (m_buildingKey == SPE_BUILD_ZIYUANMEN) {
+        if (m_textNode) {
+            if (m_textNode->getChildByTag(888)) {
+                m_textNode->getChildByTag(888)->setVisible(!m_textNode->getChildByTag(888)->isVisible());
+            }
+        }
+    }
+    
     if (m_buildingKey == SPE_BUILD_CARGO) {
         time_t targetTime = PortActController::getInstance()->m_nextRewardTime;
         time_t nowTime = GlobalData::shared()->getTimeStamp();
@@ -1277,6 +1321,9 @@ void SpeBuild::onClickThis(float _time)
     else if(m_buildingKey == SPE_BUILD_DRAGON){
         CCLog("click dragon building");
         PopupViewController::getInstance()->addPopupInView(DragonBattleJoinView::create());
+    }
+    else if (m_buildingKey == SPE_BUILD_ZIYUANMEN) {
+        PopupViewController::getInstance()->addPopupInView(MainCityView::create(FUN_BUILD_MAIN_CITY_ID));
     }
     
     scheduleOnce(schedule_selector(SpeBuild::onCanClick), 0.2f);
