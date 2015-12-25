@@ -78,18 +78,19 @@ private:
     CCSafeObject<CCControlButton> m_applyBtn;
     CCSafeObject<CCControlButton> m_joinAlliance;
     CCSafeObject<CCControlButton> m_RestrictApply;
-    CCSafeObject<CCNode> m_fireNode1;
-    CCSafeObject<CCNode> m_fireNode2;
+
     CCSafeObject<CCControlButton> m_btnMail;
     CCSafeObject<CCControlButton> m_btnMember;
     CCSafeObject<CCControlButton> m_btnComment;
     CCSafeObject<CCNode> m_textNode;
     CCSafeObject<WaitInterface> m_waitInterface;
     CCSafeObject<CCNode> m_middleNode;
-    CCSafeObject<CCNode> m_zhandouNode;
+//    CCSafeObject<CCNode> m_zhandouNode;
     CCSafeObject<CCNode> m_renshuNode;
     
     CCSafeObject<CCScrollView> m_scrollView;
     CCSafeObject<AllianceInfo> m_info;
+    
+    CCSafeObject<CCLabelIF> m_lvTxt;
 };
 #endif /* defined(__IF__CheckAllianceInfoView__) */

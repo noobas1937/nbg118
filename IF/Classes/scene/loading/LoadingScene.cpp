@@ -372,6 +372,7 @@ void LoadingScene::onGoToHelpShift(CCObject* p)
 
 void LoadingScene::getDownloadContents()
 {
+#ifdef USING_DLC
     NBDLCController::clean();
     
     string language = LocalController::shared()->getLanguageFileNameBasedOnUserSystem();
@@ -400,6 +401,19 @@ void LoadingScene::getDownloadContents()
     };
     auto dlc_ini = NBDLCController::create(manifest_file_path, version_filename, temp_manifest_filename, manifest_filename);
     dlc_ini->start(manifest_file_path, cb_ini);
+#else
+    LocalController::shared()->purgeData();
+    LocalController::shared()->init();
+    
+    setLoadingTips();
+    LoadingScene::showLoading();
+    
+    //为月卡做记录
+    int loadCount = CCUserDefault::sharedUserDefault()->getIntegerForKey("day_load_count");
+    loadCount+=1;
+    CCUserDefault::sharedUserDefault()->setIntegerForKey("day_load_count", loadCount);
+    CCUserDefault::sharedUserDefault()->flush();
+#endif
 }
 
 #pragma mark *

@@ -73,30 +73,30 @@ bool AllianceDonateRankView::init()
     m_infoList->setPositionY(m_infoList->getPositionY()-addHeight);
     m_infoList->setContentSize(CCSizeMake(oldWidth, oldHeight+addHeight));
     
-    if (!CCCommonUtils::isIosAndroidPad())
-    {
-        int BGcount = (newBgHeight-80)/100+1-1;
-        for (int i=0; i<BGcount; i++) {
-            auto pic = CCLoadSprite::createSprite("technology_09.png");
-            m_totalNode->addChild(pic);
-            pic->setPositionY(203-(i+1)*100);
-        }
-    } else
-    {
-        float curY = 0;
-        auto tbg = CCLoadSprite::loadResource("technology_09.png");
-        auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
-        while (curY > -2048)
-        {
-            auto pic = CCLoadSprite::createSprite("technology_09.png");
-            pic->setAnchorPoint(ccp(0, 1));
-            pic->setPosition(ccp(0, curY));
-            tBatchNode->addChild(pic);
-            curY -= pic->getContentSize().height;
-        }
-        tBatchNode->setScaleX(1536.0 / 640.0);
-        m_totalNode->addChild(tBatchNode);
-    }
+//    if (!CCCommonUtils::isIosAndroidPad())
+//    {
+//        int BGcount = (newBgHeight-80)/100+1-1;
+//        for (int i=0; i<BGcount; i++) {
+//            auto pic = CCLoadSprite::createSprite("technology_09.png");
+//            m_totalNode->addChild(pic);
+//            pic->setPositionY(203-(i+1)*100);
+//        }
+//    } else
+//    {
+//        float curY = 0;
+//        auto tbg = CCLoadSprite::loadResource("technology_09.png");
+//        auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
+//        while (curY > -2048)
+//        {
+//            auto pic = CCLoadSprite::createSprite("technology_09.png");
+//            pic->setAnchorPoint(ccp(0, 1));
+//            pic->setPosition(ccp(0, curY));
+//            tBatchNode->addChild(pic);
+//            curY -= pic->getContentSize().height;
+//        }
+//        tBatchNode->setScaleX(1536.0 / 640.0);
+//        m_totalNode->addChild(tBatchNode);
+//    }
     
     
     CCCommonUtils::setButtonTitle(m_weekBtn, _lang("115300").c_str());

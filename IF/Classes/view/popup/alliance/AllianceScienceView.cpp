@@ -50,29 +50,29 @@ bool AllianceScienceView::init()
         CCLoadSprite::doResourceByCommonIndex(7, false);
     });
     
-    auto tbg = CCLoadSprite::loadResource("technology_09.png");
-    auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
-    int maxHight = CCDirector::sharedDirector()->getWinSize().height;
-    int curHight = -100;
-    while (curHight<maxHight) {
-        auto bg = CCLoadSprite::createSprite("technology_09.png");
-        bg->setAnchorPoint(ccp(0, 1));
-        bg->setScaleX(624*1.0/bg->getContentSize().width);
-        if (CCCommonUtils::isIosAndroidPad())
-        {
-            bg->setScaleX(1536 * 1.0 / bg->getContentSize().width);
-        }
-        bg->setPosition(ccp(0, curHight));
-        curHight += bg->getContentSize().height;
-        tBatchNode->addChild(bg);
-    }
+//    auto tbg = CCLoadSprite::loadResource("technology_09.png");
+//    auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
+//    int maxHight = CCDirector::sharedDirector()->getWinSize().height;
+//    int curHight = -100;
+//    while (curHight<maxHight) {
+//        auto bg = CCLoadSprite::createSprite("technology_09.png");
+//        bg->setAnchorPoint(ccp(0, 1));
+//        bg->setScaleX(624*1.0/bg->getContentSize().width);
+//        if (CCCommonUtils::isIosAndroidPad())
+//        {
+//            bg->setScaleX(1536 * 1.0 / bg->getContentSize().width);
+//        }
+//        bg->setPosition(ccp(0, curHight));
+//        curHight += bg->getContentSize().height;
+//        tBatchNode->addChild(bg);
+//    }
     
     auto tmpCCB = CCBLoadFile("AllianceScienceView",this,this);
     this->setContentSize(tmpCCB->getContentSize());
     
 //    setTitleName(_lang("115159").c_str());
     m_titleTxt->setString(_lang("115159"));
-    m_listNode->addChild(tBatchNode);
+//    m_listNode->addChild(tBatchNode);
     
     int oldBgHeight = m_buildBG->getContentSize().height;
     changeBGHeight(m_buildBG);

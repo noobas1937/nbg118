@@ -10,8 +10,6 @@
 #include "../Ext/CCDevice.h"
 #include <map>
 
-//#define USING_DLC
-
 static map<string, bool> current_dlc_paths;
 
 void NBDLCController::clean()
@@ -26,7 +24,6 @@ NBDLCController* NBDLCController::create(string manifest_file_path,
 {
     auto p = new NBDLCController();
     
-#ifdef USING_DLC
     string dlc_path = FileUtils::getInstance()->getWritablePath() + "dlc_" + /*cocos2d::extension::CCDevice::getDLCVersionName() + "_" +*/ manifest_filename;
     auto it = current_dlc_paths.find(dlc_path);
     if (it == current_dlc_paths.end()) FileUtils::getInstance()->addSearchPath(dlc_path, true); // 查找文件时优先搜索从服务器下载下来的文件
@@ -37,7 +34,6 @@ NBDLCController* NBDLCController::create(string manifest_file_path,
     
     CCLOG("NBDLCController : manifest_file_path %s", manifest_file_path.c_str());
     CCLOG("NBDLCController : DLC path %s", dlc_path.c_str());
-#endif
     
     return p;
 }
@@ -55,15 +51,6 @@ NBDLCController::~NBDLCController()
 
 void NBDLCController::start(string manifest_file_path_as_key, std::function<void(string, EventAssetsManagerEx*)> callback)
 {
-#ifndef USING_DLC
-    if (callback)
-    {
-        callback(manifest_file_path_as_key, nullptr);
-    }
-    onCompleted();
-    return;
-#endif
-    
     if (false == m_pAssetsManagerEx->getLocalManifest()->isLoaded())
     {
         CCLOG("NBDLCController : 没有有效的配置文件 %s", manifest_file_path_as_key.c_str());

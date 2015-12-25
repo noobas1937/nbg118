@@ -1,0 +1,5 @@
+include ':NineOldAndroids'
+include ':ChatServices:related_projects:SwipeMenuListView'
+include ':ChatServices'
+include ':ChatServices:related_projects:NewQuickAction3D'
+include ':ChatServices:related_projects:PullRefreshDemo'

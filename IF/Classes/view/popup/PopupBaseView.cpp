@@ -16,6 +16,7 @@ void PopupBaseView::closeSelf() {
 }
 
 bool PopupBaseView::init() {
+    m_bReleaseTextureAfterRemove = true;
     m_bopenAnim = false;
     m_isAniComplete = true;
     m_isSystemMail = false;

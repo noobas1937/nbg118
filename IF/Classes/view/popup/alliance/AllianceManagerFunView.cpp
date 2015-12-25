@@ -73,8 +73,29 @@ bool AllianceManagerFunView::init(){
         auto node = CCBLoadFile("AllianceManagerFunView", this, this);
         this->setContentSize(node->getContentSize());
         
-        m_bodyIcon = CCLoadSprite::createSprite(m_info->getPic().c_str());
-        m_bodyIcon->setScale(0.8);
+//        m_bodyIcon = CCLoadSprite::createSprite();
+//        m_bodyIcon->setScale(0.8);
+//        
+        
+        //fusheng add
+        string nb_picName = m_info->getPic();
+//        auto arr1 = CCCommonUtils::split(m_info->getPic().c_str(), "_");
+//        if (arr1->count() == 2) {
+//            CCString* str = dynamic_cast<CCString*>( arr1->getObjectAtIndex(0));
+//            
+//            if (str) {
+//                nb_picName ="common307_" + str->_string + "_bust.png";
+//            }
+//        }
+        m_bodyIcon = CCLoadSprite::createSprite(nb_picName.c_str());
+        
+        m_bodyIcon->setAnchorPoint(Vec2(0.5,0));
+//        if (m_bodyIcon->getContentSize().width <=2 && m_bodyIcon->getContentSize().height <=2) {
+//            m_bodyIcon = CCLoadSprite::createSprite(m_info->getPic().c_str());
+//        }
+//        
+        //fusheng end
+    
 //        if (CCCommonUtils::isIosAndroidPad())
 //        {
 //            m_bodyIcon->setScale(1.6);
@@ -100,7 +121,8 @@ bool AllianceManagerFunView::init(){
         }
         
         CCSequence* sc1 = CCSequence::create(CCDelayTime::create(0.1),CCMoveTo::create(0.35, ccp(0,0)),CCCallFuncO::create(this, callfuncO_selector(AllianceManagerFunView::playFadeIn), NULL),NULL);
-        CCSequence* sc2 = CCSequence::create(CCDelayTime::create(0.05),CCScaleTo::create(0.4, 1.3),NULL);
+//        CCSequence* sc2 = CCSequence::create(CCDelayTime::create(0.05),CCScaleTo::create(0.4, 1.3),NULL);
+         CCSequence* sc2 = CCSequence::create(CCDelayTime::create(0.05),CCScaleTo::create(0.4, 1.0),NULL);
         CCSpawn* sw = CCSpawn::create(sc1,sc2,NULL);
         m_bodyIcon->runAction(sw);
 

@@ -316,6 +316,32 @@
                 <key>sourceSize</key>
                 <string>{90,90}</string>
             </dict>
+            <key>ooo.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{503,265},{300,278}}</string>
+                <key>offset</key>
+                <string>{0,11}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{300,278}}</string>
+                <key>sourceSize</key>
+                <string>{300,300}</string>
+            </dict>
+            <key>ooo_bust.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{503,265},{300,278}}</string>
+                <key>offset</key>
+                <string>{0,11}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{300,278}}</string>
+                <key>sourceSize</key>
+                <string>{300,300}</string>
+            </dict>
             <key>rm.png</key>
             <dict>
                 <key>frame</key>

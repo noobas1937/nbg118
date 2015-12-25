@@ -60,18 +60,18 @@ bool AllRankListPopUpView::init(){
     m_infoList->setContentSize(CCSize(m_infoList->getContentSize().width, m_infoList->getContentSize().height+dh));
     m_infoList->setPositionY(m_infoList->getPositionY()-dh);
 //    m_IOSNode->setPositionY(m_IOSNode->getPositionY() - dh / 2);
-    int totalH = 0;
-    while (totalH < CCDirector::sharedDirector()->getWinSize().height) {
-        auto pic = CCLoadSprite::createSprite("technology_09.png");
-        m_totalNode->addChild(pic);
-        pic->setAnchorPoint(ccp(0, 0));
-        pic->setPosition(ccp(0, totalH));
-        if (CCCommonUtils::isIosAndroidPad())
-        {
-            pic->setScale(2.4);
-        }
-        totalH += pic->getContentSize().height;
-    }
+//    int totalH = 0;
+//    while (totalH < CCDirector::sharedDirector()->getWinSize().height) {
+//        auto pic = CCLoadSprite::createSprite("technology_09.png");
+//        m_totalNode->addChild(pic);
+//        pic->setAnchorPoint(ccp(0, 0));
+//        pic->setPosition(ccp(0, totalH));
+//        if (CCCommonUtils::isIosAndroidPad())
+//        {
+//            pic->setScale(2.4);
+//        }
+//        totalH += pic->getContentSize().height;
+//    }
     m_totalNode->setPositionY(m_totalNode->getPositionY() - dh);
 
     if(GlobalData::shared()->analyticID == "market_global"){

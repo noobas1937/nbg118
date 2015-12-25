@@ -79,28 +79,28 @@ bool ActivityListView::init()
         m_infoList->setContentSize(CCSize(m_infoList->getContentSize().width,m_infoList->getContentSize().height + add));
         m_infoList->setPositionY(m_infoList->getPositionY() - add);
         
-        if (CCCommonUtils::isIosAndroidPad()) {
-            float cury =  -1024 - add / 2.0;
-            auto tbg = CCLoadSprite::loadResource("technology_09.png");
-            auto tbatch = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
-            while (cury < 1024 + add / 2.0) {
-                auto pic = CCLoadSprite::createSprite("technology_09.png");
-                pic->setScaleX(1536.0 / 640.0);
-                pic->setAnchorPoint(ccp(0.5, 0));
-                pic->setPosition(ccp(0, cury));
-                tbatch->addChild(pic);
-                cury += pic->getContentSize().height;
-            }
-            m_bgNode->addChild(tbatch);
-        } else {
-            int bgcount = (m_infoList->getContentSize().height)/100+2;
-            for (int i = 0; i<=bgcount; i++) {
-                auto pic = CCLoadSprite::createSprite("technology_09.png");
-                pic->setPositionY(-i*100+200);
-                pic->setScale(1.03);
-                m_bgNode->addChild(pic);
-            }
-        }
+//        if (CCCommonUtils::isIosAndroidPad()) {
+//            float cury =  -1024 - add / 2.0;
+//            auto tbg = CCLoadSprite::loadResource("technology_09.png");
+//            auto tbatch = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
+//            while (cury < 1024 + add / 2.0) {
+//                auto pic = CCLoadSprite::createSprite("technology_09.png");
+//                pic->setScaleX(1536.0 / 640.0);
+//                pic->setAnchorPoint(ccp(0.5, 0));
+//                pic->setPosition(ccp(0, cury));
+//                tbatch->addChild(pic);
+//                cury += pic->getContentSize().height;
+//            }
+//            m_bgNode->addChild(tbatch);
+//        } else {
+//            int bgcount = (m_infoList->getContentSize().height)/100+2;
+//            for (int i = 0; i<=bgcount; i++) {
+//                auto pic = CCLoadSprite::createSprite("technology_09.png");
+//                pic->setPositionY(-i*100+200);
+//                pic->setScale(1.03);
+//                m_bgNode->addChild(pic);
+//            }
+//        }
         
         ActivityController::getInstance()->sortActivityArr();
         m_data = CCArray::create();

@@ -663,22 +663,21 @@ public class ChatFragment extends ActionBarFragment
 		
 		buttonJoinAlliance = (Button) view.findViewById(ResUtil.getId(this.activity, "id", "joinAllianceBtn"));
 		// guojiang
-		buttonJoinAlliance.setVisibility(Button.INVISIBLE);
-//		buttonJoinAlliance.setText(LanguageManager.getLangByKey(LanguageKeys.MENU_JOIN));
-//			
-//		buttonJoinAlliance.setOnClickListener(new View.OnClickListener()
-//		{
-//
-//			@Override
-//			public void onClick(View v)
-//			{			
-//				ChatServiceController.doHostAction("joinAllianceBtnClick", "", "", "", true);
-//			}
-//		});
+//		buttonJoinAlliance.setVisibility(Button.INVISIBLE);
+		buttonJoinAlliance.setText(LanguageManager.getLangByKey(LanguageKeys.MENU_JOIN));
+			
+		buttonJoinAlliance.setOnClickListener(new View.OnClickListener()
+		{
+
+			@Override
+			public void onClick(View v)
+			{			
+				ChatServiceController.doHostAction("joinAllianceBtnClick", "", "", "", true);
+			}
+		});
 
 		noAllianceTipText = ((TextView) view.findViewById(ResUtil.getId(this.activity, "id", "joinAllianceTipText")));
-		noAllianceTipText.setText("Coming Soon!");
-//		noAllianceTipText.setText(LanguageManager.getLangByKey(LanguageKeys.TIP_JOIN_ALLIANCE));
+		noAllianceTipText.setText(LanguageManager.getLangByKey(LanguageKeys.TIP_JOIN_ALLIANCE));
 
 		refreshSendButton();
 
@@ -1163,22 +1162,22 @@ public class ChatFragment extends ActionBarFragment
 		isJoinAlliancePopupShowing = true;
 		Window window = dlg.getWindow();
 		window.setBackgroundDrawable(new ColorDrawable());
-		window.setContentView(R.layout.cs__first_alliance_popup);
+		window.setContentView(R.layout.nb_1st_alliance_popup);
 		window.setLayout(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 
-		ImageView bgImageView2 = (ImageView) window.findViewById(R.id.bg2);
-		ViewHelper.setRotationY(bgImageView2, 180);
+		// ImageView bgImageView2 = (ImageView) window.findViewById(R.id.bg2);
+		// ViewHelper.setRotationY(bgImageView2, 180);
 
 		TextView joinAllianceTipText = (TextView) window.findViewById(R.id.joinAllianceTipText);
-		joinAllianceTipText.setText(LanguageManager.getLangByKey(LanguageKeys.TIP_ADDALLIANCE_REWARD));
+		joinAllianceTipText.setText("");//LanguageManager.getLangByKey(LanguageKeys.TIP_ADDALLIANCE_REWARD));
 
 		TextView joinAllianceRewardText = (TextView) window.findViewById(R.id.joinAllianceRewardText);
-		joinAllianceRewardText.setText(LanguageManager.getLangByKey(LanguageKeys.TIP_ADDALLIANCE_COIN, "100"));
+		joinAllianceRewardText.setText("");//LanguageManager.getLangByKey(LanguageKeys.TIP_ADDALLIANCE_COIN, "200"));
 
 		TextView sendMethodText = (TextView) window.findViewById(R.id.sendMethodText);
-		sendMethodText.setText(LanguageManager.getLangByKey(LanguageKeys.TIP_ADDALLIANCE_REWARD_SENDBYMAIL));
+		sendMethodText.setText("");//LanguageManager.getLangByKey(LanguageKeys.TIP_ADDALLIANCE_REWARD_SENDBYMAIL));
 
-		RelativeLayout firstJoinAllianceLayout = (RelativeLayout) window.findViewById(R.id.firstAllianceLayout);
+		RelativeLayout firstJoinAllianceLayout = (RelativeLayout) window.findViewById(R.id.nb1stAllianceLayout);
 
 		firstJoinAllianceLayout.setOnTouchListener(new OnTouchListener()
 		{
@@ -1638,7 +1637,7 @@ public class ChatFragment extends ActionBarFragment
 			try
 			{
 				// guojiang
-//				showJoinAlliancePopup();
+				showJoinAlliancePopup();
 			}
 			catch (Exception e)
 			{

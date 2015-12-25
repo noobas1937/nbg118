@@ -46,33 +46,33 @@ bool TroopsView::init(int type)
     auto tmpCCB = CCBLoadFile("MainCityMoreView",this,this);
     this->setContentSize(tmpCCB->getContentSize());
     
-    if (CCCommonUtils::isIosAndroidPad()) {
-        int newBgHeight = m_buildBG->getContentSize().height;
-        int count = newBgHeight/100+1;
-        for (int i = 0; i<=count; i++) {
-            auto pic = CCLoadSprite::createSprite("technology_09.png");
-            pic->setPositionY(-i*100);
-            pic->setScaleX(2.4);
-            m_BGNode->addChild(pic);
-        }
-    }
-    else {
-        int oldBgHeight = m_buildBG->getContentSize().height;
-        changeBGHeight(m_buildBG);
-        int newBgHeight = m_buildBG->getContentSize().height;
-        int addHeight = newBgHeight - oldBgHeight;
-        int oldWidth = m_infoList->getContentSize().width;
-        int oldHeight = m_infoList->getContentSize().height;
-        m_infoList->setPositionY(m_infoList->getPositionY()-addHeight);
-        m_infoList->setContentSize(CCSizeMake(oldWidth, oldHeight+addHeight));
-        // m_BGNode->setPositionY(m_buildBG->getPositionY()-50);
-        int count = newBgHeight/100+1;
-        for (int i = 0; i<=count; i++) {
-            auto pic = CCLoadSprite::createSprite("technology_09.png");
-            pic->setPositionY(-i*100);
-            m_BGNode->addChild(pic);
-        }
-    }
+//    if (CCCommonUtils::isIosAndroidPad()) {
+//        int newBgHeight = m_buildBG->getContentSize().height;
+//        int count = newBgHeight/100+1;
+//        for (int i = 0; i<=count; i++) {
+//            auto pic = CCLoadSprite::createSprite("technology_09.png");
+//            pic->setPositionY(-i*100);
+//            pic->setScaleX(2.4);
+//            m_BGNode->addChild(pic);
+//        }
+//    }
+//    else {
+//        int oldBgHeight = m_buildBG->getContentSize().height;
+//        changeBGHeight(m_buildBG);
+//        int newBgHeight = m_buildBG->getContentSize().height;
+//        int addHeight = newBgHeight - oldBgHeight;
+//        int oldWidth = m_infoList->getContentSize().width;
+//        int oldHeight = m_infoList->getContentSize().height;
+//        m_infoList->setPositionY(m_infoList->getPositionY()-addHeight);
+//        m_infoList->setContentSize(CCSizeMake(oldWidth, oldHeight+addHeight));
+//        // m_BGNode->setPositionY(m_buildBG->getPositionY()-50);
+//        int count = newBgHeight/100+1;
+//        for (int i = 0; i<=count; i++) {
+//            auto pic = CCLoadSprite::createSprite("technology_09.png");
+//            pic->setPositionY(-i*100);
+//            m_BGNode->addChild(pic);
+//        }
+//    }
     
     m_scrollView = CCScrollView::create(m_infoList->getContentSize());
     m_scrollView->setDirection(kCCScrollViewDirectionVertical);

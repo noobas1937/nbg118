@@ -17,6 +17,16 @@
 #include "DefaultTableViewDelegate.h"
 #include "AllianceEventInfo.h"
 
+enum AlliancePageTag
+{
+    ALLIANCE_BTN,
+    MEMBER_BTN,
+    WAR_BTN,
+    STORE_BTN,
+    SCIENCE_BTN
+    
+};
+
 class AllianceInfoView: public PopupBaseView
 ,public CCBSelectorResolver
  
@@ -120,6 +130,15 @@ private:
     //
     CCSafeObject<CCLabelIF> m_titleTxt;
     
+    CCSafeObject<CCSprite> m_nb_alliance_info;
+    
+    CCSafeObject<CCNode> m_nb_allianceBottomNode;
+    
+    CCSafeObject<CCLayerColor> m_nb_bg1;
+    CCSafeObject<CCLayerColor> m_nb_bg2;
+    CCSafeObject<CCLayerColor> m_nb_bg3;
+
+    
     WaitInterface* m_waitInterface;
     CCPoint m_touchPos;
     int m_eventNum;
@@ -196,6 +215,82 @@ private:
     CCSafeObject<CCNode> m_node2;
     
     AllianceEventInfo* m_lastInfo;
+};
+
+enum ClickAlliancePageTag
+{
+    ALLIANCE_CLICK_HOME,
+    ALLIANCE_CLICK_MEMBER,
+    ALLIANCE_CLICK_WAR,
+    ALLIANCE_CLICK_STORE,
+    ALLIANCE_CLICK_SCIENCE,
+    
+    ALLIANCE_NONE,
+    
+};
+
+class AllianceBottomNode:public Layer
+, public CCBMemberVariableAssigner
+{
+public:
+    
+    static AllianceBottomNode *create(AllianceInfo* info,AlliancePageTag tag);
+
+private:
+    AllianceBottomNode();
+    virtual bool init();
+    virtual void onEnter();
+    virtual void onExit();
+    virtual bool onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode);
+    virtual bool onTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent);
+    virtual void onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent);
+    virtual void onTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
+
+    void updateNum(CCObject* param);
+    
+
+    ClickAlliancePageTag clickPage;
+    
+    AlliancePageTag m_PageTag;
+    AllianceInfo* m_info;
+    
+    
+    CCSafeObject<CCNode> nb_allianceNode;
+#pragma mark Alliance_btn
+    CCSafeObject<CCSprite> m_nb_allianceSpr;
+    CCSafeObject<CCLabelIF> m_nb_allianceTxt;
+
+
+#pragma mark Member_btn
+    CCSafeObject<CCSprite> m_nb_memberSpr;
+    CCSafeObject<CCLabelIF> m_nb_memberTxt;
+    CCSafeObject<CCNode> m_nb_applyNode;
+    CCSafeObject<CCSprite> m_nb_applyFlag;
+    CCSafeObject<CCLabelIF>  m_nb_applyTipNum;
+
+    
+#pragma mark War_btn
+    CCSafeObject<CCSprite> m_nb_warSpr;
+    CCSafeObject<CCLabelIF> m_nb_warTxt;
+    CCSafeObject<CCNode> m_warNumNode;
+    CCSafeObject<CCSprite> m_warNumberFlag;
+    CCSafeObject<CCLabelIF>  m_warTipNum;
+
+
+
+#pragma mark Store_btn
+    CCSafeObject<CCSprite> m_nb_storeSpr;
+    CCSafeObject<CCLabelIF> m_nb_storeTxt;
+
+
+
+
+#pragma mark Science_btn
+    CCSafeObject<CCSprite> m_nb_scienceSpr;
+    CCSafeObject<CCLabelIF> m_nb_scienceTxt;
+    
+    
+
 };
 
 #endif /* defined(__IF__AllianceInfoView__) */

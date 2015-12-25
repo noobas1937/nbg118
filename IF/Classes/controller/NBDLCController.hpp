@@ -13,6 +13,8 @@
 #include "cocos-ext.h"
 #include <string>
 
+//#define USING_DLC
+
 USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace std;

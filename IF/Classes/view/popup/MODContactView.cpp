@@ -268,23 +268,23 @@ void MODContactView::onGetModDataBack(CCObject *obj){
 }
 
 void MODContactView::addBG(){
-    std::string picName = "technology_09.png";
-    auto totalH = CCDirector::sharedDirector()->getWinSize().height;
-    int h = 0;
-    auto batch = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource(picName.c_str())->getTexture());
-    m_bgContainer->addChild(batch);
-    while (h < totalH) {
-        auto sprite = CCLoadSprite::createSprite(picName.c_str());
-        sprite->setAnchorPoint(ccp(0, 0));
-        batch->addChild(sprite);
-        sprite->setPosition(ccp(0, h));
-        h += sprite->getContentSize().height;
-        if (CCCommonUtils::isIosAndroidPad())
-        {
-            sprite->setScale(2.4);
-            
-        }
-    }
+//    std::string picName = "technology_09.png";
+//    auto totalH = CCDirector::sharedDirector()->getWinSize().height;
+//    int h = 0;
+//    auto batch = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource(picName.c_str())->getTexture());
+//    m_bgContainer->addChild(batch);
+//    while (h < totalH) {
+//        auto sprite = CCLoadSprite::createSprite(picName.c_str());
+//        sprite->setAnchorPoint(ccp(0, 0));
+//        batch->addChild(sprite);
+//        sprite->setPosition(ccp(0, h));
+//        h += sprite->getContentSize().height;
+//        if (CCCommonUtils::isIosAndroidPad())
+//        {
+//            sprite->setScale(2.4);
+//            
+//        }
+//    }
 }
 
 void MODContactView::changeFlagIcon(CCObject* lan){
@@ -366,22 +366,22 @@ bool IntroPopUpView::init(){
 }
 
 void IntroPopUpView::addBG(){
-    std::string picName = "technology_09.png";
-    auto totalH = CCDirector::sharedDirector()->getWinSize().height;
-    int h = 0;
-    auto batch = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource(picName.c_str())->getTexture());
-    m_bgContainer->addChild(batch);
-    while (h < totalH) {
-        auto sprite = CCLoadSprite::createSprite(picName.c_str());
-        sprite->setAnchorPoint(ccp(0, 0));
-        batch->addChild(sprite);
-        sprite->setPosition(ccp(0, h));
-        h += sprite->getContentSize().height;
-        if (CCCommonUtils::isIosAndroidPad())
-        {
-            sprite->setScale(2.4);
-        }
-    }
+//    std::string picName = "technology_09.png";
+//    auto totalH = CCDirector::sharedDirector()->getWinSize().height;
+//    int h = 0;
+//    auto batch = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource(picName.c_str())->getTexture());
+//    m_bgContainer->addChild(batch);
+//    while (h < totalH) {
+//        auto sprite = CCLoadSprite::createSprite(picName.c_str());
+//        sprite->setAnchorPoint(ccp(0, 0));
+//        batch->addChild(sprite);
+//        sprite->setPosition(ccp(0, h));
+//        h += sprite->getContentSize().height;
+//        if (CCCommonUtils::isIosAndroidPad())
+//        {
+//            sprite->setScale(2.4);
+//        }
+//    }
 }
 
 void IntroPopUpView::addText(){
@@ -508,22 +508,22 @@ bool MODLanguageView2::init(){
 }
 
 void MODLanguageView2::addBG(){
-    std::string picName = "technology_09.png";
-    auto totalH = CCDirector::sharedDirector()->getWinSize().height;
-    int h = 0;
-    auto batch = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource(picName.c_str())->getTexture());
-    m_bgContainer->addChild(batch);
-    while (h < totalH) {
-        auto sprite = CCLoadSprite::createSprite(picName.c_str());
-        sprite->setAnchorPoint(ccp(0, 0));
-        batch->addChild(sprite);
-        sprite->setPosition(ccp(0, h));
-        h += sprite->getContentSize().height;
-        if (CCCommonUtils::isIosAndroidPad())
-        {
-            sprite->setScale(2.4);
-        }
-    }
+//    std::string picName = "technology_09.png";
+//    auto totalH = CCDirector::sharedDirector()->getWinSize().height;
+//    int h = 0;
+//    auto batch = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource(picName.c_str())->getTexture());
+//    m_bgContainer->addChild(batch);
+//    while (h < totalH) {
+//        auto sprite = CCLoadSprite::createSprite(picName.c_str());
+//        sprite->setAnchorPoint(ccp(0, 0));
+//        batch->addChild(sprite);
+//        sprite->setPosition(ccp(0, h));
+//        h += sprite->getContentSize().height;
+//        if (CCCommonUtils::isIosAndroidPad())
+//        {
+//            sprite->setScale(2.4);
+//        }
+//    }
     
 //    h = 0;
 //    picName = "Alliance diban.png";

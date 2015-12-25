@@ -273,7 +273,7 @@
 						<key>customClass</key>
 						<string></string>
 						<key>displayName</key>
-						<string>CCControlButton</string>
+						<string>m_mail</string>
 						<key>memberVarAssignmentName</key>
 						<string>m_mail</string>
 						<key>memberVarAssignmentType</key>
@@ -481,7 +481,7 @@
 						<key>customClass</key>
 						<string></string>
 						<key>displayName</key>
-						<string>CCControlButton</string>
+						<string>m_manageBtn</string>
 						<key>memberVarAssignmentName</key>
 						<string>m_manageBtn</string>
 						<key>memberVarAssignmentType</key>
@@ -689,7 +689,7 @@
 						<key>customClass</key>
 						<string>CCLabelIF</string>
 						<key>displayName</key>
-						<string>CCLabelTTF</string>
+						<string>m_powerLabel</string>
 						<key>memberVarAssignmentName</key>
 						<string>m_powerLabel</string>
 						<key>memberVarAssignmentType</key>
@@ -817,7 +817,7 @@
 						<key>customClass</key>
 						<string>CCLabelIF</string>
 						<key>displayName</key>
-						<string>CCLabelTTF</string>
+						<string>m_nameLabel</string>
 						<key>memberVarAssignmentName</key>
 						<string>m_nameLabel</string>
 						<key>memberVarAssignmentType</key>
@@ -1127,7 +1127,7 @@
 						<key>customClass</key>
 						<string></string>
 						<key>displayName</key>
-						<string>CCNode</string>
+						<string>m_iconPlaceHolder</string>
 						<key>memberVarAssignmentName</key>
 						<string>m_iconPlaceHolder</string>
 						<key>memberVarAssignmentType</key>
@@ -1184,21 +1184,13 @@
 				<key>customClass</key>
 				<string></string>
 				<key>displayName</key>
-				<string>CCNode</string>
+				<string>m_infoNode</string>
 				<key>memberVarAssignmentName</key>
 				<string>m_infoNode</string>
 				<key>memberVarAssignmentType</key>
 				<integer>2</integer>
 				<key>properties</key>
 				<array>
-					<dict>
-						<key>name</key>
-						<string>visible</string>
-						<key>type</key>
-						<string>Check</string>
-						<key>value</key>
-						<false/>
-					</dict>
 					<dict>
 						<key>name</key>
 						<string>anchorPoint</string>
@@ -1246,13 +1238,25 @@
 						<key>customClass</key>
 						<string></string>
 						<key>displayName</key>
-						<string>CCSprite</string>
+						<string>m_bg</string>
 						<key>memberVarAssignmentName</key>
 						<string>m_bg</string>
 						<key>memberVarAssignmentType</key>
 						<integer>2</integer>
 						<key>properties</key>
 						<array>
+							<dict>
+								<key>name</key>
+								<string>position</string>
+								<key>type</key>
+								<string>Position</string>
+								<key>value</key>
+								<array>
+									<real>3</real>
+									<real>0.0</real>
+									<integer>0</integer>
+								</array>
+							</dict>
 							<dict>
 								<key>name</key>
 								<string>anchorPoint</string>
@@ -1292,8 +1296,8 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string>Common/Common_1.plist</string>
-									<string>Alliance_title.png</string>
+									<string>Common/Common_7.plist</string>
+									<string>nb_0045.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -1317,7 +1321,7 @@
 						<key>customClass</key>
 						<string>CCLabelIFTTF</string>
 						<key>displayName</key>
-						<string>CCLabelTTF</string>
+						<string>m_titleTxt</string>
 						<key>memberVarAssignmentName</key>
 						<string>m_titleTxt</string>
 						<key>memberVarAssignmentType</key>
@@ -1331,8 +1335,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>97.608329772949219</real>
-									<real>45</real>
+									<real>100.60832977294922</real>
+									<real>38</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -1394,9 +1398,9 @@
 								<string>Color3</string>
 								<key>value</key>
 								<array>
-									<integer>195</integer>
-									<integer>160</integer>
-									<integer>124</integer>
+									<integer>208</integer>
+									<integer>216</integer>
+									<integer>242</integer>
 								</array>
 							</dict>
 							<dict>
@@ -1445,7 +1449,7 @@
 						<key>customClass</key>
 						<string></string>
 						<key>displayName</key>
-						<string>CCSprite</string>
+						<string>m_arrow</string>
 						<key>memberVarAssignmentName</key>
 						<string>m_arrow</string>
 						<key>memberVarAssignmentType</key>
@@ -1459,8 +1463,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>588.60003662109375</real>
-									<real>44</real>
+									<real>591.60003662109375</real>
+									<real>39</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -1539,7 +1543,7 @@
 						<key>customClass</key>
 						<string></string>
 						<key>displayName</key>
-						<string>CCSprite</string>
+						<string>m_rankSpr</string>
 						<key>memberVarAssignmentName</key>
 						<string>m_rankSpr</string>
 						<key>memberVarAssignmentType</key>
@@ -1553,8 +1557,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>10.893518447875977</real>
-									<real>6.5787038803100586</real>
+									<real>32.893516540527344</real>
+									<real>40.578704833984375</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -1565,8 +1569,8 @@
 								<string>Point</string>
 								<key>value</key>
 								<array>
-									<real>0.0</real>
-									<real>0.0</real>
+									<real>0.5</real>
+									<real>0.5</real>
 								</array>
 							</dict>
 							<dict>
@@ -1597,8 +1601,8 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string>Common/Common_1.plist</string>
-									<string>Btn_shoucang.png</string>
+									<string>Common/Common_7.plist</string>
+									<string>nb_al_R_0044.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -1613,6 +1617,8 @@
 								</array>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -1673,8 +1679,8 @@
 										<string>SpriteFrame</string>
 										<key>value</key>
 										<array>
-											<string>Common/Common_1.plist</string>
-											<string>Alliance_R1.png</string>
+											<string>Common/Common_7.plist</string>
+											<string>nb_0032.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -1694,7 +1700,7 @@
 						<key>customClass</key>
 						<string></string>
 						<key>displayName</key>
-						<string>CCNode</string>
+						<string>m_rankIcon</string>
 						<key>memberVarAssignmentName</key>
 						<string>m_rankIcon</string>
 						<key>memberVarAssignmentType</key>
@@ -1708,8 +1714,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>49.208332061767578</real>
-									<real>42.736110687255859</real>
+									<real>43.208332061767578</real>
+									<real>40.736110687255859</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -1755,7 +1761,7 @@
 						<key>customClass</key>
 						<string></string>
 						<key>displayName</key>
-						<string>CCSprite</string>
+						<string>m_numSpr</string>
 						<key>memberVarAssignmentName</key>
 						<string>m_numSpr</string>
 						<key>memberVarAssignmentType</key>
@@ -1769,8 +1775,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>512.8055419921875</real>
-									<real>44</real>
+									<real>514.8055419921875</real>
+									<real>39</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -1838,7 +1844,7 @@
 						<key>customClass</key>
 						<string>CCLabelIF</string>
 						<key>displayName</key>
-						<string>CCLabelTTF</string>
+						<string>m_numTxt</string>
 						<key>memberVarAssignmentName</key>
 						<string>m_numTxt</string>
 						<key>memberVarAssignmentType</key>
@@ -1852,8 +1858,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>526.60833740234375</real>
-									<real>45</real>
+									<real>529.60833740234375</real>
+									<real>40</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -1915,9 +1921,9 @@
 								<string>Color3</string>
 								<key>value</key>
 								<array>
-									<integer>195</integer>
-									<integer>160</integer>
-									<integer>124</integer>
+									<integer>208</integer>
+									<integer>216</integer>
+									<integer>242</integer>
 								</array>
 							</dict>
 							<dict>
@@ -1962,7 +1968,7 @@
 				<key>customClass</key>
 				<string></string>
 				<key>displayName</key>
-				<string>CCNode</string>
+				<string>m_rankNode</string>
 				<key>memberVarAssignmentName</key>
 				<string>m_rankNode</string>
 				<key>memberVarAssignmentType</key>
@@ -2165,7 +2171,7 @@
 						<key>customClass</key>
 						<string></string>
 						<key>displayName</key>
-						<string>CCControlButton</string>
+						<string>m_btn1</string>
 						<key>memberVarAssignmentName</key>
 						<string>m_btn1</string>
 						<key>memberVarAssignmentType</key>
@@ -2373,7 +2379,7 @@
 						<key>customClass</key>
 						<string></string>
 						<key>displayName</key>
-						<string>CCControlButton</string>
+						<string>m_btn4</string>
 						<key>memberVarAssignmentName</key>
 						<string>m_btn4</string>
 						<key>memberVarAssignmentType</key>
@@ -2581,7 +2587,7 @@
 						<key>customClass</key>
 						<string></string>
 						<key>displayName</key>
-						<string>CCControlButton</string>
+						<string>m_btn2</string>
 						<key>memberVarAssignmentName</key>
 						<string>m_btn2</string>
 						<key>memberVarAssignmentType</key>
@@ -2785,21 +2791,13 @@
 				<key>customClass</key>
 				<string></string>
 				<key>displayName</key>
-				<string>CCNode</string>
+				<string>m_btnNode</string>
 				<key>memberVarAssignmentName</key>
 				<string>m_btnNode</string>
 				<key>memberVarAssignmentType</key>
 				<integer>2</integer>
 				<key>properties</key>
 				<array>
-					<dict>
-						<key>name</key>
-						<string>visible</string>
-						<key>type</key>
-						<string>Check</string>
-						<key>value</key>
-						<false/>
-					</dict>
 					<dict>
 						<key>baseValue</key>
 						<array>

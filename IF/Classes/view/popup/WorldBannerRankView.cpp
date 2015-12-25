@@ -47,12 +47,12 @@ bool WorldBannerRankView::init()
     m_infoList->setPositionY(m_infoList->getPositionY()-addHeight);
     m_infoList->setContentSize(CCSizeMake(oldWidth, oldHeight+addHeight));
     
-    int BGcount = (newBgHeight-80)/100+1-1;
-    for (int i=0; i<BGcount; i++) {
-        auto pic = CCLoadSprite::createSprite("technology_09.png");
-        m_totalNode->addChild(pic);
-        pic->setPositionY(203-(i+1)*100);
-    }
+//    int BGcount = (newBgHeight-80)/100+1-1;
+//    for (int i=0; i<BGcount; i++) {
+//        auto pic = CCLoadSprite::createSprite("technology_09.png");
+//        m_totalNode->addChild(pic);
+//        pic->setPositionY(203-(i+1)*100);
+//    }
     
     m_textLabel1->setString(_lang("110142"));
     m_textLabel2->setString(_lang("110143"));

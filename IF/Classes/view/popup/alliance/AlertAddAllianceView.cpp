@@ -45,10 +45,14 @@ bool AlertAddAllianceView::init(){
     bool ret = false;
     if(PopupBaseView::init()){
         this->setIsHDPanel(true);
+        CCLoadSprite::doResourceByCommonIndex(6, true);
         CCLoadSprite::doResourceByCommonIndex(7, true);
-//        setCleanFunction([](){
+        CCLoadSprite::doResourceByCommonIndex(206, true);
+        setCleanFunction([](){
 //            CCLoadSprite::doResourceByCommonIndex(7, false);
-//        });
+            CCLoadSprite::doResourceByCommonIndex(6, false);
+            CCLoadSprite::doResourceByCommonIndex(206, false);
+        });
         
         auto node = CCBLoadFile("AlertAddAllianceView", this, this);
         this->setContentSize(node->getContentSize());
@@ -59,11 +63,23 @@ bool AlertAddAllianceView::init(){
 //        m_txt3->setString(_lang("115004"));
 //        m_txt4->setString(_lang("115005"));
 //        m_txt5->setString(_lang("115006"));
-        m_txt1->setString(_lang("115168"));
-        m_txt2->setString(_lang_1("115169", "200"));
-        m_txt3->setString(_lang("115170"));
+        
+//        m_txt1->setString(_lang("115168"));
+//        m_txt2->setString(_lang_1("115169", "200"));
+//        m_txt3->setString(_lang("115170"));
+        
+        m_txt1->setString(_lang("500024"));
+        m_txt2->setString(_lang("500025"));
+        m_txt3->setString(_lang("500026"));
+        
         CCCommonUtils::setButtonTitle(m_btnJoin, _lang("115020").c_str());
         m_btnJoin->setSwallowsTouches(false);
+        
+        m_btnJoin->setTitleColorForState({0x8c, 0x51, 0x17}, cocos2d::extension::Control::State::SELECTED);
+        m_btnJoin->setTitleColorForState({0x8c, 0x51, 0x17}, cocos2d::extension::Control::State::NORMAL);
+        m_btnJoin->setTitleColorForState({0x8c, 0x51, 0x17}, cocos2d::extension::Control::State::HIGH_LIGHTED);
+        m_btnJoin->setTitleColorForState({0x8c, 0x51, 0x17}, cocos2d::extension::Control::State::DISABLED);
+        
         ret = true;
     }
     return ret;
@@ -73,7 +89,7 @@ bool AlertAddAllianceView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_btnJoin", CCControlButton*, this->m_btnJoin);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_txt1", CCLabelIF*, this->m_txt1);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_txt3", CCLabelIF*, this->m_txt3);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_txt2", CCLabelBMFont*, this->m_txt2);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_txt2", CCLabelIF*, this->m_txt2);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_clickNode", CCNode*, this->m_clickNode);
     return false;
 }

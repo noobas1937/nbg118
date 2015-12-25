@@ -517,9 +517,11 @@ LOCAL_SRC_FILES := main.cpp \
 ../../IF/Classes/scene/loading/LoadingScene.cpp \
 ../../IF/Classes/scene/SceneContainer.cpp \
 ../../IF/Classes/scene/titan/DrawNode3D.cpp \
+../../IF/Classes/scene/titan/NBGPostEffectLayer.cpp \
 ../../IF/Classes/scene/titan/NBSprite3D.cpp \
 ../../IF/Classes/scene/titan/Titan.cpp \
 ../../IF/Classes/scene/titan/TitanInView.cpp \
+../../IF/Classes/scene/vikingship/VikingShip.cpp \
 ../../IF/Classes/scene/world/AAreaBuildCCB.cpp \
 ../../IF/Classes/scene/world/ActBossPopUp.cpp \
 ../../IF/Classes/scene/world/AddFavorite.cpp \
@@ -541,6 +543,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../IF/Classes/scene/world/map/NBWorldMapMainCity.cpp \
 ../../IF/Classes/scene/world/map/NBWorldMonster.cpp \
 ../../IF/Classes/scene/world/map/NBWorldNPC.cpp \
+../../IF/Classes/scene/world/map/NBWorldUtils.cpp \
 ../../IF/Classes/scene/world/MarchDetailView.cpp \
 ../../IF/Classes/scene/world/MinimapView.cpp \
 ../../IF/Classes/scene/world/MonsterDetailView.cpp \

@@ -40,20 +40,20 @@ bool MedalNewView::init()
         this->setContentSize(ccb->getContentSize());
         
         int extH = getExtendHeight();
-        auto tbg = CCLoadSprite::loadResource("technology_09.png");
-        auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
-        int maxHight = CCDirector::sharedDirector()->getWinSize().height;
-        int width = CCDirector::sharedDirector()->getWinSize().width;
-        int curHight = -maxHight/2.0f;
-        while (curHight<maxHight) {
-            auto bg = CCLoadSprite::createSprite("technology_09.png");
-            bg->setAnchorPoint(ccp(0, 1));
-            bg->setPosition(ccp(-width/2.0f, curHight));
-            curHight += bg->getContentSize().height;
-            bg->runAction(CCFadeIn::create(0.5));
-            tBatchNode->addChild(bg);
-        }
-        m_viewNode->addChild(tBatchNode);
+//        auto tbg = CCLoadSprite::loadResource("technology_09.png");
+//        auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
+//        int maxHight = CCDirector::sharedDirector()->getWinSize().height;
+//        int width = CCDirector::sharedDirector()->getWinSize().width;
+//        int curHight = -maxHight/2.0f;
+//        while (curHight<maxHight) {
+//            auto bg = CCLoadSprite::createSprite("technology_09.png");
+//            bg->setAnchorPoint(ccp(0, 1));
+//            bg->setPosition(ccp(-width/2.0f, curHight));
+//            curHight += bg->getContentSize().height;
+//            bg->runAction(CCFadeIn::create(0.5));
+//            tBatchNode->addChild(bg);
+//        }
+//        m_viewNode->addChild(tBatchNode);
         m_viewNode->setPositionY(m_viewNode->getPositionY()-extH);
 //        m_waitInterface = GameController::getInstance()->showWaitInterface(m_listNode);
         MedalNewNode* medalNode = MedalNewNode::create(medalType_Other);

@@ -49,15 +49,15 @@ bool MonthCardView::init(){
     
     auto tmpCCB = CCBLoadFile("MonthCardView",this,this);
     if (CCCommonUtils::isIosAndroidPad()) {
-        this->setContentSize(CCDirector::sharedDirector()->getWinSize());
-        int newBgHeight = CCDirector::sharedDirector()->getWinSize().height;
-        int bgcount = newBgHeight/100;
-        for (int i = 0; i<=bgcount; i++) {
-            auto pic = CCLoadSprite::createSprite("technology_09.png");
-            pic->setPositionY(-i*100);
-            pic->setScaleX(2.4);
-            m_BGNode->addChild(pic);
-        }
+//        this->setContentSize(CCDirector::sharedDirector()->getWinSize());
+//        int newBgHeight = CCDirector::sharedDirector()->getWinSize().height;
+//        int bgcount = newBgHeight/100;
+//        for (int i = 0; i<=bgcount; i++) {
+//            auto pic = CCLoadSprite::createSprite("technology_09.png");
+//            pic->setPositionY(-i*100);
+//            pic->setScaleX(2.4);
+//            m_BGNode->addChild(pic);
+//        }
     }
     else {
         setContentSize(CCDirector::sharedDirector()->getWinSize());

@@ -51,26 +51,28 @@ bool CheckAllianceInfoView::init()
     setIsHDPanel(true);
     CCLoadSprite::doResourceByCommonIndex(205, true);
     CCLoadSprite::doResourceByCommonIndex(7, true);
+    CCLoadSprite::doResourceByCommonIndex(8, true);
     setCleanFunction([](){
         CCLoadSprite::doResourceByCommonIndex(205, false);
         CCLoadSprite::doResourceByCommonIndex(7, false);
+        CCLoadSprite::doResourceByCommonIndex(8, false);
     });
-    auto tbg = CCLoadSprite::loadResource("technology_09.png");
-    auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
-    int maxHight = CCDirector::sharedDirector()->getWinSize().height;
-    int curHight = -500;
-    while (curHight<maxHight) {
-        auto bg = CCLoadSprite::createSprite("technology_09.png");
-        bg->setAnchorPoint(ccp(0, 1));
-        bg->setPosition(ccp(0, curHight));
-        curHight += bg->getContentSize().height;
-        tBatchNode->addChild(bg);
-    }
-    if (CCCommonUtils::isIosAndroidPad())
-    {
-        tBatchNode->setScaleX(1536.0 / 640.0);
-    }
-    this->addChild(tBatchNode);
+//    auto tbg = CCLoadSprite::loadResource("technology_09.png");
+//    auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
+//    int maxHight = CCDirector::sharedDirector()->getWinSize().height;
+//    int curHight = -500;
+//    while (curHight<maxHight) {
+//        auto bg = CCLoadSprite::createSprite("technology_09.png");
+//        bg->setAnchorPoint(ccp(0, 1));
+//        bg->setPosition(ccp(0, curHight));
+//        curHight += bg->getContentSize().height;
+//        tBatchNode->addChild(bg);
+//    }
+//    if (CCCommonUtils::isIosAndroidPad())
+//    {
+//        tBatchNode->setScaleX(1536.0 / 640.0);
+//    }
+//    this->addChild(tBatchNode);
     
     auto tmpCCB = CCBLoadFile("CheckNewAllianceInfoView",this,this);
     this->setContentSize(tmpCCB->getContentSize());
@@ -99,9 +101,9 @@ bool CheckAllianceInfoView::init()
         int deltY = 0;
         if (addH >= 200)
         {
-            m_middleNode->setPositionY(m_middleNode->getPositionY() - 30);
-            m_renshuNode->setPositionY(m_renshuNode->getPositionY() - 15);
-            m_zhandouNode->setPositionY(m_zhandouNode->getPositionY() - 15);
+//            m_middleNode->setPositionY(m_middleNode->getPositionY() - 30);
+//            m_renshuNode->setPositionY(m_renshuNode->getPositionY() - 15);
+//            m_zhandouNode->setPositionY(m_zhandouNode->getPositionY() - 15);
             deltY = 30;
         }
         m_funList->setContentSize(CCSize(m_funList->getContentSize().width,m_funList->getContentSize().height+addH - deltY));
@@ -124,6 +126,10 @@ bool CheckAllianceInfoView::init()
         m_leaderTxt->setString(str.c_str());
         str = _lang_1("115017", CC_CMDITOAL(m_info->totalForce).c_str());
         m_powerTxt->setString(str);
+        
+        string lv = "Lv.";
+        lv.append(CC_CMDITOAL(m_info->level).c_str());
+        m_lvTxt->setString(lv);
     }
     
     m_allianceIcon->removeAllChildrenWithCleanup(true);
@@ -148,6 +154,7 @@ bool CheckAllianceInfoView::init()
     m_scrollView = CCScrollView::create(m_funList->getContentSize());
     m_scrollView->setDirection(kCCScrollViewDirectionVertical);
     m_scrollView->setTouchPriority(Touch_Popup);
+    m_scrollView->setPosition({25, 30});
     m_funList->addChild(m_scrollView,10000);
 
     CCSize size = m_funList->getContentSize();
@@ -162,13 +169,6 @@ bool CheckAllianceInfoView::init()
         m_scrollView->setContentSize(CCSize(m_funList->getContentSize().width,60));
         m_scrollView->setContentOffset(ccp(0, m_funList->getContentSize().height - 60));
     }
-    
-    ParticleFireAni* par = ParticleFireAni::create();
-    m_fireNode1->addChild(par);
-    
-    ParticleFireAni* par2 = ParticleFireAni::create();
-    m_fireNode2->addChild(par2);
-    
  
     if(!GlobalData::shared()->playerInfo.isInAlliance()){
         m_bottomNode->setVisible(true);
@@ -229,6 +229,9 @@ void CheckAllianceInfoView::initFun(){
     str = _lang_1("115015", m_info->leader.c_str());
     m_leaderTxt->setString(str.c_str());
     m_powerTxt->setString(CC_CMDITOAL(m_info->totalForce).c_str());
+    string lv = "Lv.";
+    lv.append(CC_CMDITOAL(m_info->level).c_str());
+    m_lvTxt->setString(lv);
     //
     std::string strtemp;
     if (m_info->recruit == 0){
@@ -269,6 +272,7 @@ void CheckAllianceInfoView::initFun(){
 //    m_scrollView->setViewSize(CCSize(orgSize.width, h));
 //    m_scrollView->setViewSize(CCSize(orgSize.width, orgSize.height));
     m_announceTxt->setString(annStr.c_str());
+//    m_announceTxt->setString("annStr.c_str()xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
     m_scrollView->setContentSize(CCSize(m_announceTxt->getContentSize().width * m_announceTxt->getOriginScaleX(), m_announceTxt->getOriginScaleY() * m_announceTxt->getContentSize().height));
     int offY = m_announceTxt->getContentSize().height * m_announceTxt->getOriginScaleY() - m_funList->getContentSize().height;
     m_scrollView->setContentOffset(ccp(0, -offY));
@@ -478,17 +482,19 @@ bool CheckAllianceInfoView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarge
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_joinAlliance", CCControlButton*, this->m_joinAlliance);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_RestrictApply", CCControlButton*, this->m_RestrictApply);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bottomNode", CCNode*, this->m_bottomNode);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_fireNode1", CCNode*, this->m_fireNode1);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_fireNode2", CCNode*, this->m_fireNode2);
+
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_btnMail", CCControlButton*, this->m_btnMail);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_btnMember", CCControlButton*, this->m_btnMember);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_btnComment", CCControlButton*, this->m_btnComment);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_enterStrict", CCLabelIFTTF*, this->m_enterStrict);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_ConNumShow", CCLabelIFTTF*, this->m_ConNumShow);
     
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_zhandouNode", CCNode*, this->m_zhandouNode);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_zhandouNode", CCNode*, this->m_zhandouNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_renshuNode", CCNode*, this->m_renshuNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_middleNode", CCNode*, this->m_middleNode);
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_lvTxt", CCLabelIF*, this->m_lvTxt);
+    
     return false;
 }
 

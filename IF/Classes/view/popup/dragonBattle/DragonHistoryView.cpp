@@ -76,21 +76,21 @@ bool DragonHistoryView::init(){
         auto node = CCBLoadFile("DragonHistoryView", this, this);
         this->setContentSize(node->getContentSize());
         
-        auto tbg = CCLoadSprite::loadResource("technology_09.png");
-        auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
-        int maxHight = CCDirector::sharedDirector()->getWinSize().height;
-        int curHight = -500;
-        while (curHight<maxHight) {
-            auto bg = CCLoadSprite::createSprite("technology_09.png");
-            bg->setAnchorPoint(ccp(0, 1));
-            bg->setPosition(ccp(0, curHight));
-            curHight += bg->getContentSize().height;
-            tBatchNode->addChild(bg);
-        }
-        if (CCCommonUtils::isIosAndroidPad()) {
-            tBatchNode->setScaleX(1536.0 / 640.0);
-        }
-        this->addChild(tBatchNode,-10);
+//        auto tbg = CCLoadSprite::loadResource("technology_09.png");
+//        auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
+//        int maxHight = CCDirector::sharedDirector()->getWinSize().height;
+//        int curHight = -500;
+//        while (curHight<maxHight) {
+//            auto bg = CCLoadSprite::createSprite("technology_09.png");
+//            bg->setAnchorPoint(ccp(0, 1));
+//            bg->setPosition(ccp(0, curHight));
+//            curHight += bg->getContentSize().height;
+//            tBatchNode->addChild(bg);
+//        }
+//        if (CCCommonUtils::isIosAndroidPad()) {
+//            tBatchNode->setScaleX(1536.0 / 640.0);
+//        }
+//        this->addChild(tBatchNode,-10);
         int preHeight = this->m_viewBg->getContentSize().height;
         changeBGHeight(m_viewBg);
         m_viewBg->setVisible(false);

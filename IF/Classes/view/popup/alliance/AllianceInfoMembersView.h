@@ -37,6 +37,7 @@ public:
     CC_SYNTHESIZE(bool, m_open, Open);
     CC_SYNTHESIZE(bool, m_online, Online);
     CC_SYNTHESIZE(int, m_mainCityLv, MainCityLv);
+    CC_SYNTHESIZE(int, m_userLevel, UserLevel);
     CC_SYNTHESIZE(bool, m_isManager, IsManager);
     CC_SYNTHESIZE(int, m_appNum, AppNum);
     CC_SYNTHESIZE(string, m_lang, Lang);
@@ -117,6 +118,16 @@ private:
     void onHelpClick(CCObject *pSender, CCControlEvent event);
     void onApply(CCObject *pSender, CCControlEvent event);
     void openJoinAlliance(CCObject *pSender, CCControlEvent event);
+    
+    void onClickMailBtn(CCObject *pSender, CCControlEvent event);
+    void onClickInviteBtn(CCObject *pSender, CCControlEvent event);
+    void onClickExitBtn(CCObject *pSender, CCControlEvent event);
+    
+    void dismissAlliance();
+    void onDismissAlliance(CCObject* obj);
+    void secondConfirm();
+    void leavelSuccess(CCObject* obj);
+    
     void addParticleToBatch(cocos2d::CCParticleSystemQuad *particle);
     
     void exitAlliance();
@@ -157,6 +168,17 @@ private:
     CCSafeObject<CCNode> m_introNode;
     CCSafeObject<CCScrollView> m_scrollView;
     CCSafeObject<CCArray> m_cell;
+    
+    CCSafeObject<CCNode> m_postest;
+    CCSafeObject<CCSprite> m_titleFlag;
+    
+    CCSafeObject<CCLabelIF> m_powertxt;
+    CCSafeObject<CCLabelIF> m_lvtxt;
+    CCSafeObject<CCLabelIF> m_nametxt;
+    
+    CCSafeObject<CCControlButton> m_mailBtn;
+    CCSafeObject<CCControlButton> m_inviteBtn;
+    CCSafeObject<CCControlButton> m_exitBtn;
     
     InfoMembers m_datas;
     InfoMembers m_appDatas;
@@ -300,9 +322,11 @@ private:
     CCSafeObject<CCSprite> m_flagBg;
     CCSafeObject<CCNode> m_clickNode1;
     CCSafeObject<CCNode> m_clickNode2;
-    CCSafeObject<CCNode> m_onLineBg;
+//    CCSafeObject<CCNode> m_onLineBg;
     AllianceInfoMember* m_info;
     CCPoint m_touchPos;
+    
+    CCSafeObject<CCNode> m_nodeHide[2];
     
     int m_clickType;//0 默认； 1 点击cell时发送迁城邀请
 };

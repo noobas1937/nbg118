@@ -22,6 +22,7 @@
 #include "checkAllianceRestrictcommamd.h"
 
 #define OPENAGAIN 20
+const float nb_cell_width = 662;
 UpdateAllianceInfoView *UpdateAllianceInfoView::create(int open){
     UpdateAllianceInfoView *ret = new UpdateAllianceInfoView();
     if(ret && ret->init(open)){
@@ -49,13 +50,16 @@ bool UpdateAllianceInfoView::init(int open){
         auto node = CCBLoadFile("UpdateAllianceInfoView", this, this);
         this->setContentSize(node->getContentSize());
         int preHeight = this->m_background->getContentSize().height;
-        changeBGHeight(m_background);
+        changeBGMaxHeight(m_background);
+//        changeBGHeight(m_background);
         int dh = m_background->getContentSize().height - preHeight;
         if (CCCommonUtils::isIosAndroidPad()) {
             dh = CCDirector::sharedDirector()->getWinSize().height - 2048;
         }
         this->m_funNode->setContentSize(CCSize(m_funNode->getContentSize().width, m_funNode->getContentSize().height + dh));
         m_funNode->setPositionY(m_funNode->getPositionY()-dh);
+        
+         m_bottomNode->setPositionY(m_bottomNode->getPositionY()-dh);
         
         m_scrollView = CCScrollView::create(m_funNode->getContentSize());
         m_scrollView->setDirection(kCCScrollViewDirectionVertical);
@@ -125,6 +129,45 @@ bool UpdateAllianceInfoView::init(int open){
 
         ret = true;
     }
+    
+    auto listener = EventListenerTouchOneByOne::create();
+    listener->setSwallowTouches(true);
+    listener->onTouchBegan = [this](Touch *touch, Event *event)
+    {
+        if (isTouchInside(m_nbTouchNodeForChangeFlag, touch)) {
+            return true;
+        }
+        return false;
+    };
+    listener->onTouchMoved = [this](Touch *touch, Event *event){};//fusheng 切换联盟旗帜
+    listener->onTouchEnded = [this](Touch *touch, Event *event){
+        if (isTouchInside(m_nbTouchNodeForChangeFlag, touch)) {
+            CCCommonUtils::flyHint("", "", _lang("E100008"));
+            
+            return;
+            
+            PopupViewController::getInstance()->addPopupView(AllianceCheckView::create(),true,true);
+            
+            
+            
+        }
+    };
+
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+
+    
+    string lv = "Lv.";
+    lv.append(CC_CMDITOAL(GlobalData::shared()->playerInfo.allianceInfo.level).c_str());
+    m_lvTxt->setString(lv);
+
+    
+    
+    m_nb_bg1->setColor({25,30,44});
+    m_nb_bg2->setColor({38,44,70});
+    
+   
+    
+    
     return ret;
 }
 
@@ -169,13 +212,31 @@ void UpdateAllianceInfoView::updatePosition(CCObject* data){
     }else if(index==4){
         m_scrollView->setContentOffset(ccp(0, m_funNode->getContentSize().height - totalH2 + 110*(num-2) - 110));
         m_scrollView->setTouchEnabled(false);
-    }else{
+    }else if(index == -1){
         m_scrollView->setContentOffset(ccp(0, m_funNode->getContentSize().height - totalH2));
         m_scrollView->setTouchEnabled(true);
+    }
+    else
+    {
+        m_scrollView->setContentOffset(ccp(0, m_funNode->getContentSize().height - totalH2));
+        m_scrollView->setTouchEnabled(false);
+
     }
 }
 
 bool UpdateAllianceInfoView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode){
+    
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bottomNode", CCNode*, this->m_bottomNode);
+    
+     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nb_bg1", CCLayerColor*, this->m_nb_bg1);
+     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nb_bg2", CCLayerColor*, this->m_nb_bg2);
+    
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_lvTxt", CCLabelIF*, this->m_lvTxt);
+
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_allianceIcon", CCNode*, this->m_allianceIcon);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nbTouchNodeForChangeFlag", CCNode*, this->m_nbTouchNodeForChangeFlag);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_funNode", CCNode*, this->m_funNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_background", CCScale9Sprite*, this->m_background);
     return false;
@@ -207,6 +268,18 @@ bool AllianceChangeFunCell::init(){
     this->m_nameTxt->setString(m_titleStr.c_str());
     CCCommonUtils::setButtonTitle(m_btnEdit, _lang("115034").c_str());
     CCCommonUtils::setButtonTitle(m_btnSave, _lang("115035").c_str());
+    
+    m_btnEdit->getBackgroundSpriteForState(cocos2d::extension::Control::State::DISABLED)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
+
+    m_btnSave->getBackgroundSpriteForState(cocos2d::extension::Control::State::DISABLED)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
+    
+     m_modifyBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::DISABLED)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
+    
+     m_modifyAbbrBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::DISABLED)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
+    
+     m_rankBtn->getBackgroundSpriteForState(cocos2d::extension::Control::State::DISABLED)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
+
+ 
     //announce
     m_announceTxt->setString(m_info->intro.c_str());
     m_touchTxt1->setString(_lang("115053"));
@@ -289,7 +362,7 @@ void AllianceChangeFunCell::showTabView(float t){
     m_langList->addChild(langList);
 }
 void AllianceChangeFunCell::cellEnlarge(){
-    m_bg->setContentSize(CCSize(604,580));   //380
+    m_bg->setContentSize(CCSize(nb_cell_width,580));   //380
     if (CCCommonUtils::isIosAndroidPad())
     {
         m_bg->setContentSize(CCSize(1500, 1190));
@@ -356,9 +429,10 @@ void AllianceChangeFunCell::cellEnlarge(){
 
 }
 void AllianceChangeFunCell::open(){
+    
     m_open = true;
     m_arrow->setRotation(90);
-    m_bg->setContentSize(CCSize(604,300));
+    m_bg->setContentSize(CCSize(nb_cell_width,300));
     if (CCCommonUtils::isIosAndroidPad()) {
         m_bg->setContentSize(CCSize(1500, 650));
     }
@@ -459,7 +533,7 @@ void AllianceChangeFunCell::open(){
         case 4:
         {
             m_funLangNode->setVisible(true);
-            m_bg->setContentSize(CCSize(604,600));
+            m_bg->setContentSize(CCSize(nb_cell_width,600));
             if (CCCommonUtils::isIosAndroidPad()) {
                 m_bg->setContentSize(CCSize(1500, 1200));
             }
@@ -468,7 +542,7 @@ void AllianceChangeFunCell::open(){
         case 5:
         {
             m_funRankNode->setVisible(true);
-            m_bg->setContentSize(CCSize(604,600));
+            m_bg->setContentSize(CCSize(nb_cell_width,600));
             if (CCCommonUtils::isIosAndroidPad()) {
                 m_bg->setContentSize(CCSize(1500, 950));
             }
@@ -601,7 +675,7 @@ void AllianceChangeFunCell::open(){
             m_lock3->setVisible(true);
             m_lock4->setVisible(true);
             m_lock5->setVisible(true);
-            m_bg->setContentSize(CCSize(604,600));
+            m_bg->setContentSize(CCSize(nb_cell_width,600));
             if (CCCommonUtils::isIosAndroidPad()) {
                 m_bg->setContentSize(CCSize(1500, 930));
             }
@@ -851,7 +925,7 @@ void AllianceChangeFunCell::open(){
         case 7:
         {
             //--sun TODO 获取限制要求信息
-            m_bg->setContentSize(CCSize(604,380));
+            m_bg->setContentSize(CCSize(nb_cell_width,380));
             if (CCCommonUtils::isIosAndroidPad())
             {
                 m_bg->setContentSize(CCSize(1500, 1190));
@@ -917,6 +991,7 @@ void AllianceChangeFunCell::open(){
 
 void AllianceChangeFunCell::onEnter(){
     CCNode::onEnter();
+    setSwallowsTouches(false);
     setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
     setTouchEnabled(true);
 
@@ -1008,6 +1083,12 @@ void AllianceChangeFunCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEv
         return ;
     }
     if(isTouchInside(m_bg, pTouch) && !m_open){
+        if(m_index == 6)//fusheng 暂时不开放
+        {
+            CCCommonUtils::flyHint("", "", _lang("E100008"));
+            
+            return;
+        }
         open();
         CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_ALLIACNE_FUN_POSITION,CCInteger::create(m_index));
     }
@@ -1075,7 +1156,7 @@ void AllianceChangeFunCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEv
             CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_ALLIACNE_FUN_POSITION,CCInteger::create(OPENAGAIN));
         }
         else{
-            m_bg->setContentSize(CCSize(604,300));   //380
+            m_bg->setContentSize(CCSize(nb_cell_width,300));   //380
             if (CCCommonUtils::isIosAndroidPad()) {
                 m_bg->setContentSize(CCSize(1500, 650));
             }
@@ -1147,7 +1228,7 @@ void AllianceChangeFunCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEv
             CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_ALLIACNE_FUN_POSITION,CCInteger::create(OPENAGAIN));
         }
         else{
-            m_bg->setContentSize(CCSize(604,300));   //380
+            m_bg->setContentSize(CCSize(nb_cell_width,300));   //380
             if (CCCommonUtils::isIosAndroidPad())
             {
                 m_bg->setContentSize(CCSize(1500, 650));
@@ -1165,7 +1246,7 @@ void AllianceChangeFunCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEv
 void AllianceChangeFunCell::reset(){
     m_arrow->setRotation(0);
     m_open = false;
-    m_bg->setContentSize(CCSize(604,96));
+    m_bg->setContentSize(CCSize(nb_cell_width,96));
     if (CCCommonUtils::isIosAndroidPad())
     {
         m_bg->setContentSize(CCSize(1500, 160));

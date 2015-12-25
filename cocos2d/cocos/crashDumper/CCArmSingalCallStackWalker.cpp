@@ -11,24 +11,24 @@
 #include "CCCrashDump.h"
 
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID )
+// #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID )
 
-typedef struct ucontext
-{
-    unsigned long     uc_flags;
-    struct ucontext  *uc_link;
-    stack_t           uc_stack;
+// typedef struct ucontext
+// {
+//     unsigned long     uc_flags;
+//     struct ucontext  *uc_link;
+//     stack_t           uc_stack;
     
-    struct sigcontext uc_mcontext;
-    sigset_t          uc_sigmask;
+//     struct sigcontext uc_mcontext;
+//     sigset_t          uc_sigmask;
     /* Allow for uc_sigmask growth.  Glibc uses a 1024-bit sigset_t.  */
-    int               _sigbuffer[32 - (sizeof (sigset_t) / sizeof (int))];
+//     int               _sigbuffer[32 - (sizeof (sigset_t) / sizeof (int))];
     /* Last for extensibility.  Eight byte aligned because some
      coprocessors require eight byte alignment.  */
-    unsigned long     uc_regspace[128] __attribute__((__aligned__(8)));
-} ucontext_t;
+//     unsigned long     uc_regspace[128] __attribute__((__aligned__(8)));
+// } ucontext_t;
 
-#endif
+// #endif
 
 #define ARM_FP mUnwindState.gregs[11]
 #define ARM_IP mUnwindState.gregs[12]

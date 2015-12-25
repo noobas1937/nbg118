@@ -125,18 +125,18 @@ void MODView::update(float time){
 }
 
 void MODView::addBG(){
-    std::string picName = "technology_09.png";
-    auto totalH = CCDirector::sharedDirector()->getWinSize().height;
-    int h = 0;
-    auto batch = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource(picName.c_str())->getTexture());
-    m_bgContainer->addChild(batch);
-    while (h < totalH) {
-        auto sprite = CCLoadSprite::createSprite(picName.c_str());
-        sprite->setAnchorPoint(ccp(0, 0));
-        batch->addChild(sprite);
-        sprite->setPosition(ccp(0, h));
-        h += sprite->getContentSize().height;
-    }
+//    std::string picName = "technology_09.png";
+//    auto totalH = CCDirector::sharedDirector()->getWinSize().height;
+//    int h = 0;
+//    auto batch = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource(picName.c_str())->getTexture());
+//    m_bgContainer->addChild(batch);
+//    while (h < totalH) {
+//        auto sprite = CCLoadSprite::createSprite(picName.c_str());
+//        sprite->setAnchorPoint(ccp(0, 0));
+//        batch->addChild(sprite);
+//        sprite->setPosition(ccp(0, h));
+//        h += sprite->getContentSize().height;
+//    }
 }
 
 void MODView::getRewardData(){
@@ -449,18 +449,18 @@ void MODManagerPopUpView::showTab(int tab){
 }
 
 void MODManagerPopUpView::addBG(){
-    std::string picName = "technology_09.png";
-    auto totalH = CCDirector::sharedDirector()->getWinSize().height;
-    int h = 0;
-    auto batch = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource(picName.c_str())->getTexture());
-    m_bgContainer->addChild(batch);
-    while (h < totalH) {
-        auto sprite = CCLoadSprite::createSprite(picName.c_str());
-        sprite->setAnchorPoint(ccp(0, 0));
-        batch->addChild(sprite);
-        sprite->setPosition(ccp(0, h));
-        h += sprite->getContentSize().height;
-    }
+//    std::string picName = "technology_09.png";
+//    auto totalH = CCDirector::sharedDirector()->getWinSize().height;
+//    int h = 0;
+//    auto batch = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource(picName.c_str())->getTexture());
+//    m_bgContainer->addChild(batch);
+//    while (h < totalH) {
+//        auto sprite = CCLoadSprite::createSprite(picName.c_str());
+//        sprite->setAnchorPoint(ccp(0, 0));
+//        batch->addChild(sprite);
+//        sprite->setPosition(ccp(0, h));
+//        h += sprite->getContentSize().height;
+//    }
 }
 
 void MODManagerPopUpView::gridTouched(cocos2d::extension::CCMultiColTableView* table, CCTableViewCell* cell){

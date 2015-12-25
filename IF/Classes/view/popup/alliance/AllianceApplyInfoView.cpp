@@ -36,11 +36,11 @@ bool AllianceApplyInfoView::init(){
     if(PopupBaseView::init()){
         CCLoadSprite::doResourceByCommonIndex(7, true);
         CCLoadSprite::doResourceByCommonIndex(504, true);
-        CCLoadSprite::doResourceByCommonIndex(502, true);
+        CCLoadSprite::doResourceByCommonIndex(6, true);
         setCleanFunction([](){
             CCLoadSprite::doResourceByCommonIndex(7, false);
             CCLoadSprite::doResourceByCommonIndex(504, false);
-            CCLoadSprite::doResourceByCommonIndex(502, false);
+            CCLoadSprite::doResourceByCommonIndex(6, false);
         });
         auto node = CCBLoadFile("JoinAllianceInfoView", this, this);
         this->setContentSize(CCDirector::sharedDirector()->getWinSize());
@@ -48,16 +48,16 @@ bool AllianceApplyInfoView::init(){
         CCCommonUtils::setButtonTitle(m_sendBtn, _lang("105302").c_str());
         CCCommonUtils::setButtonTitle(m_nosendBtn, _lang("115505").c_str());
         m_titleLabel->setString(_lang("115022"));
-        m_titleLabel->setColor({255,213,144});
+//        m_titleLabel->setColor({255,213,144});
         m_tipsLabel->setString(_lang("115501"));
-        m_tipsLabel->setColor({58,42,19});
+//        m_tipsLabel->setColor({58,42,19});
         
         if(m_contentEditBox==NULL){
-            m_contentEditBox = InputFieldMultiLine::create(CCSizeMake(445,300),"lianmeng_di_7.png",18);
+            m_contentEditBox = InputFieldMultiLine::create(CCSizeMake(445,300),"nb_vip_detail_list_bg.png",18);
             m_contentEditBox->setMaxChars(199);
             m_contentEditBox->setLineNumber(10);
             m_contentEditBox->setPosition(ccp(0, 0));
-            m_contentEditBox->setFontColor({201,182,140});
+            m_contentEditBox->setFontColor({196,207,255});
             m_contentEditBox->setEnabled(true);
             m_contentEditBox->setSwallowsTouches(false);
             m_messageNode->addChild(m_contentEditBox);

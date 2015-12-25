@@ -70,10 +70,10 @@ cocos2d::CCSprite* CCLoadSprite::createSprite(const char* fileName, bool useDefa
                 DynamicResourceController::getInstance()->loadNameTypeResource(DynamicResource_MONSTER_TEXTURE_layer,false);
                 ret = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(fileName);
                 if(!ret){
-                    fileName = "rm_bust.png";
+                    fileName = "ooo_bust.png";
                 }
             }else{
-                fileName = "rm_bust.png";
+                fileName = "ooo_bust.png";
             }
         }
         else if (type == CCLoadSpriteType_MONSTERLAYERLITTLE){
@@ -81,10 +81,10 @@ cocos2d::CCSprite* CCLoadSprite::createSprite(const char* fileName, bool useDefa
                 DynamicResourceController::getInstance()->loadNameTypeResource(DynamicResource_MONSTER_TEXTURE_layer,false);
                 ret = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(fileName);
                 if(!ret){
-                    fileName = "rm.png";
+                    fileName = "ooo.png";
                 }
             }else{
-                fileName = "rm.png";
+                fileName = "ooo.png";
             }
         }
         else{
@@ -392,6 +392,7 @@ void CCLoadSprite::doLoadResource(const char* path, int index, bool frameLoad)
 {
     if (!path) return;
     
+#ifdef USING_DLC
     // guojiang
     // NBDLCController::create 会增加下载目录到 SearchPath，所以在加载资源前调用
     if (strcmp(path, COMMON_PATH) == 0)
@@ -415,6 +416,7 @@ void CCLoadSprite::doLoadResource(const char* path, int index, bool frameLoad)
             });
         }
     }
+#endif
     
     if (CCTexture2D::useDownloadResource() == true)
     {

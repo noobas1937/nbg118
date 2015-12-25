@@ -54,26 +54,26 @@ bool NewTroopsView::init()
         CCLoadSprite::doResourceByCommonIndex(204, false);
         CCLoadSprite::doResourceByCommonIndex(504, false);
     });
-    auto frame = CCLoadSprite::loadResource("technology_09.png");
-    auto tBatchnode = CCSpriteBatchNode::createWithTexture(frame->getTexture());
+//    auto frame = CCLoadSprite::loadResource("technology_09.png");
+//    auto tBatchnode = CCSpriteBatchNode::createWithTexture(frame->getTexture());
     auto size = CCDirector::sharedDirector()->getWinSize();
-    int curH = 0;
-    while (curH < size.height) {
-        auto spr = CCLoadSprite::createSprite("technology_09.png");
-        spr->setAnchorPoint(CCPointZero);
-        spr->setPosition(ccp(0, curH));
-        tBatchnode->addChild(spr);
-        curH += spr->getContentSize().height;
-    }
-    if (CCCommonUtils::isIosAndroidPad())
-    {
-        tBatchnode->setScaleX(1536.0 / 640);
-    }
-    this->addChild(tBatchnode);
+//    int curH = 0;
+//    while (curH < size.height) {
+//        auto spr = CCLoadSprite::createSprite("technology_09.png");
+//        spr->setAnchorPoint(CCPointZero);
+//        spr->setPosition(ccp(0, curH));
+//        tBatchnode->addChild(spr);
+//        curH += spr->getContentSize().height;
+//    }
+//    if (CCCommonUtils::isIosAndroidPad())
+//    {
+//        tBatchnode->setScaleX(1536.0 / 640);
+//    }
+//    this->addChild(tBatchnode);
     auto tmpCCB = CCBLoadFile("NewTroopsView",this,this);
     this->setContentSize(tmpCCB->getContentSize());
     int add = size.height - tmpCCB->getContentSize().height;
-    tBatchnode->setPositionY(tBatchnode->getPositionY() - add);
+//    tBatchnode->setPositionY(tBatchnode->getPositionY() - add);
     m_listNode->setPositionY(m_listNode->getPositionY() - add);
     m_listNode->setContentSize(CCSize(m_listNode->getContentSize().width, m_listNode->getContentSize().height + add));
     m_scrollView = CCScrollView::create(m_listNode->getContentSize());

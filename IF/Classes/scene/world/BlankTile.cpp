@@ -169,6 +169,11 @@ void BlankTile::onClickInviteTeleport(cocos2d::CCObject *pSender, Control::Event
 }
 void BlankTile::onClickPlace(cocos2d::CCObject *pSender, Control::EventType pCCControlEvent)
 {
+    CCCommonUtils::flyHint("", "", _lang("E100008"));
+    return;
+    
+    //TODO: guojiang 联盟领地入口
+    
     SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
     AllianceManager::getInstance()->tmpCityIndex = m_cityInfo.cityIndex;
     PopupViewController::getInstance()->addPopupInView(AllianceTerritoryView::create(m_cityInfo.cityIndex,true));

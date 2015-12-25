@@ -99,6 +99,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 //    CCLOG("Time profiler: [%ld] ,line: [%d]",CCMathUtils::getCurrentTime(),__LINE__);
     
 // ------------------------------------------------------------------------------------
+#ifdef USING_LUA
     // register lua module
     auto engine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
@@ -112,6 +113,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     {
         CCLOG("Lua init Error");
     }
+#endif
     
 // ------------------------------------------------------------------------------------
     // run

@@ -29,7 +29,7 @@ public class JoinAlliancePopup extends PopupWindows implements OnDismissListener
 		mContext = context;
 		mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-		mRootView = (ViewGroup) mInflater.inflate(R.layout.cs__first_alliance_popup, null);
+		mRootView = (ViewGroup) mInflater.inflate(R.layout.nb_1st_alliance_popup, null);
 		mRootView.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
 		setContentView(mRootView);

@@ -101,21 +101,21 @@ bool BuildingHospitalPopUpView::init(){
             m_stoneNode->setVisible(false);
             m_stoneIcon->setEnabled(false);
         }
-        int newBgHeight = m_buildBG->getContentSize().height;
-        int BGcount = (newBgHeight-80)/100+1;
-        for (int i=0; i<BGcount; i++) {
-            auto pic = CCLoadSprite::createSprite("technology_09.png");
-            pic->setAnchorPoint(ccp(0, 0));
-            m_bgNode->addChild(pic);
-            int dh = pic->getContentSize().height;
-            pic->setPositionY(-i*100);
-            if (CCCommonUtils::isIosAndroidPad())
-            {
-                pic->setScaleX(2.4);
-            }
-            
-            
-        }
+//        int newBgHeight = m_buildBG->getContentSize().height;
+//        int BGcount = (newBgHeight-80)/100+1;
+//        for (int i=0; i<BGcount; i++) {
+//            auto pic = CCLoadSprite::createSprite("technology_09.png");
+//            pic->setAnchorPoint(ccp(0, 0));
+//            m_bgNode->addChild(pic);
+//            int dh = pic->getContentSize().height;
+//            pic->setPositionY(-i*100);
+//            if (CCCommonUtils::isIosAndroidPad())
+//            {
+//                pic->setScaleX(2.4);
+//            }
+//            
+//            
+//        }
         m_tipTxt->setString(_lang("138081"));
         m_tipTxt->setVisible(GlobalData::shared()->isCrossService);
         m_needNode->setVisible(!GlobalData::shared()->isCrossService);
