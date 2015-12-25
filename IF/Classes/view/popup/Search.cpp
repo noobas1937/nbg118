@@ -55,22 +55,22 @@ bool SearchView::init()
         CCLoadSprite::doResourceByCommonIndex(307, false);
     });
     
-    auto tbg = CCLoadSprite::createSprite("technology_09.png");
-    auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
-    int maxHeight = CCDirector::sharedDirector()->getWinSize().height;
-    int curHeight = 0;
-    while (curHeight < maxHeight) {
-        auto bg = CCLoadSprite::createSprite("technology_09.png");
-        bg->setAnchorPoint(ccp(0, 0));
-        bg->setPosition(ccp(0, curHeight));
-        tBatchNode->addChild(bg);
-        curHeight += bg->getContentSize().height;
-        if (CCCommonUtils::isIosAndroidPad())
-        {
-            bg->setScale(2.4);
-        }
-    }
-    this->addChild(tBatchNode);
+//    auto tbg = CCLoadSprite::createSprite("technology_09.png");
+//    auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
+//    int maxHeight = CCDirector::sharedDirector()->getWinSize().height;
+//    int curHeight = 0;
+//    while (curHeight < maxHeight) {
+//        auto bg = CCLoadSprite::createSprite("technology_09.png");
+//        bg->setAnchorPoint(ccp(0, 0));
+//        bg->setPosition(ccp(0, curHeight));
+//        tBatchNode->addChild(bg);
+//        curHeight += bg->getContentSize().height;
+//        if (CCCommonUtils::isIosAndroidPad())
+//        {
+//            bg->setScale(2.4);
+//        }
+//    }
+//    this->addChild(tBatchNode);
     
     auto tmpCCB = CCBLoadFile("SearchView", this, this);
     this->setContentSize(tmpCCB->getContentSize());
@@ -82,7 +82,7 @@ bool SearchView::init()
     m_listNode->setPositionY(m_listNode->getPositionY() - dh);
     m_listNode->setContentSize(CCSize(m_listNode->getContentSize().width, m_listNode->getContentSize().height + dh));
     m_bgNode->setPositionY(m_bgNode->getPositionY() - dh);
-    tBatchNode->setPositionY(tBatchNode->getPositionY() - dh);
+//    tBatchNode->setPositionY(tBatchNode->getPositionY() - dh);
     
     auto spriteText = CCLoadSprite::createScale9Sprite("world_title_3.png");
     if (CCCommonUtils::isIosAndroidPad())
@@ -995,21 +995,21 @@ bool SearchAllianceInfoView::init(AllianceInfo* info)
         CCLoadSprite::doResourceByCommonIndex(205, false);
         CCLoadSprite::doResourceByCommonIndex(7, false);
     });
-    auto tbg = CCLoadSprite::loadResource("technology_09.png");
-    auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
-    int maxHight = CCDirector::sharedDirector()->getWinSize().height;
-    int curHight = -500;
-    while (curHight<maxHight) {
-        auto bg = CCLoadSprite::createSprite("technology_09.png");
-        bg->setAnchorPoint(ccp(0, 1));
-        bg->setPosition(ccp(0, curHight));
-        curHight += bg->getContentSize().height;
-        tBatchNode->addChild(bg);
-    }
-    if (CCCommonUtils::isIosAndroidPad()) {
-        tBatchNode->setScaleX(2.4);
-    }
-    this->addChild(tBatchNode);
+//    auto tbg = CCLoadSprite::loadResource("technology_09.png");
+//    auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
+//    int maxHight = CCDirector::sharedDirector()->getWinSize().height;
+//    int curHight = -500;
+//    while (curHight<maxHight) {
+//        auto bg = CCLoadSprite::createSprite("technology_09.png");
+//        bg->setAnchorPoint(ccp(0, 1));
+//        bg->setPosition(ccp(0, curHight));
+//        curHight += bg->getContentSize().height;
+//        tBatchNode->addChild(bg);
+//    }
+//    if (CCCommonUtils::isIosAndroidPad()) {
+//        tBatchNode->setScaleX(2.4);
+//    }
+//    this->addChild(tBatchNode);
     
     auto tmpCCB = CCBLoadFile("SearchAllianceInfoView",this,this);
     this->setContentSize(tmpCCB->getContentSize());

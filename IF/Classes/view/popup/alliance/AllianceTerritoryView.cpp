@@ -68,27 +68,27 @@ bool AllianceTerritoryView::init()
     m_infoList->setPositionY(m_infoList->getPositionY() - extH);
     m_infoList->setContentSize(CCSize(m_infoList->getContentSize().width, m_infoList->getContentSize().height + extH));
     m_bgNode->setPositionY(m_bgNode->getPositionY() - extH);
-    auto tbg = CCLoadSprite::loadResource("technology_09.png");
-    auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
-    auto picBg1 = CCLoadSprite::createSprite("technology_09.png");
-    picBg1->setAnchorPoint(ccp(0, 0));
-    picBg1->setPosition(ccp(0, 0));
-    tBatchNode->addChild(picBg1);
-    int maxHeight = CCDirector::sharedDirector()->getWinSize().height - 79;
-    int curHeight = picBg1->getContentSize().height;
-    while(curHeight < maxHeight)
-    {
-        auto picBg2 = CCLoadSprite::createSprite("technology_09.png");
-        picBg2->setAnchorPoint(ccp(0, 0));
-        picBg2->setPosition(ccp(0, curHeight));
-        tBatchNode->addChild(picBg2);
-        curHeight += picBg2->getContentSize().height;
-    }
-    if (CCCommonUtils::isIosAndroidPad())
-    {
-        tBatchNode->setScaleX(1536.0 / 640.0);
-    }
-    m_bgNode->addChild(tBatchNode);
+//    auto tbg = CCLoadSprite::loadResource("technology_09.png");
+//    auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
+//    auto picBg1 = CCLoadSprite::createSprite("technology_09.png");
+//    picBg1->setAnchorPoint(ccp(0, 0));
+//    picBg1->setPosition(ccp(0, 0));
+//    tBatchNode->addChild(picBg1);
+//    int maxHeight = CCDirector::sharedDirector()->getWinSize().height - 79;
+//    int curHeight = picBg1->getContentSize().height;
+//    while(curHeight < maxHeight)
+//    {
+//        auto picBg2 = CCLoadSprite::createSprite("technology_09.png");
+//        picBg2->setAnchorPoint(ccp(0, 0));
+//        picBg2->setPosition(ccp(0, curHeight));
+//        tBatchNode->addChild(picBg2);
+//        curHeight += picBg2->getContentSize().height;
+//    }
+//    if (CCCommonUtils::isIosAndroidPad())
+//    {
+//        tBatchNode->setScaleX(1536.0 / 640.0);
+//    }
+//    m_bgNode->addChild(tBatchNode);
 //    auto tempSprite = CCLoadSprite::createScale9Sprite("btn_equip.png");
 //    m_bgNode->addChild(tempSprite);
     m_tabView = CCTableView::create(this, m_infoList->getContentSize());
