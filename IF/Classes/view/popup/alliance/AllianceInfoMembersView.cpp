@@ -622,7 +622,14 @@ bool AllianceInfoMembersView::init(){
         m_exitBtn->setTitleForState(_lang("115039"), cocos2d::extension::Control::State::SELECTED);
         
         m_showData = CCArray::create();
-        dh += 90 - 140;
+        if (m_allianceId != GlobalData::shared()->playerInfo.allianceInfo.uid)
+        {
+            dh += 90;
+        }
+        else
+        {
+            dh += 90 - 140;
+        }
         if (CCCommonUtils::isIosAndroidPad()) {
             dh = CCDirector::sharedDirector()->getWinSize().height - 2048;
         }
@@ -638,9 +645,18 @@ bool AllianceInfoMembersView::init(){
         m_tableView->setTouchPriority(Touch_Popup);
         m_listContainer->addChild(m_tableView);
         
-        auto abn = AllianceBottomNode::create(&GlobalData::shared()->playerInfo.allianceInfo, AlliancePageTag::MEMBER_BTN);
-        abn->setPositionY(preHeight - m_background->getContentSize().height);
-        addChild(abn);
+        if (m_allianceId != GlobalData::shared()->playerInfo.allianceInfo.uid)
+        {
+            m_mailBtn->setEnabled(false);
+            m_inviteBtn->setEnabled(false);
+            m_exitBtn->setEnabled(false);
+        }
+        else
+        {
+            auto abn = AllianceBottomNode::create(&GlobalData::shared()->playerInfo.allianceInfo, AlliancePageTag::MEMBER_BTN);
+            abn->setPositionY(preHeight - m_background->getContentSize().height);
+            addChild(abn);
+        }
         
         string statusBtn = CCUserDefault::sharedUserDefault()->getStringForKey(ALLIANCE_MEMBER_BTN_STATUS,"");
         if(statusBtn==""){
