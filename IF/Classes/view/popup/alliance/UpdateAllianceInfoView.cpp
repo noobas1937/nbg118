@@ -139,7 +139,7 @@ bool UpdateAllianceInfoView::init(int open){
         }
         return false;
     };
-    listener->onTouchMoved = [this](Touch *touch, Event *event){};
+    listener->onTouchMoved = [this](Touch *touch, Event *event){};//fusheng 切换联盟旗帜
     listener->onTouchEnded = [this](Touch *touch, Event *event){
         if (isTouchInside(m_nbTouchNodeForChangeFlag, touch)) {
             CCCommonUtils::flyHint("", "", _lang("E100008"));
@@ -429,6 +429,7 @@ void AllianceChangeFunCell::cellEnlarge(){
 
 }
 void AllianceChangeFunCell::open(){
+    
     m_open = true;
     m_arrow->setRotation(90);
     m_bg->setContentSize(CCSize(nb_cell_width,300));
@@ -1082,6 +1083,12 @@ void AllianceChangeFunCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEv
         return ;
     }
     if(isTouchInside(m_bg, pTouch) && !m_open){
+        if(m_index == 6)//fusheng 暂时不开放
+        {
+            CCCommonUtils::flyHint("", "", _lang("E100008"));
+            
+            return;
+        }
         open();
         CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_ALLIACNE_FUN_POSITION,CCInteger::create(m_index));
     }
