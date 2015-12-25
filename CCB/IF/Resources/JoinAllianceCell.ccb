@@ -1998,8 +1998,8 @@
 										<string>Color3</string>
 										<key>value</key>
 										<array>
-											<integer>85</integer>
-											<integer>249</integer>
+											<integer>255</integer>
+											<integer>38</integer>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -2455,8 +2455,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>457</real>
-							<real>160</real>
+							<real>453</real>
+							<real>158</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -2478,8 +2478,8 @@
 						<string>ScaleLock</string>
 						<key>value</key>
 						<array>
-							<real>0.60000002384185791</real>
-							<real>0.60000002384185791</real>
+							<real>1</real>
+							<real>1</real>
 							<true/>
 							<integer>0</integer>
 						</array>
@@ -2539,7 +2539,7 @@
 						<key>value</key>
 						<array>
 							<real>473</real>
-							<real>160</real>
+							<real>157</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -2643,6 +2643,8 @@
 						<string>jia tai luo ni ya yu</string>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>
