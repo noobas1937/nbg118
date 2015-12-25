@@ -15,9 +15,10 @@ void main() {
 	//gl_FragColor = texture2D(CC_Texture0, v_texCoord                 )  * v_fragmentColor;
 	
     
-	float margin = 0.10;
+	float margin = 0.15;
 	float rmargin = 1.0 - margin;
-	if(v_texCoord.x < (1.0 - margin) && v_texCoord.x > margin && v_texCoord.y < (1.0 - margin) && v_texCoord.y > margin )
+	//if(v_texCoord.x < (1.0 - margin) && v_texCoord.x > margin && v_texCoord.y < (1.0 - margin) && v_texCoord.y > margin )
+	if(v_texCoord.y < (1.0 - margin) && v_texCoord.y > margin )
 	{
 		gl_FragColor = texture2D(CC_Texture0, v_texCoord) * v_fragmentColor;
 	}
@@ -36,7 +37,7 @@ void main() {
 			
 			float distant1 = 0.0;
 			float distant2 = 0.0;
-			
+			/*
 			if(v_texCoord.x >= (rmargin))
 			{
 				distant1 = v_texCoord.x - rmargin;
@@ -45,7 +46,7 @@ void main() {
 			{
 				distant1 = margin - v_texCoord.x;
 			}
-			
+			*/
 			
 			if(v_texCoord.y >= (rmargin))
 			{
@@ -58,7 +59,7 @@ void main() {
 			
 			
 			float distant = (distant1 + distant2) ;
-			distant = distant * distant * 1000.0;
+			distant = distant * distant * 200.0;
 			distant = min(distant, 1.0);
 			vec2 newBlurSize = blurSize;
 			
