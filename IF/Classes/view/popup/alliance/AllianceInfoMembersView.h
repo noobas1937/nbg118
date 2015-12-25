@@ -126,6 +126,7 @@ private:
     void dismissAlliance();
     void onDismissAlliance(CCObject* obj);
     void secondConfirm();
+    void leavelSuccess(CCObject* obj);
     
     void addParticleToBatch(cocos2d::CCParticleSystemQuad *particle);
     

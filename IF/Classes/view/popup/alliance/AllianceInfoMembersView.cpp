@@ -467,9 +467,25 @@ void AllianceInfoMembersView::onDismissAlliance(CCObject* obj)
 
 void AllianceInfoMembersView::secondConfirm()
 {
-    AllianceTerritoryCheckIfStorageCommand* cmd = new AllianceTerritoryCheckIfStorageCommand(GlobalData::shared()->playerInfo.uid);
-    cmd->sendAndRelease();
+    GameController::getInstance()->showWaitInterface();
+    LeaveAllianceCommand * command = new LeaveAllianceCommand(_lang("115186").append("  (").append(_lang("115181")).append(")").c_str(),2);
+    command->setCallback(CCCallFuncO::create(this, callfuncO_selector(AllianceInfoMembersView::leavelSuccess), NULL));
+    command->sendAndRelease();
 }
+
+void AllianceInfoMembersView::leavelSuccess(CCObject* obj){
+    UIComponent::getInstance()->changeChatChannel(CHAT_COUNTRY);
+    PopupViewController::getInstance()->removeAllPopupView();
+    ChatController::getInstance()->m_chatAlliancePool.clear();
+    ChatController::getInstance()->m_latestAllianceMsg.sequenceId=0;
+#if(CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
+    ChatServiceCocos2dx::resetPlayerIsInAlliance();
+#elif(CC_TARGET_PLATFORM==CC_PLATFORM_IOS)
+    ChatServiceCocos2dx::resetPlayerIsInAlliance();
+#endif
+    CCUserDefault::sharedUserDefault()->setStringForKey(ALLIANCE_MEMBER_BTN_STATUS, "");
+}
+
 
 void AllianceInfoMembersView::addParticleToBatch(cocos2d::CCParticleSystemQuad *particle){
     auto batchCount = m_parVec.size();
