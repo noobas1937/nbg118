@@ -192,25 +192,25 @@ bool ManagerKingdomView::init(){
     bool ret = false;
     if(PopupBaseView::init()){
         setIsHDPanel(true);
-        auto tbg = CCLoadSprite::loadResource("technology_09.png");
-        auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
-        int maxHight = CCDirector::sharedDirector()->getWinSize().height;
-        int curHight = -500;
-        if (CCCommonUtils::isIosAndroidPad()) {
-            curHight = -1200;
-        }
-        m_palace = "301";
-        while (curHight<maxHight) {
-            auto bg = CCLoadSprite::createSprite("technology_09.png");
-            bg->setAnchorPoint(ccp(0, 1));
-            bg->setPosition(ccp(0, curHight));
-            if (CCCommonUtils::isIosAndroidPad()) {
-                bg->setScaleX(2.4);
-            }
-            curHight += bg->getContentSize().height;
-            tBatchNode->addChild(bg);
-        }
-        this->addChild(tBatchNode);
+//        auto tbg = CCLoadSprite::loadResource("technology_09.png");
+//        auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
+//        int maxHight = CCDirector::sharedDirector()->getWinSize().height;
+//        int curHight = -500;
+//        if (CCCommonUtils::isIosAndroidPad()) {
+//            curHight = -1200;
+//        }
+//        m_palace = "301";
+//        while (curHight<maxHight) {
+//            auto bg = CCLoadSprite::createSprite("technology_09.png");
+//            bg->setAnchorPoint(ccp(0, 1));
+//            bg->setPosition(ccp(0, curHight));
+//            if (CCCommonUtils::isIosAndroidPad()) {
+//                bg->setScaleX(2.4);
+//            }
+//            curHight += bg->getContentSize().height;
+//            tBatchNode->addChild(bg);
+//        }
+//        this->addChild(tBatchNode);
         CCLoadSprite::doResourceByCommonIndex(208, true);
         CCLoadSprite::doResourceByCommonIndex(102, true);
         CCLoadSprite::doResourceByCommonIndex(307, true);

@@ -60,25 +60,25 @@ bool PortActView::init()
 
 void PortActView::addBG()
 {
-    std::string picName = "technology_09.png";
-    auto totalH = CCDirector::sharedDirector()->getWinSize().height;
-    int h = 0;
-    auto batch = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource(picName.c_str())->getTexture());
-    m_bgContainer->addChild(batch);
-    while (h < totalH) {
-        auto sprite = CCLoadSprite::createSprite(picName.c_str());
-        sprite->setAnchorPoint(ccp(0, 0));
-        if (CCCommonUtils::isIosAndroidPad()) {
-//            sprite->setScaleX(2.4);
-            sprite->setAnchorPoint(ccp(0, 0.5));
-        }
-        batch->addChild(sprite);
-        sprite->setPosition(ccp(0, h));
-        h += sprite->getContentSize().height;
-    }
-    if (CCCommonUtils::isIosAndroidPad()) {
-        batch->setScaleX(1536 * 1.0 / 640);
-    }
+//    std::string picName = "technology_09.png";
+//    auto totalH = CCDirector::sharedDirector()->getWinSize().height;
+//    int h = 0;
+//    auto batch = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource(picName.c_str())->getTexture());
+//    m_bgContainer->addChild(batch);
+//    while (h < totalH) {
+//        auto sprite = CCLoadSprite::createSprite(picName.c_str());
+//        sprite->setAnchorPoint(ccp(0, 0));
+//        if (CCCommonUtils::isIosAndroidPad()) {
+////            sprite->setScaleX(2.4);
+//            sprite->setAnchorPoint(ccp(0, 0.5));
+//        }
+//        batch->addChild(sprite);
+//        sprite->setPosition(ccp(0, h));
+//        h += sprite->getContentSize().height;
+//    }
+//    if (CCCommonUtils::isIosAndroidPad()) {
+//        batch->setScaleX(1536 * 1.0 / 640);
+//    }
 }
 
 void PortActView::onEnter()

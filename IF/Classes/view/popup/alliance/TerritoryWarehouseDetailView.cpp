@@ -105,29 +105,29 @@ bool TerritoryWarehouseDetailView::init(){
         m_withdrawBtn->setVisible(true);
         m_withdrawBtn->setEnabled(false);
         addLoadingAni();
-        auto tbg = CCLoadSprite::loadResource("technology_09.png");
-        auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
-        auto picBg1 = CCLoadSprite::createSprite("technology_09.png");
-        picBg1->setAnchorPoint(ccp(0, 0));
-        picBg1->setPosition(ccp(0, 0));
-        if (CCCommonUtils::isIosAndroidPad()) {
-            picBg1->setScaleX(2.4);
-        }
-        tBatchNode->addChild(picBg1);
-        int maxHeight = CCDirector::sharedDirector()->getWinSize().height - 79;
-        int curHeight = picBg1->getContentSize().height;
-        while(curHeight < maxHeight)
-        {
-            auto picBg2 = CCLoadSprite::createSprite("technology_09.png");
-            picBg2->setAnchorPoint(ccp(0, 0));
-            picBg2->setPosition(ccp(0, curHeight));
-            if (CCCommonUtils::isIosAndroidPad()) {
-                picBg2->setScaleX(2.4);
-            }
-            tBatchNode->addChild(picBg2);
-            curHeight += picBg2->getContentSize().height;
-        }
-        m_bgNode->addChild(tBatchNode);
+//        auto tbg = CCLoadSprite::loadResource("technology_09.png");
+//        auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
+//        auto picBg1 = CCLoadSprite::createSprite("technology_09.png");
+//        picBg1->setAnchorPoint(ccp(0, 0));
+//        picBg1->setPosition(ccp(0, 0));
+//        if (CCCommonUtils::isIosAndroidPad()) {
+//            picBg1->setScaleX(2.4);
+//        }
+//        tBatchNode->addChild(picBg1);
+//        int maxHeight = CCDirector::sharedDirector()->getWinSize().height - 79;
+//        int curHeight = picBg1->getContentSize().height;
+//        while(curHeight < maxHeight)
+//        {
+//            auto picBg2 = CCLoadSprite::createSprite("technology_09.png");
+//            picBg2->setAnchorPoint(ccp(0, 0));
+//            picBg2->setPosition(ccp(0, curHeight));
+//            if (CCCommonUtils::isIosAndroidPad()) {
+//                picBg2->setScaleX(2.4);
+//            }
+//            tBatchNode->addChild(picBg2);
+//            curHeight += picBg2->getContentSize().height;
+//        }
+//        m_bgNode->addChild(tBatchNode);
         
         ParticleFireAni* par = ParticleFireAni::create();
         m_fireNode1->addChild(par);
