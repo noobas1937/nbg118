@@ -51,7 +51,7 @@ ChatView* ChatView::create(int type,string allianceId,int countryType){
 bool ChatView::init(int _type,string allianceId,int countryType)
 {
     // tao.yu 暂时关闭联盟聊天
-    _type = CHAT_COUNTRY;
+//    _type = CHAT_COUNTRY;
     /////////////////
     if (!PopupBaseView::init()) {
         return false;
