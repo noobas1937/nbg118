@@ -81,7 +81,7 @@ bool MainCityView::init(int buildId)
 void MainCityView::updateInfo()
 {
     int _itemH = 145;
-    int curY = 0;
+    int curY = 30;
     int curX = 10;
     if (CCCommonUtils::isIosAndroidPad()) {
         _itemH = 280;

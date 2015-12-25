@@ -195,6 +195,7 @@ private:
     void showAttention();
     void showAttention1();
     
+    void initResourceStatistics();
     void initMc2();
     void initBigTile();
     void startGuide(float _time);
@@ -291,6 +292,9 @@ private:
     CCSafeObject<SpeBuild> m_goldBoxBuild;
     CCSafeObject<CCNode> m_shipNode;
     CCSafeObject<SpeBuild> m_shipBuild;
+    //资源牌
+    CCSafeObject<Node> m_ziyuanmenNode;
+    CCSafeObject<SpeBuild> m_ziyuanmenBuild;
     //商人
     CCSafeObject<CCNode> m_merchanteNode;
     CCSafeObject<SpeBuild> m_merchanteBuild;

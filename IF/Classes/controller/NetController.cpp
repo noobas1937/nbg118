@@ -162,6 +162,24 @@ void NetController::getServerStatusBack(CCHttpClient* client, CCHttpResponse* re
         }
     }
     
+    if (isConnected())
+    {
+        auto popupview = PopupViewController::getInstance()->getCurrentPopupView();
+        auto yesnoView = dynamic_cast<YesNoDialog*>(popupview);
+        if (yesnoView)
+        {
+            PopupViewController::getInstance()->removeLastPopupView();
+        }
+        return;
+    }
+    
+    auto popupview = PopupViewController::getInstance()->getCurrentPopupView();
+    auto yesnoView = dynamic_cast<YesNoDialog*>(popupview);
+    if (yesnoView)
+    {
+        PopupViewController::getInstance()->removeLastPopupView();
+    }
+    
     if(status == 1){
         auto _dialog = YesNoDialog::show(_message.c_str()
                                          , CCCallFunc::create(this, callfunc_selector(NetController::funQuitGame))
