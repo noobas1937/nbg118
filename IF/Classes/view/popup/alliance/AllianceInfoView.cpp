@@ -389,9 +389,9 @@ void AllianceInfoView::initFun(){
     m_powerTxt->setString(CC_CMDITOAL(m_info->totalForce).c_str());
 
     // tao.yu 第一版不开放联盟领地和联盟科技
-    const int nbUseIndex[4] = {1,4,5,6};
+    const int nbUseIndex[4] = {1,4,5,6};//fusheng 保留原有逻辑  方便功能修改
     const char* titles3[7] = {"115190","115301","115159","115206","115077","115929","115258"};
-    const char* icons3[7] = {"allianceWar.png","AllianceTerritory.png","allianceScience.png","allianceShop.png","allianceHelp.png","icon_comment.png","icon_alliance_manger.png"};
+    const char* icons3[7] = {"allianceWar.png","AllianceTerritory.png","allianceScience.png","allianceShop.png","allianceHelp.png","icon_comment.png","nb_alliance_icon.png"};
 
 //    int num =6;
     int num = 4;
