@@ -173,7 +173,9 @@ bool AllianceInviteView::init(){
         setIsHDPanel(true);
         CCLoadSprite::doResourceByCommonIndex(307, true);
         CCLoadSprite::doResourceByCommonIndex(7, true);
-        setCleanFunction([](){
+        setCleanFunction([this](){
+            if (false == m_bReleaseTextureAfterRemove) return;
+            
             CCLoadSprite::doResourceByCommonIndex(307, false);
             CCLoadSprite::doResourceByCommonIndex(7, false);
         });
@@ -606,10 +608,10 @@ bool AllianceUserCell::init()
     bool ret = true;
     
     if (CCNode::init()) {
-        setCleanFunction([](){
-            CCLoadSprite::doResourceByCommonIndex(307, false);
-            CCLoadSprite::doResourceByCommonIndex(7, false);
-        });
+//        setCleanFunction([](){
+//            CCLoadSprite::doResourceByCommonIndex(307, false);
+//            CCLoadSprite::doResourceByCommonIndex(7, false);
+//        });
 
         m_ccbNode = CCBLoadFile("NewAllianceMemberCell", this, this);
         if (CCCommonUtils::isIosAndroidPad()) {
@@ -623,6 +625,10 @@ bool AllianceUserCell::init()
 //            m_powerTxt->setFntFile("pve_fnt_title.fnt");
 //        }
         m_inviteId = "";
+        
+        m_powerTxt->setFntFile(getNBFont(NB_FONT_Bold_Border));
+        m_powerValue->setFntFile(getNBFont(NB_FONT_Bold_Border));
+        
         return true;
     }
     

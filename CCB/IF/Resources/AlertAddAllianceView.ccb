@@ -190,8 +190,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>-236.24697875976562</real>
-											<real>-335.46041870117188</real>
+											<real>-196.24697875976562</real>
+											<real>-314.46041870117188</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -213,19 +213,11 @@
 										<string>ScaleLock</string>
 										<key>value</key>
 										<array>
-											<real>0.42654532194137573</real>
-											<real>0.59630060195922852</real>
+											<real>1</real>
+											<real>1</real>
 											<true/>
 											<integer>0</integer>
 										</array>
-									</dict>
-									<dict>
-										<key>name</key>
-										<string>rotation</string>
-										<key>type</key>
-										<string>Degrees</string>
-										<key>value</key>
-										<real>75</real>
 									</dict>
 									<dict>
 										<key>name</key>
@@ -242,8 +234,91 @@
 										<string>SpriteFrame</string>
 										<key>value</key>
 										<array>
-											<string>Common/Common_206.plist</string>
-											<string>nb_monster_attack_1.png</string>
+											<string>Common/Common_2.plist</string>
+											<string>nb_scieencePopupHuaWen2.png</string>
+										</array>
+									</dict>
+									<dict>
+										<key>name</key>
+										<string>blendFunc</string>
+										<key>type</key>
+										<string>Blendmode</string>
+										<key>value</key>
+										<array>
+											<integer>770</integer>
+											<integer>771</integer>
+										</array>
+									</dict>
+								</array>
+							</dict>
+							<dict>
+								<key>baseClass</key>
+								<string>CCSprite</string>
+								<key>children</key>
+								<array/>
+								<key>customClass</key>
+								<string></string>
+								<key>displayName</key>
+								<string>CCSprite</string>
+								<key>memberVarAssignmentName</key>
+								<string></string>
+								<key>memberVarAssignmentType</key>
+								<integer>0</integer>
+								<key>properties</key>
+								<array>
+									<dict>
+										<key>name</key>
+										<string>position</string>
+										<key>type</key>
+										<string>Position</string>
+										<key>value</key>
+										<array>
+											<real>214.75302124023438</real>
+											<real>116.53958129882812</real>
+											<integer>0</integer>
+										</array>
+									</dict>
+									<dict>
+										<key>name</key>
+										<string>anchorPoint</string>
+										<key>type</key>
+										<string>Point</string>
+										<key>value</key>
+										<array>
+											<real>0.5</real>
+											<real>0.5</real>
+										</array>
+									</dict>
+									<dict>
+										<key>name</key>
+										<string>scale</string>
+										<key>type</key>
+										<string>ScaleLock</string>
+										<key>value</key>
+										<array>
+											<real>1</real>
+											<real>1</real>
+											<true/>
+											<integer>0</integer>
+										</array>
+									</dict>
+									<dict>
+										<key>name</key>
+										<string>ignoreAnchorPointForPosition</string>
+										<key>type</key>
+										<string>Check</string>
+										<key>value</key>
+										<false/>
+									</dict>
+									<dict>
+										<key>name</key>
+										<string>displayFrame</string>
+										<key>type</key>
+										<string>SpriteFrame</string>
+										<key>value</key>
+										<array>
+											<string>Common/Common_2.plist</string>
+											<string>nb_scieencePopupHuaWen1.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -614,7 +689,7 @@
 										<key>value</key>
 										<array>
 											<real>0.0</real>
-											<real>-140</real>
+											<real>-100</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -750,7 +825,7 @@
 										<key>value</key>
 										<array>
 											<real>0.0</real>
-											<real>217.27365112304688</real>
+											<real>275.27365112304688</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -833,7 +908,7 @@
 										<key>value</key>
 										<array>
 											<real>-209.43363952636719</real>
-											<real>-62.208011627197266</real>
+											<real>-22.208011627197266</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -916,7 +991,7 @@
 										<key>value</key>
 										<array>
 											<real>-209.43363952636719</real>
-											<real>-142.19999694824219</real>
+											<real>-102.19999694824219</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -999,7 +1074,7 @@
 										<key>value</key>
 										<array>
 											<real>-209.43363952636719</real>
-											<real>-222.19999694824219</real>
+											<real>-182.19999694824219</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -1078,7 +1153,7 @@
 								<key>value</key>
 								<array>
 									<real>0.0</real>
-									<real>-47</real>
+									<real>-136</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -1139,7 +1214,7 @@
 								<key>value</key>
 								<array>
 									<real>0.0</real>
-									<real>-169</real>
+									<real>-258</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -1212,7 +1287,7 @@
 								<key>value</key>
 								<array>
 									<real>-176.6416015625</real>
-									<real>-110</real>
+									<real>-155</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -1340,7 +1415,7 @@
 								<key>value</key>
 								<array>
 									<real>-176.6416015625</real>
-									<real>-190</real>
+									<real>-235</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -1468,7 +1543,7 @@
 								<key>value</key>
 								<array>
 									<real>-176.6416015625</real>
-									<real>-270</real>
+									<real>-315</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -1572,8 +1647,6 @@
 								<string>MAIL</string>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -1598,7 +1671,7 @@
 								<key>value</key>
 								<array>
 									<real>0.0</real>
-									<real>-386</real>
+									<real>-475</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -1699,8 +1772,8 @@
 								<string>Size</string>
 								<key>value</key>
 								<array>
-									<real>244</real>
-									<real>74</real>
+									<real>312</real>
+									<real>88</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -1730,9 +1803,9 @@
 								<string>Color3</string>
 								<key>value</key>
 								<array>
-									<integer>170</integer>
-									<integer>117</integer>
-									<integer>41</integer>
+									<integer>158</integer>
+									<integer>99</integer>
+									<integer>29</integer>
 								</array>
 							</dict>
 							<dict>
@@ -1753,9 +1826,9 @@
 								<string>Color3</string>
 								<key>value</key>
 								<array>
-									<integer>170</integer>
-									<integer>117</integer>
-									<integer>41</integer>
+									<integer>158</integer>
+									<integer>99</integer>
+									<integer>29</integer>
 								</array>
 							</dict>
 							<dict>
@@ -1776,12 +1849,14 @@
 								<string>Color3</string>
 								<key>value</key>
 								<array>
-									<integer>170</integer>
-									<integer>117</integer>
-									<integer>41</integer>
+									<integer>158</integer>
+									<integer>99</integer>
+									<integer>29</integer>
 								</array>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 				</array>
 				<key>customClass</key>

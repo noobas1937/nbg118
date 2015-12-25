@@ -677,7 +677,11 @@ void AllianceInfoView::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *
             MailController::getInstance()->openMailDialogViewFirst(_lang("105564"), GlobalData::shared()->playerInfo.uid);
         }else if(isTouchInside(m_inviteSpr, pTouch)){
             SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
-            PopupViewController::getInstance()->addPopupInView(AllianceInviteView::create());
+            
+            auto pop = AllianceInviteView::create();
+            pop->setReleaseTextureAfterRemove(false);
+            PopupViewController::getInstance()->addPopupInView(pop);
+            
         }else if(isTouchInside(m_memberSpr, pTouch)){
             SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
             PopupViewController::getInstance()->addPopupInView(AllianceInfoMembersView::create(GlobalData::shared()->playerInfo.allianceInfo.uid));

@@ -574,6 +574,7 @@ void AllianceHelpViewCell::bind(AllianceHelp* allianceHelp)
     str.append(CC_ITOA(allianceHelp->getCurrentHelp()));
     str.append("/");
     str.append(CC_ITOA(allianceHelp->getAmount()));
+    m_progressTxt->setFntFile(getNBFont(NB_FONT_Bold_Border));
     m_progressTxt->setString(str);
     float len = allianceHelp->getCurrentHelp()/(allianceHelp->getAmount()*1.0);
     len = MIN(len,1);

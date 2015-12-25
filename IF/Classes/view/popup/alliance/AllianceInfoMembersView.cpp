@@ -420,7 +420,9 @@ void AllianceInfoMembersView::onClickMailBtn(CCObject *pSender, CCControlEvent e
 void AllianceInfoMembersView::onClickInviteBtn(CCObject *pSender, CCControlEvent event)
 {
     SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
-    PopupViewController::getInstance()->addPopupInView(AllianceInviteView::create());
+    auto pop = AllianceInviteView::create();
+    pop->setReleaseTextureAfterRemove(false);
+    PopupViewController::getInstance()->addPopupInView(pop);
 }
 
 void AllianceInfoMembersView::onClickExitBtn(CCObject *pSender, CCControlEvent event)
@@ -580,10 +582,13 @@ bool AllianceInfoMembersView::init(){
         int dh = m_background->getContentSize().height - preHeight;
         m_background->setVisible(false);
 
-        m_lvtxt->setString("0");
+        m_lvtxt->setString("");
         m_powertxt->setString("0");
         m_nametxt->setString("");
         m_postest->removeAllChildren();
+        
+        m_lvtxt->setFntFile(getNBFont(NB_FONT_Bold_Border));
+        m_powertxt->setFntFile(getNBFont(NB_FONT_Bold_Border));
         
         m_mailBtn->setTitleForState(_lang("115900"), cocos2d::extension::Control::State::NORMAL);
         m_mailBtn->setTitleForState(_lang("115900"), cocos2d::extension::Control::State::DISABLED);
@@ -1523,6 +1528,7 @@ void AllianceInfoMembersCell::bind(AllianceInfoMember* oneInfo,AllianceInfoMembe
         m_infoNode->setVisible(false);
         m_arrow->setRotation(m_oneInfo->getOpen()?90:0);
         m_titleTxt->setString(m_oneInfo->getAllianceTitle().c_str());
+        m_numTxt->setFntFile(getNBFont(NB_FONT_Bold_Border));
         m_numTxt->setString(CC_ITOA(m_oneInfo->getAppNum()));
         m_rankIcon->removeAllChildrenWithCleanup(true);
         CCSprite* spr = NULL;
@@ -1715,7 +1721,11 @@ void AllianceOneMembersCell::setData(AllianceInfoMember* member)
     m_headIcon->addChild(spr);
     m_nameTxt->setString(m_info->getName().c_str());
 //    m_powerTxt->setString(_lang("102163").c_str());
-    string lv = "LV."; lv.append(CC_ITOA(m_info->getUserLevel()));
+    
+    m_powerTxt->setFntFile(getNBFont(NB_FONT_Bold_Border));
+    m_powerValue->setFntFile(getNBFont(NB_FONT_Bold_Border));
+    
+    string lv = "Lv."; lv.append(CC_ITOA(m_info->getUserLevel()));
     m_powerTxt->setString(lv);
     m_powerValue->setString(CC_CMDITOAL(m_info->getPower()));
 //    if(m_info->getOnline()){
