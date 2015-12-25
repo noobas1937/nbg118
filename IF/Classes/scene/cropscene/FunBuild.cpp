@@ -3643,7 +3643,7 @@ void FunBuildState::onCheckAllianceHelp()
         if (qInfo.type == TYPE_BUILDING || qInfo.type == TYPE_HOSPITAL || qInfo.type == TYPE_SCIENCE || qInfo.type == TYPE_FORGE) {
             if (GlobalData::shared()->playerInfo.isInAlliance() && qInfo.canHelp){
                 m_helpIconNode->removeAllChildren();
-                auto icon = CCLoadSprite::createSprite("alliances_help.png");
+                auto icon = CCLoadSprite::createSprite("allianceHelp.png");
                 m_helpIconNode->addChild(icon);
                 if (qInfo.type == TYPE_HOSPITAL && GlobalData::shared()->isCrossService) {
                     m_helpNode->setVisible(false);

@@ -462,42 +462,42 @@ bool AllianceHelpViewCell::init()
         CCSize size = node->getContentSize();
         setContentSize(size);
         
-        m_bgNode->removeAllChildrenWithCleanup(true);
-        auto tbg = CCLoadSprite::loadResource("cell_bg1.png");
-        auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
-        CCSprite* spr = nullptr;
-        spr = CCLoadSprite::createSprite("cell_bg1.png");
-        spr->setAnchorPoint(ccp(0, 0));
-        spr->setPosition(ccp(0, 0));
-        if (CCCommonUtils::isIosAndroidPad())
-        {
-            spr->setScaleX(2);
-            spr->setScaleY(1.9);
-        }
-        tBatchNode->addChild(spr);
-        CCSize size1 = spr->getContentSize();
-        int wi = size1.width;
-        while (wi < size.width - size1.width) {
-            spr = CCLoadSprite::createSprite("cell_bg2.png");
-            spr->setAnchorPoint(ccp(0, 0));
-            spr->setPosition(CCSize(wi, 0));
-            if (CCCommonUtils::isIosAndroidPad()) {
-                spr->setScaleX(2);
-                spr->setScaleY(1.9);
-            }
-            tBatchNode->addChild(spr);
-            wi += spr->getContentSize().width;
-        }
-        spr = CCLoadSprite::createSprite("cell_bg1.png");
-        spr->setAnchorPoint(ccp(1, 0));
-        spr->setPosition(ccp(size.width, 0));
-        if (CCCommonUtils::isIosAndroidPad()) {
-            spr->setScaleX(2);
-            spr->setScaleY(1.9);
-        }
-        spr->setFlipX(true);
-        tBatchNode->addChild(spr);
-        m_bgNode->addChild(tBatchNode);
+//        m_bgNode->removeAllChildrenWithCleanup(true);
+//        auto tbg = CCLoadSprite::loadResource("cell_bg1.png");
+//        auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
+//        CCSprite* spr = nullptr;
+//        spr = CCLoadSprite::createSprite("cell_bg1.png");
+//        spr->setAnchorPoint(ccp(0, 0));
+//        spr->setPosition(ccp(0, 0));
+//        if (CCCommonUtils::isIosAndroidPad())
+//        {
+//            spr->setScaleX(2);
+//            spr->setScaleY(1.9);
+//        }
+//        tBatchNode->addChild(spr);
+//        CCSize size1 = spr->getContentSize();
+//        int wi = size1.width;
+//        while (wi < size.width - size1.width) {
+//            spr = CCLoadSprite::createSprite("cell_bg2.png");
+//            spr->setAnchorPoint(ccp(0, 0));
+//            spr->setPosition(CCSize(wi, 0));
+//            if (CCCommonUtils::isIosAndroidPad()) {
+//                spr->setScaleX(2);
+//                spr->setScaleY(1.9);
+//            }
+//            tBatchNode->addChild(spr);
+//            wi += spr->getContentSize().width;
+//        }
+//        spr = CCLoadSprite::createSprite("cell_bg1.png");
+//        spr->setAnchorPoint(ccp(1, 0));
+//        spr->setPosition(ccp(size.width, 0));
+//        if (CCCommonUtils::isIosAndroidPad()) {
+//            spr->setScaleX(2);
+//            spr->setScaleY(1.9);
+//        }
+//        spr->setFlipX(true);
+//        tBatchNode->addChild(spr);
+//        m_bgNode->addChild(tBatchNode);
         
         m_headImgNode = HFHeadImgNode::create();
         CCCommonUtils::setButtonTitle(m_helpBtn, _lang("115078").c_str());
@@ -579,7 +579,8 @@ void AllianceHelpViewCell::bind(AllianceHelp* allianceHelp)
     float len = allianceHelp->getCurrentHelp()/(allianceHelp->getAmount()*1.0);
     len = MIN(len,1);
     len = MAX(len,0);
-    m_progress->setPreferredSize(CCSize(286*len,23));
+    m_progress->setPreferredSize(CCSize(248 * len, 20));
+    m_progress->setVisible(len > 0);
     if(allianceHelp->getStats()==1){
         m_helpBtn->setVisible(true);
     }else{
