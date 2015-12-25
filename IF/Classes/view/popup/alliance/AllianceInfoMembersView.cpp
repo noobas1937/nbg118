@@ -1645,6 +1645,7 @@ bool AllianceOneMembersCell::init()
         setContentSize(size);
         
         m_nodeHide[0]->setVisible(false);
+        m_nodeHide[1]->setVisible(false);
         
         std::string lang = cocos2d::extension::CCDevice::getLanguage();
 //        if (lang == "en" || lang == "en-US")

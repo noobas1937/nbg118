@@ -847,7 +847,7 @@ void AllianceUserCell::setData(AllianceInfoMember* member,CCNode* clickArea,int 
     }
     int iindex = 0;
     while (iindex<2) {
-        this->m_nodeHide[iindex]->setVisible(showShine);
+        this->m_nodeHide[iindex]->setVisible(false);//showShine);
         ++iindex;
     }
 }
