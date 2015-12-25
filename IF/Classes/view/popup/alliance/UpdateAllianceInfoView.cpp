@@ -59,6 +59,8 @@ bool UpdateAllianceInfoView::init(int open){
         this->m_funNode->setContentSize(CCSize(m_funNode->getContentSize().width, m_funNode->getContentSize().height + dh));
         m_funNode->setPositionY(m_funNode->getPositionY()-dh);
         
+         m_bottomNode->setPositionY(m_bottomNode->getPositionY()-dh);
+        
         m_scrollView = CCScrollView::create(m_funNode->getContentSize());
         m_scrollView->setDirection(kCCScrollViewDirectionVertical);
         m_funNode->addChild(m_scrollView);
@@ -144,6 +146,8 @@ bool UpdateAllianceInfoView::init(int open){
             
             return;
             
+            PopupViewController::getInstance()->addPopupView(AllianceCheckView::create(),true,true);
+            
             
             
         }
@@ -160,6 +164,8 @@ bool UpdateAllianceInfoView::init(int open){
     
     m_nb_bg1->setColor({25,30,44});
     m_nb_bg2->setColor({38,44,70});
+    
+   
     
     
     return ret;
@@ -220,6 +226,8 @@ void UpdateAllianceInfoView::updatePosition(CCObject* data){
 
 bool UpdateAllianceInfoView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode){
     
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bottomNode", CCNode*, this->m_bottomNode);
     
      CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nb_bg1", CCLayerColor*, this->m_nb_bg1);
      CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nb_bg2", CCLayerColor*, this->m_nb_bg2);

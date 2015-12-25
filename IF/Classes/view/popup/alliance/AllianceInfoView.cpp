@@ -1044,7 +1044,8 @@ void AllianceFunCell::clickHandle(CCObject *pSender, CCControlEvent event){
             PopupViewController::getInstance()->addPopupInView(ChatView::create(CHAT_COMMENT,m_info->uid),false);
             break;
         case 7:
-            PopupViewController::getInstance()->addPopupInView(AllianceFunView::create());
+//            PopupViewController::getInstance()->addPopupInView(AllianceFunView::create());
+            PopupViewController::getInstance()->addPopupInView(UpdateAllianceInfoView::create(-1));//fusheng 直接进入setting界面
             break;
     }
 }
@@ -1134,7 +1135,7 @@ void AllianceEventCell::setData(AllianceEventInfo* info,AllianceEventInfo* lastI
 //        m_timeTxt->setColor({141,166,80});
 //        m_contentTxt->setColor({90,119,57});
     }
-    m_timeTxt->setColor({143,143,143});
+//    m_timeTxt->setColor({143,143,143});
     m_node2->setVisible(true);
     if(m_lastInfo==NULL){
         
@@ -1227,7 +1228,7 @@ void AllianceEventCell::showCell(AllianceEventInfo* info){
 //        m_timeTxt->setColor({141,166,80});
 //        m_contentTxt->setColor({90,119,57});
     }
-    m_timeTxt->setColor({143,143,143});
+//    m_timeTxt->setColor({143,143,143});
     m_node2->setVisible(true);
     if(m_lastInfo==NULL){
         
@@ -1334,12 +1335,20 @@ bool AllianceBottomNode::init()
 {
     auto tmpCCB = CCBLoadFile("AllianceBottomNode",this,this);
 
+    m_nb_allianceTxt->setFntFile(getNBFont(NB_FONT_Bold_Border));
+    m_nb_memberTxt->setFntFile(getNBFont(NB_FONT_Bold_Border));
+    m_nb_warTxt->setFntFile(getNBFont(NB_FONT_Bold_Border));
+    m_nb_storeTxt->setFntFile(getNBFont(NB_FONT_Bold_Border));
+    m_nb_scienceTxt->setFntFile(getNBFont(NB_FONT_Bold_Border));
     
     m_nb_allianceTxt->setString(_lang("500023"));
     m_nb_memberTxt->setString(_lang("115266"));
     m_nb_warTxt->setString(_lang("115190"));
     m_nb_storeTxt->setString(_lang("115206"));
     m_nb_scienceTxt->setString(_lang("115159"));
+    
+   
+   
     
     auto listener = EventListenerTouchOneByOne::create();
     listener->setSwallowTouches(true);
