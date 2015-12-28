@@ -87,11 +87,11 @@ void LoadingScene::addLoadingBG(Point& addPt)
         gift1->setScale(0.9);
         this->addChild(gift1,99999);
         
-        Vec2 gift2Pos = loadingBG->convertToWorldSpace(Vec2(115,935));
-        auto gift2 = CCLoadSprite::createSprite("loading_gift2.png");
-        gift2->setAnchorPoint(ccp(0.5,0.5));
-        gift2->setPosition(gift2Pos);
-        this->addChild(gift2,99999);
+//        Vec2 gift2Pos = loadingBG->convertToWorldSpace(Vec2(115,935));
+//        auto gift2 = CCLoadSprite::createSprite("loading_gift2.png");
+//        gift2->setAnchorPoint(ccp(0.5,0.5));
+//        gift2->setPosition(gift2Pos);
+//        this->addChild(gift2,99999);
         
         // tao.yu 动画效果
 //        auto kingSpine = IFLoadingSceneArmyNode::create("Loading/Loading_3.atlas", "Spine/Loading/loading.json", "loop", 1);
