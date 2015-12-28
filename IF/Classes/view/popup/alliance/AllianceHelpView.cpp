@@ -236,6 +236,7 @@ bool AllianceHelpView::init(){
             CCCommonUtils::setButtonTitle(m_btnJoin, _lang("115068").c_str());
         }
         m_helpAll->setEnabled(false);
+        m_helpAll->getBackgroundSpriteForState(cocos2d::extension::Control::State::DISABLED)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);//fusheng 置灰
         
         ParticleFireAni* par = ParticleFireAni::create();
         m_fireNode1->addChild(par);
