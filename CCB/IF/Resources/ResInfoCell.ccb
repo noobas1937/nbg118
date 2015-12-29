@@ -26,6 +26,18 @@
 			<key>position</key>
 			<real>88</real>
 		</dict>
+		<dict>
+			<key>orientation</key>
+			<integer>0</integer>
+			<key>position</key>
+			<real>0.0</real>
+		</dict>
+		<dict>
+			<key>orientation</key>
+			<integer>1</integer>
+			<key>position</key>
+			<real>0.0</real>
+		</dict>
 	</array>
 	<key>jsControlled</key>
 	<false/>
@@ -62,7 +74,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>165</real>
+									<real>292</real>
 									<real>73</real>
 									<integer>0</integer>
 								</array>
@@ -74,7 +86,7 @@
 								<string>Point</string>
 								<key>value</key>
 								<array>
-									<real>0.5</real>
+									<real>1</real>
 									<real>0.5</real>
 								</array>
 							</dict>
@@ -85,7 +97,7 @@
 								<string>ScaleLock</string>
 								<key>value</key>
 								<array>
-									<real>1</real>
+									<real>0.94999998807907104</real>
 									<real>1</real>
 									<false/>
 									<integer>0</integer>
@@ -156,7 +168,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>471</real>
+									<real>292</real>
 									<real>73</real>
 									<integer>0</integer>
 								</array>
@@ -168,7 +180,7 @@
 								<string>Point</string>
 								<key>value</key>
 								<array>
-									<real>0.5</real>
+									<real>0.0</real>
 									<real>0.5</real>
 								</array>
 							</dict>
@@ -179,7 +191,7 @@
 								<string>ScaleLock</string>
 								<key>value</key>
 								<array>
-									<real>1</real>
+									<real>0.94999998807907104</real>
 									<real>1</real>
 									<false/>
 									<integer>0</integer>
@@ -239,7 +251,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>35.578704833984375</real>
+									<real>23.578704833984375</real>
 									<real>18.853519439697266</real>
 									<integer>0</integer>
 								</array>
@@ -324,7 +336,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>88.888885498046875</real>
+									<real>76.888885498046875</real>
 									<real>71.685188293457031</real>
 									<integer>0</integer>
 								</array>
@@ -362,8 +374,6 @@
 								<false/>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
