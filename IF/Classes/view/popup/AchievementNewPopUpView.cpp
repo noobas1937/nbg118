@@ -374,7 +374,7 @@ void AchievementNewPopUpView::updateRecommendTask()
             string tmpstr = "+";
             tmpstr = tmpstr + CC_ITOA_K(r_num);
             m_rewardNum->setString(tmpstr.c_str());
-            m_rewardNum->setFntFile("eeeq_0.fnt");
+            m_rewardNum->setFntFile("eeeq.fnt");
         }
     }
 }

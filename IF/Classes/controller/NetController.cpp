@@ -164,12 +164,6 @@ void NetController::getServerStatusBack(CCHttpClient* client, CCHttpResponse* re
     
     if (isConnected())
     {
-        auto popupview = PopupViewController::getInstance()->getCurrentPopupView();
-        auto yesnoView = dynamic_cast<YesNoDialog*>(popupview);
-        if (yesnoView)
-        {
-            PopupViewController::getInstance()->removeLastPopupView();
-        }
         return;
     }
     
@@ -188,6 +182,7 @@ void NetController::getServerStatusBack(CCHttpClient* client, CCHttpResponse* re
                                          );
         _dialog->setNoButtonTitle(_lang("E100089").c_str());
     }else if(status == 0){
+#if COCOS2D_DEBUG == 1
         auto _dialog = YesNoDialog::show(_lang("E100086").c_str()
                                          , CCCallFunc::create(this, callfunc_selector(NetController::funRetry))
                                          , 0
@@ -197,6 +192,7 @@ void NetController::getServerStatusBack(CCHttpClient* client, CCHttpResponse* re
         _dialog->showCancelButton();
         _dialog->setYesButtonTitle(_lang("105248").c_str());
         _dialog->setNoButtonTitle(_lang("E100075").c_str());
+#endif
     }
 }
 
