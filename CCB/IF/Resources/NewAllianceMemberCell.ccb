@@ -1353,8 +1353,6 @@
 												<string>Power</string>
 											</dict>
 										</array>
-										<key>selected</key>
-										<true/>
 									</dict>
 									<dict>
 										<key>baseClass</key>
@@ -1841,7 +1839,7 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>112</real>
+											<real>120</real>
 											<real>88</real>
 											<integer>0</integer>
 										</array>
@@ -1879,6 +1877,8 @@
 										<false/>
 									</dict>
 								</array>
+								<key>selected</key>
+								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>
