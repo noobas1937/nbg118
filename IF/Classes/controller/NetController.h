@@ -117,6 +117,7 @@ private:
     CC_SYNTHESIZE(bool, m_isFirstReconnect, FirstReconnect);
     bool m_isRetry;
     int m_isReConnection;
+    int m_connectTimes;
     int getRealPort();
     std::string getRealIp();
     bool isChina();
