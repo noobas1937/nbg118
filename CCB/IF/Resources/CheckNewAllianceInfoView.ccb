@@ -1590,8 +1590,6 @@
 										<string>Leader:asdsa(12)sbsbsbs</string>
 									</dict>
 								</array>
-								<key>selected</key>
-								<true/>
 							</dict>
 						</array>
 						<key>customClass</key>
@@ -4197,7 +4195,7 @@
 								<key>value</key>
 								<array>
 									<real>0.0</real>
-									<real>-111</real>
+									<real>-142</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -4309,6 +4307,8 @@
 								<real>50</real>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -4531,7 +4531,7 @@ f
 								<key>value</key>
 								<array>
 									<real>-294.97830200195312</real>
-									<real>-276.82180786132812</real>
+									<real>-307.82180786132812</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -4580,6 +4580,8 @@ f
 								<false/>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
