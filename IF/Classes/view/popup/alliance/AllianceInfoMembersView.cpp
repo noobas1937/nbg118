@@ -1765,7 +1765,7 @@ void AllianceOneMembersCell::setData(AllianceInfoMember* member)
     m_headIcon->removeAllChildrenWithCleanup(true);
     CCSprite* spr = CCLoadSprite::createSprite(m_info->getPic().c_str());
     spr->setAnchorPoint({0.5, 0});
-    spr->setScale(.5);
+    spr->setScale(.4);
     m_headIcon->addChild(spr);
     m_nameTxt->setString(m_info->getName().c_str());
 //    m_powerTxt->setString(_lang("102163").c_str());
@@ -1789,10 +1789,10 @@ void AllianceOneMembersCell::setData(AllianceInfoMember* member)
 //        m_powerValue->setColor({172,172,172});
 //    }
     
-    m_titleFlag->setVisible(m_info->getRank()>1);
-    if(m_info->getRank()>1){
-        m_titleFlag->initWithSpriteFrame(CCLoadSprite::loadResource(CCString::createWithFormat("icon_Alliance_0%d.png",m_info->getRank())->getCString()));
-    }
+    m_titleFlag->setVisible(false);//m_info->getRank()>1);
+//    if(m_info->getRank()>1){
+//        m_titleFlag->initWithSpriteFrame(CCLoadSprite::loadResource(CCString::createWithFormat("icon_Alliance_0%d.png",m_info->getRank())->getCString()));
+//    }
 //    m_flagBg->initWithSpriteFrame(CCLoadSprite::loadResource(CCString::createWithFormat("Alliance_Flag_0%d.png",m_info->getRank())->getCString()));
     m_offLineTime->setString("");
 //    m_onLineBg->setVisible(false);

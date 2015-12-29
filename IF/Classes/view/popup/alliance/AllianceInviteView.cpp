@@ -801,7 +801,7 @@ void AllianceUserCell::setData(AllianceInfoMember* member,CCNode* clickArea,int 
     m_headIcon->removeAllChildrenWithCleanup(true);
     CCSprite* spr = CCLoadSprite::createSprite(m_info->getPic().c_str());
     spr->setAnchorPoint({0.5, 0});
-    spr->setScale(.5);
+    spr->setScale(.4);
 //    spr->setScale(0.8);
 //    if (CCCommonUtils::isIosAndroidPad()) {
 //        spr->setScale(1);
