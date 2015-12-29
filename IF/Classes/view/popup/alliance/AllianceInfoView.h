@@ -19,7 +19,7 @@
 
 enum AlliancePageTag
 {
-    ALLIANCE_BTN,
+    ALLIANCE_BTN = 1,
     MEMBER_BTN,
     WAR_BTN,
     STORE_BTN,
@@ -219,7 +219,7 @@ private:
 
 enum ClickAlliancePageTag
 {
-    ALLIANCE_CLICK_HOME,
+    ALLIANCE_CLICK_HOME ,
     ALLIANCE_CLICK_MEMBER,
     ALLIANCE_CLICK_WAR,
     ALLIANCE_CLICK_STORE,
@@ -254,6 +254,7 @@ private:
     AlliancePageTag m_PageTag;
     AllianceInfo* m_info;
     
+    CCSafeObject<CCNode> m_growNode;
     
     CCSafeObject<CCNode> nb_allianceNode;
 #pragma mark Alliance_btn
