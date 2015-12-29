@@ -238,6 +238,7 @@ void YuanJunCell::onExit() {
 }
 
 void YuanJunCell::onBtnHelpClick(CCObject * pSender, Control::EventType pCCControlEvent){
+    CCCommonUtils::flyHint("", "", _lang("E100008"));return;//fusheng 12.29 屏蔽士兵援助
     PopupViewController::getInstance()->addPopupView(YuanJunTipView::create(m_info->pointId));
 }
 

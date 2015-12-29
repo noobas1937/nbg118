@@ -923,6 +923,8 @@ void FunBuildBtnsView::onBtn4Click(CCObject * pSender, Control::EventType pCCCon
             return;
         }
     }else if(buildType == FUN_BUILD_STABLE){
+        CCCommonUtils::flyHint("", "", _lang("E100008"));//fusheng 12.29 屏蔽士兵援助
+        return;
         PopupViewController::getInstance()->addPopupInView(YuanJunDetailView::create()); //YuanJunView
     }
     else if(buildType == FUN_BUILD_FORGE){
