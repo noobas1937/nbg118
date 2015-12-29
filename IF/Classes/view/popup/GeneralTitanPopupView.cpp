@@ -1033,6 +1033,8 @@ void GeneralTitanPopupView::handleTianUpgradeAnimationComplete(CCObject* obj)
         
         m_titanPosInView->addChild(tieanInView );
         
+        tieanInView->m_Titan->changeTitanState(Titan::eActState::Idle);//fusheng 升级动画完成后 播放一个idle
+        
         CCLOG("GeneralTitanPopupView titan sheng ji animation complete");
         //            view->setVisible(true);
     }

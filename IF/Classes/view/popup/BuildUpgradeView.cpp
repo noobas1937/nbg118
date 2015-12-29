@@ -1756,12 +1756,22 @@ void UpgradeCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEven
         else if (m_type == 2 && m_gotoBuildId>0) {
             auto layer = dynamic_cast<ImperialScene*>(SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE));
             if (layer) {
-                layer->onMoveToBuildAndPlay(m_gotoBuildId, true);
-                PopupViewController::getInstance()->removeAllPopupView();
+                if(m_gotoBuildId == FUN_BUILD_MAIN_CITY_ID)
+                {
+                    
+                    PopupViewController::getInstance()->removeAllPopupView();
+                    PopupViewController::getInstance()->addPopupInView(GeneralTitanPopupView::create());//fusheng 点击龙 goto 打开龙界面
+                }
+                else
+                {
+                    layer->onMoveToBuildAndPlay(m_gotoBuildId, true);
+                    PopupViewController::getInstance()->removeAllPopupView();
+                }
+                
             }
             else
             {
-                if (m_buildId == FUN_BUILD_MAIN_CITY_ID) {
+                if (m_buildId == FUN_BUILD_MAIN_CITY_ID) {//fusheng 从world里 点击goto按钮
 //                    UIComponent::getInstance()->OnHomeBackBtnClick(NULL, CCControlEvent::TOUCH_DOWN);
                     if (CCCommonUtils::isIosAndroidPad())
                     {

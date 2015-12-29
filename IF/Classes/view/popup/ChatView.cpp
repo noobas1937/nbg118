@@ -51,7 +51,7 @@ ChatView* ChatView::create(int type,string allianceId,int countryType){
 bool ChatView::init(int _type,string allianceId,int countryType)
 {
     // tao.yu 暂时关闭联盟聊天
-    _type = CHAT_COUNTRY;
+//    _type = CHAT_COUNTRY;
     /////////////////
     if (!PopupBaseView::init()) {
         return false;
@@ -607,6 +607,10 @@ void ChatView::onPostBtnClick(cocos2d::CCObject *pSender, Control::EventType pCC
     delayTime=0;
     if(type==CHAT_COMMENT){
         m_sendMsg = m_editBox->getText();
+        if(m_sendMsg == "")
+        {
+            return ;//不处理空
+        }
         string lang = LocalController::shared()->getLanguageFileName();
         AllianceSendCommentCommand* cmd = new AllianceSendCommentCommand(m_allianceId,m_sendMsg,lang);
         cmd->setSuccessCallback(CCCallFuncO::create(this, callfuncO_selector(ChatView::callBackSuccess), NULL));
@@ -622,7 +626,7 @@ void ChatView::onPostBtnClick(cocos2d::CCObject *pSender, Control::EventType pCC
     }
     m_editBox->setText("");
     m_editBox->closeIME();
-    m_editBox->openIME();
+//    m_editBox->openIME();//fusheng 不新打开输入法          
     m_tabView->setPositionY(m_oldTablePosY);
     m_tabView->setViewSize(m_oldTableViewSize);
     m_editBGNode->setPositionY(m_oldEditPositionY);
