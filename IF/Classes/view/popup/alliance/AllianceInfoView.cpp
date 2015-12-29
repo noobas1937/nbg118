@@ -1372,6 +1372,19 @@ bool AllianceBottomNode::init()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
     
+    auto child = this->nb_allianceNode->getChildByTag(this->m_PageTag);
+    
+    if(child)
+    {
+       
+        this->m_growNode->setVisible(true);
+        this->m_growNode->setPosition(child->getPosition());
+    }
+    else
+    {
+        this->m_growNode->setVisible(false);
+    }
+   
     
     return true;
 }
@@ -1404,6 +1417,10 @@ void AllianceBottomNode::onExit()
 {
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "nb_allianceNode", CCNode*, this->nb_allianceNode);
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_growNode", CCNode*, this->m_growNode);
+    
+    
 #pragma mark Alliance_btn
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nb_allianceSpr", CCSprite*, this->m_nb_allianceSpr);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nb_allianceTxt", CCLabelIF*, this->m_nb_allianceTxt);
