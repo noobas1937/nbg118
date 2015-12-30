@@ -141,7 +141,7 @@ bool CheckAllianceInfoView::init()
     addBtnPar(m_joinAlliance);
     addBtnPar(m_applyBtn);
     m_bottomNode->setVisible(false);
-    m_bottomNode->setPositionY(m_bottomNode->getPositionY()-addH);
+    m_bottomNode->setPositionY(m_bottomNode->getPositionY()-addH + 20);
     
     CCCommonUtils::setButtonTitle(m_applyBtn, _lang("115019").c_str());
     CCCommonUtils::setButtonTitle(m_RestrictApply, _lang("115019").c_str());

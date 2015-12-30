@@ -257,6 +257,8 @@ void AllianceManager::openYuanYunView(int pointId){
         return;
     }
     if(pointId<=0) return;
+    CCCommonUtils::flyHint("", "", _lang("E100008"));return;//fusheng 12.29 屏蔽士兵援助
+    
     PopupViewController::getInstance()->addPopupView(YuanJunTipView::create(pointId));
 }
 

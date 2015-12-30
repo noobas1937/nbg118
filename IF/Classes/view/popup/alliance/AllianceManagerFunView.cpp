@@ -89,7 +89,7 @@ bool AllianceManagerFunView::init(){
 //        }
         m_bodyIcon = CCLoadSprite::createSprite(nb_picName.c_str());
         
-        m_bodyIcon->setAnchorPoint(Vec2(0.5,0));
+        m_bodyIcon->setAnchorPoint(Vec2(0.5,1));
 //        if (m_bodyIcon->getContentSize().width <=2 && m_bodyIcon->getContentSize().height <=2) {
 //            m_bodyIcon = CCLoadSprite::createSprite(m_info->getPic().c_str());
 //        }

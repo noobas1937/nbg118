@@ -33,6 +33,7 @@ NetController::NetController()
 , m_isReConnection(0)
 , m_ipConnectTime(0)
 , m_isSending(false)
+, m_connectTimes(0)
 {
     // NBTODO
     isTecentConnectionInUse = false;
@@ -130,14 +131,25 @@ void NetController::getServerStatus(){
 
 void NetController::getServerStatusBack(CCHttpClient* client, CCHttpResponse* response){
     int status = 0;//0 其他问题， 1 服务器状态有问题
+    // tao.yu （status == 0）时 包括丢包，闪断等情况
     std::string _message = _lang("E100088");
-
+    
+    ++m_connectTimes;
+    
     if (!response)
     {
         status = 1;
     }else if (!response->isSucceed())
     {
         status = 1;
+        
+        GameController::getInstance()->setLoadingLog("NetController:getServerStatusBack", "isSucceedFalse");
+        
+        if(!isConnected() && m_connectTimes<=3 && SceneController::getInstance()->currentSceneId == SCENE_ID_LOADING)
+        {
+            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(SFS_CONNECT_ERROR);
+            return;
+        }
     }else{
         std::vector<char>* iter = response->getResponseData();
     
@@ -153,6 +165,17 @@ void NetController::getServerStatusBack(CCHttpClient* client, CCHttpResponse* re
                     if (_code != 0) {
                         status = 1;
                     }
+                    else
+                    {
+                        GameController::getInstance()->setLoadingLog("NetController:getServerStatusBack", "cokerrcode0");
+                        
+                        if(!isConnected() && m_connectTimes<=3 && SceneController::getInstance()->currentSceneId == SCENE_ID_LOADING)
+                        {
+                            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(SFS_CONNECT_ERROR);
+                            return;
+                        }
+                    }
+                    
                     _message= Json_getString(c, "message", "");
                     Json_dispose(c);
                 }
@@ -164,12 +187,6 @@ void NetController::getServerStatusBack(CCHttpClient* client, CCHttpResponse* re
     
     if (isConnected())
     {
-        auto popupview = PopupViewController::getInstance()->getCurrentPopupView();
-        auto yesnoView = dynamic_cast<YesNoDialog*>(popupview);
-        if (yesnoView)
-        {
-            PopupViewController::getInstance()->removeLastPopupView();
-        }
         return;
     }
     
@@ -201,6 +218,10 @@ void NetController::getServerStatusBack(CCHttpClient* client, CCHttpResponse* re
 }
 
 void NetController::sendLog(std::string type, std::string cmd){
+    if (true){
+        // tao.yu 此处上传log暂时不做
+        return;
+    }
     if(cmd == ""){
         return;
     }
@@ -292,6 +313,7 @@ void NetController::onLoginFailed(cocos2d::CCObject *obj)
 
 void NetController::onConnection(CCObject* p)
 {
+    m_connectTimes = 0;
     CCLOGFUNC();
     //loadingLog统计
     GameController::getInstance()->setLoadingLog("NetController", "onConnection");
@@ -767,13 +789,15 @@ void NetController::checkReConnection(float delta)
         CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(NetController::checkReConnection), this);
         return;
     }
-    if(/*GlobalData::shared()->analyticID == "cn1" && */isNetWorkOK()){//网络没有问题，与服务器断开重连
-        doConnect();
-        if(isConnected()){
-            m_isReConnection = 0;
-            CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(NetController::checkReConnection), this);
-            return;
-        }
+//    if(GlobalData::shared()->connectionFlag == 1){
+        if(!isConnected() && isNetWorkOK()){//网络没有问题，与服务器断开重连
+            doConnect();
+            if(isConnected()){
+                m_isReConnection = 0;
+                CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(NetController::checkReConnection), this);
+                return;
+            }
+//        }
     }
 
     CCLOGFUNCF("not connected, request stacked and do reconnect %d",m_isReConnection);
