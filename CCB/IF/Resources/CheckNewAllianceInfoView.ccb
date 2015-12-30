@@ -883,7 +883,7 @@
 										<string>Size</string>
 										<key>value</key>
 										<array>
-											<real>220</real>
+											<real>270</real>
 											<real>32</real>
 											<integer>0</integer>
 										</array>
@@ -1161,7 +1161,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>-264</real>
+									<real>-274</real>
 									<real>64</real>
 									<integer>0</integer>
 								</array>
@@ -1775,8 +1775,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>-167</real>
-									<real>228</real>
+									<real>-145</real>
+									<real>216</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -1813,6 +1813,8 @@
 								<false/>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -2470,8 +2472,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>204.40005493164062</real>
-									<real>185.60000610351562</real>
+									<real>213.40005493164062</real>
+									<real>187.60000610351562</real>
 									<integer>0</integer>
 								</array>
 							</dict>
