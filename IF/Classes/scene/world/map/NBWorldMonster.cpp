@@ -62,6 +62,8 @@ void WorldMapView::monsterDeathCB(CCObject* obj)
                 auto c = WORLD_MAP_VIEW->m_mapMonstersNode->getChildByTag(tag);
                 if (c)
                 {
+                    c->stopAllActions();
+                    c->setOpacity(180);
                     CCDelayTime* delayTime = CCDelayTime::create(3.0f);
                     CCFadeOut* fadeOut = CCFadeOut::create(2.0f);
                     CCSequence* seq = CCSequence::create(delayTime, fadeOut, nullptr);
@@ -265,6 +267,7 @@ void NBWorldMonster::createMonsterBatchItem(BatchTagType type, unsigned int inde
         flipX = (info.cityIndex % 2 == 1);
     }
     
+    bool bPlayAttackAnimation = false; // guojiang
     if (type == MonsterDead)
     {
         CCArray* arr = CCArray::create();
@@ -274,6 +277,7 @@ void NBWorldMonster::createMonsterBatchItem(BatchTagType type, unsigned int inde
         CC_SAFE_RETAIN(arr);
         CCCallFuncO* callFunc = CCCallFuncO::create(WORLD_MAP_VIEW, callfuncO_selector(WorldMapView::monsterDeathCB), arr);
         monsterNode->setSpineState(monsterJsonName, MonsterAttack, direction,true,callFunc,9);
+        bPlayAttackAnimation = true;
         
     }
     else if(type == MonsterAttack)
@@ -571,7 +575,7 @@ void NBWorldMonster::createMonsterBatchItem(BatchTagType type, unsigned int inde
             c->removeFromParent();
         }
         
-        if (type == MonsterAttack)
+        if (type == MonsterAttack || bPlayAttackAnimation)
         {
             for (int i = MonsterAttack; i <= MonsterBreath; i++)
             {
