@@ -454,8 +454,7 @@ void LoadingScene::onEnter(){
     if(isChina() && !m_isAdd){
         CCSprite *logo = dynamic_cast<CCSprite*>(this->getChildByTag(LOADING_LOGO_TAG));
         if(logo){
-            logo->setDisplayFrame(CCLoadSprite::loadResource("logo_only.png"));
-            logo->setPositionY(logo->getPositionY() + 40);
+            logo->setDisplayFrame(CCLoadSprite::loadResource("logo_cn.png"));
         }
         auto layer = CCLayerColor::create(ccc4(0, 0, 0, 200), CCDirector::sharedDirector()->getWinSize().width, 70);
         this->addChild(layer);
