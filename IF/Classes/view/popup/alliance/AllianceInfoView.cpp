@@ -1023,9 +1023,10 @@ void AllianceFunCell::clickHandle(CCObject *pSender, CCControlEvent event){
             break;
         case 2:
         {
-            CCCommonUtils::flyHint("", "", _lang("E100008"));
-            return;
-            
+//            CCCommonUtils::flyHint("", "", _lang("E100008"));
+//            return;
+//
+            //fusheng 联盟建筑
             //TODO: guojiang 联盟领地入口
             
             unsigned int index = WorldController::getIndexByPoint(WorldController::getInstance()->selfPoint);
