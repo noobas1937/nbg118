@@ -80,12 +80,12 @@ void LoadingScene::addLoadingBG(Point& addPt)
 //        this->addChild(loadingArrow,99999);
         
         // tao.yu 圣诞节礼物
-        Vec2 gift1Pos = loadingBG->convertToWorldSpace(Vec2(470,210));
-        auto gift1 = CCLoadSprite::createSprite("loading_gift1.png");
-        gift1->setAnchorPoint(ccp(0.5,0.5));
-        gift1->setPosition(gift1Pos);
-        gift1->setScale(0.9);
-        this->addChild(gift1,99999);
+//        Vec2 gift1Pos = loadingBG->convertToWorldSpace(Vec2(470,210));
+//        auto gift1 = CCLoadSprite::createSprite("loading_gift1.png");
+//        gift1->setAnchorPoint(ccp(0.5,0.5));
+//        gift1->setPosition(gift1Pos);
+//        gift1->setScale(0.9);
+//        this->addChild(gift1,99999);
         
 //        Vec2 gift2Pos = loadingBG->convertToWorldSpace(Vec2(115,935));
 //        auto gift2 = CCLoadSprite::createSprite("loading_gift2.png");
@@ -312,13 +312,19 @@ bool LoadingScene::init()
     }
     addChild(m_headParticleNode);
     
-    
-    auto logo = CCLoadSprite::createSprite("logo.png");
+    string logoPic = "logo.png";
+    Vec2 logoPos(0.3,0.85);
+    if (isTraditionalChinese()) {
+        logoPic = "logo_cn.png";
+        logoPos = Vec2(0.5,0.85);
+    }
+    auto logo = CCLoadSprite::createSprite(logoPic.c_str());
     logo->setAnchorPoint(ccp(0.5, 0.5));
     logo->setScale(0.8);
-    logo->setPosition(ccp(size.width * 0.3, size.height * 0.85));//
+    logo->setPosition(ccp(size.width * logoPos.x, size.height * logoPos.y));
     logo->setTag(LOADING_LOGO_TAG);
     addChild(logo,10000);
+    
     
     addLoadingTips();
     addPlatformLogo();
@@ -1080,6 +1086,11 @@ bool LoadingScene::isChina(){
     bool isChinaPlatForm = (GlobalData::shared()->isChinaPlatForm() || GlobalData::shared()->analyticID == "common");
     bool isChinaLan = (CCCommonUtils::getLanguage() == "zh_CN");
     return isChinaPlatForm || isChinaLan;
+}
+
+bool LoadingScene::isTraditionalChinese(){
+    bool isHant = (CCCommonUtils::getLanguage() == "zh_TW");
+    return isHant;
 }
 
 //---------

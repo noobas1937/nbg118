@@ -26,12 +26,20 @@
 #include "ChatServiceCocos2dx.h"
 #include "ChatController.h"
 
-#define MAX_LANGUAGE_COUNT 18
-const char* langName[MAX_LANGUAGE_COUNT] = {"English","Français","Deutsch","Pусский","한국어","ไทย","日本語","Português","Español","Türkçe","Indonesia","繁體中文","简体中文","Italiano","Polski","Nederlands","العربية","Română"};
-const char* langIcon[MAX_LANGUAGE_COUNT] = {"GbUs","FR","DE","RU","KR","TH","JP","BrPr","ES","TR","ID","TW","CN","IT","PL","NL","AE","RO"};
-const char* langType[MAX_LANGUAGE_COUNT] = {"en","fr","de","ru","ko","th","ja","pt","es","tr","id","zh_TW","zh_CN","it","pl","nl","ar","ro"};
-const char* langCode[MAX_LANGUAGE_COUNT] = {"102913","102917","102919","102920","102921","102935","102928","102918","102916","102936","102941","102915","102914","102922","102931","102930","103052","115619"};
-const int langStatus[MAX_LANGUAGE_COUNT] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};//
+//#define MAX_LANGUAGE_COUNT 18
+//const char* langName[MAX_LANGUAGE_COUNT] = {"English","Français","Deutsch","Pусский","한국어","ไทย","日本語","Português","Español","Türkçe","Indonesia","繁體中文","简体中文","Italiano","Polski","Nederlands","العربية","Română"};
+//const char* langIcon[MAX_LANGUAGE_COUNT] = {"GbUs","FR","DE","RU","KR","TH","JP","BrPr","ES","TR","ID","TW","CN","IT","PL","NL","AE","RO"};
+//const char* langType[MAX_LANGUAGE_COUNT] = {"en","fr","de","ru","ko","th","ja","pt","es","tr","id","zh_TW","zh_CN","it","pl","nl","ar","ro"};
+//const char* langCode[MAX_LANGUAGE_COUNT] = {"102913","102917","102919","102920","102921","102935","102928","102918","102916","102936","102941","102915","102914","102922","102931","102930","103052","115619"};
+//const int langStatus[MAX_LANGUAGE_COUNT] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};//
+
+
+#define MAX_LANGUAGE_COUNT 3
+const char* langName[MAX_LANGUAGE_COUNT] = {"English","繁體中文","简体中文"};
+const char* langIcon[MAX_LANGUAGE_COUNT] = {"GbUs","TW","CN"};
+const char* langType[MAX_LANGUAGE_COUNT] = {"en","zh_TW","zh_CN"};
+const char* langCode[MAX_LANGUAGE_COUNT] = {"102913","102915","102914"};
+const int langStatus[MAX_LANGUAGE_COUNT] = {0,0,0};//
 
 string LanguageSettingView::getLanguageIconByType(string type){
     int i=0;

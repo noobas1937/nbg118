@@ -48,6 +48,7 @@ private:
     virtual bool onTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
     virtual void onTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
     bool isChina();
+    bool isTraditionalChinese();
     void showLoading();
     void sendCmdLogin();
     void loadingAni(float t);

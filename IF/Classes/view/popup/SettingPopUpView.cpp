@@ -775,25 +775,9 @@ void SettingCell::touchEvent()
             break;
         case Setting_lang:
         {
-            // tao.yu 第一版本不开放更换语言，只支持英文
-            CCCommonUtils::flyHint("", "", _lang("E100008"));
-//            PopupViewController::getInstance()->addPopupInView(LanguageSettingView::create());
-//            std::string language = LocalController::shared()->getLanguageFileName();
-//            if (language.compare("en"))
-//            {
-//                CCUserDefault::sharedUserDefault()->setStringForKey(KEY_PREFERRED_LANGUAGE, "en");
-//                m_itemName->setString("CN");
-//            }
-//            else
-//            {
-//                CCUserDefault::sharedUserDefault()->setStringForKey(KEY_PREFERRED_LANGUAGE, "zh_CN");
-//                m_itemName->setString("EN");
-//            }
-//            CCUserDefault::sharedUserDefault()->setStringForKey("current-version-code","");
-//            CCUserDefault::sharedUserDefault()->flush();
-//            
-//            LogoutCommand* cmd=new LogoutCommand();
-//            cmd->sendAndRelease();
+            // tao.yu 更换语言，只支持英文,繁体中文,简体中文
+//            CCCommonUtils::flyHint("", "", _lang("E100008"));
+            PopupViewController::getInstance()->addPopupInView(LanguageSettingView::create());
         }
             break;
         case Setting_Help:{
