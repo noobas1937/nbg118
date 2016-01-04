@@ -2511,6 +2511,24 @@ void GeneralTitanPopupView::onTitanFeedClick(CCObject * pSender, Control::EventT
 }
 void GeneralTitanPopupView::AccGrowthCallBack()
 {
+    
+    if(m_titanInfo.feedNum>=m_titanInfo.feedMaxNum)
+    {
+        
+        int gold = (m_titanInfo.feedNum - m_titanInfo.feedMaxNum)*50+CCCommonUtils::getGoldByTime(3600);
+        gold = gold>1000? 1000:gold;
+    
+        if (gold>0) {
+            //判断金币数量是否足够
+            if (GlobalData::shared()->playerInfo.gold < gold) {
+                YesNoDialog::gotoPayTips();
+                return ;
+            }
+        }
+    }
+
+    
+    
     TitanInView* view = dynamic_cast<TitanInView*>(  m_titanPosInView->getChildByTag(10086));
     
     if (view && GlobalData::shared()->titanInfo.level != 1) {
