@@ -1296,12 +1296,13 @@ void ActivityController::showEnterView(){
     }
 }
 void ActivityController::showEnterViewByType(string popup){
-    //fusheng 不响应出了sign_pop之外的别的弹窗
-//    popup = "sign_pop";
-    if(popup.compare("sign_pop") != 0)
+    //fusheng 修改为不弹出event_pop 和 month_pop
+    
+    if(popup.compare("sign_pop") != 0 && popup.compare("gift_pop") )
     {
         return;
     }
+
     if(popup.compare("sign_pop_guide") == 0){
         PopupViewController::getInstance()->addPopupView(RechargeACTVCell::createDailyGuideRwd(14));
     }else if(popup.compare("sign_pop") == 0){
