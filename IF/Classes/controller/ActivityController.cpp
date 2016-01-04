@@ -1167,7 +1167,12 @@ void ActivityController::showEnterView(){
             bDaily=false;
         }
     }
-//    bDaily = true;//fusheng
+    if(PortActController::getInstance()->m_isRdLoginDay == 0)
+    {
+        bDaily = true;//fusheng  如果今天的7天没有领取  弹出领取界面
+        idx = 0;//fusheng
+    }
+
     bool bGuideDaily = false;
     if(PortActController::getInstance()->canPopNewRDView()){
         bGuideDaily=true;
@@ -1291,12 +1296,13 @@ void ActivityController::showEnterView(){
     }
 }
 void ActivityController::showEnterViewByType(string popup){
-    //fusheng 不响应出了sign_pop之外的别的弹窗
-//    popup = "sign_pop";
-    if(popup.compare("sign_pop") != 0)
+    //fusheng 修改为不弹出event_pop 和 month_pop
+    
+    if(popup.compare("sign_pop") != 0 && popup.compare("gift_pop") )
     {
         return;
     }
+
     if(popup.compare("sign_pop_guide") == 0){
         PopupViewController::getInstance()->addPopupView(RechargeACTVCell::createDailyGuideRwd(14));
     }else if(popup.compare("sign_pop") == 0){

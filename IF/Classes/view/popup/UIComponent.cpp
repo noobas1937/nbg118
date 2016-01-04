@@ -405,7 +405,7 @@ bool UIComponentGold::onAssignCCBMemberVariable(cocos2d::CCObject *pTarget, cons
 }
 void UIComponentGold::setGoldValue(long goldValue){
     mFinalValue = goldValue;
-    if(mFinalValue>0 && mFinalValue!=mNowValue && !mInAnimation){
+    if(mFinalValue>=0 && mFinalValue!=mNowValue && !mInAnimation){
 //        this->getAnimationManager()->runAnimationsForSequenceNamed("1");
         m_goldStar->setVisible(false);
         CCSequence* pSizeSeq = CCSequence::create(CCScaleTo::create(0.1f, 0.95f), CCScaleTo::create(0.1f, 1.15f), NULL);
