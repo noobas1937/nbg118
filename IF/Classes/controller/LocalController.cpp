@@ -58,57 +58,58 @@ std::string LocalController::getLanguageFileNameBasedOnUserSystem()
         return   "en";
     }
     
-    if(local.find("pt")<local.length()){
-        return  "pt";
-    }
-    if(local.find("tr")<local.length()){
-        return  "tr";
-    }
-    if(local.find("fr")<local.length()){
-        return  "fr";
-    }
-    if(local.find("no")<local.length()){
-        return  "no";
-    }
-    if(local.find("ko")<local.length()){
-        return  "ko";
-    }
-    if(local.find("ja")<local.length()){
-        return  "ja";
-    }
-    if(local.find("nl")<local.length()){
-        return  "nl";
-    }
-    if(local.find("it")<local.length()){
-        return   "it";
-    }
-    if(local.find("de")<local.length()){
-        return   "de";
-    }
-    if(local.find("es")<local.length()){
-        return  "es";
-    }
-    if(local.find("th")<local.length()){
-        return  "th";
-    }
-    if(local.find("ru")<local.length()){
-        return  "ru";
-    }
-    if(local.find("it")<local.length()){
-        return  "it";
-    }
-    if(local.find("nl")<local.length()){
-        return  "nl";
-    }
-    if(local.find("pl")<local.length()){
-        return  "pl";
-    }
-    if(local.find("ro")<local.length()){
-        return  "ro";
-    }
-    if(local.find("fa")<local.length()){
-        return  "fa";
-    }
+    // tao.yu 暂时只开放这些语言
+//    if(local.find("pt")<local.length()){
+//        return  "pt";
+//    }
+//    if(local.find("tr")<local.length()){
+//        return  "tr";
+//    }
+//    if(local.find("fr")<local.length()){
+//        return  "fr";
+//    }
+//    if(local.find("no")<local.length()){
+//        return  "no";
+//    }
+//    if(local.find("ko")<local.length()){
+//        return  "ko";
+//    }
+//    if(local.find("ja")<local.length()){
+//        return  "ja";
+//    }
+//    if(local.find("nl")<local.length()){
+//        return  "nl";
+//    }
+//    if(local.find("it")<local.length()){
+//        return   "it";
+//    }
+//    if(local.find("de")<local.length()){
+//        return   "de";
+//    }
+//    if(local.find("es")<local.length()){
+//        return  "es";
+//    }
+//    if(local.find("th")<local.length()){
+//        return  "th";
+//    }
+//    if(local.find("ru")<local.length()){
+//        return  "ru";
+//    }
+//    if(local.find("it")<local.length()){
+//        return  "it";
+//    }
+//    if(local.find("nl")<local.length()){
+//        return  "nl";
+//    }
+//    if(local.find("pl")<local.length()){
+//        return  "pl";
+//    }
+//    if(local.find("ro")<local.length()){
+//        return  "ro";
+//    }
+//    if(local.find("fa")<local.length()){
+//        return  "fa";
+//    }
     return  "en";
 }
 
@@ -120,9 +121,7 @@ std::string LocalController::getLanguageFileName()
     std::string preferredLanguage = CCUserDefault::sharedUserDefault()->getStringForKey(KEY_PREFERRED_LANGUAGE,"");
     std::string fileName="";
     if(preferredLanguage==""){
-        // tao.yu 第一版只开放英文
-//        fileName = getLanguageFileNameBasedOnUserSystem();
-        fileName = "en";
+        fileName = getLanguageFileNameBasedOnUserSystem();
     }else{
         fileName=preferredLanguage;
     }
