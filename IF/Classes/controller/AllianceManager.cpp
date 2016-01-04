@@ -271,7 +271,8 @@ void AllianceManager::openMarketView(){
     if(haveMarket){
         PopupViewController::getInstance()->addPopupInView(AllianceInfoMembersView::create(GlobalData::shared()->playerInfo.allianceInfo.uid));
     }else{
-        CCCommonUtils::flyHint("", "", _lang("115075"));
+        CCCommonUtils::flyHint("", "", _lang("E100008"));
+//        CCCommonUtils::flyHint("", "", _lang("115075"));//fusheng 资源帮助提示
     }
 }
 
@@ -284,7 +285,8 @@ void AllianceManager::openAllianceTradeView(std::string uid,int mainLV,int point
     if(haveMarket){
         AllianceResourceTradeView::createResurceTradeByUid(uid,pointId,mainLV);
     }else{
-        CCCommonUtils::flyHint("", "", _lang("115075"));
+        CCCommonUtils::flyHint("", "", _lang("E100008"));
+//        CCCommonUtils::flyHint("", "", _lang("115075"));//fusheng 资源帮助提示
     }
 }
 

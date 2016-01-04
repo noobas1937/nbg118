@@ -1523,14 +1523,13 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
                         if(m_titanInfo.feedFoodNum>food->longValue())
                         {
                             
-                            //                    this->m_needFood->setColor(ccColor3B::RED);
-                            
+
                             isFoodEnough = false;
                             
                         }
                         else
                         {
-                            //                    this->m_needFood->setColor(ccColor3B::WHITE);
+
                         }
                     }
                     else
@@ -1543,13 +1542,13 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
                         if(m_titanInfo.feedFoodNum>lfood)
                         {
                             
-                            //                    this->m_needFood->setColor(ccColor3B::RED);
+
                             
                             isFoodEnough = false;
                         }
                         else
                         {
-                            //                    this->m_needFood->setColor(ccColor3B::WHITE);
+
                         }
                         
                         //            this->m_currentFoodNum->setString(CCString::createWithFormat("/%ld",lfood)->getCString());
@@ -1566,13 +1565,13 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
                     if(m_titanInfo.feedFoodNum>lfood)
                     {
                         
-                        //                this->m_needFood->setColor(ccColor3B::RED);
+
                         
                         isFoodEnough = false;
                     }
                     else
                     {
-                        //                this->m_needFood->setColor(ccColor3B::WHITE);
+
                     }
                 }
             }
@@ -1621,7 +1620,8 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         {
             m_titanFeedTxt->setColor(ccColor3B(31,72,14));
             
-            m_needFood->setColor(ccColor3B(255,168,3));
+            m_needFood->setColor(ccColor3B(167,104,3));
+//            m_needFood->setColor(ccWHITE);
             
             m_needGlod->setColor(ccColor3B(41,95,128));
         }

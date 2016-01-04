@@ -1167,7 +1167,12 @@ void ActivityController::showEnterView(){
             bDaily=false;
         }
     }
-//    bDaily = true;//fusheng
+    if(PortActController::getInstance()->m_isRdLoginDay == 0)
+    {
+        bDaily = true;//fusheng  如果今天的7天没有领取  弹出领取界面
+        idx = 0;//fusheng
+    }
+
     bool bGuideDaily = false;
     if(PortActController::getInstance()->canPopNewRDView()){
         bGuideDaily=true;

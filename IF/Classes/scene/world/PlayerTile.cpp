@@ -190,7 +190,9 @@ void PlayerTile::onClickButton(CCObject * pSender, Control::EventType pCCControl
                     AllianceManager::getInstance()->openAllianceTradeView(m_playerUid,player.cityLv,index);
                 }
             }else{
-                CCCommonUtils::flyHint("", "", _lang("115075"));
+                CCCommonUtils::flyHint("", "", _lang("E100008"));
+//        CCCommonUtils::flyHint("", "", _lang("115075"));//fusheng 资源帮助提示
+
             }
         }
             break;

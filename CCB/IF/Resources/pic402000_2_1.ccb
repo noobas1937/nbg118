@@ -37,6 +37,87 @@
 		<array>
 			<dict>
 				<key>baseClass</key>
+				<string>CCSprite</string>
+				<key>children</key>
+				<array/>
+				<key>customClass</key>
+				<string></string>
+				<key>displayName</key>
+				<string>CCSprite</string>
+				<key>memberVarAssignmentName</key>
+				<string></string>
+				<key>memberVarAssignmentType</key>
+				<integer>0</integer>
+				<key>properties</key>
+				<array>
+					<dict>
+						<key>name</key>
+						<string>visible</string>
+						<key>type</key>
+						<string>Check</string>
+						<key>value</key>
+						<false/>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>anchorPoint</string>
+						<key>type</key>
+						<string>Point</string>
+						<key>value</key>
+						<array>
+							<real>0.5</real>
+							<real>0.5</real>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>scale</string>
+						<key>type</key>
+						<string>ScaleLock</string>
+						<key>value</key>
+						<array>
+							<real>1</real>
+							<real>1</real>
+							<false/>
+							<integer>0</integer>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>ignoreAnchorPointForPosition</string>
+						<key>type</key>
+						<string>Check</string>
+						<key>value</key>
+						<false/>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>displayFrame</string>
+						<key>type</key>
+						<string>SpriteFrame</string>
+						<key>value</key>
+						<array>
+							<string>Imperial/Imperial_22.plist</string>
+							<string>build_tile.png</string>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>blendFunc</string>
+						<key>type</key>
+						<string>Blendmode</string>
+						<key>value</key>
+						<array>
+							<integer>770</integer>
+							<integer>771</integer>
+						</array>
+					</dict>
+				</array>
+				<key>selected</key>
+				<true/>
+			</dict>
+			<dict>
+				<key>baseClass</key>
 				<string>CCNode</string>
 				<key>children</key>
 				<array>
@@ -135,8 +216,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>-172</real>
-									<real>-60</real>
+									<real>-192</real>
+									<real>-73</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -158,8 +239,8 @@
 								<string>ScaleLock</string>
 								<key>value</key>
 								<array>
-									<real>1.2000000476837158</real>
-									<real>1.2000000476837158</real>
+									<real>1</real>
+									<real>1</real>
 									<true/>
 									<integer>1</integer>
 								</array>
@@ -218,7 +299,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>70.127304077148438</real>
+									<real>80.127304077148438</real>
 									<real>-20.126541137695312</real>
 									<integer>0</integer>
 								</array>
@@ -301,7 +382,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>101.54183959960938</real>
+									<real>111.54183959960938</real>
 									<real>-7.6959228515625</real>
 									<integer>0</integer>
 								</array>
@@ -384,7 +465,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>101.5</real>
+									<real>111.5</real>
 									<real>-7.6999969482421875</real>
 									<integer>0</integer>
 								</array>
@@ -445,7 +526,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>76.100006103515625</real>
+									<real>86.100006103515625</real>
 									<real>-17.099998474121094</real>
 									<integer>0</integer>
 								</array>
