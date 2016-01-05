@@ -374,6 +374,7 @@ void CreateAllianceView::onNameBgClick(CCObject *pSender, CCControlEvent event){
 void CreateAllianceView::checkName(float _time){
     std::string str = m_allianceNameEditBox->getText();
     if(str=="" || lastName==str || str.length()<3){
+        if (str.length() < 3) m_nameOkNode->setVisible(false);
         return ;
     }
     m_enterNameTxt->setString("");
