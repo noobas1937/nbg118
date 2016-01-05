@@ -168,13 +168,13 @@ SEL_CCControlHandler TerritoryUnlockTipsView::onResolveCCBCCControlSelector(coco
 
 void TerritoryUnlockTipsView::onEnter() {
     PopupBaseView::onEnter();
-    setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
-    setTouchEnabled(true);
+//    setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
+//    setTouchEnabled(true);
 
     //CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, 2, true);//
 }
 
 void TerritoryUnlockTipsView::onExit() {
-    setTouchEnabled(false);
+//    setTouchEnabled(false);
     PopupBaseView::onExit();
 }
