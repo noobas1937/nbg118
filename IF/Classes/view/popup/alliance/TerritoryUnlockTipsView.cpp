@@ -8,6 +8,8 @@
 
 #include "TerritoryUnlockTipsView.h"
 #include "ScienceController.h"
+#include "ParticleFireAni.h"
+
 TerritoryUnlockTipsView* TerritoryUnlockTipsView::create(std::string name, int count) {
     auto ret = new TerritoryUnlockTipsView(name,count);
     if (ret && ret->init()) {
@@ -35,6 +37,12 @@ bool TerritoryUnlockTipsView::init() {
         m_currentNum = GlobalData::shared()->playerInfo.allianceInfo.currentNum;
         m_totalForce = GlobalData::shared()->playerInfo.allianceInfo.totalForce;
         m_scienceLevel = ScienceController::getInstance()->getTotalAllScPoints();
+        
+        ParticleFireAni* par = ParticleFireAni::create();
+        m_fireNode1->addChild(par);
+        
+        ParticleFireAni* par2 = ParticleFireAni::create();
+        m_fireNode2->addChild(par2);
         
         CCDictElement *element;
         auto dictEffect = LocalController::shared()->DBXMLManager()->getGroupByKey("territory");
@@ -69,7 +77,7 @@ bool TerritoryUnlockTipsView::init() {
 //                    m_lbar1->setVisible(s>0.00f);
 //                    m_rbar1->setVisible(s>0.99f);
                     m_progress1->setPreferredSize(CCSize(248 * s, 20));
-                    m_progress1->setVisible(s > 0.01);
+                    m_progress1->setVisible(248 * s > 22); // left + right insets = 20
                 }
                 
                 strTemp = CC_ITOA(m_totalForce);
@@ -85,7 +93,7 @@ bool TerritoryUnlockTipsView::init() {
 //                    m_lbar2->setVisible(s>0.00f);
 //                    m_rbar2->setVisible(s>0.99f);
                     m_progress2->setPreferredSize(CCSize(248 * s, 20));
-                    m_progress2->setVisible(s > 0.01);
+                    m_progress2->setVisible(248 * s > 22); // left + right insets = 20
                 }
                 
                 strTemp = CC_ITOA(m_scienceLevel);
@@ -101,7 +109,7 @@ bool TerritoryUnlockTipsView::init() {
 //                    m_lbar3->setVisible(s>0.00f);
 //                    m_rbar3->setVisible(s>0.99f);
                     m_progress3->setPreferredSize(CCSize(248 * s, 20));
-                    m_progress3->setVisible(s > 0.01);
+                    m_progress3->setVisible(248 * s > 22); // left + right insets = 20
                 }
                 
                 std::string picStr = "";
@@ -166,6 +174,9 @@ bool TerritoryUnlockTipsView::onAssignCCBMemberVariable(CCObject* pTarget, const
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_lock3Label", CCLabelIF*, this->m_lock3Label)
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_progress3", CCScale9Sprite*, this->m_progress3)
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_progressTxt3", CCLabelIF*, this->m_progressTxt3)
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_fireNode1", CCNode*, this->m_fireNode1);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_fireNode2", CCNode*, this->m_fireNode2);
     
     return false;
 }

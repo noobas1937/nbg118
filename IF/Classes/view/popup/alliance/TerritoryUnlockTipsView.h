@@ -36,6 +36,9 @@ private:
     CCSafeObject<CCLabelIF> m_tipLabel;
     CCSafeObject<CCNode> m_touchNode;
     
+    CCSafeObject<CCNode> m_fireNode1;
+    CCSafeObject<CCNode> m_fireNode2;
+    
     CCSafeObject<CCNode> m_node1;
     CCSafeObject<CCNode> m_icon1;
     CCSafeObject<CCLabelIF> m_lock1Label;
