@@ -108,6 +108,9 @@ class YuanJunSoldierCell : public CCNode
 {
 public:
     static YuanJunSoldierCell *create(CCDictionary* info);
+    
+    CCSafeObject<CCSprite> m_bg;
+    
 private:
     YuanJunSoldierCell(CCDictionary* info):m_info(info){};
     virtual void onEnter();

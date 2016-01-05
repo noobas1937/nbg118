@@ -459,24 +459,26 @@ bool YuanJunSoldierCell::init(){
     path.append(CC_ITOA(num));
     path.append(".png");
     auto pic  = CCLoadSprite::createSprite(path.c_str());
+    pic->setAnchorPoint({.5, 0});
     
     m_icon->removeAllChildrenWithCleanup(true);
     m_nameTxt->setString(name);
     m_numTxt->setString(CC_CMDITOA(atoi(count.c_str())));
     CCSprite* spr = CCLoadSprite::createSprite(icon.c_str());
+    spr->setAnchorPoint({.5, 0});
     if (CCCommonUtils::isIosAndroidPad()) {
         spr->setScale(1.4);
     }
     else
-        spr->setScale(0.7);
+        spr->setScale(0.6);
     m_icon->addChild(spr);
     m_icon->addChild(pic);
-    pic->setPositionY(-30);
     return true;
 }
 
 
 bool YuanJunSoldierCell::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode){
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_bg", CCSprite*, this->m_bg);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_icon", CCNode*, this->m_icon);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_nameTxt", CCLabelIF*, this->m_nameTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_numTxt", CCLabelIF*, this->m_numTxt);

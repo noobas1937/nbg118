@@ -542,7 +542,7 @@ void TerritoryInformationCell::setData(YuanJunInfo* info,int stat){
     });
     m_nameTxt->setString(m_info->getName().c_str());
     m_statusTxt->setString(_lang("115484"));
-    m_bgNodee->setVisible(true);
+//    m_bgNodee->setVisible(true);
     m_unUseNode->setVisible(false);
     m_moveNode->setVisible(false);
     m_scienceNode->setVisible(false);
@@ -669,7 +669,7 @@ bool TerritoryInformationCell::onAssignCCBMemberVariable(cocos2d::CCObject * pTa
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_clickArea", CCNode*, this->m_clickArea);
     //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_soldierNode", CCNode*, this->m_soldierNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_scienceNode", CCNode*, this->m_scienceNode);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_bgNodee", CCNode*, this->m_bgNodee);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_bgNodee", CCSprite*, this->m_bgNodee);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_scienceTxt", CCLabelIF*, this->m_scienceTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_joinNode", CCSprite*, this->m_joinNode);
     return false;
