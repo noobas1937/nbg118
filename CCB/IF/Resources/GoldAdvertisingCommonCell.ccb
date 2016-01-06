@@ -400,7 +400,7 @@
 										<key>type</key>
 										<string>FntFile</string>
 										<key>value</key>
-										<string>nb_fnt2.fnt</string>
+										<string>eeeq.fnt</string>
 									</dict>
 									<dict>
 										<key>name</key>
@@ -411,6 +411,8 @@
 										<string>+21，000</string>
 									</dict>
 								</array>
+								<key>selected</key>
+								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>
@@ -2248,8 +2250,6 @@
 								<false/>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 				</array>
 				<key>customClass</key>

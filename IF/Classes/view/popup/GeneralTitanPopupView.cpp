@@ -1033,6 +1033,8 @@ void GeneralTitanPopupView::handleTianUpgradeAnimationComplete(CCObject* obj)
         
         m_titanPosInView->addChild(tieanInView );
         
+        tieanInView->m_Titan->changeTitanState(Titan::eActState::Idle);//fusheng 升级动画完成后 播放一个idle
+        
         CCLOG("GeneralTitanPopupView titan sheng ji animation complete");
         //            view->setVisible(true);
     }
@@ -1521,14 +1523,13 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
                         if(m_titanInfo.feedFoodNum>food->longValue())
                         {
                             
-                            //                    this->m_needFood->setColor(ccColor3B::RED);
-                            
+
                             isFoodEnough = false;
                             
                         }
                         else
                         {
-                            //                    this->m_needFood->setColor(ccColor3B::WHITE);
+
                         }
                     }
                     else
@@ -1541,13 +1542,13 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
                         if(m_titanInfo.feedFoodNum>lfood)
                         {
                             
-                            //                    this->m_needFood->setColor(ccColor3B::RED);
+
                             
                             isFoodEnough = false;
                         }
                         else
                         {
-                            //                    this->m_needFood->setColor(ccColor3B::WHITE);
+
                         }
                         
                         //            this->m_currentFoodNum->setString(CCString::createWithFormat("/%ld",lfood)->getCString());
@@ -1564,13 +1565,13 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
                     if(m_titanInfo.feedFoodNum>lfood)
                     {
                         
-                        //                this->m_needFood->setColor(ccColor3B::RED);
+
                         
                         isFoodEnough = false;
                     }
                     else
                     {
-                        //                this->m_needFood->setColor(ccColor3B::WHITE);
+
                     }
                 }
             }
@@ -1619,7 +1620,8 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
         {
             m_titanFeedTxt->setColor(ccColor3B(31,72,14));
             
-            m_needFood->setColor(ccColor3B(255,168,3));
+            m_needFood->setColor(ccColor3B(167,104,3));
+//            m_needFood->setColor(ccWHITE);
             
             m_needGlod->setColor(ccColor3B(41,95,128));
         }
@@ -2509,6 +2511,24 @@ void GeneralTitanPopupView::onTitanFeedClick(CCObject * pSender, Control::EventT
 }
 void GeneralTitanPopupView::AccGrowthCallBack()
 {
+    
+    if(m_titanInfo.feedNum>=m_titanInfo.feedMaxNum)
+    {
+        
+        int gold = (m_titanInfo.feedNum - m_titanInfo.feedMaxNum)*50+CCCommonUtils::getGoldByTime(3600);
+        gold = gold>1000? 1000:gold;
+    
+        if (gold>0) {
+            //判断金币数量是否足够
+            if (GlobalData::shared()->playerInfo.gold < gold) {
+                YesNoDialog::gotoPayTips();
+                return ;
+            }
+        }
+    }
+
+    
+    
     TitanInView* view = dynamic_cast<TitanInView*>(  m_titanPosInView->getChildByTag(10086));
     
     if (view && GlobalData::shared()->titanInfo.level != 1) {

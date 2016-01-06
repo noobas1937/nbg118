@@ -389,12 +389,20 @@ void AllianceInfoView::initFun(){
     m_powerTxt->setString(CC_CMDITOAL(m_info->totalForce).c_str());
 
     // tao.yu 第一版不开放联盟领地和联盟科技
+    //fusheng 加权限管理
+    
+    int num = 3;//fusheng 最后一个不显示
+
+    if (AllianceManager::getInstance()->checkRight(SHOW_ALLIANCE_LANGUAGE, GlobalData::shared()->playerInfo.allianceInfo.rank)) {
+        num = 4;
+    }
+    
     const int nbUseIndex[4] = {1,4,5,6};//fusheng 保留原有逻辑  方便功能修改
     const char* titles3[7] = {"115190","115301","115159","115206","115077","115929","115258"};
-    const char* icons3[7] = {"allianceWar.png","AllianceTerritory.png","allianceScience.png","allianceShop.png","allianceHelp.png","icon_comment.png","nb_alliance_icon.png"};
+    const char* icons3[7] = {"allianceWar.png","AllianceTerritory.png","allianceScience.png","allianceShop.png","allianceHelp.png","icon_comment.png","icon_nb_alliance_manager.png"};
 
 //    int num =6;
-    int num = 4;
+    
     
     int totalH = 85* num+30 + 85 +140;
     if(CCCommonUtils::isIosAndroidPad())
@@ -1364,6 +1372,19 @@ bool AllianceBottomNode::init()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
     
+    auto child = this->nb_allianceNode->getChildByTag(this->m_PageTag);
+    
+    if(child)
+    {
+       
+        this->m_growNode->setVisible(true);
+        this->m_growNode->setPosition(child->getPosition());
+    }
+    else
+    {
+        this->m_growNode->setVisible(false);
+    }
+   
     
     return true;
 }
@@ -1396,6 +1417,10 @@ void AllianceBottomNode::onExit()
 {
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "nb_allianceNode", CCNode*, this->nb_allianceNode);
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_growNode", CCNode*, this->m_growNode);
+    
+    
 #pragma mark Alliance_btn
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nb_allianceSpr", CCSprite*, this->m_nb_allianceSpr);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nb_allianceTxt", CCLabelIF*, this->m_nb_allianceTxt);

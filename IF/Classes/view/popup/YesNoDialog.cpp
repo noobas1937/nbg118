@@ -1155,16 +1155,16 @@ bool ConfirmCoinView::init(){
     }
     m_titleLabel->setString(titleString.c_str());
     
-    if(!costBtnRect.equals(CCRectZero)){
-        CCNode *animNode = CCNode::create();
-        m_nodeAdv->addChild(animNode);
-        CCPoint pos = costBtnRect.origin;
-        animNode->setContentSize(costBtnRect.size);
-        animNode->setPosition(pos);
-        ButtonLightEffect* btnEffect = ButtonLightEffect::create(costBtnRect.size);
-        animNode->addChild(btnEffect);
-//        btnEffect->setPosition(ccp(0, -10));
-    }
+//    if(!costBtnRect.equals(CCRectZero)){//fusheng  不显示按钮高光
+//        CCNode *animNode = CCNode::create();
+//        m_nodeAdv->addChild(animNode);
+//        CCPoint pos = costBtnRect.origin;
+//        animNode->setContentSize(costBtnRect.size);
+//        animNode->setPosition(pos);
+//        ButtonLightEffect* btnEffect = ButtonLightEffect::create(costBtnRect.size);
+//        animNode->addChild(btnEffect);
+////        btnEffect->setPosition(ccp(0, -10));
+//    }
     
     return true;
 }

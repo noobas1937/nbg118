@@ -732,6 +732,19 @@
                 <key>sourceSize</key>
                 <string>{146,194}</string>
             </dict>
+            <key>pic402000_2_small.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{308,1314},{146,113}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{146,113}}</string>
+                <key>sourceSize</key>
+                <string>{146,113}</string>
+            </dict>
             <key>pic403000_2_small.png</key>
             <dict>
                 <key>frame</key>
@@ -924,7 +937,7 @@
             <key>size</key>
             <string>{1024,2048}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:0bd140ccfd212433da94e97a25507b5d:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:aff23bc38c5690d094438e809151eda4:1/1$</string>
             <key>textureFileName</key>
             <string>Common_204.pvr.ccz</string>
         </dict>

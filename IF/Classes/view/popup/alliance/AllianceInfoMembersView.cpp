@@ -45,8 +45,14 @@ static const CCSize CELL_SIZE_WITHOUT_TITLE(640, 230);
 static const CCSize CELL_SIZE_WITH_TITLE_HD(1536, 170);
 static const CCSize CELL_SIZE_WITHOUT_TITLE_HD(1536, 400);
 
-static int status[6] = {1,1,1,1,1,1};
+static const int CELLS_CNT = 6;
+static const char* STATUS_DEFAULT = "0,1,0,0,0,0";
+static const char* STATUS_HAS_APPLICATIONS = "0,0,0,0,0,1";
+static int status[CELLS_CNT] = {1,1,1,1,1,1};
 static bool tipFlag = false;
+
+// 不显示盟主
+#define NO_ALLIANCE_LORD {if (rank == 5) continue;}
 
 bool AllianceInfoMembersView::onAssignCCBMemberVariable(cocos2d::CCObject *pTarget, const char *pMemberVariableName, cocos2d::CCNode *pNode){
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_background", CCScale9Sprite*, this->m_background);
@@ -97,318 +103,318 @@ void AllianceInfoMembersView::onApply(CCObject *pSender, CCControlEvent event){
 void AllianceInfoMembersView::onHelpClick(CCObject *pSender, CCControlEvent event){
     CCLOG("onHelpClick");
     PopupViewController::getInstance()->addPopupInView(AllianceRankAttrView::create());
-    return ;
-    if(!tipFlag){
-        m_btnStatus = "";
-        for (int i=0; i<6; i++) {
-            m_btnStatus.append(CC_ITOA(status[i]));
-            if(i!=5){
-                m_btnStatus.append(",");
-            }
-        }
-        vector<std::string> bvector;
-        CCCommonUtils::splitString("1,0,0,0,0,0",",", bvector);
-        int num = bvector.size();
-        num = MIN(num,6);
-        for (int i=0; i<num; i++) {
-            status[i] = atoi(bvector[i].c_str());
-        }
-        m_first = true;
-        this->resetTitleStatus();
-        this->generalData();
-        this->resetPosition();
-        
-        m_parVec.clear();
-        m_introNode->removeFromParent();
-        m_introNode->removeAllChildrenWithCleanup(true);
-        m_tableView->getContainer()->addChild(m_introNode,100000);
-        
-        CCRenderTexture* layer = CCRenderTexture::create(640, 1500);
-        ccBlendFunc ccb1 = {GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA};
-        layer->getSprite()->setBlendFunc(ccb1);
-        layer->clear(0.0f, 0.0f, 0.0f, 0.7f);//0.0f, 0.0f, 0.0f, 0.7f
-        layer->setAnchorPoint(ccp(0.5, 0.5));
-        layer->setPosition(ccp(320, 750));
-        m_introNode->addChild(layer,-20);
-        layer->removeAllChildren();
-        layer->begin();
-        
-        CCPoint startPos = ccp(235, m_introNode->getContentSize().height+100);
-        if(GlobalData::shared()->playerInfo.allianceInfo.rank>=4){
-            startPos.y = startPos.y +80;
-        }
-        AllianceIntroTip* intro1 = AllianceIntroTip::create(true, ccp(321.0, 103.0),_lang("115245"));
-        intro1->setPosition(ccp(235, startPos.y));
-        m_introNode->addChild(intro1);
-        
-        string tmpStart = "ShowFire_";
-        string tmpStart1 = "ShowFireUp_";
-        CCPoint pos = ccp(560,startPos.y +110);
-        CCSize size = m_helpBtn->getContentSize();
-        CCNode* frieNode =  CCNode::create();
-        frieNode->setAnchorPoint(ccp(0.5, 0.5));
-        frieNode->setTag(999);
-        m_helpBtn->addChild(frieNode);
-        
-        for (int i=1; i<=5; i++) {
-            auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(), CCPointZero,size.width*0.3);
-            particle->setPosition(ccp(size.width/2, -3));
-            particle->setPosVar(ccp(size.width/2, 0));
-            frieNode->addChild(particle);
-            
-            auto particle1 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(), CCPointZero,size.width*0.3);
-            particle1->setPosition(ccp(size.width/2, size.height-3));
-            particle1->setPosVar(ccp(size.width/2, 0));
-            frieNode->addChild(particle1);
-            
-            auto particle2 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart1.c_str(),i)->getCString(), CCPointZero,size.height*0.3);
-            particle2->setPosition(ccp(0, size.height/2));
-            particle2->setPosVar(ccp(0, size.height/2));
-            frieNode->addChild(particle2);
-            
-            auto particle3 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart1.c_str(),i)->getCString(), CCPointZero,size.height*0.3);
-            particle3->setPosition(ccp(size.width, size.height/2));
-            particle3->setPosVar(ccp(0, size.height/2));
-            frieNode->addChild(particle3);
-        }
-        
-        pos = ccp(560,startPos.y +110);
-        size = CCSize(60,60);
-        CCLayerColor* intro1layer = CCLayerColor::create();
-        intro1layer->setOpacity(255);
-        intro1layer->setColor(ccc3(255, 255, 255));
-        intro1layer->setContentSize(size);
-        intro1layer->setPosition(pos);
-        ccBlendFunc cbf = {GL_ZERO,GL_ONE_MINUS_SRC_ALPHA};
-        intro1layer->setBlendFunc(cbf);
-        intro1layer->visit();
-        
-        for (int i=1; i<=5; i++) {
-            auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(), CCPointZero,size.width*0.3);
-            particle->setPosition(pos+ccp(size.width/2, -3));
-            particle->setPosVar(ccp(size.width/2, 0));
-            addParticleToBatch(particle);
-            
-            auto particle1 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(), CCPointZero,size.width*0.3);
-            particle1->setPosition(pos+ccp(size.width/2, size.height-3));
-            particle1->setPosVar(ccp(size.width/2, 0));
-            addParticleToBatch(particle1);
-            
-            auto particle2 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart1.c_str(),i)->getCString(), CCPointZero,size.height*0.3);
-            particle2->setPosition(pos+ccp(0, size.height/2));
-            particle2->setPosVar(ccp(0, size.height/2));
-            addParticleToBatch(particle2);
-            
-            auto particle3 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart1.c_str(),i)->getCString(), CCPointZero,size.height*0.3);
-            particle3->setPosition(pos+ccp(size.width, size.height/2));
-            particle3->setPosVar(ccp(0, size.height/2));
-            addParticleToBatch(particle3);
-        }
-        
-        AllianceIntroTip* intro2 = AllianceIntroTip::create(true, ccp(105.0, 103),_lang("115246"));
-        intro2->setPosition(ccp(90, startPos.y - 230));
-        m_introNode->addChild(intro2);
-        
-        pos = ccp(165, startPos.y - 120);
-        size = CCSize(150,220);
-        
-        for (int i=1; i<=5; i++) {
-            auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(), CCPointZero,size.width*0.3);
-            particle->setPosition(pos+ccp(size.width/2, -3));
-            particle->setPosVar(ccp(size.width/2, 0));
-            addParticleToBatch(particle);
-            
-            auto particle1 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(), CCPointZero,size.width*0.3);
-            particle1->setPosition(pos+ccp(size.width/2, size.height-3));
-            particle1->setPosVar(ccp(size.width/2, 0));
-            addParticleToBatch(particle1);
-            
-            auto particle2 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart1.c_str(),i)->getCString(), CCPointZero,size.height*0.3);
-            particle2->setPosition(pos+ccp(0, size.height/2));
-            particle2->setPosVar(ccp(0, size.height/2));
-            addParticleToBatch(particle2);
-            
-            auto particle3 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart1.c_str(),i)->getCString(), CCPointZero,size.height*0.3);
-            particle3->setPosition(pos+ccp(size.width, size.height/2));
-            particle3->setPosVar(ccp(0, size.height/2));
-            addParticleToBatch(particle3);
-        }
-        CCLayerColor* clayer = CCLayerColor::create();
-        clayer->setOpacity(255);
-        clayer->setColor(ccc3(255, 255, 255));
-        clayer->setContentSize(size);
-        clayer->setPosition(pos);
-        cbf = {GL_ZERO,GL_ONE_MINUS_SRC_ALPHA};
-        clayer->setBlendFunc(cbf);
-        clayer->visit();
-
-        if(GlobalData::shared()->playerInfo.allianceInfo.rank>=4){
-            AllianceIntroTip* intro3 = AllianceIntroTip::create(false, ccp(267.0, -17.0),_lang("115247"));
-            intro3->setPosition(ccp(20, startPos.y - 580));
-            m_introNode->addChild(intro3);
-            
-            pos = ccp(175, startPos.y - 690);
-            size = CCSize(300,60);
-            CCLayerColor* intro3layer = CCLayerColor::create();
-            intro3layer->setOpacity(255);
-            intro3layer->setColor(ccc3(255, 255, 255));
-            intro3layer->setContentSize(size);
-            intro3layer->setPosition(pos);
-            cbf = {GL_ZERO,GL_ONE_MINUS_SRC_ALPHA};
-            intro3layer->setBlendFunc(cbf);
-            intro3layer->visit();
-            
-            for (int i=1; i<=5; i++) {
-                auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(), CCPointZero,size.width*0.3);
-                particle->setPosition(pos+ccp(size.width/2, -3));
-                particle->setPosVar(ccp(size.width/2, 0));
-                addParticleToBatch(particle);
-                
-                auto particle1 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(), CCPointZero,size.width*0.3);
-                particle1->setPosition(pos+ccp(size.width/2, size.height-3));
-                particle1->setPosVar(ccp(size.width/2, 0));
-                addParticleToBatch(particle1);
-                
-                auto particle2 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart1.c_str(),i)->getCString(), CCPointZero,size.height*0.3);
-                particle2->setPosition(pos+ccp(0, size.height/2));
-                particle2->setPosVar(ccp(0, size.height/2));
-                addParticleToBatch(particle2);
-                
-                auto particle3 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart1.c_str(),i)->getCString(), CCPointZero,size.height*0.3);
-                particle3->setPosition(pos+ccp(size.width, size.height/2));
-                particle3->setPosVar(ccp(0, size.height/2));
-                addParticleToBatch(particle3);
-            }
-            
-            AllianceIntroTip* intro4 = AllianceIntroTip::create(true, ccp(105.0, 103),_lang("115248"));
-            intro4->setPosition(ccp(90, startPos.y - 940));
-            m_introNode->addChild(intro4);
-            
-            pos = ccp(175, startPos.y - 830);
-            size = CCSize(300,60);
-            
-            CCLayerColor* intro4layer = CCLayerColor::create();
-            intro4layer->setOpacity(255);
-            intro4layer->setColor(ccc3(255, 255, 255));
-            intro4layer->setContentSize(size);
-            intro4layer->setPosition(pos);
-            cbf = {GL_ZERO,GL_ONE_MINUS_SRC_ALPHA};
-            intro4layer->setBlendFunc(cbf);
-            intro4layer->visit();
-            
-            for (int i=1; i<=5; i++) {
-                auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(), CCPointZero,size.width*0.3);
-                particle->setPosition(pos+ccp(size.width/2, -3));
-                particle->setPosVar(ccp(size.width/2, 0));
-                addParticleToBatch(particle);
-                
-                auto particle1 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(), CCPointZero,size.width*0.3);
-                particle1->setPosition(pos+ccp(size.width/2, size.height-3));
-                particle1->setPosVar(ccp(size.width/2, 0));
-                addParticleToBatch(particle1);
-                
-                auto particle2 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart1.c_str(),i)->getCString(), CCPointZero,size.height*0.3);
-                particle2->setPosition(pos+ccp(0, size.height/2));
-                particle2->setPosVar(ccp(0, size.height/2));
-                addParticleToBatch(particle2);
-                
-                auto particle3 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart1.c_str(),i)->getCString(), CCPointZero,size.height*0.3);
-                particle3->setPosition(pos+ccp(size.width, size.height/2));
-                particle3->setPosVar(ccp(0, size.height/2));
-                addParticleToBatch(particle3);
-            }
-        }else{
-            AllianceIntroTip* intro3 = AllianceIntroTip::create(false, ccp(267.0, -17.0),_lang("115247"));
-            intro3->setPosition(ccp(20, startPos.y - 500));
-            m_introNode->addChild(intro3);
-            
-            pos = ccp(175, startPos.y - 610);
-            size = CCSize(300,60);
-            CCLayerColor* intro3layer = CCLayerColor::create();
-            intro3layer->setOpacity(255);
-            intro3layer->setColor(ccc3(255, 255, 255));
-            intro3layer->setContentSize(size);
-            intro3layer->setPosition(pos);
-            cbf = {GL_ZERO,GL_ONE_MINUS_SRC_ALPHA};
-            intro3layer->setBlendFunc(cbf);
-            intro3layer->visit();
-            
-            for (int i=1; i<=5; i++) {
-                auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(), CCPointZero,size.width*0.3);
-                particle->setPosition(pos+ccp(size.width/2, -3));
-                particle->setPosVar(ccp(size.width/2, 0));
-                addParticleToBatch(particle);
-                
-                auto particle1 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(), CCPointZero,size.width*0.3);
-                particle1->setPosition(pos+ccp(size.width/2, size.height-3));
-                particle1->setPosVar(ccp(size.width/2, 0));
-                addParticleToBatch(particle1);
-                
-                auto particle2 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart1.c_str(),i)->getCString(), CCPointZero,size.height*0.3);
-                particle2->setPosition(pos+ccp(0, size.height/2));
-                particle2->setPosVar(ccp(0, size.height/2));
-                addParticleToBatch(particle2);
-                
-                auto particle3 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart1.c_str(),i)->getCString(), CCPointZero,size.height*0.3);
-                particle3->setPosition(pos+ccp(size.width, size.height/2));
-                particle3->setPosVar(ccp(0, size.height/2));
-                addParticleToBatch(particle3);
-            }
-            
-            AllianceIntroTip* intro4 = AllianceIntroTip::create(true, ccp(105.0, 103),_lang("115248"));
-            intro4->setPosition(ccp(90, startPos.y - 860));
-            m_introNode->addChild(intro4);
-            pos = ccp(175, startPos.y - 750);
-            size = CCSize(300,60);
-            
-            CCLayerColor* intro4layer = CCLayerColor::create();
-            intro4layer->setOpacity(255);
-            intro4layer->setColor(ccc3(255, 255, 255));
-            intro4layer->setContentSize(size);
-            intro4layer->setPosition(pos);
-            cbf = {GL_ZERO,GL_ONE_MINUS_SRC_ALPHA};
-            intro4layer->setBlendFunc(cbf);
-            intro4layer->visit();
-            
-            for (int i=1; i<=5; i++) {
-                auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(), CCPointZero,size.width*0.3);
-                particle->setPosition(pos+ccp(size.width/2, -3));
-                particle->setPosVar(ccp(size.width/2, 0));
-                addParticleToBatch(particle);
-                
-                auto particle1 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(), CCPointZero,size.width*0.3);
-                particle1->setPosition(pos+ccp(size.width/2, size.height-3));
-                particle1->setPosVar(ccp(size.width/2, 0));
-                addParticleToBatch(particle1);
-                
-                auto particle2 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart1.c_str(),i)->getCString(), CCPointZero,size.height*0.3);
-                particle2->setPosition(pos+ccp(0, size.height/2));
-                particle2->setPosVar(ccp(0, size.height/2));
-                addParticleToBatch(particle2);
-                
-                auto particle3 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart1.c_str(),i)->getCString(), CCPointZero,size.height*0.3);
-                particle3->setPosition(pos+ccp(size.width, size.height/2));
-                particle3->setPosVar(ccp(0, size.height/2));
-                addParticleToBatch(particle3);
-            }
-        }
-        layer->end();
-        tipFlag = true;
-    }else{
-        tipFlag = false;
-        m_introNode->removeFromParent();
-        vector<std::string> bvector;
-        CCCommonUtils::splitString(m_btnStatus,",", bvector);
-        int num = bvector.size();
-        num = MIN(num,6);
-        for (int i=0; i<num; i++) {
-            status[i] = atoi(bvector[i].c_str());
-        }
-        this->resetTitleStatus();
-        this->generalData();
-        this->resetPosition();
-        m_helpBtn->removeChildByTag(999);
-    }
+//    return ;
+//    if(!tipFlag){
+//        m_btnStatus = "";
+//        for (int i=0; i<6; i++) {
+//            m_btnStatus.append(CC_ITOA(status[i]));
+//            if(i!=5){
+//                m_btnStatus.append(",");
+//            }
+//        }
+//        vector<std::string> bvector;
+//        CCCommonUtils::splitString("1,0,0,0,0,0",",", bvector);
+//        int num = bvector.size();
+//        num = MIN(num,6);
+//        for (int i=0; i<num; i++) {
+//            status[i] = atoi(bvector[i].c_str());
+//        }
+//        m_first = true;
+//        this->resetTitleStatus();
+//        this->generalData();
+//        this->resetPosition();
+//        
+//        m_parVec.clear();
+//        m_introNode->removeFromParent();
+//        m_introNode->removeAllChildrenWithCleanup(true);
+//        m_tableView->getContainer()->addChild(m_introNode,100000);
+//        
+//        CCRenderTexture* layer = CCRenderTexture::create(640, 1500);
+//        ccBlendFunc ccb1 = {GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA};
+//        layer->getSprite()->setBlendFunc(ccb1);
+//        layer->clear(0.0f, 0.0f, 0.0f, 0.7f);//0.0f, 0.0f, 0.0f, 0.7f
+//        layer->setAnchorPoint(ccp(0.5, 0.5));
+//        layer->setPosition(ccp(320, 750));
+//        m_introNode->addChild(layer,-20);
+//        layer->removeAllChildren();
+//        layer->begin();
+//        
+//        CCPoint startPos = ccp(235, m_introNode->getContentSize().height+100);
+//        if(GlobalData::shared()->playerInfo.allianceInfo.rank>=4){
+//            startPos.y = startPos.y +80;
+//        }
+//        AllianceIntroTip* intro1 = AllianceIntroTip::create(true, ccp(321.0, 103.0),_lang("115245"));
+//        intro1->setPosition(ccp(235, startPos.y));
+//        m_introNode->addChild(intro1);
+//        
+//        string tmpStart = "ShowFire_";
+//        string tmpStart1 = "ShowFireUp_";
+//        CCPoint pos = ccp(560,startPos.y +110);
+//        CCSize size = m_helpBtn->getContentSize();
+//        CCNode* frieNode =  CCNode::create();
+//        frieNode->setAnchorPoint(ccp(0.5, 0.5));
+//        frieNode->setTag(999);
+//        m_helpBtn->addChild(frieNode);
+//        
+//        for (int i=1; i<=5; i++) {
+//            auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(), CCPointZero,size.width*0.3);
+//            particle->setPosition(ccp(size.width/2, -3));
+//            particle->setPosVar(ccp(size.width/2, 0));
+//            frieNode->addChild(particle);
+//            
+//            auto particle1 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(), CCPointZero,size.width*0.3);
+//            particle1->setPosition(ccp(size.width/2, size.height-3));
+//            particle1->setPosVar(ccp(size.width/2, 0));
+//            frieNode->addChild(particle1);
+//            
+//            auto particle2 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart1.c_str(),i)->getCString(), CCPointZero,size.height*0.3);
+//            particle2->setPosition(ccp(0, size.height/2));
+//            particle2->setPosVar(ccp(0, size.height/2));
+//            frieNode->addChild(particle2);
+//            
+//            auto particle3 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart1.c_str(),i)->getCString(), CCPointZero,size.height*0.3);
+//            particle3->setPosition(ccp(size.width, size.height/2));
+//            particle3->setPosVar(ccp(0, size.height/2));
+//            frieNode->addChild(particle3);
+//        }
+//        
+//        pos = ccp(560,startPos.y +110);
+//        size = CCSize(60,60);
+//        CCLayerColor* intro1layer = CCLayerColor::create();
+//        intro1layer->setOpacity(255);
+//        intro1layer->setColor(ccc3(255, 255, 255));
+//        intro1layer->setContentSize(size);
+//        intro1layer->setPosition(pos);
+//        ccBlendFunc cbf = {GL_ZERO,GL_ONE_MINUS_SRC_ALPHA};
+//        intro1layer->setBlendFunc(cbf);
+//        intro1layer->visit();
+//        
+//        for (int i=1; i<=5; i++) {
+//            auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(), CCPointZero,size.width*0.3);
+//            particle->setPosition(pos+ccp(size.width/2, -3));
+//            particle->setPosVar(ccp(size.width/2, 0));
+//            addParticleToBatch(particle);
+//            
+//            auto particle1 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(), CCPointZero,size.width*0.3);
+//            particle1->setPosition(pos+ccp(size.width/2, size.height-3));
+//            particle1->setPosVar(ccp(size.width/2, 0));
+//            addParticleToBatch(particle1);
+//            
+//            auto particle2 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart1.c_str(),i)->getCString(), CCPointZero,size.height*0.3);
+//            particle2->setPosition(pos+ccp(0, size.height/2));
+//            particle2->setPosVar(ccp(0, size.height/2));
+//            addParticleToBatch(particle2);
+//            
+//            auto particle3 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart1.c_str(),i)->getCString(), CCPointZero,size.height*0.3);
+//            particle3->setPosition(pos+ccp(size.width, size.height/2));
+//            particle3->setPosVar(ccp(0, size.height/2));
+//            addParticleToBatch(particle3);
+//        }
+//        
+//        AllianceIntroTip* intro2 = AllianceIntroTip::create(true, ccp(105.0, 103),_lang("115246"));
+//        intro2->setPosition(ccp(90, startPos.y - 230));
+//        m_introNode->addChild(intro2);
+//        
+//        pos = ccp(165, startPos.y - 120);
+//        size = CCSize(150,220);
+//        
+//        for (int i=1; i<=5; i++) {
+//            auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(), CCPointZero,size.width*0.3);
+//            particle->setPosition(pos+ccp(size.width/2, -3));
+//            particle->setPosVar(ccp(size.width/2, 0));
+//            addParticleToBatch(particle);
+//            
+//            auto particle1 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(), CCPointZero,size.width*0.3);
+//            particle1->setPosition(pos+ccp(size.width/2, size.height-3));
+//            particle1->setPosVar(ccp(size.width/2, 0));
+//            addParticleToBatch(particle1);
+//            
+//            auto particle2 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart1.c_str(),i)->getCString(), CCPointZero,size.height*0.3);
+//            particle2->setPosition(pos+ccp(0, size.height/2));
+//            particle2->setPosVar(ccp(0, size.height/2));
+//            addParticleToBatch(particle2);
+//            
+//            auto particle3 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart1.c_str(),i)->getCString(), CCPointZero,size.height*0.3);
+//            particle3->setPosition(pos+ccp(size.width, size.height/2));
+//            particle3->setPosVar(ccp(0, size.height/2));
+//            addParticleToBatch(particle3);
+//        }
+//        CCLayerColor* clayer = CCLayerColor::create();
+//        clayer->setOpacity(255);
+//        clayer->setColor(ccc3(255, 255, 255));
+//        clayer->setContentSize(size);
+//        clayer->setPosition(pos);
+//        cbf = {GL_ZERO,GL_ONE_MINUS_SRC_ALPHA};
+//        clayer->setBlendFunc(cbf);
+//        clayer->visit();
+//
+//        if(GlobalData::shared()->playerInfo.allianceInfo.rank>=4){
+//            AllianceIntroTip* intro3 = AllianceIntroTip::create(false, ccp(267.0, -17.0),_lang("115247"));
+//            intro3->setPosition(ccp(20, startPos.y - 580));
+//            m_introNode->addChild(intro3);
+//            
+//            pos = ccp(175, startPos.y - 690);
+//            size = CCSize(300,60);
+//            CCLayerColor* intro3layer = CCLayerColor::create();
+//            intro3layer->setOpacity(255);
+//            intro3layer->setColor(ccc3(255, 255, 255));
+//            intro3layer->setContentSize(size);
+//            intro3layer->setPosition(pos);
+//            cbf = {GL_ZERO,GL_ONE_MINUS_SRC_ALPHA};
+//            intro3layer->setBlendFunc(cbf);
+//            intro3layer->visit();
+//            
+//            for (int i=1; i<=5; i++) {
+//                auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(), CCPointZero,size.width*0.3);
+//                particle->setPosition(pos+ccp(size.width/2, -3));
+//                particle->setPosVar(ccp(size.width/2, 0));
+//                addParticleToBatch(particle);
+//                
+//                auto particle1 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(), CCPointZero,size.width*0.3);
+//                particle1->setPosition(pos+ccp(size.width/2, size.height-3));
+//                particle1->setPosVar(ccp(size.width/2, 0));
+//                addParticleToBatch(particle1);
+//                
+//                auto particle2 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart1.c_str(),i)->getCString(), CCPointZero,size.height*0.3);
+//                particle2->setPosition(pos+ccp(0, size.height/2));
+//                particle2->setPosVar(ccp(0, size.height/2));
+//                addParticleToBatch(particle2);
+//                
+//                auto particle3 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart1.c_str(),i)->getCString(), CCPointZero,size.height*0.3);
+//                particle3->setPosition(pos+ccp(size.width, size.height/2));
+//                particle3->setPosVar(ccp(0, size.height/2));
+//                addParticleToBatch(particle3);
+//            }
+//            
+//            AllianceIntroTip* intro4 = AllianceIntroTip::create(true, ccp(105.0, 103),_lang("115248"));
+//            intro4->setPosition(ccp(90, startPos.y - 940));
+//            m_introNode->addChild(intro4);
+//            
+//            pos = ccp(175, startPos.y - 830);
+//            size = CCSize(300,60);
+//            
+//            CCLayerColor* intro4layer = CCLayerColor::create();
+//            intro4layer->setOpacity(255);
+//            intro4layer->setColor(ccc3(255, 255, 255));
+//            intro4layer->setContentSize(size);
+//            intro4layer->setPosition(pos);
+//            cbf = {GL_ZERO,GL_ONE_MINUS_SRC_ALPHA};
+//            intro4layer->setBlendFunc(cbf);
+//            intro4layer->visit();
+//            
+//            for (int i=1; i<=5; i++) {
+//                auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(), CCPointZero,size.width*0.3);
+//                particle->setPosition(pos+ccp(size.width/2, -3));
+//                particle->setPosVar(ccp(size.width/2, 0));
+//                addParticleToBatch(particle);
+//                
+//                auto particle1 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(), CCPointZero,size.width*0.3);
+//                particle1->setPosition(pos+ccp(size.width/2, size.height-3));
+//                particle1->setPosVar(ccp(size.width/2, 0));
+//                addParticleToBatch(particle1);
+//                
+//                auto particle2 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart1.c_str(),i)->getCString(), CCPointZero,size.height*0.3);
+//                particle2->setPosition(pos+ccp(0, size.height/2));
+//                particle2->setPosVar(ccp(0, size.height/2));
+//                addParticleToBatch(particle2);
+//                
+//                auto particle3 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart1.c_str(),i)->getCString(), CCPointZero,size.height*0.3);
+//                particle3->setPosition(pos+ccp(size.width, size.height/2));
+//                particle3->setPosVar(ccp(0, size.height/2));
+//                addParticleToBatch(particle3);
+//            }
+//        }else{
+//            AllianceIntroTip* intro3 = AllianceIntroTip::create(false, ccp(267.0, -17.0),_lang("115247"));
+//            intro3->setPosition(ccp(20, startPos.y - 500));
+//            m_introNode->addChild(intro3);
+//            
+//            pos = ccp(175, startPos.y - 610);
+//            size = CCSize(300,60);
+//            CCLayerColor* intro3layer = CCLayerColor::create();
+//            intro3layer->setOpacity(255);
+//            intro3layer->setColor(ccc3(255, 255, 255));
+//            intro3layer->setContentSize(size);
+//            intro3layer->setPosition(pos);
+//            cbf = {GL_ZERO,GL_ONE_MINUS_SRC_ALPHA};
+//            intro3layer->setBlendFunc(cbf);
+//            intro3layer->visit();
+//            
+//            for (int i=1; i<=5; i++) {
+//                auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(), CCPointZero,size.width*0.3);
+//                particle->setPosition(pos+ccp(size.width/2, -3));
+//                particle->setPosVar(ccp(size.width/2, 0));
+//                addParticleToBatch(particle);
+//                
+//                auto particle1 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(), CCPointZero,size.width*0.3);
+//                particle1->setPosition(pos+ccp(size.width/2, size.height-3));
+//                particle1->setPosVar(ccp(size.width/2, 0));
+//                addParticleToBatch(particle1);
+//                
+//                auto particle2 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart1.c_str(),i)->getCString(), CCPointZero,size.height*0.3);
+//                particle2->setPosition(pos+ccp(0, size.height/2));
+//                particle2->setPosVar(ccp(0, size.height/2));
+//                addParticleToBatch(particle2);
+//                
+//                auto particle3 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart1.c_str(),i)->getCString(), CCPointZero,size.height*0.3);
+//                particle3->setPosition(pos+ccp(size.width, size.height/2));
+//                particle3->setPosVar(ccp(0, size.height/2));
+//                addParticleToBatch(particle3);
+//            }
+//            
+//            AllianceIntroTip* intro4 = AllianceIntroTip::create(true, ccp(105.0, 103),_lang("115248"));
+//            intro4->setPosition(ccp(90, startPos.y - 860));
+//            m_introNode->addChild(intro4);
+//            pos = ccp(175, startPos.y - 750);
+//            size = CCSize(300,60);
+//            
+//            CCLayerColor* intro4layer = CCLayerColor::create();
+//            intro4layer->setOpacity(255);
+//            intro4layer->setColor(ccc3(255, 255, 255));
+//            intro4layer->setContentSize(size);
+//            intro4layer->setPosition(pos);
+//            cbf = {GL_ZERO,GL_ONE_MINUS_SRC_ALPHA};
+//            intro4layer->setBlendFunc(cbf);
+//            intro4layer->visit();
+//            
+//            for (int i=1; i<=5; i++) {
+//                auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(), CCPointZero,size.width*0.3);
+//                particle->setPosition(pos+ccp(size.width/2, -3));
+//                particle->setPosVar(ccp(size.width/2, 0));
+//                addParticleToBatch(particle);
+//                
+//                auto particle1 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(), CCPointZero,size.width*0.3);
+//                particle1->setPosition(pos+ccp(size.width/2, size.height-3));
+//                particle1->setPosVar(ccp(size.width/2, 0));
+//                addParticleToBatch(particle1);
+//                
+//                auto particle2 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart1.c_str(),i)->getCString(), CCPointZero,size.height*0.3);
+//                particle2->setPosition(pos+ccp(0, size.height/2));
+//                particle2->setPosVar(ccp(0, size.height/2));
+//                addParticleToBatch(particle2);
+//                
+//                auto particle3 = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart1.c_str(),i)->getCString(), CCPointZero,size.height*0.3);
+//                particle3->setPosition(pos+ccp(size.width, size.height/2));
+//                particle3->setPosVar(ccp(0, size.height/2));
+//                addParticleToBatch(particle3);
+//            }
+//        }
+//        layer->end();
+//        tipFlag = true;
+//    }else{
+//        tipFlag = false;
+//        m_introNode->removeFromParent();
+//        vector<std::string> bvector;
+//        CCCommonUtils::splitString(m_btnStatus,",", bvector);
+//        int num = bvector.size();
+//        num = MIN(num,6);
+//        for (int i=0; i<num; i++) {
+//            status[i] = atoi(bvector[i].c_str());
+//        }
+//        this->resetTitleStatus();
+//        this->generalData();
+//        this->resetPosition();
+//        m_helpBtn->removeChildByTag(999);
+//    }
 }
 
 void AllianceInfoMembersView::onClickMailBtn(CCObject *pSender, CCControlEvent event)
@@ -622,7 +628,14 @@ bool AllianceInfoMembersView::init(){
         m_exitBtn->setTitleForState(_lang("115039"), cocos2d::extension::Control::State::SELECTED);
         
         m_showData = CCArray::create();
-        dh += 90 - 140;
+        if (m_allianceId != GlobalData::shared()->playerInfo.allianceInfo.uid)
+        {
+            dh += 90;
+        }
+        else
+        {
+            dh += 90 - 140;
+        }
         if (CCCommonUtils::isIosAndroidPad()) {
             dh = CCDirector::sharedDirector()->getWinSize().height - 2048;
         }
@@ -638,22 +651,36 @@ bool AllianceInfoMembersView::init(){
         m_tableView->setTouchPriority(Touch_Popup);
         m_listContainer->addChild(m_tableView);
         
-        auto abn = AllianceBottomNode::create(&GlobalData::shared()->playerInfo.allianceInfo, AlliancePageTag::MEMBER_BTN);
-        abn->setPositionY(preHeight - m_background->getContentSize().height);
-        addChild(abn);
-        
-        string statusBtn = CCUserDefault::sharedUserDefault()->getStringForKey(ALLIANCE_MEMBER_BTN_STATUS,"");
-        if(statusBtn==""){
-            statusBtn = "1,0,0,0,0,0";
+        if (m_allianceId != GlobalData::shared()->playerInfo.allianceInfo.uid)
+        {
+            m_mailBtn->setEnabled(false);
+            m_inviteBtn->setEnabled(false);
+            m_exitBtn->setEnabled(false);
         }
-        if(m_allianceId == GlobalData::shared()->playerInfo.allianceInfo.uid && GlobalData::shared()->playerInfo.allianceInfo.rank >= 4 && GlobalData::shared()->playerInfo.allianceInfo.applyNum > 0){
-            statusBtn = "0,0,0,0,0,1";
+        else
+        {
+            auto abn = AllianceBottomNode::create(&GlobalData::shared()->playerInfo.allianceInfo, AlliancePageTag::MEMBER_BTN);
+            abn->setPositionY(preHeight - m_background->getContentSize().height);
+            addChild(abn);
+        }
+        
+        string statusBtn = CCUserDefault::sharedUserDefault()->getStringForKey(ALLIANCE_MEMBER_BTN_STATUS, "");
+        if (statusBtn == "")
+        {
+            statusBtn = STATUS_DEFAULT;
+        }
+        if (m_allianceId == GlobalData::shared()->playerInfo.allianceInfo.uid
+            && GlobalData::shared()->playerInfo.allianceInfo.rank >= 4
+            && GlobalData::shared()->playerInfo.allianceInfo.applyNum > 0)
+        {
+            statusBtn = STATUS_HAS_APPLICATIONS;
         }
         vector<std::string> bvector;
-        CCCommonUtils::splitString(statusBtn,",", bvector);
+        CCCommonUtils::splitString(statusBtn, ",", bvector);
         int num = bvector.size();
-        num = MIN(num,6);
-        for (int i=0; i<num; i++) {
+        num = MIN(num, CELLS_CNT);
+        for (int i = 0; i < num; i++)
+        {
             status[i] = atoi(bvector[i].c_str());
         }
         AllianceInfoMember member;
@@ -852,7 +879,7 @@ void AllianceInfoMembersView::onGetAllianceMembers(CCObject* data)
                 selfInfo = infoMember;
             }
             infoMember.setUserLevel(userLv);
-            if (i == 0)
+            if (infoMember.getRank() == 5)
             {
                 m_titleFlag->setVisible(infoMember.getRank()>1);
                 if (infoMember.getRank() > 1)
@@ -873,7 +900,7 @@ void AllianceInfoMembersView::onGetAllianceMembers(CCObject* data)
                 m_postest->removeAllChildren();
                 m_postest->addChild(s);
             }
-
+            
             m_datas.push_back(infoMember);
         }
     }
@@ -1136,6 +1163,9 @@ void AllianceInfoMembersView::generalData(){
     for (int j=titleNum; j>0; j--) {
         CCArray* titleV = CCArray::create();
         int rank = m_titles[titleNum-j].getRank();
+        
+        NO_ALLIANCE_LORD
+        
         string rankTitle = "";
 //        switch (rank) {
 //            case 1:
@@ -1241,6 +1271,7 @@ void AllianceInfoMembersView::generalData(){
             }
         }
     }
+    
 //    if(GlobalData::shared()->playerInfo.isInAlliance() && m_allianceId==GlobalData::shared()->playerInfo.allianceInfo.uid){
 //        AllianceInfoMember* buttonInfo = new AllianceInfoMember();
 //        buttonInfo->setRank(-99);
@@ -1734,7 +1765,7 @@ void AllianceOneMembersCell::setData(AllianceInfoMember* member)
     m_headIcon->removeAllChildrenWithCleanup(true);
     CCSprite* spr = CCLoadSprite::createSprite(m_info->getPic().c_str());
     spr->setAnchorPoint({0.5, 0});
-    spr->setScale(.5);
+    spr->setScale(.4);
     m_headIcon->addChild(spr);
     m_nameTxt->setString(m_info->getName().c_str());
 //    m_powerTxt->setString(_lang("102163").c_str());
@@ -1758,10 +1789,10 @@ void AllianceOneMembersCell::setData(AllianceInfoMember* member)
 //        m_powerValue->setColor({172,172,172});
 //    }
     
-    m_titleFlag->setVisible(m_info->getRank()>1);
-    if(m_info->getRank()>1){
-        m_titleFlag->initWithSpriteFrame(CCLoadSprite::loadResource(CCString::createWithFormat("icon_Alliance_0%d.png",m_info->getRank())->getCString()));
-    }
+    m_titleFlag->setVisible(false);//m_info->getRank()>1);
+//    if(m_info->getRank()>1){
+//        m_titleFlag->initWithSpriteFrame(CCLoadSprite::loadResource(CCString::createWithFormat("icon_Alliance_0%d.png",m_info->getRank())->getCString()));
+//    }
 //    m_flagBg->initWithSpriteFrame(CCLoadSprite::loadResource(CCString::createWithFormat("Alliance_Flag_0%d.png",m_info->getRank())->getCString()));
     m_offLineTime->setString("");
 //    m_onLineBg->setVisible(false);

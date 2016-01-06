@@ -89,7 +89,7 @@ bool AllianceManagerFunView::init(){
 //        }
         m_bodyIcon = CCLoadSprite::createSprite(nb_picName.c_str());
         
-        m_bodyIcon->setAnchorPoint(Vec2(0.5,0));
+        m_bodyIcon->setAnchorPoint(Vec2(0.5,1));
 //        if (m_bodyIcon->getContentSize().width <=2 && m_bodyIcon->getContentSize().height <=2) {
 //            m_bodyIcon = CCLoadSprite::createSprite(m_info->getPic().c_str());
 //        }
@@ -688,7 +688,9 @@ void AllianceManagerFunView::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCE
                     //PopupViewController::getInstance()->addPopupInView(AllianceResourceTradeView::create(playerInfo));
                     playerInfo->release();
                 }else{
-                    CCCommonUtils::flyHint("", "", _lang("115075"));
+                    CCCommonUtils::flyHint("", "", _lang("E100008"));
+//        CCCommonUtils::flyHint("", "", _lang("115075"));//fusheng 资源帮助提示
+
                 }
                 PopupViewController::getInstance()->removePopupView(this);
             }
