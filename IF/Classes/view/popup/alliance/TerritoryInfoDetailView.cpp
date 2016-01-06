@@ -1569,7 +1569,7 @@ CCSize TerritoryInfoDetailView::tableCellSizeForIndex(CCTableView *table, ssize_
             if (CCCommonUtils::isIosAndroidPad()) {
                 return CCSize(1470, 250+addH+120);
             }
-            return CCSize(CELL_W, CELL_H+addH+60);
+            return CCSize(CELL_W, CELL_H+addH+50);
         }
         else {
             if (CCCommonUtils::isIosAndroidPad()) {
@@ -1661,10 +1661,8 @@ void TerritoryInfoDetailCell::setData(YuanJunInfo* info,int stat){
     m_info = info;
     
     CCLoadSprite::doResourceByCommonIndex(204, true);
-    CCLoadSprite::doResourceByCommonIndex(6, true);
     setCleanFunction([](){
         CCLoadSprite::doResourceByCommonIndex(204, false);
-        CCLoadSprite::doResourceByCommonIndex(6, false);
     });
     m_nameTxt->setString(m_info->getName().c_str());
     std::string numStr = _lang("108557");
@@ -1755,7 +1753,7 @@ void TerritoryInfoDetailCell::setData(YuanJunInfo* info,int stat){
                 addH = row*200 + 120;
             }
             else
-                addH = row*100 + 60;
+                addH = row*100 + 70;
         }
         else {
             if (CCCommonUtils::isIosAndroidPad()) {
@@ -1775,8 +1773,10 @@ void TerritoryInfoDetailCell::setData(YuanJunInfo* info,int stat){
         else
             m_renderBg->setContentSize(CCSize(CELL_W, addH));
         m_renderBg->removeAllChildrenWithCleanup(true);
-        Scale9Sprite* sp = Scale9Sprite::create("nb_vip_detail_list_bg.png");
-        sp->setContentSize({CELL_W - 10.0f, addH - 10.0f});
+        Scale9Sprite* sp = CCLoadSprite::createScale9Sprite("nb_al_members_bg.png");
+        sp->setZOrder(-100);
+        sp->setContentSize({CELL_W - 30.0f, addH + 0.0f});
+        sp->setPosition({CELL_W / 2.0f, addH / 2.0f + 5.f});
         m_renderBg->addChild(sp);
         for (int i=0; i<num; i++) {
             auto dic = _dict(m_info->getSoldiers()->objectAtIndex(i));
@@ -1787,7 +1787,7 @@ void TerritoryInfoDetailCell::setData(YuanJunInfo* info,int stat){
                 cell->setPosition(ccp(col==0?40:680, m_renderBg->getContentSize().height-220-rowIndex*200));
             }
             else
-                cell->setPosition(ccp(col == 0 ? 30 : 330, m_renderBg->getContentSize().height - 122 - rowIndex * 128));
+                cell->setPosition(ccp(col == 0 ? 33 : 327, m_renderBg->getContentSize().height - 122 - rowIndex * 128));
             
             if (rowIndex % 2 == 1)
             {
@@ -1802,7 +1802,8 @@ void TerritoryInfoDetailCell::setData(YuanJunInfo* info,int stat){
                 useArmyId = armyId;
             }
         }
-        if (m_owner && GlobalData::shared()->playerInfo.allianceInfo.rank >= 4 && m_info->getUid() != GlobalData::shared()->playerInfo.uid && m_info->getAllianceId() == GlobalData::shared()->playerInfo.allianceInfo.uid) {
+        if (m_owner && GlobalData::shared()->playerInfo.allianceInfo.rank >= 4 && m_info->getUid() != GlobalData::shared()->playerInfo.uid && m_info->getAllianceId() == GlobalData::shared()->playerInfo.allianceInfo.uid)
+        {
             CCControlButton* button = CCControlButton::create(CCLoadSprite::createScale9Sprite("btn_green3.png"));
             button->setTitleForState(_lang("115157"), CCControlStateNormal);
             button->setTitleForState(_lang("115157"), CCControlStateHighlighted);
