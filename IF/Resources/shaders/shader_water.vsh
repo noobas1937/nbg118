@@ -43,6 +43,8 @@ varying vec3 v_darkColor;
 varying vec3 v_lightColor;
 varying float v_reflectionPower;
 
+varying vec3 mvp_pos;
+
 #ifdef LIGHTMAP
 varying highp vec2 v_worldPos;
 #endif
@@ -76,6 +78,10 @@ void main()
 	pos.z += wave * WAVE_HEIGHT * a_color.b;
 	gl_Position = CC_MVPMatrix * pos;
 
+	mvp_pos.x = gl_Position.x;
+	mvp_pos.y = gl_Position.y;
+	mvp_pos.z = gl_Position.z;
+
 	// Water alpha
 	float maxValue = 0.55;//0.5;
 	v_wave.x = 1.0 - (a_color.a - maxValue) * (1.0 / maxValue);
@@ -86,7 +92,7 @@ void main()
 
 	// UV coordinates
 	vec2 texcoordMap = vec2(a_position.x * u_1DivLevelWidth, a_position.y * u_1DivLevelHeight) * 4.0;
-	v_bumpUv1.xy =  texcoordMap + vec2(0.0, u_time * 0.005) * 1.5;			// bump uv
+	v_bumpUv1.xy =  texcoordMap + vec2(0.0, u_time * 0.005) * 0.15;			// bump uv
 #ifdef USE_FOAM
 	v_foamUv = (texcoordMap + vec2(u_time * 0.005)) * 5.5;
 
@@ -103,12 +109,21 @@ void main()
 	//v_wave.z = 0.0;
 #endif
 	
-	vec3 lightDir = normalize(vec3(-1.0, 1.0, 0.0));
+	
+	vec3 lightDir = normalize(vec3(1.0, 1.0, 0.0));
 	vec3 lightVec = normalize(u_lightPos - pos.xyz);
 	v_wave.z = (1.0 - abs(dot(lightDir, lightVec)));
+	
 	v_wave.z = v_wave.z * 0.2 + (v_wave.z * v_wave.z) * 0.8;
 	v_wave.z += 1.1 - (length(u_lightPos - pos.xyz) * 0.008);
 	v_wave.w = (1.0 + (1.0 - v_wave.z * 0.5) * 7.0);
+	
+	//begin a by ljf
+	v_wave.z = exp(-1.0 * mvp_pos.x * mvp_pos.x - 1.0 * mvp_pos.y * mvp_pos.y); //ljf
+	v_wave.w = (1.0 + (1.0 - v_wave.z * 0.5) * 7.0);
+	//end a by ljf
+
+	
 
 #ifdef LIGHTMAP
 	v_worldPos = vec2(pos.x * u_1DivLevelWidth, pos.y * u_1DivLevelHeight);

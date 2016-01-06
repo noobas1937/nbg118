@@ -68,6 +68,7 @@
 #include "Enemy.h"
 #include "WorldController.h"
 #include "NBGPostEffectLayer.h"
+#include "NBWaterSprite.hpp"
 //end a by ljf
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
@@ -364,6 +365,14 @@ bool ImperialScene::init()
     m_isVikingShipMove = false;
     mVikingShipDict = CCDictionary::create();
     mShipLevel = 0;
+    
+    float scale = 10.0;
+    auto layer = NBWaterSprite::create(WATER_NORMALS);
+    layer->setScale(scale);
+    layer->setPosition(scale * Vec2(256 * 0, 256 * 0) + Vec2(400, 400));
+    //layer->setRotation3D(Vec3(45, 0, 45));
+    m_touchLayer->addChild(layer, 9999999);
+    
     //UIComponent::getInstance()->loadSpineActivityBox();
     //end a by ljf
     return true;

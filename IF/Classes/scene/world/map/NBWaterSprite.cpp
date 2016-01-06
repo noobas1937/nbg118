@@ -196,6 +196,12 @@ void NBWaterSprite::setUniforms()
     getShaderProgram()->setUniformLocationWith3fv(m_uUniforms[kCCWaterUniformSEA_DARK], sea_dark, 1);
     getShaderProgram()->setUniformLocationWith3fv(m_uUniforms[kCCWaterUniformSEA_LIGHT], sea_light, 1);
     
+    //begin a by ljf
+    //GLfloat light_pos[3] = {-256.0f + getContentSize().width * 0.5f,-256.0f + getContentSize().height * 0.5f ,10.0f};
+    //getShaderProgram()->setUniformLocationWith3fv(m_uUniforms[kCCWaterUniformlightPos], light_pos, 1);
+    
+    //end a by ljf
+    
     CHECK_GL_ERROR_DEBUG();
 }
 
@@ -216,10 +222,13 @@ void NBWaterSprite::initVertexData()
     unsigned char *data_=pMyimg->getData();
     for(int i = 0; i<= WATER_GRID_COLUMN; ++i)
     {
-        vert.vertices.y = -256 + vertexGridSizeY*i;
+        
+        //vert.vertices.y = -256 + vertexGridSizeY*i;
+        vert.vertices.y =  vertexGridSizeY*i; //ljf
         vert.texCoords.v = texCoordGridSizeV*i;
         for (int j = 0; j <= WATER_GRID_ROWS; ++j) {
-            vert.vertices.x = -256 + vertexGridSizeX*j;
+            //vert.vertices.x = -256 + vertexGridSizeX*j;
+            vert.vertices.x =  vertexGridSizeX*j; //ljf
             vert.texCoords.u = texCoordGridSizeU*j;
             ccColor4B color = ccColor4B(0, 0, 0, 64);//foam, wave, wind, depth
             if (i != 64 && j != 64) {
@@ -311,6 +320,13 @@ void NBWaterSprite::onDraw(const Mat4& transform, uint32_t flags)
     
     GLfloat lightPos[3] = {minLightPos[0] + fRate*(maxLightPos[0] - minLightPos[0])
         , minLightPos[1] + fRate*(maxLightPos[1] - minLightPos[1]), 120};
+    //lightPos[0] = 800;
+    //lightPos[1] = 0;
+    //lightPos[2] = 0;
+    //begin a by ljf
+    //lightPos[0] += m_fUtime;
+    //CCLOG("light pos 0: %f", lightPos[0]);
+    //end a by ljf
     
     pProgram->setUniformLocationWith3fv(m_uUniforms[kCCWaterUniformlightPos], lightPos, 1);
     
