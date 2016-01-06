@@ -450,8 +450,21 @@ bool YuanJunSoldierCell::init(){
     this->setContentSize(bg->getContentSize());
     std::string armyId = m_info->valueForKey("armyId")->getCString();
     std::string name = CCCommonUtils::getNameById(armyId);
+    std::string level = "";
     std::string icon = "ico" + armyId+ "_small.png";
     std::string count = m_info->valueForKey("count")->getCString();
+    
+    std::vector<std::string> _strvet;
+    CCCommonUtils::splitString(name.c_str(), "Lv.", _strvet);
+    if (_strvet.size() > 0)
+    {
+        name = _strvet[0];
+    }
+    if (_strvet.size() > 1)
+    {
+        level.append("Lv.");
+        level.append(_strvet[1]);
+    }
     
     string path = armyId.substr(armyId.size()-2);
     int num  = atoi(path.c_str())+1;
@@ -463,6 +476,7 @@ bool YuanJunSoldierCell::init(){
     
     m_icon->removeAllChildrenWithCleanup(true);
     m_nameTxt->setString(name);
+    m_LvTxt->setString(level);
     m_numTxt->setString(CC_CMDITOA(atoi(count.c_str())));
     CCSprite* spr = CCLoadSprite::createSprite(icon.c_str());
     spr->setAnchorPoint({.5, 0});
@@ -481,6 +495,7 @@ bool YuanJunSoldierCell::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, 
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_bg", CCSprite*, this->m_bg);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_icon", CCNode*, this->m_icon);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_nameTxt", CCLabelIF*, this->m_nameTxt);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_LvTxt", CCLabelIF*, this->m_LvTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_numTxt", CCLabelIF*, this->m_numTxt);
     return false;
 }

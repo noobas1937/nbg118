@@ -1742,6 +1742,10 @@ void TerritoryInfoDetailCell::setData(YuanJunInfo* info,int stat){
             useArmyId = armyId;
         }
     }
+    
+    const int OPEN_BG_TAG = 10010;
+    m_renderBg->getParent()->removeChildByTag(OPEN_BG_TAG);
+    
     double haveTime = (m_info->getArrivalTime() - GlobalData::shared()->getWorldTime());
     if(m_info->getOpen()){
         m_renderBg->setVisible(true);
@@ -1774,10 +1778,11 @@ void TerritoryInfoDetailCell::setData(YuanJunInfo* info,int stat){
             m_renderBg->setContentSize(CCSize(CELL_W, addH));
         m_renderBg->removeAllChildrenWithCleanup(true);
         Scale9Sprite* sp = CCLoadSprite::createScale9Sprite("nb_al_members_bg.png");
-        sp->setZOrder(-100);
-        sp->setContentSize({CELL_W - 30.0f, addH + 0.0f});
-        sp->setPosition({CELL_W / 2.0f, addH / 2.0f + 5.f});
-        m_renderBg->addChild(sp);
+        sp->setTag(OPEN_BG_TAG);
+        sp->setZOrder(-OPEN_BG_TAG);
+        sp->setContentSize({CELL_W - 30.0f, addH + 10.0f});
+        sp->setPosition({m_renderBg->getPositionX() + CELL_W / 2.0f, m_renderBg->getPositionY() - addH + addH / 2.0f + 15.f});
+        m_renderBg->getParent()->addChild(sp);
         for (int i=0; i<num; i++) {
             auto dic = _dict(m_info->getSoldiers()->objectAtIndex(i));
             YuanJunSoldierCell* cell = YuanJunSoldierCell::create(dic);
