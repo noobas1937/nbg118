@@ -448,7 +448,7 @@ public:
     CCSafeObject<CCSprite> m_miniBG;
     CCSafeObject<CCSprite> m_goHomeBtn;
     CCSafeObject<CCNode> m_inUiTitle;
-    CCSafeObject<CCSprite> quest_bg;
+    CCSafeObject<CCNode> quest_bg;
     CCSafeObject<CCSprite> m_woodIcon;
     CCSafeObject<CCSprite> m_ironIcon;
     CCSafeObject<CCSprite> m_foodIcon;

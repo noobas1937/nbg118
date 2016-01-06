@@ -455,6 +455,7 @@ void LoadingScene::onEnter(){
         CCSprite *logo = dynamic_cast<CCSprite*>(this->getChildByTag(LOADING_LOGO_TAG));
         if(logo){
             logo->setDisplayFrame(CCLoadSprite::loadResource("logo_cn.png"));
+            logo->setPositionX(CCDirector::sharedDirector()->getWinSize().width * 0.5);
         }
         auto layer = CCLayerColor::create(ccc4(0, 0, 0, 200), CCDirector::sharedDirector()->getWinSize().width, 70);
         this->addChild(layer);
