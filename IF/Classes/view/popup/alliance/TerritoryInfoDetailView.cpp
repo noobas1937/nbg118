@@ -1847,17 +1847,17 @@ void TerritoryInfoDetailCell::setData(YuanJunInfo* info,int stat){
         int picVer = m_info->getpicVer();
         m_icon->removeAllChildrenWithCleanup(true);
         CCSprite* headSpr = CCLoadSprite::createSprite(head.c_str());
-        CCCommonUtils::setSpriteMaxSize(headSpr, 78);
+        CCCommonUtils::setSpriteMaxSize(headSpr, 88);
         m_icon->addChild(headSpr);
         if (CCCommonUtils::isUseCustomPic(picVer))
         {
-            m_headImgNode->initHeadImgUrl2(m_icon, CCCommonUtils::getCustomPicUrl(uid, picVer), 1.0f, 78, true);
+            m_headImgNode->initHeadImgUrl2(m_icon, CCCommonUtils::getCustomPicUrl(uid, picVer), 1.0f, 88, true);
         }
     }else{
         m_icon->removeAllChildrenWithCleanup(true);
         std::string icon = "ico" + useArmyId+ "_small.png";
         CCSprite* headSpr = CCLoadSprite::createSprite(icon.c_str());
-        CCCommonUtils::setSpriteMaxSize(headSpr, 78);
+        CCCommonUtils::setSpriteMaxSize(headSpr, 88);
         m_icon->addChild(headSpr);
     }
     m_arrow->setRotation(m_info->getOpen()?270:180);

@@ -1145,7 +1145,7 @@ void MailReadPopUpView::showJoinAllianceBtn(){
 //        m_joinAllianceBtn->addTargetWithActionForControlEvents(this, cccontrol_selector(MailReadPopUpView::onJoinAllianceBtnClick), CCControlEventTouchUpInside);
 //        m_joinAllianceBtn->setPosition(ccp(m_contentContainer->getContentSize().width/2+85+12,m_totalH));
 //        CCCommonUtils::setButtonTitle(m_joinAllianceBtn, _lang("103741").c_str());
-//        auto spr1 = CCLoadSprite::createScale9Sprite("btn_yellow.png");
+//        auto spr1 = CCLoadSprite::createScale9Sprite("but_blue.png");
 //        m_refuseAllianceBtn = CCControlButton::create(spr1);
 //        m_ListNode->addChild(m_refuseAllianceBtn);
 //        m_refuseAllianceBtn->setPreferredSize(CCSize(170, 64));
