@@ -320,7 +320,7 @@ bool UIComponentOldTitle::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget,
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pFlagL", CCSprite*, this->m_pFlagL);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pFlagR", CCSprite*, this->m_pFlagR);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_powerBgNode", CCNode*, this->m_powerBgNode);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_LvBG", CCSprite*, this->m_LvBG);
+
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_powerName", CCLabelIF*, this->m_powerName);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_power", CCLabelIFBMFont*, this->m_power);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_powerParticleNode", CCNode*, this->m_powerParticleNode);
@@ -1597,7 +1597,7 @@ void UIComponent::hidePopupBG()
         
         this->m_popupTitleBg2->setVisible(!true); // guo.jiang
         
-        this->m_popupTitleName->setVisible(!true); // guo.jiang
+        this->m_popupTitleName->setVisible(true); // guo.jiang
         
         //        this->m_line1->setVisible(true);
         
@@ -1634,7 +1634,6 @@ void UIComponent::setPopupTitleName(string _name)
 
 
 void UIComponent::showResourceBar(bool _bShow)
-
 {
     
     if (_bShow) {
@@ -1659,7 +1658,6 @@ void UIComponent::showResourceBar(bool _bShow)
         m_otherPartNode->setVisible(true);
         m_goldNewNode->setVisible(false);
         
-//        m_buildNode->setVisible(true);
         CheckGuideUIShow();
         
         m_powerAndBgNode->setVisible(true);
@@ -1725,7 +1723,7 @@ void UIComponent::showPopupView(UIPopupViewType type, bool isHD)
             this->m_uiTitle->setVisible(true);
             this->m_popupReturnBtn->setVisible(true);
 //            this->m_popupTitleName->setVisible(type==7?false:true);
-            this->m_popupTitleName->setVisible(false); // guo.jiang
+            this->m_popupTitleName->setVisible(true); // guo.jiang
             //begin a by ljf
             if(type==UIPopupViewType_Tool_Store)
             {
@@ -2748,7 +2746,7 @@ bool UIComponent::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const c
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_homeBack", CCSprite*, this->m_homeBack);
     
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "quest_bg", CCSprite*, this->quest_bg);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "quest_bg", CCNode*, this->quest_bg);
     
     
     //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_PVE", CCSprite*, this->m_PVE);
@@ -2817,8 +2815,6 @@ bool UIComponent::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const c
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_chatBG", CCScale9Sprite*, this->m_chatBG);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_questBG", CCNode*, this->m_questBG);
-    
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_questBG2", CCNode*, this->m_questBG2);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_questRecNode", CCNode*, this->m_questRecNode);
     
@@ -2904,7 +2900,6 @@ bool UIComponent::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const c
     
     //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_generalSoulBtnTimesBG", CCSprite*, this->m_generalSoulBtnTimesBG);
     
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_LvBG", CCSprite*, this->m_LvBG);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pFlagL", CCSprite*, this->m_pFlagL);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pFlagR", CCSprite*, this->m_pFlagR);
     
@@ -3353,7 +3348,7 @@ bool UIComponent::onTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEven
         return true;
         
     }else if(m_otherPartNode->isVisible() && m_UserNode->isVisible() && isTouchInside(this->m_playerBG, pTouch)){
-        //(isTouchInside(this->m_LvBG, pTouch) ||
+
         hintType = 7;
         
         return true;
@@ -5505,7 +5500,6 @@ CCNode* UIComponent::getNodeByIndex(string _key){
         
     }else if(_key == "UI_achievement"){
         
-//        return m_questBG2;//fusheng
         return quest_bg;
         
     }else if(_key == "UI_goods"){
@@ -5524,7 +5518,6 @@ CCNode* UIComponent::getNodeByIndex(string _key){
         
     }else if(_key == "UI_target2"){
         
-//        return m_questBG2;//fusheng
         return quest_bg;
         
     }else if(_key == "SC2_out"){
@@ -6003,11 +5996,10 @@ void UIComponent::controllerPowerAni(){
 //    m_pFlagR->runAction(CCSequence::create(delayR1, seqR_RP, NULL));
     
     CCActionInterval * delayM1 = CCDelayTime::create(0.05);
-    CCActionInterval * scaleToM1 = CCScaleTo::create(0.1, 1.2,1.1);
+    CCActionInterval * scaleToM1 = CCScaleTo::create(0.1, 1.1,1.1);
     CCActionInterval * scaleToM2 = CCScaleTo::create(0.1, 1.0,1.0);
     CCActionInterval * seqM = CCSequence::create(scaleToM1, scaleToM2, NULL);
     CCActionInterval * seqM_RP = CCRepeat::create(seqM, repT);
-//    m_LvBG->runAction(CCSequence::create(delayM1, seqM_RP, fun, CCDelayTime::create(0.3), fun2, NULL));
     m_powerBgNode->runAction(CCSequence::create(delayM1, seqM_RP, fun, CCDelayTime::create(0.3), fun2, NULL));
     
     perPower = (long)(total - lastBattlePower)/(repT*2);

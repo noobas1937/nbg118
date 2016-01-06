@@ -134,7 +134,7 @@ private:
     void onClickCostBtn(CCObject * pSender, Control::EventType pCCControlEvent);
     void onClickGivePackageBtn(CCObject * pSender, Control::EventType pCCControlEvent);
     
-    CCSafeObject<CCLabelBMFont> m_getGoldNumText;
+    CCSafeObject<CCLabelIF> m_getGoldNumText;
     CCSafeObject<CCLabelIF> m_percentLabel;
     CCSafeObject<CCLabelIF> m_timeLabel;
     CCSafeObject<CCLabelIF> m_desLabel;
@@ -183,7 +183,7 @@ private:
     void onClickCostBtn(CCObject * pSender, Control::EventType pCCControlEvent);
     void onClickGivePackageBtn(CCObject * pSender, Control::EventType pCCControlEvent);
     
-    CCSafeObject<CCLabelBMFont> m_getGoldNumText;
+    CCSafeObject<CCLabelIF> m_getGoldNumText;
     CCSafeObject<CCLabelIF> m_percentLabel;
      CCSafeObject<CCLabelIF> m_percentLabel2;
     CCSafeObject<CCLabelIF> m_timeLabel;

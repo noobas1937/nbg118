@@ -7,24 +7,37 @@
             <key>Cloud.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,4},{248,169}}</string>
+                <string>{{62,672},{248,169}}</string>
                 <key>offset</key>
                 <string>{-1,1}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,1},{248,169}}</string>
                 <key>sourceSize</key>
                 <string>{250,173}</string>
             </dict>
-            <key>chuzheng_frame01.png</key>
+            <key>bbtn_bg.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{179,4},{642,201}}</string>
+                <string>{{4,652},{465,52}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{465,52}}</string>
+                <key>sourceSize</key>
+                <string>{465,52}</string>
+            </dict>
+            <key>chuzheng_frame01.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{4,4},{642,201}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{642,201}}</string>
                 <key>sourceSize</key>
@@ -33,7 +46,7 @@
             <key>d_icon_1_1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1432,125},{115,115}}</string>
+                <string>{{359,916},{115,115}}</string>
                 <key>offset</key>
                 <string>{-1,1}</string>
                 <key>rotated</key>
@@ -46,7 +59,7 @@
             <key>d_icon_1_2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1434,4},{115,115}}</string>
+                <string>{{372,795},{115,115}}</string>
                 <key>offset</key>
                 <string>{-1,1}</string>
                 <key>rotated</key>
@@ -59,7 +72,7 @@
             <key>d_icon_2_1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1313,4},{115,115}}</string>
+                <string>{{358,1089},{115,115}}</string>
                 <key>offset</key>
                 <string>{-1,1}</string>
                 <key>rotated</key>
@@ -72,7 +85,7 @@
             <key>d_icon_2_2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1311,125},{115,115}}</string>
+                <string>{{237,1089},{115,115}}</string>
                 <key>offset</key>
                 <string>{-1,1}</string>
                 <key>rotated</key>
@@ -85,7 +98,7 @@
             <key>d_icon_2_3.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1192,4},{115,115}}</string>
+                <string>{{238,968},{115,115}}</string>
                 <key>offset</key>
                 <string>{-1,1}</string>
                 <key>rotated</key>
@@ -98,7 +111,7 @@
             <key>d_icon_3_1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1190,125},{115,115}}</string>
+                <string>{{238,847},{115,115}}</string>
                 <key>offset</key>
                 <string>{-1,1}</string>
                 <key>rotated</key>
@@ -111,7 +124,7 @@
             <key>d_icon_3_2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1071,4},{115,115}}</string>
+                <string>{{373,488},{115,115}}</string>
                 <key>offset</key>
                 <string>{-1,1}</string>
                 <key>rotated</key>
@@ -124,7 +137,7 @@
             <key>d_icon_3_3.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1069,125},{115,115}}</string>
+                <string>{{373,367},{115,115}}</string>
                 <key>offset</key>
                 <string>{-1,1}</string>
                 <key>rotated</key>
@@ -137,7 +150,7 @@
             <key>d_icon_4_1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{950,4},{115,115}}</string>
+                <string>{{373,246},{115,115}}</string>
                 <key>offset</key>
                 <string>{-1,1}</string>
                 <key>rotated</key>
@@ -150,7 +163,7 @@
             <key>d_icon_4_2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{948,127},{115,115}}</string>
+                <string>{{373,125},{115,115}}</string>
                 <key>offset</key>
                 <string>{-1,1}</string>
                 <key>rotated</key>
@@ -163,7 +176,7 @@
             <key>d_icon_4_3.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{827,127},{115,115}}</string>
+                <string>{{373,4},{115,115}}</string>
                 <key>offset</key>
                 <string>{-1,1}</string>
                 <key>rotated</key>
@@ -176,7 +189,7 @@
             <key>d_icon_5_1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{827,4},{117,117}}</string>
+                <string>{{372,672},{117,117}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -186,6 +199,58 @@
                 <key>sourceSize</key>
                 <string>{117,117}</string>
             </dict>
+            <key>nb_cmm_gohome.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{62,847},{170,169}}</string>
+                <key>offset</key>
+                <string>{0,1}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{170,169}}</string>
+                <key>sourceSize</key>
+                <string>{170,171}</string>
+            </dict>
+            <key>nb_cmm_goworld.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{62,1022},{162,169}}</string>
+                <key>offset</key>
+                <string>{-4,1}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{162,169}}</string>
+                <key>sourceSize</key>
+                <string>{170,171}</string>
+            </dict>
+            <key>nb_main_bottom_bg.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{211,4},{662,156}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{662,156}}</string>
+                <key>sourceSize</key>
+                <string>{662,156}</string>
+            </dict>
+            <key>nb_skill_right_frame.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{316,672},{50,154}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{50,154}}</string>
+                <key>sourceSize</key>
+                <string>{50,154}</string>
+            </dict>
         </dict>
         <key>metadata</key>
         <dict>
@@ -194,9 +259,9 @@
             <key>realTextureFileName</key>
             <string>Common_3.pvr.ccz</string>
             <key>size</key>
-            <string>{1553,256}</string>
+            <string>{493,1208}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:--REMOVED----------------------------</string>
+            <string>$TexturePacker:SmartUpdate:ada6a182bedd14f8c8ec44d31a65bc4b:1/1$</string>
             <key>textureFileName</key>
             <string>Common_3.pvr.ccz</string>
         </dict>
