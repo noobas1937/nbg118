@@ -53,8 +53,8 @@ bool TerritoryFunctionView::init(int stat)
     int textW = m_descriptionText->getContentSize().width * m_descriptionText->getOriginScaleX();
     m_descriptionText->setPositionY(m_descriptionText->getPositionY() - textH / 2);
     
-    int ttw = 8;//fusheng 虚报的padding
-    int tth = 8;
+    int ttw = 18;//fusheng 虚线的padding
+    int tth = 18;
     auto dashed = NBCommonUtils::createDashed(CCSize(textW+ttw,textH+tth));
     
     dashed->setPositionX(-textW/2 - ttw/2);
