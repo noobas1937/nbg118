@@ -267,6 +267,14 @@
 		36A9688617E8468D002129DA /* WaitInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36A9688417E8468D002129DA /* WaitInterface.cpp */; };
 		36A968A817E981DE002129DA /* YesNoDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36A968A617E981DE002129DA /* YesNoDialog.cpp */; };
 		36AA340C1BBA60ED006D7E97 /* C3DShowView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36AA340A1BBA60ED006D7E97 /* C3DShowView.cpp */; };
+		36CC27721C3D175900581CC2 /* helvetica_bold.png in Resources */ = {isa = PBXBuildFile; fileRef = 36CC276A1C3D175900581CC2 /* helvetica_bold.png */; };
+		36CC27731C3D175900581CC2 /* helvetica_border.png in Resources */ = {isa = PBXBuildFile; fileRef = 36CC276B1C3D175900581CC2 /* helvetica_border.png */; };
+		36CC27741C3D175900581CC2 /* helvetica_gradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 36CC276C1C3D175900581CC2 /* helvetica_gradient.png */; };
+		36CC27751C3D175900581CC2 /* helvetica_shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 36CC276D1C3D175900581CC2 /* helvetica_shadow.png */; };
+		36CC27761C3D175900581CC2 /* helvetica_bold.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 36CC276E1C3D175900581CC2 /* helvetica_bold.fnt */; };
+		36CC27771C3D175900581CC2 /* helvetica_border.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 36CC276F1C3D175900581CC2 /* helvetica_border.fnt */; };
+		36CC27781C3D175900581CC2 /* helvetica_gradient.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 36CC27701C3D175900581CC2 /* helvetica_gradient.fnt */; };
+		36CC27791C3D175900581CC2 /* helvetica_shadow.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 36CC27711C3D175900581CC2 /* helvetica_shadow.fnt */; };
 		36D7170318D9C6E3002FC987 /* CCGraySprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36D7170118D9C6E3002FC987 /* CCGraySprite.cpp */; };
 		36DA93901BCE353D0091A48B /* NBGRenderTarget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36DA938E1BCE353D0091A48B /* NBGRenderTarget.cpp */; };
 		36DE16D91BA188C00020785E /* 3d in Resources */ = {isa = PBXBuildFile; fileRef = 36DE16D71BA188C00020785E /* 3d */; };
@@ -1748,6 +1756,14 @@
 		36A968A717E981DE002129DA /* YesNoDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YesNoDialog.h; sourceTree = "<group>"; };
 		36AA340A1BBA60ED006D7E97 /* C3DShowView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = C3DShowView.cpp; sourceTree = "<group>"; };
 		36AA340B1BBA60ED006D7E97 /* C3DShowView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = C3DShowView.hpp; sourceTree = "<group>"; };
+		36CC276A1C3D175900581CC2 /* helvetica_bold.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = helvetica_bold.png; path = Resources/helvetica_bold.png; sourceTree = "<group>"; };
+		36CC276B1C3D175900581CC2 /* helvetica_border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = helvetica_border.png; path = Resources/helvetica_border.png; sourceTree = "<group>"; };
+		36CC276C1C3D175900581CC2 /* helvetica_gradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = helvetica_gradient.png; path = Resources/helvetica_gradient.png; sourceTree = "<group>"; };
+		36CC276D1C3D175900581CC2 /* helvetica_shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = helvetica_shadow.png; path = Resources/helvetica_shadow.png; sourceTree = "<group>"; };
+		36CC276E1C3D175900581CC2 /* helvetica_bold.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = helvetica_bold.fnt; path = Resources/helvetica_bold.fnt; sourceTree = "<group>"; };
+		36CC276F1C3D175900581CC2 /* helvetica_border.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = helvetica_border.fnt; path = Resources/helvetica_border.fnt; sourceTree = "<group>"; };
+		36CC27701C3D175900581CC2 /* helvetica_gradient.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = helvetica_gradient.fnt; path = Resources/helvetica_gradient.fnt; sourceTree = "<group>"; };
+		36CC27711C3D175900581CC2 /* helvetica_shadow.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = helvetica_shadow.fnt; path = Resources/helvetica_shadow.fnt; sourceTree = "<group>"; };
 		36D7170118D9C6E3002FC987 /* CCGraySprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGraySprite.cpp; sourceTree = "<group>"; };
 		36D7170218D9C6E3002FC987 /* CCGraySprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGraySprite.h; sourceTree = "<group>"; };
 		36DA938E1BCE353D0091A48B /* NBGRenderTarget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBGRenderTarget.cpp; sourceTree = "<group>"; };
@@ -6018,6 +6034,14 @@
 		DB9F590717CD9A520037F7E5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				36CC276A1C3D175900581CC2 /* helvetica_bold.png */,
+				36CC276B1C3D175900581CC2 /* helvetica_border.png */,
+				36CC276C1C3D175900581CC2 /* helvetica_gradient.png */,
+				36CC276D1C3D175900581CC2 /* helvetica_shadow.png */,
+				36CC276E1C3D175900581CC2 /* helvetica_bold.fnt */,
+				36CC276F1C3D175900581CC2 /* helvetica_border.fnt */,
+				36CC27701C3D175900581CC2 /* helvetica_gradient.fnt */,
+				36CC27711C3D175900581CC2 /* helvetica_shadow.fnt */,
 				366751581C2A442900447EDE /* Arial_Bold_Border.png */,
 				366751591C2A442900447EDE /* Arial_Bold_Regular.png */,
 				3667515A1C2A442900447EDE /* Arial_Bold.png */,
@@ -7245,6 +7269,7 @@
 				B80D4B2F1BAFCA6B00422225 /* nb_world_link_area.tmx in Resources */,
 				272AB62E1B15C7BC0052E896 /* but_back.png in Resources */,
 				272AB6251B15C7BC0052E896 /* alliance_gold1.png in Resources */,
+				36CC27791C3D175900581CC2 /* helvetica_shadow.fnt in Resources */,
 				272AB6581B15C7BC0052E896 /* icon02.jpg in Resources */,
 				6CD847C01B2EE5C500C8AF0D /* MemberTableCell.xib in Resources */,
 				B15628B318FEB62000902628 /* pve_fnt_title.fnt in Resources */,
@@ -7277,6 +7302,7 @@
 				272AB6401B15C7BC0052E896 /* forum_forward.png in Resources */,
 				272AB62B1B15C7BC0052E896 /* btn_qieye_02.png in Resources */,
 				272AB6151B15C7BC0052E896 /* TipPopUpController.xib in Resources */,
+				36CC27751C3D175900581CC2 /* helvetica_shadow.png in Resources */,
 				272AB6241B15C7BC0052E896 /* alliance_02.png in Resources */,
 				366751671C2A442900447EDE /* Arial_Gradient.fnt in Resources */,
 				366751601C2A442900447EDE /* Arial_Bold_Border.png in Resources */,
@@ -7286,11 +7312,13 @@
 				272AB6131B15C7BC0052E896 /* BanPopUpController.xib in Resources */,
 				272AB60D1B15C7BC0052E896 /* ChartIOS-Info.plist in Resources */,
 				5A6CE7B11B8F023E005CCFAA /* hdccbi in Resources */,
+				36CC27721C3D175900581CC2 /* helvetica_bold.png in Resources */,
 				272AB6601B15C7BC0052E896 /* sendfailed.png in Resources */,
 				272AB6521B15C7BC0052E896 /* horn_bg_right.png in Resources */,
 				272AB6351B15C7BC0052E896 /* chat_from_bg_pressed.png in Resources */,
 				272AB66B1B15C7BC0052E896 /* ui_popup_bg.png in Resources */,
 				272AB6361B15C7BC0052E896 /* chat_right_bg_normal.png in Resources */,
+				36CC27761C3D175900581CC2 /* helvetica_bold.fnt in Resources */,
 				59D7F0321AF0BF85000120F9 /* HS-Attachment@2x.png in Resources */,
 				59D7F0301AF0BF85000120F9 /* HelpshiftLocalizable.strings in Resources */,
 				EDC5D3CA1C1EF072006037D9 /* eeeq_0.png in Resources */,
@@ -7328,6 +7356,7 @@
 				6CD92EC21B42A06F0049B8E1 /* ChattingVC.xib in Resources */,
 				96F6B7E81A79D67C0032D9C0 /* particleImg in Resources */,
 				366751651C2A442900447EDE /* Arial_Bold_Regular.fnt in Resources */,
+				36CC27741C3D175900581CC2 /* helvetica_gradient.png in Resources */,
 				272AB64C1B15C7BC0052E896 /* g044.png in Resources */,
 				59D7F0481AF0BF85000120F9 /* HSConfirmBox@2x.png in Resources */,
 				59D7F0491AF0BF85000120F9 /* HSTutorial.png in Resources */,
@@ -7344,10 +7373,12 @@
 				272AB6681B15C7BC0052E896 /* ui_gray_biaotilan.png in Resources */,
 				59D7F03A1AF0BF85000120F9 /* HS-no-connection.png in Resources */,
 				366751631C2A442900447EDE /* Arial_Gradient.png in Resources */,
+				36CC27731C3D175900581CC2 /* helvetica_border.png in Resources */,
 				272AB64A1B15C7BC0052E896 /* g038.png in Resources */,
 				366E1C7517D09868006CCCBF /* local in Resources */,
 				272AB6641B15C7BC0052E896 /* tishikuang_full.png in Resources */,
 				59D7F04F1AF0BF85000120F9 /* HelpshiftConfig.plist in Resources */,
+				36CC27771C3D175900581CC2 /* helvetica_border.fnt in Resources */,
 				59D7F0351AF0BF85000120F9 /* HS-camera-button@2x.png in Resources */,
 				59D7F0371AF0BF85000120F9 /* HS-delete-button.png in Resources */,
 				272AB66C1B15C7BC0052E896 /* Images.xcassets in Resources */,
@@ -7360,6 +7391,7 @@
 				366751621C2A442900447EDE /* Arial_Bold.png in Resources */,
 				59D7F04E1AF0BF85000120F9 /* HSTutorialiPad@3x.png in Resources */,
 				59D7F03E1AF0BF85000120F9 /* HS-powered-by-logo@3x.png in Resources */,
+				36CC27781C3D175900581CC2 /* helvetica_gradient.fnt in Resources */,
 				272AB6261B15C7BC0052E896 /* alliance_gold2.png in Resources */,
 				272AB6651B15C7BC0052E896 /* tmod.png in Resources */,
 				272AB62F1B15C7BC0052E896 /* chat_bg_default.jpg in Resources */,

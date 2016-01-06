@@ -322,7 +322,7 @@ bool UIComponentOldTitle::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget,
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_powerBgNode", CCNode*, this->m_powerBgNode);
 
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_powerName", CCLabelIF*, this->m_powerName);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_power", CCLabelIFBMFont*, this->m_power);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_power", CCLabelIF*, this->m_power);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_powerParticleNode", CCNode*, this->m_powerParticleNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_wood", CCLabelIF*, this->m_wood);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_woodIcon", CCSprite*, this->m_woodIcon);
@@ -658,11 +658,11 @@ bool UIComponent::init(CCSize size)
     //    this->m_PVEBtnTitle->setString(_lang("102159").c_str());
     
     this->m_storeBtnLabel->setString(_lang("102160").c_str());
-    
+    m_storeBtnLabel->setFntFile(getNBFont(NB_FONT_Bold_Border));
     //    this->m_generalBtnTitle->setString(_lang("102161").c_str());
     
     this->m_allianceBtnTitle->setString(_lang("102161").c_str());
-    
+    m_allianceBtnTitle->setFntFile(getNBFont(NB_FONT_Bold_Border));
     //    this->m_levelName->setString(_lang("102203").c_str());
     
     //TODO 临时修改
@@ -675,15 +675,19 @@ bool UIComponent::init(CCSize size)
     
 //    this->m_powerName->setString(_lang("102163").c_str());
     
-    this->m_goldName->setString(_lang("102153").c_str());
+    m_goldName->setString(_lang("102153").c_str());
     
-    this->m_mailBtnTitle->setString(_lang("101205").c_str());
+    m_mailBtnTitle->setString(_lang("101205").c_str());
+    m_mailBtnTitle->setFntFile(getNBFont(NB_FONT_Bold_Border));
     
-    this->m_questName->setString(_lang("107500").c_str());
+    m_questName->setString(_lang("107500").c_str());
+    m_questName->setFntFile(getNBFont(NB_FONT_Bold_Border));
     
-    this->m_homeBackBtnTitle->setString(_lang("108538").c_str());
+    m_homeBackBtnTitle->setString(_lang("108538").c_str());
+    m_homeBackBtnTitle->setFntFile(getNBFont(NB_FONT_Bold_Border));
     
-    this->m_worldBtnTitle->setString(_lang("105601").c_str());
+    m_worldBtnTitle->setString(_lang("105601").c_str());
+    m_worldBtnTitle->setFntFile(getNBFont(NB_FONT_Bold_Border));
     
     m_queueNode->setVisible(false);
     
@@ -1238,7 +1242,7 @@ void UIComponent::onQuestStateUpdate(CCObject* p){
         
         arr->addObject(CCString::create(nameStr));
         
-        auto rollText = RollingText::create(arr, 390);
+        auto rollText = RollingText::create(arr, 390, ccc3(66,64,43));
         
         m_questNameNode->addChild(rollText);
         
@@ -1623,12 +1627,10 @@ void UIComponent::hideReturnBtn()
 
 
 
-void UIComponent::setPopupTitleName(string _name)
-
+void UIComponent::setPopupTitleName(string _name,bool bVisible)
 {
-    
     this->m_popupTitleName->setString(_name.c_str());
-    
+    this->m_popupTitleName->setVisible(bVisible);
 }
 
 
@@ -1639,22 +1641,19 @@ void UIComponent::showResourceBar(bool _bShow)
     if (_bShow) {
         
         m_UserNode->setVisible(true);
-        
+        m_UserResBg->setVisible(false);
         m_otherPartNode->setVisible(false);
         m_goldNewNode->setVisible(false);
         
         m_buildNode->setVisible(false);
         
         m_powerAndBgNode->setVisible(false);
-        
+
     }
-    
     else
-        
     {
         
         m_UserNode->setVisible(false);
-        
         m_otherPartNode->setVisible(true);
         m_goldNewNode->setVisible(false);
         
@@ -2231,7 +2230,7 @@ void UIComponent::setUserData(){
     
     double addPower = total - lastBattlePower;
     
-    currentPower = atoi(m_power->getString());
+    currentPower = atoi(m_power->getString().c_str());
     
     if(currentPower==0 || addPower<=0){
         isPlayingPowerAni = false;
@@ -3052,7 +3051,7 @@ bool UIComponent::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const c
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_armyCDContainer", CCNode*, this->m_armyCDContainer);
     
     
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_power", CCLabelIFBMFont*, this->m_power);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_power", CCLabelIF*, this->m_power);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_questName", CCLabelIF*, this->m_questName);
     
