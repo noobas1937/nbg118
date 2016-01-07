@@ -531,11 +531,11 @@ void GuideController::addGuideView(bool movingFlag){
     if(m_node == NULL){
         return;
     }
-    float s = 1.0;
+    float frameScale = 1.0;
     if(movingFlag){
         if(SceneController::getInstance()->currentSceneId == SCENE_ID_MAIN){
             auto layer = dynamic_cast<ImperialScene*>(SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE));
-            s = layer->getTouchLayerScale();
+            frameScale = layer->getTouchLayerScale();
             if(layer){
                 layer->setTouchEnabled(true);
             }
@@ -581,8 +581,14 @@ void GuideController::addGuideView(bool movingFlag){
     CCRect rect = cocos2d::CCRect(m_node->boundingBox());
     float dx = localP.x + m_offX + (rect.origin.x - m_node->getPositionX());
     float dy = localP.y + m_offY + (rect.origin.y - m_node->getPositionY());
-    float w = m_node->getContentSize().width * s;
-    float h = m_node->getContentSize().height * s;
+    
+    if (area == "UI_titan") {
+        frameScale = frameScale* m_node->getScaleX();
+    }
+    
+    
+    float w = m_node->getContentSize().width * frameScale;
+    float h = m_node->getContentSize().height * frameScale;
     
     if (CCCommonUtils::isIosAndroidPad())
     {

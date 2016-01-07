@@ -1451,12 +1451,15 @@ void BattleView::refreshDragonStatus(CCObject* obj)
         
         string id = CC_ITOA(GlobalData::shared()->titanInfo.tid);
         
-        string picName = CCCommonUtils::getPropById(id, "dragonMarchUI");
+        string picName = CCCommonUtils::getPropById(id, "dragonUI");
         picName.append(".png");
         auto spr = CCLoadSprite::createSprite(picName.c_str());
        
         m_dragonPicNode->removeAllChildren();
         m_dragonPicNode->addChild(spr);
+        
+        auto sprFrame = CCLoadSprite::createSprite("d_march_frame.png");
+        m_dragonPicNode->addChild(sprFrame,100);
         
         if(GlobalData::shared()->titanInfo.maxManual!=0)
         {
@@ -1517,13 +1520,15 @@ void BattleView::refreshDragonStatus(CCObject* obj)
         
         string id = CC_ITOA(GlobalData::shared()->titanInfo.tid);
         
-        string picName = CCCommonUtils::getPropById(id, "dragonMarchUI");
+        string picName = CCCommonUtils::getPropById(id, "dragonUI");
         picName.append(".png");
         auto spr = CCLoadSprite::createSprite(picName.c_str());
         
         m_dragonPicNode2->removeAllChildren();
         m_dragonPicNode2->addChild(spr);
         
+        auto sprFrame = CCLoadSprite::createSprite("d_march_frame.png");
+        m_dragonPicNode2->addChild(sprFrame,100);
         
         m_dragonNode->setVisible(false);
         m_dragonMarchingNode->setVisible(true);
