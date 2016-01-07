@@ -1785,7 +1785,8 @@ void ImperialScene::onPlayMoveTroops(int buildId)
 
 void ImperialScene::startGuide(float _time)
 {
-    return;
+    // tao.yu 此处关闭新手引导
+//    return;
     setUnMoveScence(false);
     if(WorldController::getInstance()->selfPoint.x < 0){
         return;
