@@ -1116,9 +1116,15 @@ void TerritoryResourceDetailCell::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
             }
             else
                 attendRally();
-        }else if(m_info->getIndex()==3){
+        }else if(m_info->getIndex()==3)
+        {
+            //TODO: guojiang 联盟
+            CCCommonUtils::flyHint("", "", _lang("E100008"));
+            return;
+            
             PopupViewController::getInstance()->addPopupInView(AllianceScienceView::create());
-        }else if(m_info->getIndex()==4){
+        }
+        else if(m_info->getIndex()==4){
             return;//////////////
         }else{
             CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TERRITORY_RES_DETAIL_CELL_CLICK,CCString::create(m_info->getUuid().c_str()));

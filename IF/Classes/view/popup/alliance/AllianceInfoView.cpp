@@ -748,6 +748,10 @@ void AllianceInfoView::clickEventCell(CCObject* sender,void* pData){
         }
             break;
         case 2:
+            //TODO: guojiang 联盟
+            CCCommonUtils::flyHint("", "", _lang("E100008"));
+            return;
+            
             PopupViewController::getInstance()->addPopupInView(AllianceScienceView::create());
             break;
         case 3:
