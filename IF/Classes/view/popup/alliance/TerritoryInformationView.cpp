@@ -134,11 +134,11 @@ bool TerritoryInformationView::init(){
 //        }
 //        m_bgNode->addChild(tBatchNode);
         
-        ParticleFireAni* par = ParticleFireAni::create();
-        m_fireNode1->addChild(par);
-        
-        ParticleFireAni* par2 = ParticleFireAni::create();
-        m_fireNode2->addChild(par2);
+//        ParticleFireAni* par = ParticleFireAni::create();//fusheng 没有这个节点
+//        m_fireNode1->addChild(par);
+//        
+//        ParticleFireAni* par2 = ParticleFireAni::create();
+//        m_fireNode2->addChild(par2);
         
         m_tabView = CCTableView::create(this, m_infoList->getContentSize());
         m_tabView->setDirection(kCCScrollViewDirectionVertical);
