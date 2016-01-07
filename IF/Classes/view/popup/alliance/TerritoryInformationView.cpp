@@ -437,6 +437,28 @@ SEL_CCControlHandler TerritoryInformationView::onResolveCCBCCControlSelector(coc
     return NULL;
 }
 
+const int CELL_W = 640;
+const int CELL_H = 104;
+
+CCArray* getSolidersWithoutDragon(CCArray* rawSoldiers)
+{
+    CCArray* soldiers = CCArray::create();
+    for (auto s : *(rawSoldiers))
+    {
+        auto dic = _dict(s);
+        int armyId = dic->valueForKey("armyId")->intValue();
+        if (armyId >= 107401 && armyId <= 107430)
+        {
+            // dragon
+        }
+        else
+        {
+            soldiers->addObject(s);
+        }
+    }
+    return soldiers;
+}
+
 CCSize TerritoryInformationView::tableCellSizeForIndex(CCTableView *table, ssize_t idx)
 {
     if(idx >= m_data->count()){
@@ -444,19 +466,28 @@ CCSize TerritoryInformationView::tableCellSizeForIndex(CCTableView *table, ssize
     }
     YuanJunInfo* obj = dynamic_cast<YuanJunInfo*>(m_data->objectAtIndex(idx));
     if (obj->getOpen()) {
-        int num = obj->getSoldiers()->count();
+        CCArray* soldiers = getSolidersWithoutDragon(obj->getSoldiers());
+        
+        int num = soldiers->count();
         int row = num/2 + (num%2==0?0:1);
-        int addH = row*100;
-        if (CCCommonUtils::isIosAndroidPad()) {
-            addH = row*200;
-            return CCSize(1470, 250+addH+40);
+        int addH = row*100 + 20;
+//        if (CCCommonUtils::isIosAndroidPad()) {
+//            addH = row*200;
+//            return CCSize(1470, 250+addH+40);
+//        }
+        if (num > 0)
+        {
+            return CCSize(CELL_W, CELL_H+addH+50);
         }
-        return CCSize(620, 125+addH+20);
+        else
+        {
+            return CCSize(CELL_W, CELL_H);
+        }
     }
-    if (CCCommonUtils::isIosAndroidPad()) {
-        return CCSize(1470, 250);
-    }
-    return CCSize(620, 125);
+//    if (CCCommonUtils::isIosAndroidPad()) {
+//        return CCSize(1470, 250);
+//    }
+    return CCSize(CELL_W, CELL_H);
 }
 
 CCSize TerritoryInformationView::cellSizeForTable(CCTableView *table)
@@ -464,7 +495,7 @@ CCSize TerritoryInformationView::cellSizeForTable(CCTableView *table)
     if (CCCommonUtils::isIosAndroidPad()) {
         return CCSize(1470, 250);
     }
-    return CCSize(620, 125);
+    return CCSize(CELL_W, CELL_H);
 }
 
 CCTableViewCell* TerritoryInformationView::tableCellAtIndex(CCTableView *table, ssize_t idx)
@@ -570,14 +601,22 @@ void TerritoryInformationCell::setData(YuanJunInfo* info,int stat){
         numStr.append(":");
         numStr.append(CC_CMDITOA(maxCount));
         m_armyNum->setString(numStr);
+
+        const int OPEN_BG_TAG = 10010;
+        m_renderBg->getParent()->removeChildByTag(OPEN_BG_TAG);
+
         if(m_info->getOpen()){
             m_renderBg->setVisible(true);
-            num = m_info->getSoldiers()->count();
+            CCArray* soldiers = getSolidersWithoutDragon(m_info->getSoldiers());
+            num = soldiers->count();
             int row = num/2 + (num%2==0?0:1);
-            int addH = row*100 + 20;
+            
+            int addH = row*100 + 70;
             if (CCCommonUtils::isIosAndroidPad()) {
                 addH = row*200 + 40;
             }
+            if (num <= 0) addH = 0;
+            
             m_moveNode->setPosition(ccp(0, addH));
             m_renderBg->setPosition(ccp(0, addH));
             m_bgNodee->setPosition(ccp(0, addH));
@@ -585,10 +624,21 @@ void TerritoryInformationCell::setData(YuanJunInfo* info,int stat){
                 m_renderBg->setContentSize(CCSize(1470,addH));
             }
             else
-                m_renderBg->setContentSize(CCSize(620,addH));
+                m_renderBg->setContentSize(CCSize(CELL_W, addH));
             m_renderBg->removeAllChildrenWithCleanup(true);
+            
+            if (num > 0)
+            {
+                Scale9Sprite* sp = CCLoadSprite::createScale9Sprite("nb_al_members_bg.png");
+                sp->setTag(OPEN_BG_TAG);
+                sp->setZOrder(-OPEN_BG_TAG);
+                sp->setContentSize({CELL_W - 30.0f, addH + 10.0f});
+                sp->setPosition({m_renderBg->getPositionX() + CELL_W / 2.0f, m_renderBg->getPositionY() - addH + addH / 2.0f + 15.f});
+                m_renderBg->getParent()->addChild(sp);
+            }
+            
             for (int i=0; i<num; i++) {
-                auto dic = _dict(m_info->getSoldiers()->objectAtIndex(i));
+                auto dic = _dict(soldiers->objectAtIndex(i));
                 YuanJunSoldierCell* cell = YuanJunSoldierCell::create(dic);
                 int rowIndex = i/2;
                 int col = i%2;
@@ -596,7 +646,13 @@ void TerritoryInformationCell::setData(YuanJunInfo* info,int stat){
                     cell->setPosition(ccp(col==0?40:680, m_renderBg->getContentSize().height-220-rowIndex*200));
                 }
                 else
-                    cell->setPosition(ccp(col==0?20:340, m_renderBg->getContentSize().height-110-rowIndex*100));
+                    cell->setPosition(ccp(col == 0 ? 33 : 327, m_renderBg->getContentSize().height - 122 - rowIndex * 128));
+
+                if (rowIndex % 2 == 1)
+                {
+                    cell->m_bg->setScaleY(-1);
+                }
+
                 m_renderBg->addChild(cell);
             }
         }else{

@@ -98,48 +98,52 @@ void MoveCityPopUpView::createCitySprite(){
     string picName = "";
     switch (mCityType) {
         case MoveCity_Castle:{
-            int level = FunBuildController::getInstance()->getMainCityLv();
-            int mapIndex = 3;
-            while (mapIndex >= 0) {
-                auto arr = WorldMapView::getCityPicArr(mapIndex, level, GlobalData::shared()->playerInfo.officer == KINGDOM_KING_ID);
-                int posX = _tile_width / 2;
-                int posY = _tile_height / 2;
-                if(mapIndex == 0 || mapIndex == 2){
-                    posX = _tile_width;
-                }
-                if(mapIndex == 3){
-                    posX = _tile_width + posX;
-                }
-                if(mapIndex == 1 || mapIndex == 3){
-                    posY = _tile_height;
-                }
-                if(mapIndex == 2){
-                    posY = _tile_height + posY;
-                }
-                CCObject *obj = NULL;
-                CCARRAY_FOREACH(arr, obj){
-                    std::string picName = _dict(obj)->valueForKey("pic")->getCString();
-                    int addX = _dict(obj)->valueForKey("x")->intValue();
-                    int addY = _dict(obj)->valueForKey("y")->intValue();
-                    auto sprite = CCLoadSprite::createSprite(picName.c_str());
-                    sprite->setAnchorPoint(ccp(0, 0));
-                    if (CCCommonUtils::isIosAndroidPad()) {
-                        m_cityNode->addChild(sprite);
-                        sprite->setPosition(ccp(posX, posY) - ccp(_tile_width / 2, _tile_height / 2) + ccp(addX, addY));
-                    }
-                    else {
-                        m_picNode->addChild(sprite);
-                        sprite->setPosition(ccp(posX, posY) - ccp(_tile_width / 2, _tile_height / 2) + ccp(addX, addY));
-                    }
-                }
-                mapIndex--;
-            }
-            if (CCCommonUtils::isIosAndroidPad()) {
-                m_picNode->addChild(m_cityNode);
-                m_cityNode->setScale(WORLD_DEFAULT_HD_SCALE);
-                m_cityNode->setPosition(-_tile_width * (WORLD_DEFAULT_HD_SCALE - 1), -_tile_height * (WORLD_DEFAULT_HD_SCALE - 1));
-            }
-            return;
+//            int level = FunBuildController::getInstance()->getMainCityLv();
+//            int mapIndex = 3;
+//            while (mapIndex >= 0) {
+//                auto arr = WorldMapView::getCityPicArr(mapIndex, level, GlobalData::shared()->playerInfo.officer == KINGDOM_KING_ID);
+//                int posX = _tile_width / 2;
+//                int posY = _tile_height / 2;
+//                if(mapIndex == 0 || mapIndex == 2){
+//                    posX = _tile_width;
+//                }
+//                if(mapIndex == 3){
+//                    posX = _tile_width + posX;
+//                }
+//                if(mapIndex == 1 || mapIndex == 3){
+//                    posY = _tile_height;
+//                }
+//                if(mapIndex == 2){
+//                    posY = _tile_height + posY;
+//                }
+//                CCObject *obj = NULL;
+//                CCARRAY_FOREACH(arr, obj){
+//                    std::string picName = _dict(obj)->valueForKey("pic")->getCString();
+//                    int addX = _dict(obj)->valueForKey("x")->intValue();
+//                    int addY = _dict(obj)->valueForKey("y")->intValue();
+//                    auto sprite = CCLoadSprite::createSprite(picName.c_str());
+//                    sprite->setAnchorPoint(ccp(0, 0));
+//                    if (CCCommonUtils::isIosAndroidPad()) {
+//                        m_cityNode->addChild(sprite);
+//                        sprite->setPosition(ccp(posX, posY) - ccp(_tile_width / 2, _tile_height / 2) + ccp(addX, addY));
+//                    }
+//                    else {
+//                        m_picNode->addChild(sprite);
+//                        sprite->setPosition(ccp(posX, posY) - ccp(_tile_width / 2, _tile_height / 2) + ccp(addX, addY));
+//                    }
+//                }
+//                mapIndex--;
+//            }
+//            if (CCCommonUtils::isIosAndroidPad()) {
+//                m_picNode->addChild(m_cityNode);
+//                m_cityNode->setScale(WORLD_DEFAULT_HD_SCALE);
+//                m_cityNode->setPosition(-_tile_width * (WORLD_DEFAULT_HD_SCALE - 1), -_tile_height * (WORLD_DEFAULT_HD_SCALE - 1));
+//            }
+//            return;
+            
+            // TODO: guojiang
+            picName = "lv1.png";
+            break;
         }
         case MoveCity_Food:{
             picName = "0020.png";
@@ -190,9 +194,18 @@ void MoveCityPopUpView::createCitySprite(){
         if (CCCommonUtils::isIosAndroidPad()) {
             sprSize = sprite->getContentSize() * sprite->getScale();
         }
-        if(sprSize.width < _tile_width && sprSize.height < _tile_height){
+        if (sprSize.width < _tile_width && sprSize.height < _tile_height)
+        {
             sprite->setPosition(CCPoint((_tile_width-sprSize.width)*0.5 ,(_tile_height-sprSize.height)*0.5));
-        }else{
+        }
+        // TODO: guojiang
+        else if (MoveCity_Castle == mCityType)
+        {
+            sprite->setPosition({_tile_width / 2, _tile_height / 2});
+        }
+        else
+        {
+            
             sprite->setPosition(CCPointZero);
         }
     }
