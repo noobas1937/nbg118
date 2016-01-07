@@ -23,6 +23,8 @@ precision mediump float;
 
 uniform lowp sampler2D normal0;
 //uniform lowp sampler2D CC_Texture0;
+uniform lowp sampler2D shape; //ljf
+
 #ifdef USE_FOAM
 	uniform lowp sampler2D foam;
 #endif
@@ -37,13 +39,21 @@ varying vec3 v_darkColor;
 varying vec3 v_lightColor;
 varying float v_reflectionPower;
 
+varying vec3 v_mvpPos; //ljf
+
+varying vec2 v_texCoord; //ljf
+
 #ifdef LIGHTMAP
 uniform lowp sampler2D lightmap;
 varying vec2 v_worldPos;
 #endif
 
+
+
 void main()
 {
+	
+
     vec4 normalMapValue = texture2D(normal0, v_bumpUv1.xy);
     gl_FragColor = vec4(mix(v_lightColor, v_darkColor, (normalMapValue.x * v_wave.y) + (normalMapValue.y * (1.0 - v_wave.y))), v_wave.x)
     
@@ -51,7 +61,11 @@ void main()
 	
 //	pow(x,y)*z is calculated here as exp2(log2(x) * y + log2(z))
 	
-	+ exp2(log2(((normalMapValue.z * v_wave.y) + (normalMapValue.w * (1.0 - v_wave.y))) * v_wave.z) * v_wave.w + v_reflectionPower);
+	+ exp2(log2(((normalMapValue.z * v_wave.y) + (normalMapValue.w * (1.0 - v_wave.y))) * v_wave.z) * v_wave.w + v_reflectionPower) * 3.0;
+	
+	//exp(-1.0 * v_mvpPos.x * v_mvpPos.x - 1.0 * v_mvpPos.y * v_mvpPos.y)
+	//+ exp2(log2(((normalMapValue.z * v_wave.y) + (normalMapValue.w * (1.0 - v_wave.y))) * 1.0 * exp(-16.0 * v_mvpPos.x * v_mvpPos.x - 16.0 * v_mvpPos.y * v_mvpPos.y)) + v_reflectionPower);
+	
 //	+ vec4(pow(((normalMapValue.z * v_wave.y) + (normalMapValue.w * (1.0 - v_wave.y))) * v_wave.z, v_wave.w)) * v_reflectionPower;
 	#else
 	;
@@ -64,4 +78,12 @@ void main()
 	;
 	#endif // LIGHTMAP
 	#endif // USE_FOAM
+
+	//begin ljf
+	//gl_FragColor = vec4(x, 0.0, 0.0, 1.0);
+	vec4 shapeValue = texture2D(shape, v_texCoord);
+	gl_FragColor.a = shapeValue.x * 0.5;
+	//gl_FragColor = texture2D(shape, v_texCoord);
+	//gl_FragColor.a = 0.5;
+	//end ljf
 }

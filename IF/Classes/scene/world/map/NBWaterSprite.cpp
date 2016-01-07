@@ -15,6 +15,7 @@ m_fDivHeight(0.001),
 m_fDivWidth(0.001),
 m_fUtime(0),
 m_pFoam(NULL),
+m_pShape(NULL),
 m_pLightMap(NULL)
 {
     
@@ -23,6 +24,15 @@ m_pLightMap(NULL)
 NBWaterSprite::~NBWaterSprite()
 {
     CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_COME_TO_FOREGROUND);
+    if(m_pFoam){
+        m_pFoam->release();
+        m_pFoam = NULL;
+    }
+    if(m_pShape)
+    {
+        m_pShape->release();
+        m_pShape = NULL;
+    }
 }
 
 
@@ -74,11 +84,17 @@ bool NBWaterSprite::initWithTexture(CCTexture2D* texture, const CCRect& rect)
                                                                       NULL);
         
         m_pFoam = Director::getInstance()->getTextureCache()->addImage("shaders/foam.png");
+        m_pShape = Director::getInstance()->getTextureCache()->addImage("shaders/water_shape_3040.jpg");
+        if(m_pFoam)
+            m_pFoam->retain();
+        if(m_pShape)
+            m_pShape->retain();
+        //m_pShape = getTexture();
         m_pLightMap = getTexture();
-        m_fMovement = 1.4;//1.4
-        m_fWaveHeight = 0.3;//0.3
-        m_fDivWidth = 0.008197;//0.008197
-        m_fDivHeight = 0.008197;//0.008197
+        m_fMovement = 1.4 * 2.0;//1.4
+        m_fWaveHeight = 0.3 * 2.0;//0.3
+        m_fDivWidth = 0.008197 ;//0.008197
+        m_fDivHeight = 0.008197 ;//0.008197
         
         initVertexData();
         this->initProgram();
@@ -141,6 +157,7 @@ void NBWaterSprite::initProgram()
     m_uUniforms[kCCWaterUniformNormal] = glGetUniformLocation( program, kCCWaterUniformNormal_s);
     m_uUniforms[kCCWaterUniformlightMap] = glGetUniformLocation( program, kCCWaterUniformlightMap_s);
     m_uUniforms[kCCWaterUniformFoam] = glGetUniformLocation( program, kCCWaterUniformFoam_s);
+    m_uUniforms[kCCWaterUniformShape] = glGetUniformLocation( program, kCCWaterUniformShape_s);
     
     CCLOG("uniform loc %s : %d", kCCWaterUniformTime_s, m_uUniforms[kCCWaterUniformTime]);
     CCLOG("uniform loc %s : %d", kCCWaterUniformlightPos_s, m_uUniforms[kCCWaterUniformlightPos]);
@@ -155,6 +172,7 @@ void NBWaterSprite::initProgram()
     CCLOG("uniform loc %s : %d", kCCWaterUniformNormal_s, m_uUniforms[kCCWaterUniformNormal]);
     CCLOG("uniform loc %s : %d", kCCWaterUniformlightMap_s, m_uUniforms[kCCWaterUniformlightMap]);
     CCLOG("uniform loc %s : %d", kCCWaterUniformFoam_s, m_uUniforms[kCCWaterUniformFoam]);
+    CCLOG("uniform loc %s : %d", kCCWaterUniformShape_s, m_uUniforms[kCCWaterUniformShape]);
     
     getShaderProgram()->setUniformLocationWith1i(m_uUniforms[kCCWaterUniformNormal], 1);
     //    getShaderProgram()->setUniformLocationWith1i(m_uUniforms[kCCWaterUniformlightMap], 2);
@@ -180,10 +198,12 @@ void NBWaterSprite::setUniforms()
 //    ④28,64,145→0.1098,0.251,0.5686
     
     GLfloat shore_dark[3] = {0.0313,0.4117,0.6235};
-    GLfloat sea_dark[3] = {0.0784,0.1176,0.2784};
+    //GLfloat sea_dark[3] = {0.0784,0.1176,0.2784}; //orign
+    GLfloat sea_dark[3] = {54.0 / 255.0, 64.0 / 255.0, 149.0 / 255.0}; //ljf
     
     GLfloat shore_light[3] = {0.4196,0.6823,0.7529};
-    GLfloat sea_light[3] = {0.1098,0.251,0.5686};
+    //GLfloat sea_light[3] = {0.1098,0.251,0.5686}; //orign
+    GLfloat sea_light[3] = {54.0 / 255.0, 64.0 / 255.0, 149.0 / 255.0}; //ljf
     
 //    GLfloat shore_dark[3] = {0.0664062, 0.6875, 0.785156};//{0.0431373, 0.67451, 0.533333}
 //    GLfloat sea_dark[3] = {0.113725, 0.211765, 0.356863};//{0.113725, 0.211765, 0.356863}
@@ -196,6 +216,12 @@ void NBWaterSprite::setUniforms()
     getShaderProgram()->setUniformLocationWith3fv(m_uUniforms[kCCWaterUniformSEA_DARK], sea_dark, 1);
     getShaderProgram()->setUniformLocationWith3fv(m_uUniforms[kCCWaterUniformSEA_LIGHT], sea_light, 1);
     
+    //begin a by ljf
+    //GLfloat light_pos[3] = {-256.0f + getContentSize().width * 0.5f,-256.0f + getContentSize().height * 0.5f ,10.0f};
+    //getShaderProgram()->setUniformLocationWith3fv(m_uUniforms[kCCWaterUniformlightPos], light_pos, 1);
+    
+    //end a by ljf
+    
     CHECK_GL_ERROR_DEBUG();
 }
 
@@ -204,8 +230,8 @@ void NBWaterSprite::initVertexData()
     ccV3F_C4B_T2F vert;
     float texCoordGridSizeU = 1.0f / WATER_GRID_COLUMN;
     float texCoordGridSizeV = 1.0f / WATER_GRID_ROWS;
-    float fWidth = getContentSize().width;
-    float fHeight = getContentSize().height;
+    float fWidth = getContentSize().width ;
+    float fHeight = getContentSize().height ;
     float vertexGridSizeX = fWidth / WATER_GRID_COLUMN;
     float vertexGridSizeY = fHeight / WATER_GRID_ROWS;
     vert.vertices.z = 0;
@@ -216,15 +242,18 @@ void NBWaterSprite::initVertexData()
     unsigned char *data_=pMyimg->getData();
     for(int i = 0; i<= WATER_GRID_COLUMN; ++i)
     {
-        vert.vertices.y = -256 + vertexGridSizeY*i;
+        
+        //vert.vertices.y = -256 + vertexGridSizeY*i;
+        vert.vertices.y =  vertexGridSizeY*i; //ljf
         vert.texCoords.v = texCoordGridSizeV*i;
         for (int j = 0; j <= WATER_GRID_ROWS; ++j) {
-            vert.vertices.x = -256 + vertexGridSizeX*j;
+            //vert.vertices.x = -256 + vertexGridSizeX*j;
+            vert.vertices.x =  vertexGridSizeX*j; //ljf
             vert.texCoords.u = texCoordGridSizeU*j;
             ccColor4B color = ccColor4B(0, 0, 0, 64);//foam, wave, wind, depth
             if (i != 64 && j != 64) {
                 unsigned int *pixel = (unsigned int *)data_;
-                pixel = pixel + ((int)(vert.texCoords.v * getContentSize().width * getContentSize().width)) + (int)(vert.texCoords.u * getContentSize().height);
+                pixel = pixel + ((int)(vert.texCoords.v * getContentSize().width * getContentSize().width )) + (int)(vert.texCoords.u * getContentSize().height );
                 //color.r = (*pixel & 0xff)/255;
                 //CCLOG("R: %d", *pixel & 0xff);
                 int nG = ((*pixel >> 8) & 0xff);
@@ -311,17 +340,41 @@ void NBWaterSprite::onDraw(const Mat4& transform, uint32_t flags)
     
     GLfloat lightPos[3] = {minLightPos[0] + fRate*(maxLightPos[0] - minLightPos[0])
         , minLightPos[1] + fRate*(maxLightPos[1] - minLightPos[1]), 120};
+    //lightPos[0] = 800;
+    //lightPos[1] = 0;
+    //lightPos[2] = 0;
+    //begin a by ljf
+    //lightPos[0] += m_fUtime;
+    //CCLOG("light pos 0: %f", lightPos[0]);
+    //end a by ljf
     
     pProgram->setUniformLocationWith3fv(m_uUniforms[kCCWaterUniformlightPos], lightPos, 1);
     
     //ccGLBindTexture2D(getTexture()->getName());
-    ccGLBindTexture2DN(1, getTexture()->getName());
+    ccGLBindTexture2DN(0, getTexture()->getName());
+    glUniform1i(m_uUniforms[kCCWaterUniformNormal], 0 );
+    
+    if (m_pShape != NULL) {
+        ccGLBindTexture2DN(1, m_pShape->getName());
+        glUniform1i(m_uUniforms[kCCWaterUniformShape], 1 );
+    }
+    
     if (m_pLightMap) {
         ccGLBindTexture2DN(2, m_pLightMap->getName());
+        glUniform1i(m_uUniforms[kCCWaterUniformlightMap], 2 );
     }
     if (m_pFoam != NULL) {
         ccGLBindTexture2DN(3, m_pFoam->getName());
+        glUniform1i(m_uUniforms[kCCWaterUniformFoam], 3 );
     }
+    
+    
+    /*
+    m_uUniforms[kCCWaterUniformNormal] = glGetUniformLocation( program, kCCWaterUniformNormal_s);
+    m_uUniforms[kCCWaterUniformlightMap] = glGetUniformLocation( program, kCCWaterUniformlightMap_s);
+    m_uUniforms[kCCWaterUniformFoam] = glGetUniformLocation( program, kCCWaterUniformFoam_s);
+    m_uUniforms[kCCWaterUniformShape] = glGetUniformLocation( program, kCCWaterUniformShape_s);
+    */
     
     //
     // Attributes
@@ -330,9 +383,17 @@ void NBWaterSprite::onDraw(const Mat4& transform, uint32_t flags)
     ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );
     
     drawByVertexs();
+    
+    //begin a by ljf
+    ccGLBindTexture2DN(0, NULL);
+    ccGLBindTexture2DN(1, NULL);
+    ccGLBindTexture2DN(2, NULL);
+    ccGLBindTexture2DN(3, NULL);
+    //end a by ljf
     CHECK_GL_ERROR_DEBUG();
     
     CC_INCREMENT_GL_DRAWS(1);
+    
 }
 
 void NBWaterSprite::drawByVertexs()
