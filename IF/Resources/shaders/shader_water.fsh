@@ -61,7 +61,7 @@ void main()
 	
 //	pow(x,y)*z is calculated here as exp2(log2(x) * y + log2(z))
 	
-	+ exp2(log2(((normalMapValue.z * v_wave.y) + (normalMapValue.w * (1.0 - v_wave.y))) * v_wave.z) * v_wave.w + v_reflectionPower);
+	+ exp2(log2(((normalMapValue.z * v_wave.y) + (normalMapValue.w * (1.0 - v_wave.y))) * v_wave.z) * v_wave.w + v_reflectionPower) * 3.0;
 	
 	//exp(-1.0 * v_mvpPos.x * v_mvpPos.x - 1.0 * v_mvpPos.y * v_mvpPos.y)
 	//+ exp2(log2(((normalMapValue.z * v_wave.y) + (normalMapValue.w * (1.0 - v_wave.y))) * 1.0 * exp(-16.0 * v_mvpPos.x * v_mvpPos.x - 16.0 * v_mvpPos.y * v_mvpPos.y)) + v_reflectionPower);
@@ -80,16 +80,10 @@ void main()
 	#endif // USE_FOAM
 
 	//begin ljf
-	//float x = v_reflectionPower;
-	//float x = log2(((normalMapValue.z * v_wave.y) + (normalMapValue.w * (1.0 - v_wave.y))) * v_wave.z) * v_wave.w ;
-	//float x = log2(((normalMapValue.z * v_wave.y) + (normalMapValue.w * (1.0 - v_wave.y))) * v_wave.z ) ;
-	//float x = v_wave.z ;
-	//float x = /*v_wave.z + */log2(v_wave.z  );
-	//float x = -8.0;
-	//float x = v_mvpPos.z;
 	//gl_FragColor = vec4(x, 0.0, 0.0, 1.0);
 	vec4 shapeValue = texture2D(shape, v_texCoord);
-	gl_FragColor.a = shapeValue.x;
+	gl_FragColor.a = shapeValue.x * 0.5;
 	//gl_FragColor = texture2D(shape, v_texCoord);
+	//gl_FragColor.a = 0.5;
 	//end ljf
 }

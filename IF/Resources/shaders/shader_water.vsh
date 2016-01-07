@@ -70,7 +70,7 @@ void main()
 	vec4 pos = a_position;
 	
 	// Calculate new vertex position with wave
-	float animTime = a_texCoord.y + u_time;
+	float animTime = a_texCoord.y  + u_time;
 	highp float wave = cos(animTime);
 	float waveHeightFactor = (wave + 1.0) * 0.5; // 0,1
     
@@ -110,7 +110,8 @@ void main()
 	//v_wave.z = 0.0;
 #endif
 	
-	
+	//begin d by ljf
+	/*
 	vec3 lightDir = normalize(vec3(1.0, 1.0, 0.0));
 	vec3 lightVec = normalize(u_lightPos - pos.xyz);
 	v_wave.z = (1.0 - abs(dot(lightDir, lightVec)));
@@ -118,7 +119,9 @@ void main()
 	v_wave.z = v_wave.z * 0.2 + (v_wave.z * v_wave.z) * 0.8;
 	v_wave.z += 1.1 - (length(u_lightPos - pos.xyz) * 0.008);
 	v_wave.w = (1.0 + (1.0 - v_wave.z * 0.5) * 7.0);
-	
+	*/
+	//end d by ljf
+
 	//begin a by ljf
 	v_wave.z = exp(-1.0 * v_mvpPos.x * v_mvpPos.x - 1.0 * v_mvpPos.y * v_mvpPos.y); //ljf
 	v_wave.w = (1.0 + (1.0 - v_wave.z * 0.5) * 7.0);

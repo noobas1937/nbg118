@@ -366,9 +366,11 @@ bool ImperialScene::init()
     mVikingShipDict = CCDictionary::create();
     mShipLevel = 0;
     
-    float scale = 7.5;
+    float scaleX = 1.5 * 3060 / 512;
+    float scaleY = 1.5 * 2340 / 512;
     auto water = NBWaterSprite::create(WATER_NORMALS);
-    water->setScale(scale);
+    water->setScaleX(scaleX);
+    water->setScaleY(scaleY);
     //water->setFlippedY(true);
     water->setAnchorPoint(Vec2(0.5,0.5));
     m_waterNode->addChild(water);
@@ -1783,7 +1785,7 @@ void ImperialScene::onPlayMoveTroops(int buildId)
 
 void ImperialScene::startGuide(float _time)
 {
-    //return;
+    return;
     setUnMoveScence(false);
     if(WorldController::getInstance()->selfPoint.x < 0){
         return;

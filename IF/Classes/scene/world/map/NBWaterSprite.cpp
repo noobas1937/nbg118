@@ -24,6 +24,15 @@ m_pLightMap(NULL)
 NBWaterSprite::~NBWaterSprite()
 {
     CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_COME_TO_FOREGROUND);
+    if(m_pFoam){
+        m_pFoam->release();
+        m_pFoam = NULL;
+    }
+    if(m_pShape)
+    {
+        m_pShape->release();
+        m_pShape = NULL;
+    }
 }
 
 
@@ -75,13 +84,17 @@ bool NBWaterSprite::initWithTexture(CCTexture2D* texture, const CCRect& rect)
                                                                       NULL);
         
         m_pFoam = Director::getInstance()->getTextureCache()->addImage("shaders/foam.png");
-        m_pShape = Director::getInstance()->getTextureCache()->addImage("shaders/water_shape.png");
+        m_pShape = Director::getInstance()->getTextureCache()->addImage("shaders/water_shape_3040.jpg");
+        if(m_pFoam)
+            m_pFoam->retain();
+        if(m_pShape)
+            m_pShape->retain();
         //m_pShape = getTexture();
         m_pLightMap = getTexture();
-        m_fMovement = 1.4;//1.4
-        m_fWaveHeight = 0.3;//0.3
-        m_fDivWidth = 0.008197;//0.008197
-        m_fDivHeight = 0.008197;//0.008197
+        m_fMovement = 1.4 * 2.0;//1.4
+        m_fWaveHeight = 0.3 * 2.0;//0.3
+        m_fDivWidth = 0.008197 ;//0.008197
+        m_fDivHeight = 0.008197 ;//0.008197
         
         initVertexData();
         this->initProgram();
@@ -185,10 +198,12 @@ void NBWaterSprite::setUniforms()
 //    ④28,64,145→0.1098,0.251,0.5686
     
     GLfloat shore_dark[3] = {0.0313,0.4117,0.6235};
-    GLfloat sea_dark[3] = {0.0784,0.1176,0.2784};
+    //GLfloat sea_dark[3] = {0.0784,0.1176,0.2784}; //orign
+    GLfloat sea_dark[3] = {54.0 / 255.0, 64.0 / 255.0, 149.0 / 255.0}; //ljf
     
     GLfloat shore_light[3] = {0.4196,0.6823,0.7529};
-    GLfloat sea_light[3] = {0.1098,0.251,0.5686};
+    //GLfloat sea_light[3] = {0.1098,0.251,0.5686}; //orign
+    GLfloat sea_light[3] = {54.0 / 255.0, 64.0 / 255.0, 149.0 / 255.0}; //ljf
     
 //    GLfloat shore_dark[3] = {0.0664062, 0.6875, 0.785156};//{0.0431373, 0.67451, 0.533333}
 //    GLfloat sea_dark[3] = {0.113725, 0.211765, 0.356863};//{0.113725, 0.211765, 0.356863}
@@ -215,8 +230,8 @@ void NBWaterSprite::initVertexData()
     ccV3F_C4B_T2F vert;
     float texCoordGridSizeU = 1.0f / WATER_GRID_COLUMN;
     float texCoordGridSizeV = 1.0f / WATER_GRID_ROWS;
-    float fWidth = getContentSize().width;
-    float fHeight = getContentSize().height;
+    float fWidth = getContentSize().width ;
+    float fHeight = getContentSize().height ;
     float vertexGridSizeX = fWidth / WATER_GRID_COLUMN;
     float vertexGridSizeY = fHeight / WATER_GRID_ROWS;
     vert.vertices.z = 0;
