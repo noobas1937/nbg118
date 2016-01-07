@@ -7,7 +7,7 @@
             <key>Cloud.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1320,4},{248,169}}</string>
+                <string>{{1298,4},{248,169}}</string>
                 <key>offset</key>
                 <string>{-1,1}</string>
                 <key>rotated</key>
@@ -111,7 +111,7 @@
             <key>d_icon_3_2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1136,166},{115,115}}</string>
+                <string>{{1136,164},{115,115}}</string>
                 <key>offset</key>
                 <string>{-1,1}</string>
                 <key>rotated</key>
@@ -124,7 +124,7 @@
             <key>d_icon_3_3.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1015,166},{115,115}}</string>
+                <string>{{1015,164},{115,115}}</string>
                 <key>offset</key>
                 <string>{-1,1}</string>
                 <key>rotated</key>
@@ -137,7 +137,7 @@
             <key>d_icon_4_1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{894,166},{115,115}}</string>
+                <string>{{894,164},{115,115}}</string>
                 <key>offset</key>
                 <string>{-1,1}</string>
                 <key>rotated</key>
@@ -150,7 +150,7 @@
             <key>d_icon_4_2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{773,166},{115,115}}</string>
+                <string>{{773,164},{115,115}}</string>
                 <key>offset</key>
                 <string>{-1,1}</string>
                 <key>rotated</key>
@@ -163,7 +163,7 @@
             <key>d_icon_4_3.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{652,166},{115,115}}</string>
+                <string>{{652,164},{115,115}}</string>
                 <key>offset</key>
                 <string>{-1,1}</string>
                 <key>rotated</key>
@@ -176,7 +176,7 @@
             <key>d_icon_5_1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1831,4},{117,117}}</string>
+                <string>{{1809,4},{117,117}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -189,7 +189,7 @@
             <key>nb_cmm_gohome.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1702,4},{123,126}}</string>
+                <string>{{1680,4},{123,126}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -202,7 +202,7 @@
             <key>nb_cmm_goworld.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1574,4},{122,135}}</string>
+                <string>{{1552,4},{122,135}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -215,15 +215,15 @@
             <key>nb_main_bottom_bg.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{652,4},{662,156}}</string>
+                <string>{{652,4},{640,154}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{662,156}}</string>
+                <string>{{0,0},{640,154}}</string>
                 <key>sourceSize</key>
-                <string>{662,156}</string>
+                <string>{640,154}</string>
             </dict>
             <key>nb_main_quest_bg.png</key>
             <dict>
@@ -261,7 +261,7 @@
             <key>size</key>
             <string>{1981,298}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:74957f87f6db8dbd003d1fa6442a26b6:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:0e49397576e157e51b18dc5efd354eb1:1/1$</string>
             <key>textureFileName</key>
             <string>Common_3.pvr.ccz</string>
         </dict>

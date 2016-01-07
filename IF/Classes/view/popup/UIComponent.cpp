@@ -695,7 +695,7 @@ bool UIComponent::init(CCSize size)
     
     int vipLv = VipUtil::getVipLevel(GlobalData::shared()->playerInfo.vipPoints);
     
-    //this->m_vipText->setFntFile("pve_fnt_title.fnt");
+    this->m_vipText->setFntFile("eeeq.fnt");
     
     this->m_vipText->setString(CC_ITOA(vipLv)); //_lang_1("103001", CC_ITOA(vipLv)));
     
@@ -6099,7 +6099,7 @@ void UIComponent::refreshVIPStatus(float t){
         
         m_sprVip->setVisible(true);
         //begin a by ljf
-        m_vipText->setColor({90,62,22});
+//        m_vipText->setColor({90,62,22});
         if(m_vipFg)
             m_vipFg->setVisible(true);
         if(m_vipFgGray)
