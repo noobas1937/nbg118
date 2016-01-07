@@ -104,7 +104,7 @@
 								<key>type</key>
 								<string>Byte</string>
 								<key>value</key>
-								<integer>255</integer>
+								<integer>0</integer>
 							</dict>
 							<dict>
 								<key>name</key>
@@ -175,7 +175,7 @@
 								<key>value</key>
 								<array>
 									<real>-603.5</real>
-									<real>23.166667938232422</real>
+									<real>26.166667938232422</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -234,6 +234,8 @@
 								</array>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -492,8 +494,6 @@
 								</array>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>

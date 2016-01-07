@@ -231,7 +231,7 @@ public:
     CCSafeObject<CCNode> m_frameEffNode;
     
     CCSafeObject<CCLabelIF> m_powerName;
-    CCSafeObject<CCLabelIFBMFont> m_power;
+    CCSafeObject<CCLabelIF> m_power;
     CCSafeObject<CCLabelIF> m_questName;
     CCSafeObject<CCLabelIF> m_questTipNum;
     
@@ -375,7 +375,7 @@ public:
     void hidePopupBG();
     void showPopupView(UIPopupViewType type=UIPopupViewType_NONE, bool isHD=true);
     void showResourceBar(bool _bShow);
-    void setPopupTitleName(string _name);
+    void setPopupTitleName(string _name, bool bVisible = true);
     CCNode* getNodeByIndex(string _key);
     void updateMailNum(CCObject* p);
     void updateNewChatNews(int num);
@@ -448,7 +448,7 @@ public:
     CCSafeObject<CCSprite> m_miniBG;
     CCSafeObject<CCSprite> m_goHomeBtn;
     CCSafeObject<CCNode> m_inUiTitle;
-    CCSafeObject<CCSprite> quest_bg;
+    CCSafeObject<CCNode> quest_bg;
     CCSafeObject<CCSprite> m_woodIcon;
     CCSafeObject<CCSprite> m_ironIcon;
     CCSafeObject<CCSprite> m_foodIcon;
@@ -764,7 +764,7 @@ private:
     
     CCSafeObject<CCNode> m_frameEffNode;
     
-    CCSafeObject<CCLabelIFBMFont> m_power;
+    CCSafeObject<CCLabelIF> m_power;
     CCSafeObject<CCLabelIF> m_questName;
     CCSafeObject<CCLabelIF> m_questTipNum;
 

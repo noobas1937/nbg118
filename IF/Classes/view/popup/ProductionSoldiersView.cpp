@@ -777,6 +777,7 @@ void ProductionSoldiersView::moveSlider(Ref *pSender, NBSlider::EventType type){
 void ProductionSoldiersView::onEnter(){
     CCNode::onEnter();
     UIComponent::getInstance()->showResourceBar(true);
+    UIComponent::getInstance()->setPopupTitleName("",false);
 //    if(!m_isFort){
 //        CCLoadSprite::doLoadResourceAsync(COMMON_PATH, CCCallFuncO::create(this, callfuncO_selector(ProductionSoldiersView::AsyLoadRes2), NULL), m_resIndex);
 //    }else{

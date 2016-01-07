@@ -337,13 +337,13 @@
 						<array>
 							<dict>
 								<key>baseClass</key>
-								<string>CCLabelBMFont</string>
+								<string>CCLabelTTF</string>
 								<key>children</key>
 								<array/>
 								<key>customClass</key>
-								<string>CCLabelBMFont</string>
+								<string>CCLabelIF</string>
 								<key>displayName</key>
-								<string>CCLabelBMFont</string>
+								<string>CCLabelTTF</string>
 								<key>memberVarAssignmentName</key>
 								<string>m_getGoldNumText</string>
 								<key>memberVarAssignmentType</key>
@@ -380,9 +380,9 @@
 										<string>ScaleLock</string>
 										<key>value</key>
 										<array>
-											<real>1.2000000476837158</real>
-											<real>1.2000000476837158</real>
-											<true/>
+											<real>1</real>
+											<real>1</real>
+											<false/>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -396,11 +396,62 @@
 									</dict>
 									<dict>
 										<key>name</key>
-										<string>fntFile</string>
+										<string>fontName</string>
 										<key>type</key>
-										<string>FntFile</string>
+										<string>FontTTF</string>
 										<key>value</key>
-										<string>eeeq.fnt</string>
+										<string>Helvetica</string>
+									</dict>
+									<dict>
+										<key>name</key>
+										<string>fontSize</string>
+										<key>type</key>
+										<string>FloatScale</string>
+										<key>value</key>
+										<array>
+											<real>20</real>
+											<integer>0</integer>
+										</array>
+									</dict>
+									<dict>
+										<key>name</key>
+										<string>color</string>
+										<key>type</key>
+										<string>Color3</string>
+										<key>value</key>
+										<array>
+											<integer>254</integer>
+											<integer>255</integer>
+											<integer>255</integer>
+										</array>
+									</dict>
+									<dict>
+										<key>name</key>
+										<string>dimensions</string>
+										<key>type</key>
+										<string>Size</string>
+										<key>value</key>
+										<array>
+											<real>480</real>
+											<real>0.0</real>
+											<integer>0</integer>
+										</array>
+									</dict>
+									<dict>
+										<key>name</key>
+										<string>horizontalAlignment</string>
+										<key>type</key>
+										<string>IntegerLabeled</string>
+										<key>value</key>
+										<integer>1</integer>
+									</dict>
+									<dict>
+										<key>name</key>
+										<string>verticalAlignment</string>
+										<key>type</key>
+										<string>IntegerLabeled</string>
+										<key>value</key>
+										<integer>1</integer>
 									</dict>
 									<dict>
 										<key>name</key>
@@ -408,7 +459,7 @@
 										<key>type</key>
 										<string>Text</string>
 										<key>value</key>
-										<string>+21，000</string>
+										<string>+21,000</string>
 									</dict>
 								</array>
 								<key>selected</key>

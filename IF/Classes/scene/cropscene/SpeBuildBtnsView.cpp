@@ -136,7 +136,7 @@ void SpeBuildBtnsView::onShow(int buildId)
         
         bWrap = true;
     }else if( m_buildingKey == SPE_BUILD_SHIP){
-        m_nameNode->setPosition(ccp(0, 280));
+        m_nameNode->setPosition(ccp(0, 330));
         m_nameLabel->setString(_lang("101023"));
         btnIcons.push_back("monthcard_icon.png");
         m_funKeyVec.push_back("101283");

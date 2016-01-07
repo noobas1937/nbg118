@@ -320,9 +320,9 @@ bool UIComponentOldTitle::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget,
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pFlagL", CCSprite*, this->m_pFlagL);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pFlagR", CCSprite*, this->m_pFlagR);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_powerBgNode", CCNode*, this->m_powerBgNode);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_LvBG", CCSprite*, this->m_LvBG);
+
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_powerName", CCLabelIF*, this->m_powerName);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_power", CCLabelIFBMFont*, this->m_power);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_power", CCLabelIF*, this->m_power);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_powerParticleNode", CCNode*, this->m_powerParticleNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_wood", CCLabelIF*, this->m_wood);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_woodIcon", CCSprite*, this->m_woodIcon);
@@ -658,11 +658,11 @@ bool UIComponent::init(CCSize size)
     //    this->m_PVEBtnTitle->setString(_lang("102159").c_str());
     
     this->m_storeBtnLabel->setString(_lang("102160").c_str());
-    
+    m_storeBtnLabel->setFntFile(getNBFont(NB_FONT_Bold_Border));
     //    this->m_generalBtnTitle->setString(_lang("102161").c_str());
     
     this->m_allianceBtnTitle->setString(_lang("102161").c_str());
-    
+    m_allianceBtnTitle->setFntFile(getNBFont(NB_FONT_Bold_Border));
     //    this->m_levelName->setString(_lang("102203").c_str());
     
     //TODO 临时修改
@@ -675,15 +675,19 @@ bool UIComponent::init(CCSize size)
     
 //    this->m_powerName->setString(_lang("102163").c_str());
     
-    this->m_goldName->setString(_lang("102153").c_str());
+    m_goldName->setString(_lang("102153").c_str());
     
-    this->m_mailBtnTitle->setString(_lang("101205").c_str());
+    m_mailBtnTitle->setString(_lang("101205").c_str());
+    m_mailBtnTitle->setFntFile(getNBFont(NB_FONT_Bold_Border));
     
-    this->m_questName->setString(_lang("107500").c_str());
+    m_questName->setString(_lang("107500").c_str());
+    m_questName->setFntFile(getNBFont(NB_FONT_Bold_Border));
     
-    this->m_homeBackBtnTitle->setString(_lang("108538").c_str());
+    m_homeBackBtnTitle->setString(_lang("108538").c_str());
+    m_homeBackBtnTitle->setFntFile(getNBFont(NB_FONT_Bold_Border));
     
-    this->m_worldBtnTitle->setString(_lang("105601").c_str());
+    m_worldBtnTitle->setString(_lang("105601").c_str());
+    m_worldBtnTitle->setFntFile(getNBFont(NB_FONT_Bold_Border));
     
     m_queueNode->setVisible(false);
     
@@ -691,7 +695,7 @@ bool UIComponent::init(CCSize size)
     
     int vipLv = VipUtil::getVipLevel(GlobalData::shared()->playerInfo.vipPoints);
     
-    //this->m_vipText->setFntFile("pve_fnt_title.fnt");
+    this->m_vipText->setFntFile("eeeq.fnt");
     
     this->m_vipText->setString(CC_ITOA(vipLv)); //_lang_1("103001", CC_ITOA(vipLv)));
     
@@ -1238,7 +1242,7 @@ void UIComponent::onQuestStateUpdate(CCObject* p){
         
         arr->addObject(CCString::create(nameStr));
         
-        auto rollText = RollingText::create(arr, 390);
+        auto rollText = RollingText::create(arr, 390, ccc3(66,64,43));
         
         m_questNameNode->addChild(rollText);
         
@@ -1597,7 +1601,7 @@ void UIComponent::hidePopupBG()
         
         this->m_popupTitleBg2->setVisible(!true); // guo.jiang
         
-        this->m_popupTitleName->setVisible(!true); // guo.jiang
+        this->m_popupTitleName->setVisible(true); // guo.jiang
         
         //        this->m_line1->setVisible(true);
         
@@ -1623,43 +1627,36 @@ void UIComponent::hideReturnBtn()
 
 
 
-void UIComponent::setPopupTitleName(string _name)
-
+void UIComponent::setPopupTitleName(string _name,bool bVisible)
 {
-    
     this->m_popupTitleName->setString(_name.c_str());
-    
+    this->m_popupTitleName->setVisible(bVisible);
 }
 
 
 
 void UIComponent::showResourceBar(bool _bShow)
-
 {
     
     if (_bShow) {
         
         m_UserNode->setVisible(true);
-        
+        m_UserResBg->setVisible(false);
         m_otherPartNode->setVisible(false);
         m_goldNewNode->setVisible(false);
         
         m_buildNode->setVisible(false);
         
         m_powerAndBgNode->setVisible(false);
-        
+
     }
-    
     else
-        
     {
         
         m_UserNode->setVisible(false);
-        
         m_otherPartNode->setVisible(true);
         m_goldNewNode->setVisible(false);
         
-//        m_buildNode->setVisible(true);
         CheckGuideUIShow();
         
         m_powerAndBgNode->setVisible(true);
@@ -1725,7 +1722,7 @@ void UIComponent::showPopupView(UIPopupViewType type, bool isHD)
             this->m_uiTitle->setVisible(true);
             this->m_popupReturnBtn->setVisible(true);
 //            this->m_popupTitleName->setVisible(type==7?false:true);
-            this->m_popupTitleName->setVisible(false); // guo.jiang
+            this->m_popupTitleName->setVisible(true); // guo.jiang
             //begin a by ljf
             if(type==UIPopupViewType_Tool_Store)
             {
@@ -2233,7 +2230,7 @@ void UIComponent::setUserData(){
     
     double addPower = total - lastBattlePower;
     
-    currentPower = atoi(m_power->getString());
+    currentPower = atoi(m_power->getString().c_str());
     
     if(currentPower==0 || addPower<=0){
         isPlayingPowerAni = false;
@@ -2748,7 +2745,7 @@ bool UIComponent::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const c
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_homeBack", CCSprite*, this->m_homeBack);
     
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "quest_bg", CCSprite*, this->quest_bg);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "quest_bg", CCNode*, this->quest_bg);
     
     
     //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_PVE", CCSprite*, this->m_PVE);
@@ -2817,8 +2814,6 @@ bool UIComponent::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const c
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_chatBG", CCScale9Sprite*, this->m_chatBG);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_questBG", CCNode*, this->m_questBG);
-    
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_questBG2", CCNode*, this->m_questBG2);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_questRecNode", CCNode*, this->m_questRecNode);
     
@@ -2904,7 +2899,6 @@ bool UIComponent::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const c
     
     //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_generalSoulBtnTimesBG", CCSprite*, this->m_generalSoulBtnTimesBG);
     
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_LvBG", CCSprite*, this->m_LvBG);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pFlagL", CCSprite*, this->m_pFlagL);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pFlagR", CCSprite*, this->m_pFlagR);
     
@@ -3057,7 +3051,7 @@ bool UIComponent::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const c
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_armyCDContainer", CCNode*, this->m_armyCDContainer);
     
     
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_power", CCLabelIFBMFont*, this->m_power);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_power", CCLabelIF*, this->m_power);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_questName", CCLabelIF*, this->m_questName);
     
@@ -3353,7 +3347,7 @@ bool UIComponent::onTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEven
         return true;
         
     }else if(m_otherPartNode->isVisible() && m_UserNode->isVisible() && isTouchInside(this->m_playerBG, pTouch)){
-        //(isTouchInside(this->m_LvBG, pTouch) ||
+
         hintType = 7;
         
         return true;
@@ -5505,7 +5499,6 @@ CCNode* UIComponent::getNodeByIndex(string _key){
         
     }else if(_key == "UI_achievement"){
         
-//        return m_questBG2;//fusheng
         return quest_bg;
         
     }else if(_key == "UI_goods"){
@@ -5524,7 +5517,6 @@ CCNode* UIComponent::getNodeByIndex(string _key){
         
     }else if(_key == "UI_target2"){
         
-//        return m_questBG2;//fusheng
         return quest_bg;
         
     }else if(_key == "SC2_out"){
@@ -6003,11 +5995,10 @@ void UIComponent::controllerPowerAni(){
 //    m_pFlagR->runAction(CCSequence::create(delayR1, seqR_RP, NULL));
     
     CCActionInterval * delayM1 = CCDelayTime::create(0.05);
-    CCActionInterval * scaleToM1 = CCScaleTo::create(0.1, 1.2,1.1);
+    CCActionInterval * scaleToM1 = CCScaleTo::create(0.1, 1.1,1.1);
     CCActionInterval * scaleToM2 = CCScaleTo::create(0.1, 1.0,1.0);
     CCActionInterval * seqM = CCSequence::create(scaleToM1, scaleToM2, NULL);
     CCActionInterval * seqM_RP = CCRepeat::create(seqM, repT);
-//    m_LvBG->runAction(CCSequence::create(delayM1, seqM_RP, fun, CCDelayTime::create(0.3), fun2, NULL));
     m_powerBgNode->runAction(CCSequence::create(delayM1, seqM_RP, fun, CCDelayTime::create(0.3), fun2, NULL));
     
     perPower = (long)(total - lastBattlePower)/(repT*2);
@@ -6108,7 +6099,7 @@ void UIComponent::refreshVIPStatus(float t){
         
         m_sprVip->setVisible(true);
         //begin a by ljf
-        m_vipText->setColor({90,62,22});
+//        m_vipText->setColor({90,62,22});
         if(m_vipFg)
             m_vipFg->setVisible(true);
         if(m_vipFgGray)
