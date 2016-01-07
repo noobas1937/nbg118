@@ -551,7 +551,7 @@
 																<key>children</key>
 																<array/>
 																<key>customClass</key>
-																<string>CCLabelIFBMFont</string>
+																<string>CCLabelIF</string>
 																<key>displayName</key>
 																<string>CCLabel m_power</string>
 																<key>memberVarAssignmentName</key>
@@ -567,7 +567,7 @@
 																		<string>Position</string>
 																		<key>value</key>
 																		<array>
-																			<real>22</real>
+																			<real>19</real>
 																			<real>2</real>
 																			<integer>0</integer>
 																		</array>
@@ -590,8 +590,8 @@
 																		<string>ScaleLock</string>
 																		<key>value</key>
 																		<array>
-																			<real>0.5</real>
-																			<real>0.5</real>
+																			<real>1</real>
+																			<real>1</real>
 																			<true/>
 																			<integer>0</integer>
 																		</array>
@@ -610,7 +610,7 @@
 																		<key>type</key>
 																		<string>FontTTF</string>
 																		<key>value</key>
-																		<string>Helvetica-Bold</string>
+																		<string>Helvetica</string>
 																	</dict>
 																	<dict>
 																		<key>name</key>
@@ -619,7 +619,7 @@
 																		<string>FloatScale</string>
 																		<key>value</key>
 																		<array>
-																			<real>40</real>
+																			<real>20</real>
 																			<integer>0</integer>
 																		</array>
 																	</dict>
@@ -669,7 +669,7 @@
 																		<key>type</key>
 																		<string>Text</string>
 																		<key>value</key>
-																		<string>500,000,000</string>
+																		<string>123,456,789</string>
 																	</dict>
 																</array>
 															</dict>
@@ -3385,7 +3385,7 @@
 																<string>Position</string>
 																<key>value</key>
 																<array>
-																	<real>39</real>
+																	<real>59</real>
 																	<real>-89</real>
 																	<integer>0</integer>
 																</array>
@@ -3397,7 +3397,7 @@
 																<string>Point</string>
 																<key>value</key>
 																<array>
-																	<real>0.0</real>
+																	<real>0.5</real>
 																	<real>0.5</real>
 																</array>
 															</dict>
@@ -3437,7 +3437,7 @@
 																<string>FloatScale</string>
 																<key>value</key>
 																<array>
-																	<real>16</real>
+																	<real>20</real>
 																	<integer>0</integer>
 																</array>
 															</dict>
@@ -3471,7 +3471,7 @@
 																<key>type</key>
 																<string>IntegerLabeled</string>
 																<key>value</key>
-																<integer>2</integer>
+																<integer>1</integer>
 															</dict>
 															<dict>
 																<key>name</key>
@@ -3638,7 +3638,7 @@
 														<key>memberVarAssignmentName</key>
 														<string>m_playerBG</string>
 														<key>memberVarAssignmentType</key>
-														<integer>0</integer>
+														<integer>2</integer>
 														<key>properties</key>
 														<array>
 															<dict>
@@ -4134,7 +4134,7 @@
 																		<string>Position</string>
 																		<key>value</key>
 																		<array>
-																			<real>0.9576568603515625</real>
+																			<real>-0.0423431396484375</real>
 																			<real>0.625</real>
 																			<integer>0</integer>
 																		</array>
@@ -4157,8 +4157,8 @@
 																		<string>ScaleLock</string>
 																		<key>value</key>
 																		<array>
-																			<real>0.5</real>
-																			<real>0.5</real>
+																			<real>1</real>
+																			<real>1</real>
 																			<true/>
 																			<integer>0</integer>
 																		</array>
@@ -4186,7 +4186,7 @@
 																		<string>FloatScale</string>
 																		<key>value</key>
 																		<array>
-																			<real>40</real>
+																			<real>20</real>
 																			<integer>0</integer>
 																		</array>
 																	</dict>
@@ -4209,8 +4209,8 @@
 																		<string>Size</string>
 																		<key>value</key>
 																		<array>
-																			<real>50</real>
-																			<real>50</real>
+																			<real>30</real>
+																			<real>30</real>
 																			<integer>0</integer>
 																		</array>
 																	</dict>
@@ -4220,7 +4220,7 @@
 																		<key>type</key>
 																		<string>IntegerLabeled</string>
 																		<key>value</key>
-																		<integer>0</integer>
+																		<integer>1</integer>
 																	</dict>
 																	<dict>
 																		<key>name</key>
@@ -4236,7 +4236,7 @@
 																		<key>type</key>
 																		<string>Text</string>
 																		<key>value</key>
-																		<string>50</string>
+																		<string>10</string>
 																	</dict>
 																</array>
 															</dict>
@@ -4357,6 +4357,8 @@
 																<false/>
 															</dict>
 														</array>
+														<key>selected</key>
+														<true/>
 													</dict>
 													<dict>
 														<key>baseClass</key>
@@ -6754,8 +6756,6 @@
 														<string>title</string>
 													</dict>
 												</array>
-												<key>selected</key>
-												<true/>
 											</dict>
 										</array>
 										<key>customClass</key>
@@ -10184,9 +10184,9 @@
 												<string>Color3</string>
 												<key>value</key>
 												<array>
-													<integer>254</integer>
-													<integer>255</integer>
-													<integer>255</integer>
+													<integer>83</integer>
+													<integer>80</integer>
+													<integer>56</integer>
 												</array>
 											</dict>
 											<dict>
