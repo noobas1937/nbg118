@@ -198,13 +198,15 @@ void MarchFormationView::refreshDragonStatus(CCObject* obj)
         
         string id = CC_ITOA(GlobalData::shared()->titanInfo.tid);
         
-        string picName = CCCommonUtils::getPropById(id, "dragonMarchUI");
+        string picName = CCCommonUtils::getPropById(id, "dragonUI");
         picName.append(".png");
         auto spr = CCLoadSprite::createSprite(picName.c_str());
         m_dragonPicNode->removeAllChildren();
         
         m_dragonPicNode->addChild(spr);
         
+        auto sprFrame = CCLoadSprite::createSprite("d_march_frame.png");
+        m_dragonPicNode->addChild(sprFrame,100);
 
 
         
