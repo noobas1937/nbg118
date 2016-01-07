@@ -137,7 +137,11 @@ std::string CCINIParser::getObjectByKey(std::string strKey)
     if(it != m_Lines.end())
         retVal = it->second;
     else
+#if COCOS2D_DEBUG > 0
+        return strKey;
+#else
         return "";
+#endif
     StringReplace(retVal, "\\n", "\n");
     return retVal;
 }
@@ -148,7 +152,11 @@ std::string CCINIParser::getObjectByKey(std::string strKey,const char *paramCoun
     if(it != m_Lines.end())
         retVal = it->second;
     else
+#if COCOS2D_DEBUG > 0
+        return strKey;
+#else
         return "";
+#endif
     va_list args;
     va_start(args, paramCount);
     char *i = va_arg(args, char*);
