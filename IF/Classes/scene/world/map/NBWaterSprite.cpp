@@ -15,6 +15,7 @@ m_fDivHeight(0.001),
 m_fDivWidth(0.001),
 m_fUtime(0),
 m_pFoam(NULL),
+m_pShape(NULL),
 m_pLightMap(NULL)
 {
     
@@ -74,6 +75,8 @@ bool NBWaterSprite::initWithTexture(CCTexture2D* texture, const CCRect& rect)
                                                                       NULL);
         
         m_pFoam = Director::getInstance()->getTextureCache()->addImage("shaders/foam.png");
+        m_pShape = Director::getInstance()->getTextureCache()->addImage("shaders/water_shape.png");
+        //m_pShape = getTexture();
         m_pLightMap = getTexture();
         m_fMovement = 1.4;//1.4
         m_fWaveHeight = 0.3;//0.3
@@ -141,6 +144,7 @@ void NBWaterSprite::initProgram()
     m_uUniforms[kCCWaterUniformNormal] = glGetUniformLocation( program, kCCWaterUniformNormal_s);
     m_uUniforms[kCCWaterUniformlightMap] = glGetUniformLocation( program, kCCWaterUniformlightMap_s);
     m_uUniforms[kCCWaterUniformFoam] = glGetUniformLocation( program, kCCWaterUniformFoam_s);
+    m_uUniforms[kCCWaterUniformShape] = glGetUniformLocation( program, kCCWaterUniformShape_s);
     
     CCLOG("uniform loc %s : %d", kCCWaterUniformTime_s, m_uUniforms[kCCWaterUniformTime]);
     CCLOG("uniform loc %s : %d", kCCWaterUniformlightPos_s, m_uUniforms[kCCWaterUniformlightPos]);
@@ -155,6 +159,7 @@ void NBWaterSprite::initProgram()
     CCLOG("uniform loc %s : %d", kCCWaterUniformNormal_s, m_uUniforms[kCCWaterUniformNormal]);
     CCLOG("uniform loc %s : %d", kCCWaterUniformlightMap_s, m_uUniforms[kCCWaterUniformlightMap]);
     CCLOG("uniform loc %s : %d", kCCWaterUniformFoam_s, m_uUniforms[kCCWaterUniformFoam]);
+    CCLOG("uniform loc %s : %d", kCCWaterUniformShape_s, m_uUniforms[kCCWaterUniformShape]);
     
     getShaderProgram()->setUniformLocationWith1i(m_uUniforms[kCCWaterUniformNormal], 1);
     //    getShaderProgram()->setUniformLocationWith1i(m_uUniforms[kCCWaterUniformlightMap], 2);
@@ -233,7 +238,7 @@ void NBWaterSprite::initVertexData()
             ccColor4B color = ccColor4B(0, 0, 0, 64);//foam, wave, wind, depth
             if (i != 64 && j != 64) {
                 unsigned int *pixel = (unsigned int *)data_;
-                pixel = pixel + ((int)(vert.texCoords.v * getContentSize().width * getContentSize().width)) + (int)(vert.texCoords.u * getContentSize().height);
+                pixel = pixel + ((int)(vert.texCoords.v * getContentSize().width * getContentSize().width )) + (int)(vert.texCoords.u * getContentSize().height );
                 //color.r = (*pixel & 0xff)/255;
                 //CCLOG("R: %d", *pixel & 0xff);
                 int nG = ((*pixel >> 8) & 0xff);
@@ -331,13 +336,30 @@ void NBWaterSprite::onDraw(const Mat4& transform, uint32_t flags)
     pProgram->setUniformLocationWith3fv(m_uUniforms[kCCWaterUniformlightPos], lightPos, 1);
     
     //ccGLBindTexture2D(getTexture()->getName());
-    ccGLBindTexture2DN(1, getTexture()->getName());
+    ccGLBindTexture2DN(0, getTexture()->getName());
+    glUniform1i(m_uUniforms[kCCWaterUniformNormal], 0 );
+    
+    if (m_pShape != NULL) {
+        ccGLBindTexture2DN(1, m_pShape->getName());
+        glUniform1i(m_uUniforms[kCCWaterUniformShape], 1 );
+    }
+    
     if (m_pLightMap) {
         ccGLBindTexture2DN(2, m_pLightMap->getName());
+        glUniform1i(m_uUniforms[kCCWaterUniformlightMap], 2 );
     }
     if (m_pFoam != NULL) {
         ccGLBindTexture2DN(3, m_pFoam->getName());
+        glUniform1i(m_uUniforms[kCCWaterUniformFoam], 3 );
     }
+    
+    
+    /*
+    m_uUniforms[kCCWaterUniformNormal] = glGetUniformLocation( program, kCCWaterUniformNormal_s);
+    m_uUniforms[kCCWaterUniformlightMap] = glGetUniformLocation( program, kCCWaterUniformlightMap_s);
+    m_uUniforms[kCCWaterUniformFoam] = glGetUniformLocation( program, kCCWaterUniformFoam_s);
+    m_uUniforms[kCCWaterUniformShape] = glGetUniformLocation( program, kCCWaterUniformShape_s);
+    */
     
     //
     // Attributes
@@ -346,9 +368,17 @@ void NBWaterSprite::onDraw(const Mat4& transform, uint32_t flags)
     ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );
     
     drawByVertexs();
+    
+    //begin a by ljf
+    ccGLBindTexture2DN(0, NULL);
+    ccGLBindTexture2DN(1, NULL);
+    ccGLBindTexture2DN(2, NULL);
+    ccGLBindTexture2DN(3, NULL);
+    //end a by ljf
     CHECK_GL_ERROR_DEBUG();
     
     CC_INCREMENT_GL_DRAWS(1);
+    
 }
 
 void NBWaterSprite::drawByVertexs()

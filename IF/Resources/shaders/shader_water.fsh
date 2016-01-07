@@ -23,6 +23,8 @@ precision mediump float;
 
 uniform lowp sampler2D normal0;
 //uniform lowp sampler2D CC_Texture0;
+uniform lowp sampler2D shape; //ljf
+
 #ifdef USE_FOAM
 	uniform lowp sampler2D foam;
 #endif
@@ -37,15 +39,21 @@ varying vec3 v_darkColor;
 varying vec3 v_lightColor;
 varying float v_reflectionPower;
 
-varying vec3 mvp_pos;
+varying vec3 v_mvpPos; //ljf
+
+varying vec2 v_texCoord; //ljf
 
 #ifdef LIGHTMAP
 uniform lowp sampler2D lightmap;
 varying vec2 v_worldPos;
 #endif
 
+
+
 void main()
 {
+	
+
     vec4 normalMapValue = texture2D(normal0, v_bumpUv1.xy);
     gl_FragColor = vec4(mix(v_lightColor, v_darkColor, (normalMapValue.x * v_wave.y) + (normalMapValue.y * (1.0 - v_wave.y))), v_wave.x)
     
@@ -55,8 +63,8 @@ void main()
 	
 	+ exp2(log2(((normalMapValue.z * v_wave.y) + (normalMapValue.w * (1.0 - v_wave.y))) * v_wave.z) * v_wave.w + v_reflectionPower);
 	
-	//exp(-1.0 * mvp_pos.x * mvp_pos.x - 1.0 * mvp_pos.y * mvp_pos.y)
-	//+ exp2(log2(((normalMapValue.z * v_wave.y) + (normalMapValue.w * (1.0 - v_wave.y))) * 1.0 * exp(-16.0 * mvp_pos.x * mvp_pos.x - 16.0 * mvp_pos.y * mvp_pos.y)) + v_reflectionPower);
+	//exp(-1.0 * v_mvpPos.x * v_mvpPos.x - 1.0 * v_mvpPos.y * v_mvpPos.y)
+	//+ exp2(log2(((normalMapValue.z * v_wave.y) + (normalMapValue.w * (1.0 - v_wave.y))) * 1.0 * exp(-16.0 * v_mvpPos.x * v_mvpPos.x - 16.0 * v_mvpPos.y * v_mvpPos.y)) + v_reflectionPower);
 	
 //	+ vec4(pow(((normalMapValue.z * v_wave.y) + (normalMapValue.w * (1.0 - v_wave.y))) * v_wave.z, v_wave.w)) * v_reflectionPower;
 	#else
@@ -78,7 +86,10 @@ void main()
 	//float x = v_wave.z ;
 	//float x = /*v_wave.z + */log2(v_wave.z  );
 	//float x = -8.0;
-	//float x = mvp_pos.z;
+	//float x = v_mvpPos.z;
 	//gl_FragColor = vec4(x, 0.0, 0.0, 1.0);
+	vec4 shapeValue = texture2D(shape, v_texCoord);
+	gl_FragColor.a = shapeValue.x;
+	//gl_FragColor = texture2D(shape, v_texCoord);
 	//end ljf
 }

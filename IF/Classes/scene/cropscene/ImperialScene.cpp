@@ -366,12 +366,15 @@ bool ImperialScene::init()
     mVikingShipDict = CCDictionary::create();
     mShipLevel = 0;
     
-    float scale = 10.0;
-    auto layer = NBWaterSprite::create(WATER_NORMALS);
-    layer->setScale(scale);
-    layer->setPosition(scale * Vec2(256 * 0, 256 * 0) + Vec2(400, 400));
+    float scale = 7.5;
+    auto water = NBWaterSprite::create(WATER_NORMALS);
+    water->setScale(scale);
+    //water->setFlippedY(true);
+    water->setAnchorPoint(Vec2(0.5,0.5));
+    m_waterNode->addChild(water);
+    //water->setPosition(scale * Vec2(256 * 0, 256 * 0) + Vec2(3152.7, 1322.7));
     //layer->setRotation3D(Vec3(45, 0, 45));
-    m_touchLayer->addChild(layer, 9999999);
+    //m_touchLayer->addChild(layer, 9999999);
     
     //UIComponent::getInstance()->loadSpineActivityBox();
     //end a by ljf
@@ -1780,6 +1783,7 @@ void ImperialScene::onPlayMoveTroops(int buildId)
 
 void ImperialScene::startGuide(float _time)
 {
+    //return;
     setUnMoveScence(false);
     if(WorldController::getInstance()->selfPoint.x < 0){
         return;
@@ -4611,6 +4615,7 @@ bool ImperialScene::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vikingTouchNode4", CCNode*, this->m_vikingTouchNode4);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vikingNode5", CCNode*, this->m_vikingNode5);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vikingTouchNode5", CCNode*, this->m_vikingTouchNode5);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_waterNode", CCNode*, this->m_waterNode);
     //end a by ljf
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_cityBgNode", CCNode*, this->m_cityBgNode);
     

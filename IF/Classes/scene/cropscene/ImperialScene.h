@@ -370,6 +370,7 @@ private:
     CCSafeObject<CCSpriteBatchNode> m_walkerBatchNode;
     CCSafeObject<CCSpriteBatchNode> m_jianBatchNode;
     CCSafeObject<CCLayer> m_walkerLayer;
+    
     //end a by ljf
     CCSafeObject<CCSpriteBatchNode> m_chrTreeBatchNode;
     CCSafeObject<CCSpriteBatchNode> m_chrTreeBlentBatchNode;
@@ -460,6 +461,7 @@ private:
     CCSafeObject<CCNode> m_vikingNode5;
     CCSafeObject<CCNode> m_vikingTouchNode5;
     CCSafeObject<CCDictionary> mVikingShipDict;
+    CCSafeObject<CCNode> m_waterNode;
     //end a by ljf
     // tao.yu titan move path
     CCSafeObject<CCNode> m_tpath_1;

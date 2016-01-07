@@ -43,7 +43,8 @@ varying vec3 v_darkColor;
 varying vec3 v_lightColor;
 varying float v_reflectionPower;
 
-varying vec3 mvp_pos;
+varying vec3 v_mvpPos; //ljf
+varying vec2 v_texCoord; //ljf
 
 #ifdef LIGHTMAP
 varying highp vec2 v_worldPos;
@@ -78,9 +79,9 @@ void main()
 	pos.z += wave * WAVE_HEIGHT * a_color.b;
 	gl_Position = CC_MVPMatrix * pos;
 
-	mvp_pos.x = gl_Position.x;
-	mvp_pos.y = gl_Position.y;
-	mvp_pos.z = gl_Position.z;
+	v_mvpPos.x = gl_Position.x;
+	v_mvpPos.y = gl_Position.y;
+	v_mvpPos.z = gl_Position.z;
 
 	// Water alpha
 	float maxValue = 0.55;//0.5;
@@ -119,8 +120,10 @@ void main()
 	v_wave.w = (1.0 + (1.0 - v_wave.z * 0.5) * 7.0);
 	
 	//begin a by ljf
-	v_wave.z = exp(-1.0 * mvp_pos.x * mvp_pos.x - 1.0 * mvp_pos.y * mvp_pos.y); //ljf
+	v_wave.z = exp(-1.0 * v_mvpPos.x * v_mvpPos.x - 1.0 * v_mvpPos.y * v_mvpPos.y); //ljf
 	v_wave.w = (1.0 + (1.0 - v_wave.z * 0.5) * 7.0);
+	v_texCoord.x = a_texCoord.x;
+	v_texCoord.y = 1.0 - a_texCoord.y;
 	//end a by ljf
 
 	
