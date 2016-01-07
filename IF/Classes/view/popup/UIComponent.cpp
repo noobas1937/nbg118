@@ -5928,7 +5928,7 @@ void UIComponent::playPowerAniEnd(CCObject* p){
     double battlePower = GlobalData::shared()->playerInfo.getTotalPower();
     battlePower = MAX(battlePower, 0);
     m_power->setString(CC_CMDITOAL(battlePower).c_str());
-    m_power->setFontSize(75);
+    m_power->setFontSize(45);
     this->unschedule(schedule_selector(UIComponent::playPowerAni));
     m_showPower = 0;
 }
@@ -5940,7 +5940,7 @@ void UIComponent::playPowerAniEnd2(CCObject* p){
     double battlePower = GlobalData::shared()->playerInfo.getTotalPower();
     battlePower = MAX(battlePower, 0);
     m_power->setString(CC_CMDITOAL(battlePower).c_str());
-    m_power->setFontSize(40);
+    m_power->setFontSize(20);
     isPlayingPowerAni = false;
     GlobalData::shared()->playerInfo.lastBattlePower = battlePower;
     
@@ -5958,7 +5958,7 @@ void UIComponent::playAddPowerAni(CCObject* param){
 void UIComponent::controllerPowerAni(){
     
     isPlayingPowerAni = true;
-    m_power->setFontSize(60);
+    m_power->setFontSize(35);
     GlobalData::shared()->playerInfo.battlePower = GlobalData::shared()->playerInfo.getTotalPower();
     double total = GlobalData::shared()->playerInfo.battlePower;
     double lastBattlePower = GlobalData::shared()->playerInfo.lastBattlePower;
