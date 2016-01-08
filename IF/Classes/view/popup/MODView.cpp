@@ -50,13 +50,13 @@ bool MODView::init(){
         m_introText2->setPositionY(m_introText2->getPositionY() - addH);
         m_bgContainer->setPositionY(m_bgContainer->getPositionY() - addH);
         addBG();
-        for (int i=1; i<=4; i++) {
-            auto particle = ParticleController::createParticle(CCString::createWithFormat("UiFire_%d",i)->getCString());
-            m_fireNode1->addChild(particle);
-            
-            auto particle1 = ParticleController::createParticle(CCString::createWithFormat("UiFire_%d",i)->getCString());
-            m_fireNode2->addChild(particle1);
-        }
+//        for (int i=1; i<=4; i++) {
+//            auto particle = ParticleController::createParticle(CCString::createWithFormat("UiFire_%d",i)->getCString());
+//            m_fireNode1->addChild(particle);
+//            
+//            auto particle1 = ParticleController::createParticle(CCString::createWithFormat("UiFire_%d",i)->getCString());
+//            m_fireNode2->addChild(particle1);
+//        }
 
         getRewardData();
         update(1.0f);
@@ -236,13 +236,13 @@ bool MODManagerPopUpView::init(int tab){
 //        m_serverListText->setString(_lang("132023"));
 //        m_modListText->setString(_lang("132024"));
         addBG();
-        for (int i=1; i<=4; i++) {
-            auto particle = ParticleController::createParticle(CCString::createWithFormat("UiFire_%d",i)->getCString());
-            m_fireNode1->addChild(particle);
-            
-            auto particle1 = ParticleController::createParticle(CCString::createWithFormat("UiFire_%d",i)->getCString());
-            m_fireNode2->addChild(particle1);
-        }
+//        for (int i=1; i<=4; i++) {
+//            auto particle = ParticleController::createParticle(CCString::createWithFormat("UiFire_%d",i)->getCString());
+//            m_fireNode1->addChild(particle);
+//            
+//            auto particle1 = ParticleController::createParticle(CCString::createWithFormat("UiFire_%d",i)->getCString());
+//            m_fireNode2->addChild(particle1);
+//        }
         isFirstShow = true;
         showTab(tab);
         ret = true;

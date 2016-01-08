@@ -111,9 +111,11 @@ bool SettingPopUpView::init(){
         setIsHDPanel(true);
         CCLoadSprite::doResourceByCommonIndex(308, true);
         CCLoadSprite::doResourceByCommonIndex(208, true);
+//        CCLoadSprite::doResourceByCommonIndex(11, true);
         setCleanFunction([](){
-            CCLoadSprite::doResourceByCommonIndex(308, true);
+            CCLoadSprite::doResourceByCommonIndex(308, false);
             CCLoadSprite::doResourceByCommonIndex(208, false);
+//            CCLoadSprite::doResourceByCommonIndex(11, false);
         });
         auto bg = CCBLoadFile("SettingView", this, this);
         this->setContentSize(bg->getContentSize());
@@ -172,11 +174,13 @@ void SettingPopUpView::generateShowSetting(){
                 pushFlag = true;
                 if(i == Setting_Forum){
                     pushFlag = false;
-//#if(CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
-                    if(GlobalData::shared()->isOpenForum && GlobalData::shared()->analyticID != "cn_dangle"){
-                        pushFlag = true;
-                    }
-//#endif
+                    //fusheng del 不显示论坛
+////#if(CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
+//                    if(GlobalData::shared()->isOpenForum && GlobalData::shared()->analyticID != "cn_dangle"){
+//                        pushFlag = true;
+//                    }
+////#endif
+                    //fusheng end
                 }
                 else if(i == Setting_INVITE){
                     if(!inviteFlag || GlobalData::shared()->isXiaoMiPlatForm() || GlobalData::shared()->analyticID == "cn1"){
@@ -210,13 +214,15 @@ void SettingPopUpView::generateShowSetting(){
                 }else if(i==Setting_WeiBo){
                     pushFlag = false;
                     std::string language = LocalController::shared()->getLanguageFileName();
-                    if(language=="zh_CN"){
-                        pushFlag = true;
-                        if(GlobalData::shared()->analyticID == "cn_ewan"
-                           || GlobalData::shared()->analyticID == "cn_dangle"){
-                            pushFlag = false;
-                        }
-                    }
+                    //fusheng del 不显示weibo
+//                    if(language=="zh_CN"){
+//                        pushFlag = true;
+//                        if(GlobalData::shared()->analyticID == "cn_ewan"
+//                           || GlobalData::shared()->analyticID == "cn_dangle"){
+//                            pushFlag = false;
+//                        }
+//                    }
+                    //fusheng end
                 }else if(i == Setting_lang || i == Setting_SOCIAL){
                     if(GlobalData::shared()->isXiaoMiPlatForm()){
                         pushFlag = false;
