@@ -853,7 +853,6 @@ bool GoldExchangeAdvertisingCommCell::init()
     m_getLabel->setVisible(false);
     m_newPriceLabel->setPositionX(m_costBtn->getPositionX());
     
-    m_getGoldNumText->setFntFile("eeeq.fnt");
     refreshData();
     return true;
 }
@@ -922,7 +921,7 @@ SEL_CCControlHandler GoldExchangeAdvertisingCommCell::onResolveCCBCCControlSelec
 
 bool GoldExchangeAdvertisingCommCell::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode)
 {
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_getGoldNumText", CCLabelIF*, this->m_getGoldNumText);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_getGoldNumText", CCLabelBMFont*, this->m_getGoldNumText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_percentLabel", CCLabelIF*, this->m_percentLabel);
         CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_percentLabel2", CCLabelIF*, this->m_percentLabel2);
 

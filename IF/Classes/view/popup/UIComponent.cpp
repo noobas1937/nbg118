@@ -695,7 +695,7 @@ bool UIComponent::init(CCSize size)
     
     int vipLv = VipUtil::getVipLevel(GlobalData::shared()->playerInfo.vipPoints);
     
-    //this->m_vipText->setFntFile("pve_fnt_title.fnt");
+    this->m_vipText->setFntFile("eeeq.fnt");
     
     this->m_vipText->setString(CC_ITOA(vipLv)); //_lang_1("103001", CC_ITOA(vipLv)));
     
@@ -5928,7 +5928,7 @@ void UIComponent::playPowerAniEnd(CCObject* p){
     double battlePower = GlobalData::shared()->playerInfo.getTotalPower();
     battlePower = MAX(battlePower, 0);
     m_power->setString(CC_CMDITOAL(battlePower).c_str());
-    m_power->setFontSize(75);
+    m_power->setFontSize(45);
     this->unschedule(schedule_selector(UIComponent::playPowerAni));
     m_showPower = 0;
 }
@@ -5940,7 +5940,7 @@ void UIComponent::playPowerAniEnd2(CCObject* p){
     double battlePower = GlobalData::shared()->playerInfo.getTotalPower();
     battlePower = MAX(battlePower, 0);
     m_power->setString(CC_CMDITOAL(battlePower).c_str());
-    m_power->setFontSize(40);
+    m_power->setFontSize(20);
     isPlayingPowerAni = false;
     GlobalData::shared()->playerInfo.lastBattlePower = battlePower;
     
@@ -5958,7 +5958,7 @@ void UIComponent::playAddPowerAni(CCObject* param){
 void UIComponent::controllerPowerAni(){
     
     isPlayingPowerAni = true;
-    m_power->setFontSize(60);
+    m_power->setFontSize(35);
     GlobalData::shared()->playerInfo.battlePower = GlobalData::shared()->playerInfo.getTotalPower();
     double total = GlobalData::shared()->playerInfo.battlePower;
     double lastBattlePower = GlobalData::shared()->playerInfo.lastBattlePower;
@@ -6099,7 +6099,7 @@ void UIComponent::refreshVIPStatus(float t){
         
         m_sprVip->setVisible(true);
         //begin a by ljf
-        m_vipText->setColor({90,62,22});
+//        m_vipText->setColor({90,62,22});
         if(m_vipFg)
             m_vipFg->setVisible(true);
         if(m_vipFgGray)

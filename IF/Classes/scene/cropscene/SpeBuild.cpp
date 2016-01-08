@@ -360,31 +360,8 @@ bool SpeBuild::initSpeBuild(int itemId)
             }
         }
     } else if(itemId == SPE_BUILD_SHIP) {
-        auto & arrayChildren = m_mainNode->getChildren();
-        if(arrayChildren.size()>0){//fusheng  根本找不到下面的tag
-//            CCNode* tmpNode = dynamic_cast<CCNode*>(arrayChildren.at(0));//ccb 中的
-//            if(tmpNode && tmpNode->getChildByTag(0) && tmpNode->getChildByTag(0)->getChildByTag(1)){
-//                m_shipNode = tmpNode->getChildByTag(0)->getChildByTag(1);
-//                if(tmpNode->getChildByTag(0)->getChildByTag(3)){
-//                    CCSprite *sprite = dynamic_cast<CCSprite*>(tmpNode->getChildByTag(0)->getChildByTag(3));
-//                    ccBlendFunc blendFunc;
-//                    blendFunc.src = GL_ONE;
-//                    blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
-//                    sprite->setBlendFunc(blendFunc);
-//                }
-//                
-//                int idx = 0;
-//                while (idx< 2 && tmpNode->getChildByTag(0)->getChildByTag(idx+1)) {
-//                    CCNode *node = tmpNode->getChildByTag(0)->getChildByTag(idx+1);
-//                    CCPoint point = node->getPosition();
-//                    CCSize size = node->getContentSize();
-//                    m_shipParticalRect[idx] = CCRect(point.x, point.y, size.width, size.height);
-//                    ++idx;
-//                }
-//                
-//            }
-        }
         addShipPop(CCString::create("init"));
+        
     } else if (itemId == SPE_BUILD_ZIYUANMEN)
     {
         auto node = Node::create();
@@ -1663,7 +1640,7 @@ void SpeBuild::addShipPop(CCObject *ccObj){
         return;
     }
     CCSprite* sp = CCLoadSprite::createSprite(iconName.c_str());
-    sp->setPosition(ccp(0, 110));
+    sp->setPosition(ccp(0, 200));
     sp->setScale(scale);
     auto m_HTPHead = CCLoadSprite::createScale9Sprite("feedback_head.png");
     m_HTPHead->setInsetBottom(10);
@@ -1672,7 +1649,7 @@ void SpeBuild::addShipPop(CCObject *ccObj){
     m_HTPHead->setInsetRight(10);
     m_HTPHead->setAnchorPoint(ccp(0.5, 0.5));
     m_HTPHead->setContentSize(CCSize(100,100));
-    m_HTPHead->setPosition(ccp(0, 110));
+    m_HTPHead->setPosition(ccp(0, 200));
     m_textNode->addChild(m_HTPHead);
     m_HTPHead->setZOrder(1);
     auto m_HTPHead1 = CCLoadSprite::createSprite("feedback_head1.png");

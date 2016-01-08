@@ -68,6 +68,7 @@
 #include "Enemy.h"
 #include "WorldController.h"
 #include "NBGPostEffectLayer.h"
+#include "NBWaterSprite.hpp"
 //end a by ljf
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
@@ -152,13 +153,13 @@ bool ImperialScene::init()
 //    m_touchLayer->setGlobalZOrder(1);
 //    m_touchLayer->addChild(m_Layer2d);
 //    m_touchLayer->addChild(m_Layer3d);
-    //this->addChild(m_touchLayer);
+    this->addChild(m_touchLayer);
     m_touchLayer->setTag(IMPERIAL_SCENE_TOUCH_LAYER_TAG); //a by ljf
     
     //begin a by ljf
-    auto shaderLayer = NBGPostEffectLayer::create(PostEffectType::POST_EFFECT_BLUR);
-    shaderLayer->addChild(m_touchLayer);
-    addChild(shaderLayer);
+//    auto shaderLayer = NBGPostEffectLayer::create(PostEffectType::POST_EFFECT_BLUR);
+//    shaderLayer->addChild(m_touchLayer);
+//    addChild(shaderLayer);
     //end a by ljf
     
     m_sunNode = CCNode::create();//太阳光节点
@@ -364,6 +365,19 @@ bool ImperialScene::init()
     m_isVikingShipMove = false;
     mVikingShipDict = CCDictionary::create();
     mShipLevel = 0;
+    
+    float scaleX = 1.5 * 3060 / 512;
+    float scaleY = 1.5 * 2340 / 512;
+    auto water = NBWaterSprite::create(WATER_NORMALS);
+    water->setScaleX(scaleX);
+    water->setScaleY(scaleY);
+    //water->setFlippedY(true);
+    water->setAnchorPoint(Vec2(0.5,0.5));
+    m_waterNode->addChild(water);
+    //water->setPosition(scale * Vec2(256 * 0, 256 * 0) + Vec2(3152.7, 1322.7));
+    //layer->setRotation3D(Vec3(45, 0, 45));
+    //m_touchLayer->addChild(layer, 9999999);
+    
     //UIComponent::getInstance()->loadSpineActivityBox();
     //end a by ljf
     return true;
@@ -930,7 +944,7 @@ void ImperialScene::createDockShip()
 {
     NBSprite3D * dockShip = NBSprite3D::create("3d/ship/ship_gem.c3b");
     dockShip->setTexture("3d/ship/ship_gem.jpg");
-    dockShip->setScale(1.2);
+    dockShip->setScale(1.5);
     auto dockShipRootNode = CCNode::create();
     dockShipRootNode->addChild(dockShip);
     
@@ -1771,6 +1785,8 @@ void ImperialScene::onPlayMoveTroops(int buildId)
 
 void ImperialScene::startGuide(float _time)
 {
+    // tao.yu 此处关闭新手引导
+//    return;
     setUnMoveScence(false);
     if(WorldController::getInstance()->selfPoint.x < 0){
         return;
@@ -4602,6 +4618,7 @@ bool ImperialScene::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vikingTouchNode4", CCNode*, this->m_vikingTouchNode4);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vikingNode5", CCNode*, this->m_vikingNode5);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_vikingTouchNode5", CCNode*, this->m_vikingTouchNode5);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_waterNode", CCNode*, this->m_waterNode);
     //end a by ljf
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_cityBgNode", CCNode*, this->m_cityBgNode);
     

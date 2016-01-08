@@ -28,6 +28,7 @@ enum
     kCCWaterUniformNormal,
     kCCWaterUniformlightMap,
     kCCWaterUniformFoam,
+    kCCWaterUniformShape,
     
     kCCWaterUniform_MAX,
 };
@@ -45,6 +46,7 @@ enum
 #define kCCWaterUniformNormal_s         "normal0"
 #define kCCWaterUniformlightMap_s       "lightmap"
 #define kCCWaterUniformFoam_s           "foam"
+#define kCCWaterUniformShape_s           "shape"
 
 
 #define WATER_GRID_COLUMN 64
@@ -70,6 +72,7 @@ public:
     static NBWaterSprite* create(const char *pszFileName, const CCRect&  rect);
     CC_SYNTHESIZE_RETAIN(Texture2D*, m_pNormal, NormalTexture);
     CC_SYNTHESIZE_RETAIN(Texture2D*, m_pFoam, FoamTexture);
+    CC_SYNTHESIZE_RETAIN(Texture2D*, m_pShape, ShapeTexture);
     CC_SYNTHESIZE_RETAIN(Texture2D*, m_pLightMap, LightMapTexture);
     GLint m_uUniforms[kCCWaterUniform_MAX];
     CC_SYNTHESIZE_PASS_BY_REF(Color3B, m_shoreDarkColor, ShoreDark);

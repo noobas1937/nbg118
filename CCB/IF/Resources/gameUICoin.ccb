@@ -770,9 +770,11 @@
 						<key>type</key>
 						<string>Text</string>
 						<key>value</key>
-						<string>123,456,789</string>
+						<string>123,456</string>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>
