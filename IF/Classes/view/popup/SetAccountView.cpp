@@ -621,7 +621,7 @@ bool SetAccountNextView::init(int type){
         auto particle1 = ParticleController::createParticle(CCString::createWithFormat("UiFire_%d",i)->getCString());
         m_fireNode2->addChild(particle1);
     }
-    
+    changeBGMaxHeight(m_viewBg);
     return true;
 }
 
@@ -956,6 +956,8 @@ void SetAccountNextView::updateButtonState(CCObject* p)
     {//显示账号切换
         string fbTitle = _lang("105269")+" "+_lang("105253");
         m_facebookLoginTitle1->setString(fbTitle.c_str());
+        CCCommonUtils::setButtonSprite(m_facebookLoginBtn, "btn_green3.png");
+        CCCommonUtils::setButtonSprite(m_googlePlayLoginBtn, "btn_green3.png");
         
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         string gpTitle = _lang("113900")+" "+_lang("105253");

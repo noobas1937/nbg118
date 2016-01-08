@@ -160,8 +160,8 @@ bool GlobalData::cantSwtichAccount(){
 }
 
 bool GlobalData::isWeiboEnabled(){
-    if(analyticID == "cn1" || (analyticID == "AppStore" && CCCommonUtils::getLanguage() == "zh_CN"))
-        return true;
+//    if(analyticID == "cn1" || (analyticID == "AppStore" && CCCommonUtils::getLanguage() == "zh_CN"))
+//        return true;//fusheng 没有微博 不显示微博
     return false;
 }
 
