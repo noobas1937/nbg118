@@ -174,7 +174,6 @@ bool AllianceInviteView::init(){
         CCLoadSprite::doResourceByCommonIndex(307, true);
         CCLoadSprite::doResourceByCommonIndex(7, true);
         setCleanFunction([this](){
-            if (false == m_bReleaseTextureAfterRemove) return;
             
             CCLoadSprite::doResourceByCommonIndex(307, false);
             CCLoadSprite::doResourceByCommonIndex(7, false);

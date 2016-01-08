@@ -68,7 +68,6 @@ bool AllianceInfoView::init()
     CCLoadSprite::doResourceByCommonIndex(205, true);
     CCLoadSprite::doResourceByCommonIndex(7, true);
     setCleanFunction([this](){
-        if (false == m_bReleaseTextureAfterRemove) return;
         
         CCLoadSprite::doResourceByCommonIndex(205, false);
         CCLoadSprite::doResourceByCommonIndex(7, false);
@@ -687,7 +686,6 @@ void AllianceInfoView::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *
             SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
             
             auto pop = AllianceInviteView::create();
-            pop->setReleaseTextureAfterRemove(false);
             PopupViewController::getInstance()->addPopupInView(pop);
             
         }else if(isTouchInside(m_memberSpr, pTouch)){
@@ -1518,10 +1516,6 @@ void AllianceBottomNode::onExit()
                 return ;
             
             auto popup = dynamic_cast<PopupBaseView*>(PopupViewController::getInstance()->getCurrentPopupView());
-            if (popup)
-            {
-                popup->setReleaseTextureAfterRemove(false);
-            }
             
             //fusheng 是否移除上一个界面
             PopupViewController::getInstance()->removeLastPopupView();
@@ -1543,10 +1537,6 @@ void AllianceBottomNode::onExit()
                 return ;
             
             auto popup = dynamic_cast<PopupBaseView*>(PopupViewController::getInstance()->getCurrentPopupView());
-            if (popup)
-            {
-                popup->setReleaseTextureAfterRemove(false);
-            }
             
             //fusheng 是否移除上一个界面
             PopupViewController::getInstance()->removeLastPopupView();
