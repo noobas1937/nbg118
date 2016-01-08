@@ -16,7 +16,9 @@ m_fDivWidth(0.001),
 m_fUtime(0),
 m_pFoam(NULL),
 m_pShape(NULL),
-m_pLightMap(NULL)
+m_pLightMap(NULL),
+m_shapeScaleX(1.0),
+m_shapeScaleY(1.0)
 {
     
 }
@@ -99,6 +101,12 @@ bool NBWaterSprite::initWithTexture(CCTexture2D* texture, const CCRect& rect)
         initVertexData();
         this->initProgram();
         schedule(schedule_selector(NBWaterSprite::update));
+        
+        //begin a by ljf
+        m_shapeScaleX = 1.0 * m_pShape->getContentSize().width / getContentSize().width;
+        m_shapeScaleY = 1.0 * m_pShape->getContentSize().height / getContentSize().height;
+        
+        //end a by ljf
         return true;
     }
     

@@ -68,6 +68,8 @@ public:
     void initProgram();
     void listenBackToForeground(Ref *obj);
     
+    
+    
     static NBWaterSprite* create(const char *pszFileName);
     static NBWaterSprite* create(const char *pszFileName, const CCRect&  rect);
     CC_SYNTHESIZE_RETAIN(Texture2D*, m_pNormal, NormalTexture);
@@ -91,6 +93,9 @@ protected:
     CC_SYNTHESIZE(float, m_fWaveHeight, WaveHeight);
     CC_SYNTHESIZE(float, m_fDivHeight,  DivHeight);
     CC_SYNTHESIZE(float, m_fDivWidth,   DivWidth);
+    
+    CC_SYNTHESIZE(float, m_shapeScaleX,   ShapeScaleX);
+    CC_SYNTHESIZE(float, m_shapeScaleY,   ShapeScaleY);
     CustomCommand _customCommand;
 };
 
