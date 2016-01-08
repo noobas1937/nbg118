@@ -123,8 +123,11 @@ void main()
 	//end d by ljf
 
 	//begin a by ljf
-	v_wave.z = exp(-1.0 * v_mvpPos.x * v_mvpPos.x - 1.0 * v_mvpPos.y * v_mvpPos.y); //ljf
+	//v_wave.z = exp(-0.3 * (1.0 * v_mvpPos.x - 3.0 * v_mvpPos.y) * (1.0 * v_mvpPos.x - 3.0 * v_mvpPos.y) ); 
+	v_wave.z =  exp(-0.2 * (1.0 * pow((v_mvpPos.x - 3.0 * v_mvpPos.y), 2.0) + 10.0 * pow(v_mvpPos.y, 2.0) + 1.0 * pow(v_mvpPos.x, 2.0)));
+	//v_wave.z = exp(-1.0 * v_mvpPos.y * v_mvpPos.y ); 
 	v_wave.w = (1.0 + (1.0 - v_wave.z * 0.5) * 7.0);
+	//v_wave.w = (1.0 + (1.0 - v_wave.z * 0.5) * 14.0);
 	v_texCoord.x = a_texCoord.x;
 	v_texCoord.y = 1.0 - a_texCoord.y;
 	//end a by ljf
@@ -136,7 +139,10 @@ void main()
 #endif
 
 	// Blend factor for normal maps
-    v_wave.y = (cos((a_position.x + u_time) * a_position.y * 0.003 + u_time) + 1.0) * 0.5;
+    //v_wave.y = (cos((a_position.x + u_time) * a_position.y * 0.003 + u_time) + 1.0) * 0.5; //orign
+
+    v_wave.y = (cos((a_position.x + u_time) * a_position.y * 0.003 + u_time) + 1.0) * 0.5; //ljf
+    
 
 	// Calculate colors
 	float blendFactor = 1.0 - min(1.0, a_color.a * 1.6);

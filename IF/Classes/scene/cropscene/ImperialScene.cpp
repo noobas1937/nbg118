@@ -366,8 +366,8 @@ bool ImperialScene::init()
     mVikingShipDict = CCDictionary::create();
     mShipLevel = 0;
     
-    float scaleX = 1.5 * 3060 / 512;
-    float scaleY = 1.5 * 2340 / 512;
+    float scaleX = 1.5 * 3060.0 / 512.0;
+    float scaleY = 1.5 * 2340.0 / 512.0;
     auto water = NBWaterSprite::create(WATER_NORMALS);
     water->setScaleX(scaleX);
     water->setScaleY(scaleY);
@@ -1785,7 +1785,7 @@ void ImperialScene::onPlayMoveTroops(int buildId)
 
 void ImperialScene::startGuide(float _time)
 {
-    return;
+    
     setUnMoveScence(false);
     if(WorldController::getInstance()->selfPoint.x < 0){
         return;
@@ -1794,7 +1794,7 @@ void ImperialScene::startGuide(float _time)
 //    GuideController::share()->setGuide("3076500");//fusheng 教程test
     UserUpgradeView*  pop = dynamic_cast<UserUpgradeView*>(PopupViewController::getInstance()->getCurrentPopupView());
     
-// tao.yu 第一版不需要活动界面
+// tao.yu 第一版不需要活动界面    ·
 //fusheng 12.17 先关闭
     if (true) {
         if (m_isLogin && !GuideController::share()->isInTutorial() && pop==NULL) {//没有弹开有升级界面才弹活动界面

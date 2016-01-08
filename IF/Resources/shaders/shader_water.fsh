@@ -55,13 +55,16 @@ void main()
 	
 
     vec4 normalMapValue = texture2D(normal0, v_bumpUv1.xy);
-    gl_FragColor = vec4(mix(v_lightColor, v_darkColor, (normalMapValue.x * v_wave.y) + (normalMapValue.y * (1.0 - v_wave.y))), v_wave.x)
+    gl_FragColor = vec4(mix(v_lightColor, v_darkColor, (normalMapValue.x * v_wave.y) + (normalMapValue.y * (1.0 - v_wave.y))), v_wave.x) 
     
 	#ifdef REFLECTION
 	
 //	pow(x,y)*z is calculated here as exp2(log2(x) * y + log2(z))
 	
-	+ exp2(log2(((normalMapValue.z * v_wave.y) + (normalMapValue.w * (1.0 - v_wave.y))) * v_wave.z) * v_wave.w + v_reflectionPower) * 3.0;
+	//+ exp2(log2(((normalMapValue.z * v_wave.y) + (normalMapValue.w * (1.0 - v_wave.y))) * v_wave.z) * v_wave.w + v_reflectionPower) * 2.0
+	+ exp2(log2(((normalMapValue.z * v_wave.y) + (normalMapValue.w * (1.0 - v_wave.y))) * v_wave.z) * v_wave.w ) * 2.5
+	;
+	
 	
 	//exp(-1.0 * v_mvpPos.x * v_mvpPos.x - 1.0 * v_mvpPos.y * v_mvpPos.y)
 	//+ exp2(log2(((normalMapValue.z * v_wave.y) + (normalMapValue.w * (1.0 - v_wave.y))) * 1.0 * exp(-16.0 * v_mvpPos.x * v_mvpPos.x - 16.0 * v_mvpPos.y * v_mvpPos.y)) + v_reflectionPower);
