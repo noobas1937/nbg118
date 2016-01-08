@@ -84,7 +84,7 @@ bool SearchView::init()
     m_bgNode->setPositionY(m_bgNode->getPositionY() - dh);
 //    tBatchNode->setPositionY(tBatchNode->getPositionY() - dh);
     
-    auto spriteText = CCLoadSprite::createScale9Sprite("world_title_3.png");
+    auto spriteText = CCLoadSprite::createScale9Sprite("nb_alliance_search_bg.png");
     if (CCCommonUtils::isIosAndroidPad())
     {
         m_editBox = CCEditBox::create(CCSizeMake(420*2.2, 44*2.2), spriteText);
@@ -96,7 +96,7 @@ bool SearchView::init()
     }
     m_editBox->setMaxLength(100);
     m_editBox->setFontSize(24);
-    m_editBox->setFontColor(ccBLACK);
+    m_editBox->setFontColor(ccWHITE);
     m_editBox->setReturnType(kKeyboardReturnTypeDone);
     m_editBox->setInputFlag(kEditBoxInputFlagInitialCapsSentence);
     m_editBox->setText("");
@@ -738,7 +738,8 @@ void SearchCell::setData(PlayerSearchInfo * playerInfo, AllianceInfo * allianceI
             str.append("_middle.png");
         }
         CCSprite* spr = CCLoadSprite::createSprite(str.c_str());
-        spr->setScale(0.8);
+        spr->setScale(0.5);
+        spr->setAnchorPoint({0.5, 0.0});
         m_playerIconNode->addChild(spr, 0, 444);
         m_playerNameLabel->setString(m_playerInfo->name.c_str());
         m_myAlliLabel->setString(_lang("108102"));
@@ -747,7 +748,7 @@ void SearchCell::setData(PlayerSearchInfo * playerInfo, AllianceInfo * allianceI
         } else {
             m_myAlliNameLabel->setString(_lang("108714"));
         }
-        m_flagBg->initWithSpriteFrame(CCLoadSprite::loadResource(CCString::createWithFormat("Alliance_Flag_01.png")->getCString()));
+        // m_flagBg->initWithSpriteFrame(CCLoadSprite::loadResource(CCString::createWithFormat("Alliance_Flag_01.png")->getCString()));
         if (m_playerInfo->serverId >= 0) {
             m_kingdomLabel->setString(_lang("108755") + CC_ITOA(m_playerInfo->serverId));
         } else {
@@ -1233,7 +1234,9 @@ void SearchAllianceInfoView::onMailClick(CCObject * pSender, Control::EventType 
 void SearchAllianceInfoView::onMemberClick(CCObject * pSender, Control::EventType pCCControlEvent){
     bool isApply = GlobalData::shared()->playerInfo.allianceInfo.uid !=m_info->uid;
     if (GlobalData::shared()->playerInfo.selfServerId == m_info->serverId) {
-        PopupViewController::getInstance()->addPopupInView(AllianceInfoMembersView::create(m_info->uid,isApply));
+        auto popup = AllianceInfoMembersView::create(m_info->uid,isApply);
+        popup->setReleaseTextureAfterRemove(false);
+        PopupViewController::getInstance()->addPopupInView(popup);
     } else {
 //        PopupViewController::getInstance()->addPopupInView(AllianceInfoMembersView::create(m_info->uid,false));
         return;
