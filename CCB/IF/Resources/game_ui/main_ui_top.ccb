@@ -553,7 +553,7 @@
 																<key>customClass</key>
 																<string>CCLabelIF</string>
 																<key>displayName</key>
-																<string>CCLabel m_power</string>
+																<string>m_power</string>
 																<key>memberVarAssignmentName</key>
 																<string>m_power</string>
 																<key>memberVarAssignmentType</key>
@@ -10538,8 +10538,6 @@
 										<false/>
 									</dict>
 								</array>
-								<key>selected</key>
-								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>

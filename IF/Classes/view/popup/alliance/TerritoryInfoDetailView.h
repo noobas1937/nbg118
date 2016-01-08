@@ -63,14 +63,11 @@ private:
     CCSafeObject<CCNode> m_infoList;
     CCSafeObject<CCNode> m_picNode;
     CCSafeObject<CCNode> m_bottomNode;
-    CCSafeObject<CCNode> m_fireNode1;
-    CCSafeObject<CCNode> m_fireNode2;
     CCSafeObject<CCNode> m_bgNode;
     CCSafeObject<CCNode> m_bannerNode;
     CCSafeObject<CCControlButton> m_withdrawBtn;
     CCSafeObject<CCControlButton> m_tipBtn;
     
-    CCSafeObject<CCLabelIF> m_titleLabel;
     CCSafeObject<CCLabelIF> m_titleTxt;
     CCSafeObject<CCLabelIF> m_statLabel;
     CCSafeObject<CCLabelIF> m_defLabel1;
@@ -137,7 +134,7 @@ private:
     CCSafeObject<CCNode> m_scienceNode;
     CCSafeObject<CCLabelIF> m_scienceTxt;
     CCSafeObject<CCSprite> m_joinNode;
-    CCSafeObject<CCNode> m_bgNodee;
+    CCSafeObject<CCSprite> m_bgNodee;
     CCSafeObject<HFHeadImgNode> m_headImgNode;
     CCNode* m_clickNode;
     CCPoint  m_touchPos;

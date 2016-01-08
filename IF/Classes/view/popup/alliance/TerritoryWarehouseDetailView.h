@@ -137,7 +137,7 @@ private:
     CCSafeObject<CCLabelIF> m_tipTxt;
     CCSafeObject<CCNode> m_unUseNode;
     CCSafeObject<CCNode> m_moveNode;
-    CCSafeObject<CCNode> m_bgNodee;
+    CCSafeObject<CCSprite> m_bgNodee;
     CCSafeObject<CCNode> m_arrow;
     CCSafeObject<CCNode> m_clickArea;
     CCSafeObject<CCNode> m_soldierNode;

@@ -748,6 +748,10 @@ void AllianceInfoView::clickEventCell(CCObject* sender,void* pData){
         }
             break;
         case 2:
+            //TODO: guojiang 联盟
+            CCCommonUtils::flyHint("", "", _lang("E100008"));
+            return;
+            
             PopupViewController::getInstance()->addPopupInView(AllianceScienceView::create());
             break;
         case 3:
@@ -1023,11 +1027,6 @@ void AllianceFunCell::clickHandle(CCObject *pSender, CCControlEvent event){
             break;
         case 2:
         {
-            CCCommonUtils::flyHint("", "", _lang("E100008"));
-            return;
-            
-            //TODO: guojiang 联盟领地入口
-            
             unsigned int index = WorldController::getIndexByPoint(WorldController::getInstance()->selfPoint);
             PopupViewController::getInstance()->addPopupInView(AllianceTerritoryView::create(index,false));
         }

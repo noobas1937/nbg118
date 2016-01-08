@@ -33,29 +33,30 @@ private:
     
 private:
     CCSafeObject<CCLabelIF> m_titleLabel;
-    CCSafeObject<CCLabelIF> m_lock1Label;
-    CCSafeObject<CCLabelIF> m_lock2Label;
-    CCSafeObject<CCLabelIF> m_lock3Label;
-    CCSafeObject<CCLabelIF> m_condition1Label;
-    CCSafeObject<CCLabelIF> m_condition2Label;
-    CCSafeObject<CCLabelIF> m_condition3Label;
     CCSafeObject<CCLabelIF> m_tipLabel;
-    CCSafeObject<CCScale9Sprite> m_bar1;
-    CCSafeObject<CCScale9Sprite> m_bar2;
-    CCSafeObject<CCScale9Sprite> m_bar3;
     CCSafeObject<CCNode> m_touchNode;
-    CCSafeObject<CCNode> m_icon1;
-    CCSafeObject<CCNode> m_icon2;
-    CCSafeObject<CCNode> m_icon3;
+    
+    CCSafeObject<CCNode> m_fireNode1;
+    CCSafeObject<CCNode> m_fireNode2;
+    
     CCSafeObject<CCNode> m_node1;
+    CCSafeObject<CCNode> m_icon1;
+    CCSafeObject<CCLabelIF> m_lock1Label;
+    CCSafeObject<CCScale9Sprite> m_progress1;
+    CCSafeObject<CCLabelIF> m_progressTxt1;
+    
     CCSafeObject<CCNode> m_node2;
+    CCSafeObject<CCNode> m_icon2;
+    CCSafeObject<CCLabelIF> m_lock2Label;
+    CCSafeObject<CCScale9Sprite> m_progress2;
+    CCSafeObject<CCLabelIF> m_progressTxt2;
+    
     CCSafeObject<CCNode> m_node3;
-    CCSafeObject<CCSprite> m_lbar1;
-    CCSafeObject<CCSprite> m_rbar1;
-    CCSafeObject<CCSprite> m_lbar2;
-    CCSafeObject<CCSprite> m_rbar2;
-    CCSafeObject<CCSprite> m_lbar3;
-    CCSafeObject<CCSprite> m_rbar3;
+    CCSafeObject<CCNode> m_icon3;
+    CCSafeObject<CCLabelIF> m_lock3Label;
+    CCSafeObject<CCScale9Sprite> m_progress3;
+    CCSafeObject<CCLabelIF> m_progressTxt3;
+    
     std::string m_name;
     int m_count;
     double m_currentNum;

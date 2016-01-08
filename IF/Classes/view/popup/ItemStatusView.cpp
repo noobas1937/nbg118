@@ -40,8 +40,11 @@ bool ItemStatusView::init()
         return false;
     }
     setIsHDPanel(true);
+    CCLoadSprite::doResourceByCommonIndex(7, true);
     setCleanFunction([](){
         CCLoadSprite::releaseDynamicResourceByType(CCLoadSpriteType_GOODS);
+        CCLoadSprite::doResourceByCommonIndex(7, false);
+
     });
     auto tmpCCB = CCBLoadFile("ItemStatusView02",this,this);
     if (CCCommonUtils::isIosAndroidPad()) {
@@ -75,6 +78,7 @@ bool ItemStatusView::init()
     
 //    onEnterUpdate();
 //    GlobalData::shared()->statusMap.find(tmpSid) != GlobalData::shared()->statusMap.end()
+    
     
     
     

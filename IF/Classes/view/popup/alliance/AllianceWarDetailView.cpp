@@ -1217,6 +1217,10 @@ void AllianceTeamDetailCell::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent){
                 //CCCommonUtils::flyHint("", "", _lang("115144"));
             }
         }else if(m_info->getIndex()==3){
+            //TODO: guojiang 联盟
+            CCCommonUtils::flyHint("", "", _lang("E100008"));
+            return;
+            
             PopupViewController::getInstance()->addPopupInView(AllianceScienceView::create());
         }else{
             CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_ALLIANCE_WAR_DETAIL_CELL_CLICK,CCString::create(m_info->getUuid().c_str()));

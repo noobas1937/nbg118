@@ -108,6 +108,9 @@ class YuanJunSoldierCell : public CCNode
 {
 public:
     static YuanJunSoldierCell *create(CCDictionary* info);
+    
+    CCSafeObject<CCSprite> m_bg;
+    
 private:
     YuanJunSoldierCell(CCDictionary* info):m_info(info){};
     virtual void onEnter();
@@ -118,6 +121,7 @@ private:
 	virtual SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName);
     
     CCSafeObject<CCLabelIF> m_nameTxt;
+    CCSafeObject<CCLabelIF> m_LvTxt;
     CCSafeObject<CCLabelIF> m_numTxt;
     CCSafeObject<CCNode> m_icon;
     CCDictionary* m_info;

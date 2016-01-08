@@ -137,7 +137,7 @@ private:
     CCSafeObject<CCNode> m_scienceNode;
     CCSafeObject<CCLabelIF> m_scienceTxt;
     CCSafeObject<CCSprite> m_joinNode;
-    CCSafeObject<CCNode> m_bgNodee;
+    CCSafeObject<CCSprite> m_bgNodee;
     CCSafeObject<HFHeadImgNode> m_headImgNode;
     CCNode* m_clickNode;
     CCPoint  m_touchPos;

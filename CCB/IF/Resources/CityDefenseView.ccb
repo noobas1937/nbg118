@@ -1408,8 +1408,6 @@
 										</array>
 									</dict>
 								</array>
-								<key>selected</key>
-								<true/>
 							</dict>
 						</array>
 						<key>customClass</key>
@@ -1795,7 +1793,7 @@
 										<string>ScaleLock</string>
 										<key>value</key>
 										<array>
-											<real>1</real>
+											<real>0.75</real>
 											<real>1</real>
 											<false/>
 											<integer>0</integer>
@@ -1874,7 +1872,7 @@
 										<string>Size</string>
 										<key>value</key>
 										<array>
-											<real>200</real>
+											<real>280</real>
 											<real>80</real>
 											<integer>0</integer>
 										</array>
@@ -2003,7 +2001,7 @@
 										<string>ScaleLock</string>
 										<key>value</key>
 										<array>
-											<real>1</real>
+											<real>0.75</real>
 											<real>1</real>
 											<false/>
 											<integer>0</integer>
@@ -2082,7 +2080,7 @@
 										<string>Size</string>
 										<key>value</key>
 										<array>
-											<real>200</real>
+											<real>280</real>
 											<real>80</real>
 											<integer>0</integer>
 										</array>
@@ -2165,6 +2163,8 @@
 										</array>
 									</dict>
 								</array>
+								<key>selected</key>
+								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>

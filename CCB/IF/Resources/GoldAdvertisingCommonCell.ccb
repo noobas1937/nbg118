@@ -337,13 +337,13 @@
 						<array>
 							<dict>
 								<key>baseClass</key>
-								<string>CCLabelTTF</string>
+								<string>CCLabelBMFont</string>
 								<key>children</key>
 								<array/>
 								<key>customClass</key>
-								<string>CCLabelIF</string>
+								<string>CCLabelBMFont</string>
 								<key>displayName</key>
-								<string>CCLabelTTF</string>
+								<string>m_getGoldNumText</string>
 								<key>memberVarAssignmentName</key>
 								<string>m_getGoldNumText</string>
 								<key>memberVarAssignmentType</key>
@@ -396,62 +396,11 @@
 									</dict>
 									<dict>
 										<key>name</key>
-										<string>fontName</string>
+										<string>fntFile</string>
 										<key>type</key>
-										<string>FontTTF</string>
+										<string>FntFile</string>
 										<key>value</key>
-										<string>Helvetica</string>
-									</dict>
-									<dict>
-										<key>name</key>
-										<string>fontSize</string>
-										<key>type</key>
-										<string>FloatScale</string>
-										<key>value</key>
-										<array>
-											<real>20</real>
-											<integer>0</integer>
-										</array>
-									</dict>
-									<dict>
-										<key>name</key>
-										<string>color</string>
-										<key>type</key>
-										<string>Color3</string>
-										<key>value</key>
-										<array>
-											<integer>254</integer>
-											<integer>255</integer>
-											<integer>255</integer>
-										</array>
-									</dict>
-									<dict>
-										<key>name</key>
-										<string>dimensions</string>
-										<key>type</key>
-										<string>Size</string>
-										<key>value</key>
-										<array>
-											<real>480</real>
-											<real>0.0</real>
-											<integer>0</integer>
-										</array>
-									</dict>
-									<dict>
-										<key>name</key>
-										<string>horizontalAlignment</string>
-										<key>type</key>
-										<string>IntegerLabeled</string>
-										<key>value</key>
-										<integer>1</integer>
-									</dict>
-									<dict>
-										<key>name</key>
-										<string>verticalAlignment</string>
-										<key>type</key>
-										<string>IntegerLabeled</string>
-										<key>value</key>
-										<integer>1</integer>
+										<string>eeeq.fnt</string>
 									</dict>
 									<dict>
 										<key>name</key>

@@ -166,7 +166,7 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string>Common/Common_1.plist</string>
+									<string>Common/Common_2.plist</string>
 									<string>Alliance_title.png</string>
 								</array>
 							</dict>
@@ -268,9 +268,9 @@
 								<string>Color3</string>
 								<key>value</key>
 								<array>
-									<integer>195</integer>
-									<integer>160</integer>
-									<integer>124</integer>
+									<integer>161</integer>
+									<integer>171</integer>
+									<integer>208</integer>
 								</array>
 							</dict>
 							<dict>
@@ -334,7 +334,7 @@
 								<key>value</key>
 								<array>
 									<real>588.60003662109375</real>
-									<real>-37</real>
+									<real>-42</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -378,7 +378,7 @@
 								<key>value</key>
 								<array>
 									<string>Common/Common_1.plist</string>
-									<string>UI_jiantou.png</string>
+									<string>UI_jiantou1.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -473,17 +473,17 @@
 						<array>
 							<dict>
 								<key>baseClass</key>
-								<string>CCScale9Sprite</string>
+								<string>CCLayerColor</string>
 								<key>children</key>
 								<array/>
 								<key>customClass</key>
 								<string></string>
 								<key>displayName</key>
-								<string>CCScale9Sprite</string>
+								<string>CCLayerColor</string>
 								<key>memberVarAssignmentName</key>
-								<string>m_tipBg</string>
+								<string></string>
 								<key>memberVarAssignmentType</key>
-								<integer>2</integer>
+								<integer>0</integer>
 								<key>properties</key>
 								<array>
 									<dict>
@@ -493,8 +493,20 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>15</real>
-											<real>-81</real>
+											<real>0.0</real>
+											<real>-147</real>
+											<integer>0</integer>
+										</array>
+									</dict>
+									<dict>
+										<key>name</key>
+										<string>contentSize</string>
+										<key>type</key>
+										<string>Size</string>
+										<key>value</key>
+										<array>
+											<real>677</real>
+											<real>70</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -505,8 +517,8 @@
 										<string>Point</string>
 										<key>value</key>
 										<array>
-											<real>0.0</real>
-											<real>1</real>
+											<real>0.5</real>
+											<real>0.5</real>
 										</array>
 									</dict>
 									<dict>
@@ -516,7 +528,7 @@
 										<string>ScaleLock</string>
 										<key>value</key>
 										<array>
-											<real>1.1799999475479126</real>
+											<real>1</real>
 											<real>1</real>
 											<false/>
 											<integer>0</integer>
@@ -528,29 +540,38 @@
 										<key>type</key>
 										<string>Check</string>
 										<key>value</key>
-										<false/>
+										<true/>
 									</dict>
 									<dict>
 										<key>name</key>
-										<string>spriteFrame</string>
+										<string>touchEnabled</string>
+										<key>platform</key>
+										<string>iOS</string>
 										<key>type</key>
-										<string>SpriteFrame</string>
+										<string>Check</string>
 										<key>value</key>
-										<array>
-											<string>Common/Common_1.plist</string>
-											<string>frame_02png.png</string>
-										</array>
+										<true/>
 									</dict>
 									<dict>
 										<key>name</key>
-										<string>preferedSize</string>
+										<string>mouseEnabled</string>
+										<key>platform</key>
+										<string>Mac</string>
 										<key>type</key>
-										<string>Size</string>
+										<string>Check</string>
+										<key>value</key>
+										<true/>
+									</dict>
+									<dict>
+										<key>name</key>
+										<string>color</string>
+										<key>type</key>
+										<string>Color3</string>
 										<key>value</key>
 										<array>
-											<real>520</real>
-											<real>65</real>
-											<integer>0</integer>
+											<integer>37</integer>
+											<integer>40</integer>
+											<integer>54</integer>
 										</array>
 									</dict>
 									<dict>
@@ -563,47 +584,14 @@
 									</dict>
 									<dict>
 										<key>name</key>
-										<string>color</string>
+										<string>blendFunc</string>
 										<key>type</key>
-										<string>Color3</string>
+										<string>Blendmode</string>
 										<key>value</key>
 										<array>
-											<integer>255</integer>
-											<integer>255</integer>
-											<integer>255</integer>
+											<integer>770</integer>
+											<integer>771</integer>
 										</array>
-									</dict>
-									<dict>
-										<key>name</key>
-										<string>insetLeft</string>
-										<key>type</key>
-										<string>Float</string>
-										<key>value</key>
-										<real>0.0</real>
-									</dict>
-									<dict>
-										<key>name</key>
-										<string>insetTop</string>
-										<key>type</key>
-										<string>Float</string>
-										<key>value</key>
-										<real>0.0</real>
-									</dict>
-									<dict>
-										<key>name</key>
-										<string>insetRight</string>
-										<key>type</key>
-										<string>Float</string>
-										<key>value</key>
-										<real>0.0</real>
-									</dict>
-									<dict>
-										<key>name</key>
-										<string>insetBottom</string>
-										<key>type</key>
-										<string>Float</string>
-										<key>value</key>
-										<real>0.0</real>
 									</dict>
 								</array>
 							</dict>
@@ -692,9 +680,9 @@
 										<string>Color3</string>
 										<key>value</key>
 										<array>
-											<integer>198</integer>
-											<integer>190</integer>
 											<integer>179</integer>
+											<integer>184</integer>
+											<integer>199</integer>
 										</array>
 									</dict>
 									<dict>
@@ -735,8 +723,6 @@
 Sample Text Sample Text Sample Text Sample Text Sample Text </string>
 									</dict>
 								</array>
-								<key>selected</key>
-								<true/>
 							</dict>
 						</array>
 						<key>customClass</key>

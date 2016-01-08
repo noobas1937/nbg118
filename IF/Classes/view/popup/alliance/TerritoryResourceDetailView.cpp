@@ -134,11 +134,11 @@ bool TerritoryResourceDetailView::init(){
 //        }
 //        m_bgNode->addChild(tBatchNode);
         
-        ParticleFireAni* par = ParticleFireAni::create();
-        m_fireNode1->addChild(par);
-        
-        ParticleFireAni* par2 = ParticleFireAni::create();
-        m_fireNode2->addChild(par2);
+//        ParticleFireAni* par = ParticleFireAni::create();//fusheng 报错
+//        m_fireNode1->addChild(par);
+//        
+//        ParticleFireAni* par2 = ParticleFireAni::create();
+//        m_fireNode2->addChild(par2);
         
         m_tabView = CCTableView::create(this, m_infoList->getContentSize());
         m_tabView->setDirection(kCCScrollViewDirectionVertical);
@@ -889,7 +889,7 @@ void TerritoryResourceDetailCell::setData(YuanJunInfo* info,int stat){
     numStr.append(":");
     numStr.append(CC_CMDITOA(m_info->getNum()));
     m_armyNum->setString(numStr);
-    m_bgNodee->setVisible(true);
+//    m_bgNodee->setVisible(true);
     m_unUseNode->setVisible(false);
     m_moveNode->setVisible(false);
     m_scienceNode->setVisible(false);
@@ -927,7 +927,7 @@ void TerritoryResourceDetailCell::setData(YuanJunInfo* info,int stat){
         m_unUseNode->setVisible(true);
     }else if(m_info->getIndex()==3){
         m_scienceNode->setVisible(true);
-        m_bgNodee->setVisible(false);
+//        m_bgNodee->setVisible(false);
         m_scienceTxt->setString(_lang("115146"));
     }else if(m_info->getIndex()==4){
         m_tipTxt->setString(_lang("115403"));
@@ -1116,9 +1116,15 @@ void TerritoryResourceDetailCell::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
             }
             else
                 attendRally();
-        }else if(m_info->getIndex()==3){
+        }else if(m_info->getIndex()==3)
+        {
+            //TODO: guojiang 联盟
+            CCCommonUtils::flyHint("", "", _lang("E100008"));
+            return;
+            
             PopupViewController::getInstance()->addPopupInView(AllianceScienceView::create());
-        }else if(m_info->getIndex()==4){
+        }
+        else if(m_info->getIndex()==4){
             return;//////////////
         }else{
             CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TERRITORY_RES_DETAIL_CELL_CLICK,CCString::create(m_info->getUuid().c_str()));
@@ -1153,7 +1159,7 @@ bool TerritoryResourceDetailCell::onAssignCCBMemberVariable(cocos2d::CCObject * 
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_clickArea", CCNode*, this->m_clickArea);
     //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_soldierNode", CCNode*, this->m_soldierNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_scienceNode", CCNode*, this->m_scienceNode);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_bgNodee", CCNode*, this->m_bgNodee);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_bgNodee", CCSprite*, this->m_bgNodee);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_scienceTxt", CCLabelIF*, this->m_scienceTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_joinNode", CCSprite*, this->m_joinNode);
     return false;

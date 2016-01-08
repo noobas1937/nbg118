@@ -1168,8 +1168,8 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string>Common/Common_1.plist</string>
-									<string>nb_but_2_green.png</string>
+									<string>Common/Common_2.plist</string>
+									<string>nb_but_2_gray.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -1185,6 +1185,8 @@
 								</array>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -2554,8 +2556,6 @@
 										<string>2. Choose Alliance Name</string>
 									</dict>
 								</array>
-								<key>selected</key>
-								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>
