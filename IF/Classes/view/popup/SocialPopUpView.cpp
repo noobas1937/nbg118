@@ -17,7 +17,7 @@
 
 static const char* btnIcon[7] = {"icon_facebook.png","icon_Twitter.png","icon_youtube.png","icon_vk_general.png","social_kr.png","icon_google.png","icon_337.png"};
 static const char* btnLang[7] = {"101265","101266","101267","101297","","101268","101269"};
-static const char* btnURL[7] = {"https://www.facebook.com/871470146215610","https://twitter.com/ClashOfKingsCOK","http://www.youtube.com/user/ClashofKingsGame","http://vk.com/clashofking","http://cafe.naver.com/clashofkings","https://plus.google.com/communities/102750039774058615160","http://forum.337.com/en/forum-3760-1.html"};
+static const char* btnURL[7] = {"https://www.facebook.com/DragonClans.Game","https://twitter.com/ClashOfKingsCOK","http://www.youtube.com/user/ClashofKingsGame","http://vk.com/clashofking","http://cafe.naver.com/clashofkings","https://plus.google.com/communities/102750039774058615160","http://forum.337.com/en/forum-3760-1.html"};
 
 bool SocialPopUpView::onAssignCCBMemberVariable(cocos2d::CCObject *pTarget, const char *pMemberVariableName, cocos2d::CCNode *pNode){
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_background", CCScale9Sprite*, this->m_background);
@@ -116,6 +116,13 @@ bool SocialPopUpView::init(){
                 m_datas->addObject(CCInteger::create(i));
             }
         }
+        //fusheng 暂时只显示facebook
+        m_datas->removeAllObjects();
+        m_datas->addObject(CCInteger::create(0));
+
+        
+        //fusheng end
+        
         m_tableView = CCTableView::create(this, m_infoList->getContentSize());
         m_tableView->setDirection(kCCScrollViewDirectionVertical);
         m_tableView->setAnchorPoint(CCPoint(0,0));
