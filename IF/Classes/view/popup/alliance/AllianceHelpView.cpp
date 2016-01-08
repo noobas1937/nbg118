@@ -581,7 +581,7 @@ void AllianceHelpViewCell::bind(AllianceHelp* allianceHelp)
     len = MIN(len,1);
     len = MAX(len,0);
     m_progress->setPreferredSize(CCSize(248 * len, 20));
-    m_progress->setVisible(len > 0);
+    m_progress->setVisible(248 * len > 22); // left + right insets = 20
     if(allianceHelp->getStats()==1){
         m_helpBtn->setVisible(true);
     }else{

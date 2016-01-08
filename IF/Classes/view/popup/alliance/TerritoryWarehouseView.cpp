@@ -34,8 +34,10 @@ bool TerritoryWarehouseView::init()
     }
     setIsHDPanel(true);
     CCLoadSprite::doResourceByCommonIndex(504, true);
+    CCLoadSprite::doResourceByCommonIndex(7, true);
     setCleanFunction([](){
         CCLoadSprite::doResourceByCommonIndex(504, false);
+        CCLoadSprite::doResourceByCommonIndex(7, false);
     });
     auto tmpCCB = CCBLoadFile("AllianceResourceTrade",this,this);
     if (CCCommonUtils::isIosAndroidPad()) {
@@ -58,23 +60,32 @@ bool TerritoryWarehouseView::init()
         m_cityNameTxt->setString(_lang("115458"));
         m_tradePlayerTxt->setString(_lang("115453"));
         m_infoTxt->setString(_lang("115454"));
-        m_rateTxt->setVisible(true);
-        m_loadTxt->setVisible(true);
+        m_rateTxt1->setVisible(true);
+        m_rateTxt2->setVisible(true);
+        m_loadTxt1->setVisible(true);
+        m_loadTxt2->setVisible(true);
+
         if (CCCommonUtils::isIosAndroidPad()) {
-            m_loadTxt->setFontSize(40);
-            m_rateTxt->setFontSize(40);
+            m_loadTxt1->setFontSize(40);
+            m_rateTxt1->setFontSize(40);
+            m_loadTxt2->setFontSize(40);
+            m_rateTxt2->setFontSize(40);
         }
         else {
-            m_loadTxt->setFontSize(20);
-            m_rateTxt->setFontSize(20);
+            m_loadTxt1->setFontSize(20);
+            m_rateTxt1->setFontSize(20);
+            m_loadTxt2->setFontSize(20);
+            m_rateTxt2->setFontSize(20);
         }
     }
     else {
         m_cityNameTxt->setString(_lang("115364"));
         m_tradePlayerTxt->setString(_lang("115458"));
         m_infoTxt->setString(_lang("115457"));
-        m_rateTxt->setVisible(false);
-        m_loadTxt->setVisible(false);
+        m_rateTxt1->setVisible(false);
+        m_loadTxt1->setVisible(false);
+        m_rateTxt2->setVisible(false);
+        m_loadTxt2->setVisible(false);
     }
     
     m_scrollView = CCScrollView::create(m_scrollNode->getContentSize());
@@ -87,7 +98,7 @@ bool TerritoryWarehouseView::init()
     
     m_resList = CCArray::create();
     int num = 2;
-    int offY = 83*2;
+    int offY = 88*2;
     if (CCCommonUtils::isIosAndroidPad()) {
         offY = 180*2;
     }
@@ -96,7 +107,7 @@ bool TerritoryWarehouseView::init()
         offY = 0;
     }else if (FunBuildController::getInstance()->getMainCityLv()>=FunBuildController::getInstance()->building_base_k3){
         num = 3;
-        offY = 83;
+        offY = 88;
         if (CCCommonUtils::isIosAndroidPad()) {
             offY = 180;
         }
@@ -124,6 +135,8 @@ bool TerritoryWarehouseView::init()
         m_funNode1->setPosition(m_funNode1->getPositionX() + nodeW, m_funNode1->getPositionY() + nodeH);
         m_funNode2->removeFromParent();
         m_funNode2->setPosition(m_funNode2->getPositionX() + nodeW, m_funNode2->getPositionY() + nodeH+offY);
+        CCSize size = m_infoListBG->getContentSize();
+        m_infoListBG->setContentSize(CCSize(size.width,size.height-offY));//fusheng 调整infoBG 大小
         
         m_scrollView->addChild(m_funNode1);
         m_scrollView->addChild(m_funNode2);
@@ -166,6 +179,8 @@ bool TerritoryWarehouseView::init()
     m_lastTrade = 0;
     this->schedule(schedule_selector(TerritoryWarehouseView::updateChangeStatus), 0.1);
     this->updateInfo();
+    
+    m_btnTrade->getBackgroundSpriteForState(cocos2d::extension::Control::State::DISABLED)->setState(cocos2d::ui::Scale9Sprite::State::GRAY);
     return true;
 }
 
@@ -195,30 +210,36 @@ void TerritoryWarehouseView::tradeSuccess(CCObject* p){
 
 void TerritoryWarehouseView::updateTradeData(bool isEnd){
     std::string str = _lang("115451");
+    m_rateTxt1->setString(str.c_str());
+    str = "";
     str.append(CC_ITOA_K((currentStorage+GlobalData::shared()->territory_warehouse_dayStorage)*1.0));
     str.append("/");
     str.append(CC_ITOA_K(m_dayStorageLimit*1.0));
-    m_rateTxt->setString(str.c_str());
+    m_rateTxt2->setPositionX(m_rateTxt1->getPositionX()+m_rateTxt1->getContentSize().width*m_rateTxt1->getOriginScaleX());//fusheng 设置文本位置
+    m_rateTxt2->setString(str.c_str());
     str = _lang("115450");
+    m_loadTxt1->setString(str.c_str());
+    str = "";
     str.append(CC_ITOA_K((currentStorage+GlobalData::shared()->territory_warehouse_totalStorage)*1.0));
     str.append("/");
     str.append(CC_ITOA_K(m_totalStorageLimit*1.0));
-    m_loadTxt->setString(str.c_str());
+    m_loadTxt2->setPositionX(m_loadTxt1->getPositionX()+m_loadTxt1->getContentSize().width*m_loadTxt1->getOriginScaleX());//fusheng 设置文本位置
+    m_loadTxt2->setString(str.c_str());
     if (currentStorage+GlobalData::shared()->territory_warehouse_dayStorage >= m_dayStorageLimit && isEnd) {
-        m_rateTxt->stopAllActions();
-        lastStorage = currentStorage;
-        CCSequence* sc1 = CCSequence::create(CCScaleTo::create(0.1, 1.05),NULL);
-        CCSequence* sc2 = CCSequence::create(CCTintTo::create(0.25, 255, 0, 0),CCTintTo::create(0.01, 0, 244, 0),CCScaleTo::create(0.08, 1),NULL);
-        CCSpawn* sp = CCSpawn::create(sc1,sc2,NULL);
-        m_rateTxt->runAction(sp);
+//        m_rateTxt->stopAllActions();
+//        lastStorage = currentStorage;
+//        CCSequence* sc1 = CCSequence::create(CCScaleTo::create(0.1, 1.05),NULL);
+//        CCSequence* sc2 = CCSequence::create(CCTintTo::create(0.25, 255, 0, 0),CCTintTo::create(0.01, 0, 244, 0),CCScaleTo::create(0.08, 1),NULL);
+//        CCSpawn* sp = CCSpawn::create(sc1,sc2,NULL);
+//        m_rateTxt->runAction(sp);
     }
     if (currentStorage+GlobalData::shared()->territory_warehouse_totalStorage >= m_totalStorageLimit && isEnd) {
-        m_loadTxt->stopAllActions();
-        lastStorage = currentStorage;
-        CCSequence* sc1 = CCSequence::create(CCScaleTo::create(0.1, 1.05),NULL);
-        CCSequence* sc2 = CCSequence::create(CCTintTo::create(0.25, 255, 0, 0),CCTintTo::create(0.01, 0, 244, 0),CCScaleTo::create(0.08, 1),NULL);
-        CCSpawn* sp = CCSpawn::create(sc1,sc2,NULL);
-        m_loadTxt->runAction(sp);
+//        m_loadTxt->stopAllActions();
+//        lastStorage = currentStorage;
+//        CCSequence* sc1 = CCSequence::create(CCScaleTo::create(0.1, 1.05),NULL);
+//        CCSequence* sc2 = CCSequence::create(CCTintTo::create(0.25, 255, 0, 0),CCTintTo::create(0.01, 0, 244, 0),CCScaleTo::create(0.08, 1),NULL);
+//        CCSpawn* sp = CCSpawn::create(sc1,sc2,NULL);
+//        m_loadTxt->runAction(sp);
     }
     m_btnTrade->setEnabled(currentStorage>0);
     
@@ -372,9 +393,9 @@ void TerritoryWarehouseView::onDetailCallback(cocos2d::CCObject *obj){
     }
     
     int pos[4] = {0,3,2,1};
-    int listH = 83*3;
+    int listH = 88*3;
     int num = 2;
-    int offY = 83*2;
+    int offY = 88*2;
     if (CCCommonUtils::isIosAndroidPad()) {
         listH = 180*3;
         offY = 180*2;
@@ -384,7 +405,7 @@ void TerritoryWarehouseView::onDetailCallback(cocos2d::CCObject *obj){
         offY = 0;
     }else if (FunBuildController::getInstance()->getMainCityLv()>=FunBuildController::getInstance()->building_base_k3){
         num = 3;
-        offY = 83;
+        offY = 88;
         if (CCCommonUtils::isIosAndroidPad()) {
             offY = 180;
         }
@@ -397,7 +418,7 @@ void TerritoryWarehouseView::onDetailCallback(cocos2d::CCObject *obj){
                 cell->setPosition(ccp(0,listH-i*180));
             }
             else
-                cell->setPosition(ccp(0,listH-i*83));
+                cell->setPosition(ccp(0,listH-i*88));
             m_infoList->addChild(cell);
             m_resList->addObject(cell);
         }
@@ -408,7 +429,7 @@ void TerritoryWarehouseView::onDetailCallback(cocos2d::CCObject *obj){
                 cell->setPosition(ccp(0,listH-i*180));
             }
             else
-                cell->setPosition(ccp(0,listH-i*83));
+                cell->setPosition(ccp(0,listH-i*88));
             m_infoList->addChild(cell);
             m_resList->addObject(cell);
         }
@@ -575,13 +596,17 @@ bool TerritoryWarehouseView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarg
 {
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_infoList", CCNode*, this->m_infoList);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_viewBg", CCScale9Sprite*, this->m_viewBg);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_infoListBG", CCScale9Sprite*, this->m_infoListBG);
+
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_wood", CCLabelIF*, this->m_wood);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_stone", CCLabelIF*, this->m_stone);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_iron", CCLabelIF*, this->m_iron);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_food", CCLabelIF*, this->m_food);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_rateTxt", CCLabelIF*, this->m_rateTxt);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_loadTxt", CCLabelIF*, this->m_loadTxt);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_rateTxt1", CCLabelIF*, this->m_rateTxt1);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_loadTxt1", CCLabelIF*, this->m_loadTxt1);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_rateTxt2", CCLabelIF*, this->m_rateTxt2);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_loadTxt2", CCLabelIF*, this->m_loadTxt2);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_resTxt", CCLabelIF*, this->m_resTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_infoTxt", CCLabelIF*, this->m_infoTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_timeTxt", CCLabelIF*, this->m_timeTxt);
@@ -732,28 +757,38 @@ bool TerritoryWarehouseCell::init()
     m_load = 0;
     m_limit = MIN(m_totalStorageLimit, m_dayStorageLimit);
     
-    auto m_sliderBg = CCLoadSprite::createScale9Sprite("huadongtiao3.png");
-    m_sliderBg->setInsetBottom(5);
-    m_sliderBg->setInsetLeft(5);
-    m_sliderBg->setInsetRight(5);
-    m_sliderBg->setInsetTop(5);
-    m_sliderBg->setAnchorPoint(ccp(0.5,0.5));
-    m_sliderBg->setPosition(ccp(290/2, 25));
-    m_sliderBg->setContentSize(CCSize(290,18));
-    
-    auto bgSp = CCLoadSprite::createSprite("huadongtiao3.png");
-    bgSp->setVisible(false);
-    auto proSp = CCLoadSprite::createSprite("huadongtiao4.png");
-    auto thuSp = CCLoadSprite::createSprite("huadongtiao1.png");
-    
-    m_slider = CCSliderBar::createSlider(m_sliderBg, proSp, thuSp);
-    m_slider->setMinimumValue(0.0f);
-    m_slider->setMaximumValue(1.0f);
-    m_slider->setProgressScaleX(290/proSp->getContentSize().width);
-    m_slider->setTag(1);
-    m_slider->setLimitMoveValue(20);
-    m_slider->addTargetWithActionForControlEvents(this, cccontrol_selector(TerritoryWarehouseCell::sliderCallBack), CCControlEventValueChanged);
+    m_slider = NBSlider::create("nb_progressBarBg.png", "nb_bar_lv.png", "nb_warehouse_huakuai.png",NBSlider::TextureResType::PLIST);
+    m_slider->setCapInsets(Rect(8, 1, 30, 13));
+    auto ts = m_sliderNode->getContentSize();
+    m_slider->setContentSize(ts);
+
+    m_slider->addEventListener(CC_CALLBACK_2(TerritoryWarehouseCell::sliderCallBack, this));
+//    m_slider->setPosition(-230 / 2, -15 / 2);
+    m_slider->setValue(0);
     m_sliderNode->addChild(m_slider, 1);
+    
+//    auto m_sliderBg = CCLoadSprite::createScale9Sprite("huadongtiao3.png");
+//    m_sliderBg->setInsetBottom(5);
+//    m_sliderBg->setInsetLeft(5);
+//    m_sliderBg->setInsetRight(5);
+//    m_sliderBg->setInsetTop(5);
+//    m_sliderBg->setAnchorPoint(ccp(0.5,0.5));
+//    m_sliderBg->setPosition(ccp(290/2, 25));
+//    m_sliderBg->setContentSize(CCSize(290,18));
+//    
+//    auto bgSp = CCLoadSprite::createSprite("huadongtiao3.png");
+//    bgSp->setVisible(false);
+//    auto proSp = CCLoadSprite::createSprite("huadongtiao4.png");
+//    auto thuSp = CCLoadSprite::createSprite("huadongtiao1.png");
+//    
+//    m_slider = CCSliderBar::createSlider(m_sliderBg, proSp, thuSp);
+//    m_slider->setMinimumValue(0.0f);
+//    m_slider->setMaximumValue(1.0f);
+//    m_slider->setProgressScaleX(290/proSp->getContentSize().width);
+//    m_slider->setTag(1);
+//    m_slider->setLimitMoveValue(20);
+//    m_slider->addTargetWithActionForControlEvents(this, cccontrol_selector(TerritoryWarehouseCell::sliderCallBack), CCControlEventValueChanged);
+//    m_sliderNode->addChild(m_slider, 1);
     m_slider->setEnabled(silderFlag);
     
     m_valueTxt->setString(CC_ITOA(0));
@@ -768,7 +803,7 @@ void TerritoryWarehouseCell::resetData(){
     m_slider->setValue(0);
 }
 
-void TerritoryWarehouseCell::sliderCallBack(CCObject*sender,CCControlEvent even){
+void TerritoryWarehouseCell::sliderCallBack(Ref *pSender, NBSlider::EventType type){
     if(m_invalidSliderMove){
         m_invalidSliderMove = false;
         return ;

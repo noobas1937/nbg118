@@ -12,6 +12,7 @@
 #include "YesNoDialog.h"
 #include "WorldController.h"
 #include "ParticleController.h"
+#include "NBCommonUtils.h"
 TerritoryFunctionView* TerritoryFunctionView::create(int stat){
     TerritoryFunctionView* ret = new TerritoryFunctionView(stat);
     if(ret && ret->init(stat)){
@@ -30,6 +31,10 @@ bool TerritoryFunctionView::init(int stat)
     }
     setIsHDPanel(true);
     CCLoadSprite::doResourceByCommonIndex(504, true);
+    CCLoadSprite::doResourceByCommonIndex(7, true);
+    setCleanFunction([](){
+        CCLoadSprite::doResourceByCommonIndex(7, false);
+    });
     auto tmpCCB = CCBLoadFile("TerritoryFunctionView",this,this);
     this->setContentSize(tmpCCB->getContentSize());
     
@@ -45,7 +50,20 @@ bool TerritoryFunctionView::init(int stat)
     
     m_descriptionText->setString(_lang("115372"));
     int textH = m_descriptionText->getContentSize().height * m_descriptionText->getOriginScaleY();
+    int textW = m_descriptionText->getContentSize().width * m_descriptionText->getOriginScaleX();
     m_descriptionText->setPositionY(m_descriptionText->getPositionY() - textH / 2);
+    
+    int ttw = 18;//fusheng 虚线的padding
+    int tth = 18;
+    auto dashed = NBCommonUtils::createDashed(CCSize(textW+ttw,textH+tth));
+    
+    dashed->setPositionX(-textW/2 - ttw/2);
+    
+    dashed->setPositionY(-textH/2 - tth/2);
+    
+    m_descriptionText->getParent()->addChild(dashed);
+    
+    
     if (!CCCommonUtils::isIosAndroidPad()) {
         m_infoList->setPositionY(m_infoList->getPositionY()-addHeight-20);//
         m_infoList->setContentSize(CCSizeMake(oldWidth, oldHeight + addHeight - textH + 60));
@@ -72,7 +90,7 @@ bool TerritoryFunctionView::init(int stat)
         std::string titleStr = CCCommonUtils::getPropById(effectId, "title");
         TerritoryFunctionCell* cell = TerritoryFunctionCell::create(buffStr, descriptionStr, titleStr, effectId, m_stat);
         cell->setAnchorPoint(ccp(0.5, 0.5));
-        cell->setPosition(ccp(0,i*160));
+        cell->setPosition(ccp(0,i*140));
         if (CCCommonUtils::isIosAndroidPad()) {
             cell->setPositionY(i * 265);
         }
@@ -82,7 +100,7 @@ bool TerritoryFunctionView::init(int stat)
 
     this->setTitleName(_lang("115371"));
     
-    int contentHeight = i*160;
+    int contentHeight = i*140;
     if (CCCommonUtils::isIosAndroidPad()) {
         contentHeight = i * 265;
     }
@@ -90,6 +108,11 @@ bool TerritoryFunctionView::init(int stat)
     m_scrollView->setContentOffset(ccp(0, m_infoList->getContentSize().height - contentHeight));
     
     m_scrollH = contentHeight;
+    
+    
+//    changeBGMaxHeight(m_viewBg);
+    m_viewBg->setPositionY(m_viewBg->getPositionY()-addHeight);
+    
     return true;
 }
 
@@ -111,7 +134,7 @@ SEL_CCControlHandler TerritoryFunctionView::onResolveCCBCCControlSelector(cocos2
 bool TerritoryFunctionView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode)
 {
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_infoList", CCNode*, this->m_infoList);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_viewBg", CCScale9Sprite*, this->m_viewBg);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_viewBg", CCLayerColor*, this->m_viewBg);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_descriptionText", CCLabelIF*, this->m_descriptionText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_viewBg2", CCNode*, this->m_viewBg2);
     return false;

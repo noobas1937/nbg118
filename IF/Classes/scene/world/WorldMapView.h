@@ -326,7 +326,7 @@ public:
     CCNode* m_throneNode;
     CCNode* m_towerNode;
     CCSpriteBatchNode* m_throneTowerNode;
-    CCSpriteBatchNode* m_batchNode;
+    CCNode* m_batchNode;
     
     CCNode *m_armyDustParticleNode;
     CCNode *m_flagParticleNode;

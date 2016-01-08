@@ -12,7 +12,8 @@
 #include "CCBExtension.h"
 #include "PopupBaseView.h"
 #include "CCLabelIF.h"
-#include "CCSliderBar.h"
+//#include "CCSliderBar.h"
+#include "NBSlider.h"
 
 class TerritoryWarehouseView: public PopupBaseView
 ,public CCBSelectorResolver
@@ -52,14 +53,17 @@ private:
     CCSafeObject<CCLabelIF> m_stone;
     CCSafeObject<CCLabelIF> m_iron;
     CCSafeObject<CCLabelIF> m_food;
-    CCSafeObject<CCLabelIF> m_rateTxt;
-    CCSafeObject<CCLabelIF> m_loadTxt;
+    CCSafeObject<CCLabelIF> m_rateTxt1;
+    CCSafeObject<CCLabelIF> m_rateTxt2;
+    CCSafeObject<CCLabelIF> m_loadTxt1;
+    CCSafeObject<CCLabelIF> m_loadTxt2;
     CCSafeObject<CCLabelIF> m_resTxt;
     CCSafeObject<CCLabelIF> m_infoTxt;
     CCSafeObject<CCLabelIF> m_timeTxt;
     CCSafeObject<CCControlButton> m_btnTrade;
     CCSafeObject<CCNode> m_infoList;
     CCSafeObject<CCScale9Sprite> m_viewBg;
+    CCSafeObject<CCScale9Sprite> m_infoListBG;
     CCSafeObject<CCSprite> m_loadingIcon;
     CCSafeObject<CCLabelIF> m_cityNameTxt;
     CCSafeObject<CCLabelIF> m_tradeWood;
@@ -118,7 +122,7 @@ public:
     int m_index;
     void setData(unsigned long load);
     void resetData();
-    CCSafeObject<CCSliderBar> m_slider;
+    CCSafeObject<NBSlider> m_slider;
 private:
     bool init();
     virtual void onEnter();
@@ -127,7 +131,7 @@ private:
     virtual SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName);
     virtual bool onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode);
     
-    void sliderCallBack(CCObject*sender,CCControlEvent even);
+    void sliderCallBack(Ref *pSender, NBSlider::EventType type);
     
     CCSafeObject<CCLabelIF> m_nameTxt;
     CCSafeObject<CCLabelIF> m_valueTxt;

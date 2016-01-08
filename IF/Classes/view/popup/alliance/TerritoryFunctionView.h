@@ -32,7 +32,7 @@ private:
     virtual SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName);
     virtual bool onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode);
     
-    CCSafeObject<CCScale9Sprite> m_viewBg;
+    CCSafeObject<CCLayerColor> m_viewBg;
     CCSafeObject<CCNode> m_infoList;
     CCSafeObject<CCLabelIF> m_descriptionText;
     CCSafeObject<CCScrollView> m_scrollView;

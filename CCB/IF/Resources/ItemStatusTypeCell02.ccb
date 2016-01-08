@@ -13,7 +13,32 @@
 	<key>fileVersion</key>
 	<integer>4</integer>
 	<key>guides</key>
-	<array/>
+	<array>
+		<dict>
+			<key>orientation</key>
+			<integer>1</integer>
+			<key>position</key>
+			<real>7</real>
+		</dict>
+		<dict>
+			<key>orientation</key>
+			<integer>1</integer>
+			<key>position</key>
+			<real>607</real>
+		</dict>
+		<dict>
+			<key>orientation</key>
+			<integer>0</integer>
+			<key>position</key>
+			<real>155</real>
+		</dict>
+		<dict>
+			<key>orientation</key>
+			<integer>0</integer>
+			<key>position</key>
+			<real>-2</real>
+		</dict>
+	</array>
 	<key>jsControlled</key>
 	<false/>
 	<key>nodeGraph</key>
@@ -107,13 +132,13 @@
 						<array>
 							<dict>
 								<key>baseClass</key>
-								<string>CCScale9Sprite</string>
+								<string>CCSprite</string>
 								<key>children</key>
 								<array/>
 								<key>customClass</key>
 								<string></string>
 								<key>displayName</key>
-								<string>CCScale9Sprite</string>
+								<string>CCSprite</string>
 								<key>memberVarAssignmentName</key>
 								<string></string>
 								<key>memberVarAssignmentType</key>
@@ -127,7 +152,7 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>301</real>
+											<real>10</real>
 											<real>0.0</real>
 											<integer>0</integer>
 										</array>
@@ -139,7 +164,7 @@
 										<string>Point</string>
 										<key>value</key>
 										<array>
-											<real>1</real>
+											<real>0.0</real>
 											<real>0.0</real>
 										</array>
 									</dict>
@@ -151,7 +176,7 @@
 										<key>value</key>
 										<array>
 											<real>1</real>
-											<real>1</real>
+											<real>1.2000000476837158</real>
 											<false/>
 											<integer>0</integer>
 										</array>
@@ -166,216 +191,25 @@
 									</dict>
 									<dict>
 										<key>name</key>
-										<string>spriteFrame</string>
+										<string>displayFrame</string>
 										<key>type</key>
 										<string>SpriteFrame</string>
 										<key>value</key>
 										<array>
-											<string>Common/Common_8.plist</string>
-											<string>cz_bgq1.png</string>
+											<string>Common/Common_7.plist</string>
+											<string>nb_al_help_bg.png</string>
 										</array>
 									</dict>
 									<dict>
 										<key>name</key>
-										<string>preferedSize</string>
+										<string>blendFunc</string>
 										<key>type</key>
-										<string>Size</string>
+										<string>Blendmode</string>
 										<key>value</key>
 										<array>
-											<real>286</real>
-											<real>150</real>
-											<integer>0</integer>
+											<integer>770</integer>
+											<integer>771</integer>
 										</array>
-									</dict>
-									<dict>
-										<key>name</key>
-										<string>opacity</string>
-										<key>type</key>
-										<string>Byte</string>
-										<key>value</key>
-										<integer>255</integer>
-									</dict>
-									<dict>
-										<key>name</key>
-										<string>color</string>
-										<key>type</key>
-										<string>Color3</string>
-										<key>value</key>
-										<array>
-											<integer>255</integer>
-											<integer>255</integer>
-											<integer>255</integer>
-										</array>
-									</dict>
-									<dict>
-										<key>name</key>
-										<string>insetLeft</string>
-										<key>type</key>
-										<string>Float</string>
-										<key>value</key>
-										<real>60</real>
-									</dict>
-									<dict>
-										<key>name</key>
-										<string>insetTop</string>
-										<key>type</key>
-										<string>Float</string>
-										<key>value</key>
-										<real>60</real>
-									</dict>
-									<dict>
-										<key>name</key>
-										<string>insetRight</string>
-										<key>type</key>
-										<string>Float</string>
-										<key>value</key>
-										<real>60</real>
-									</dict>
-									<dict>
-										<key>name</key>
-										<string>insetBottom</string>
-										<key>type</key>
-										<string>Float</string>
-										<key>value</key>
-										<real>60</real>
-									</dict>
-								</array>
-								<key>selected</key>
-								<true/>
-							</dict>
-							<dict>
-								<key>baseClass</key>
-								<string>CCScale9Sprite</string>
-								<key>children</key>
-								<array/>
-								<key>customClass</key>
-								<string></string>
-								<key>displayName</key>
-								<string>CCScale9Sprite</string>
-								<key>memberVarAssignmentName</key>
-								<string></string>
-								<key>memberVarAssignmentType</key>
-								<integer>0</integer>
-								<key>properties</key>
-								<array>
-									<dict>
-										<key>name</key>
-										<string>position</string>
-										<key>type</key>
-										<string>Position</string>
-										<key>value</key>
-										<array>
-											<real>614</real>
-											<real>0.0</real>
-											<integer>0</integer>
-										</array>
-									</dict>
-									<dict>
-										<key>name</key>
-										<string>anchorPoint</string>
-										<key>type</key>
-										<string>Point</string>
-										<key>value</key>
-										<array>
-											<real>1</real>
-											<real>0.0</real>
-										</array>
-									</dict>
-									<dict>
-										<key>name</key>
-										<string>scale</string>
-										<key>type</key>
-										<string>ScaleLock</string>
-										<key>value</key>
-										<array>
-											<real>1</real>
-											<real>1</real>
-											<true/>
-											<integer>0</integer>
-										</array>
-									</dict>
-									<dict>
-										<key>name</key>
-										<string>ignoreAnchorPointForPosition</string>
-										<key>type</key>
-										<string>Check</string>
-										<key>value</key>
-										<false/>
-									</dict>
-									<dict>
-										<key>name</key>
-										<string>spriteFrame</string>
-										<key>type</key>
-										<string>SpriteFrame</string>
-										<key>value</key>
-										<array>
-											<string>Common/Common_8.plist</string>
-											<string>cz_bgq2.png</string>
-										</array>
-									</dict>
-									<dict>
-										<key>name</key>
-										<string>preferedSize</string>
-										<key>type</key>
-										<string>Size</string>
-										<key>value</key>
-										<array>
-											<real>350</real>
-											<real>150</real>
-											<integer>0</integer>
-										</array>
-									</dict>
-									<dict>
-										<key>name</key>
-										<string>opacity</string>
-										<key>type</key>
-										<string>Byte</string>
-										<key>value</key>
-										<integer>255</integer>
-									</dict>
-									<dict>
-										<key>name</key>
-										<string>color</string>
-										<key>type</key>
-										<string>Color3</string>
-										<key>value</key>
-										<array>
-											<integer>255</integer>
-											<integer>255</integer>
-											<integer>255</integer>
-										</array>
-									</dict>
-									<dict>
-										<key>name</key>
-										<string>insetLeft</string>
-										<key>type</key>
-										<string>Float</string>
-										<key>value</key>
-										<real>60</real>
-									</dict>
-									<dict>
-										<key>name</key>
-										<string>insetTop</string>
-										<key>type</key>
-										<string>Float</string>
-										<key>value</key>
-										<real>60</real>
-									</dict>
-									<dict>
-										<key>name</key>
-										<string>insetRight</string>
-										<key>type</key>
-										<string>Float</string>
-										<key>value</key>
-										<real>60</real>
-									</dict>
-									<dict>
-										<key>name</key>
-										<string>insetBottom</string>
-										<key>type</key>
-										<string>Float</string>
-										<key>value</key>
-										<real>60</real>
 									</dict>
 								</array>
 							</dict>
@@ -596,8 +430,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>71.400032043457031</real>
-											<real>84.000038146972656</real>
+											<real>81.400032043457031</real>
+											<real>74.000038146972656</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -679,8 +513,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>71.400032043457031</real>
-											<real>84.000038146972656</real>
+											<real>81.400032043457031</real>
+											<real>74.000038146972656</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -725,131 +559,6 @@
 								<array>
 									<dict>
 										<key>baseClass</key>
-										<string>CCScale9Sprite</string>
-										<key>children</key>
-										<array/>
-										<key>customClass</key>
-										<string></string>
-										<key>displayName</key>
-										<string>CCScale9Sprite</string>
-										<key>memberVarAssignmentName</key>
-										<string></string>
-										<key>memberVarAssignmentType</key>
-										<integer>0</integer>
-										<key>properties</key>
-										<array>
-											<dict>
-												<key>name</key>
-												<string>position</string>
-												<key>type</key>
-												<string>Position</string>
-												<key>value</key>
-												<array>
-													<real>142</real>
-													<real>109</real>
-													<integer>0</integer>
-												</array>
-											</dict>
-											<dict>
-												<key>name</key>
-												<string>scale</string>
-												<key>type</key>
-												<string>ScaleLock</string>
-												<key>value</key>
-												<array>
-													<real>1</real>
-													<real>1</real>
-													<false/>
-													<integer>0</integer>
-												</array>
-											</dict>
-											<dict>
-												<key>name</key>
-												<string>ignoreAnchorPointForPosition</string>
-												<key>type</key>
-												<string>Check</string>
-												<key>value</key>
-												<false/>
-											</dict>
-											<dict>
-												<key>name</key>
-												<string>spriteFrame</string>
-												<key>type</key>
-												<string>SpriteFrame</string>
-												<key>value</key>
-												<array>
-													<string>Common/Common_504.plist</string>
-													<string>city_gain_txtbg2.png</string>
-												</array>
-											</dict>
-											<dict>
-												<key>name</key>
-												<string>preferedSize</string>
-												<key>type</key>
-												<string>Size</string>
-												<key>value</key>
-												<array>
-													<real>329</real>
-													<real>32</real>
-													<integer>0</integer>
-												</array>
-											</dict>
-											<dict>
-												<key>name</key>
-												<string>opacity</string>
-												<key>type</key>
-												<string>Byte</string>
-												<key>value</key>
-												<integer>255</integer>
-											</dict>
-											<dict>
-												<key>name</key>
-												<string>color</string>
-												<key>type</key>
-												<string>Color3</string>
-												<key>value</key>
-												<array>
-													<integer>255</integer>
-													<integer>255</integer>
-													<integer>255</integer>
-												</array>
-											</dict>
-											<dict>
-												<key>name</key>
-												<string>insetLeft</string>
-												<key>type</key>
-												<string>Float</string>
-												<key>value</key>
-												<real>0.0</real>
-											</dict>
-											<dict>
-												<key>name</key>
-												<string>insetTop</string>
-												<key>type</key>
-												<string>Float</string>
-												<key>value</key>
-												<real>0.0</real>
-											</dict>
-											<dict>
-												<key>name</key>
-												<string>insetRight</string>
-												<key>type</key>
-												<string>Float</string>
-												<key>value</key>
-												<real>0.0</real>
-											</dict>
-											<dict>
-												<key>name</key>
-												<string>insetBottom</string>
-												<key>type</key>
-												<string>Float</string>
-												<key>value</key>
-												<real>0.0</real>
-											</dict>
-										</array>
-									</dict>
-									<dict>
-										<key>baseClass</key>
 										<string>CCLabelTTF</string>
 										<key>children</key>
 										<array/>
@@ -870,8 +579,8 @@
 												<string>Position</string>
 												<key>value</key>
 												<array>
-													<real>148</real>
-													<real>125</real>
+													<real>158</real>
+													<real>105</real>
 													<integer>0</integer>
 												</array>
 											</dict>
@@ -933,9 +642,9 @@
 												<string>Color3</string>
 												<key>value</key>
 												<array>
-													<integer>198</integer>
-													<integer>190</integer>
-													<integer>179</integer>
+													<integer>101</integer>
+													<integer>98</integer>
+													<integer>72</integer>
 												</array>
 											</dict>
 											<dict>
@@ -1055,8 +764,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>135.4000244140625</real>
-											<real>102</real>
+											<real>155.4000244140625</real>
+											<real>85</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -1118,9 +827,9 @@
 										<string>Color3</string>
 										<key>value</key>
 										<array>
-											<integer>86</integer>
-											<integer>52</integer>
-											<integer>26</integer>
+											<integer>134</integer>
+											<integer>130</integer>
+											<integer>114</integer>
 										</array>
 									</dict>
 									<dict>
@@ -1160,6 +869,8 @@
 										<string>Sample Text sadh sdajs d asd adhsd;.er  retert jjkkkkSample Text sadh sdajs d asd adhsd;.er  retert jjkkkk</string>
 									</dict>
 								</array>
+								<key>selected</key>
+								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>
@@ -1183,7 +894,7 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>574</real>
+											<real>564</real>
 											<real>80.444496154785156</real>
 											<integer>0</integer>
 										</array>
@@ -1824,172 +1535,6 @@
 												<string>Text</string>
 												<key>value</key>
 												<string>Ending in:  02:03:04</string>
-											</dict>
-										</array>
-									</dict>
-									<dict>
-										<key>baseClass</key>
-										<string>CCSprite</string>
-										<key>children</key>
-										<array/>
-										<key>customClass</key>
-										<string></string>
-										<key>displayName</key>
-										<string>CCSprite</string>
-										<key>memberVarAssignmentName</key>
-										<string></string>
-										<key>memberVarAssignmentType</key>
-										<integer>0</integer>
-										<key>properties</key>
-										<array>
-											<dict>
-												<key>name</key>
-												<string>position</string>
-												<key>type</key>
-												<string>Position</string>
-												<key>value</key>
-												<array>
-													<real>-174</real>
-													<real>-2</real>
-													<integer>0</integer>
-												</array>
-											</dict>
-											<dict>
-												<key>name</key>
-												<string>anchorPoint</string>
-												<key>type</key>
-												<string>Point</string>
-												<key>value</key>
-												<array>
-													<real>0.5</real>
-													<real>0.5</real>
-												</array>
-											</dict>
-											<dict>
-												<key>name</key>
-												<string>scale</string>
-												<key>type</key>
-												<string>ScaleLock</string>
-												<key>value</key>
-												<array>
-													<real>1</real>
-													<real>1</real>
-													<false/>
-													<integer>0</integer>
-												</array>
-											</dict>
-											<dict>
-												<key>name</key>
-												<string>ignoreAnchorPointForPosition</string>
-												<key>type</key>
-												<string>Check</string>
-												<key>value</key>
-												<false/>
-											</dict>
-											<dict>
-												<key>name</key>
-												<string>displayFrame</string>
-												<key>type</key>
-												<string>SpriteFrame</string>
-												<key>value</key>
-												<array>
-													<string>Common/Common_504.plist</string>
-													<string>city_gain_bar_left.png</string>
-												</array>
-											</dict>
-											<dict>
-												<key>name</key>
-												<string>blendFunc</string>
-												<key>type</key>
-												<string>Blendmode</string>
-												<key>value</key>
-												<array>
-													<integer>770</integer>
-													<integer>771</integer>
-												</array>
-											</dict>
-										</array>
-									</dict>
-									<dict>
-										<key>baseClass</key>
-										<string>CCSprite</string>
-										<key>children</key>
-										<array/>
-										<key>customClass</key>
-										<string></string>
-										<key>displayName</key>
-										<string>CCSprite</string>
-										<key>memberVarAssignmentName</key>
-										<string>m_barRight</string>
-										<key>memberVarAssignmentType</key>
-										<integer>2</integer>
-										<key>properties</key>
-										<array>
-											<dict>
-												<key>name</key>
-												<string>position</string>
-												<key>type</key>
-												<string>Position</string>
-												<key>value</key>
-												<array>
-													<real>174</real>
-													<real>-1.9290122985839844</real>
-													<integer>0</integer>
-												</array>
-											</dict>
-											<dict>
-												<key>name</key>
-												<string>anchorPoint</string>
-												<key>type</key>
-												<string>Point</string>
-												<key>value</key>
-												<array>
-													<real>0.5</real>
-													<real>0.5</real>
-												</array>
-											</dict>
-											<dict>
-												<key>name</key>
-												<string>scale</string>
-												<key>type</key>
-												<string>ScaleLock</string>
-												<key>value</key>
-												<array>
-													<real>1</real>
-													<real>1</real>
-													<false/>
-													<integer>0</integer>
-												</array>
-											</dict>
-											<dict>
-												<key>name</key>
-												<string>ignoreAnchorPointForPosition</string>
-												<key>type</key>
-												<string>Check</string>
-												<key>value</key>
-												<false/>
-											</dict>
-											<dict>
-												<key>name</key>
-												<string>displayFrame</string>
-												<key>type</key>
-												<string>SpriteFrame</string>
-												<key>value</key>
-												<array>
-													<string>Common/Common_504.plist</string>
-													<string>city_gain_bar_right.png</string>
-												</array>
-											</dict>
-											<dict>
-												<key>name</key>
-												<string>blendFunc</string>
-												<key>type</key>
-												<string>Blendmode</string>
-												<key>value</key>
-												<array>
-													<integer>770</integer>
-													<integer>771</integer>
-												</array>
 											</dict>
 										</array>
 									</dict>
@@ -2906,9 +2451,9 @@
 												<string>Color3</string>
 												<key>value</key>
 												<array>
-													<integer>0</integer>
-													<integer>0</integer>
-													<integer>0</integer>
+													<integer>71</integer>
+													<integer>71</integer>
+													<integer>71</integer>
 												</array>
 											</dict>
 											<dict>
@@ -3118,9 +2663,9 @@
 												<string>Color3</string>
 												<key>value</key>
 												<array>
-													<integer>57</integer>
-													<integer>57</integer>
-													<integer>57</integer>
+													<integer>166</integer>
+													<integer>166</integer>
+													<integer>166</integer>
 												</array>
 											</dict>
 											<dict>
@@ -3322,9 +2867,9 @@
 												<string>Color3</string>
 												<key>value</key>
 												<array>
-													<integer>33</integer>
-													<integer>33</integer>
-													<integer>33</integer>
+													<integer>0</integer>
+													<integer>0</integer>
+													<integer>0</integer>
 												</array>
 											</dict>
 											<dict>
@@ -4008,9 +3553,9 @@
 												<string>Color3</string>
 												<key>value</key>
 												<array>
-													<integer>57</integer>
-													<integer>57</integer>
-													<integer>57</integer>
+													<integer>166</integer>
+													<integer>166</integer>
+													<integer>166</integer>
 												</array>
 											</dict>
 											<dict>
@@ -4201,9 +3746,9 @@
 												<string>Color3</string>
 												<key>value</key>
 												<array>
-													<integer>33</integer>
-													<integer>33</integer>
-													<integer>33</integer>
+													<integer>0</integer>
+													<integer>0</integer>
+													<integer>0</integer>
 												</array>
 											</dict>
 											<dict>
@@ -5432,9 +4977,9 @@
 												<string>Color3</string>
 												<key>value</key>
 												<array>
-													<integer>0</integer>
-													<integer>0</integer>
-													<integer>0</integer>
+													<integer>71</integer>
+													<integer>71</integer>
+													<integer>71</integer>
 												</array>
 											</dict>
 											<dict>
@@ -5667,9 +5212,9 @@
 												<string>Color3</string>
 												<key>value</key>
 												<array>
-													<integer>105</integer>
-													<integer>105</integer>
-													<integer>105</integer>
+													<integer>119</integer>
+													<integer>119</integer>
+													<integer>119</integer>
 												</array>
 											</dict>
 											<dict>
@@ -5841,9 +5386,9 @@
 												<string>Color3</string>
 												<key>value</key>
 												<array>
-													<integer>105</integer>
-													<integer>105</integer>
-													<integer>105</integer>
+													<integer>119</integer>
+													<integer>119</integer>
+													<integer>119</integer>
 												</array>
 											</dict>
 											<dict>
@@ -6015,9 +5560,9 @@
 												<string>Color3</string>
 												<key>value</key>
 												<array>
-													<integer>105</integer>
-													<integer>105</integer>
-													<integer>105</integer>
+													<integer>119</integer>
+													<integer>119</integer>
+													<integer>119</integer>
 												</array>
 											</dict>
 											<dict>
@@ -6208,9 +5753,9 @@
 												<string>Color3</string>
 												<key>value</key>
 												<array>
-													<integer>105</integer>
-													<integer>105</integer>
-													<integer>105</integer>
+													<integer>119</integer>
+													<integer>119</integer>
+													<integer>119</integer>
 												</array>
 											</dict>
 											<dict>
@@ -6382,9 +5927,9 @@
 												<string>Color3</string>
 												<key>value</key>
 												<array>
-													<integer>105</integer>
-													<integer>105</integer>
-													<integer>105</integer>
+													<integer>119</integer>
+													<integer>119</integer>
+													<integer>119</integer>
 												</array>
 											</dict>
 											<dict>
@@ -6567,9 +6112,9 @@
 												<string>Color3</string>
 												<key>value</key>
 												<array>
-													<integer>105</integer>
-													<integer>105</integer>
-													<integer>105</integer>
+													<integer>119</integer>
+													<integer>119</integer>
+													<integer>119</integer>
 												</array>
 											</dict>
 											<dict>
@@ -6752,9 +6297,9 @@
 												<string>Color3</string>
 												<key>value</key>
 												<array>
-													<integer>105</integer>
-													<integer>105</integer>
-													<integer>105</integer>
+													<integer>119</integer>
+													<integer>119</integer>
+													<integer>119</integer>
 												</array>
 											</dict>
 											<dict>
@@ -6945,9 +6490,9 @@
 												<string>Color3</string>
 												<key>value</key>
 												<array>
-													<integer>105</integer>
-													<integer>105</integer>
-													<integer>105</integer>
+													<integer>119</integer>
+													<integer>119</integer>
+													<integer>119</integer>
 												</array>
 											</dict>
 											<dict>
@@ -7037,8 +6582,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>71.400001525878906</real>
-									<real>84</real>
+									<real>81.400001525878906</real>
+									<real>74</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -7236,9 +6781,9 @@
 			<key>name</key>
 			<string>loop</string>
 			<key>offset</key>
-			<real>0.3125</real>
+			<real>0.2890625</real>
 			<key>position</key>
-			<real>0.20000000298023224</real>
+			<real>1.5</real>
 			<key>resolution</key>
 			<real>30</real>
 			<key>scale</key>

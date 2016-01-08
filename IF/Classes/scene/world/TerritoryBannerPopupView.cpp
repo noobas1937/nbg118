@@ -87,17 +87,17 @@ bool TerritoryBannerPopupView::init(){
 
     
     if (CCCommonUtils::isIosAndroidPad()) {
-        m_cancelBtn = CCControlButton::create(CCLoadSprite::createScale9Sprite("btn_yellow.png"));
+        m_cancelBtn = CCControlButton::create(CCLoadSprite::createScale9Sprite("but_blue.png"));
         m_btnLabel1 = CCLabelIF::create(_lang("115021").c_str());
         m_btnLabel1->setFontSize(32);
-        m_btnLabel1->setColor(ccc3(181, 162, 119));
+        m_btnLabel1->setColor(ccc3(255, 255, 255));
         m_cancelBtn->addTargetWithActionForControlEvents(this, cccontrol_selector(TerritoryBannerPopupView::onCancelBtnClick), CCControlEventTouchUpInside);
         m_cancelBtn->setPreferredSize(CCSize(160, 70));
         m_cancelBtn->setScaleX(2.1);
         m_cancelBtn->setScaleY(1.7);
         
-        m_confirmBtn = CCControlButton::create(CCLoadSprite::createScale9Sprite("btn_gold.png"));
-        m_confirmBtn->setBackgroundSpriteForState(CCLoadSprite::createScale9Sprite("btn_gold.png"),CCControlStateHighlighted);
+        m_confirmBtn = CCControlButton::create(CCLoadSprite::createScale9Sprite("btn_green3.png"));
+        m_confirmBtn->setBackgroundSpriteForState(CCLoadSprite::createScale9Sprite("btn_green3.png"),CCControlStateHighlighted);
         m_confirmBtn->setBackgroundSpriteForState(CCLoadSprite::createScale9Sprite("Btn_grey.png"),CCControlStateDisabled);
         m_confirmBtn->addTargetWithActionForControlEvents(this, cccontrol_selector(TerritoryBannerPopupView::onConfirmBtnClick), CCControlEventTouchUpInside);
         m_confirmBtn->setPreferredSize(CCSize(160, 70));
@@ -105,7 +105,7 @@ bool TerritoryBannerPopupView::init(){
         m_confirmBtn->setScaleY(1.7);
         m_btnLabel = CCLabelIF::create(_lang("115302").c_str());
         m_btnLabel->setFontSize(32);
-        m_btnLabel->setColor(ccc3(181, 162, 119));
+        m_btnLabel->setColor(ccc3(255, 255, 255));
         
         auto bg = CCLoadSprite::createSprite("technology_11.png");
         m_picNode->addChild(bg);
@@ -148,20 +148,20 @@ bool TerritoryBannerPopupView::init(){
         
     }
     else {
-        m_cancelBtn = CCControlButton::create(CCLoadSprite::createScale9Sprite("btn_yellow.png"));
-        CCCommonUtils::setButtonTitleColor(m_cancelBtn, ccc3(181, 162, 119));
+        m_cancelBtn = CCControlButton::create(CCLoadSprite::createScale9Sprite("but_blue.png"));
+        CCCommonUtils::setButtonTitleColor(m_cancelBtn, ccc3(255, 255, 255));
         CCCommonUtils::setButtonTitle(m_cancelBtn, _lang("115021").c_str());
         m_cancelBtn->addTargetWithActionForControlEvents(this, cccontrol_selector(TerritoryBannerPopupView::onCancelBtnClick), CCControlEventTouchUpInside);
         m_cancelBtn->setPreferredSize(CCSize(160, 70));
         
-        m_confirmBtn = CCControlButton::create(CCLoadSprite::createScale9Sprite("btn_gold.png"));
-        m_confirmBtn->setBackgroundSpriteForState(CCLoadSprite::createScale9Sprite("btn_gold.png"),CCControlStateHighlighted);
+        m_confirmBtn = CCControlButton::create(CCLoadSprite::createScale9Sprite("btn_green3.png"));
+        m_confirmBtn->setBackgroundSpriteForState(CCLoadSprite::createScale9Sprite("btn_green3.png"),CCControlStateHighlighted);
         m_confirmBtn->setBackgroundSpriteForState(CCLoadSprite::createScale9Sprite("Btn_grey.png"),CCControlStateDisabled);
         m_confirmBtn->addTargetWithActionForControlEvents(this, cccontrol_selector(TerritoryBannerPopupView::onConfirmBtnClick), CCControlEventTouchUpInside);
         m_confirmBtn->setPreferredSize(CCSize(160, 70));
         m_btnLabel = CCLabelIF::create(_lang("115302").c_str());
         m_btnLabel->setFontSize(24);
-        m_btnLabel->setColor(ccc3(181, 162, 119));
+        m_btnLabel->setColor(ccc3(255, 255, 255));
         
         auto bg = CCLoadSprite::createSprite("technology_11.png");
         m_picNode->addChild(bg);

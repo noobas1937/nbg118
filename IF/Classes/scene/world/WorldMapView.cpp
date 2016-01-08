@@ -372,7 +372,8 @@ bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType) {
     m_towerNode = CCNode::create();
     m_layers[WM_CITY]->addChild(m_towerNode, 4);
     
-    m_batchNode = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("building_level_overlay.png")->getTexture(), 448);
+//    m_batchNode = CCSpriteBatchNode::createWithTexture(CCLoadSprite::loadResource("building_level_overlay.png")->getTexture(), 448);
+    m_batchNode = CCNode::create();
     m_layers[WM_CITY]->addChild(m_batchNode, 5);
     
     m_bannerNode = CCNode::create();
@@ -4913,12 +4914,20 @@ void WorldMapView::addUnderNode(unsigned int index) {
                 }else{
                     spStr = "allianceTowerBad.png";
                 }
-                auto under = CCLoadSprite::createSprite(spStr.c_str());
+                
+                Node* under = Node::create();
                 under->setAnchorPoint(ccp(0, 0));
-                under->setTag(index);
-                under->setPosition(ccp(pos.x-_halfTileSize.width,pos.y-_halfTileSize.height) + ccp(59, 29)); // left-bottom corner
+                under->setPosition(ccp(pos.x, pos.y)); // left-bottom corner
                 m_cityItem[index].push_back(under);
                 m_batchNode->addChild(under, index);
+                
+                auto island = CCLoadSprite::createSprite("z_decor_002.png");
+                // island->setAnchorPoint(Vec2(0, 0));
+                under->addChild(island);
+                
+                auto tower = CCLoadSprite::createSprite(spStr.c_str());
+                tower->setPosition(ccp(-15, 52)); // left-bottom corner
+                under->addChild(tower);
                 
                 string fullName =  _lang_1("115406", CC_ITOA(info.m_towerInfo.dialog));
                 if (info.m_aArea_simpleName != "") {
