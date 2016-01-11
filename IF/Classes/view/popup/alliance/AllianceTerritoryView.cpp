@@ -162,6 +162,9 @@ void AllianceTerritoryView::updateInfo(CCObject* data)///////默认为显示哨�
     else
         territoryOpenVec[0] = 0;
     
+    
+    
+    
     int m_territoryDataCount = m_territoryData->count();
     for (int i = 0; i < m_territoryTotalNum - m_territoryDataCount; i++) {
         AllianceTerritoryInfo* info = new AllianceTerritoryInfo();
@@ -183,6 +186,7 @@ void AllianceTerritoryView::updateInfo(CCObject* data)///////默认为显示哨�
     }
     else
         territoryOpenVec[1] = 0;
+    
     
     if (m_resourceData->count() == 0) {//超级矿未放置状态，后台未返回任何数据，前台自行生成四个显示数据
         for (int i = 0; i < 4; i++) {
@@ -437,8 +441,9 @@ void AllianceTerritoryView::refresh(CCObject* param)
         m_showData->addObjectsFromArray(m_territoryData);
     }
     else if (index == 1) {
+        CCCommonUtils::flyHint("", "", _lang("E100008"));
         m_showData->removeAllObjects();
-        m_showData->addObjectsFromArray(m_resourceData);
+//        m_showData->addObjectsFromArray(m_resourceData);//fusheng 不开放超级矿
     }
     else if (index == 2) {
         m_showData->removeAllObjects();
@@ -514,6 +519,7 @@ CCSize AllianceTerritoryView::tableCellSizeForIndex(CCTableView *table, ssize_t 
         }
         
         if (idx == 1) {
+            territoryOpenVec[1] = 0;//fusheng 不开放超级矿
             if(territoryOpenVec[idx]==1){
                 int size = m_resourceTotalNum;
                 int num = (size-1)/2+1;
@@ -612,6 +618,7 @@ CCTableViewCell* AllianceTerritoryView::tableCellAtIndex(CCTableView *table, ssi
     AllianceTerritoryInfoCell* cell = (AllianceTerritoryInfoCell*)table->dequeueCell();
     if (idx < m_dataList.size()) {
         if (cell) {
+            territoryOpenVec[1] = 0;//fusheng 不开放超级矿
             cell->setData(idx, territoryOpenVec[idx]);
         }
         else {
@@ -619,6 +626,7 @@ CCTableViewCell* AllianceTerritoryView::tableCellAtIndex(CCTableView *table, ssi
                 cell = AllianceTerritoryInfoCell::create(idx, territoryOpenVec[idx], m_isInTheWorld);
             }
             else if (idx == 1) {
+                territoryOpenVec[1] = 0;//fusheng 不开放超级矿
                 cell = AllianceTerritoryInfoCell::create(idx, territoryOpenVec[idx], m_territoryActive);
             }
             else if (idx == 2) {
@@ -631,6 +639,7 @@ CCTableViewCell* AllianceTerritoryView::tableCellAtIndex(CCTableView *table, ssi
                 cell = AllianceTerritoryInfoCell::create(idx, territoryOpenVec[idx], m_territoryActive);
             }
         }
+        
         if (territoryOpenVec[idx] == 1) {
             int m_totalNum = 0;
             m_totalNum = m_showData->count();

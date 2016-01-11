@@ -542,9 +542,14 @@ bool GeneralTitanPopupView::init()
     onShowNextUnlockItem();
     
     CCLoadSprite::doResourceByCommonIndex(305, true);
-    CCLoadSprite::doResourceByCommonIndex(3, true);
+    CCLoadSprite::doResourceByCommonIndex(513, true);
     
-     CCLoadSprite::doResourceByCommonIndex(513, true);
+    
+    this->setCleanFunction([]{
+        CCLoadSprite::doResourceByCommonIndex(305, false);
+        CCLoadSprite::doResourceByCommonIndex(513, false);
+        
+    });
     
     auto bg = CCBLoadFile("GeneralTitanDetail",this,this);
     
