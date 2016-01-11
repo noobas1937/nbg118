@@ -1,0 +1,249 @@
+{
+"skeleton": { "hash": "oVRqrftpbNqfhF1y3vAX9c23w4M", "spine": "2.1.27", "width": 0, "height": 0 },
+"bones": [
+	{ "name": "root" },
+	{ "name": "bone", "parent": "root", "x": 318.13, "y": 1049.53 }
+],
+"slots": [
+	{ "name": "lALOBfB2h80CTs0BQA_320_590", "bone": "root" },
+	{ "name": "ActivitiesCoin_1", "bone": "bone" },
+	{ "name": "liangshi01_", "bone": "bone" },
+	{ "name": "miyin01_", "bone": "bone" },
+	{ "name": "mojin01_", "bone": "bone" },
+	{ "name": "mutou01_", "bone": "bone" }
+],
+"skins": {
+	"default": {
+		"ActivitiesCoin_1": {
+			"ActivitiesCoin_1_": { "width": 43, "height": 39 },
+			"ActivitiesCoin_2_": { "width": 44, "height": 43 },
+			"ActivitiesCoin_3_": { "width": 44, "height": 38 },
+			"ActivitiesCoin_4_": { "width": 44, "height": 41 },
+			"ActivitiesCoin_5_": { "width": 44, "height": 40 },
+			"ActivitiesCoin_6_": { "width": 43, "height": 39 },
+			"ActivitiesCoin_7_": { "width": 43, "height": 39 }
+		},
+		"liangshi01_": {
+			"liangshi01_": { "x": -0.91, "y": 7.12, "width": 53, "height": 62 }
+		},
+		"miyin01_": {
+			"miyin01_": { "x": 2.2, "y": 3.52, "width": 56, "height": 54 }
+		},
+		"mojin01_": {
+			"mojin01_": { "x": 0.45, "y": 14.74, "width": 50, "height": 50 }
+		},
+		"mutou01_": {
+			"quest_mutou01_": { "x": -0.18, "y": 28.51, "width": 34, "height": 68 }
+		}
+	}
+},
+"animations": {
+	"ActivitiesCoin": {
+		"slots": {
+			"ActivitiesCoin_1": {
+				"attachment": [
+					{ "time": 0, "name": null },
+					{ "time": 0.0666, "name": "ActivitiesCoin_2_" },
+					{ "time": 0.1333, "name": "ActivitiesCoin_3_" },
+					{ "time": 0.2, "name": "ActivitiesCoin_4_" },
+					{ "time": 0.2666, "name": "ActivitiesCoin_5_" },
+					{ "time": 0.3333, "name": "ActivitiesCoin_6_" },
+					{ "time": 0.4, "name": "ActivitiesCoin_7_" },
+					{ "time": 0.4666, "name": "ActivitiesCoin_1_" },
+					{ "time": 0.5333, "name": "ActivitiesCoin_2_" },
+					{ "time": 0.6, "name": "ActivitiesCoin_3_" },
+					{ "time": 0.6666, "name": "ActivitiesCoin_4_" },
+					{ "time": 0.7333, "name": "ActivitiesCoin_5_" },
+					{ "time": 0.8, "name": "ActivitiesCoin_6_" },
+					{ "time": 0.8666, "name": "ActivitiesCoin_7_" }
+				]
+			}
+		},
+		"bones": {
+			"bone": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.8666, "angle": -40.4 }
+				],
+				"translate": [
+					{ "time": 0, "x": -34.79, "y": 1.43 },
+					{ "time": 0.3333, "x": -34.79, "y": -508.92 },
+					{ "time": 0.5, "x": -34.79, "y": -397.76 },
+					{ "time": 0.6, "x": -34.79, "y": -473.62 },
+					{ "time": 0.7333, "x": -34.79, "y": -427.07 },
+					{ "time": 0.8666, "x": -34.79, "y": -500.19 }
+				],
+				"scale": [
+					{ "time": 0, "x": 1, "y": 1 }
+				]
+			}
+		}
+	},
+	"Iron": {
+		"slots": {
+			"ActivitiesCoin_1": {
+				"attachment": [
+					{ "time": 0, "name": null }
+				]
+			},
+			"liangshi01_": {
+				"attachment": [
+					{ "time": 0, "name": null }
+				]
+			},
+			"miyin01_": {
+				"attachment": [
+					{ "time": 0, "name": "miyin01_" }
+				]
+			}
+		},
+		"bones": {
+			"bone": {
+				"rotate": [
+					{ "time": 0, "angle": 0, "curve": "stepped" },
+					{ "time": 0.3333, "angle": 0, "curve": "stepped" },
+					{ "time": 0.5, "angle": 0, "curve": "stepped" },
+					{ "time": 0.6666, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": -34.79, "y": 1.43 },
+					{ "time": 0.3333, "x": -34.79, "y": -508.92, "curve": "stepped" },
+					{ "time": 0.5, "x": -34.79, "y": -508.92, "curve": "stepped" },
+					{ "time": 0.6666, "x": -34.79, "y": -508.92 }
+				],
+				"scale": [
+					{ "time": 0, "x": 1, "y": 1, "curve": "stepped" },
+					{ "time": 0.3333, "x": 1, "y": 1, "curve": "stepped" },
+					{ "time": 0.5, "x": 1, "y": 1, "curve": "stepped" },
+					{ "time": 0.6666, "x": 1, "y": 1 }
+				]
+			}
+		}
+	},
+	"Stone": {
+		"slots": {
+			"ActivitiesCoin_1": {
+				"attachment": [
+					{ "time": 0, "name": null }
+				]
+			},
+			"mojin01_": {
+				"attachment": [
+					{ "time": 0, "name": null },
+					{ "time": 0.0666, "name": "mojin01_" }
+				]
+			}
+		},
+		"bones": {
+			"bone": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.3333, "angle": 0.15 },
+					{ "time": 0.6, "angle": -1.75, "curve": "stepped" },
+					{ "time": 1.0333, "angle": -1.75 }
+				],
+				"translate": [
+					{ "time": 0, "x": -34.79, "y": 1.43 },
+					{ "time": 0.3333, "x": -34.79, "y": -508.92 },
+					{ "time": 0.5, "x": -34.79, "y": -397.76 },
+					{ "time": 0.6, "x": -34.79, "y": -473.62 },
+					{ "time": 0.7333, "x": -34.79, "y": -427.07 },
+					{ "time": 0.8666, "x": -34.79, "y": -478.79, "curve": "stepped" },
+					{ "time": 1.0333, "x": -34.79, "y": -478.79 }
+				],
+				"scale": [
+					{ "time": 0, "x": 1, "y": 1, "curve": "stepped" },
+					{ "time": 0.2666, "x": 1, "y": 1 },
+					{ "time": 0.3333, "x": 1.537, "y": 1 },
+					{ "time": 0.5, "x": 1, "y": 2.326 },
+					{ "time": 0.6, "x": 1.537, "y": 1 },
+					{ "time": 0.7333, "x": 1, "y": 2.105 },
+					{ "time": 0.8666, "x": 1, "y": 1.274, "curve": "stepped" },
+					{ "time": 1, "x": 1, "y": 1.274 },
+					{ "time": 1.0333, "x": 1, "y": 1 }
+				]
+			}
+		}
+	},
+	"food": {
+		"slots": {
+			"ActivitiesCoin_1": {
+				"attachment": [
+					{ "time": 0, "name": null }
+				]
+			},
+			"liangshi01_": {
+				"attachment": [
+					{ "time": 0, "name": null },
+					{ "time": 0.1333, "name": "liangshi01_" }
+				]
+			},
+			"mojin01_": {
+				"attachment": [
+					{ "time": 0, "name": null }
+				]
+			},
+			"mutou01_": {
+				"attachment": [
+					{ "time": 0, "name": null }
+				]
+			}
+		},
+		"bones": {
+			"bone": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.6666, "angle": 26.07 },
+					{ "time": 1.5, "angle": 86.32 },
+					{ "time": 2.3333, "angle": 17.11 },
+					{ "time": 3.1666, "angle": 50.28 }
+				],
+				"translate": [
+					{ "time": 0, "x": -34.79, "y": 1.43 },
+					{ "time": 0.6666, "x": -73.09, "y": -100.63 },
+					{ "time": 1.5, "x": 45.3, "y": -253.74 },
+					{ "time": 2.3333, "x": -29.85, "y": -417.06 },
+					{ "time": 3.1666, "x": 18.72, "y": -488.52 }
+				],
+				"scale": [
+					{ "time": 0, "x": 1, "y": 1 }
+				]
+			}
+		}
+	},
+	"wood": {
+		"slots": {
+			"mutou01_": {
+				"attachment": [
+					{ "time": 0, "name": null },
+					{ "time": 0.0666, "name": "quest_mutou01_" }
+				]
+			}
+		},
+		"bones": {
+			"bone": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.3333, "angle": 2.16, "curve": "stepped" },
+					{ "time": 0.7333, "angle": 2.16 },
+					{ "time": 0.8333, "angle": 45.36 },
+					{ "time": 0.9, "angle": 92.67 },
+					{ "time": 0.9333, "angle": 80.98 },
+					{ "time": 1, "angle": 93.72, "curve": "stepped" },
+					{ "time": 1.1666, "angle": 93.72 }
+				],
+				"translate": [
+					{ "time": 0, "x": -34.79, "y": 1.43 },
+					{ "time": 0.3333, "x": -34.79, "y": -508.92 },
+					{ "time": 0.5, "x": -34.79, "y": -364.45 },
+					{ "time": 0.6, "x": -34.79, "y": -494.44 },
+					{ "time": 0.7333, "x": -34.79, "y": -458.3 },
+					{ "time": 0.8333, "x": -34.79, "y": -493.36, "curve": "stepped" },
+					{ "time": 0.9, "x": -34.79, "y": -493.36, "curve": "stepped" },
+					{ "time": 1.1666, "x": -34.79, "y": -493.36 }
+				]
+			}
+		}
+	}
+}
+}
