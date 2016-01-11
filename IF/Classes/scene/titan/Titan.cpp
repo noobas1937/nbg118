@@ -55,14 +55,15 @@ struct sModelPram{
 bool Titan::initWithFile(int tid)
 {
     _tid = tid;
+//    _tid = 60004;
     float nModelScale = atof(CCCommonUtils::getPropById(CC_ITOA(_tid), "scale").c_str());
     // 设置当前node的contentSize 用于点击事件
     setContentSize(Size(500,550));
     setAnchorPoint(Vec2(0.5,0));
     
     sModelPram bodyParam;
-    bodyParam.modelName = "3d/" + CCCommonUtils::getPropById(CC_ITOA(tid), "model") + ".c3b";
-    bodyParam.textureName = "3d/" + CCCommonUtils::getPropById(CC_ITOA(tid), "texture") + ".jpg";
+    bodyParam.modelName = "3d/" + CCCommonUtils::getPropById(CC_ITOA(_tid), "model") + ".c3b";
+    bodyParam.textureName = "3d/" + CCCommonUtils::getPropById(CC_ITOA(_tid), "texture") + ".jpg";
 //    bodyParam.textureShaderName = "3d/titan_1_shader.jpg";
 //    bodyParam.vShaderFileName = "shaders/titan.vsh";
 //    bodyParam.fShaderFileName = "shaders/titan.fsh";
@@ -92,7 +93,7 @@ bool Titan::initWithFile(int tid)
     if (true) {
         return true;
     }
-    
+/* 换装组件测试
     // left shoulder
     sModelPram shoulderLeftParam;
     shoulderLeftParam.modelName = "3d/shoulder_l_1.obj";
@@ -180,6 +181,7 @@ bool Titan::initWithFile(int tid)
 //    auto handrightNode = _model->getAttachNode("hand_r");
 //    handrightNode->addChild(rootps2);
     
+*/
     
 //    changeTitanState(eActState::Stand);
 
@@ -339,12 +341,6 @@ bool Titan::onTouched(CCTouch* pTouch)
         case eActState::Stand:
             changeTitanState(eActState::Walk);
             break;
-//        case eActState::Walk:
-//            changeTitanState(eActState::Idle);
-            break;
-        case eActState::Sleep:
-            changeTitanState(eActState::Dream);
-            break;
         default:
             break;
     }
@@ -371,17 +367,11 @@ void Titan::changeTitanState(eActState state)
         case eActState::Idle:
             ilde();
             break;
-        case eActState::Attack:
-            attack();
+        case eActState::Cheer:
+            cheer();
             break;
         case eActState::Walk:
             walk();
-            break;
-        case eActState::Sleep:
-            sleep();
-            break;
-        case eActState::Dream:
-            dream();
             break;
         default:
             break;
@@ -459,6 +449,47 @@ void Titan::stand()
     }
 }
 
+void Titan::walk()
+{
+    std::map<eActState,Animate3D*>::iterator it = _actionCache.find(eActState::Walk);
+    Animate3D* pAnim = nullptr;
+    if (it == _actionCache.end()) {
+        auto animInfo = getAnimationByType(eActState::Walk);
+        if (animInfo) {
+            auto animation3d = Animation3D::create(animInfo->animationName);
+            if (animation3d) {
+                pAnim = Animate3D::createWithFrames(animation3d, animInfo->startFrame, animInfo->endFrame);
+                
+                if (animInfo->keyFrames.size()!=0) {
+                    ValueMap v;
+                    
+                    v.insert(std::make_pair("fly_Dust",Value("fly_Dust")));
+                    //                    v.insert("action","fly_Dust");
+                    for (int i=0; i<animInfo->keyFrames.size(); i++) {
+                        pAnim->setKeyFrameUserInfo(animInfo->keyFrames.at(i),v);
+                    }
+                }
+                pAnim->retain();
+                _actionCache.insert(std::map<eActState,Animate3D*>::value_type(eActState::Walk,pAnim));
+            }
+        }
+    }
+    else
+    {
+        pAnim = it->second;
+    }
+    if (pAnim) {
+        Action* act = Repeat::create(pAnim,1);
+        act->setTag(1);
+        _model->stopAllActions();
+        _model->runAction(act);
+    }
+    else
+    {
+        changeTitanState(_lastState);
+    }
+}
+
 void Titan::ilde()
 {
     std::map<eActState,Animate3D*>::iterator it = _actionCache.find(eActState::Idle);
@@ -486,21 +517,18 @@ void Titan::ilde()
     }
 }
 
-void Titan::attack()
+void Titan::cheer()
 {
-    if (true) {
-        return;
-    }
-    std::map<eActState,Animate3D*>::iterator it = _actionCache.find(eActState::Attack);
+    std::map<eActState,Animate3D*>::iterator it = _actionCache.find(eActState::Cheer);
     Animate3D* pAnim = nullptr;
     if (it == _actionCache.end()) {
-        auto animInfo = getAnimationByType(eActState::Attack);
+        auto animInfo = getAnimationByType(eActState::Cheer);
         if (animInfo) {
             auto animation3d = Animation3D::create(animInfo->animationName);
             if (animation3d) {
                 pAnim = Animate3D::createWithFrames(animation3d, animInfo->startFrame, animInfo->endFrame);
                 pAnim->retain();
-                _actionCache.insert(std::map<eActState,Animate3D*>::value_type(eActState::Attack,pAnim));
+                _actionCache.insert(std::map<eActState,Animate3D*>::value_type(eActState::Cheer,pAnim));
             }
         }
     }
@@ -515,58 +543,6 @@ void Titan::attack()
         _model->stopAllActions();
         _model->runAction(act);
     }
-}
-
-void Titan::walk()
-{
-    std::map<eActState,Animate3D*>::iterator it = _actionCache.find(eActState::Walk);
-    Animate3D* pAnim = nullptr;
-    if (it == _actionCache.end()) {
-        auto animInfo = getAnimationByType(eActState::Walk);
-        if (animInfo) {
-            auto animation3d = Animation3D::create(animInfo->animationName);
-            if (animation3d) {
-                pAnim = Animate3D::createWithFrames(animation3d, animInfo->startFrame, animInfo->endFrame);
-                
-                if (animInfo->keyFrames.size()!=0) {
-                    ValueMap v;
-                    
-                    v.insert(std::make_pair("fly_Dust",Value("fly_Dust")));
-//                    v.insert("action","fly_Dust");
-                    for (int i=0; i<animInfo->keyFrames.size(); i++) {
-                        pAnim->setKeyFrameUserInfo(animInfo->keyFrames.at(i),v);
-                    }
-                }
-                pAnim->retain();
-                _actionCache.insert(std::map<eActState,Animate3D*>::value_type(eActState::Walk,pAnim));
-            }
-        }
-    }
-    else
-    {
-        pAnim = it->second;
-    }
-    if (pAnim) {
-        Action* act = Repeat::create(pAnim,1);
-        act->setTag(1);
-        _model->stopAllActions();
-        _model->runAction(act);
-    }
-    else
-    {
-        changeTitanState(_lastState);
-    }
-}
-
-
-void Titan::sleep()
-{
-    
-}
-
-void Titan::dream()
-{
-    
 }
 
 void Titan::turnFront()

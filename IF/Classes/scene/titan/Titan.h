@@ -32,10 +32,8 @@ public:
     {
         Stand = 0,
         Walk,
+        Cheer,
         Idle,
-        Attack,
-        Sleep,
-        Dream,
     };
     
     enum class eFaceDir
@@ -90,11 +88,9 @@ protected:
     bool initWithFile(int tid);
     
     void stand();
-    void ilde();
     void walk();
-    void attack();
-    void sleep();
-    void dream();
+    void ilde();
+    void cheer();
 
     sAnimationInfo* getAnimationByType(eActState e);
     

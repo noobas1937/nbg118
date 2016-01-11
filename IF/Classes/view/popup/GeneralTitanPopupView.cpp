@@ -819,7 +819,7 @@ void GeneralTitanPopupView::handleTitanUpgrade(CCObject* obj)
             
             
             TitanInView* view = dynamic_cast<TitanInView*>(  m_titanPosInView->getChildByTag(10086));
-            view->m_Titan->changeTitanState(Titan::eActState::Idle);//fusheng 蛋破碎
+            view->m_Titan->changeTitanState(Titan::eActState::Cheer);//fusheng 蛋破碎
             if (view) {
                 
                 CCLOG("GeneralTitanPopupView titan sheng ji ");
@@ -896,7 +896,7 @@ void GeneralTitanPopupView::handleTianUpgradeAnimationComplete(CCObject* obj)
         
         m_titanPosInView->addChild(tieanInView );
         
-        tieanInView->m_Titan->changeTitanState(Titan::eActState::Idle);//fusheng 升级动画完成后 播放一个idle
+        tieanInView->m_Titan->changeTitanState(Titan::eActState::Cheer);//fusheng 升级动画完成后 播放一个cheer
         
         CCLOG("GeneralTitanPopupView titan sheng ji animation complete");
         //            view->setVisible(true);
@@ -2344,7 +2344,7 @@ void GeneralTitanPopupView::onTitanFeedClick(CCObject * pSender, Control::EventT
             TitanInView* view = dynamic_cast<TitanInView*>(  m_titanPosInView->getChildByTag(10086));
             
             if (view && GlobalData::shared()->titanInfo.level != 1) {
-                view->m_Titan->changeTitanState(Titan::eActState::Idle);
+                view->m_Titan->changeTitanState(Titan::eActState::Cheer);
             }
 
 
@@ -2395,7 +2395,7 @@ void GeneralTitanPopupView::AccGrowthCallBack()
     TitanInView* view = dynamic_cast<TitanInView*>(  m_titanPosInView->getChildByTag(10086));
     
     if (view && GlobalData::shared()->titanInfo.level != 1) {
-        view->m_Titan->changeTitanState(Titan::eActState::Idle);
+        view->m_Titan->changeTitanState(Titan::eActState::Cheer);
     }
     TitanFeedCommand *tfCommand = new TitanFeedCommand();
     tfCommand->sendAndRelease();
