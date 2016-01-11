@@ -130,7 +130,8 @@ void DropRdCCB::onDropOneCell(CCObject* obj)
         int dx = CCMathUtils::getRandomInt(0, 640);
         
         int dy = CCMathUtils::getRandomInt(0, 100);
-        skAni->setPosition(m_ptArray[idx]+ccp(0, 600));
+//        skAni->setPosition(m_ptArray[idx]+ccp(0, 600));
+        skAni->setPosition(m_ptArray[idx]+ccp(0, 0));
         if (CCCommonUtils::isIosAndroidPad())
         {
             skAni->setPosition(m_ptArray[idx]+ccp(0, 800));
@@ -144,16 +145,19 @@ void DropRdCCB::onDropOneCell(CCObject* obj)
 void DropRdCCB::onPlayDrop()
 {
     m_ptArray.clear();
-    int constPt = 320;
+//    int constPt = 320;
+    int constPt = 40;
     if (CCCommonUtils::isIosAndroidPad())
     {
 //        constPt = 768;
     }
     int tmpPtx = constPt;
-    int tmpPty = 500;
+//    int tmpPty = 500;
+    int tmpPty = -300;
     for (int i=1; i<=7; i++) {
         tmpPtx = constPt - 40*(i-1);
-        tmpPty = 100 - 10*(i-1);
+//        tmpPty = 100 - 10*(i-1);
+        tmpPty = 0 - 10*(i-1);
         for (int j=0; j<i; j++) {
             int offx = CCMathUtils::getRandomInt(0, 40)-20;
             int offy = CCMathUtils::getRandomInt(0, 40)-20;
