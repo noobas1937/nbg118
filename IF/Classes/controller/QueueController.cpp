@@ -110,7 +110,15 @@ void QueueController::onEnterFrame(float dt)
                                     m_buildQueueInfo[it->first] = QueueInfo(it->second);
                                     string para1 = _lang(biter->second.name);
                                     string para2 = string (" Lv") + CC_ITOA(biter->second.level + 1) + string(" ");
-                                    CCCommonUtils::flyHint("", "", _lang_2("137480", para1.c_str(), para2.c_str()), 2, 0, true);
+                                    if(biter->second.itemId == FUN_BUILD_MAIN_CITY_ID)//fusheng 龙
+                                    {
+                                        CCCommonUtils::flyHint("", "", _lang_2("500032", para1.c_str(), para2.c_str()), 2, 0, true);
+                                    }
+                                    else
+                                    {
+                                        CCCommonUtils::flyHint("", "", _lang_2("137480", para1.c_str(), para2.c_str()), 2, 0, true);
+                                    }
+                                    
                                     SoundController::sharedSound()->playEffects(Music_Sfx_UI_buildfinish);
                                     
                                     //fusheng 在世界场景里  建筑物升级 仅仅只是提示一下
@@ -133,7 +141,15 @@ void QueueController::onEnterFrame(float dt)
                                         iter->second.uuid = it->second.uuid;
                                         string para1 = _lang(biter->second.name);
                                         string para2 = string (" Lv") + CC_ITOA(biter->second.level + 1) + string(" ");
-                                        CCCommonUtils::flyHint("", "", _lang_2("137480", para1.c_str(), para2.c_str()), 2, 0, true);
+                                        if(biter->second.itemId == FUN_BUILD_MAIN_CITY_ID)//fusheng 龙
+                                        {
+                                            CCCommonUtils::flyHint("", "", _lang_2("500032", para1.c_str(), para2.c_str()), 2, 0, true);
+                                        }
+                                        else
+                                        {
+                                            CCCommonUtils::flyHint("", "", _lang_2("137480", para1.c_str(), para2.c_str()), 2, 0, true);
+                                        }
+                                        
                                         SoundController::sharedSound()->playEffects(Music_Sfx_UI_buildfinish);
                                         
 
