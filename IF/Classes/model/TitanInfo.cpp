@@ -63,24 +63,24 @@ int TitanInfo::resetTitanInfo(CCDictionary* dict)//0没有改变 1数值改变(�
             level = newLevel;
             tid = 60000 + level;
             auto temp = dynamic_cast<CCDictionary*>(LocalController::shared()->DBXMLManager()->getGroupByKey("titan")->objectForKey(CCString::createWithFormat("%d", tid)->getCString()));
-            if(temp)
-            {
-                feedFoodNum = temp->valueForKey("needfood")->intValue();
-                nextExp = temp->valueForKey("needexp")->intValue();
-                maxManual= temp->valueForKey("maxmanual")->intValue();
-                std::vector<std::string> tmpVec;
-                splitString(temp->valueForKey("feedcdtime")->getCString(), ",", tmpVec);
-                maxFeedIntervalTime = atoi(tmpVec[tmpVec.size()-1].c_str())*60;//fusheng 最后一次喂食时间间隔（秒数）
-                feedMaxNum = tmpVec.size()+1;
-                recoverymanual = temp->valueForKey("recoverymanual")->intValue();
-                costmanual = temp->valueForKey("costmanual")->intValue();
-                recoverInterval = temp->valueForKey("recoverInterval")->intValue();
-                recoverPerInterval = (recoverInterval*1000)/(float)recoverymanual;
-//                lastCalTime(0),
-//                recoverymanual(0),
-//                costmanual(0),
-//                recoverInterval(0)
-            }
+//            if(temp)
+//            {
+//                feedFoodNum = temp->valueForKey("needfood")->intValue();
+//                nextExp = temp->valueForKey("needexp")->intValue();
+//                maxManual= temp->valueForKey("maxmanual")->intValue();
+//                std::vector<std::string> tmpVec;
+//                splitString(temp->valueForKey("feedcdtime")->getCString(), ",", tmpVec);
+//                maxFeedIntervalTime = atoi(tmpVec[tmpVec.size()-1].c_str())*60;//fusheng 最后一次喂食时间间隔（秒数）
+//                feedMaxNum = tmpVec.size()+1;
+//                recoverymanual = temp->valueForKey("recoverymanual")->intValue();
+//                costmanual = temp->valueForKey("costmanual")->intValue();
+//                recoverInterval = temp->valueForKey("recoverInterval")->intValue();
+//                recoverPerInterval = (recoverInterval*1000)/(float)recoverymanual;
+////                lastCalTime(0),
+////                recoverymanual(0),
+////                costmanual(0),
+////                recoverInterval(0)
+//            }
             if(newLevel != 1)
             {
                 
@@ -126,6 +126,62 @@ int TitanInfo::resetTitanInfo(CCDictionary* dict)//0没有改变 1数值改变(�
         }
         
     }
+  
+    
+    if (dict->objectForKey("needfood")) {
+        int newData =  dict->valueForKey("needfood")->intValue();
+
+        feedFoodNum = newData;
+
+    }
+    
+    if (dict->objectForKey("needexp")) {
+        int newData =  dict->valueForKey("needexp")->intValue();
+        
+        nextExp = newData;
+        
+    }
+   
+    if (dict->objectForKey("recoverymanual")) {
+        int newData =  dict->valueForKey("recoverymanual")->intValue();
+        
+        recoverymanual = newData;
+        
+    }
+    
+    if (dict->objectForKey("recoverInterval")) {
+        int newData =  dict->valueForKey("recoverInterval")->intValue();
+        
+        recoverInterval = newData;
+        
+         recoverPerInterval = (recoverInterval*1000)/(float)recoverymanual;
+        
+    }
+    
+    
+    if (dict->objectForKey("costmanual")) {
+        int newData =  dict->valueForKey("costmanual")->intValue();
+        
+        costmanual = newData;
+        
+    }
+    
+    
+    if (dict->objectForKey("feedcdtime")) {
+        string newData =  dict->valueForKey("feedcdtime")->getCString();
+        
+
+        
+        std::vector<std::string> tmpVec;
+        splitString(newData, ",", tmpVec);
+
+        maxFeedIntervalTime = atoi(tmpVec[tmpVec.size()-1].c_str())*60;//fusheng 最后一次喂食时间间隔（秒数）
+         feedMaxNum = tmpVec.size()+1;
+        
+    }
+    
+    
+    
     if (dict->objectForKey("exp")) {
         int newData =  dict->valueForKey("exp")->intValue();
         if (newData != exp) {
