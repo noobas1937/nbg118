@@ -127,6 +127,13 @@ int TitanInfo::resetTitanInfo(CCDictionary* dict)//0没有改变 1数值改变(�
         
     }
   
+    if (dict->objectForKey("turemaxmanual")) {
+        int newData =  dict->valueForKey("turemaxmanual")->intValue();
+        
+ 
+        maxManual = newData;
+        
+    }
     
     if (dict->objectForKey("needfood")) {
         int newData =  dict->valueForKey("needfood")->intValue();
