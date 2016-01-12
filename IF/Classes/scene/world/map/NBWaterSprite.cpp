@@ -86,7 +86,7 @@ bool NBWaterSprite::initWithTexture(CCTexture2D* texture, const CCRect& rect)
                                                                       NULL);
         
         m_pFoam = Director::getInstance()->getTextureCache()->addImage("shaders/foam.png");
-        m_pShape = Director::getInstance()->getTextureCache()->addImage("shaders/water_shape_3040.jpg");
+        m_pShape = Director::getInstance()->getTextureCache()->addImage("shaders/water_shape_1520.jpg");
         if(m_pFoam)
             m_pFoam->retain();
         if(m_pShape)
