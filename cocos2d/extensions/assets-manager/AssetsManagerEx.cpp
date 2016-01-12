@@ -108,11 +108,11 @@ AssetsManagerEx::~AssetsManagerEx()
     _downloader->_onError = nullptr;
     _downloader->_onSuccess = nullptr;
     _downloader->_onProgress = nullptr;
-    CC_SAFE_RELEASE(_localManifest);
     // _tempManifest could share a ptr with _remoteManifest or _localManifest
     if (_tempManifest != _localManifest && _tempManifest != _remoteManifest)
-        CC_SAFE_RELEASE(_tempManifest);
-    CC_SAFE_RELEASE(_remoteManifest);
+        CC_SAFE_RELEASE_NULL(_tempManifest);
+    CC_SAFE_RELEASE_NULL(_localManifest);
+    CC_SAFE_RELEASE_NULL(_remoteManifest);
 }
 
 AssetsManagerEx* AssetsManagerEx::create(
@@ -197,7 +197,7 @@ void AssetsManagerEx::loadLocalManifest(const std::string& manifestUrl)
             if (!cachedManifest->isLoaded())
             {
                 _fileUtils->removeFile(_cacheManifestPath);
-                CC_SAFE_RELEASE(cachedManifest);
+                CC_SAFE_RELEASE_NULL(cachedManifest);
                 cachedManifest = nullptr;
             }
         }
@@ -216,11 +216,11 @@ void AssetsManagerEx::loadLocalManifest(const std::string& manifestUrl)
                 // Recreate storage, to empty the content
                 _fileUtils->removeDirectory(_storagePath);
                 _fileUtils->createDirectory(_storagePath);
-                CC_SAFE_RELEASE(cachedManifest);
+                CC_SAFE_RELEASE_NULL(cachedManifest);
             }
             else
             {
-                CC_SAFE_RELEASE(_localManifest);
+                CC_SAFE_RELEASE_NULL(_localManifest);
                 _localManifest = cachedManifest;
             }
         }

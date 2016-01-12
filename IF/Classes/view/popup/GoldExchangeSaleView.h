@@ -55,8 +55,8 @@ private:
     
     CCSafeObject<CCLabelIF> m_titleLabel;
     CCSafeObject<CCLabelBMFont> m_percentLabel;
-    //CCSafeObject<CCLabelBMFont> m_getGoldNumText;
-    CCSafeObject<CCLabelIF> m_getGoldNumText;
+    CCSafeObject<CCLabelBMFont> m_getGoldNumText;
+    //CCSafeObject<CCLabelIF> m_getGoldNumText;
     CCSafeObject<CCLabelIF> m_timeLabel;
     
     CCSafeObject<CCLabelIF> m_oldPriceLabel;

@@ -367,8 +367,8 @@ bool ImperialScene::init()
     mShipLevel = 0;
     
     auto water = NBWaterSprite::create(WATER_NORMALS);
-    water->setScaleX(1.5 * water->getShapeScaleX());
-    water->setScaleY(1.5 * water->getShapeScaleY());
+    water->setScaleX(3.0 * water->getShapeScaleX());
+    water->setScaleY(3.0 * water->getShapeScaleY());
    
     water->setAnchorPoint(Vec2(0.5,0.5));
     m_waterNode->addChild(water);
