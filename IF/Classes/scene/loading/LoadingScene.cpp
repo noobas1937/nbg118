@@ -117,6 +117,7 @@ void LoadingScene::addVersionLabel()
 #else
     // tao.yu 正式服暂时不显示版本号
 //    CCLabelIF* label = CCLabelIF::create(CCString::createWithFormat("V %s (%s)",_version.c_str(),cocos2d::extension::CCDevice::getVersionCode().c_str())->getCString());
+    CCLabelIF* label = CCLabelIF::create("");
 #endif
     
     label->setScale(0.5f);
