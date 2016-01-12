@@ -1280,15 +1280,21 @@ void DynamicResourceController::loadNameTypeResource(std::string name, bool rele
          CCLog("android_test_loadNameTypeResourceName[%s]_file_not_exite",fileName.c_str());
         return;
     }
-    if(release==false){
+    
+    if (release == false)
+    {
         cocos2d::CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(fileName.c_str());
-    }else{
+        CCLoadSprite::retain_texture(fileName);
+    }
+    else if (CCLoadSprite::release_texture(fileName))
+    {
         cocos2d::CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesFromFile(fileName.c_str());
         
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         std::string textName1 = m_writeablePath + DynamicResource_Folder +"_alpha_" + name + ".pkm";
         CCTexture2D *texture1 =  CCTextureCache::sharedTextureCache()->textureForKey(textName1.c_str());
-        if(texture1){
+        if (texture1)
+        {
             CCTextureCache::sharedTextureCache()->removeTexture(texture1);
             CCLog("DynamicResource_texutre_remove:[%s]",textName1.c_str());
         }
@@ -1301,7 +1307,8 @@ void DynamicResourceController::loadNameTypeResource(std::string name, bool rele
 #else
         std::string textName = m_writeablePath + DynamicResource_Folder + name + ".pvr.ccz";
         CCTexture2D *texture =  CCTextureCache::sharedTextureCache()->textureForKey(textName.c_str());
-        if(texture){
+        if (texture)
+        {
             CCTextureCache::sharedTextureCache()->removeTexture(texture);
         }
 #endif

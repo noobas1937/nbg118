@@ -1235,7 +1235,6 @@ void SearchAllianceInfoView::onMemberClick(CCObject * pSender, Control::EventTyp
     bool isApply = GlobalData::shared()->playerInfo.allianceInfo.uid !=m_info->uid;
     if (GlobalData::shared()->playerInfo.selfServerId == m_info->serverId) {
         auto popup = AllianceInfoMembersView::create(m_info->uid,isApply);
-        popup->setReleaseTextureAfterRemove(false);
         PopupViewController::getInstance()->addPopupInView(popup);
     } else {
 //        PopupViewController::getInstance()->addPopupInView(AllianceInfoMembersView::create(m_info->uid,false));

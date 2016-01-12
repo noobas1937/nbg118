@@ -103,9 +103,9 @@ void LoadingScene::addLoadingBG(Point& addPt)
 
 void LoadingScene::addVersionLabel()
 {
-    if (true) {
-        return;
-    }
+//    if (true) {
+//        return;
+//    }
     string _uuid = cocos2d::extension::CCDevice::getDeviceUid();
     GlobalData::shared()->version = cocos2d::extension::CCDevice::getVersionName();
     
@@ -115,7 +115,9 @@ void LoadingScene::addVersionLabel()
 #if COCOS2D_DEBUG > 0
     CCLabelIF* label = CCLabelIF::create(CCString::createWithFormat("Inner-V: %s \n hudson Code: %s \n deviceID: %s",_version.c_str(),cocos2d::extension::CCDevice::getVersionCode().c_str(),_uuid.c_str())->getCString());
 #else
-    CCLabelIF* label = CCLabelIF::create(CCString::createWithFormat("V %s (%s)",_version.c_str(),cocos2d::extension::CCDevice::getVersionCode().c_str())->getCString());
+    // tao.yu 正式服暂时不显示版本号
+//    CCLabelIF* label = CCLabelIF::create(CCString::createWithFormat("V %s (%s)",_version.c_str(),cocos2d::extension::CCDevice::getVersionCode().c_str())->getCString());
+    CCLabelIF* label = CCLabelIF::create("");
 #endif
     
     label->setScale(0.5f);

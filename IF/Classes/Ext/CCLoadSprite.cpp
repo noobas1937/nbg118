@@ -13,6 +13,39 @@
 #include <map>
 
 static std::map<std::string, bool> map_NBDLCController;
+static std::map<std::string, int> MAP_TEXTURES_MANAGER;
+
+void CCLoadSprite::retain_texture(const std::string& texture)
+{
+    auto it = MAP_TEXTURES_MANAGER.find(texture);
+    if (it == MAP_TEXTURES_MANAGER.end())
+    {
+        MAP_TEXTURES_MANAGER[texture] = 1;
+    }
+    else
+    {
+        MAP_TEXTURES_MANAGER[texture] += 1;
+    }
+    
+    CCLog("CCLoadSprite::retain_texture (%s, %d)", texture.c_str(), MAP_TEXTURES_MANAGER[texture]);
+}
+
+bool CCLoadSprite::release_texture(const std::string& texture)
+{
+    auto it = MAP_TEXTURES_MANAGER.find(texture);
+    if (it == MAP_TEXTURES_MANAGER.end())
+    {
+        MAP_TEXTURES_MANAGER[texture] = 0;
+    }
+    else
+    {
+        MAP_TEXTURES_MANAGER[texture] -= 1;
+    }
+    
+    CCLog("CCLoadSprite::release_texture (%s, %d)", texture.c_str(), MAP_TEXTURES_MANAGER[texture]);
+    
+    return MAP_TEXTURES_MANAGER[texture] <= 0;
+}
 
 #define CC_2x2_WHITE_IMAGE_KEY  "cc_2x2_white_image"
 static unsigned char cc_2x2_white_image[] = {
@@ -442,6 +475,7 @@ void CCLoadSprite::doLoadResource(const char* path, int index, bool frameLoad)
         else
         {
             cocos2d::CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(buffer);
+            retain_texture(buffer);
         }
     }
     else
@@ -455,21 +489,27 @@ void CCLoadSprite::doLoadResource(const char* path, int index, bool frameLoad)
         else
         {
             cocos2d::CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(buffer);
+            retain_texture(buffer);
         }
     }
 }
 
 void CCLoadSprite::doReleaseResource(const char* path, int index) {
-    if (path) {
+    if (path)
+    {
         char buffer[256];
         sprintf(buffer,path,index);
 //        cocos2d::CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesAndTextureWithFile(buffer);
-        cocos2d::CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesFromFile(buffer); 
-        CCTextureCache::sharedTextureCache()->removeUnusedTextures();
+        if (release_texture(buffer))
+        {
+            cocos2d::CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesFromFile(buffer);
+            CCTextureCache::sharedTextureCache()->removeUnusedTextures();
+        }
     }
     
     
-if (CCTexture2D::useDownloadResource() == true && path) {
+    if (CCTexture2D::useDownloadResource() == true && path)
+    {
         string path1 =  CCFileUtils::sharedFileUtils()->getWritablePath();
         path1.append(DynamicResource_Folder);
         string filePath = path;
@@ -481,9 +521,13 @@ if (CCTexture2D::useDownloadResource() == true && path) {
         char buffer[256];
         sprintf(buffer,path1.c_str(),index);
         CCLog("android_test_doReleaseResource[%s]",buffer);
-        if(CCFileUtils::sharedFileUtils()->isFileExist(buffer)){
-            cocos2d::CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesFromFile(buffer);
-            CCTextureCache::sharedTextureCache()->removeUnusedTextures();
+        if (CCFileUtils::sharedFileUtils()->isFileExist(buffer))
+        {
+            if (release_texture(buffer))
+            {
+                cocos2d::CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesFromFile(buffer);
+                CCTextureCache::sharedTextureCache()->removeUnusedTextures();
+            }
         }
     }
 }
@@ -557,6 +601,7 @@ void ImageLoadAsync::addImageCallback(CCObject* obj)
         //dict->release();
        // cocos2d::CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesName(getPlistPath().c_str());
         cocos2d::CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(getPlistPath(),pTexture);
+        CCLoadSprite::retain_texture(getPlistPath());
         if (getSuccessCallback())
         {
             CCCallFuncO * func=getSuccessCallback();
@@ -634,6 +679,7 @@ void FrameSpriteLoader::update(float time){
         if(filePath != ""){
 //            CCLoadSprite::loadResource(filePath.c_str());
             cocos2d::CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(filePath.c_str());
+            CCLoadSprite::retain_texture(filePath);
         }
     }
     if(!m_loadSpriteArr || m_loadSpriteArr->count() == 0){

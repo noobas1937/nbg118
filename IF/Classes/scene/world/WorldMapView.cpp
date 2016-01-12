@@ -4922,7 +4922,6 @@ void WorldMapView::addUnderNode(unsigned int index) {
                 m_batchNode->addChild(under, index);
                 
                 auto island = CCLoadSprite::createSprite("z_decor_002.png");
-                // island->setAnchorPoint(Vec2(0, 0));
                 under->addChild(island);
                 
                 auto tower = CCLoadSprite::createSprite(spStr.c_str());
@@ -5158,22 +5157,44 @@ void WorldMapView::addUnderNode(unsigned int index) {
         }
             break;
         case tile_wareHouse:{
-            CCArray *arr = getCityPicArr(info, 1,getPicIdByCityInfo(info));
-            int i = 0;
-            while (i < arr->count()) {
-                auto pics = _dict(arr->objectAtIndex(i));
-                std::string picStr = pics->valueForKey("pic")->getCString();
-                int x = pics->valueForKey("x")->intValue();
-                int y = pics->valueForKey("y")->intValue();
-                auto under = CCLoadSprite::createSprite(picStr.c_str());
+//            CCArray *arr = getCityPicArr(info, 1,getPicIdByCityInfo(info));
+//            int i = 0;
+            // 1379.png - 1392.png
+//            while (i < arr->count()) {
+//                auto pics = _dict(arr->objectAtIndex(i));
+//                std::string picStr = pics->valueForKey("pic")->getCString();
+//                int x = pics->valueForKey("x")->intValue();
+//                int y = pics->valueForKey("y")->intValue();
+//                auto under = CCLoadSprite::createSprite(picStr.c_str());
+//                under->setAnchorPoint(ccp(0, 0));
+//                under->setTag(index);
+//                under->setPosition(ccp(pos.x-_halfTileSize.width,pos.y-_halfTileSize.height) + ccp(x, y)); // left-bottom corner
+//                m_cityItem[index].push_back(under);
+//                m_batchNode->addChild(under, index + i);
+//                i++;
+//            }
+            
+            if (info.parentCityIndex == info.cityIndex)
+            {
+                Node* under = Node::create();
                 under->setAnchorPoint(ccp(0, 0));
-                under->setTag(index);
-                under->setPosition(ccp(pos.x-_halfTileSize.width,pos.y-_halfTileSize.height) + ccp(x, y)); // left-bottom corner
+                under->setPosition(ccp(pos.x, pos.y + _halfTileSize.height)); // left-bottom corner
                 m_cityItem[index].push_back(under);
-                m_batchNode->addChild(under, index + i);
-                i++;
-            }
-            if(info.parentCityIndex == info.cityIndex){
+                m_batchNode->addChild(under, index);
+                
+//                auto island = CCLoadSprite::createSprite("z_decor_002.png");
+//                under->addChild(island);
+                auto island = NBWorldMapMainCity::getMainCityIslandImage(0, pos.x, pos.y);
+                if (island)
+                {
+                    island->setPosition(-_halfTileSize.width * 1.5, -_halfTileSize.height * 1.5);
+                    under->addChild(island);
+                }
+                
+                auto tower = CCLoadSprite::createSprite("territory_warehouse.png");
+                tower->setPosition(ccp(-25, 62)); // left-bottom corner
+                under->addChild(tower);
+                
                 string fullName = info.m_aArea_nickname;
                 if (fullName == "") {
                     fullName = _lang("115364");
@@ -5390,22 +5411,44 @@ void WorldMapView::addUnderNode(unsigned int index) {
                 if (m_aAreaAniNode->getChildByTag(info.cityIndex)) {
                     m_aAreaAniNode->removeChildByTag(info.cityIndex);
                 }
-                CCArray *arr = getCityPicArr(info, 1,getPicIdByCityInfo(info));
-                int i = 0;
-                while (i < arr->count()) {
-                    auto pics = _dict(arr->objectAtIndex(i));
-                    std::string picStr = pics->valueForKey("pic")->getCString();
-                    int x = pics->valueForKey("x")->intValue();
-                    int y = pics->valueForKey("y")->intValue();
-                    auto under = CCLoadSprite::createSprite(picStr.c_str());
+                
+//                CCArray *arr = getCityPicArr(info, 1,getPicIdByCityInfo(info));
+//                int i = 0;
+//                while (i < arr->count()) {
+//                    auto pics = _dict(arr->objectAtIndex(i));
+//                    std::string picStr = pics->valueForKey("pic")->getCString();
+//                    int x = pics->valueForKey("x")->intValue();
+//                    int y = pics->valueForKey("y")->intValue();
+//                    auto under = CCLoadSprite::createSprite(picStr.c_str());
+//                    under->setAnchorPoint(ccp(0, 0));
+//                    under->setTag(index);
+//                    under->setPosition(ccp(pos.x-_halfTileSize.width,pos.y-_halfTileSize.height) + ccp(x, y)); // left-bottom corner
+//                    m_cityItem[index].push_back(under);
+//                    m_batchNode->addChild(under, index + i);
+//                    i++;
+//                }
+                
+                if (info.parentCityIndex == info.cityIndex)
+                {
+                    Node* under = Node::create();
                     under->setAnchorPoint(ccp(0, 0));
-                    under->setTag(index);
-                    under->setPosition(ccp(pos.x-_halfTileSize.width,pos.y-_halfTileSize.height) + ccp(x, y)); // left-bottom corner
+                    under->setPosition(ccp(pos.x, pos.y + _halfTileSize.height)); // left-bottom corner
                     m_cityItem[index].push_back(under);
-                    m_batchNode->addChild(under, index + i);
-                    i++;
-                }
-                if(info.parentCityIndex == info.cityIndex){
+                    m_batchNode->addChild(under, index);
+                    
+                    //                auto island = CCLoadSprite::createSprite("z_decor_002.png");
+                    //                under->addChild(island);
+                    auto island = NBWorldMapMainCity::getMainCityIslandImage(0, pos.x, pos.y);
+                    if (island)
+                    {
+                        island->setPosition(-_halfTileSize.width * 1.5, -_halfTileSize.height * 1.5);
+                        under->addChild(island);
+                    }
+                    
+                    auto tower = CCLoadSprite::createSprite("territory_fort.png");
+                    tower->setPosition(ccp(-25, 62)); // left-bottom corner
+                    under->addChild(tower);
+                    
                     if (0 < info.m_allianceAreaInfo.range && info.m_allianceAreaInfo.range < 100) {
                         initAAreaBlankInfo(info.cityIndex, info.m_allianceAreaInfo.range,isMyalliance);
                     }

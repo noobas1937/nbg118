@@ -1799,7 +1799,15 @@ void FunBuild::onPlayUpEnd(bool isOnly)
                 scheduleOnce(schedule_selector(FunBuild::playCompleteSound), 3.0f);
                 string para1 = _lang(m_info->name);
                 string para2 = string(" Lv") + CC_ITOA(m_info->level) + string(" ");
-                CCCommonUtils::flyHint("", "", _lang_2("137480", para1.c_str(), para2.c_str()), 2, 0, true);
+                if(m_info->itemId == FUN_BUILD_MAIN_CITY_ID)//fusheng 龙
+                {
+                    CCCommonUtils::flyHint("", "", _lang_2("500032", para1.c_str(), para2.c_str()), 2, 0, true);
+                }
+                else
+                {
+                    CCCommonUtils::flyHint("", "", _lang_2("137480", para1.c_str(), para2.c_str()), 2, 0, true);
+                }
+                
                 SoundController::sharedSound()->playEffects(Music_Sfx_UI_buildfinish);
             }
         } else {
