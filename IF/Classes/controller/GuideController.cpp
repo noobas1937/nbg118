@@ -158,7 +158,7 @@ bool GuideController::start(){
         m_startGuide = true;
         std::string guideId = "";
         string gFake = CCUserDefault::sharedUserDefault()->getStringForKey("Guide_Fake","");
-        if(GlobalData::shared()->playerInfo.level == 1 && GlobalData::shared()->playerInfo.exp == 0 && (gFake=="" || gFake=="start_1")){
+        if(GlobalData::shared()->playerInfo.level == 1 && GlobalData::shared()->playerInfo.exp == 0 && (gFake=="" || gFake=="start_1") && FunBuildController::getInstance()->getFunbuildById(FUN_BUILD_MAIN_CITY_ID).level == 1){
             guideId = "3070100";//第一个引导
         }else{
             std::string stepKey = GlobalData::shared()->playerInfo.uid + GUIDE_STEP;
@@ -582,9 +582,9 @@ void GuideController::addGuideView(bool movingFlag){
     float dx = localP.x + m_offX + (rect.origin.x - m_node->getPositionX());
     float dy = localP.y + m_offY + (rect.origin.y - m_node->getPositionY());
     
-    if (area == "UI_titan") {
+//    if (area == "UI_titan") {
         frameScale = frameScale* m_node->getScaleX();
-    }
+//    }
     
     
     float w = m_node->getContentSize().width * frameScale;
@@ -609,19 +609,19 @@ void GuideController::addGuideView(bool movingFlag){
     CCCommonUtils::splitString(area, "_", opers);
     if(area == "WL_wood" || area == "WL_food")
     {
-        dx += 40;
-        dy += 20;
+//        dx += 40;//fusheng del
+//        dy += 20;
         if (!CCCommonUtils::isIosAndroidPad())
         {
-            w -= 90;
-            h -= 60;
+//            w -= 90;//fusheng del
+//            h -= 60;
         }
     }
     else if (area == "SC2_out") {
-        dx -= 3;
-        dy -= 3;
-        w += 20;
-        h += 20;
+//        dx -= 3;//fusheng del
+//        dy -= 3;
+//        w += 20;
+//        h += 20;
     }
     else if(opers.size()>0 && opers[0] == "MC")
     {
@@ -653,18 +653,18 @@ void GuideController::addGuideView(bool movingFlag){
     }
     else if(opers.size()>=3 && opers[2] == "collect")
     {
-        dx -= 20;
-        dy -= 20;
-        w += 40;
-        h += 40;
+//        dx -= 20;//fusheng del
+//        dy -= 20;
+//        w += 40;
+//        h += 40;
     }
     
     if (CCCommonUtils::isIosAndroidPad())
     {
         if(!strcasecmp("SMC_9990013", area.c_str()))
         {
-            dy += 40;
-            dx += 10;
+//            dy += 40;
+//            dx += 10;
         }
         else if (!strcasecmp("General_set", area.c_str()))
         {
