@@ -23,6 +23,7 @@
 #include "AppLibHelper.h"
 #include "FBUtilies.h"
 #include "FiveStarTaskView.h"
+#include "GeneralTitanPopupView.h"
 
 static QuestController* _instance;
 
@@ -588,7 +589,10 @@ bool QuestController::goToQuestTarget(QuestInfo* quest, bool isSt){
                         int bid = FunBuildController::getInstance()->getMaxLvBuildByType(itemId);
                         if(bid>0){
                             ret = true;
-                            layer->onMoveToBuildAndPlay(bid);
+                            if(bid == 400000000)
+                                PopupViewController::getInstance()->addPopupInView(GeneralTitanPopupView::create(),true);//fusheng 从外面任务索引点击龙升级 直接打开龙界面
+                            else
+                                layer->onMoveToBuildAndPlay(bid);
                         }
                     }
                 }
