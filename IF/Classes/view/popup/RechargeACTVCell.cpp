@@ -169,27 +169,41 @@ bool RechargeACTVCell::initRechargeACTVCell()
     int extH = getExtendHeight();
     GoldExchangeItem* dataItemNormal=NULL;
     GoldExchangeItem* dataItem=NULL;
-    for (map<string, GoldExchangeItem*>::iterator it = GlobalData::shared()->goldExchangeList.begin(); it != GlobalData::shared()->goldExchangeList.end(); it++) {
+    for (map<string, GoldExchangeItem*>::iterator it = GlobalData::shared()->goldExchangeList.begin(); it != GlobalData::shared()->goldExchangeList.end(); it++)
+    {
         if(!it->second)
             continue;
-        if(it->second->type=="5"){
-        }else{
-            if(it->second->type == "3"){
-                if(it->second->bought||it->second->popup_image=="close"){
+        if(it->second->type=="5")
+        {
+        }
+        else
+        {
+            if(it->second->type == "3")
+            {
+                if(it->second->bought||it->second->popup_image=="close")
+                {
                     continue;
                 }
-                if(it->second->end>GlobalData::shared()->getWorldTime()){
-                    if(dataItem==NULL ||dataItem->popup<it->second->popup){
+                if(it->second->end>GlobalData::shared()->getWorldTime())
+                {
+                    if(dataItem==NULL ||dataItem->popup<it->second->popup)
+                    {
                         dataItem = it->second;
                     }
                 }
-            }else if(it->second->type == "1"){
-                if(it->second->bought||it->second->popup_image=="hide" || it->second->popup_image.empty()){
+            }
+            else if(it->second->type == "1")
+            {
+                if(it->second->bought||it->second->popup_image=="hide" || it->second->popup_image.empty())
+                {
                     continue;
                 }
-                if(it->second->end>GlobalData::shared()->getWorldTime()){
-                    if(LuaController::getInstance()->showNoramlIcon(it->second->popup_image)==true){
-                        if(dataItemNormal==NULL ||dataItemNormal->popup<it->second->popup){
+                if(it->second->end>GlobalData::shared()->getWorldTime())
+                {
+                    if(LuaController::getInstance()->showNoramlIcon(it->second->popup_image)==true)
+                    {
+                        if(dataItemNormal==NULL ||dataItemNormal->popup<it->second->popup)
+                        {
                             dataItemNormal = it->second;
                         }
                     }
@@ -197,23 +211,33 @@ bool RechargeACTVCell::initRechargeACTVCell()
             }
         }
     }
-    if (dataItem) {
-        if(dataItem->popup_image =="month"){
-        }else{
+    if (dataItem)
+    {
+        if(dataItem->popup_image =="month")
+        {
+        }
+        else
+        {
             CCLoadSprite::doResourceByCommonIndex(7, true);
             setCleanFunction([](){
                 CCLoadSprite::doResourceByCommonIndex(7, false);
             });
-            if(dataItem->popup_image=="new_recharge"){//首充
+            if(dataItem->popup_image=="new_recharge")
+            {//首充
                 GoldExchangeFirstPayCell* cell =  GoldExchangeFirstPayCell::create(dataItem, 1);
                 cell->ignoreAnchorPointForPosition(false);
                 cell->setAnchorPoint(ccp(0.5, 0.5));
                 cell->setPosition(ccp(winSize.width/2, winSize.height/2));
                 this->addChild(cell);
-            }else{
-                if(LuaController::getInstance()->checkLuaValid(dataItem->popup_image,dataItem->md5,dataItem->type)){
+            }
+            else
+            {
+                if(LuaController::getInstance()->checkLuaValid(dataItem->popup_image,dataItem->md5,dataItem->type))
+                {
                     LuaController::getInstance()->showExchangeSale(this,dataItem);
-                }else{
+                }
+                else
+                {
                     GoldExchangeSaleView* cell =  GoldExchangeSaleView::create(dataItem, 1);
                     cell->ignoreAnchorPointForPosition(false);
                     cell->setAnchorPoint(ccp(0.5, 0.5));
@@ -222,10 +246,15 @@ bool RechargeACTVCell::initRechargeACTVCell()
                 }
             }
         }
-    }else if(dataItemNormal){
-        if(LuaController::getInstance()->checkLuaValid(dataItemNormal->popup_image,dataItemNormal->md5,dataItemNormal->type)){
+    }
+    else if(dataItemNormal)
+    {
+        if(LuaController::getInstance()->checkLuaValid(dataItemNormal->popup_image,dataItemNormal->md5,dataItemNormal->type))
+        {
             LuaController::getInstance()->showExchangeSale(this,dataItemNormal);
-        }else{
+        }
+        else
+        {
             GoldExchangeSaleView* cell =  GoldExchangeSaleView::create(dataItemNormal, 1);
             cell->ignoreAnchorPointForPosition(false); //ljf
             cell->setAnchorPoint(ccp(0.5, 0.5));
