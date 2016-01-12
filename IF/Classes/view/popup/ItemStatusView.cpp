@@ -503,9 +503,9 @@ void ItemStatusTypeCell::freshData(){
         float len = m_time*1.0/max;
         if(len>1) len = 1;
         m_progress->setScaleX(len);
-        m_barRight->setVisible(len>0.99);//右箭头
+//        m_barRight->setVisible(len>0.99);//右箭头
         m_timeTxt->setString(_lang_1("105805", CC_SECTOA(m_time)));
-        m_receiveGlow->setVisible(true);
+        m_receiveGlow->setVisible(false);//fusheng 不显示亮光
         float px=0;//进度条头上的光效位置
         px=m_progress->getPositionX()+(m_progress->getContentSize().width*len);
         m_headParticleNode->setPositionX(px);
