@@ -63,9 +63,9 @@ bool NBProgressBar::init(cocos2d::Node *pProgressBar, cocos2d::Node *pMaskNode, 
     
     this->addChild(m_pClippingNode, 1);
     
-    CC_SAFE_RELEASE_NULL(m_pProgressBar);
+    m_pProgressBar->release();
     
-    CC_SAFE_RELEASE_NULL(m_pMaskNode);
+    m_pMaskNode->release();
     
     m_minMNValue = minMNValue == -10086? m_pProgressBar->getPositionX():minMNValue;
     

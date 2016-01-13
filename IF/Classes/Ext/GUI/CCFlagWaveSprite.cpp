@@ -120,7 +120,7 @@ CCFlagWaveSprite* CCFlagWaveSprite::create(CCSpriteFrame *spf) {
 //        p->addAttribute(kCCAttributeNameTexCoord, kCCVertexAttrib_TexCoords);
 
         ret->setShaderProgram(p);
-        CC_SAFE_RELEASE_NULL(p);
+        p->release();
         p->link();
         p->updateUniforms(isETC);
 

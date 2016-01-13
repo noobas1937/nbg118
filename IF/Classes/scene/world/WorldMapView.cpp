@@ -5070,22 +5070,48 @@ void WorldMapView::addUnderNode(unsigned int index) {
             break;
         case tile_superMine:{
             if (true) {
-                CCArray *arr = getCityPicArr(info, 1,getPicIdByCityInfo(info));
-                int i = 0;
-                while (i < arr->count()) {
-                    auto pics = _dict(arr->objectAtIndex(i));
-                    std::string picStr = pics->valueForKey("pic")->getCString();
-                    int x = pics->valueForKey("x")->intValue();
-                    int y = pics->valueForKey("y")->intValue();
-                    auto under = CCLoadSprite::createSprite(picStr.c_str());
-                    under->setAnchorPoint(ccp(0, 0));
-                    under->setTag(index);
-                    under->setPosition(ccp(pos.x-_halfTileSize.width,pos.y-_halfTileSize.height) + ccp(x, y)); // left-bottom corner
-                    m_cityItem[index].push_back(under);
-                    m_batchNode->addChild(under, index + i);
-                    i++;
+                
+                if (info.m_superMineInfo.type != Wood)
+                {
+                    CCArray *arr = getCityPicArr(info, 1,getPicIdByCityInfo(info));
+                    int i = 0;
+                    while (i < arr->count()) {
+                        auto pics = _dict(arr->objectAtIndex(i));
+                        std::string picStr = pics->valueForKey("pic")->getCString();
+                        int x = pics->valueForKey("x")->intValue();
+                        int y = pics->valueForKey("y")->intValue();
+                        auto under = CCLoadSprite::createSprite(picStr.c_str());
+                        under->setAnchorPoint(ccp(0, 0));
+                        under->setTag(index);
+                        under->setPosition(ccp(pos.x-_halfTileSize.width,pos.y-_halfTileSize.height) + ccp(x, y)); // left-bottom corner
+                        m_cityItem[index].push_back(under);
+                        m_batchNode->addChild(under, index + i);
+                        i++;
+                    }
                 }
-                if(info.parentCityIndex == info.cityIndex){
+                
+                if (info.parentCityIndex == info.cityIndex)
+                {
+                    if (info.m_superMineInfo.type == Wood)
+                    {
+                        Node* under = Node::create();
+                        under->setAnchorPoint(ccp(0, 0));
+                        under->setPosition(ccp(pos.x, pos.y + _halfTileSize.height)); // left-bottom corner
+                        m_cityItem[index].push_back(under);
+                        m_batchNode->addChild(under, index);
+                        
+                        auto island = NBWorldMapMainCity::getMainCityIslandImage(0, pos.x, pos.y);
+                        if (island)
+                        {
+                            island->setPosition(-_halfTileSize.width * 1.5, -_halfTileSize.height * 1.5);
+                            under->addChild(island);
+                        }
+                        
+                        auto tower = CCLoadSprite::createSprite("super_mine_sawmill.png");
+                        tower->setPosition(ccp(-25, 52)); // left-bottom corner
+                        under->addChild(tower);
+                    }
+                    
                     string fullName = "";
                     switch (info.m_superMineInfo.type) {
                         case Food:
@@ -5182,8 +5208,6 @@ void WorldMapView::addUnderNode(unsigned int index) {
                 m_cityItem[index].push_back(under);
                 m_batchNode->addChild(under, index);
                 
-//                auto island = CCLoadSprite::createSprite("z_decor_002.png");
-//                under->addChild(island);
                 auto island = NBWorldMapMainCity::getMainCityIslandImage(0, pos.x, pos.y);
                 if (island)
                 {
