@@ -40,11 +40,20 @@ bool GoldExchangeMoreListView::init(int itemId)
     });
 
     this->setModelLayerTouchCallback([&](cocos2d::CCTouch *pTouch){
+        
         // detect touch inside panel
+        if (isTouchInside(m_nbClosebtn, pTouch)) {
+            PopupViewController::getInstance()->removePopupView(this);
+            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GOLDEXCHANGE_ADVERTISING_SCROLL);
+            return;
+        }
         if (!isTouchInside(m_buildBG, pTouch)) {
             PopupViewController::getInstance()->removePopupView(this);
             CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GOLDEXCHANGE_ADVERTISING_SCROLL);
         }
+        
+       
+        
     });
     m_itemId = itemId;
     auto tmpCCB = CCBLoadFile("GoldExchangeMoreListView",this,this);
@@ -180,6 +189,8 @@ SEL_CCControlHandler GoldExchangeMoreListView::onResolveCCBCCControlSelector(coc
 
 bool GoldExchangeMoreListView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode)
 {
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nbClosebtn", CCSprite*, this->m_nbClosebtn);
    // CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_okBtn", CCControlButton*, this->m_okBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_infoList", CCNode*, this->m_infoList);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_goldNumText", CCLabelIF*, this->m_goldNumText);

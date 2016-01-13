@@ -12,9 +12,9 @@
 #include "DrawNode3D.h"
 #include "CCCommonUtils.h"
 
-const float sfChangeActionTime = 3.f;
-const float sfMoveSpeed = 2;
-const float sfRunSpeed = 6;
+//const float sfChangeActionTime = 3.f;
+//const float sfMoveSpeed = 2;
+//const float sfRunSpeed = 6;
 Titan::Titan()
 :_curMovePosIndex(0)
 ,_tid(0)
