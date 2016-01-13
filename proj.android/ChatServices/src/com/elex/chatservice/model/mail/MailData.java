@@ -15,66 +15,80 @@ import com.elex.chatservice.model.LanguageManager;
 import com.elex.chatservice.model.MailIconName;
 import com.elex.chatservice.model.MailManager;
 import com.elex.chatservice.model.TimeManager;
+import com.elex.chatservice.model.TranslateManager;
 import com.elex.chatservice.model.UserManager;
 import com.elex.chatservice.model.db.DBDefinition;
 import com.elex.chatservice.model.db.DBHelper;
+import com.elex.chatservice.model.mail.battle.BattleMailData;
 import com.elex.chatservice.util.LogUtil;
 
-public class MailData extends ChannelListItem {
-	// 由JNI传递过来的邮件属性
-	private int						type			= -1;
+public class MailData extends ChannelListItem
+{
+	private int						type						= -1;
 	private int						createTime;
-	private int						status;						// 是否未读，大于1则是
+	/** 是否未读，大于1则是 */
+	private int						status;
 	private int						reply;
 	private int						rewardStatus;
-	private int						itemIdFlag;					// 1需要读语言文件
-	private int						save;						// 0未保存,1保存,2删除保存过
-	private String					uid				= "";
-	private String					title			= "";
-	private String					contents		= "";
-	private String					fromName		= "";
-	private String					fromUid			= "";
-	private String					rewardId		= "";
-	
-	private transient String		version			= "";
-	public transient String			pic				= "";
+	/** 需要读语言文件 */
+	private int						itemIdFlag;
+	/** 0未保存,1保存,2删除保存过 */
+	private int						save;
+	private String					uid							= "";
+	private String					title						= "";
+	private String					contents					= "";
+	private String					fromName					= "";
+	private String					fromUid						= "";
+	private String					rewardId					= "";
+	private int						mbLevel						= 0;
+
+	private transient String		version						= "";
+	public transient String			pic							= "";
 
 	// 运行时属性
-	public transient int			tabType			= -1;
+	public transient int			tabType						= -1;
 	public transient boolean		isAtk;
-	public transient boolean 		hasParseCompex 	= false;
-	public transient boolean 		hasParseBy2dx 	= false;
-	public transient boolean 		hasParseLocal 	= false;
-	public transient String			language		= "";
-	public transient int			parseVersion	= -1;
-	
-	// 显示属性
-	public transient String			nameText		= "";
-	public transient String			contentText		= "";
-	public transient String			mailIcon		= "";
-	public transient String			timeText		= "";
-	public transient boolean		usePersonalPic	= false;
-	public transient ChatChannel	channel			= null;
-	public transient String			channelId		= "";
+	public transient String			language					= "";
+	public transient int			parseVersion				= -1;
+	public transient boolean		needParseByForce			= false;
+	/** 邮件是否打开过，对于复杂邮件，如果打开过就不再进行json解析 */
+	public transient boolean		hasMailOpend				= false;
+	public transient boolean		isKnightMail				= false;
+	public transient boolean		isKnightActivityFinishMail	= false;
+	public transient boolean		hasParseForKnight			= false;
 
-	private static final int		PARSE_VERSION_BASIS		= 1;
-	private static final int		CURRENT_PARSE_VERSION	= PARSE_VERSION_BASIS;
-	
+	// 显示属性
+	public transient String			nameText					= "";
+	public transient String			contentText					= "";
+	public transient String			mailIcon					= "";
+	public transient String			timeText					= "";
+	public transient boolean		usePersonalPic				= false;
+	public transient ChatChannel	channel						= null;
+	public transient String			channelId					= "";
+
+	private static final int		PARSE_VERSION_BASIS			= 1;
+	private static final int		CURRENT_PARSE_VERSION		= PARSE_VERSION_BASIS;
+
 	public MailData()
 	{
 	}
 
-	@JSONField(serialize=false)
+	@JSONField(serialize = false)
 	public boolean isParseVersionOld()
 	{
 		return parseVersion < CURRENT_PARSE_VERSION;
 	}
-	
+
+	public void setNeedParseByForce(boolean needParseByForce)
+	{
+		this.needParseByForce = needParseByForce;
+	}
+
 	public void updateParseVersion()
 	{
 		parseVersion = CURRENT_PARSE_VERSION;
 	}
-	
+
 	public void setMailData(MailData mailData)
 	{
 		type = mailData.type;
@@ -84,6 +98,7 @@ public class MailData extends ChannelListItem {
 		rewardStatus = mailData.rewardStatus;
 		itemIdFlag = mailData.itemIdFlag;
 		save = mailData.save;
+		mbLevel = mailData.mbLevel;
 		uid = mailData.uid;
 		title = mailData.title;
 		contents = mailData.contents;
@@ -92,14 +107,24 @@ public class MailData extends ChannelListItem {
 		rewardId = mailData.rewardId;
 		version = mailData.version;
 		channelId = mailData.channelId;
+		parseVersion = mailData.parseVersion;
+		language = mailData.language;
+		needParseByForce = mailData.needParseByForce;
+		hasMailOpend = mailData.hasMailOpend;
+		isKnightMail = mailData.isKnightMail;
+		isKnightActivityFinishMail = mailData.isKnightActivityFinishMail;
+		hasParseForKnight = mailData.hasParseForKnight;
 	}
-	
+
 	public void setMailDealStatus()
 	{
 	}
-	
-	// 用于从数据库获取消息
-	public MailData(Cursor c) {
+
+	/**
+	 * 用于从数据库获取消息
+	 */
+	public MailData(Cursor c)
+	{
 		try
 		{
 			type = c.getInt(c.getColumnIndex(DBDefinition.MAIL_TYPE));
@@ -116,12 +141,13 @@ public class MailData extends ChannelListItem {
 			fromName = c.getString(c.getColumnIndex(DBDefinition.MAIL_FROM_NAME));
 			fromUid = c.getString(c.getColumnIndex(DBDefinition.MAIL_FROM_USER_ID));
 			rewardId = c.getString(c.getColumnIndex(DBDefinition.MAIL_REWARD_ID));
-			if (type == MailManager.MAIL_SYSUPDATE) version = fromUid;
+			if (type == MailManager.MAIL_SYSUPDATE)
+				version = fromUid;
 			nameText = c.getString(c.getColumnIndex(DBDefinition.MAIL_TITLE_TEXT));
 			contentText = c.getString(c.getColumnIndex(DBDefinition.MAIL_SUMMARY));
 			language = c.getString(c.getColumnIndex(DBDefinition.MAIL_LANGUAGE));
 			parseVersion = c.getInt(c.getColumnIndex(DBDefinition.PARSE_VERSION));
-			hasParseCompex = isComplexMail() && !needParseContent() && !isParseVersionOld();
+			mbLevel = c.getInt(c.getColumnIndex(DBDefinition.MAIL_REWARD_LEVEL));
 		}
 		catch (Exception e)
 		{
@@ -129,8 +155,9 @@ public class MailData extends ChannelListItem {
 		}
 	}
 
-	@JSONField(serialize=false)
-	public ContentValues getContentValues() {
+	@JSONField(serialize = false)
+	public ContentValues getContentValues()
+	{
 		ContentValues cv = new ContentValues();
 		cv.put(DBDefinition.COLUMN_TABLE_VER, DBHelper.CURRENT_DATABASE_VERSION);
 		cv.put(DBDefinition.MAIL_TYPE, type);
@@ -151,79 +178,86 @@ public class MailData extends ChannelListItem {
 		cv.put(DBDefinition.MAIL_SUMMARY, contentText);
 		cv.put(DBDefinition.MAIL_LANGUAGE, language);
 		cv.put(DBDefinition.PARSE_VERSION, parseVersion);
-		
+		cv.put(DBDefinition.MAIL_REWARD_LEVEL, mbLevel);
+
 		return cv;
 	}
-	
+
 	public boolean canDelete()
 	{
-		boolean ret=true;
-		if((!rewardId.equals("") && rewardStatus==0) || save==1)
-			ret=false;
+		boolean ret = true;
+		if ((!rewardId.equals("") && rewardStatus == 0) || save == 1)
+			ret = false;
 		return ret;
 	}
-	
-	public boolean hasNotGetReward()
-	{
-		boolean ret=true;
-		if((!rewardId.equals("") && rewardStatus==0))
-			ret=false;
-		return ret;
-	}
-	
+
 	public void parseContents()
 	{
-		if(type==MailManager.MAIL_SYSUPDATE)
-			version=fromUid;
-		parseMailTypeTab();
-//		System.out.println("parseMailTypeTab");
+		if (type == MailManager.MAIL_SYSUPDATE)
+			version = fromUid;
 		parseMailCellIcon();
-//		System.out.println("parseMailCellIcon");
-		parseMailName();
-//		System.out.println("parseName");
-		
 		timeText = TimeManager.getReadableTime(createTime);
-		language = ConfigManager.getInstance().gameLang;
-		
 
-		if(!needComplexParse())
+		if (needParseContent())
 		{
+			parseMailTypeTab();
+			parseMailName();
 			parseContentText();
-			hasParseLocal = true;
+			language = ConfigManager.getInstance().gameLang;
+			updateParseVersion();
 		}
 	}
-	
+
+	@JSONField(serialize = false)
+	public boolean isUserMail()
+	{
+		if (type <= MailManager.MAIL_USER || type == MailManager.MAIL_Alliance_ALL || type == MailManager.CHAT_ROOM
+				|| type == MailManager.MAIL_MOD_SEND || type == MailManager.MAIL_MOD_PERSONAL)
+			return true;
+		return false;
+	}
+
 	public void parseMailTypeTab()
 	{
-		if(type>=0 && type<MailManager.MAIL_TYPE_COUNT)
+		if (type >= 0 && type < MailManager.MAIL_TYPE_COUNT)
 		{
-			if(type==MailManager.MAIL_BATTLE_REPORT||type==MailManager.MAIL_DETECT||
-					type==MailManager.MAIL_DETECT_REPORT||type==MailManager.MAIL_ENCAMP||type==MailManager.MAIL_WORLD_BOSS){
-		        tabType = MailManager.MAILTAB_FIGHT;
-		    }
-			else if(type==MailManager.ALL_SERVICE){
-		        tabType = MailManager.MAILTAB_STUDIO;
-		    }
-			else if(type== MailManager.MAIL_FRESHER||type==MailManager.MAIL_SYSNOTICE||type==MailManager.MAIL_SYSUPDATE){
-		        tabType = MailManager.MAILTAB_NOTICE;
-		    }
-			else if(type <=MailManager.MAIL_USER||type==MailManager.MAIL_Alliance_ALL||type==MailManager.CHAT_ROOM){
-		        tabType = MailManager.MAILTAB_USER;
-		    }
-			else if(type == MailManager.MAIL_MOD_SEND || type == MailManager.MAIL_MOD_PERSONAL){
-		        if(UserManager.getInstance().getCurrentUser().mGmod  == 2 || UserManager.getInstance().getCurrentUser().mGmod == 5){
-		            tabType = MailManager.MAILTAB_MOD;
-		        }else{
-		            tabType = MailManager.MAILTAB_USER;
-		        }
-		    }else{
-		        tabType = MailManager.MAILTAB_SYSTEM;
-		    }
+			if (type == MailManager.MAIL_BATTLE_REPORT || type == MailManager.MAIL_DETECT || type == MailManager.MAIL_DETECT_REPORT
+					|| type == MailManager.MAIL_ENCAMP || type == MailManager.MAIL_WORLD_BOSS)
+			{
+				tabType = MailManager.MAILTAB_FIGHT;
+			}
+			else if (type == MailManager.ALL_SERVICE)
+			{
+				tabType = MailManager.MAILTAB_STUDIO;
+			}
+			else if (type == MailManager.MAIL_FRESHER || type == MailManager.MAIL_SYSNOTICE || type == MailManager.MAIL_SYSUPDATE)
+			{
+				tabType = MailManager.MAILTAB_NOTICE;
+			}
+			else if (type <= MailManager.MAIL_USER || type == MailManager.MAIL_Alliance_ALL || type == MailManager.CHAT_ROOM)
+			{
+				tabType = MailManager.MAILTAB_USER;
+			}
+			else if (type == MailManager.MAIL_MOD_SEND || type == MailManager.MAIL_MOD_PERSONAL)
+			{
+				if (UserManager.getInstance().getCurrentUser().mGmod == 2 || UserManager.getInstance().getCurrentUser().mGmod == 5)
+				{
+					tabType = MailManager.MAILTAB_MOD;
+				}
+				else
+				{
+					tabType = MailManager.MAILTAB_USER;
+				}
+			}
+			else
+			{
+				tabType = MailManager.MAILTAB_SYSTEM;
+			}
 		}
-//		System.out.println("parseMailTypeTab type:" + type + " tabType:" + tabType);
 	}
-	
-	private void parseMailCellIcon() {
+
+	private void parseMailCellIcon()
+	{
 		switch (type)
 		{
 			case MailManager.MAIL_SYSTEM:
@@ -271,7 +305,7 @@ public class MailData extends ChannelListItem {
 				mailIcon = MailManager.getInstance().getMailIconByName(MailIconName.MAIL_ICON_BATTLE_EXPLORE);
 				break;
 			case MailManager.MAIL_SYSNOTICE:
-				if(StringUtils.isNotEmpty(title) && title.equals("114020"))
+				if (StringUtils.isNotEmpty(title) && title.equals("114020"))
 					mailIcon = MailManager.getInstance().getMailIconByName(MailIconName.MAIL_ICON_SYSTEM_VIP);
 				else
 					mailIcon = MailManager.getInstance().getMailIconByName(MailIconName.MAIL_ICON_SYSTEM);
@@ -280,8 +314,7 @@ public class MailData extends ChannelListItem {
 				mailIcon = MailManager.getInstance().getMailIconByName(MailIconName.MAIL_ICON_ANNOUNCEMENT);
 				break;
 			case MailManager.MAIL_ALLIANCEINVITE:
-				mailIcon = pic;
-				usePersonalPic = true;
+				mailIcon = MailManager.getInstance().getMailIconByName(MailIconName.MAIL_ICON_INVITE_JOIN_ALLIANCE);
 				break;
 			case MailManager.MAIL_ATTACKMONSTER:
 				mailIcon = MailManager.getInstance().getMailIconByName(MailIconName.CHANNEL_ICON_MONSTER);
@@ -295,12 +328,10 @@ public class MailData extends ChannelListItem {
 				usePersonalPic = true;
 				break;
 			case MailManager.MAIL_INVITE_TELEPORT:
-				mailIcon = pic;
-				usePersonalPic = true;
+				mailIcon = MailManager.getInstance().getMailIconByName(MailIconName.MAIL_ICON_INVITE_MOVE);
 				break;
 			case MailManager.MAIL_ALLIANCE_KICKOUT:
-				mailIcon = pic;
-				usePersonalPic = true;
+				mailIcon = MailManager.getInstance().getMailIconByName(MailIconName.MAIL_ICON_INVITE_KICKEDOUT);
 				break;
 			case MailManager.MAIL_WORLD_BOSS:
 				mailIcon = MailManager.getInstance().getMailIconByName(MailIconName.MAIL_ICON_BATTLE_REPORT);
@@ -308,135 +339,171 @@ public class MailData extends ChannelListItem {
 			case MailManager.CHAT_ROOM:
 				mailIcon = MailManager.getInstance().getMailIconByName(MailIconName.MAIL_ICON_CHAT_ROOM);
 				break;
+			case MailManager.MAIL_REFUSE_ALL_APPLY:
+				mailIcon = MailManager.getInstance().getMailIconByName(MailIconName.MAIL_ICON_INVITE_REJECTED);
+				break;
+
 			default:
 				break;
 		}
-		
-		if(isWorldBossKillRewardMail())
+
+		if (isWorldBossKillRewardMail())
 			mailIcon = MailManager.getInstance().getMailIconByName(MailIconName.MAIL_ICON_BATTLE_REPORT);
-		if (mailIcon==null || mailIcon.equals("")) {
+		if (mailIcon == null || mailIcon.equals(""))
+		{
 			mailIcon = MailManager.getInstance().getMailIconByName(MailIconName.MAIL_ICON_SYSTEM);
 		}
 	}
-	
+
 	public void parseMailName()
 	{
-//		System.out.println("refreshStatus 1");
-		nameText=fromName;
-		
-	    if(type==MailManager.MAIL_RESOURCE_HELP){
-	    	nameText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_RESOURCEHELP);
-	    }
-	    else if(type == MailManager.MAIL_MOD_SEND || type == MailManager.MAIL_MOD_PERSONAL){
-	        nameText = "[MOD]" +fromName;
-	    }
-	    else if(type==MailManager.MAIL_ALLIANCEINVITE){
-	        nameText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TABNAME_INVITE);
-	    }
-	    else if(type == MailManager.MAIL_ALLIANCE_KICKOUT){
-	        nameText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TABNAME_QUITALLIANCE);
-	    }
-	    else if(type == MailManager.MAIL_GIFT){
-	    	if(UserManager.getInstance().getUser(fromUid)!=null && !UserManager.getInstance().getUser(fromUid).asn.equals("")){
-	    		nameText="("+UserManager.getInstance().getUser(fromUid).asn+")"+fromName;
-	        }else{
-	        	nameText=fromName;
-	        }
-	    }
-	    else if(type == MailManager.MAIL_WORLD_BOSS || isWorldBossKillRewardMail())
-	    {
-	    	nameText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_WORLDBOSS);
-	    }
-	    else if(type==MailManager.MAIL_RESOURCE)
-	    {
-	    	nameText = LanguageManager.getLangByKey(LanguageKeys.MAIL_NAME_RESOURCE);
-	    }
-	    else if(type == MailManager.MAIL_FRESHER || type == MailManager.MAIL_SYSTEM){
-	    	nameText = LanguageManager.getLangByKey(LanguageKeys.NPC_NAME);
-	    }
-	    else if(type == MailManager.MAIL_REFUSE_ALL_APPLY){
-	    	nameText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_115464);
-	    }
-	    else if(type == MailManager.MAIL_ATTACKMONSTER)
-	    {
-	    	nameText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_103715);
-	    }
-	    else if(type == MailManager.MAIL_DETECT)
+
+		if (type == MailManager.MAIL_RESOURCE_HELP)
 		{
-	    	nameText = LanguageManager.getLangByKey(LanguageKeys.MENU_DETECTREPORT);
-	    	if(itemIdFlag==0 && StringUtils.isNotEmpty(title))
-	    	{
-	    		if(title.equals("1"))
-	    		{
-	    			nameText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_105523);
-	    		}
-	    		else
-	    		{
-	    			nameText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_105567);
-	    		}
-	    	}
+			nameText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_RESOURCEHELP);
 		}
-	    
-	    
-	    if(nameText==null ||nameText.equals(""))
-	    {
-	    	if(tabType == MailManager.MAILTAB_FIGHT){
-		        nameText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TABNAME_FIGHT); 
-		    }else if(tabType == MailManager.MAILTAB_MOD){
-		        nameText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TABNAME_MOD);
-		    }else if(tabType == MailManager.MAILTAB_STUDIO){
-		        nameText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TABNAME_STUDIO);
-		    }
-		    else if(tabType ==MailManager.MAILTAB_SYSTEM){
-		    	nameText = LanguageManager.getLangByKey(LanguageKeys.TIP_SYSTEM);
-		    }
-		    else if(tabType ==MailManager.MAILTAB_NOTICE){
-		        nameText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TABNAME_NOTICE);
-		    }
-	    }
-	    if(nameText.equals("3000001") || nameText.equals("3000002"))
-	    	nameText = LanguageManager.getLangByKey(LanguageKeys.NPC_NAME);
-	   
+		else if (type == MailManager.MAIL_MOD_SEND || type == MailManager.MAIL_MOD_PERSONAL)
+		{
+			nameText = "[MOD]" + fromName;
+		}
+		else if (type == MailManager.MAIL_ALLIANCEINVITE)
+		{
+			nameText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TABNAME_INVITE);
+		}
+		else if (type == MailManager.MAIL_ALLIANCE_KICKOUT)
+		{
+			nameText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TABNAME_QUITALLIANCE);
+		}
+		else if (type == MailManager.MAIL_GIFT)
+		{
+			if (UserManager.getInstance().getUser(fromUid) != null && !UserManager.getInstance().getUser(fromUid).asn.equals(""))
+			{
+				nameText = "(" + UserManager.getInstance().getUser(fromUid).asn + ")" + fromName;
+			}
+			else
+			{
+				nameText = fromName;
+			}
+		}
+		else if (type == MailManager.MAIL_WORLD_BOSS || isWorldBossKillRewardMail())
+		{
+			nameText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_WORLDBOSS);
+		}
+		else if (type == MailManager.MAIL_RESOURCE)
+		{
+			nameText = LanguageManager.getLangByKey(LanguageKeys.MAIL_NAME_RESOURCE);
+		}
+		else if (type == MailManager.MAIL_FRESHER || type == MailManager.MAIL_SYSTEM)
+		{
+			if (StringUtils.isNotEmpty(title) && title.equals("115429"))
+			{
+				if (StringUtils.isNotEmpty(fromName))
+					nameText = fromName;
+				else
+					nameText = LanguageManager.getLangByKey(LanguageKeys.NPC_NAME);
+			}
+		}
+		else if (type == MailManager.MAIL_REFUSE_ALL_APPLY)
+		{
+			nameText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_115464);
+		}
+		else if (type == MailManager.MAIL_ATTACKMONSTER)
+		{
+			nameText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_103715);
+		}
+		else if (type == MailManager.MAIL_DETECT)
+		{
+			nameText = LanguageManager.getLangByKey(LanguageKeys.MENU_DETECTREPORT);
+			if (itemIdFlag == 0 && StringUtils.isNotEmpty(title))
+			{
+				if (title.equals("1"))
+				{
+					nameText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_105523);
+				}
+				else
+				{
+					nameText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_105567);
+				}
+			}
+		}
+		else if (type == MailManager.ALL_SERVICE)
+		{
+			nameText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TABNAME_STUDIO);
+		}
+		else if (type == MailManager.MAIL_SYSUPDATE)
+		{
+			nameText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TABNAME_NOTICE);
+		}
+		
+		if(StringUtils.isNotEmpty(fromName) && StringUtils.isNumeric(fromName) && !fromName.contains("."))
+		{
+			nameText = LanguageManager.getLangByKey(fromName);
+		}
+
+		if (nameText == null || nameText.equals(""))
+		{
+			if (tabType == MailManager.MAILTAB_FIGHT)
+			{
+				nameText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TABNAME_FIGHT);
+			}
+			else if (tabType == MailManager.MAILTAB_MOD)
+			{
+				nameText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TABNAME_MOD);
+			}
+			else if (tabType == MailManager.MAILTAB_STUDIO)
+			{
+				nameText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TABNAME_STUDIO);
+			}
+			else if (tabType == MailManager.MAILTAB_SYSTEM)
+			{
+				nameText = LanguageManager.getLangByKey(LanguageKeys.TIP_SYSTEM);
+			}
+			else if (tabType == MailManager.MAILTAB_NOTICE)
+			{
+				nameText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TABNAME_NOTICE);
+			}
+		}
+		
+		if (fromName.equals("3000001") || fromName.equals("3000002"))
+			nameText = LanguageManager.getLangByKey(LanguageKeys.NPC_NAME);
+
 	}
-	
+
 	public void parseContentText()
 	{
-//		System.out.println("parseTitleText type:"+type+"  title:"+title);
-		if(title!=null && !title.equals(""))
+		if (StringUtils.isNotEmpty(title))
+		{
 			contentText = title.replaceAll("\n", " ");
-		
-		if(title.equals("105734"))
-			contentText=LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_CASTLEMOVE);
-		else if(title.equals("138067"))
-			contentText=LanguageManager.getLangByKey(LanguageKeys.MAIL_BATTLE_TITLE);
-		else if(title.equals("114010"))
-			contentText=LanguageManager.getLangByKey(LanguageKeys.MAIL_NEWPLAYER_MOVECASTAL);
-		else if(title.equals("115295"))
-			contentText=LanguageManager.getLangByKey(LanguageKeys.MAIL_INVITE_MOVECASTAL);
-		else if(title.equals("114012"))
-			contentText=LanguageManager.getLangByKey(LanguageKeys.MAIL_ALLIANCE_APPLY);
-		else if(title.equals("105718"))
-			contentText=LanguageManager.getLangByKey(LanguageKeys.MAIL_ENEMY_KILL);
-		else if(title.equals("133017"))
-			contentText=LanguageManager.getLangByKey(LanguageKeys.MAIL_ALLIANCE_REWARD);
-		else if(StringUtils.isNumeric(title))
-		{
-			contentText=LanguageManager.getLangByKey(title);
+			if (title.equals("105734"))
+				contentText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_CASTLEMOVE);
+			else if (title.equals("138067"))
+				contentText = LanguageManager.getLangByKey(LanguageKeys.MAIL_BATTLE_TITLE);
+			else if (title.equals("114010"))
+				contentText = LanguageManager.getLangByKey(LanguageKeys.MAIL_NEWPLAYER_MOVECASTAL);
+			else if (title.equals("115295"))
+				contentText = LanguageManager.getLangByKey(LanguageKeys.MAIL_INVITE_MOVECASTAL);
+			else if (title.equals("114012"))
+				contentText = LanguageManager.getLangByKey(LanguageKeys.MAIL_ALLIANCE_APPLY);
+			else if (title.equals("105718"))
+				contentText = LanguageManager.getLangByKey(LanguageKeys.MAIL_ENEMY_KILL);
+			else if (title.equals("133017"))
+				contentText = LanguageManager.getLangByKey(LanguageKeys.MAIL_ALLIANCE_REWARD);
+			else if (StringUtils.isNumeric(title))
+			{
+				contentText = LanguageManager.getLangByKey(title);
+			}
 		}
-		
-		if(itemIdFlag == 1)
+
+		if (itemIdFlag == 1)
 		{
-			String contentArr[]=contents.split("\\|");
+			String contentArr[] = contents.split("\\|");
 			int num = contentArr.length;
-			
-			System.out.println("contents:"+contents+" str size:"+num);
+
 			switch (num)
 			{
 				case 5:
 					if (contentArr[0].equals("115336"))
-					{// 领地使用默认名字
-						System.out.println("str[3]" + contentArr[3]);
-						System.out.println("str[4]" + contentArr[4]);
+					{
 						String name = LanguageManager.getLangByKey(LanguageKeys.MAIL_ALLIANCE_CASTLE, contentArr[4]);
 						contentText = LanguageManager.getLangByKey(contentArr[3], name);
 					}
@@ -454,145 +521,162 @@ public class MailData extends ChannelListItem {
 					}
 					contentText = LanguageManager.getLangByKey(contentArr[4], name);
 				}
-				break;
+					break;
 				default:
 					break;
 			}
 		}
-		
-		
-		if(type == MailManager.MAIL_DONATE)
+
+		if (type == MailManager.MAIL_DONATE)
 		{
-	        String str[]=contents.split("\\|");
-	        if(str.length>4)
-	        {
-	        	String userName=str[1];
-	        	if(!str[2].equals(""))
-	        	{
-	        		userName="("+str[2]+")"+userName;
-	        	}
-	        	contentText=LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_GIFT,userName);
-	        }
-		}
-		else if(type == MailManager.MAIL_DIGONG || type == MailManager.WORLD_NEW_EXPLORE)
-		{
-			contentText=LanguageManager.getLangByKey(LanguageKeys.MAIL_TABNAME_WORLDEXPLORE);
-		}
-		else if(type == MailManager.MAIL_WOUNDED)
-		{
-			contentText=LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_WOUNDED);
-		}
-		else if(type == MailManager.MAIL_DETECT)
-		{
-			if(itemIdFlag==1)
+			String str[] = contents.split("\\|");
+			if (str.length > 4)
 			{
-	            if(!contents.equals("") && contents.length()>6)
-	            {
-	            	String content=contents.substring(6);
-	            	if(content.equals("105554"))
-	            	{
-	            		contentText=LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_105523);
-	            	}
-	            }
-	            
+				String userName = str[1];
+				if (!str[2].equals(""))
+				{
+					userName = "(" + str[2] + ")" + userName;
+				}
+				contentText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_GIFT, userName);
+			}
+		}
+		else if (type == MailManager.MAIL_DIGONG || type == MailManager.WORLD_NEW_EXPLORE)
+		{
+			contentText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TABNAME_WORLDEXPLORE);
+		}
+		else if (type == MailManager.MAIL_WOUNDED)
+		{
+			contentText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_WOUNDED);
+		}
+		else if (type == MailManager.MAIL_DETECT)
+		{
+			if (itemIdFlag == 1)
+			{
+				if (!contents.equals("") && contents.length() > 6)
+				{
+					String content = contents.substring(6);
+					if (content.equals("105554"))
+					{
+						contentText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_105523);
+					}
+				}
+
 			}
 			else
 			{
-			    if(title.equals("1"))
-			    {
-			    	contentText=LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_105523);
-			    }
-			    else
-			    {
-			    	contentText=LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_105567);
-			    }
-			    
-			    String content[] = contents.split("\\|");
-                int num = content.length;
-                System.out.println("contents num:"+num);
-                switch (num) {
-                    case 1:
-                    	contentText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_105524,contents);
-                        break;
-                    case 3:{
-                    	String name = content[0];
-                    	String type = content[1];
-                        if(type.equals("1")){
-                        	contentText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_137429,name);
-                        }else if (type.equals("2")){
-                        	contentText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_137431,name);
-                        }else if (type.equals("3")){
-                        	contentText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_137430,name);
-                        }else{
-                        	contentText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_105524,name);
-                        }
-                        break;
-                    }
-                    default:
-                        break;
-                }
-			    
+				if (title.equals("1"))
+				{
+					contentText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_105523);
+				}
+				else
+				{
+					contentText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_105567);
+				}
+
+				String content[] = contents.split("\\|");
+				int num = content.length;
+				switch (num)
+				{
+					case 1:
+						contentText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_105524, contents);
+						break;
+					case 3:
+					{
+						String name = content[0];
+						String type = content[1];
+						if (type.equals("1"))
+						{
+							contentText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_137429, name);
+						}
+						else if (type.equals("2"))
+						{
+							contentText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_137431, name);
+						}
+						else if (type.equals("3"))
+						{
+							contentText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_137430, name);
+						}
+						else if (type.equals("12"))
+						{
+							contentText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_140183, name,
+									LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_110081));
+							nameText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_140181,
+									LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_110081));
+						}
+						else if (type.equals("10"))
+						{
+							contentText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_140183, name,
+									LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_110172));
+							nameText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_140181,
+									LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_110172));
+						}
+						else
+						{
+							contentText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_105524, name);
+						}
+						break;
+					}
+					default:
+						break;
+				}
+
 			}
 		}
-		else if(type == MailManager.MAIL_GIFT){
-	    	contentText = contents;
-	    }
-		if(contentText.length()>50)
+		else if (type == MailManager.MAIL_GIFT)
+		{
+			contentText = contents;
+		}
+		if (StringUtils.isNotEmpty(contentText) && contentText.length() > 50)
 		{
 			contentText = contentText.substring(0, 50);
 			contentText = contentText + "...";
 		}
-		
+
 	}
-	
-	public boolean needParseFrom2dx()
-	{
-		return (!hasParseBy2dx && isComplexMail());
-	}
-	
-	public boolean needComplexParse()
-	{
-		return (!hasParseCompex && isComplexMail());
-	}
-	
-	@JSONField(serialize=false)
+
+	@JSONField(serialize = false)
 	public boolean isComplexMail()
 	{
-		if(type == MailManager.MAIL_ATTACKMONSTER || type == MailManager.MAIL_BATTLE_REPORT 
-				|| type == MailManager.MAIL_RESOURCE ||type == MailManager.MAIL_RESOURCE_HELP 
-				|| type == MailManager.MAIL_DETECT_REPORT || type == MailManager.MAIL_ENCAMP 
-				|| type == MailManager.WORLD_NEW_EXPLORE)
+		if (type == MailManager.MAIL_BATTLE_REPORT || type == MailManager.MAIL_RESOURCE || type == MailManager.MAIL_DETECT_REPORT
+				|| type == MailManager.MAIL_ENCAMP || type == MailManager.WORLD_NEW_EXPLORE || type == MailManager.MAIL_ALLIANCEINVITE
+				|| type == MailManager.MAIL_ALLIANCEAPPLY || type == MailManager.MAIL_ATTACKMONSTER
+				|| type == MailManager.MAIL_RESOURCE_HELP || type == MailManager.MAIL_INVITE_TELEPORT
+				|| type == MailManager.MAIL_ALLIANCE_KICKOUT || type == MailManager.MAIL_WORLD_BOSS
+				|| type == MailManager.MAIL_REFUSE_ALL_APPLY)
+		{
 			return true;
+		}
 		return false;
 	}
-	
+
 	public boolean needParseContent()
 	{
-		if(StringUtils.isNotEmpty(nameText) && StringUtils.isNotEmpty(contentText) && !StringUtils.isNumeric(nameText) 
-				&& !StringUtils.isNumeric(contentText) && StringUtils.isNotEmpty(language) && 
-				language.equals(ConfigManager.getInstance().gameLang))
+		if (StringUtils.isNotEmpty(nameText) && StringUtils.isNotEmpty(contentText) && !isParseVersionOld()
+				&& !StringUtils.isNumeric(nameText) && !StringUtils.isNumeric(contentText) && StringUtils.isNotEmpty(language)
+				&& TranslateManager.getInstance().isLangSameAsTargetLang(language))
 		{
 			return false;
 		}
 		return true;
 	}
-	
+
 	@JSONField(serialize = false)
 	public String getChannelId()
 	{
-		if(ChatServiceController.isNewMailUIEnable)
+		if (ChatServiceController.isNewMailUIEnable)
 			return getNewChannelId();
 		else
 			return getOldChannelId();
 	}
-	
+
 	@JSONField(serialize = false)
 	public String getOldChannelId()
 	{
 		String channelId = "";
-		if(tabType<0)
+		if (tabType < 0)
 			parseMailTypeTab();
-		switch (tabType) {
+		switch (tabType)
+		{
 			case MailManager.MAILTAB_SYSTEM:
 				channelId = MailManager.CHANNELID_SYSTEM;
 				break;
@@ -611,49 +695,81 @@ public class MailData extends ChannelListItem {
 			default:
 				break;
 		}
-		
-		if(type == MailManager.MAIL_RESOURCE)
+
+		if (type == MailManager.MAIL_RESOURCE)
 			channelId = MailManager.CHANNELID_RESOURCE;
-		else if(type == MailManager.MAIL_ATTACKMONSTER)
+		else if (type == MailManager.MAIL_ATTACKMONSTER)
 			channelId = MailManager.CHANNELID_MONSTER;
-		else if(type == MailManager.MAIL_RESOURCE_HELP)
+		else if (type == MailManager.MAIL_RESOURCE_HELP)
 			channelId = MailManager.CHANNELID_RESOURCE_HELP;
 		return channelId;
 	}
-	
+
+	@JSONField(serialize = false)
+	public boolean isKnightMail()
+	{
+		return isKnightMail;
+	}
+
+	@JSONField(serialize = false)
+	public void setIsKnightMail(boolean flag)
+	{
+		isKnightMail = flag;
+	}
+
+	@JSONField(serialize = false)
+	public boolean isKnightActivityFinish()
+	{
+		return isKnightActivityFinishMail;
+	}
+
 	@JSONField(serialize = false)
 	public String getNewChannelId()
 	{
 		String channelId = "";
-		if(type == MailManager.MAIL_SYSTEM)
+		if (type == MailManager.MAIL_SYSTEM)
 		{
-			if(title.equals("114111") 
-					|| title.equals("105726")
-					|| title.equals("105727")
-					|| title.equals("105728")
-					|| title.equals("105729")
-					|| title.equals("105730"))
+			if (title.equals("114111") || title.equals("105726") || title.equals("105727") || title.equals("105728")
+					|| title.equals("105729") || title.equals("105730") || title.equals("115429"))
 			{
 				channelId = MailManager.CHANNELID_ALLIANCE;
 			}
-			else if(isWorldBossKillRewardMail())
+			else if (isWorldBossKillRewardMail() || isKnightActivityStartMail() || title.equals("150335"))
 			{
-				channelId = MailManager.CHANNELID_FIGHT;
+				channelId = MailManager.CHANNELID_EVENT;
 			}
 			else
 			{
 				channelId = MailManager.CHANNELID_SYSTEM;
 			}
 		}
+		else if (type == MailManager.MAIL_BATTLE_REPORT)
+		{
+			if (!hasParseForKnight)
+			{
+				needParseByForce = true;
+				MailManager.getInstance().parseMailDataContent(this);
+			}
+			if (isKnightMail())
+			{
+				channelId = MailManager.CHANNELID_KNIGHT;
+			}
+			else if (isKnightActivityFinish())
+			{
+				channelId = MailManager.CHANNELID_EVENT;
+			}
+			else
+			{
+				channelId = MailManager.CHANNELID_FIGHT;
+			}
+		}
 		else
 		{
-			switch(type)
+			switch (type)
 			{
-				case MailManager.MAIL_BATTLE_REPORT:
 				case MailManager.MAIL_DETECT:
 				case MailManager.MAIL_DETECT_REPORT:
 				case MailManager.MAIL_ENCAMP:
-				case MailManager.MAIL_WORLD_BOSS:
 				case MailManager.WORLD_NEW_EXPLORE:
 				case MailManager.WORLD_MONSTER_SPECIAL:
 					channelId = MailManager.CHANNELID_FIGHT;
@@ -666,6 +782,8 @@ public class MailData extends ChannelListItem {
 				case MailManager.MAIL_REFUSE_ALL_APPLY:
 				case MailManager.MAIL_RESOURCE_HELP:
 				case MailManager.MAIL_DONATE:
+				case MailManager.MAIL_ALLIANCE_PACKAGE:
+				case MailManager.MAIL_ALLIANCE_RANKCHANGE:
 					channelId = MailManager.CHANNELID_ALLIANCE;
 					break;
 				case MailManager.ALL_SERVICE:
@@ -685,157 +803,220 @@ public class MailData extends ChannelListItem {
 				case MailManager.MAIL_RESOURCE:
 					channelId = MailManager.CHANNELID_RESOURCE;
 					break;
+				case MailManager.MAIL_WORLD_BOSS:
+					channelId = MailManager.CHANNELID_EVENT;
+					break;
 			}
 		}
-		
+
 		return channelId;
 	}
-	
+
 	@Override
-	public String toString() {
-		return "[MailData]: uid = "+uid+" type = " + type+" title:"+title;
+	public String toString()
+	{
+		return "[MailData]: uid = " + uid + " type = " + type + " title:" + title;
 	}
-	
-	public int getType() {
+
+	public int getType()
+	{
 		return type;
 	}
 
-	public void setType(int type) {
+	public void setType(int type)
+	{
 		this.type = type;
 	}
 
-	public int getCreateTime() {
+	public int getCreateTime()
+	{
 		return createTime;
 	}
 
-	public void setCreateTime(int createTime) {
+	public void setCreateTime(int createTime)
+	{
 		this.createTime = createTime;
 	}
 
-	public int getStatus() {
+	public int getStatus()
+	{
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(int status)
+	{
 		this.status = status;
 	}
 
-	@JSONField(serialize=false)
-	public boolean isUnread() {
+	@JSONField(serialize = false)
+	public boolean isUnread()
+	{
 		return status == 0;
 	}
 
-	public int getReply() {
+	public int getReply()
+	{
 		return reply;
 	}
 
-	public void setReply(int reply) {
+	public void setReply(int reply)
+	{
 		this.reply = reply;
 	}
-	
+
 	public boolean hasReward()
 	{
 		return !rewardId.equals("") && rewardStatus == 0;
 	}
-	@JSONField (serialize = false)
+
+	@JSONField(serialize = false)
 	public boolean isLock()
 	{
 		return getSave() == 1;
 	}
 
-	public int getRewardStatus() {
+	public int getRewardStatus()
+	{
 		return rewardStatus;
 	}
 
-	public void setRewardStatus(int rewardStatus) {
+	public void setRewardStatus(int rewardStatus)
+	{
 		this.rewardStatus = rewardStatus;
 	}
 
-	public int getItemIdFlag() {
+	public int getItemIdFlag()
+	{
 		return itemIdFlag;
 	}
 
-	public void setItemIdFlag(int itemIdFlag) {
+	public void setItemIdFlag(int itemIdFlag)
+	{
 		this.itemIdFlag = itemIdFlag;
 	}
 
-	public int getSave() {
+	public int getSave()
+	{
 		return save;
 	}
 
-	public void setSave(int save) {
+	public void setSave(int save)
+	{
 		this.save = save;
 	}
 
-	public String getUid() {
+	public String getUid()
+	{
 		return uid;
 	}
 
-	public void setUid(String uid) {
+	public void setUid(String uid)
+	{
 		this.uid = uid;
 	}
 
-	public String getTitle() {
+	public String getTitle()
+	{
 		return title;
 	}
 
-	public void setTitle(String title) {
+	public void setTitle(String title)
+	{
 		this.title = title;
 	}
 
-	public String getContents() {
+	public String getContents()
+	{
 		return contents;
 	}
 
-	public void setContents(String contents) {
+	public void setContents(String contents)
+	{
 		this.contents = contents;
 	}
 
-	public String getFromName() {
+	public String getFromName()
+	{
 		return fromName;
 	}
 
-	public void setFromName(String fromName) {
+	public void setFromName(String fromName)
+	{
 		this.fromName = fromName;
 	}
 
-	public String getFromUid() {
+	public String getFromUid()
+	{
 		return fromUid;
 	}
 
-	public void setFromUid(String fromUid) {
+	public void setFromUid(String fromUid)
+	{
 		this.fromUid = fromUid;
 	}
 
-	public String getRewardId() {
+	public String getRewardId()
+	{
 		return rewardId;
 	}
 
-	public void setRewardId(String rewardId) {
+	public void setRewardId(String rewardId)
+	{
 		this.rewardId = rewardId;
 	}
 
 	@JSONField(serialize = false)
-	public String getVersion() {
+	public String getVersion()
+	{
 		return version;
 	}
 
 	@JSONField(serialize = false)
-	public void setVersion(String version) {
+	public void setVersion(String version)
+	{
 		this.version = version;
 	}
 
 	@JSONField(serialize = false)
-	public int getChannelTime()
+	public long getChannelTime()
 	{
 		return getCreateTime();
 	}
-	
+
 	@JSONField(serialize = false)
 	public boolean isWorldBossKillRewardMail()
 	{
-		if(itemIdFlag == 1 && StringUtils.isNotEmpty(title) && title.equals("137460"))
+		if (itemIdFlag == 1 && StringUtils.isNotEmpty(title) && title.equals("137460"))
 			return true;
 		return false;
 	}
+
+	@JSONField(serialize = false)
+	public boolean isKnightActivityStartMail()
+	{
+		if (StringUtils.isNotEmpty(title) && title.equals("133270"))
+			return true;
+		return false;
+	}
+
+	public int getMbLevel()
+	{
+		return mbLevel;
+	}
+
+	public void setMbLevel(int mbLevel)
+	{
+		this.mbLevel = mbLevel;
+	}
+
+	public boolean isChannelMail()
+	{
+		String channelId = getChannelId();
+		if (StringUtils.isNotEmpty(channelId)
+				&& (channelId.equals(MailManager.CHANNELID_KNIGHT) || channelId.equals(MailManager.CHANNELID_RESOURCE) || channelId
+						.equals(MailManager.CHANNELID_MONSTER)))
+			return true;
+		return false;
+	}
+
 }

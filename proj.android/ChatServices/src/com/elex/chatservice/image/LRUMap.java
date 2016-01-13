@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 @SuppressWarnings("serial")
 public class LRUMap<K, V> extends LinkedHashMap<K, V>
 {
-	private int mCapacity;
+	private int	mCapacity;
 
 	public LRUMap(int initialCapacity)
 	{

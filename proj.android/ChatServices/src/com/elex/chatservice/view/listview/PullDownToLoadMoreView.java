@@ -18,31 +18,33 @@ import com.elex.chatservice.util.LogUtil;
 
 public class PullDownToLoadMoreView extends FrameLayout
 {
-	private static int timeInterval = 400;
-	private GestureDetector mGestureDetector;
-	private Scroller mScroller;
-	private int scrollType;
-	private int bottomViewInitializeVisibility = View.INVISIBLE;
-	private int topViewInitializeVisibility = View.INVISIBLE;
-	private boolean hasAddTopAndBottom = false;
-	private int scrollDeltaY=0;
-	private int topViewHeight=0;
-	private int bottomViewHeight;
-	private boolean isScrollToTop = false;
-	private boolean isScrollFarTop = false;
-	private boolean isMoveDown = false;
-	private boolean isScrollStoped = false;
-	private boolean isFristTouch = true;
-	private boolean isHideTopView = false;
-	private boolean isCloseTopAllowRefersh = true;
-	private boolean isBottomWithOutScroll = true;
-	private ListViewLoadListener mListViewLoadListener;
-	private View topView;
-	private View bottomView;
-	private Context context;
-	private boolean isProgressBarShowed=false;
+	private static int				timeInterval					= 400;
+	private GestureDetector			mGestureDetector;
+	private Scroller				mScroller;
+	private int						scrollType;
+	private int						bottomViewInitializeVisibility	= View.INVISIBLE;
+	private int						topViewInitializeVisibility		= View.INVISIBLE;
+	private boolean					hasAddTopAndBottom				= false;
+	private int						scrollDeltaY					= 0;
+	private int						topViewHeight					= 0;
+	private int						bottomViewHeight;
+	private boolean					isScrollToTop					= false;
+	private boolean					isScrollFarTop					= false;
+	private boolean					isMoveDown						= false;
+	private boolean					isScrollToDownStoped			= false;
+	private boolean					isFristTouch					= true;
+	private boolean					isHideTopView					= false;
+	private boolean					isCloseTopAllowRefersh			= true;
+	private boolean					isBottomWithOutScroll			= true;
+	private ListViewLoadListener	mListViewLoadListener;
+	private OnTouchListener			mTouchListener;
+	private View					topView;
+	private View					bottomView;
+	private Context					context;
+	private boolean					isProgressBarShowed				= false;
+	private long					mStartTime						= 0;
 
-	private Handler mHandler = new Handler()
+	private Handler					mHandler						= new Handler()
 	{
 		public void handleMessage(android.os.Message msg)
 		{
@@ -54,15 +56,13 @@ public class PullDownToLoadMoreView extends FrameLayout
 					{
 						break;
 					}
-					isProgressBarShowed=true;
-					
+
 					if (mListViewLoadListener != null)
 					{
-						scrollDeltaY=Math.abs(getScrollY());
+						scrollDeltaY = Math.abs(getScrollY());
 						mListViewLoadListener.refreshData();
 					}
-					System.out.println("handleMessage 1");
-					
+
 					break;
 				case 1:
 					if (bottomView.getVisibility() != View.VISIBLE)
@@ -72,28 +72,34 @@ public class PullDownToLoadMoreView extends FrameLayout
 					scrollTo(0, bottomViewHeight);
 					break;
 			}
-			
+
 		};
 	};
-	
+
 	public void hideProgressBar()
 	{
-		if(isProgressBarShowed)
+		if (isProgressBarShowed)
 		{
+			System.out.println("hideProgressBar");
 			scrollTo(0, getPullDownHeight());
-			startScroll();
-			isProgressBarShowed=false;
+			isProgressBarShowed = false;
+			mStartTime = System.currentTimeMillis();
 		}
 	}
-	
+
+	public boolean getIsProgressBarShowed()
+	{
+		return isProgressBarShowed;
+	}
+
 	public PullDownToLoadMoreView(Context context)
 	{
-		this(context,null);
+		this(context, null);
 	}
 
 	public PullDownToLoadMoreView(Context context, AttributeSet attrs)
 	{
-		this(context, attrs,0);
+		this(context, attrs, 0);
 	}
 
 	public PullDownToLoadMoreView(Context context, AttributeSet attrs, int defStyle)
@@ -103,21 +109,24 @@ public class PullDownToLoadMoreView extends FrameLayout
 		this.mGestureDetector = new GestureDetector(context, onGestureListener);
 		this.context = context;
 	}
-	
-	private OnGestureListener onGestureListener=new OnGestureListener() {
-		
+
+	private OnGestureListener	onGestureListener	= new OnGestureListener()
+	{
 		@Override
-		public boolean onSingleTapUp(MotionEvent e) {
+		public boolean onSingleTapUp(MotionEvent e)
+		{
 			return false;
 		}
-		
+
 		@Override
-		public void onShowPress(MotionEvent e) {
-			
+		public void onShowPress(MotionEvent e)
+		{
+
 		}
-		
+
 		@Override
-		public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+		public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY)
+		{
 			int i = -1;
 			int j = 1;
 			if (distanceY <= 0.0F)
@@ -150,12 +159,11 @@ public class PullDownToLoadMoreView extends FrameLayout
 					{
 						i = j;
 					}
-					if (i + getScrollY() > topViewHeight) 
+					if (i + getScrollY() > topViewHeight)
 					{
 						i = topViewHeight - getScrollY();
 					}
-					
-					if(getScrollY()+topViewHeight<=0 || getScrollY()>0)
+					if ((getScrollY() + topViewHeight <= 0) || getScrollY() > 0)
 						scrollBy(0, i);
 					return true;
 				}
@@ -171,8 +179,8 @@ public class PullDownToLoadMoreView extends FrameLayout
 				{
 					i = j;
 				}
-				
-				if ((i + getScrollY() < topViewHeight) && (!isMoveDown)) 
+
+				if ((i + getScrollY() < topViewHeight) && (!isMoveDown))
 				{
 					i = topViewHeight - getScrollY();
 				}
@@ -181,19 +189,22 @@ public class PullDownToLoadMoreView extends FrameLayout
 			}
 			return false;
 		}
-		
+
 		@Override
-		public void onLongPress(MotionEvent e) {
-			
+		public void onLongPress(MotionEvent e)
+		{
+
 		}
-		
+
 		@Override
-		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY)
+		{
 			return false;
 		}
-		
+
 		@Override
-		public boolean onDown(MotionEvent e) {
+		public boolean onDown(MotionEvent e)
+		{
 			if (!mScroller.isFinished())
 			{
 				mScroller.abortAnimation();
@@ -201,7 +212,6 @@ public class PullDownToLoadMoreView extends FrameLayout
 			return false;
 		}
 	};
-	
 
 	@Override
 	protected void onLayout(boolean changed, int left, int top, int right, int bottom)
@@ -218,16 +228,31 @@ public class PullDownToLoadMoreView extends FrameLayout
 		int childrenCount = getChildCount();
 		int index = 0;
 		int topValue = 0;
+		int screenWidth = 0;
+		boolean hasMeasuredWidth = true;
+		int topViewHeight = 0;
 		while (true)
 		{
 			if (index >= childrenCount)
 			{
 				this.topView = getChildAt(0);
 				this.bottomView = getChildAt(-1 + getChildCount());
-				this.topView.setVisibility(View.INVISIBLE);
-				this.bottomView.setVisibility(View.INVISIBLE);
-				this.topViewHeight = this.topView.getHeight();
-				this.bottomViewHeight = this.bottomView.getHeight();
+				if (topView != null)
+				{
+					this.topView.setVisibility(View.VISIBLE);
+					if (!hasMeasuredWidth && screenWidth != 0)
+					{
+						topView.layout(0, 0, screenWidth, topViewHeight);
+					}
+					this.topViewHeight = this.topView.getHeight();
+				}
+				
+				if(bottomView!=null)
+				{
+					this.bottomView.setVisibility(View.INVISIBLE);
+					this.bottomViewHeight = this.bottomView.getHeight();
+				}
+
 				if ((!this.isHideTopView) && (this.topViewHeight != 0))
 				{
 					this.isHideTopView = true;
@@ -239,10 +264,27 @@ public class PullDownToLoadMoreView extends FrameLayout
 			try
 			{
 				int height = view.getMeasuredHeight();
-				if (view.getVisibility() != 8)
+				int width = view.getMeasuredWidth();
+				if (width != 0)
+					screenWidth = width;
+				else
+					hasMeasuredWidth = false;
+				if (height == 0 || width == 0)
 				{
-					// 可能在进一步调用obtainView时出异常 NullPointerException 或 IllegalStateException 
-					view.layout(0, topValue, view.getMeasuredWidth(), topValue + height);
+					int w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+					int h = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+					view.measure(w, h);
+					height = view.getMeasuredHeight();
+					width = view.getMeasuredWidth();
+				}
+
+				if (index == 0)
+					topViewHeight = height;
+				if (view.getVisibility() != View.GONE)
+				{
+					// 可能在进一步调用obtainView时出异常 NullPointerException 或
+					// IllegalStateException
+					view.layout(0, topValue, width, topValue + height);
 					topValue += height;
 				}
 			}
@@ -258,30 +300,37 @@ public class PullDownToLoadMoreView extends FrameLayout
 	{
 		return this.topViewHeight;
 	}
-	
+
 	public int getPullDownHeight()
 	{
-		return scrollDeltaY>topViewHeight?scrollDeltaY:topViewHeight;
+		int scrollValue = (getScrollY() < topViewHeight && getScrollY() > 0) ? getScrollY() : topViewHeight;
+		return scrollDeltaY > topViewHeight ? scrollDeltaY : scrollValue;
+	}
+
+	public boolean isTopViewShowed()
+	{
+		return topView.getVisibility() == View.VISIBLE;
 	}
 
 	public final void startTopScroll()
 	{
-//		System.out.println("startTopScroll 0");
 		if (!this.isCloseTopAllowRefersh)
 		{
-//			System.out.println("startTopScroll 1");
 			if (this.topView.getVisibility() == View.INVISIBLE)
 			{
-//				System.out.println("startTopScroll 2");
 				this.mScroller.startScroll(0, getScrollY(), 0, -getScrollY() + this.topViewHeight, 200);
 			}
 			else if (this.topView.getVisibility() == View.VISIBLE)
 			{
-				System.out.println("startTopScroll 3");
 				this.mScroller.startScroll(0, getScrollY(), 0, -getScrollY(), 200);
 			}
+
+			if (!isProgressBarShowed)
+			{
+				this.isScrollToDownStoped = true;
+			}
+
 			this.scrollType = 0;
-			this.isScrollStoped = true;
 			this.isFristTouch = false;
 		}
 		else
@@ -293,7 +342,12 @@ public class PullDownToLoadMoreView extends FrameLayout
 
 	public void setListViewLoadListener(ListViewLoadListener listener)
 	{
-		this.mListViewLoadListener=listener;
+		this.mListViewLoadListener = listener;
+	}
+	
+	public void setListViewTouchListener(OnTouchListener listener)
+	{
+		this.mTouchListener = listener;
 	}
 
 	public final void setAllowPullDownRefersh(boolean paramBoolean)
@@ -308,8 +362,8 @@ public class PullDownToLoadMoreView extends FrameLayout
 
 	public final void setTopViewInitialize(boolean isInitialize)
 	{
-		this.topViewInitializeVisibility = isInitialize?View.VISIBLE:View.INVISIBLE;
-		if (this.topView != null) 
+		this.topViewInitializeVisibility = isInitialize ? View.VISIBLE : View.INVISIBLE;
+		if (this.topView != null)
 		{
 			this.topView.setVisibility(this.topViewInitializeVisibility);
 		}
@@ -323,30 +377,35 @@ public class PullDownToLoadMoreView extends FrameLayout
 
 	private void startScroll()
 	{
-//		System.out.println("startScroll 0");
 		if (getScrollY() - this.topViewHeight < 0)
 		{
-//			System.out.println("startScroll 1");
-			if (!this.isCloseTopAllowRefersh)
+			if (!this.isCloseTopAllowRefersh && getScrollY() + topViewHeight > 0)
 			{
-//				System.out.println("startScroll 2");
 				if (this.topView.getVisibility() == View.INVISIBLE)
 				{
-					System.out.println("startScroll 23");
 					this.mScroller.startScroll(0, getScrollY(), 0, -getScrollY() + this.topViewHeight, 200);
 				}
-//				if (this.topView.getVisibility() == View.VISIBLE)
-//				{
-//					System.out.println("startScroll 24");
-//					this.mScroller.startScroll(0, getScrollY(), 0, -getScrollY(), 200);
-//				}
+				else if (this.topView.getVisibility() == View.VISIBLE)
+				{
+					if (getScrollY() < 0)
+						scrollBy(0, -getScrollY());
+				}
 				this.scrollType = 0;
-				this.isScrollStoped = true;
+				if (!isProgressBarShowed)
+				{
+					if (System.currentTimeMillis() - mStartTime >= 2000)
+					{
+						this.isScrollToDownStoped = true;
+					}
+					else
+					{
+						scrollTo(0, topViewHeight);
+					}
+				}
 				this.isFristTouch = false;
 			}
 			else
 			{
-//				System.out.println("this.isCloseTopAllowRefersh");
 				this.mScroller.startScroll(0, getScrollY(), 0, -getScrollY() + this.topViewHeight, 200);
 			}
 			postInvalidate();
@@ -356,11 +415,15 @@ public class PullDownToLoadMoreView extends FrameLayout
 			if (!this.isBottomWithOutScroll)
 			{
 				if (this.bottomView.getVisibility() == View.INVISIBLE)
+				{
 					this.mScroller.startScroll(0, getScrollY(), 0, this.bottomViewHeight - getScrollY(), 200);
-				if (this.bottomView.getVisibility() == View.VISIBLE)
+				}
+				else if (this.bottomView.getVisibility() == View.VISIBLE)
+				{
 					this.mScroller.startScroll(0, getScrollY(), 0, this.bottomViewHeight - getScrollY() + this.bottomViewHeight, 200);
+				}
 				this.scrollType = 1;
-				this.isScrollStoped = true;
+//				this.isScrollStoped = true;
 				this.isFristTouch = false;
 			}
 			else
@@ -388,21 +451,19 @@ public class PullDownToLoadMoreView extends FrameLayout
 				this.isScrollToTop = false;
 				this.isScrollFarTop = false;
 			}
-			
+
 			if (this.topViewInitializeVisibility == View.VISIBLE)
 			{
 				if (!this.isCloseTopAllowRefersh)
 				{
-//					System.out.println("dispatchTouchEvent 00");
 					this.topView.setVisibility(View.VISIBLE);
 				}
 				else
 				{
-//					System.out.println("dispatchTouchEvent 01");
 					this.topView.setVisibility(View.INVISIBLE);
 				}
 			}
-			
+
 			if (this.bottomViewInitializeVisibility == View.VISIBLE)
 			{
 				if (!this.isBottomWithOutScroll)
@@ -414,7 +475,7 @@ public class PullDownToLoadMoreView extends FrameLayout
 					this.bottomView.setVisibility(View.INVISIBLE);
 				}
 			}
-			
+
 			if (paramMotionEvent.getAction() != MotionEvent.ACTION_UP)
 			{
 				if (paramMotionEvent.getAction() != MotionEvent.ACTION_CANCEL)
@@ -422,37 +483,45 @@ public class PullDownToLoadMoreView extends FrameLayout
 					if (!this.mGestureDetector.onTouchEvent(paramMotionEvent))
 					{
 						// 可能在进一步调到obtainView后出异常
-						try{
+						try
+						{
 							bool = super.dispatchTouchEvent(paramMotionEvent);
-						}catch(Exception e){
+						}
+						catch (Exception e)
+						{
 							LogUtil.printException(e);
 						}
 					}
 					else
 					{
 						paramMotionEvent.setAction(MotionEvent.ACTION_CANCEL);
-						try{
+						try
+						{
 							bool = super.dispatchTouchEvent(paramMotionEvent);
-						}catch(Exception e){
+						}
+						catch (Exception e)
+						{
 							LogUtil.printException(e);
 						}
 					}
 				}
 				else
 				{
-//					System.out.println("dispatchTouchEvent 0");
 					startScroll();
 				}
 			}
 			else
 			{
-//				System.out.println("dispatchTouchEvent 1");
-				InputMethodManager inputManager = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);  
-				inputManager.hideSoftInputFromWindow(getWindowToken(), 0); 
+				mTouchListener.onTouch(this, paramMotionEvent);
+//				InputMethodManager inputManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+//				inputManager.hideSoftInputFromWindow(getWindowToken(), 0);
 				startScroll();
-				try{
+				try
+				{
 					bool = super.dispatchTouchEvent(paramMotionEvent);
-				}catch(Exception e){
+				}
+				catch (Exception e)
+				{
 					LogUtil.printException(e);
 				}
 			}
@@ -467,11 +536,11 @@ public class PullDownToLoadMoreView extends FrameLayout
 		super.computeScroll();
 		if (!this.mScroller.computeScrollOffset())
 		{
-			if (this.isScrollStoped)
+			if (this.isScrollToDownStoped)
 			{
-//				System.out.println("computeScroll 33");
-				this.isScrollStoped = false;
+				this.isScrollToDownStoped = false;
 				this.mHandler.sendEmptyMessageDelayed(0, timeInterval);
+				isProgressBarShowed = true;
 			}
 		}
 		else

@@ -4,5 +4,5 @@ import android.graphics.Bitmap;
 
 public interface ImageLoaderListener
 {
-	void onImageLoaded(String url, Bitmap bitmap);
+	void onImageLoaded(Bitmap bitmap);
 }

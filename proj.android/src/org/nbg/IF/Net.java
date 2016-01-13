@@ -29,6 +29,7 @@ import org.nbg.util.DeviceUtil;
 import org.nbg.util.GameContext;
 
 import com.elex.chatservice.controller.ChatServiceController;
+import com.elex.chatservice.controller.JniController;
 import com.google.android.apps.analytics.AdInstallRefMointor;
 import com.smartfoxserver.v2.entities.data.ISFSArray;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
@@ -208,19 +209,43 @@ public class Net implements IEventListener {
 		});
 	}
 	
-	public static void transportMailInfo(final String jsonStr)
+//	public static void transportMailInfo(final String jsonStr)
+//	{
+//		try
+//		{
+//			long responseForC = nativeCCDictionary();
+//			SFSObject obj = ChatServiceJsonDeSerializer.getInstance().newFromJsonData(jsonStr);
+//			nativeAddCCObjectToCCDictionary(responseForC, "mailInfo", sfsObjectToCCDictionary(obj));
+//			ChatServiceController.getInstance().host.transportMailInfo(responseForC);
+//		}
+//		catch (Exception e)
+//		{
+//			System.out.println("Net transportMailInfo json error:"+jsonStr);
+//		}
+//	}
+	
+	public static void transportMailInfo(final String jsonStr, final boolean isShowDetect)
 	{
-		try
+		IF.getInstance().runOnGLThread(new Runnable()
 		{
-			long responseForC = nativeCCDictionary();
-			SFSObject obj = ChatServiceJsonDeSerializer.getInstance().newFromJsonData(jsonStr);
-			nativeAddCCObjectToCCDictionary(responseForC, "mailInfo", sfsObjectToCCDictionary(obj));
-			ChatServiceController.getInstance().host.transportMailInfo(responseForC);
-		}
-		catch (Exception e)
-		{
-			System.out.println("Net transportMailInfo json error:"+jsonStr);
-		}
+			@Override
+			public void run()
+			{
+				try
+				{
+					long responseForC = nativeCCDictionary();
+					SFSObject obj = ChatServiceJsonDeSerializer.getInstance().newFromJsonData(jsonStr);
+					nativeAddCCObjectToCCDictionary(responseForC, "mailInfo", sfsObjectToCCDictionary(obj));
+					// ChatServiceController.getInstance().host.transportMailInfo(responseForC);
+					JniController.getInstance().excuteJNIVoidMethod("transportMailInfo",
+							new Object[] { Long.valueOf(responseForC), Boolean.valueOf(isShowDetect) });
+				}
+				catch (Exception e)
+				{
+					System.out.println("Net transportMailInfo json error:" + jsonStr);
+				}
+			}
+		});
 	}
 	
 	public static String getParseFromCocos2dx(final String jsonStr)

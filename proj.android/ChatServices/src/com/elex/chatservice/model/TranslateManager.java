@@ -7,275 +7,522 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.apache.http.util.EntityUtils;
+
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 
 import com.alibaba.fastjson.JSON;
 import com.elex.chatservice.controller.ChatServiceController;
+import com.elex.chatservice.controller.JniController;
 import com.elex.chatservice.model.db.DBDefinition;
 import com.elex.chatservice.model.db.DBManager;
 import com.elex.chatservice.util.LogUtil;
+import com.elex.chatservice.util.TranslateListener;
+import com.elex.chatservice.util.TranslateNewParams;
 import com.elex.chatservice.util.TranslateParam;
 import com.elex.chatservice.util.TranslateUtil;
 import com.elex.chatservice.util.TranslatedByLuaResult;
+import com.elex.chatservice.util.HeadPicUtil.MD5;
 
-public class TranslateManager {
-	
-	private static TranslateManager _instance=null;
-	private List<MsgItem> translateQueue=null;
-	private Map<String,List<MsgItem>> translateQueueLua=null;
-	private Timer timer=null;
-	private TimerTask timerTask=null;
-	private long tranlateStartTime=0;
-	private boolean isTranlating=false;
-	public String disableLang="";
-	public static boolean isTranslatedByLuaStart = false;
-	public static boolean isUIShow = false;
-	
+public class TranslateManager
+{
+
+	private static TranslateManager		_instance				= null;
+	private List<MsgItem>				translateQueue			= null;
+	private Map<String, List<MsgItem>>	translateQueueLua		= null;
+	private Timer						timer					= null;
+	private TimerTask					timerTask				= null;
+	private long						tranlateStartTime		= 0;
+	private boolean						isTranlating			= false;
+	public String						disableLang				= "";
+	public static boolean				isTranslatedByLuaStart	= false;
+	public static boolean				isUIShow				= false;
+	private static ExecutorService		executorService			= null;
+
 	public static TranslateManager getInstance()
 	{
-		if(_instance == null)
-			_instance=new TranslateManager();
+		if (_instance == null)
+			_instance = new TranslateManager();
 		return _instance;
 	}
-	
+
 	private TranslateManager()
 	{
+		executorService = Executors.newFixedThreadPool(5);
 		reset();
 	}
-	
+
 	public void reset()
 	{
 		stopTimer();
 		translateQueue = new ArrayList<MsgItem>();
 		translateQueueLua = new HashMap<String, List<MsgItem>>();
 	}
-	
+
 	private boolean isNeedTranslateChar(String str)
 	{
-		if(StringUtils.isNumeric(str))
+		if (StringUtils.isNotEmpty(str) && StringUtils.isNumeric(str))
 			return false;
 		char[] chars = str.toCharArray();
-		if(chars.length==1)
+		if (chars.length == 1)
 		{
-//			System.out.println("isNeedTranslate str:"+str);
-			int code=(int)chars[0];
-			if(code>=0 && code<=255)
+			int code = (int) chars[0];
+			if (code >= 0 && code <= 255)
 				return false;
 		}
 		return true;
 	}
-	
-	private boolean isTranslateMsgValid(MsgItem msgItem)
+
+	public boolean isTranslateMsgValid(MsgItem msgItem)
 	{
-		if(msgItem.translateMsg.equals("") || msgItem.translatedLang==null || 
-				(!msgItem.translateMsg.equals("") && msgItem.translatedLang!=null && !msgItem.translatedLang.equals("") 
-				&& !msgItem.translatedLang.equals(ConfigManager.getInstance().gameLang)))
+		if (StringUtils.isEmpty(msgItem.translateMsg)
+				|| msgItem.translateMsg.startsWith("{\"code\":{")
+				|| StringUtils.isEmpty(msgItem.translatedLang)
+				|| !isLangSameAsTargetLang(msgItem.translatedLang))
 			return false;
 		return true;
 	}
-	
-	private boolean isOriginalLangValid(MsgItem msgItem)
+
+	public boolean isLangSameAsTargetLang(String lang)
 	{
-		if(msgItem.originalLang.equals(ConfigManager.getInstance().gameLang) && msgItem.translateMsg.equals(""))
+		boolean isSame = false;
+		if (StringUtils.isNotEmpty(lang) && StringUtils.isNotEmpty(ConfigManager.getInstance().gameLang)
+				&& (ConfigManager.getInstance().gameLang.equals(lang) || isSameZhLang(lang, ConfigManager.getInstance().gameLang)))
+			isSame = true;
+		return isSame;
+	}
+
+	public boolean isSameZhLang(String originalLang, String targetLang)
+	{
+		if (StringUtils.isNotEmpty(originalLang) && StringUtils.isNotEmpty(targetLang)
+				&& ((isZh_CN(originalLang) && isZh_CN(targetLang)) || (isZh_TW(originalLang) && isZh_TW(targetLang))))
 			return true;
 		return false;
 	}
-	
+
+	public boolean isZh_CN(String lang)
+	{
+		if (StringUtils.isNotEmpty(lang) && lang.equals("zh-CN") || lang.equals("zh_CN") || lang.equals("zh-Hans") || lang.equals("zh-CHS"))
+			return true;
+		return false;
+	}
+
+	public boolean isZh_TW(String lang)
+	{
+		if (StringUtils.isNotEmpty(lang) && lang.equals("zh-TW") || lang.equals("zh_TW") || lang.equals("zh-Hant") || lang.equals("zh-CHT"))
+			return true;
+		return false;
+	}
+
+	private boolean isOriginalLangValid(MsgItem msgItem)
+	{
+		if (msgItem.isOriginalSameAsTargetLang() && msgItem.translateMsg.equals(""))
+			return true;
+		return false;
+	}
+
 	public void enterTranlateQueue(MsgItem msgItem)
 	{
-		if(ConfigManager.autoTranlateMode <= 0)
+		if (ConfigManager.autoTranlateMode <= 0)
 			return;
-		try {
-			if(msgItem!=null && !msgItem.isSelfMsg && !msgItem.isNewMsg && !msgItem.isEquipMessage() && !msgItem.msg.equals("") && isNeedTranslateChar(msgItem.msg) 
-					&& !isOriginalLangValid(msgItem) && !isTranslateMsgValid(msgItem))
+		try
+		{
+			if (msgItem != null && !msgItem.isSelfMsg() && !msgItem.isNewMsg && !msgItem.isEquipMessage() && !msgItem.msg.equals("")
+					&& isNeedTranslateChar(msgItem.msg) && !isOriginalLangValid(msgItem) && !isTranslateMsgValid(msgItem))
 			{
-//				System.out.println("历史消息无翻译或译文语言和游戏语言不一致");
-				if(translateQueue!=null)
+				if (translateQueue != null && !translateQueue.contains(msgItem))
+				{
 					translateQueue.add(msgItem);
-				if(translateQueueLua!=null)
+				}
+				if (translateQueueLua != null)
 				{
 					List<MsgItem> list = null;
-					if(translateQueueLua.containsKey(msgItem.msg))
+					if (translateQueueLua.containsKey(msgItem.msg))
+					{
 						list = translateQueueLua.get(msgItem.msg);
-					if(list == null)
+						if (list != null && !list.contains(msgItem))
+						{
+							list.add(msgItem);
+						}
+						else if (list == null)
+						{
+							list = new ArrayList<MsgItem>();
+							list.add(msgItem);
+							translateQueueLua.put(msgItem.msg, list);
+						}
+					}
+					else
+					{
 						list = new ArrayList<MsgItem>();
-					list.add(msgItem);
-					translateQueueLua.put(msgItem.msg, list);
+						list.add(msgItem);
+						translateQueueLua.put(msgItem.msg, list);
+					}
 				}
-				
-				if(timer==null)
+
+				if (timer == null)
 					createTimer();
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			LogUtil.printException(e);
 		}
 	}
-	
+
 	private boolean canTranslateByLua()
 	{
-		if(isTranslatedByLuaStart && isUIShow)
+		if (isTranslatedByLuaStart && isUIShow)
 			return true;
-//		System.out.println("canTranslateByLua");
-		isTranslatedByLuaStart = ChatServiceController.getInstance().host.canTransalteByLua();
+		isTranslatedByLuaStart = JniController.getInstance().excuteJNIMethod("canTransalteByLua", null);
 		return isTranslatedByLuaStart;
 	}
-	
+
 	public void handleTranslateResult(TranslatedByLuaResult result)
 	{
 		List<MsgItem> list = translateQueueLua.get(result.getOriginalMsg());
-		if(list!=null && list.size()>0)
+		if (list != null && list.size() > 0)
 		{
-			for(int i=0; i<list.size(); i++)
+			for (int i = 0; i < list.size(); i++)
 			{
 				MsgItem msgItem = list.get(i);
-				if(msgItem != null)
+				if (msgItem != null)
 				{
-					if(!msgItem.isTranlateDisable() && !msgItem.isOriginalSameAsTargetLang())
+					msgItem.translateMsg = result.getTranslatedMsg();
+					msgItem.originalLang = result.getOriginalLang();
+					msgItem.translatedLang = ConfigManager.getInstance().gameLang;
+					
+					if (TranslateManager.getInstance().hasTranslated(msgItem))
 						msgItem.hasTranslated = true;
 					else
 						msgItem.hasTranslated = false;
-					msgItem.translateMsg = result.getTranslatedMsg();
-					msgItem.originalLang = result.getOriginalLang();
-					ChatServiceController.getInstance().host.callXCApi();
-					msgItem.translatedLang=ConfigManager.getInstance().gameLang;
-//					System.out.println("lua 翻译消息原文："+msgItem.msg+" 译文:"+msgItem.translateMsg+" msgItem.channelType:"+msgItem.channelType);
 					
 					ChatChannel channel = null;
-					if((msgItem.channelType == DBDefinition.CHANNEL_TYPE_USER || msgItem.channelType == DBDefinition.CHANNEL_TYPE_CHATROOM) && msgItem.chatChannel!=null)
+					if ((msgItem.channelType == DBDefinition.CHANNEL_TYPE_USER || msgItem.channelType == DBDefinition.CHANNEL_TYPE_CHATROOM)
+							&& msgItem.chatChannel != null)
 					{
-						channel = ChannelManager.getInstance().getChannel(msgItem.channelType,msgItem.chatChannel.channelID);
+						channel = ChannelManager.getInstance().getChannel(msgItem.channelType, msgItem.chatChannel.channelID);
 					}
-					else if(msgItem.channelType ==DBDefinition.CHANNEL_TYPE_COUNTRY || msgItem.channelType == DBDefinition.CHANNEL_TYPE_ALLIANCE)
+					else if (msgItem.channelType == DBDefinition.CHANNEL_TYPE_COUNTRY
+							|| msgItem.channelType == DBDefinition.CHANNEL_TYPE_ALLIANCE)
 					{
 						channel = ChannelManager.getInstance().getChannel(msgItem.channelType);
 					}
-					if(channel != null){
+					if (channel != null)
+					{
 						DBManager.getInstance().updateMessage(msgItem, channel.getChatTable());
 					}
 				}
 			}
 			translateQueueLua.remove(result.getOriginalMsg());
-			isTranlating=false;
+			isTranlating = false;
 		}
 	}
-	
+
 	public boolean isInTranslateQueue(String msg)
 	{
-		if(translateQueueLua!=null && translateQueueLua.containsKey(msg))
+		if (translateQueueLua != null && translateQueueLua.containsKey(msg))
 			return true;
 		return false;
 	}
-	
+
 	private void createTimer()
 	{
-//		System.out.println("createTimer");
-		if(ConfigManager.autoTranlateMode <= 0)
+		if (ConfigManager.autoTranlateMode <= 0)
 			return;
-		timer=new Timer();
-		timerTask=new TimerTask() {
-			
+		timer = new Timer();
+		timerTask = new TimerTask()
+		{
+
 			@Override
-			public void run() {
-				if(System.currentTimeMillis()-tranlateStartTime>=5000 || !isTranlating)
+			public void run()
+			{
+				if (System.currentTimeMillis() - tranlateStartTime >= 5000 || !isTranlating)
 				{
-					if(ConfigManager.autoTranlateMode == 2 && canTranslateByLua() && !translateQueueLua.isEmpty())
+					if (ConfigManager.autoTranlateMode == 2 && canTranslateByLua() && !translateQueueLua.isEmpty())
 					{
-						
+
 						Set<String> msgKeySet = translateQueueLua.keySet();
-						if(msgKeySet.size()>0)
+						if (msgKeySet.size() > 0)
 						{
 							String msg = msgKeySet.toArray()[0].toString();
-							if(StringUtils.isNotEmpty(msg))
+							if (StringUtils.isNotEmpty(msg))
 							{
-//								System.out.println("lua traslate start msg:"+msg);
-								
-								if(System.currentTimeMillis()-tranlateStartTime>=5000 && isTranlating)
+								if (System.currentTimeMillis() - tranlateStartTime >= 5000 && isTranlating)
 								{
 									translateQueueLua.remove(msg);
 									isTranlating = false;
 								}
 								else
 								{
-									tranlateStartTime=System.currentTimeMillis();
-									isTranlating=true;
-									ChatServiceController.getInstance().host.translateMsgByLua(msg, ConfigManager.getInstance().gameLang);
+									tranlateStartTime = System.currentTimeMillis();
+									isTranlating = true;
+									JniController.getInstance().excuteJNIVoidMethod("translateMsgByLua",
+											new Object[] { msg, ConfigManager.getInstance().gameLang });
 								}
 							}
 						}
-						if(translateQueueLua.isEmpty())
+						if (translateQueueLua.isEmpty())
 							stopTimer();
 					}
-					else if(ConfigManager.autoTranlateMode == 1 && !translateQueue.isEmpty())
+					else if (ConfigManager.autoTranlateMode == 1 && !translateQueue.isEmpty())
 					{
-						final MsgItem msgItem=translateQueue.get(0);
-						if(msgItem!=null)
+						final MsgItem msgItem = translateQueue.get(0);
+						if (msgItem != null)
 						{
-//							System.out.println("开始翻译:"+msgItem.msg);
-							tranlateStartTime=System.currentTimeMillis();
-							isTranlating=true;
-							try {
-								String ret= TranslateUtil.translate(msgItem.msg);
-								TranslateParam param=JSON.parseObject(ret,TranslateParam.class);
-								String translateMsg=param.getTranslatedMsg();
-								if(!translateMsg.trim().equals(""))
+							tranlateStartTime = System.currentTimeMillis();
+							isTranlating = true;
+							try
+							{
+								String ret = TranslateUtil.translateNew(msgItem.msg, msgItem.getLang());
+								TranslateNewParams param = JSON.parseObject(ret, TranslateNewParams.class);
+								String translateMsg = param.getTranslateMsg();
+								if (StringUtils.isNotEmpty(translateMsg) && !translateMsg.startsWith("{\"code\":{"))
 								{
-									if(!msgItem.isTranlateDisable() && !msgItem.isOriginalSameAsTargetLang())
+									msgItem.translateMsg = translateMsg;
+									msgItem.originalLang = param.getOriginalLang();
+									msgItem.translatedLang = ConfigManager.getInstance().gameLang;
+									
+									if (TranslateManager.getInstance().hasTranslated(msgItem))
 										msgItem.hasTranslated = true;
 									else
 										msgItem.hasTranslated = false;
 									
-									msgItem.translateMsg=translateMsg;
-									msgItem.originalLang=param.getSrc();
-									ChatServiceController.getInstance().host.callXCApi();
-									msgItem.translatedLang=ConfigManager.getInstance().gameLang;
-//								System.out.println("google 翻译消息原文："+msgItem.msg+" 译文:"+msgItem.translateMsg+" msgItem.channelType:"+msgItem.channelType);
-									
 									ChatChannel channel = null;
-									if((msgItem.channelType == DBDefinition.CHANNEL_TYPE_USER || msgItem.channelType == DBDefinition.CHANNEL_TYPE_CHATROOM) && msgItem.chatChannel!=null)
+									if ((msgItem.channelType == DBDefinition.CHANNEL_TYPE_USER || msgItem.channelType == DBDefinition.CHANNEL_TYPE_CHATROOM)
+											&& msgItem.chatChannel != null)
 									{
-										channel = ChannelManager.getInstance().getChannel(msgItem.channelType,msgItem.chatChannel.channelID);
+										channel = ChannelManager.getInstance().getChannel(msgItem.channelType,
+												msgItem.chatChannel.channelID);
 									}
-									else if(msgItem.channelType ==DBDefinition.CHANNEL_TYPE_COUNTRY || msgItem.channelType == DBDefinition.CHANNEL_TYPE_ALLIANCE)
+									else if (msgItem.channelType == DBDefinition.CHANNEL_TYPE_COUNTRY
+											|| msgItem.channelType == DBDefinition.CHANNEL_TYPE_ALLIANCE)
 									{
 										channel = ChannelManager.getInstance().getChannel(msgItem.channelType);
 									}
-									if(channel != null){
-//									System.out.println("翻译消息 222");
+									if (channel != null)
+									{
 										DBManager.getInstance().updateMessage(msgItem, channel.getChatTable());
 									}
 									translateQueue.remove(msgItem);
-									isTranlating=false;
+									isTranlating = false;
 								}
-							} catch (Exception e) {
+							}
+							catch (Exception e)
+							{
 								translateQueue.remove(msgItem);
-								LogUtil.trackMessage("JSON.parseObject exception on server" + UserManager.getInstance().getCurrentUser().serverId, "", "");
+								// LogUtil.trackMessage("JSON.parseObject exception on server"
+								// +
+								// UserManager.getInstance().getCurrentUser().serverId,
+								// "", "");
 							}
 						}
-						if(translateQueue.isEmpty())
+						if (translateQueue.isEmpty())
 							stopTimer();
 					}
 				}
-				
+
 			}
 		};
 		timer.schedule(timerTask, 0, 100);
 	}
-	
+
 	private void stopTimer()
 	{
-//		System.out.println("stopTimer");
-		if(timerTask!=null)
+		try
 		{
-			timerTask.cancel();
-			timerTask=null;
+			if (timerTask != null)
+			{
+				timerTask.cancel();
+				timerTask = null;
+			}
+
+			if (timer != null)
+			{
+				timer.cancel();
+				timer.purge();
+				timer = null;
+			}
 		}
-		
-		if(timer!=null)
+		catch (Exception e)
 		{
-			timer.cancel();
-			timer.purge();
-			timer=null;
+			LogUtil.printException(e);
 		}
+	}
+
+	class TranslateRunnable implements Runnable
+	{
+		private MsgItem	msgItem;
+		private Handler	handler;
+
+		public TranslateRunnable(MsgItem item, Handler handler)
+		{
+			this.msgItem = item;
+			this.handler = handler;
+		}
+
+		@Override
+		public void run()
+		{
+			String ret = translateNew(msgItem.msg, msgItem.getLang());
+
+			try
+			{
+				TranslateNewParams params = JSON.parseObject(ret, TranslateNewParams.class);
+				String translateMsg = params.getTranslateMsg();
+				String originalLang = params.getOriginalLang();
+
+				if (StringUtils.isEmpty(translateMsg) || translateMsg.startsWith("{\"code\":{"))
+					return;
+
+				if (!msgItem.isTranlateDisable() && !msgItem.isOriginalSameAsTargetLang())
+					msgItem.hasTranslated = true;
+				else
+					msgItem.hasTranslated = false;
+
+				msgItem.translateMsg = translateMsg;
+				msgItem.originalLang = originalLang;
+				msgItem.translatedLang = ConfigManager.getInstance().gameLang;
+
+				ChatChannel channel = null;
+				if ((msgItem.channelType == DBDefinition.CHANNEL_TYPE_USER || msgItem.channelType == DBDefinition.CHANNEL_TYPE_CHATROOM)
+						&& msgItem.chatChannel != null)
+				{
+					channel = ChannelManager.getInstance().getChannel(msgItem.channelType, msgItem.chatChannel.channelID);
+				}
+				else if (msgItem.channelType == DBDefinition.CHANNEL_TYPE_COUNTRY
+						|| msgItem.channelType == DBDefinition.CHANNEL_TYPE_ALLIANCE)
+				{
+					channel = ChannelManager.getInstance().getChannel(msgItem.channelType);
+				}
+				if (channel != null)
+				{
+					DBManager.getInstance().updateMessage(msgItem, channel.getChatTable());
+				}
+
+				if (handler != null)
+				{
+					msgItem.hasTranslated = true;
+					msgItem.isTranslatedByForce = true;
+					msgItem.hasTranslatedByForce = true;
+
+					Message msg = new Message();
+					Bundle data = new Bundle();
+					data.putString("translateMsg", translateMsg);
+					msg.setData(data);
+					handler.sendMessage(msg);
+				}
+
+			}
+			catch (Exception e)
+			{
+				// LogUtil.trackMessage("JSON.parseObject exception on server" +
+				// UserManager.getInstance().getCurrentUser().serverId, "",
+				// "");
+			}
+		}
+
+	}
+
+	public String translateNew(final String srcMsg, final String orginalLang)
+	{
+		try
+		{
+			HttpParams httpParams = new BasicHttpParams();
+			HttpConnectionParams.setConnectionTimeout(httpParams, 20000);
+			HttpConnectionParams.setSoTimeout(httpParams, 20000);
+			HttpClient httpClient = new DefaultHttpClient(httpParams);
+			HttpPost post = new HttpPost("http://173.193.186.101/translate2.php");
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			BasicNameValuePair sc = new BasicNameValuePair("sc", srcMsg);
+			String originalLangStr = TranslateManager.getInstance().getTranslateLang(orginalLang);
+			BasicNameValuePair sf = new BasicNameValuePair("sf", originalLangStr);
+			String key = TranslateManager.getInstance().getTranslateLang(ConfigManager.getInstance().gameLang);
+			String translateLang = "[\"" + key + "\"]";
+			BasicNameValuePair tf = new BasicNameValuePair("tf", translateLang);
+			BasicNameValuePair ch = new BasicNameValuePair("ch", "cok");
+			String currentTime = Long.toString(System.currentTimeMillis());
+			BasicNameValuePair t = new BasicNameValuePair("t", currentTime);
+			String md5 = MD5.getMD5Str(srcMsg + originalLangStr + translateLang + "cok" + currentTime + "jv89#klnme_*@");
+			BasicNameValuePair sig = new BasicNameValuePair("sig", md5);
+
+			params.add(sc);
+			params.add(sf);
+			params.add(tf);
+			params.add(ch);
+			params.add(t);
+			params.add(sig);
+			post.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
+			HttpResponse httpResponse = httpClient.execute(post);
+
+			String responseStr = EntityUtils.toString(httpResponse.getEntity());
+			// System.out.println("translateNew:" + responseStr);
+			return responseStr;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return srcMsg;
+	}
+
+	public void loadTranslation(final MsgItem msgItem, final TranslateListener translateListener)
+	{
+		if (!(msgItem != null && !msgItem.isSelfMsg() && !msgItem.isEquipMessage() && StringUtils.isNotEmpty(msgItem.msg)
+				&& isNeedTranslateChar(msgItem.msg) && !isOriginalLangValid(msgItem) && !isTranslateMsgValid(msgItem)))
+			return;
+
+		Handler handler = null;
+		if (translateListener != null)
+		{
+			handler = new Handler()
+			{
+				@Override
+				public void handleMessage(Message msg)
+				{
+					super.handleMessage(msg);
+					Bundle data = msg.getData();
+					String translateMsg = data.getString("translateMsg");
+
+					if (translateListener != null)
+					{
+						translateListener.onTranslateFinish(translateMsg);
+					}
+
+				}
+			};
+		}
+
+		if (executorService != null)
+			executorService.submit(new TranslateRunnable(msgItem, handler));
+	}
+
+	public String getTranslateLang(String originalLang)
+	{
+		if (isZh_CN(originalLang))
+			return "zh-Hans";
+		else if (isZh_TW(originalLang))
+			return "zh-Hant";
+		return originalLang;
+	}
+	
+	public boolean hasTranslated(MsgItem msgItem)
+	{
+		return isTranslateMsgValid(msgItem) && !msgItem.isTranlateDisable() && !msgItem.isOriginalSameAsTargetLang() && (ChatServiceController.isDefaultTranslateEnable || (!ChatServiceController.isDefaultTranslateEnable && msgItem.hasTranslatedByForce));
 	}
 }

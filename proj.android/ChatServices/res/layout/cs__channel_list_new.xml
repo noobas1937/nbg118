@@ -5,14 +5,14 @@
     android:layout_height="fill_parent"
     tools:context="${relativePackage}.${activityClass}" >
 
-    <FrameLayout android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <FrameLayout android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:layout_above="@+id/mailButtonBarLayout">
         
         <com.lee.pullrefresh.ui.PullToRefreshSwipeListView
         	android:id="@+id/channelListPullView"
-        	android:layout_width="match_parent"
-        	android:layout_height="match_parent"
+        	android:layout_width="fill_parent"
+        	android:layout_height="fill_parent"
         
         	android:cacheColorHint="#00000000" >
 
@@ -42,8 +42,8 @@
 
     <LinearLayout
         android:id="@+id/mailButtonBarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
         android:layout_alignParentBottom="true"
         android:layout_centerVertical="true"
         android:background="@drawable/mail_list_edit_buttonbar_bg"
@@ -52,7 +52,7 @@
         <LinearLayout
             android:id="@+id/channel_item_checkbox_layout"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_gravity="center_vertical"
             android:layout_weight="64"
             android:gravity="center_vertical"
@@ -90,7 +90,7 @@
 
         <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_gravity="center_vertical"
             android:layout_weight="640"
             android:gravity="center_vertical"
@@ -99,22 +99,42 @@
             <TextView
                 android:id="@+id/checkboxLabel"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="8dp"
+                android:gravity="center_vertical"
                 android:text="Check all"
                 android:textColor="#ff5f4015"
                 android:textSize="@dimen/cs__textTitle" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:layout_gravity="center_vertical"
                 android:layout_toRightOf="@+id/checkboxLabel"
                 android:gravity="center_vertical"
                 android:orientation="horizontal" >
 
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="30" >
+
+                    <ImageView
+                        android:id="@+id/mailButtonBarReward"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="2dp"
+                        android:background="#00ffffff"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/mail_list_edit_gift" />
+                </RelativeLayout>
+                
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -133,25 +153,6 @@
                         android:scaleType="fitCenter"
                         android:src="@drawable/mail_list_edit_write" />
                 </RelativeLayout>
-
-                <!-- <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="30" >
-
-                    <ImageView
-                        android:id="@+id/mailButtonBarLock"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginBottom="2dp"
-                        android:layout_marginTop="2dp"
-                        android:background="#00ffffff"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/mail_list_edit_favorite" />
-                </RelativeLayout> -->
 
                 <RelativeLayout
                     android:layout_width="0dp"

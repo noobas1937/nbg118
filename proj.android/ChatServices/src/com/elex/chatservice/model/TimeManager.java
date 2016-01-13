@@ -5,10 +5,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * Date是以默认时区创建的，已经包含了本机的时区 2dx中的时区也是从本机获取的，所以不用考虑时区因素
+ */
 public class TimeManager
 {
-	// Date是以默认时区创建的，已经包含了本机的时区
-	// 2dx中的时区也是从本机获取的，所以不用考虑时区因素
 	private long				serverBaseTime;
 	private long				localBaseTime;
 
@@ -27,36 +28,26 @@ public class TimeManager
 		return instance;
 	}
 
-	/**
-	 * @param serverTime utc时间，s为单位为
-	 */
 	public void setServerBaseTime(int serverTime)
 	{
 		serverBaseTime = (long) serverTime * 1000;
 		localBaseTime = System.currentTimeMillis();
-		System.out.println("setServerBaseTime() serverBaseTime:" + serverBaseTime + " localBaseTime:" + localBaseTime);
 	}
 
-	/**
-	 * @return utc时间，单位为s
-	 */
 	public int getCurrentTime()
 	{
 		long ms = getCurrentTimeMS();
-		double s = ms / 1000;	// 12位数转换过来只能保留到小数点后9位
-//		System.out.println("getCurrentTime() ms:" + ms + " s:" + (int) Math.round(s));
-
+		double s = ms / 1000;
 		return (int) Math.round(s);
 	}
-	
+
 	public long getCurrentTimeMS()
 	{
-//		System.out.println("getCurrentTimeMS() ms:" + (serverBaseTime + System.currentTimeMillis() - localBaseTime));
 		return serverBaseTime + System.currentTimeMillis() - localBaseTime;
 	}
-	
+
 	/**
-	 * @return 当前时区与0时区的时间差，单位为s
+	 * 获取当前时区与0时区的时间差，单位为s
 	 */
 	public int getTimeOffset()
 	{
@@ -65,25 +56,37 @@ public class TimeManager
 	}
 
 	/**
-	 * @return 当前时区的gmt时间，单位为s
+	 * 获取当前时区的gmt时间，单位为s
 	 */
 	public int getCurrentLocalTime()
 	{
 		return getCurrentTime() + getTimeOffset();
 	}
 
+	public boolean isToday(int time)
+	{
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(getDate(time));
+		int date = cal.get(Calendar.DATE);
+		cal.setTime(new Date(getCurrentTimeMS()));
+		int currentDate = cal.get(Calendar.DATE);
+		if (date == currentDate)
+			return true;
+		return false;
+	}
+	
 	private static Date getDate(int time)
 	{
 		Date date = new Date((long) time * 1000);
 		return date;
 	}
-	
+
 	public static String getTimeYMDHM(int time)
 	{
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
 		return formatter.format(getDate(time));
 	}
-	
+
 	public static String getTimeMDHM(int time)
 	{
 		SimpleDateFormat formatter = new SimpleDateFormat("MM-dd HH:mm", Locale.getDefault());
@@ -101,38 +104,65 @@ public class TimeManager
 		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm", Locale.getDefault());
 		return formatter.format(getDate(time));
 	}
-	
+
 	public static boolean isLastYear(int time)
 	{
 		Calendar cal = Calendar.getInstance();
-		cal.setTime(getDate(time));  
+		cal.setTime(getDate(time));
 		int year = cal.get(Calendar.YEAR);
 		cal.setTime(new Date(System.currentTimeMillis()));
 		int currentYear = cal.get(Calendar.YEAR);
-		if(year < currentYear)
+		if (year < currentYear)
 			return true;
 		return false;
 	}
-	
+
+	public static boolean isInValidTime(long time)
+	{
+		return isInValidTime(getTimeInS(time));
+	}
+
 	public static boolean isInValidTime(int time)
 	{
 		boolean isInValid = false;
 		Calendar cal = Calendar.getInstance();
-		cal.setTime(getDate(time));  
+		cal.setTime(getDate(time));
 		int year = cal.get(Calendar.YEAR);
-		isInValid = year<2010;
+		isInValid = year < 2010;
 		return isInValid;
 	}
+
+	public static String getReadableTime(long time)
+	{
+		return getReadableTime(getTimeInS(time));
+	}
 	
+	public static int getTimeInS(long time)
+	{
+		if(time > 9999999999L){
+			return Double.valueOf(Math.floor(time / 1000)).intValue();
+		}else{
+			return Long.valueOf(time).intValue();
+		}
+	}
+	
+	public static long getTimeInMS(long time)
+	{
+		if(time < 10000000000L){
+			return time * 1000;
+		}else{
+			return time;
+		}
+	}
+
 	public static String getReadableTime(int time)
 	{
 		String timeText = "";
 		int dt = TimeManager.getInstance().getCurrentTime() - time;
 		int timedt = 0;
-//		System.out.println("getReadableTime dt:" + dt);
 		if (dt >= 24 * 3600 * 2)
 		{
-			if(isLastYear(time))
+			if (isLastYear(time))
 				timeText = getTimeYMDHM(time);
 			else
 				timeText = getTimeMDHM(time);

@@ -6,20 +6,21 @@ import com.elex.chatservice.util.MathUtil;
 
 public class ApplicationItem extends ChannelListItem
 {
-	public ApplicationInfo appInfo;
-	private boolean	isLock;
-	private boolean hasReward;
-	public int showMute;
-	public boolean showUreadAsText;
-	public int time;
-	public String summary;
-	
+	public ApplicationInfo	appInfo;
+	private boolean			isLock;
+	private boolean			hasReward;
+	public int				showMute;
+	public boolean			showUreadAsText;
+	public int				time;
+	public String			summary;
+
 	public ApplicationItem(ApplicationInfo applicationInfo)
 	{
 		appInfo = applicationInfo;
-		
+
 		unreadCount = MathUtil.random(1, 10) > 5 ? 0 : 1;
-		if(unreadCount == 1){
+		if (unreadCount == 1)
+		{
 			unreadCount = MathUtil.random(1, 10) > 5 ? MathUtil.random(1, 30) : MathUtil.random(30, 1000);
 		}
 		showUreadAsText = MathUtil.random(1, 10) > 5;
@@ -31,11 +32,12 @@ public class ApplicationItem extends ChannelListItem
 				: "[ui_silver.png]+3k [ui_food.png]+3k [diamond.png]+3k  [ui_gold.png]+3k [ui_wood.png]+3k [ui_iron.png]+3k";
 	}
 
-	public boolean isUnread() {
+	public boolean isUnread()
+	{
 		return unreadCount > 0;
 	}
-	
-	public int getChannelTime()
+
+	public long getChannelTime()
 	{
 		return time;
 	}

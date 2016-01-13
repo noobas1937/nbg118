@@ -1,76 +1,116 @@
 package com.elex.chatservice.model.mail.allianceinvite;
 
-public class AllianceInviteMailContents {
-	private String iconAlliance;
-	private String allianceLang;
-	private int deal;
-	private String contents;
-	private int fightpower;
-	private String learderName;
-	private String alliancename;
-	private int curMember;
-	private String allianceId;
-	private int maxMember;
-	public String getIconAlliance() {
+public class AllianceInviteMailContents
+{
+	private String	iconAlliance;
+	private String	allianceLang;
+	private int		deal;
+	private String	contents;
+	private int		fightpower;
+	private String	learderName;
+	private String	alliancename;
+	private int		curMember;
+	private String	allianceId;
+	private int		maxMember;
+
+	public String getIconAlliance()
+	{
 		return iconAlliance;
 	}
-	public void setIconAlliance(String iconAlliance) {
+
+	public void setIconAlliance(String iconAlliance)
+	{
 		this.iconAlliance = iconAlliance;
 	}
-	public String getAllianceLang() {
+
+	public String getAllianceLang()
+	{
 		return allianceLang;
 	}
-	public void setAllianceLang(String allianceLang) {
+
+	public void setAllianceLang(String allianceLang)
+	{
 		this.allianceLang = allianceLang;
 	}
-	public int getDeal() {
+
+	public int getDeal()
+	{
 		return deal;
 	}
-	public void setDeal(int deal) {
+
+	public void setDeal(int deal)
+	{
 		this.deal = deal;
 	}
-	public String getContents() {
+
+	public String getContents()
+	{
 		return contents;
 	}
-	public void setContents(String contents) {
+
+	public void setContents(String contents)
+	{
 		this.contents = contents;
 	}
-	public int getFightpower() {
+
+	public int getFightpower()
+	{
 		return fightpower;
 	}
-	public void setFightpower(int fightpower) {
+
+	public void setFightpower(int fightpower)
+	{
 		this.fightpower = fightpower;
 	}
-	public String getLearderName() {
+
+	public String getLearderName()
+	{
 		return learderName;
 	}
-	public void setLearderName(String learderName) {
+
+	public void setLearderName(String learderName)
+	{
 		this.learderName = learderName;
 	}
-	public String getAlliancename() {
+
+	public String getAlliancename()
+	{
 		return alliancename;
 	}
-	public void setAlliancename(String alliancename) {
+
+	public void setAlliancename(String alliancename)
+	{
 		this.alliancename = alliancename;
 	}
-	public int getCurMember() {
+
+	public int getCurMember()
+	{
 		return curMember;
 	}
-	public void setCurMember(int curMember) {
+
+	public void setCurMember(int curMember)
+	{
 		this.curMember = curMember;
 	}
-	public String getAllianceId() {
+
+	public String getAllianceId()
+	{
 		return allianceId;
 	}
-	public void setAllianceId(String allianceId) {
+
+	public void setAllianceId(String allianceId)
+	{
 		this.allianceId = allianceId;
 	}
-	public int getMaxMember() {
+
+	public int getMaxMember()
+	{
 		return maxMember;
 	}
-	public void setMaxMember(int maxMember) {
+
+	public void setMaxMember(int maxMember)
+	{
 		this.maxMember = maxMember;
 	}
-	
-	
+
 }

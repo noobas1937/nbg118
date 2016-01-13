@@ -1,200 +1,300 @@
 package com.elex.chatservice.model.mail.battle;
 
-public class UserParams {
-	private int battleLose;
-	private String alliance;
-	private String uid;
-	private int defenseWin;
-	private int playerPower;
-	private int armyKill;
-	private int attackWin;
-	private int score;
-	private int pointId;
-	private String pic;
-	private int cityDes;
-	private int questpower;
-	private int buildingPower;
-	private int fortPower;
-	private int armyCure;
-	private int armyPower;
-	private String name;
-	private int detectNum;
-	private int attackLose;
-	private int battleWin;
-	private int heroPower;
-	private int sciencePower;
-	private int armyDead;
-	private String npcId;
-	private int picVer;
-	private int equipPower;
-	private int monster;
-	
+public class UserParams
+{
+	private int		battleLose;
+	private String	alliance;
+	private String	uid;
+	private int		defenseWin;
+	private int		playerPower;
+	private int		armyKill;
+	private int		attackWin;
+	private int		score;
+	private int		pointId;
+	private String	pic;
+	private int		cityDes;
+	private int		questpower;
+	private int		buildingPower;
+	private int		fortPower;
+	private int		armyCure;
+	private int		armyPower;
+	private String	name;
+	private int		detectNum;
+	private int		attackLose;
+	private int		battleWin;
+	private int		heroPower;
+	private int		sciencePower;
+	private int		armyDead;
+	private String	npcId;
+	private int		picVer;
+	private int		equipPower;
+	private int		monster;
+
 	public String getNpcId()
 	{
 		return npcId;
 	}
+
 	public void setNpcId(String npcId)
 	{
 		this.npcId = npcId;
 	}
-	public int getBattleLose() {
+
+	public int getBattleLose()
+	{
 		return battleLose;
 	}
-	public void setBattleLose(int battleLose) {
+
+	public void setBattleLose(int battleLose)
+	{
 		this.battleLose = battleLose;
 	}
-	public String getAlliance() {
+
+	public String getAlliance()
+	{
 		return alliance;
 	}
-	public void setAlliance(String alliance) {
+
+	public void setAlliance(String alliance)
+	{
 		this.alliance = alliance;
 	}
-	public String getUid() {
+
+	public String getUid()
+	{
 		return uid;
 	}
-	public void setUid(String uid) {
+
+	public void setUid(String uid)
+	{
 		this.uid = uid;
 	}
-	public int getDefenseWin() {
+
+	public int getDefenseWin()
+	{
 		return defenseWin;
 	}
-	public void setDefenseWin(int defenseWin) {
+
+	public void setDefenseWin(int defenseWin)
+	{
 		this.defenseWin = defenseWin;
 	}
-	public int getPlayerPower() {
+
+	public int getPlayerPower()
+	{
 		return playerPower;
 	}
-	public void setPlayerPower(int playerPower) {
+
+	public void setPlayerPower(int playerPower)
+	{
 		this.playerPower = playerPower;
 	}
-	public int getArmyKill() {
+
+	public int getArmyKill()
+	{
 		return armyKill;
 	}
-	public void setArmyKill(int armyKill) {
+
+	public void setArmyKill(int armyKill)
+	{
 		this.armyKill = armyKill;
 	}
-	public int getAttackWin() {
+
+	public int getAttackWin()
+	{
 		return attackWin;
 	}
-	public void setAttackWin(int attackWin) {
+
+	public void setAttackWin(int attackWin)
+	{
 		this.attackWin = attackWin;
 	}
-	public int getScore() {
+
+	public int getScore()
+	{
 		return score;
 	}
-	public void setScore(int score) {
+
+	public void setScore(int score)
+	{
 		this.score = score;
 	}
-	public int getPointId() {
+
+	public int getPointId()
+	{
 		return pointId;
 	}
-	public void setPointId(int pointId) {
+
+	public void setPointId(int pointId)
+	{
 		this.pointId = pointId;
 	}
-	public String getPic() {
+
+	public String getPic()
+	{
 		return pic;
 	}
-	public void setPic(String pic) {
+
+	public void setPic(String pic)
+	{
 		this.pic = pic;
 	}
-	public int getCityDes() {
+
+	public int getCityDes()
+	{
 		return cityDes;
 	}
-	public void setCityDes(int cityDes) {
+
+	public void setCityDes(int cityDes)
+	{
 		this.cityDes = cityDes;
 	}
-	public int getQuestpower() {
+
+	public int getQuestpower()
+	{
 		return questpower;
 	}
-	public void setQuestpower(int questpower) {
+
+	public void setQuestpower(int questpower)
+	{
 		this.questpower = questpower;
 	}
-	public int getBuildingPower() {
+
+	public int getBuildingPower()
+	{
 		return buildingPower;
 	}
-	public void setBuildingPower(int buildingPower) {
+
+	public void setBuildingPower(int buildingPower)
+	{
 		this.buildingPower = buildingPower;
 	}
-	public int getFortPower() {
+
+	public int getFortPower()
+	{
 		return fortPower;
 	}
-	public void setFortPower(int fortPower) {
+
+	public void setFortPower(int fortPower)
+	{
 		this.fortPower = fortPower;
 	}
-	public int getArmyCure() {
+
+	public int getArmyCure()
+	{
 		return armyCure;
 	}
-	public void setArmyCure(int armyCure) {
+
+	public void setArmyCure(int armyCure)
+	{
 		this.armyCure = armyCure;
 	}
-	public int getArmyPower() {
+
+	public int getArmyPower()
+	{
 		return armyPower;
 	}
-	public void setArmyPower(int armyPower) {
+
+	public void setArmyPower(int armyPower)
+	{
 		this.armyPower = armyPower;
 	}
-	public String getName() {
+
+	public String getName()
+	{
 		return name;
 	}
-	public void setName(String name) {
+
+	public void setName(String name)
+	{
 		this.name = name;
 	}
-	public int getDetectNum() {
+
+	public int getDetectNum()
+	{
 		return detectNum;
 	}
-	public void setDetectNum(int detectNum) {
+
+	public void setDetectNum(int detectNum)
+	{
 		this.detectNum = detectNum;
 	}
-	public int getAttackLose() {
+
+	public int getAttackLose()
+	{
 		return attackLose;
 	}
-	public void setAttackLose(int attackLose) {
+
+	public void setAttackLose(int attackLose)
+	{
 		this.attackLose = attackLose;
 	}
-	public int getBattleWin() {
+
+	public int getBattleWin()
+	{
 		return battleWin;
 	}
-	public void setBattleWin(int battleWin) {
+
+	public void setBattleWin(int battleWin)
+	{
 		this.battleWin = battleWin;
 	}
-	public int getHeroPower() {
+
+	public int getHeroPower()
+	{
 		return heroPower;
 	}
-	public void setHeroPower(int heroPower) {
+
+	public void setHeroPower(int heroPower)
+	{
 		this.heroPower = heroPower;
 	}
-	public int getSciencePower() {
+
+	public int getSciencePower()
+	{
 		return sciencePower;
 	}
-	public void setSciencePower(int sciencePower) {
+
+	public void setSciencePower(int sciencePower)
+	{
 		this.sciencePower = sciencePower;
 	}
-	public int getArmyDead() {
+
+	public int getArmyDead()
+	{
 		return armyDead;
 	}
-	public void setArmyDead(int armyDead) {
+
+	public void setArmyDead(int armyDead)
+	{
 		this.armyDead = armyDead;
 	}
+
 	public int getPicVer()
 	{
 		return picVer;
 	}
+
 	public void setPicVer(int picVer)
 	{
 		this.picVer = picVer;
 	}
+
 	public int getEquipPower()
 	{
 		return equipPower;
 	}
+
 	public void setEquipPower(int equipPower)
 	{
 		this.equipPower = equipPower;
 	}
+
 	public int getMonster()
 	{
 		return monster;
 	}
+
 	public void setMonster(int monster)
 	{
 		this.monster = monster;

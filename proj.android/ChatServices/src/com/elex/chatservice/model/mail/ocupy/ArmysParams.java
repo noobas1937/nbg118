@@ -1,19 +1,28 @@
 package com.elex.chatservice.model.mail.ocupy;
 
-public class ArmysParams {
-	private String armyId;
-	private int armyNum;
-	public String getArmyId() {
+public class ArmysParams
+{
+	private String	armyId;
+	private int		armyNum;
+
+	public String getArmyId()
+	{
 		return armyId;
 	}
-	public void setArmyId(String armyId) {
+
+	public void setArmyId(String armyId)
+	{
 		this.armyId = armyId;
 	}
-	public int getArmyNum() {
+
+	public int getArmyNum()
+	{
 		return armyNum;
 	}
-	public void setArmyNum(int armyNum) {
+
+	public void setArmyNum(int armyNum)
+	{
 		this.armyNum = armyNum;
 	}
-	
+
 }

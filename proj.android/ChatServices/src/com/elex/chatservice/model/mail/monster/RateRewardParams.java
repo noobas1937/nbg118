@@ -1,21 +1,28 @@
 package com.elex.chatservice.model.mail.monster;
 
+public class RateRewardParams
+{
+	private RateRewardValueParams	value;
+	private int						type;
 
-public class RateRewardParams {
-	private RateRewardValueParams value;
-	private int type;
-	public RateRewardValueParams getValue() {
+	public RateRewardValueParams getValue()
+	{
 		return value;
 	}
-	public void setValue(RateRewardValueParams value) {
+
+	public void setValue(RateRewardValueParams value)
+	{
 		this.value = value;
 	}
-	public int getType() {
+
+	public int getType()
+	{
 		return type;
 	}
-	public void setType(int type) {
+
+	public void setType(int type)
+	{
 		this.type = type;
 	}
-	
-	
+
 }

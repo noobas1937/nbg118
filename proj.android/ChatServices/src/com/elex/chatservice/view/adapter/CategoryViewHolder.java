@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.Animation;
@@ -22,26 +23,27 @@ import android.widget.TextView;
 import com.elex.chatservice.R;
 import com.elex.chatservice.controller.ChatServiceController;
 import com.elex.chatservice.model.ChannelListItem;
+import com.elex.chatservice.model.ChannelManager;
 import com.elex.chatservice.model.ChatChannel;
 import com.elex.chatservice.model.ConfigManager;
 import com.elex.chatservice.model.MailManager;
 import com.elex.chatservice.model.mail.MailData;
+import com.elex.chatservice.util.LogUtil;
 import com.elex.chatservice.util.ScaleUtil;
 
 public class CategoryViewHolder
 {
-	public LinearLayout item_checkbox_layout;
-	public LinearLayout item_divider_title_layout;
-	public View		item_leading_space;
+	public LinearLayout		item_checkbox_layout;
+	public LinearLayout		item_divider_title_layout;
+	public View				item_leading_space;
 	public RelativeLayout	item_pic_layout;
 	public ImageView		item_icon;
-	public TextView		item_title;
+	public TextView			item_title;
 
-	public TextView		unread_text;
+	public TextView			unread_text;
 	public int				unreadCount;
-	
-	public CheckBox		item_checkBox;
-//	public int				showMute;
+
+	public CheckBox			item_checkBox;
 	public boolean			adjustSizeCompleted	= false;
 	public boolean			showUreadAsText;
 
@@ -51,89 +53,93 @@ public class CategoryViewHolder
 		item_checkbox_layout = (LinearLayout) view.findViewById(R.id.channel_item_checkbox_layout);
 		item_divider_title_layout = (LinearLayout) view.findViewById(R.id.divider_title_layout);
 		unread_text = (TextView) view.findViewById(R.id.channel_unread_count);
-		if(!ChatServiceController.isNewMailUIEnable) item_pic_layout = (RelativeLayout) view.findViewById(R.id.channel_pic_layout);
+		if (!ChatServiceController.isNewMailUIEnable)
+			item_pic_layout = (RelativeLayout) view.findViewById(R.id.channel_pic_layout);
 		item_icon = (ImageView) view.findViewById(R.id.channel_icon);
 		item_title = (TextView) view.findViewById(R.id.channel_name);
 		item_checkBox = (CheckBox) view.findViewById(R.id.channel_checkBox);
 		item_checkBox.setClickable(false);
 		item_checkBox.setFocusable(false);
-		
-//		view.setOnClickListener(new View.OnClickListener()
-//		{
-//			@Override
-//			public void onClick(View v)
-//			{
-//				if(isInEditMode){
-//					item_checkBox.toggle();
-//				}
-//			}
-//		});
 	}
-	
-	private void adjustTextSize()
-	{
-//		ScaleUtil.adjustTextSize(item_title, ConfigManager.scaleRatio * getFontScreenCorrectionFactor());
-//		ScaleUtil.adjustTextSize(item_latest_msg, ConfigManager.scaleRatio * getFontScreenCorrectionFactor());
-//		ScaleUtil.adjustTextSize(item_time, ConfigManager.scaleRatio * getFontScreenCorrectionFactor());
-	}
-	
-	public void setContent(Context context, ChannelListItem item, boolean showUreadAsText, Drawable drawable, String title, String summary, String time, boolean isInEditMode, int position, int bgColor)
+
+	public void setContent(Context context, ChannelListItem item, boolean showUreadAsText, Drawable drawable, String title, String summary,
+			String time, boolean isInEditMode, int position, int bgColor)
 	{
 		adjustSize(context);
-		
-		if(item instanceof MailData){
+
+		if (item instanceof MailData)
+		{
 			this.unreadCount = item.isUnread() ? 1 : 0;
-		}else{
-			this.unreadCount = item.unreadCount;	
 		}
-		this.showUreadAsText = showUreadAsText;	
-		
-//		holder.showMute = item.showMute;
+		else
+		{
+			this.unreadCount = item.unreadCount;
+		}
+		this.showUreadAsText = showUreadAsText;
+
 		showUnreadCountText(context);
-		
-		if(drawable != null) {
+
+		if (drawable != null)
+		{
 			item_icon.setImageDrawable(drawable);
 		}
-		
-		if(item_divider_title_layout != null && item instanceof ChatChannel && ((ChatChannel)item).channelID.equals(MailManager.CHANNELID_MOD))
+
+		if (item_divider_title_layout != null && item instanceof ChatChannel && (((ChatChannel) item).isDialogChannel() || ((ChatChannel) item).channelID.equals(MailManager.CHANNELID_MOD))
+				&& ((ChatChannel) item).channelID.equals(ChannelManager.getInstance().getFirstChannelID()))
 		{
 			item_divider_title_layout.setVisibility(View.VISIBLE);
-		}else if(item_divider_title_layout != null){
+		}
+		else if (item_divider_title_layout != null)
+		{
 			item_divider_title_layout.setVisibility(View.GONE);
 		}
-		
+
 		item_title.setText(title);
-		
+
 		showIcon(item.isLock(), item.hasReward(), item, isInEditMode);
 	}
-	
-	private boolean enteredEditMode = false;
-	protected final boolean enableAnimation = false;
+
+	private boolean			enteredEditMode	= false;
+	protected final boolean	enableAnimation	= false;
+
 	protected void showIcon(boolean isLock, boolean reward, ChannelListItem item, boolean isInEditMode)
 	{
-		if(isInEditMode){
+		if (isInEditMode)
+		{
 			// 新版UI才有item_checkbox_layout
-			if(item_checkbox_layout != null){
+			if (item_checkbox_layout != null)
+			{
 				item_checkbox_layout.setVisibility(View.VISIBLE);
 				item_leading_space.setVisibility(View.GONE);
 				item_checkBox.setChecked(item.checked);
 
 				// 若不判断enteredEditMode，上下滑时，边界外的cell都将再放一次滑入效果
-				if(enableAnimation && !enteredEditMode) {
+				if (enableAnimation && !enteredEditMode)
+				{
 					playShowAnimation();
 				}
-			}else{
+			}
+			else
+			{
 				item_checkBox.setVisibility(View.VISIBLE);
 				item_checkBox.setChecked(item.checked);
 			}
-		}else{
-			if(item_checkbox_layout != null){
-				if(!enteredEditMode){
+		}
+		else
+		{
+			if (item_checkbox_layout != null)
+			{
+				if (!enteredEditMode)
+				{
 					hideCheckboxLayout();
-				}else if(enableAnimation){
+				}
+				else if (enableAnimation)
+				{
 					playHideAnimation();
 				}
-			}else{
+			}
+			else
+			{
 				item_checkBox.setVisibility(View.GONE);
 			}
 		}
@@ -145,18 +151,15 @@ public class CategoryViewHolder
 		int time = 600;
 
 		enteredEditMode = true;
-		
+
 		AnimationSet animationSet = new AnimationSet(true);
-		TranslateAnimation translateAnimation = new TranslateAnimation(
-				Animation.ABSOLUTE, -delta, 
-				Animation.ABSOLUTE, 0f, 
-				Animation.ABSOLUTE, 0f, 
-				Animation.ABSOLUTE, 0f);
+		TranslateAnimation translateAnimation = new TranslateAnimation(Animation.ABSOLUTE, -delta, Animation.ABSOLUTE, 0f,
+				Animation.ABSOLUTE, 0f, Animation.ABSOLUTE, 0f);
 		translateAnimation.setDuration(time);
 		animationSet.addAnimation(translateAnimation);
 		item_checkBox.startAnimation(animationSet);
 	}
-	
+
 	private void playHideAnimation()
 	{
 		float delta = item_icon.getWidth() / 2;
@@ -164,14 +167,12 @@ public class CategoryViewHolder
 
 		enteredEditMode = false;
 		AnimationSet animationSet = new AnimationSet(true);
-		TranslateAnimation translateAnimation = new TranslateAnimation(
-				Animation.ABSOLUTE, 0f, 
-				Animation.ABSOLUTE, -delta, 
-				Animation.ABSOLUTE, 0f, 
-				Animation.ABSOLUTE, 0f);
+		TranslateAnimation translateAnimation = new TranslateAnimation(Animation.ABSOLUTE, 0f, Animation.ABSOLUTE, -delta,
+				Animation.ABSOLUTE, 0f, Animation.ABSOLUTE, 0f);
 		translateAnimation.setDuration(time);
 		animationSet.addAnimation(translateAnimation);
-		translateAnimation.setAnimationListener(new AnimationListener(){
+		translateAnimation.setAnimationListener(new AnimationListener()
+		{
 			public void onAnimationStart(Animation animation)
 			{
 			}
@@ -189,7 +190,7 @@ public class CategoryViewHolder
 		});
 		item_checkBox.startAnimation(animationSet);
 	}
-	
+
 	private void hideCheckboxLayout()
 	{
 		item_checkbox_layout.setVisibility(View.GONE);
@@ -205,64 +206,84 @@ public class CategoryViewHolder
 	{
 		unread_text.setVisibility(View.VISIBLE);
 		String unread = Integer.toString(unreadCount);
-		if(unreadCount > 99) {
+		if (unreadCount > 99)
+		{
 			unread = "99+";
-		}else if(unreadCount <= 0) {
+		}
+		else if (unreadCount <= 0)
+		{
 			unread = "";
 		}
 		unread_text.setText(unread);
 	}
 
-	private static final int DEFAULT_CORNER_RADIUS_DIP = 8;
-	private final int DEFAULT_BADGE_COLOR = Color.parseColor("#CCFF0000");
-	protected ShapeDrawable getDefaultBackground(Context context) {
-		
+	private static final int	DEFAULT_CORNER_RADIUS_DIP	= 8;
+	private final int			DEFAULT_BADGE_COLOR			= Color.parseColor("#CCFF0000");
+
+	protected ShapeDrawable getDefaultBackground(Context context)
+	{
+
 		int r = dipToPixels(DEFAULT_CORNER_RADIUS_DIP, context);
-		float[] outerR = new float[] {r, r, r, r, r, r, r, r};
-        
+		float[] outerR = new float[] { r, r, r, r, r, r, r, r };
+
 		RoundRectShape rr = new RoundRectShape(outerR, null, null);
 		ShapeDrawable drawable = new ShapeDrawable(rr);
 		drawable.getPaint().setColor(DEFAULT_BADGE_COLOR);
-		
+
 		return drawable;
 	}
 
-	private int dipToPixels(int dip, Context context) {
+	private int dipToPixels(int dip, Context context)
+	{
 		Resources r = context.getResources();
 		float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip, r.getDisplayMetrics());
 		return (int) px;
 	}
-	
+
 	protected void adjustSize(Context context)
 	{
-		if(ChatServiceController.isNewMailUIEnable) return;
-		
+		if (ChatServiceController.isNewMailUIEnable)
+			return;
+
 		if (ConfigManager.getInstance().scaleFontandUI && ConfigManager.scaleRatio > 0 && !adjustSizeCompleted)
 		{
 			adjustTextSize();
-			
+
 			int picWidthDP = 50;
-			
-			if(this instanceof MailViewHolder){
+
+			if (this instanceof MailViewHolder)
+			{
 				item_pic_layout.setLayoutParams(new RelativeLayout.LayoutParams((int) (ScaleUtil.dip2px(context, picWidthDP)
 						* ConfigManager.scaleRatio * getScreenCorrectionFactor(context)), (int) (ScaleUtil.dip2px(context, picWidthDP)
 						* ConfigManager.scaleRatio * getScreenCorrectionFactor(context))));
-			}else{
+			}
+			else
+			{
 				item_pic_layout.setLayoutParams(new LinearLayout.LayoutParams((int) (ScaleUtil.dip2px(context, picWidthDP)
 						* ConfigManager.scaleRatio * getScreenCorrectionFactor(context)), (int) (ScaleUtil.dip2px(context, picWidthDP)
 						* ConfigManager.scaleRatio * getScreenCorrectionFactor(context))));
 			}
-			
+
 			adjustSizeExtend(context);
-			
+
 			adjustSizeCompleted = true;
 		}
 	}
-	
+
+	private void adjustTextSize()
+	{
+		// ScaleUtil.adjustTextSize(item_title, ConfigManager.scaleRatio *
+		// getFontScreenCorrectionFactor());
+		// ScaleUtil.adjustTextSize(item_latest_msg, ConfigManager.scaleRatio *
+		// getFontScreenCorrectionFactor());
+		// ScaleUtil.adjustTextSize(item_time, ConfigManager.scaleRatio *
+		// getFontScreenCorrectionFactor());
+	}
+
 	protected void adjustSizeExtend(Context context)
 	{
 	}
-	
+
 	/**
 	 * 高ppi手机的缩放修正因子
 	 */
@@ -272,7 +293,7 @@ public class CategoryViewHolder
 
 		return density == DisplayMetrics.DENSITY_XXHIGH ? 0.8 : 1.0;
 	}
-	
+
 	protected double getFontScreenCorrectionFactor(Context context)
 	{
 		int density = context.getResources().getDisplayMetrics().densityDpi;

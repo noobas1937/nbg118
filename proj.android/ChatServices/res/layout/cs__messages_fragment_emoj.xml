@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/emoji_frameLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <RelativeLayout
+        android:id="@+id/fragmentLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/ui_paper_3c"
+        android:clickable="true" >
+
+        <LinearLayout
+            android:id="@+id/headerRelativeLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/buttonsLinearLayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:background="@drawable/chuzheng_frame02"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/buttonCountry"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_qieye_01"
+                    android:text="国家"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/hs__header_button_text_highlight_color"
+                    android:textSize="@dimen/cs__textButtonTitle" />
+                <!-- android:textStyle="bold" -->
+
+                <Button
+                    android:id="@+id/buttonAllie"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_qieye_01"
+                    android:text="联盟"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/hs__header_button_text_highlight_color"
+                    android:textSize="@dimen/cs__textButtonTitle" />
+                <!-- android:textStyle="bold" -->
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/messagesListLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/bottom_layout"
+            android:layout_below="@+id/headerRelativeLayout"
+            android:clickable="true" >
+
+            <RelativeLayout
+                android:id="@+id/hs__messagesListLayout"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@drawable/ui_paper_3c"
+                android:clickable="true" >
+
+                <FrameLayout
+                    android:id="@+id/hs__noAllianceLayout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:visibility="gone" >
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:orientation="vertical" >
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.50" >
+
+                            <FrameLayout
+                                android:layout_width="0dp"
+                                android:layout_height="fill_parent"
+                                android:layout_weight="0.20" >
+                            </FrameLayout>
+
+                            <TextView
+                                android:id="@+id/joinAllianceTipText"
+                                android:layout_width="0dp"
+                                android:layout_height="fill_parent"
+                                android:layout_gravity="center"
+                                android:layout_weight="0.60"
+                                android:gravity="center"
+                                android:text="您未加入联盟，暂时无法使用联盟聊天频道"
+                                android:textColor="#4D2500"
+                                android:textSize="@dimen/cs__textButtonTitle" />
+
+                            <FrameLayout
+                                android:layout_width="0dp"
+                                android:layout_height="fill_parent"
+                                android:layout_weight="0.20" >
+                            </FrameLayout>
+                        </LinearLayout>
+
+                        <FrameLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.50" >
+
+                            <Button
+                                android:id="@+id/joinAllianceBtn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:background="@drawable/btn_green3"
+                                android:gravity="center_vertical|center_horizontal"
+                                android:paddingBottom="15dp"
+                                android:paddingTop="15dp"
+                                android:text="加入联盟"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="#FFFFFF"
+                                android:textSize="@dimen/cs__textButtonTitle" />
+                        </FrameLayout>
+                    </LinearLayout>
+                </FrameLayout>
+
+                <LinearLayout
+                    android:id="@+id/hs__dragon_chat_tip_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="horizontal" >
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="0.15" />
+
+                    <TextView
+                        android:id="@+id/dragon_chat_tip_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.7"
+                        android:gravity="center"
+                        android:text="巨龙战场中世界频道不可用"
+                        android:textColor="#4D2500"
+                        android:textSize="@dimen/cs__textButtonTitle" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="0.15" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/tooltipLayout"
+                style="@style/new_msg_tooltip_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="30dp"
+                android:clickable="true"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/tooltipArrow"
+                    android:layout_width="13dp"
+                    android:layout_height="17dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/new_msg_tooltip_arrow" />
+
+                <TextView
+                    android:id="@+id/tooltipLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="6dp"
+                    android:text="21条新消息"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="#8c4931"
+                    android:textSize="@dimen/cs__textSendButton" />
+            </LinearLayout>
+
+            <!--
+        <RelativeLayout
+		    android:id="@+id/tooltipLayout2"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentTop="true"
+		    android:layout_marginTop="5dp"
+		    android:background="#ffffffff"
+		    android:clickable="true"
+		    android:orientation="horizontal" >
+	            <TextView
+	                android:id="@+id/tooltipLabel2"
+		    		android:layout_marginTop="12dp"
+		    		android:layout_marginBottom="4dp"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_centerHorizontal="true"
+	                android:layout_centerVertical="true"
+	                android:text="21条新消息"
+	                android:textAppearance="?android:attr/textAppearanceSmall"
+	                android:textColor="@color/hs__actionBarStackedColor"
+	                android:textSize="@dimen/cs__textSendButton" />
+	    </RelativeLayout>
+            -->
+
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <RelativeLayout
+                    android:id="@+id/horn_scroll_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/chat_notice_bg2"
+                    android:gravity="center_vertical" >
+
+                    <ImageView
+                        android:id="@+id/horn_close_btn"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/chat_notice_cha" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="2dp"
+                        android:layout_toLeftOf="@+id/horn_close_btn"
+                        android:gravity="center_vertical" >
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/chat_notice_icon1" />
+
+                        <TextView
+                            android:id="@+id/horn_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="(TTD):xxx:"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#ffffff"
+                            android:textSize="@dimen/cs__textMessage" />
+
+                        <com.elex.chatservice.view.autoscroll.ScrollText
+                            android:id="@+id/horn_scroll_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:ellipsize="none"
+                            android:paddingLeft="5dp"
+                            android:singleLine="true"
+                            android:text="Every time announcement spend 10 gold COINS"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#ffffff"
+                            android:textSize="@dimen/cs__textMessage" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="-4dp"
+                    android:layout_marginRight="-1dp"
+                    android:layout_marginTop="-2dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ui_huitiao2" />
+            </FrameLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/bottom_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical" >
+
+            <!-- android:layout_alignParentBottom="true" -->
+
+            <LinearLayout
+                android:id="@+id/horn_tip_layout"
+                android:layout_width="match_parent"
+                android:layout_height="28dp"
+                android:background="@drawable/horn_text_bg" >
+
+                <ImageView
+                    android:id="@+id/flyhint_icon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/horn_icon" />
+
+                <TextView
+                    android:id="@+id/horn_text_tip"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="Every time announcement spend 10 gold COINS"
+                    android:textColor="#FFF27F"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bottom_bg" >
+
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/line_grey02"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/hs__sendMessageLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible" >
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:paddingLeft="2dp" >
+
+                        <CheckBox
+                            android:id="@+id/horn_checkbox"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginBottom="5dp"
+                            android:button="@drawable/horn_checkbox" />
+
+                        <EditText
+                            android:id="@+id/hs__messageText"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_marginTop="8dp"
+                            android:autoText="true"
+                            android:background="@drawable/input"
+                            android:imeOptions="actionSend"
+                            android:inputType="textMultiLine"
+                            android:maxLength="500"
+                            android:maxLines="@integer/hs__chat_max_lines"
+                            android:minHeight="42dp"
+                            android:paddingBottom="0dp"
+                            android:paddingTop="0dp"
+                            android:textAppearance="?android:attr/textAppearance"
+                            android:textColor="@color/hs__messages_text_color" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/hs__emojiSwitch"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/emoji_switch_normal"
+                        android:visibility="gone" />
+
+                    <LinearLayout
+                        android:id="@+id/hs__sendMessageLayout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:paddingLeft="0dp"
+                        android:paddingRight="2dp" >
+
+                        <Button
+                            android:id="@+id/hs__sendMessageBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:background="@drawable/btn_yellow"
+                            android:text="@string/hs__send_msg_btn"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/hs__actionBarTextColorPrimary"
+                            android:textSize="@dimen/cs__textSendButton" />
+
+                        <!-- android:textStyle="bold" -->
+
+                        <TextView
+                            android:id="@+id/wordCountTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="0/500"
+                            android:textColor="@color/hs__actionBarTextColorPrimary"
+                            android:textSize="@dimen/cs__textSizeSmall"
+                            android:visibility="gone" />
+                    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <!--
+       <org.yanzi.ui.HorizontalListView  
+        android:id="@+id/horizon_listview"  
+        android:layout_width="match_parent"  
+        android:layout_height="20dp"  
+       android:layout_alignParentTop="true"  
+       android:visibility="gone"
+        >   </org.yanzi.ui.HorizontalListView>
+            -->
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/EmojiView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <com.elex.chatservice.util.emoji.EmojiNoMoveViewPager
+                    android:id="@+id/EmojiViewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_gravity="center"
+                    android:paddingBottom="30dp" />
+
+                <HorizontalScrollView
+                    android:id="@+id/emojiHorizontalScrollView"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:scrollbars="none"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="center_horizontal"
+                    android:background="#ddd"
+                    android:fadingEdge="horizontal" >
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:orientation="horizontal" >
+
+                        <ImageButton
+                            android:id="@+id/emojiImage1"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/emoji_category_000" />
+
+                        <ImageButton
+                            android:id="@+id/emojiImage2"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/emoji_category_001" />
+
+                        <ImageButton
+                            android:id="@+id/emojiImage3"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/emoji_category_002" />
+
+                        <ImageButton
+                            android:id="@+id/emojiImage4"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/emoji_category_003" />
+
+                        <ImageButton
+                            android:id="@+id/emojiImage5"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/emoji_category_004" />
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <LinearLayout
+                    android:id="@+id/emoji_delete"
+                    style="@style/new_msg_tooltip_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="0dp"
+                    android:layout_marginTop="10dp"
+                    android:clickable="true"
+                    android:orientation="horizontal"
+                    >
+
+        <ImageView
+            android:id="@+id/emoji_delete_icon"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/emoji_delete_icon" />
+    </LinearLayout>
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/emoji_cover"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ddd" />
+        </LinearLayout>
+
+        <!--
+             <LinearLayout
+            android:id="@+id/emoji_page_select"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/bottom_layout"
+            android:background="#ddd"
+            android:gravity="center_horizontal"
+            android:visibility="visible" >
+        -->
+
+        -->
+        <!--
+            <ImageView
+                android:id="@+id/page0_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="matrix"
+                android:src="@drawable/emoji_page_focused" />
+
+            <ImageView
+                android:id="@+id/page1_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:scaleType="matrix"
+                android:src="@drawable/emoji_page_unfocused" />
+
+            <ImageView
+                android:id="@+id/page2_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:scaleType="matrix"
+                android:src="@drawable/emoji_page_unfocused" />
+        -->
+        <!-- </LinearLayout> -->
+    </RelativeLayout>
+
+    
+
+</FrameLayout>

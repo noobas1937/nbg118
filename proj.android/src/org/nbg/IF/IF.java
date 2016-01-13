@@ -84,6 +84,11 @@ import org.apache.commons.lang.StringUtils;
 import com.adjust.sdk.Adjust;
 import com.appsflyer.AppsFlyerLib;
 import com.elex.chatservice.controller.ChatServiceController;
+import com.elex.chatservice.controller.JniController;
+import com.elex.chatservice.model.MailManager;
+import com.elex.chatservice.model.db.DBManager;
+import com.elex.chatservice.util.IAnalyticTracker;
+import com.elex.chatservice.util.IJniCallHelper;
 import com.elex.chatservice.util.LogUtil;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -100,7 +105,6 @@ import com.nanigans.android.sdk.NanigansEventManager;
 //import com.testin.agent.TestinAgent;
 import com.umeng.analytics.MobclickAgent;
 import com.xiaomi.migamechannel.MiGameChannel;
-import com.elex.chatservice.util.IAnalyticTracker;
 
 
 //import com.xingcloud.analytic.CloudAnalytic;
@@ -118,7 +122,7 @@ import com.elex.chatservice.model.db.DBManager;
 import android.os.Build; 
 
 
-public class IF extends Cocos2dxActivity implements IAnalyticTracker {
+public class IF extends Cocos2dxActivity implements IAnalyticTracker ,IJniCallHelper{
 	private static IF instance = null;
 	private Tracker tracker;
 	private LinearLayout m_webLayout;
@@ -366,6 +370,7 @@ public class IF extends Cocos2dxActivity implements IAnalyticTracker {
 		LogUtil.tracker = this;
 		ChatServiceController.init(this, false);
 		MailManager.tracker=this;
+		JniController.jniHelper=this;
 //		if(ChatServiceBridge.enableChatInputField){
 //			ChatInputInterface.initChatInputView(this);
 //			try{
@@ -963,13 +968,6 @@ public class IF extends Cocos2dxActivity implements IAnalyticTracker {
 		FBUtil.appEventException(exceptionType, funcInfo, cause, message);
 	}
 	
-	@Override
-	public void transportMail(String jsonStr)
-	{
-		System.out.println("IF transportMail");
-		Net.transportMailInfo(jsonStr);
-	}
-	
 	public void saveCrashPID(){
 		doSaveCrashPID();
 	}
@@ -978,11 +976,11 @@ public class IF extends Cocos2dxActivity implements IAnalyticTracker {
 		
 	}
 
-	@Override
-	public String getParseFromCocos2dx(String jsonStr)
-	{
-		return Net.getParseFromCocos2dx(jsonStr);
-	}
+//	@Override
+//	public String getParseFromCocos2dx(String jsonStr)
+//	{
+//		return Net.getParseFromCocos2dx(jsonStr);
+//	}
 	
 	public static void savePhoneDevice(){
         final boolean result = false;
@@ -1019,4 +1017,49 @@ public class IF extends Cocos2dxActivity implements IAnalyticTracker {
             e.printStackTrace();
         }
 	}
+
+
+	@Override
+	public void transportMail(String jsonStr,boolean isShowDetectMail)
+	{
+		System.out.println("IF transportMail isShowDetectMail:"+isShowDetectMail);
+		Net.transportMailInfo(jsonStr,isShowDetectMail);
+	}
+	
+	@Override
+	public <T> T excuteJNIMethod(String methodName, Object[] params)
+	{
+		return ChatServiceJniHandle.excuteJNIMethod(methodName, params);
+	}
+	
+	@Override
+	public void excuteJNIVoidMethod(String methodName, Object[] params)
+	{
+		ChatServiceJniHandle.excuteJNIVoidMethod(methodName, params);
+	}
+
+	@Override
+	public String getPublishChannelName() {
+		// TODO Auto-generated method stub
+//		return IF.getInstance().getPublishImpl().getPublishChannel()
+		return "debug" ;
+	}
+
+	@Override
+	public void trackMessage(String messageType, String... args) {
+		// TODO Auto-generated method stub
+		FBUtil.appEventMessage(messageType, args);
+	}
+	
+	public static void initDatabase(boolean isAccountChanged, boolean isNewUser)
+    {
+		DBManager.initDatabase(isAccountChanged, isNewUser);
+    }
+	
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
+	{
+		DBManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
+	}
+
 }

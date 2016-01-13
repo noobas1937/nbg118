@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/confirmLinearLayout"
+    android:layout_height="match_parent" >
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.15" >
+    </View>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.7"
+        android:orientation="vertical" >
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.20" >
+        </View>
+
+        <LinearLayout
+            android:id="@+id/bg"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.50"
+            android:background="@drawable/join_first_alliance_bg"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.4"
+                android:orientation="vertical" >
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.25" />
+
+                <ImageView
+                    android:id="@+id/red_package_senderHeaderPic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.4"
+                    android:gravity="center"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/item002" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.35"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/red_package_sendername"
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.5"
+                        android:gravity="center|top"
+                        android:text="xutestxu"
+                        android:textColor="#ffc600"
+                        android:textSize="9sp" />
+
+                    <TextView
+                        android:id="@+id/red_package_sendertip"
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.5"
+                        android:gravity="center|bottom"
+                        android:paddingBottom="2dp"
+                        android:text="发了一个红包"
+                        android:textColor="#ffc600"
+                        android:textSize="10sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.4"
+                android:orientation="horizontal" >
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="0.09" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="0.84"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/red_package_warning"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_horizontal|top"
+                        android:paddingTop="20dp"
+                        android:text="手慢了，红包被抢光了"
+                        android:textColor="#ffc600"
+                        android:textSize="11sp"
+                        android:visibility="gone" />
+
+                    <LinearLayout
+                        android:id="@+id/red_package_unhandlelayout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:id="@+id/red_package_msg"
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.3"
+                            android:gravity="center_horizontal|top"
+                            android:paddingTop="5dp"
+                            android:lines="2"
+                            android:text="大家快来呀"
+                            android:textColor="#ffc600"
+                            android:textSize="9sp" />
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.7"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:padding="10dp" >
+
+                            <Button
+                                android:id="@+id/red_package_open_btn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/btn_green3"
+                                android:text="拆红包"
+                                android:textColor="#ffc600"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="0.07" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/red_package_detail"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.2"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:text="看看大家手气"
+                android:textColor="#ffc600"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.30" >
+        </View>
+    </LinearLayout>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.15" >
+    </View>
+
+</LinearLayout>

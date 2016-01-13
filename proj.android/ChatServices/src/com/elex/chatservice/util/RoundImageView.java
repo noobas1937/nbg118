@@ -24,46 +24,45 @@ import com.elex.chatservice.R;
  * http://blog.csdn.net/lmj623565791/article/details/41967509
  * 
  * @author zhy
- * 
  */
 public class RoundImageView extends ImageView
 {
 	/**
 	 * 图片的类型，圆形or圆角
 	 */
-	private int type;
-	public static final int TYPE_CIRCLE = 0;
-	public static final int TYPE_ROUND = 1;
+	private int					type;
+	public static final int		TYPE_CIRCLE				= 0;
+	public static final int		TYPE_ROUND				= 1;
 	/**
 	 * 圆角大小的默认值
 	 */
-	private static final int BODER_RADIUS_DEFAULT = 10;
+	private static final int	BODER_RADIUS_DEFAULT	= 10;
 	/**
 	 * 圆角的大小
 	 */
-	private int mBorderRadius;
+	private int					mBorderRadius;
 
 	/**
 	 * 绘图的Paint
 	 */
-	private Paint mBitmapPaint;
+	private Paint				mBitmapPaint;
 	/**
 	 * 圆角的半径
 	 */
-	private int mRadius;
+	private int					mRadius;
 	/**
 	 * 3x3 矩阵，主要用于缩小放大
 	 */
-	private Matrix mMatrix;
+	private Matrix				mMatrix;
 	/**
 	 * 渲染图像，使用图像为绘制图形着色
 	 */
-	private BitmapShader mBitmapShader;
+	private BitmapShader		mBitmapShader;
 	/**
 	 * view的宽度
 	 */
-	private int mWidth;
-	private RectF mRoundRect;
+	private int					mWidth;
+	private RectF				mRoundRect;
 
 	public RoundImageView(Context context, AttributeSet attrs)
 	{
@@ -73,14 +72,10 @@ public class RoundImageView extends ImageView
 		mBitmapPaint = new Paint();
 		mBitmapPaint.setAntiAlias(true);
 
-		TypedArray a = context.obtainStyledAttributes(attrs,
-				R.styleable.RoundImageView);
+		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RoundImageView);
 
-		mBorderRadius = a.getDimensionPixelSize(
-				R.styleable.RoundImageView_borderRadius, (int) TypedValue
-						.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-								BODER_RADIUS_DEFAULT, getResources()
-										.getDisplayMetrics()));// 默认为10dp
+		mBorderRadius = a.getDimensionPixelSize(R.styleable.RoundImageView_borderRadius,
+				(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, BODER_RADIUS_DEFAULT, getResources().getDisplayMetrics()));// 默认为10dp
 		type = a.getInt(R.styleable.RoundImageView_type, TYPE_CIRCLE);// 默认为Circle
 
 		a.recycle();
@@ -96,9 +91,7 @@ public class RoundImageView extends ImageView
 	{
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-		/**
-		 * 如果类型是圆形，则强制改变view的宽高一致，以小值为准
-		 */
+		// 如果类型是圆形，则强制改变view的宽高一致，以小值为准
 		if (type == TYPE_CIRCLE)
 		{
 			mWidth = Math.min(getMeasuredWidth(), getMeasuredHeight());
@@ -120,6 +113,8 @@ public class RoundImageView extends ImageView
 		}
 
 		Bitmap bmp = drawableToBitamp(drawable);
+		if (bmp == null)
+			return; // Fabric少量异常
 		// 将bmp作为着色器，就是在指定区域内绘制bmp
 		mBitmapShader = new BitmapShader(bmp, TileMode.CLAMP, TileMode.CLAMP);
 		float scale = 1.0f;
@@ -129,16 +124,14 @@ public class RoundImageView extends ImageView
 			int bSize = Math.min(bmp.getWidth(), bmp.getHeight());
 			scale = mWidth * 1.0f / bSize;
 
-		} else if (type == TYPE_ROUND)
+		}
+		else if (type == TYPE_ROUND)
 		{
-			Log.e("TAG",
-					"b'w = " + bmp.getWidth() + " , " + "b'h = "
-							+ bmp.getHeight());
+			Log.e("TAG", "b'w = " + bmp.getWidth() + " , " + "b'h = " + bmp.getHeight());
 			if (!(bmp.getWidth() == getWidth() && bmp.getHeight() == getHeight()))
 			{
 				// 如果图片的宽或者高与view的宽高不匹配，计算出需要缩放的比例；缩放后的图片的宽高，一定要大于我们view的宽高；所以我们这里取大值；
-				scale = Math.max(getWidth() * 1.0f / bmp.getWidth(),
-						getHeight() * 1.0f / bmp.getHeight());
+				scale = Math.max(getWidth() * 1.0f / bmp.getWidth(), getHeight() * 1.0f / bmp.getHeight());
 			}
 
 		}
@@ -162,9 +155,9 @@ public class RoundImageView extends ImageView
 
 		if (type == TYPE_ROUND)
 		{
-			canvas.drawRoundRect(mRoundRect, mBorderRadius, mBorderRadius,
-					mBitmapPaint);
-		} else
+			canvas.drawRoundRect(mRoundRect, mBorderRadius, mBorderRadius, mBitmapPaint);
+		}
+		else
 		{
 			canvas.drawCircle(mRadius, mRadius, mRadius, mBitmapPaint);
 			// drawSomeThing(canvas);
@@ -183,9 +176,6 @@ public class RoundImageView extends ImageView
 
 	/**
 	 * drawable转bitmap
-	 * 
-	 * @param drawable
-	 * @return
 	 */
 	private Bitmap drawableToBitamp(Drawable drawable)
 	{
@@ -203,9 +193,9 @@ public class RoundImageView extends ImageView
 		return bitmap;
 	}
 
-	private static final String STATE_INSTANCE = "state_instance";
-	private static final String STATE_TYPE = "state_type";
-	private static final String STATE_BORDER_RADIUS = "state_border_radius";
+	private static final String	STATE_INSTANCE		= "state_instance";
+	private static final String	STATE_TYPE			= "state_type";
+	private static final String	STATE_BORDER_RADIUS	= "state_border_radius";
 
 	@Override
 	protected Parcelable onSaveInstanceState()
@@ -223,11 +213,11 @@ public class RoundImageView extends ImageView
 		if (state instanceof Bundle)
 		{
 			Bundle bundle = (Bundle) state;
-			super.onRestoreInstanceState(((Bundle) state)
-					.getParcelable(STATE_INSTANCE));
+			super.onRestoreInstanceState(((Bundle) state).getParcelable(STATE_INSTANCE));
 			this.type = bundle.getInt(STATE_TYPE);
 			this.mBorderRadius = bundle.getInt(STATE_BORDER_RADIUS);
-		} else
+		}
+		else
 		{
 			super.onRestoreInstanceState(state);
 		}
@@ -260,8 +250,7 @@ public class RoundImageView extends ImageView
 
 	public int dp2px(int dpVal)
 	{
-		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-				dpVal, getResources().getDisplayMetrics());
+		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpVal, getResources().getDisplayMetrics());
 	}
 
 }

@@ -5,8 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
+
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,92 +21,94 @@ import android.widget.TextView;
 
 import com.elex.chatservice.R;
 import com.elex.chatservice.controller.ChatServiceController;
-import com.elex.chatservice.image.AsyncImageLoader;
-import com.elex.chatservice.image.ImageLoaderListener;
 import com.elex.chatservice.model.ChannelManager;
-import com.elex.chatservice.model.ConfigManager;
 import com.elex.chatservice.model.LanguageKeys;
 import com.elex.chatservice.model.LanguageManager;
 import com.elex.chatservice.model.UserInfo;
 import com.elex.chatservice.model.UserManager;
 import com.elex.chatservice.util.CompatibleApiUtil;
 import com.elex.chatservice.util.ImageUtil;
-import com.elex.chatservice.util.LogUtil;
 import com.elex.chatservice.util.ResUtil;
 
-public class ExpandableListAdapter extends BaseExpandableListAdapter {
-	private Context _context;
-	private List<String> _listDataHeader; // header titles
+public class ExpandableListAdapter extends BaseExpandableListAdapter
+{
+	private Context									_context;
+	// header titles
+	private List<String>							_listDataHeader;
 	// child data in format of header title, child title
-	private HashMap<String, ArrayList<UserInfo>> _listDataChild;
-	public MemberSelectorFragment fragment=null;
-	private LayoutInflater inflater;
-	private ArrayList<String> memberUidArray;
-	private HashMap<String, Boolean> selectStateMap;
+	private HashMap<String, ArrayList<UserInfo>>	_listDataChild;
+	public MemberSelectorFragment					fragment	= null;
+	private LayoutInflater							inflater;
+	private ArrayList<String>						memberUidArray;
+	private HashMap<String, Boolean>				selectStateMap;
 
-	public ExpandableListAdapter(Context context,MemberSelectorFragment fragment, List<String> listDataHeader,
-			HashMap<String, ArrayList<UserInfo>> listChildData,boolean isAllianceMember) {
+	public ExpandableListAdapter(Context context, MemberSelectorFragment fragment, List<String> listDataHeader,
+			HashMap<String, ArrayList<UserInfo>> listChildData, boolean isAllianceMember)
+	{
 		this._context = context;
 		this._listDataHeader = listDataHeader;
 		this._listDataChild = listChildData;
 		this.inflater = ((LayoutInflater) this._context.getSystemService(Context.LAYOUT_INFLATER_SERVICE));
-		this.fragment=fragment;
+		this.fragment = fragment;
 
 		memberUidArray = UserManager.getInstance().getSelectMemberUidArr();
-		if(memberUidArray == null)
+		if (memberUidArray == null)
 		{
 			memberUidArray = new ArrayList<String>();
 		}
-		for(int i=0;i<memberUidArray.size();i++)
+		for (int i = 0; i < memberUidArray.size(); i++)
 		{
-			System.out.println("ExpandableListAdapter memberUidArray:"+i+" ---"+memberUidArray.get(i));
+			System.out.println("ExpandableListAdapter memberUidArray:" + i + " ---" + memberUidArray.get(i));
 		}
+		System.out.println("isAllianceMember:" + isAllianceMember);
 		resetSelectStateMap(isAllianceMember);
 	}
-	
-	public void setSelectState(String uid,Boolean selected)
+
+	public void setSelectState(String uid, Boolean selected)
 	{
-		if(selectStateMap!=null)
+		if (selectStateMap != null)
 		{
 			selectStateMap.put(uid, selected);
-		}	
+		}
 	}
-	
-	public HashMap<String, Boolean> getSelectStateMap() {
+
+	public HashMap<String, Boolean> getSelectStateMap()
+	{
 		return selectStateMap;
 	}
 
 	private void resetSelectStateMap(boolean isAllianceMember)
 	{
 		System.out.println("resetSelectStateMap");
-		selectStateMap=new HashMap<String, Boolean>();
-		
-		if(isAllianceMember)
+		selectStateMap = new HashMap<String, Boolean>();
+
+		if (isAllianceMember)
 		{
-			HashMap<String, UserInfo> memberInfoMap=UserManager.getInstance().getChatRoomMemberInfoMap();
-			if(memberInfoMap!=null && memberInfoMap.size()>0)
+			HashMap<String, UserInfo> memberInfoMap = UserManager.getInstance().getChatRoomMemberInfoMap();
+			if (memberInfoMap != null && memberInfoMap.size() > 0)
 			{
-				Set<String> uidKeySet=memberInfoMap.keySet();
-				for(String uid:uidKeySet)
+				Set<String> uidKeySet = memberInfoMap.keySet();
+				for (String uid : uidKeySet)
 				{
-					if(!uid.equals(""))
+					if (!uid.equals(""))
 						selectStateMap.put(uid, Boolean.FALSE);
 				}
 			}
-			if(memberUidArray!=null && memberUidArray.size()>0)
+			if (memberUidArray != null && memberUidArray.size() > 0)
 			{
-				for(int i=0;i<memberUidArray.size();i++)
+				for (int i = 0; i < memberUidArray.size(); i++)
 				{
-					String uid=memberUidArray.get(i);
-					if(selectStateMap.containsKey(uid))
+					String uid = memberUidArray.get(i);
+					if (selectStateMap.containsKey(uid))
 					{
-						System.out.println("uid1:"+uid);
+						System.out.println("uid1:" + uid);
 						selectStateMap.put(uid, Boolean.TRUE);
 					}
 				}
-				if(!ChatServiceController.isCreateChatRoom&&!ChatServiceController.isInChatRoom() && !UserManager.getInstance().getCurrentMail().opponentUid.equals(""))
+				if (!ChatServiceController.isCreateChatRoom && !ChatServiceController.isInChatRoom()
+						&& !UserManager.getInstance().getCurrentMail().opponentUid.equals(""))
 				{
-					if(selectStateMap.containsKey(UserManager.getInstance().getCurrentMail().opponentUid))
+					if (selectStateMap.containsKey(UserManager.getInstance().getCurrentMail().opponentUid))
 					{
 						selectStateMap.put(UserManager.getInstance().getCurrentMail().opponentUid, Boolean.TRUE);
 					}
@@ -114,142 +117,168 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 		}
 		else
 		{
-			String resultStr=LanguageManager.getLangByKey(LanguageKeys.TIP_SEARCH_RESULT);
-			if(resultStr.trim().equals(""))
-				resultStr="搜索结果";
-			
+			String resultStr = "";
+			if (ChatServiceController.isFriendEnable)
+			{
+				resultStr = LanguageManager.getLangByKey(LanguageKeys.TITLE_FRIEND_LIST);
+				if (StringUtils.isEmpty(resultStr))
+					resultStr = "好友列表";
+			}
+			else
+			{
+				resultStr = LanguageManager.getLangByKey(LanguageKeys.TIP_SEARCH_RESULT);
+				if (StringUtils.isEmpty(resultStr))
+					resultStr = "搜索结果";
+			}
+
 			ArrayList<String> memberArr = UserManager.getInstance().getSelectMemberUidArr();
-			if(memberArr == null)
+			if (memberArr == null)
 			{
 				memberArr = new ArrayList<String>();
 			}
-			
-			if(_listDataChild.containsKey(resultStr))
+
+			if (_listDataChild.containsKey(resultStr))
 			{
-				ArrayList<UserInfo> userArr=_listDataChild.get(resultStr);
-				if(userArr!=null && userArr.size()>0)
+				ArrayList<UserInfo> userArr = _listDataChild.get(resultStr);
+				if (userArr != null && userArr.size() > 0)
 				{
-					for(int i=0;i<userArr.size();i++)
+					for (int i = 0; i < userArr.size(); i++)
 					{
-						UserInfo user=(UserInfo)(userArr.get(i));
-						if(user!=null)
+						UserInfo user = (UserInfo) (userArr.get(i));
+						if (user != null)
 						{
-							String uid=user.uid;
-							if(!uid.equals(""))
+							String uid = user.uid;
+							if (!uid.equals(""))
 							{
-								if(memberArr.contains(uid) || fragment.memberUidAdded.contains(uid))
+								if (memberArr.contains(uid) || fragment.memberUidAdded.contains(uid))
 									selectStateMap.put(uid, Boolean.TRUE);
 								else
 									selectStateMap.put(uid, Boolean.FALSE);
 							}
-							
+
 						}
 					}
 				}
 			}
-			
-			ArrayList<String> nonAllianceArr=UserManager.getInstance().getSelctedMemberArr(false);
-			if(nonAllianceArr!=null && nonAllianceArr.size()>0)
+
+			if (!ChatServiceController.isFriendEnable)
 			{
-				for(int i=0;i<nonAllianceArr.size();i++)
+				ArrayList<String> nonAllianceArr = UserManager.getInstance().getSelctedMemberArr(false);
+				if (nonAllianceArr != null && nonAllianceArr.size() > 0)
 				{
-					String uid=nonAllianceArr.get(i);
-					if(!uid.equals(""))
-						selectStateMap.put(uid, Boolean.TRUE);
+					for (int i = 0; i < nonAllianceArr.size(); i++)
+					{
+						String uid = nonAllianceArr.get(i);
+						if (!uid.equals(""))
+							selectStateMap.put(uid, Boolean.TRUE);
+					}
 				}
 			}
+
 		}
 	}
 
 	@Override
-	public Object getChild(int groupPosition, int childPosititon) {
-		if(this._listDataHeader.size()>0 && groupPosition<this._listDataHeader.size() && _listDataChild!=null)
+	public Object getChild(int groupPosition, int childPosititon)
+	{
+		if (this._listDataHeader.size() > 0 && groupPosition < this._listDataHeader.size() && _listDataChild != null)
 		{
-			String key=this._listDataHeader.get(groupPosition);
-			if(key!=null && !key.equals(""))
+			String key = this._listDataHeader.get(groupPosition);
+			if (key != null && !key.equals(""))
 			{
-				ArrayList<UserInfo> userArr=this._listDataChild.get(key);
-				if(userArr!=null && userArr.size()>0)
+				ArrayList<UserInfo> userArr = this._listDataChild.get(key);
+				if (userArr != null && userArr.size() > childPosititon)
+				{
 					return userArr.get(childPosititon);
+				}
 			}
-		}	
+		}
 		return null;
 	}
 
 	@Override
-	public long getChildId(int groupPosition, int childPosition) {
+	public long getChildId(int groupPosition, int childPosition)
+	{
 		return childPosition;
 	}
-	
+
 	class OnUserCheckedChangeListener implements OnCheckedChangeListener
 	{
 		public OnUserCheckedChangeListener(UserHolder holder)
 		{
-			mHolder=holder;
+			mHolder = holder;
 		}
-		
-		private UserHolder mHolder;
-		
+
+		private UserHolder	mHolder;
+
 		@Override
-		public void onCheckedChanged(CompoundButton buttonView,
-				boolean isChecked) {
-			String posStr=mHolder.checkBox.getTag().toString();
-//			System.out.println("posStr:"+posStr);
-			if(posStr.equals(""))
+		public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+		{
+			String posStr = mHolder.checkBox.getTag().toString();
+			if (posStr.equals(""))
 				return;
-			String[] posArr=posStr.split("_");
+			String[] posArr = posStr.split("_");
 			int groupPosition = Integer.parseInt(posArr[0]);
-			int childPosition=Integer.parseInt(posArr[1]);
-			UserInfo userInfo=(UserInfo)getChild(groupPosition,childPosition);
-			if(userInfo==null)
+			int childPosition = Integer.parseInt(posArr[1]);
+			UserInfo userInfo = (UserInfo) getChild(groupPosition, childPosition);
+			if (userInfo == null)
 				return;
-//			String groupId=UserManager.getInstance().getCurrentMail().opponentUid;
-//			ArrayList<String> memberUidArray=ChannelManager.getInstance().getChatRoomMemberArrayByKey(groupId);
-			
-//			System.out.println("onCheckedChanged1 userInfo.uid:"+userInfo.uid);
-			HashMap<String, UserInfo> memberInfoMap=UserManager.getInstance().getChatRoomMemberInfoMap();
-			Set<String> allianceUidKeySet=null;
-			if(memberInfoMap!=null && memberInfoMap.size()>0)
+
+			HashMap<String, UserInfo> memberInfoMap = UserManager.getInstance().getChatRoomMemberInfoMap();
+			Set<String> allianceUidKeySet = null;
+			if (memberInfoMap != null && memberInfoMap.size() > 0)
 			{
-				allianceUidKeySet=memberInfoMap.keySet();
+				allianceUidKeySet = memberInfoMap.keySet();
 			}
-			if(isChecked)
+			if (isChecked)
 			{
-//				System.out.println("onCheckedChanged2");
-				if(!selectStateMap.get(userInfo.uid))
+				if (!selectStateMap.get(userInfo.uid))
 				{
-//					System.out.println("onCheckedChanged2 1");
 					selectStateMap.put(userInfo.uid, Boolean.TRUE);
-					if(fragment.memberTab==1)
+					if (fragment.memberTab == 1)
 					{
-						if(!memberUidArray.contains(userInfo.uid) && !fragment.memberUidAdded.contains(userInfo.uid))
+						if (!memberUidArray.contains(userInfo.uid) && !fragment.memberUidAdded.contains(userInfo.uid))
 						{
-//							System.out.println("onCheckedChanged2 2");
 							fragment.memberUidAdded.add(userInfo.uid);
 						}
-						if(fragment.memberUidRemoved.contains(userInfo.uid))
+						if (fragment.memberUidRemoved.contains(userInfo.uid))
 						{
-//							System.out.println("onCheckedChanged2 3");
 							fragment.memberUidRemoved.remove(userInfo.uid);
 						}
 					}
-					else if(fragment.memberTab==2)
+					else if (fragment.memberTab == 2)
 					{
-						if(!memberUidArray.contains(userInfo.uid) && !fragment.commonMemberUidAdded.contains(userInfo.uid))
+						if (allianceUidKeySet != null && allianceUidKeySet.contains(userInfo.uid))
 						{
-//							System.out.println("onCheckedChanged2 4");
-							if(allianceUidKeySet!=null && allianceUidKeySet.contains(userInfo.uid) && !fragment.memberUidAdded.contains(userInfo.uid))
-								fragment.memberUidAdded.add(userInfo.uid);
-							else
-								fragment.commonMemberUidAdded.add(userInfo.uid);
-						}
-						if(fragment.commonMemberUidRemoved.contains(userInfo.uid))
-						{
-//							System.out.println("onCheckedChanged2 5");
-							if(allianceUidKeySet!=null && allianceUidKeySet.contains(userInfo.uid) && fragment.memberUidRemoved.contains(userInfo.uid))
+							if (fragment.memberUidRemoved.contains(userInfo.uid))
+							{
 								fragment.memberUidRemoved.remove(userInfo.uid);
-							else
+							}
+						}
+						else
+						{
+							if (fragment.commonMemberUidRemoved.contains(userInfo.uid))
+							{
 								fragment.commonMemberUidRemoved.remove(userInfo.uid);
+							}
+						}
+
+						if (!memberUidArray.contains(userInfo.uid))
+						{
+							if (allianceUidKeySet != null && allianceUidKeySet.contains(userInfo.uid))
+							{
+								if (!fragment.memberUidAdded.contains(userInfo.uid))
+								{
+									fragment.memberUidAdded.add(userInfo.uid);
+								}
+							}
+							else
+							{
+								if (!fragment.commonMemberUidAdded.contains(userInfo.uid))
+								{
+									fragment.commonMemberUidAdded.add(userInfo.uid);
+								}
+							}
 						}
 					}
 					fragment.onSelectionChanged();
@@ -257,57 +286,50 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 			}
 			else
 			{
-//				System.out.println("onCheckedChanged3");
-				if(selectStateMap.get(userInfo.uid))
+				if (selectStateMap.get(userInfo.uid))
 				{
 					selectStateMap.put(userInfo.uid, Boolean.FALSE);
-					if(fragment.memberTab==1)
+					if (fragment.memberTab == 1)
 					{
-						if(fragment.memberUidAdded.contains(userInfo.uid))
+						if (fragment.memberUidAdded.contains(userInfo.uid))
 						{
-//							System.out.println("onCheckedChanged3 1");
 							fragment.memberUidAdded.remove(userInfo.uid);
 						}
-						if(memberUidArray.contains(userInfo.uid) && !fragment.memberUidRemoved.contains(userInfo.uid))
+						if (memberUidArray.contains(userInfo.uid) && !fragment.memberUidRemoved.contains(userInfo.uid))
 						{
-//							System.out.println("onCheckedChanged3 2");
 							fragment.memberUidRemoved.add(userInfo.uid);
 						}
 					}
-					else if(fragment.memberTab==2)
+					else if (fragment.memberTab == 2)
 					{
-						if(allianceUidKeySet!=null && allianceUidKeySet.contains(userInfo.uid))
+						if (allianceUidKeySet != null && allianceUidKeySet.contains(userInfo.uid))
 						{
-							if(fragment.memberUidAdded.contains(userInfo.uid))
+							if (fragment.memberUidAdded.contains(userInfo.uid))
 							{
-//								System.out.println("onCheckedChanged3 31");
 								fragment.memberUidAdded.remove(userInfo.uid);
 							}
 						}
-						else 
+						else
 						{
-							if(fragment.commonMemberUidAdded.contains(userInfo.uid))
+							if (fragment.commonMemberUidAdded.contains(userInfo.uid))
 							{
-//								System.out.println("onCheckedChanged3 32");
 								fragment.commonMemberUidAdded.remove(userInfo.uid);
 							}
 						}
-						
-						if(memberUidArray.contains(userInfo.uid))
+
+						if (memberUidArray.contains(userInfo.uid))
 						{
-							if(allianceUidKeySet!=null && allianceUidKeySet.contains(userInfo.uid))
+							if (allianceUidKeySet != null && allianceUidKeySet.contains(userInfo.uid))
 							{
-								if(!fragment.memberUidRemoved.contains(userInfo.uid))
+								if (!fragment.memberUidRemoved.contains(userInfo.uid))
 								{
-//									System.out.println("onCheckedChanged3 41");
 									fragment.memberUidRemoved.add(userInfo.uid);
 								}
 							}
 							else
 							{
-								if(!fragment.commonMemberUidRemoved.contains(userInfo.uid))
+								if (!fragment.commonMemberUidRemoved.contains(userInfo.uid))
 								{
-//									System.out.println("onCheckedChanged3 42");
 									fragment.commonMemberUidRemoved.add(userInfo.uid);
 								}
 							}
@@ -317,94 +339,83 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 				}
 			}
 		}
-		
 	}
 
 	@Override
-	public View getChildView(int groupPosition, final int childPosition,boolean isLastChild, View convertView, ViewGroup parent) {
-		UserInfo userInfo =null;
-		UserHolder holder=null;
-		if (groupPosition < 0 || groupPosition>=_listDataHeader.size() || childPosition<0)
+	public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
+	{
+		UserInfo userInfo = null;
+		UserHolder holder = null;
+		if (groupPosition < 0 || groupPosition >= _listDataHeader.size() || childPosition < 0)
 		{
 			return null;
 		}
 		else
 		{
 			userInfo = (UserInfo) getChild(groupPosition, childPosition);
-			if (userInfo == null) 
+			if (userInfo == null)
 			{
 				System.out.println("userInfo == null");
 				return null;
 			}
 		}
-		
+
 		if (convertView == null)
 		{
-//			System.out.println("convertView == null");
 			convertView = this.inflater.inflate(R.layout.list_item, null);
-			holder=new UserHolder();
+			holder = new UserHolder();
 			holder.findView(convertView);
 			holder.checkBox.setOnCheckedChangeListener(new OnUserCheckedChangeListener(holder));
-			// setHeadImage(userInfo,holder.headImage);
 		}
 		else
 		{
-//			System.out.println("convertView != null");
 			holder = (UserHolder) convertView.getTag();
 		}
-		
-		if(holder==null)
+
+		if (holder == null)
 			return null;
-		
-		if(holder.headImage.getTag()==null)
-		{
-			ImageUtil.setHeadImage(_context,userInfo.headPic,holder.headImage,userInfo);
+
+		if(StringUtils.isNotEmpty(userInfo.uid))
 			holder.headImage.setTag(userInfo.uid);
-//			System.out.println("1111 groupPosition:"+groupPosition+" childPosition:"+childPosition);
-		}
-		else
+		ImageUtil.setHeadImage(_context, userInfo.headPic, holder.headImage, userInfo);
+
+		String name = userInfo.userName;
+		boolean isKickEnable = true;
+		boolean isCreater = true;
+		if (ChatServiceController.isInChatRoom() && !ChatServiceController.isCreateChatRoom)
 		{
-			String imgTag=holder.headImage.getTag().toString();
-//			System.out.println("2222 imgTag:"+imgTag);
-			if(!imgTag.equals(userInfo.uid))
+			String founderUid = ChannelManager.getInstance()
+					.getChatRoomFounderByKey(UserManager.getInstance().getCurrentMail().opponentUid);
+			if (!founderUid.equals("") && founderUid.equals(userInfo.uid))
 			{
-				ImageUtil.setHeadImage(_context,userInfo.headPic,holder.headImage,userInfo);
-				holder.headImage.setTag(userInfo.uid);
+				String creater = LanguageManager.getLangByKey(LanguageKeys.TIP_CHATROOM_CREATER);
+				if (creater.equals(""))
+					creater = "创建者";
+				name += " (" + creater + ")";
 			}
-		}
-		
-		String name=userInfo.userName;
-		boolean isKickEnable=true;
-		boolean isCreater=true;
-		if(ChatServiceController.isInChatRoom() && !ChatServiceController.isCreateChatRoom)
-		{
-			String founderUid=ChannelManager.getInstance().getChatRoomFounderByKey(UserManager.getInstance().getCurrentMail().opponentUid);
-			if(!founderUid.equals("") && founderUid.equals(userInfo.uid))
+
+			if (!founderUid.equals("") && founderUid.equals(UserManager.getInstance().getCurrentUserId()))
 			{
-				String creater=LanguageManager.getLangByKey(LanguageKeys.TIP_CHATROOM_CREATER);
-				if(creater.equals(""))
-					creater="创建者";
-				name+=" ("+creater+")";
-			}
-			
-			if(!founderUid.equals("") && founderUid.equals(UserManager.getInstance().getCurrentUserId()))
-			{
-				isCreater=true;
+				isCreater = true;
 			}
 			else
 			{
-				isCreater=false;
+				isCreater = false;
 			}
 		}
-		if(memberUidArray!=null && memberUidArray.size()>0 && memberUidArray.contains(userInfo.uid) && !isCreater)
+		if (memberUidArray != null && memberUidArray.size() > 0 && memberUidArray.contains(userInfo.uid) && !isCreater)
 		{
-			isKickEnable=false;
+			isKickEnable = false;
 		}
 		holder.userName.setText(name);
-		holder.checkBox.setTag(""+groupPosition+"_"+childPosition);
+		holder.checkBox.setTag("" + groupPosition + "_" + childPosition);
 		holder.checkBox.setChecked(selectStateMap.containsKey(userInfo.uid) && selectStateMap.get(userInfo.uid));
-		if(!isKickEnable || (!UserManager.getInstance().getCurrentUser().uid.equals("") && UserManager.getInstance().getCurrentUser().uid.equals(userInfo.uid))||
-				(!ChatServiceController.isCreateChatRoom&&!ChatServiceController.isInChatRoom() && !UserManager.getInstance().getCurrentMail().opponentUid.equals("") &&UserManager.getInstance().getCurrentMail().opponentUid.equals(userInfo.uid)))
+		if (!isKickEnable
+				|| (!UserManager.getInstance().getCurrentUser().uid.equals("") && UserManager.getInstance().getCurrentUser().uid
+						.equals(userInfo.uid))
+				|| (!ChatServiceController.isCreateChatRoom && !ChatServiceController.isInChatRoom()
+						&& !UserManager.getInstance().getCurrentMail().opponentUid.equals("") && UserManager.getInstance().getCurrentMail().opponentUid
+							.equals(userInfo.uid)))
 		{
 			holder.checkBox.setEnabled(false);
 			CompatibleApiUtil.getInstance().setButtonAlpha(holder.checkBox, false);
@@ -418,14 +429,15 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 	}
 
 	@Override
-	public int getChildrenCount(int groupPosition) {
-		if(this._listDataHeader.size()>0 && groupPosition<this._listDataHeader.size() && this._listDataChild!=null)
+	public int getChildrenCount(int groupPosition)
+	{
+		if (this._listDataHeader.size() > 0 && groupPosition < this._listDataHeader.size() && this._listDataChild != null)
 		{
-			String key=this._listDataHeader.get(groupPosition);
-			if(key!=null && !key.equals(""))
+			String key = this._listDataHeader.get(groupPosition);
+			if (key != null && !key.equals(""))
 			{
-				ArrayList<UserInfo> userArr=this._listDataChild.get(key);
-				if(userArr!=null)
+				ArrayList<UserInfo> userArr = this._listDataChild.get(key);
+				if (userArr != null)
 					return userArr.size();
 			}
 		}
@@ -433,33 +445,36 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 	}
 
 	@Override
-	public Object getGroup(int groupPosition) {
-		if(this._listDataHeader!=null)
+	public Object getGroup(int groupPosition)
+	{
+		if (this._listDataHeader != null)
 			return this._listDataHeader.get(groupPosition);
 		return null;
 	}
 
 	@Override
-	public int getGroupCount() {
-		if(this._listDataHeader!=null)
+	public int getGroupCount()
+	{
+		if (this._listDataHeader != null)
 			return this._listDataHeader.size();
 		return 0;
 	}
 
 	@Override
-	public long getGroupId(int groupPosition) {
+	public long getGroupId(int groupPosition)
+	{
 		return groupPosition;
 	}
 
 	@Override
-	public View getGroupView(int groupPosition, boolean isExpanded,
-			View convertView, ViewGroup parent) {
-		if(getGroup(groupPosition)==null)
+	public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent)
+	{
+		if (getGroup(groupPosition) == null)
 			return null;
 		String headerTitle = (String) getGroup(groupPosition);
-		if (convertView == null) {
-			LayoutInflater infalInflater = (LayoutInflater) this._context
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		if (convertView == null)
+		{
+			LayoutInflater infalInflater = (LayoutInflater) this._context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = infalInflater.inflate(ResUtil.getId(this._context, "layout", "list_group"), null);
 		}
 
@@ -471,22 +486,23 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 	}
 
 	@Override
-	public boolean hasStableIds() {
+	public boolean hasStableIds()
+	{
 		return false;
 	}
 
 	@Override
-	public boolean isChildSelectable(int groupPosition, int childPosition) {
+	public boolean isChildSelectable(int groupPosition, int childPosition)
+	{
 		return true;
 	}
 
-	
 	public class UserHolder
 	{
-		public ImageView headImage;
-		public TextView userName;
-		public CheckBox checkBox;
-		
+		public ImageView	headImage;
+		public TextView		userName;
+		public CheckBox		checkBox;
+
 		public void findView(View convertView)
 		{
 			headImage = ((ImageView) convertView.findViewById(R.id.headImage));

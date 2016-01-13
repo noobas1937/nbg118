@@ -766,7 +766,15 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
             postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    mRefreshListener.onPullUpToRefresh(PullToRefreshBase.this);
+                	try
+					{
+                		if (mRefreshListener != null)
+                			mRefreshListener.onPullUpToRefresh(PullToRefreshBase.this);
+					}
+					catch (Exception e)
+					{
+						e.printStackTrace();
+					}
                 }
             }, getSmoothScrollDuration()); 
         }

@@ -15,47 +15,126 @@
         <Button
             android:id="@+id/button0"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="100dp"
             android:layout_marginRight="100dp"
-            android:layout_height="wrap_content"
             android:text="频道列表" />
 
         <Button
             android:id="@+id/button1"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="100dp"
             android:layout_marginRight="100dp"
-            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="聊天" />
 
         <Button
             android:id="@+id/button3"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="100dp"
             android:layout_marginRight="100dp"
-            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="邮件" />
 
         <Button
             android:id="@+id/button2"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="100dp"
             android:layout_marginRight="100dp"
-            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="论坛" />
 
         <Button
             android:id="@+id/button4"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="100dp"
             android:layout_marginRight="100dp"
-            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="群聊设置" />
 
+        <Button
+            android:id="@+id/button6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="100dp"
+            android:layout_marginTop="10dp"
+            android:text="切换图片" />
+        
+        <Button
+            android:id="@+id/button7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="100dp"
+            android:layout_marginTop="10dp"
+            android:text="翻译纠错" />
+
+        <Button
+            android:id="@+id/button8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="100dp"
+            android:layout_marginTop="10dp"
+            android:text="序列化" />
+
+        <Button
+            android:id="@+id/button9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="100dp"
+            android:layout_marginTop="10dp"
+            android:text="连接websocket" />
+
+        <EditText
+            android:id="@+id/wsStatusLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="10dp"
+            android:inputType="textMultiLine"
+            android:maxLines="8"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:scrollbars="vertical"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/hs__actionBarTextColorSecondary"
+            android:textSize="@dimen/cs__textButtonTitle" />
+        
+        <Button
+            android:id="@+id/button10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="100dp"
+            android:layout_marginTop="10dp"
+            android:text="发消息" />
+
+        <com.elex.chatservice.util.gif.GifView
+            android:id="@+id/gifView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:enabled="false" >
+        </com.elex.chatservice.util.gif.GifView>
+
+        <com.elex.chatservice.util.gif.GifMovieView
+            android:id="@+id/gifMovieView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:onClick="onGifClick"
+            android:enabled="false" >
+        </com.elex.chatservice.util.gif.GifMovieView>
     </LinearLayout>
 
 </RelativeLayout>

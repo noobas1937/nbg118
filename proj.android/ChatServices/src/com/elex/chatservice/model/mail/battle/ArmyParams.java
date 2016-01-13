@@ -1,48 +1,83 @@
 package com.elex.chatservice.model.mail.battle;
 
-public class ArmyParams {
-	private int exp;
-	private String armId;
-	private int num;
-	private int hurt;
-	private int kill;
-	private int dead;
-	public int getExp() {
+public class ArmyParams
+{
+	private int		exp;
+	private String	armId;
+	private int		num;
+	private int		hurt;
+	private int		kill;
+	private int		dead;
+	private int		star;
+
+	public int getExp()
+	{
 		return exp;
 	}
-	public void setExp(int exp) {
+
+	public void setExp(int exp)
+	{
 		this.exp = exp;
 	}
-	public String getArmId() {
+
+	public String getArmId()
+	{
 		return armId;
 	}
-	public void setArmId(String armId) {
+
+	public void setArmId(String armId)
+	{
 		this.armId = armId;
 	}
-	public int getNum() {
+
+	public int getNum()
+	{
 		return num;
 	}
-	public void setNum(int num) {
+
+	public void setNum(int num)
+	{
 		this.num = num;
 	}
-	public int getHurt() {
+
+	public int getHurt()
+	{
 		return hurt;
 	}
-	public void setHurt(int hurt) {
+
+	public void setHurt(int hurt)
+	{
 		this.hurt = hurt;
 	}
-	public int getKill() {
+
+	public int getKill()
+	{
 		return kill;
 	}
-	public void setKill(int kill) {
+
+	public void setKill(int kill)
+	{
 		this.kill = kill;
 	}
-	public int getDead() {
+
+	public int getDead()
+	{
 		return dead;
 	}
-	public void setDead(int dead) {
+
+	public void setDead(int dead)
+	{
 		this.dead = dead;
 	}
-	
-	
+
+	public int getStar()
+	{
+		return star;
+	}
+
+	public void setStar(int star)
+	{
+		this.star = star;
+	}
+
 }

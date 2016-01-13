@@ -2,22 +2,9 @@ package com.elex.chatservice.view;
 
 import org.apache.commons.lang.StringUtils;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.elex.chatservice.controller.ChatServiceController;
 import com.elex.chatservice.model.ChannelManager;
 import com.elex.chatservice.model.ChatChannel;
-import com.elex.chatservice.model.LanguageKeys;
-import com.elex.chatservice.model.LanguageManager;
 import com.elex.chatservice.model.MailManager;
-import com.elex.chatservice.model.db.DBDefinition;
-import com.elex.chatservice.view.MainListFragment;
-import com.elex.chatservice.view.adapter.AppAdapter;
-import com.elex.chatservice.view.adapter.MainChannelAdapter;
-import com.elex.chatservice.view.adapter.MsgChannelAdapter;
 
 public class MsgMailListFragment extends MainListFragment
 {
@@ -40,14 +27,14 @@ public class MsgMailListFragment extends MainListFragment
 			}
 		}
 	}
-	
+
 	@Override
 	public void onStop()
 	{
 		super.onStop();
 		dataChanged = true;
 	}
-	
+
 	@Override
 	public void onResume()
 	{
@@ -58,6 +45,22 @@ public class MsgMailListFragment extends MainListFragment
 	@Override
 	protected void showWriteButton()
 	{
-		
+	}
+
+	public void refreshScrollLoadEnabled()
+	{
+		channelListPullView.setPullLoadEnabled(false);
+		channelListPullView.setPullRefreshEnabled(false);
+
+		if (adapter != null && adapter.hasMoreData())
+		{
+			System.out.println("MsgMailListFragment.refreshScrollLoadEnabled() setScrollLoadEnabled true");
+			channelListPullView.setScrollLoadEnabled(true);
+		}
+		else
+		{
+			System.out.println("MsgMailListFragment.refreshScrollLoadEnabled() setScrollLoadEnabled false");
+			channelListPullView.setScrollLoadEnabled(false);
+		}
 	}
 }

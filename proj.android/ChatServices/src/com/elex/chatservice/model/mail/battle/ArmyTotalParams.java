@@ -1,34 +1,50 @@
 package com.elex.chatservice.model.mail.battle;
 
-public class ArmyTotalParams {
-	private int num;
-	private int hurt;
-	private int kill;
-	private int dead;
-	public int getNum() {
+public class ArmyTotalParams
+{
+	private int	num;
+	private int	hurt;
+	private int	kill;
+	private int	dead;
+
+	public int getNum()
+	{
 		return num;
 	}
-	public void setNum(int num) {
+
+	public void setNum(int num)
+	{
 		this.num = num;
 	}
-	public int getHurt() {
+
+	public int getHurt()
+	{
 		return hurt;
 	}
-	public void setHurt(int hurt) {
+
+	public void setHurt(int hurt)
+	{
 		this.hurt = hurt;
 	}
-	public int getKill() {
+
+	public int getKill()
+	{
 		return kill;
 	}
-	public void setKill(int kill) {
+
+	public void setKill(int kill)
+	{
 		this.kill = kill;
 	}
-	public int getDead() {
+
+	public int getDead()
+	{
 		return dead;
 	}
-	public void setDead(int dead) {
+
+	public void setDead(int dead)
+	{
 		this.dead = dead;
 	}
-	
-	
+
 }

@@ -459,8 +459,8 @@ public class LocalNotificationManager {
 			notificationIntent.putExtra(ACTION_DATA_KEY, actionData);
 		}
 
-		final PendingIntent pendingIntent = PendingIntent.getService(context, code.hashCode(), notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-		notification.setLatestEventInfo(context, title, body, pendingIntent);
+//		final PendingIntent pendingIntent = PendingIntent.getService(context, code.hashCode(), notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+//		notification.setLatestEventInfo(context, title, body, pendingIntent);
 
 		// Fire the notification.
 		final NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);

@@ -8,7 +8,6 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -28,92 +27,105 @@ public class MailViewHolder extends CategoryViewHolder
 	public ImageView	item_lock_icon;
 	public ImageView	item_reward_icon;
 	public LinearLayout	contentLinearLayout;
-	// public ImageView item_mute_icon;
 
 	public MailViewHolder(View view)
 	{
 		super(view);
-		
+
 		item_latest_msg = (TextView) view.findViewById(R.id.channel_latest_msg);
 		item_time = (TextView) view.findViewById(R.id.channel_item_time);
 		item_icon_layout = (LinearLayout) view.findViewById(R.id.channel_icon_layout);
 		item_lock_icon = (ImageView) view.findViewById(R.id.channel_lock_icon);
 		item_reward_icon = (ImageView) view.findViewById(R.id.channel_reward_icon);
 		contentLinearLayout = (LinearLayout) view.findViewById(R.id.content_linear_layout);
-//		item_mute_icon = (ImageView) view.findViewById(R.id.channel_mute_icon);
 	}
-	
-	public void setContent(Context context, ChannelListItem item, boolean showUreadAsText, Drawable drawable, String title, String summary, String time, boolean isInEditMode, int position, int bgColor)
+
+	public void setContent(Context context, ChannelListItem item, boolean showUreadAsText, Drawable drawable, String title, String summary,
+			String time, boolean isInEditMode, int position, int bgColor)
 	{
 		super.setContent(context, item, showUreadAsText, drawable, title, summary, time, isInEditMode, position, bgColor);
 
-		if (StringUtils.isNotEmpty(summary) && summary.contains(".png")){
+		if (StringUtils.isNotEmpty(summary) && summary.contains(".png"))
+		{
 			HtmlTextUtil.setResourceHtmlText(item_latest_msg, summary);
-		}else{
+		}
+		else
+		{
 			item_latest_msg.setText(summary);
 		}
 		item_time.setText(time);
-		
-		if(bgColor != 0) {
+
+		if (bgColor != 0)
+		{
 			GradientDrawable bgShape = (GradientDrawable) item_icon.getBackground();
 			bgShape.setColor(bgColor);
 		}
 	}
-	
+
 	protected void showUnreadCountText(Context context)
 	{
 		unread_text.setVisibility(unreadCount > 0 ? View.VISIBLE : View.GONE);
 
-		if(unreadCount <= 0) return;
-		
-		if(ChatServiceController.isNewMailUIEnable || !showUreadAsText){
+		if (unreadCount <= 0)
+			return;
+
+		if (ChatServiceController.isNewMailUIEnable || !showUreadAsText)
+		{
 			unread_text.setText("");
 			unread_text.setTextSize(TypedValue.COMPLEX_UNIT_PX, 1);
 			unread_text.setBackgroundResource(R.drawable.channel_red_dot);
-		}else{
+		}
+		else
+		{
 			unread_text.setText(Integer.toString(unreadCount));
-			Resources r = context.getResources(); 
+			Resources r = context.getResources();
 			unread_text.setTextSize(TypedValue.COMPLEX_UNIT_PX, r.getDimension(R.dimen.cs__textSummary));
 			unread_text.setBackgroundDrawable(getDefaultBackground(context));
 		}
 	}
-	
+
 	protected void showIcon(boolean isLock, boolean reward, ChannelListItem item, boolean isInEditMode)
 	{
 		item_lock_icon.setVisibility(isLock ? View.VISIBLE : View.GONE);
 		item_reward_icon.setVisibility(reward ? View.VISIBLE : View.GONE);
-//		item_mute_icon.setVisibility(showMute == 1 ? View.VISIBLE : View.GONE);
-		
-		if(isInEditMode){
+
+		if (isInEditMode)
+		{
 			adjustContentLinearLayout(false);
-		}else if(!enableAnimation){
+		}
+		else if (!enableAnimation)
+		{
 			adjustContentLinearLayout(true);
 		}
 		super.showIcon(isLock, reward, item, isInEditMode);
 	}
-	
+
 	private void adjustContentLinearLayout(boolean isExpand)
 	{
 		// 旧版UI没有contentLinearLayout
-		if(contentLinearLayout == null) return;
-		
-		if(isExpand){
+		if (contentLinearLayout == null)
+			return;
+
+		if (isExpand)
+		{
 			LinearLayout.LayoutParams lay = (LinearLayout.LayoutParams) contentLinearLayout.getLayoutParams();
 			lay.weight = 504;
-		}else{
+		}
+		else
+		{
 			LinearLayout.LayoutParams lay = (LinearLayout.LayoutParams) contentLinearLayout.getLayoutParams();
 			// 多了item_checkbox_layout，少了item_leading_space
 			lay.weight = 504 - 64 + 16;
 		}
 	}
-	
+
 	protected void onHideAnimationEnd()
 	{
 		adjustContentLinearLayout(true);
-		
+
 		super.onHideAnimationEnd();
 	}
-	
+
 	protected void adjustSizeExtend(Context context)
 	{
 		int muteIconWidthDP = 15;
@@ -124,10 +136,5 @@ public class MailViewHolder extends CategoryViewHolder
 		item_reward_icon.setLayoutParams(param1);
 
 		item_lock_icon.setLayoutParams(param1);
-		
-//		LinearLayout.LayoutParams param2 = new LinearLayout.LayoutParams((int) (ScaleUtil.dip2px(context, muteIconWidthDP)
-//				* ConfigManager.scaleRatio * getScreenCorrectionFactor()), (int) (ScaleUtil.dip2px(context, muteIconWidthDP)
-//				* ConfigManager.scaleRatio * getScreenCorrectionFactor()));
-//		item_mute_icon.setLayoutParams(param2);
 	}
 }

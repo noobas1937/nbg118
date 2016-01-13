@@ -8,7 +8,7 @@ import com.elex.chatservice.util.LogUtil;
 
 public class WorldBossMailData extends MailData
 {
-	private WorldBossMailContents detail;
+	private WorldBossMailContents	detail;
 
 	public WorldBossMailContents getDetail()
 	{
@@ -20,43 +20,46 @@ public class WorldBossMailData extends MailData
 		this.detail = detail;
 	}
 
-	public void parseContents() {
+	public void parseContents()
+	{
 		super.parseContents();
-		if(!getContents().equals(""))
+		if (!getContents().equals(""))
 		{
-			try {
-				detail=JSON.parseObject(getContents(),WorldBossMailContents.class);
-				if(detail == null)
+			try
+			{
+				detail = JSON.parseObject(getContents(), WorldBossMailContents.class);
+				hasMailOpend = true;
+				if (detail == null || needParseByForce)
 					return;
-				
-				if(detail.getAttList()!=null && detail.getAttList().size()>0)
+
+				if (detail.getAttList() != null && detail.getAttList().size() > 0)
 				{
-					//得到队长的名字
-		            String leaderName="";
-		            for(int i=0;i<detail.getAttList().size();i++)
-		            {
-		            	AttListParams att=detail.getAttList().get(i);
-		            	if(att!=null)
-		            	{
-		            		String name=att.getName();
-			            	if(att.getLeader()==1 && name!=null)
-			            	{
-			            		leaderName=name;
-			            		break;
-			            	}
-		            	}
-		            }
-//		            System.out.println("leaderName:"+leaderName);
-		            contentText = LanguageManager.getLangByKey(LanguageKeys.MAIL_CONTENT_WORLDBOSS,leaderName);
-		            
-		            if(contentText.length()>50)
-		    		{
-		    			contentText = contentText.substring(0, 50);
-		    			contentText = contentText + "...";
-		    		}
+					String leaderName = "";
+					for (int i = 0; i < detail.getAttList().size(); i++)
+					{
+						AttListParams att = detail.getAttList().get(i);
+						if (att != null)
+						{
+							String name = att.getName();
+							if (att.getLeader() == 1 && name != null)
+							{
+								leaderName = name;
+								break;
+							}
+						}
+					}
+					contentText = LanguageManager.getLangByKey(LanguageKeys.MAIL_CONTENT_WORLDBOSS, leaderName);
+
+					if (contentText.length() > 50)
+					{
+						contentText = contentText.substring(0, 50);
+						contentText = contentText + "...";
+					}
 				}
-			} catch (Exception e) {
-				LogUtil.trackMessage("[WorldBossMailContents parseContents error]: contents:"+getContents(), "", "");
+			}
+			catch (Exception e)
+			{
+				LogUtil.trackMessage("[WorldBossMailContents parseContents error]: contents:" + getContents(), "", "");
 			}
 		}
 	}

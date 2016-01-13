@@ -18,58 +18,70 @@ import com.elex.chatservice.view.MsgMailListFragment;
 
 public class AbstractMailListAdapter extends BaseAdapter
 {
-	public ChannelListFragment fragment;
+	public static final int	VIEW_TYPE_NONE				= 0;
+	public static final int	VIEW_TYPE_DELETE			= 1;
+	public static final int	VIEW_TYPE_READ_AND_DELETE	= 2;
+	public static final int	VIEW_TYPE_READ				= 3;
 	
+	public ChannelListFragment			fragment;
+
 	protected ChannelListActivity		context;
 	public ArrayList<ChannelListItem>	list	= new ArrayList<ChannelListItem>();
+	public boolean						isLoadingMore;
 
-	public AbstractMailListAdapter(ChannelListActivity context, ChannelListFragment fragment) {
+	public AbstractMailListAdapter(ChannelListActivity context, ChannelListFragment fragment)
+	{
 		this.context = context;
 		this.fragment = fragment;
 	}
-	
+
 	public void reloadData()
 	{
 	}
-	
+
 	public void refreshOrder()
 	{
-		SortUtil.getInstance().refreshListOrder(list);
-		
+		SortUtil.getInstance().refreshListOrder(list, ChannelListItem.class);
+
 		notifyDataSetChangedOnUI();
 	}
 	
+	public void refreshAdapterList()
+	{
+		
+	}
+
 	public boolean hasMoreData()
 	{
 		return false;
 	}
-	
-	public void loadMoreData()
+
+	public synchronized void loadMoreData()
 	{
 	}
-	
-	public int getCount() {
+
+	public int getCount()
+	{
 		return list.size();
 	}
-	
-	@Override
-    public int getViewTypeCount() {
-        // menu type count
-        return 2;
-    }
 
-	public static final int VIEW_TYPE_NONE = 0;
-	public static final int VIEW_TYPE_DELETE = 1;
-	
-    @Override
-    public int getItemViewType(int position) {
-        return VIEW_TYPE_DELETE;
-    }
-    
+	@Override
+	public int getViewTypeCount()
+	{
+		return 4;
+	}
+
+	@Override
+	public int getItemViewType(int position)
+	{
+		return VIEW_TYPE_READ;
+	}
+
 	@Override
 	public ChannelListItem getItem(int position)
 	{
-		if (position >= 0 && position < list.size()) return list.get(position);
+		if (position >= 0 && position < list.size())
+			return list.get(position);
 		return null;
 	}
 
@@ -82,65 +94,59 @@ public class AbstractMailListAdapter extends BaseAdapter
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent)
 	{
-//		if(position == 0){
-//			System.out.println(position + " getItem(position) = " + getItem(position));
-//			System.out.println("getItem(position).isCategory() = " + getItem(position).isCategory());
-//			if(convertView != null){
-//				System.out.println("getItem isViewChanged = " + isViewChanged(convertView, getItem(position).isCategory(), true));
-//				
-//			}
-//		}
-		if (convertView == null)// || isViewChanged(convertView, getItem(position).isCategory(), false)
+		if (convertView == null)
 		{
-			if(ChatServiceController.isNewMailUIEnable){
-				if(fragment instanceof MainListFragment && !(fragment instanceof MsgMailListFragment)){
+			if (ChatServiceController.isNewMailUIEnable)
+			{
+				if (fragment instanceof MainListFragment && !(fragment instanceof MsgMailListFragment))
+				{
 					convertView = View.inflate(context, R.layout.cs__channel_list_item_category, null);
 					convertView.setTag(new CategoryViewHolder(convertView));
-				}else{
+				}
+				else
+				{
 					convertView = View.inflate(context, R.layout.cs__channel_list_item_mail, null);
 					convertView.setTag(new MailViewHolder(convertView));
 				}
-			}else{
+			}
+			else
+			{
 				convertView = View.inflate(context, R.layout.cs__channel_list_item, null);
 				convertView.setTag(new MailViewHolder(convertView));
 			}
 		}
 		return convertView;
 	}
-	
-//	private boolean isViewChanged(View convertView, boolean isCategory, boolean output)
-//	{
-//		if(isCategory && convertView.findViewById(R.id.channel_lock_icon) != null){
-//			if(output) System.out.println("getItem not isCategory");
-//			return true;
-//		}else if(!isCategory && convertView.findViewById(R.id.channel_lock_icon) == null){
-//			if(output) System.out.println("getItem not not isCategory");
-//			return true;
-//		}
-//		return false;
-//	}
-	
+
 	protected void refreshMenu()
 	{
-		if(fragment.isInEditMode()){
+		if (fragment.isInEditMode())
+		{
 			fragment.getListView().closeMenu();
 			fragment.getListView().enabled = false;
-		}else{
+		}
+		else
+		{
 			fragment.getListView().enabled = true;
 		}
 	}
-	
+
 	public void notifyDataSetChangedOnUI()
 	{
-		System.out.println("notifyDataSetChangedOnUI 1");
-		if(context == null) return;
-		System.out.println("notifyDataSetChangedOnUI");
-		context.runOnUiThread(new Runnable() {
+		if (context == null)
+			return;
+
+		context.runOnUiThread(new Runnable()
+		{
 			@Override
-			public void run() {
-				try {
+			public void run()
+			{
+				try
+				{
 					notifyDataSetChanged();
-				} catch (Exception e) {
+				}
+				catch (Exception e)
+				{
 					LogUtil.printException(e);
 				}
 			}

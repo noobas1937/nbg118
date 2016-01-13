@@ -6,17 +6,17 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class InAbsCache<K, V>
 {
-	protected static final int DEFAULT_CACHE_SIZE = 32;
+	protected static final int						DEFAULT_CACHE_SIZE	= 32;
 
-	private HashMap<K, V> mHardCache;
+	private HashMap<K, V>							mHardCache;
 
 	/**
 	 * 当mHardCache的key大于Cache Size的时候，会根据LRU算法把最近没有被使用的key放入到这个缓存中。
 	 * T使用了SoftReference，当内存空间不足时，此cache中的T会被垃圾回收掉
 	 */
-	private ConcurrentHashMap<K, SoftReference<V>> mSoftCache;
+	private ConcurrentHashMap<K, SoftReference<V>>	mSoftCache;
 
-	private int mCacheSize;
+	private int										mCacheSize;
 
 	@SuppressWarnings("serial")
 	public InAbsCache(int cacheSize)
@@ -33,12 +33,10 @@ public abstract class InAbsCache<K, V>
 			@Override
 			protected boolean removeEldestEntry(Entry<K, V> eldest)
 			{
-				// TODO Auto-generated method stub
 				if (size() > mCacheSize)
 				{
 					// 当map的size大于mCacheSize时，把最近不常用的key放到mSoftCache中，从而实现延迟缓存从内存中清除
-					mSoftCache.put(eldest.getKey(),
-							new SoftReference<V>(eldest.getValue()));
+					mSoftCache.put(eldest.getKey(), new SoftReference<V>(eldest.getValue()));
 				}
 				return super.removeEldestEntry(eldest);
 			}

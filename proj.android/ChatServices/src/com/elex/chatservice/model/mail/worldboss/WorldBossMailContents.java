@@ -6,25 +6,37 @@ import com.elex.chatservice.model.mail.monster.DefParams;
 
 public class WorldBossMailContents
 {
-	private DefParams def;
-	private List<AttListParams> attList;
-	private int xy;
-	public DefParams getDef() {
+	private DefParams			def;
+	private List<AttListParams>	attList;
+	private int					xy;
+
+	public DefParams getDef()
+	{
 		return def;
 	}
-	public void setDef(DefParams def) {
+
+	public void setDef(DefParams def)
+	{
 		this.def = def;
 	}
-	public List<AttListParams> getAttList() {
+
+	public List<AttListParams> getAttList()
+	{
 		return attList;
 	}
-	public void setAttList(List<AttListParams> attList) {
+
+	public void setAttList(List<AttListParams> attList)
+	{
 		this.attList = attList;
 	}
-	public int getXy() {
+
+	public int getXy()
+	{
 		return xy;
 	}
-	public void setXy(int xy) {
+
+	public void setXy(int xy)
+	{
 		this.xy = xy;
 	}
 }

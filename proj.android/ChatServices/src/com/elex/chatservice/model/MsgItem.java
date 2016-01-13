@@ -8,64 +8,120 @@ import java.util.Locale;
 import org.apache.commons.lang.StringUtils;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.provider.BaseColumns;
+import android.util.Log;
+import android.view.View;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.elex.chatservice.controller.ChatServiceController;
 import com.elex.chatservice.model.db.DBDefinition;
 import com.elex.chatservice.model.db.DBHelper;
+import com.elex.chatservice.model.db.DBManager;
 import com.elex.chatservice.util.LogUtil;
-import com.elex.chatservice.view.ChatActivity;
+import com.elex.chatservice.util.ResUtil;
 
 public final class MsgItem
 {
-	public final static int	SENDING					= 0;
-	public final static int	SEND_FAILED				= 1;
-	public final static int	SEND_SUCCESS			= 2;
+	public final static int	SENDING							= 0;
+	public final static int	SEND_FAILED						= 1;
+	public final static int	SEND_SUCCESS					= 2;
 
-	public final static int	MSG_TYPE_CHATROOM_TIP	= 100;
-	public final static int	MSG_TYPE_MOD			= 200;
-	public final static int	MAIL_MOD_PERSON			= 23;
+	public final static int	MSG_TYPE_ALLIANCE_JOIN			= 8;
+	public final static int	MSG_TYPE_ALLIANCE_RALLY			= 9;
+	public final static int	MSG_TYPE_LOTTERY_SHARE			= 10;
+	public final static int	MSG_TYPE_ALLIANCETASK_SHARE		= 11;
+	public final static int	MSG_TYPE_RED_PACKAGE			= 12;
+	/** 增加post时要变更这个值 */
+	public final static int	MSG_TYPE_MAX_VALUE				= 12;
 
-	// 数据库对应
-	public int				_id;								// 数据库使用的id
+	public final static int	MSG_TYPE_CHATROOM_TIP			= 100;
+	public final static int	MSG_TYPE_MOD					= 200;
+	public final static int	MAIL_MOD_PERSON					= 23;
+
+	public final static int	HANDLED							= 0;
+	public final static int	UNHANDLE						= 1;
+	public final static int	NONE_MONEY						= 2;
+	public final static int	FINISH							= 3;
+
+	public final static int	MSGITEM_TYPE_MESSAGE			= 0;
+	public final static int	MSGITEM_TYPE_GIF				= 1;
+	public final static int	MSGITEM_TYPE_PIC				= 2;
+	public final static int	MSGITEM_TYPE_REDPACKAGE			= 3;
+	public final static int	MSGITEM_TYPE_CHATROM_TIP		= 4;
+	public final static int	MSGITEM_TYPE_NEW_MESSAGE_TIP	= 5;
+
+	/** 数据库使用的id */
+	public int				_id;
 	public int				tableVer;
 	public int				sequenceId;
-	public String			mailId;								// 用来标识邮件的id
-	public String			uid						= "";		// uid，群聊时才会存数据库
-	public int				channelType				= -1;		// 频道类型
-	public int				createTime				= 0;			// 收到的消息会在C++中初始化此字段，对应后台传回来的createTime
-	public int				post					= -1;		// 数据库中名为type：是否为系统信息，“0”表示不是，非“0”表示是
-	public String			msg						= "";		// 消息体
-	public String			translateMsg			= "";		// 翻译信息
-	public String			originalLang			= "";		// 源语言
-	public String			translatedLang			= "";		// 翻译后的语言
-	public int				sendState				= -1;		// 发送状态，0正在发送，1发送失败，2发送成功
-	public String			attachmentId			= "";		// 战报UID，侦察战报UID,装备ID
-	public String			media					= "";
+	/** 用来标识邮件的id */
+	public String			mailId;
+	/** uid，群聊时才会存数据库 */
+	public String			uid								= "";
+	/** 频道类型 */
+	public int				channelType						= -1;
+	/** 收到的消息会在C++中初始化此字段，对应后台传回来的createTime */
+	public int				createTime						= 0;
+	/** 数据库中名为type：是否为系统信息，“0”表示不是，非“0”表示是 */
+	public int				post							= -1;
+	/** 消息体 */
+	public String			msg								= "";
+	/** 翻译信息 */
+	public String			translateMsg					= "";
+	/** 源语言 */
+	public String			originalLang					= "";
+	/** 翻译后的语言 */
+	public String			translatedLang					= "";
+	/**
+	 * 对于自己发的消息,发送状态，0正在发送，1发送失败，2发送成功 红包消息时，表示红包的领取状态,1未领取，0领取过,2被抢光了,3到期了
+	 * */
+	public int				sendState						= -1;
+	/** 战报UID，侦察战报UID,装备ID等 */
+	public String			attachmentId					= "";
+
+	public String			media							= "";
 
 	// 运行时属性
-	public boolean			isSelfMsg;							// 是否是自己的信息
-	public boolean			isNewMsg;							// 是否是新消息
-	public String			currentText				= "";
-	public boolean			hasTranslated;						// 是否被翻译过
-	public boolean			isSendDataShowed		= false;
-	public int				lastUpdateTime			= 0;
-	public int				sendLocalTime			= 0;		// 本地发送时间戳
-	public boolean			isTranslateByGoogle		= false;
-	public boolean			isFirstNewMsg			= false;
-	public int				firstNewMsgState		= 0;		// 0:不是第一条
-																// 1:第一条且新消息数小于等于200条
-																// 2:第一条且新消息数超过200条
-	public ChatChannel		chatChannel				= null;		// msgItem所属的Channel
-	public boolean			isTranslatedByForce		= false;	// 是否强制翻译，点击翻译菜单后置为true
+	/** 是否是自己的信息 */
+	public boolean			isSelfMsg;
+	/** 是否是新消息 */
+	public boolean			isNewMsg;
+	public String			currentText						= "";
+	/** 是否被翻译过 */
+	public boolean			hasTranslated;
+	public boolean			isSendDataShowed				= false;
+	public int				lastUpdateTime					= 0;
+	/** 本地发送时间戳 */
+	public int				sendLocalTime					= 0;
+	public boolean			isTranslateByGoogle				= false;
+	public boolean			isFirstNewMsg					= false;
+	/**
+	 * 0:不是第一条 1:第一条且新消息数小于等于200条 2:第一条且新消息数超过200条
+	 * */
+	public int				firstNewMsgState				= 0;
+	/** msgItem所属的Channel */
+	public ChatChannel		chatChannel						= null;
+	/** 是否强制翻译，点击翻译菜单后置为true，点击原文置为false */
+	public boolean			isTranslatedByForce				= false;
+	/** 是否做过强制翻译，点击翻译菜单后置为true */
+	public boolean			hasTranslatedByForce			= false;
+	//是否被强制显示原文
+	public boolean			isOriginalLangByForce			= false;
 
 	// 被C++使用
-	public String			name;								// 发送者名称
-	public String			asn;								// 联盟简称
-	public String			vip;								// vip信息
-	public String			headPic;							// 系统头像
+	/** 发送者名称 */
+	public String			name;
+	/** 联盟简称 */
+	public String			asn;
+	/** vip信息 */
+	public String			vip;
+	/** 系统头像 */
+	public String			headPic;
 	public int				gmod;
-	public int				headPicVer;							// 自定义头像
+	/** 自定义头像 */
+	public int				headPicVer;
 
 	/**
 	 * C++创建的对象可能没有默认值赋值，需要补上
@@ -77,85 +133,81 @@ public final class MsgItem
 			currentText = "";
 		}
 	}
-	
+
+	public MsgItem()
+	{
+
+	}
+
 	public UserInfo getUser()
 	{
+		UserManager.checkUser(uid, "", 0);
 		UserInfo user = UserManager.getInstance().getUser(uid);
-		if(user == null){
-			System.out.println("UserInfo getUser() null:" + " uid = " + uid);
-		}
 		return user;
 	}
-	
-	// 如果希望获取用户信息之前可以看到基本信息，可以启用isDummy判断
+
 	public String getName()
 	{
 		return getUser().userName;
-//		return getUser().isDummy ? name : getUser().userName;
 	}
+	
+	public String getLang()
+	{
+		String lang = originalLang;
+		if(StringUtils.isEmpty(lang) && StringUtils.isNotEmpty(getUser().lang))
+			lang = getUser().lang;
+		return lang;
+	}
+
 	public int getSrcServerId()
 	{
 		return getUser().crossFightSrcServerId;
 	}
+
 	public String getASN()
 	{
 		return getUser().asn;
-//		return getUser().isDummy ? asn : getUser().asn;
 	}
+
 	public String getVip()
 	{
 		return getUser().getVipInfo();
-//		return getUser().isDummy ? vip : getUser().vipInfo;
 	}
+	
+	public int getVipLevel()
+	{
+		return getUser().getVipLevel();
+	}
+
 	public String getHeadPic()
 	{
 		return getUser().headPic;
-//		return getUser().isDummy ? headPic : getUser().headPic;
 	}
+
 	public int getGmod()
 	{
 		return getUser().mGmod;
-//		return getUser().isDummy ? gmod : getUser().mGmod;
 	}
+
 	public int getHeadPicVer()
 	{
 		return getUser().headPicVer;
-//		return getUser().isDummy ? headPicVer : getUser().headPicVer;
 	}
 
 	public void initUserForReceivedMsg(String mailOpponentUid, String mailOpponentName)
 	{
-		checkUser(uid, "", lastUpdateTime);
-		
-		// 有时一个私信session里只有我自己说的话，但也需要取到对方的信息（这样channel才会有标题），所以加以下判断
-		String fromUid = ChannelManager.getInstance().getModChannelFromUid(mailOpponentUid);
-		if(channelType == DBDefinition.CHANNEL_TYPE_USER && StringUtils.isNotEmpty(fromUid) && !fromUid.equals(uid))
+		if(lastUpdateTime > TimeManager.getInstance().getCurrentTime())
 		{
-			checkUser(fromUid, mailOpponentName, 0);
+			LogUtil.printVariables(Log.WARN, LogUtil.TAG_MSG, "invalid lastUpdateTime msg:\n" + LogUtil.typeToString(this));
 		}
-	}
-	
-	private void checkUser(String uid, String name, int updateTime)
-	{
-		UserInfo user = UserManager.getInstance().getUser(uid);
-		
-		boolean isOld = false;
-		if(user != null) isOld = updateTime > 0 ? updateTime > user.lastUpdateTime : false;
-//		System.out.println("checkUser() initUserForReceivedMsg: " + uid + " " + name + " " + updateTime + " " + isOld);
-//		if(user != null)	System.out.println("user.lastUpdateTime: " + user.lastUpdateTime + " !user.isValid():" + !user.isValid());
-		
-		if (user == null || !user.isValid() || (isOld && !user.uid.equals(UserManager.getInstance().getCurrentUserId())))
+		String fromUid = ChannelManager.getInstance().getModChannelFromUid(mailOpponentUid);
+		if (channelType == DBDefinition.CHANNEL_TYPE_USER && StringUtils.isNotEmpty(fromUid) && !fromUid.equals(uid))
 		{
-			if (user == null){
-				user = new UserInfo(uid);
-				if(StringUtils.isNotEmpty(name)) user.userName = name;
-				UserManager.getInstance().addUser(user);
-			}
-			
-			// 从后台取userInfo
-			ArrayList<String> uids = new ArrayList<String>();
-			uids.add(uid);
-			UserManager.getInstance().getMultiUserInfo(uids);
+			UserManager.checkUser(fromUid, mailOpponentName, lastUpdateTime);
+		}
+		else
+		{
+			UserManager.checkUser(uid, "", lastUpdateTime);
 		}
 	}
 
@@ -164,10 +216,13 @@ public final class MsgItem
 		UserManager.getInstance().getCurrentUser();
 	}
 
-	// 用于从数据库获取消息
+	/**
+	 * 用于从数据库获取消息
+	 */
 	public MsgItem(Cursor c)
 	{
-		try{
+		try
+		{
 			_id = c.getInt(c.getColumnIndex(BaseColumns._ID));
 			tableVer = c.getInt(c.getColumnIndex(DBDefinition.COLUMN_TABLE_VER));
 			sequenceId = c.getInt(c.getColumnIndex(DBDefinition.CHAT_COLUMN_SEQUENCE_ID));
@@ -182,13 +237,16 @@ public final class MsgItem
 			originalLang = c.getString(c.getColumnIndex(DBDefinition.CHAT_COLUMN_ORIGINAL_LANGUAGE));
 			translatedLang = c.getString(c.getColumnIndex(DBDefinition.CHAT_COLUMN_TRANSLATED_LANGUAGE));
 			sendState = c.getInt(c.getColumnIndex(DBDefinition.CHAT_COLUMN_STATUS));
+			if (isRedPackageMessage() && sendState < 0)
+			{
+				sendState = UNHANDLE;
+			}
 			attachmentId = c.getString(c.getColumnIndex(DBDefinition.CHAT_COLUMN_ATTACHMENT_ID));
 			media = c.getString(c.getColumnIndex(DBDefinition.CHAT_COLUMN_MEDIA));
 			UserManager.getInstance().getUser(uid);
-//			System.out.println("msg:"+msg+"  MsgItem uid:"+uid+"   getCurrentUserId:"+UserManager.getInstance().getCurrentUserId());
 			isSelfMsg = uid.equals(UserManager.getInstance().getCurrentUserId());
 			isNewMsg = false;
-			if (hasTranslation() && !isTranlateDisable() && !isOriginalSameAsTargetLang())
+			if (TranslateManager.getInstance().hasTranslated(this))
 				this.hasTranslated = true;
 			else
 				this.hasTranslated = false;
@@ -199,11 +257,6 @@ public final class MsgItem
 		}
 	}
 
-	/**
-	 * TODO 是否应该包括table_ver
-	 * 它是用来表示表的版本，不是记录的版本
-	 * 它有默认值，问题是alter表不会改变该字段的默认值，但用CURRENT_DATABASE_VERSION也不妥
-	 */
 	public ContentValues getContentValues()
 	{
 		ContentValues cv = new ContentValues();
@@ -219,49 +272,41 @@ public final class MsgItem
 		cv.put(DBDefinition.CHAT_COLUMN_TRANSLATION, translateMsg);
 		cv.put(DBDefinition.CHAT_COLUMN_ORIGINAL_LANGUAGE, originalLang);
 		cv.put(DBDefinition.CHAT_COLUMN_TRANSLATED_LANGUAGE, translatedLang);
+		if (isRedPackageMessage() && sendState < 0)
+			sendState = UNHANDLE;
 		cv.put(DBDefinition.CHAT_COLUMN_STATUS, sendState);
 		cv.put(DBDefinition.CHAT_COLUMN_ATTACHMENT_ID, attachmentId);
 		cv.put(DBDefinition.CHAT_COLUMN_MEDIA, media);
 		return cv;
 	}
 
-	// 用于发送消息
-	public MsgItem(String uidStr,
-					boolean isNewMsg,
-		  			boolean isSelf,
-		  			int channelType,
-		  			int post,
-		  			String msgStr,
-		  			int sendLocalTime)
+	/**
+	 * 用于发送消息
+	 */
+	public MsgItem(String uidStr, boolean isNewMsg, boolean isSelf, int channelType, int post, String msgStr, int sendLocalTime)
 	{
 		this.uid = uidStr;
 		this.isNewMsg = isNewMsg;
-		this.isSelfMsg = isSelf && (post!=100);
+		this.isSelfMsg = isSelf && (post != 100);
 		this.channelType = channelType;
 		this.post = post;
 		this.msg = msgStr;
-		if (hasTranslation() && !isTranlateDisable())
+		if (TranslateManager.getInstance().hasTranslated(this))
 			this.hasTranslated = true;
 		else
 			this.hasTranslated = false;
 		this.sendLocalTime = sendLocalTime;
 	}
-	
-	// 用于wrapper假消息
-	public MsgItem(int seqId,
-					boolean isNewMsg,
-		  			boolean isSelf,
-		  			int channelType,
-		  			int post,
-		  			String uidStr,
-		  			String msgStr,
-		  			String translateMsgStr,
-		  			String originalLangStr,
-		  			int sendLocalTime)
+
+	/**
+	 * 用于wrapper假消息
+	 */
+	public MsgItem(int seqId, boolean isNewMsg, boolean isSelf, int channelType, int post, String uidStr, String msgStr,
+			String translateMsgStr, String originalLangStr, int sendLocalTime)
 	{
 		this.sequenceId = seqId;
 		this.isNewMsg = isNewMsg;
-		this.isSelfMsg = isSelf && (post!=100);
+		this.isSelfMsg = isSelf && (post != 100);
 		this.channelType = channelType;
 		this.msg = msgStr;
 		this.uid = uidStr;
@@ -273,34 +318,35 @@ public final class MsgItem
 		setExternalInfo();
 	}
 
-  public void setExternalInfo()
-  {
-	  if(hasTranslation() && !isTranlateDisable())
-	  {
-		  this.hasTranslated=true;
-	  }
-	  else
-	  {
-		  this.hasTranslated=false;
-	  }
-	  
-	  if(isSystemHornMsg())
-	  {
-		  this.headPic ="guide_player_icon";
-	  }
-  }
+	public void setExternalInfo()
+	{
+		if (TranslateManager.getInstance().hasTranslated(this))
+		{
+			this.hasTranslated = true;
+		}
+		else
+		{
+			this.hasTranslated = false;
+		}
+
+		if (isSystemHornMsg())
+		{
+			this.headPic = "guide_player_icon";
+		}
+	}
 
 	public boolean isEqualTo(MsgItem msgItem)
 	{
-		if (this.isSelfMsg == msgItem.isSelfMsg && this.msg.equals(msgItem.msg)) return true;
-		return false;
-	}
-	
-	public boolean isSameLang()
-	{
-		if(StringUtils.isNotEmpty(originalLang) && originalLang.equals(translatedLang))
+		if (this.isSelfMsg == msgItem.isSelfMsg && this.msg.equals(msgItem.msg))
 			return true;
 		return false;
+	}
+
+	public boolean isSelfMsg()
+	{
+		isSelfMsg = StringUtils.isNotEmpty(uid) && StringUtils.isNotEmpty(UserManager.getInstance().getCurrentUserId())
+				&& uid.equals(UserManager.getInstance().getCurrentUserId()) && post != MSG_TYPE_CHATROOM_TIP;
+		return isSelfMsg;
 	}
 
 	public boolean isInAlliance()
@@ -312,48 +358,49 @@ public final class MsgItem
 	{
 		return (isHornMessage() && uid.equals("3000002"));
 	}
-	
+
 	public boolean isTranlateDisable()
 	{
-		if(ConfigManager.autoTranlateMode <= 0 && translateMsg.equals(""))
-			return true;
-//		System.out.println("isTranlateDisable disableLang:"+TranslateManager.getInstance().disableLang+"  msg:"+msg+"  translateMsg:"+translateMsg+"  originalLang:"+originalLang);
-		boolean isContainsOriginLang=false;	
-		if(originalLang.contains(","))
+		if (StringUtils.isNotEmpty(originalLang) && StringUtils.isNotEmpty(TranslateManager.getInstance().disableLang))
 		{
-			String langStr[]=originalLang.split(",");
-			for(int i=0;i<langStr.length;i++)
+			boolean isContainsOriginLang = false;
+			if (originalLang.contains(","))
 			{
-				if(!langStr[i].equals("") && isContainsLang(TranslateManager.getInstance().disableLang,langStr[i]))
+				String langStr[] = originalLang.split(",");
+				for (int i = 0; i < langStr.length; i++)
 				{
-					isContainsOriginLang=true;
-					break;
+					if (!langStr[i].equals("") && isContainsLang(TranslateManager.getInstance().disableLang, langStr[i]))
+					{
+						isContainsOriginLang = true;
+						break;
+					}
 				}
 			}
-		}
-		else
-		{
-			isContainsOriginLang=isContainsLang(TranslateManager.getInstance().disableLang,originalLang);
-		}
-		
-		if(!originalLang.equals("") && !TranslateManager.getInstance().disableLang.equals("") && isContainsOriginLang )
-			return true;
+			else
+			{
+				isContainsOriginLang = isContainsLang(TranslateManager.getInstance().disableLang, originalLang);
+			}
 
+			if (isContainsOriginLang)
+				return true;
+		}
 		return false;
 	}
-	
-	private boolean isContainsLang(String disableLang,String lang)
+
+	private boolean isContainsLang(String disableLang, String lang)
 	{
 		boolean ret = false;
-		if(StringUtils.isNotEmpty(disableLang) && StringUtils.isNotEmpty(originalLang))
+		if (StringUtils.isNotEmpty(disableLang) && StringUtils.isNotEmpty(originalLang))
 		{
-			if(disableLang.contains(lang))
+			if (disableLang.contains(lang))
 				ret = true;
 			else
 			{
-				if(((disableLang.contains("zh-CN") || disableLang.contains("zh_CN") || disableLang.contains("zh-Hans")) && isZh_CN(lang))
-						|| ((disableLang.contains("zh-TW") || disableLang.contains("zh_TW") || disableLang.contains("zh-Hant")) && isZh_TW(lang)))
-						ret = true;
+				if (((disableLang.contains("zh-CN") || disableLang.contains("zh_CN") || disableLang.contains("zh-Hans")) && TranslateManager
+						.getInstance().isZh_CN(lang))
+						|| ((disableLang.contains("zh-TW") || disableLang.contains("zh_TW") || disableLang.contains("zh-Hant")) && TranslateManager
+								.getInstance().isZh_TW(lang)))
+					ret = true;
 			}
 		}
 		return ret;
@@ -372,17 +419,19 @@ public final class MsgItem
 		}
 	}
 
-	//是否是提示消息,显示在中间
+	/**
+	 * 是否是聊天室的提示消息,显示在中间
+	 */
 	public boolean isTipMsg()
 	{
 		return post == MSG_TYPE_CHATROOM_TIP;
 	}
-	
+
 	public boolean isModMsg()
 	{
 		return post == MSG_TYPE_MOD;
 	}
-	
+
 	public String getAllianceLabel()
 	{
 		if (isInAlliance())
@@ -419,18 +468,43 @@ public final class MsgItem
 	{
 		return post == 6;
 	}
-	
+
 	public boolean isEquipMessage()
 	{
 		return post == 7;
 	}
 
+	public boolean isAllianceJoinMessage()
+	{
+		return post == MSG_TYPE_ALLIANCE_JOIN;
+	}
+
+	public boolean isRallyMessage()
+	{
+		return post == MSG_TYPE_ALLIANCE_RALLY;
+	}
+
+	public boolean isLotteryMessage()
+	{
+		return post == MSG_TYPE_LOTTERY_SHARE;
+	}
+
 	/**
-	 * TODO 修改为 (post > 0 && post <= 5)，以避免item.isSystemMessage() && !item.isHornMessage()这种写法
+	 * 判断是否是系统消息
 	 */
 	public boolean isSystemMessage()
 	{
-		return post > 0 && post<=7 ;
+		return post > 0 && !isTipMsg() && !isModMsg();
+	}
+
+	public boolean isAllianceTaskMessage()
+	{
+		return post == MSG_TYPE_ALLIANCETASK_SHARE;
+	}
+
+	public boolean isRedPackageMessage()
+	{
+		return post == MSG_TYPE_RED_PACKAGE;
 	}
 
 	private Date getSendUtcDate()
@@ -458,42 +532,143 @@ public final class MsgItem
 		return formatter.format(getSendUtcDate());
 	}
 
+	public String getSendTimeToShow()
+	{
+		if (TimeManager.getInstance().isToday(createTime))
+		{
+			return getSendTimeHM();
+		}
+		return getSendTime();
+	}
+
 	public boolean hasTranslation()
 	{
-		return StringUtils.isNotEmpty(translateMsg);
+		return StringUtils.isNotEmpty(translateMsg) && !translateMsg.startsWith("{\"code\":{");
 	}
-	
+
 	public boolean canShowTranslateMsg()
 	{
-		return hasTranslation() && hasTranslated && !isOriginalSameAsTargetLang() && (!isTranlateDisable() || isTranslatedByForce);
+		return TranslateManager.getInstance().isTranslateMsgValid(this)
+				&& (!isTranlateDisable() || isTranslatedByForce)
+				&& !isOriginalSameAsTargetLang()
+				&& !isOriginalLangByForce ;
 	}
-	
-	private boolean isZh_CN(String lang)
-	{
-		if(StringUtils.isNotEmpty(lang) && lang.equals("zh-CN") || lang.equals("zh_CN") || lang.equals("zh-Hans"))
-			return true;
-		return false;
-	}
-	
-	private boolean isZh_TW(String lang)
-	{
-		if(StringUtils.isNotEmpty(lang) && lang.equals("zh-TW") || lang.equals("zh_TW") || lang.equals("zh-Hant"))
-			return true;
-		return false;
-	}
-	
-	private boolean isSameZhLang(String targetLang)
-	{
-		if(StringUtils.isNotEmpty(originalLang) && StringUtils.isNotEmpty(targetLang) && ((isZh_CN(originalLang) && isZh_CN(targetLang)) || (isZh_TW(originalLang) && isZh_TW(targetLang))))
-				return true;
-		return false;
-	}
-	
+
 	public boolean isOriginalSameAsTargetLang()
 	{
-		boolean isSame=false;
-		if(StringUtils.isNotEmpty(originalLang) && StringUtils.isNotEmpty(ConfigManager.getInstance().gameLang) && (ConfigManager.getInstance().gameLang.equals(originalLang) || isSameZhLang(ConfigManager.getInstance().gameLang)))
-			isSame=true;
+		boolean isSame = false;
+		if (StringUtils.isNotEmpty(originalLang)
+				&& StringUtils.isNotEmpty(ConfigManager.getInstance().gameLang)
+				&& (ConfigManager.getInstance().gameLang.equals(originalLang) || TranslateManager.getInstance().isSameZhLang(originalLang,
+						ConfigManager.getInstance().gameLang)))
+			isSame = true;
 		return isSame;
+	}
+
+	public boolean isVersionInvalid()
+	{
+		if (post > MSG_TYPE_MAX_VALUE && !isTipMsg() && !isModMsg() && post != MAIL_MOD_PERSON)
+			return true;
+		return false;
+	}
+
+	public ChatChannel getChatChannel()
+	{
+		ChatChannel channel = null;
+		if (channelType == DBDefinition.CHANNEL_TYPE_COUNTRY)
+			channel = ChannelManager.getInstance().getCountryChannel();
+		else if (channelType == DBDefinition.CHANNEL_TYPE_ALLIANCE)
+			channel = ChannelManager.getInstance().getAllianceChannel();
+		return channel;
+	}
+
+	public void handleRedPackageFinishState()
+	{
+		if (!isRedPackageMessage())
+			return;
+		if (sendState == UNHANDLE && isRedPackageFinish())
+		{
+			sendState = FINISH;
+			ChatChannel channel = getChatChannel();
+			if (channel != null)
+				DBManager.getInstance().updateMessage(this, channel.getChatTable());
+		}
+	}
+
+	public boolean isRedPackageFinish()
+	{
+		if (!isRedPackageMessage())
+			return false;
+		if (createTime + ChatServiceController.red_package_during_time * 60 * 60 < TimeManager.getInstance().getCurrentTime())
+			return true;
+		return false;
+	}
+
+	public boolean isKingMsg()
+	{
+		if (StringUtils.isNotEmpty(uid) && StringUtils.isNotEmpty(ChatServiceController.kingUid)
+				&& ChatServiceController.kingUid.equals(uid))
+			return true;
+		return false;
+	}
+
+	public int getMsgItemType(Context context)
+	{
+		if (firstNewMsgState == 1 || firstNewMsgState == 2)
+		{
+			return MSGITEM_TYPE_NEW_MESSAGE_TIP;
+		}
+		else
+		{
+			String replacedEmoj = StickManager.getPredefinedEmoj(msg);
+			if (replacedEmoj != null)
+			{
+				return getPicType(context, replacedEmoj);
+			}
+			else
+			{
+				if (isRedPackageMessage())
+					return MSGITEM_TYPE_REDPACKAGE;
+				else
+					return getMessageType();
+			}
+		}
+	}
+
+	public int getMessageType()
+	{
+		if (isTipMsg())
+			return MSGITEM_TYPE_CHATROM_TIP;
+		else
+			return MSGITEM_TYPE_MESSAGE;
+	}
+
+	public int getPicType(Context context, String fileName)
+	{
+		if (fileName == null)
+			return -1;
+		int id = ResUtil.getId(context, "drawable", fileName);
+		if (id == 0)
+			return -1;
+		if (context.getString(id).endsWith(".gif"))
+		{
+			return MSGITEM_TYPE_GIF;
+		}
+		else
+		{
+			return MSGITEM_TYPE_PIC;
+		}
+	}
+	
+	public boolean isNotInRestrictList()
+	{
+		return (!isSystemMessage() && !UserManager.getInstance().isInRestrictList(uid, UserManager.BAN_LIST)) || 
+				(isHornMessage() && !UserManager.getInstance().isInRestrictList(uid, UserManager.BAN_NOTICE_LIST));
+	}
+
+	public boolean isInRestrictList()
+	{
+		return (!isSystemMessage() && UserManager.getInstance().isInRestrictList(uid, UserManager.BAN_LIST)) || 
+				(isHornMessage() && UserManager.getInstance().isInRestrictList(uid, UserManager.BAN_NOTICE_LIST));
 	}
 }

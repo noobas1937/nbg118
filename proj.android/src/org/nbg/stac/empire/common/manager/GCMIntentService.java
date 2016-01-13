@@ -85,16 +85,16 @@ public class GCMIntentService extends GCMBaseIntentService{
 		PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
 				notificationIntent, 0);
 		
-		Notification notification = new Notification(R.drawable.ic_launcher, message,
-				System.currentTimeMillis());
-		// 设定Notification出现时的声音，一般不建议自定义
-		notification.defaults |= Notification.DEFAULT_SOUND;
-		notification.flags |= Notification.FLAG_AUTO_CANCEL;
-		notification.setLatestEventInfo(context, context.getString(R.string.app_name), message,
-				contentIntent);
-		// 显示这个notification
-		Long currentTime = System.currentTimeMillis();
-		nm.notify(currentTime.intValue(), notification);
+//		Notification notification = new Notification(R.drawable.ic_launcher, message,
+//				System.currentTimeMillis());
+//		// 设定Notification出现时的声音，一般不建议自定义
+//		notification.defaults |= Notification.DEFAULT_SOUND;
+//		notification.flags |= Notification.FLAG_AUTO_CANCEL;
+//		notification.setLatestEventInfo(context, context.getString(R.string.app_name), message,
+//				contentIntent);
+//		// 显示这个notification
+//		Long currentTime = System.currentTimeMillis();
+//		nm.notify(currentTime.intValue(), notification);
 		
 		if (!TextUtils.isEmpty(gcmType)) {
 			// 初始化友盟

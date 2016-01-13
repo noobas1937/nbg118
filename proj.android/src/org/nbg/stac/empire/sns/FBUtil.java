@@ -1019,6 +1019,28 @@ public class FBUtil {
     	logger.logEvent("Purchase_Item",spend,parameters);
     }
     
+    public static void appEventMessage(String messageType, String... args)
+	{
+    	if(!IF.getInstance().facebookEnabled){
+			Log.d(TAG, "appEventMessage" + ": fail due to facebookEnabled false");
+			return;
+		}
+    	Log.d(TAG, "appEventMessage " + messageType );
+    	
+    	AppEventsLogger logger = IF.getInstance().getAppEventsLogger();
+    	Bundle parameters = new Bundle();
+    	parameters.putString("version", Device.getVersionName() + " " + Device.getVersionCode());
+    	
+		for (int i = 0; i < args.length; i += 2)
+		{
+			if ((i + 1) < args.length)
+			{
+		    	parameters.putString(args[i], args[i + 1]);
+			}
+		}
+    	logger.logEvent(messageType, parameters);
+	}
+    
     public static void appEventShareLog(String realm,int user_level, int castle_level,String share_content){
     	if(!IF.getInstance().facebookEnabled){
 			Log.d(TAG, "appEventShareLog" + ": fail due to facebookEnabled false");

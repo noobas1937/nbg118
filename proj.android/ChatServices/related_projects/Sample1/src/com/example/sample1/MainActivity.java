@@ -16,9 +16,9 @@ public class MainActivity extends Activity {
 		
 		setContentView(R.layout.activity_main);
 		
-	    Helpshift.install(getApplication(), "d364a0d2a0b3856ba1aa8d4cc0371855",
+	    Helpshift.install(getApplication(), "78595a4520a0688ffb956c4067a028e9",
 	        "elex.helpshift.com",
-	        "elex_platform_20151106082553299-dfa2768467c76a9");
+	        "elex_platform_20140804011326224-93771e1d4419a42");
 	    
 	    Helpshift.showConversation(MainActivity.this);
 //		Helpshift.showFAQs(MainActivity.this);

@@ -12,10 +12,12 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.elex.chatservice.R;
+import com.elex.chatservice.controller.ChatServiceController;
 import com.elex.chatservice.image.AsyncImageLoader;
 import com.elex.chatservice.image.ImageLoaderListener;
 import com.elex.chatservice.model.ConfigManager;
@@ -33,15 +35,16 @@ public class ImageUtil
 		else
 		{
 			int idFlag = ResUtil.getId(c, "drawable", headPic);
-			
+
 			return idFlag != 0 ? idFlag : defaultId;
 		}
 	}
-	
+
 	/**
 	 * 如果默认的g026图片不存在，则不会设置imageView
 	 * 
-	 * @param headPic 可为空，使用默认头像g026
+	 * @param headPic
+	 *            可为空，使用默认头像g026
 	 */
 	public static void setPredefinedHeadImage(final Context c, String headPic, final ImageView imageView)
 	{
@@ -52,20 +55,25 @@ public class ImageUtil
 			{
 				if (c != null && c instanceof Activity)
 				{
-					((Activity) c).runOnUiThread(new Runnable() {
+					((Activity) c).runOnUiThread(new Runnable()
+					{
 						@Override
-						public void run() {
-							try {
-								// 极少情况可能发生 Fatal Exception: java.lang.OutOfMemoryError ，且没有被try捕获
+						public void run()
+						{
+							try
+							{
+								// 极少情况可能发生 Fatal Exception:
+								// java.lang.OutOfMemoryError ，且没有被try捕获
 								// 应该是因为有自定义头像，超出了堆内存上限
 								imageView.setImageDrawable(c.getResources().getDrawable(resId));
-							} catch (Exception e) {
+							}
+							catch (Exception e)
+							{
 								LogUtil.printException(e);
 							}
 						}
 					});
 				}
-//				imageView.setImageDrawable(c.getResources().getDrawable(resId));
 			}
 		}
 		catch (Exception e)
@@ -73,96 +81,96 @@ public class ImageUtil
 			LogUtil.printException(e);
 		}
 	}
-	
+
 	public static void setImageOnUiThread(final Context c, final ImageView imageView, final Bitmap bitmap)
 	{
 		if (c != null && c instanceof Activity)
 		{
-			((Activity) c).runOnUiThread(new Runnable() {
+			((Activity) c).runOnUiThread(new Runnable()
+			{
 				@Override
-				public void run() {
-					try {
-    					imageView.setImageBitmap(bitmap);
-					} catch (Exception e) {
+				public void run()
+				{
+					try
+					{
+						imageView.setImageBitmap(bitmap);
+					}
+					catch (Exception e)
+					{
 						LogUtil.printException(e);
 					}
 				}
 			});
 		}
 	}
-	
+
 	public static void setCustomHeadImage(final Context c, final ImageView imageView, final UserInfo user)
 	{
 		getCustomHeadImage(user, new ImageLoaderListener()
 		{
 			@Override
-			public void onImageLoaded(String url, final Bitmap bitmap)
+			public void onImageLoaded(final Bitmap bitmap)
 			{
-				if (bitmap != null)
-				{
-					setImageOnUiThread(c, imageView, bitmap);
-				}
+				String uid = (String)imageView.getTag();
+				if((StringUtils.isNotEmpty(uid) && !uid.equals(user.uid)) || bitmap == null)
+					return;
+				setImageOnUiThread(c, imageView, bitmap);
 			}
 		});
 	}
-	
+
 	public static void getCustomHeadImage(final UserInfo user, final ImageLoaderListener listener)
 	{
-		if(ConfigManager.enableCustomHeadImg && user != null && user.isCustomHeadImage() && listener != null)
+		if (ConfigManager.enableCustomHeadImg && user != null && user.isCustomHeadImage() && listener != null)
 		{
-			if(user.isCustomHeadPicExist())
+			String locaPath = user.getCustomHeadPic();
+			if (AsyncImageLoader.getInstance().isCacheExistForKey(locaPath))
 			{
-				Bitmap bitMap=AsyncImageLoader.loadBitmapFromStoreSync(user.getCustomHeadPic());
-				
-				listener.onImageLoaded(user.uid, bitMap);
+				Bitmap bitmap = AsyncImageLoader.getInstance().loadBitmapFromCache(locaPath);
+				listener.onImageLoaded(bitmap);
+//				LogUtil.printVariablesWithFuctionName(Log.INFO, LogUtil.TAG_DEBUG, "bitmap from cache is not null", bitmap != null,
+//						"isListFilling", ChatServiceController.isListViewFling, "user", user.userName);
 			}
-			else
+			else /*if (!ChatServiceController.isListViewFling)*/
 			{
-				AsyncImageLoader.loadBitmapFromUrl(user.getCustomHeadPicUrl(), user.getCustomHeadPic(), new ImageLoaderListener()
+				if (user.isCustomHeadPicExist())
 				{
-					@Override
-					public void onImageLoaded(String url, Bitmap bitmap)
+					AsyncImageLoader.getInstance().loadBitmapFromStore(user.getCustomHeadPic(), new ImageLoaderListener()
 					{
-						listener.onImageLoaded(user.uid, bitmap);
-					}
-				});
+						@Override
+						public void onImageLoaded(Bitmap bitmap)
+						{
+							listener.onImageLoaded(bitmap);
+//							LogUtil.printVariablesWithFuctionName(Log.INFO, LogUtil.TAG_DEBUG, "bitmap from sdcard is not null",
+//									bitmap != null, "isListFilling", ChatServiceController.isListViewFling, "user", user.userName);
+						}
+					});
+				}
+				else
+				{
+					AsyncImageLoader.getInstance().loadBitmapFromUrl(user.getCustomHeadPicUrl(), user.getCustomHeadPic(),
+							new ImageLoaderListener()
+							{
+								@Override
+								public void onImageLoaded(Bitmap bitmap)
+								{
+									listener.onImageLoaded(bitmap);
+//									LogUtil.printVariablesWithFuctionName(Log.INFO, LogUtil.TAG_DEBUG, "bitmap from http is not null",
+//											bitmap != null, "isListFilling", ChatServiceController.isListViewFling, "user", user.userName);
+								}
+							});
+				}
 			}
 		}
 	}
-	
-	public static void setHeadImage(Context c, String headPic, final ImageView imageView, UserInfo user) 
+
+	public static void setHeadImage(Context c, String headPic, final ImageView imageView, UserInfo user)
 	{
 		setPredefinedHeadImage(c, headPic, imageView);
-		
+
 		setCustomHeadImage(c, imageView, user);
-		
-//		if(ConfigManager.enableCustomHeadImg && user != null && user.isCustomHeadImage())
-//		{
-//			if(user.isCustomHeadPicExist())
-//			{
-//				Bitmap bitMap=AsyncImageLoader.loadBitmapFromStoreSync(user.getCustomHeadPic());
-//				if(bitMap!=null)
-//				{
-//					imageView.setImageBitmap(bitMap);
-//				}
-//			}
-//			else
-//			{
-//				AsyncImageLoader.loadBitmapFromUrl(user.getCustomHeadPicUrl(), user.getCustomHeadPic(), new ImageLoaderListener()
-//				{
-//					@Override
-//					public void onImageLoaded(String url, Bitmap bitmap)
-//					{
-//						if (bitmap != null)
-//						{
-//							imageView.setImageBitmap(bitmap);
-//						}
-//					}
-//				});
-//			}
-//		}
 	}
-	
+
 	/**
 	 * x匹配宽度，y按tile重复
 	 */
@@ -170,14 +178,18 @@ public class ImageUtil
 	public static void setYRepeatingBG(Activity activity, View view, int id)
 	{
 		Drawable d = ImageUtil.getRepeatingBG(activity, R.drawable.mail_list_bg);
-		if(d == null) return;
-	    if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN){
-	    	view.setBackgroundDrawable(d);
-	    }else{
-	    	view.setBackground(d);
-	    }
+		if (d == null)
+			return;
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
+		{
+			view.setBackgroundDrawable(d);
+		}
+		else
+		{
+			view.setBackground(d);
+		}
 	}
-	
+
 	public static Drawable getRepeatingBG(Activity activity, int center)
 	{
 		DisplayMetrics dm = new DisplayMetrics();
@@ -187,7 +199,8 @@ public class ImageUtil
 		options.inScaled = true;
 
 		Bitmap center_bmp = BitmapFactory.decodeResource(activity.getResources(), center, options);
-		if(center_bmp == null) return null;
+		if (center_bmp == null)
+			return null;
 		center_bmp.setDensity(Bitmap.DENSITY_NONE);
 		center_bmp = Bitmap.createScaledBitmap(center_bmp, dm.widthPixels, center_bmp.getHeight(), true);
 

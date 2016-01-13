@@ -4,17 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.alibaba.fastjson.JSON;
-import com.elex.chatservice.controller.ChatServiceController;
+import com.elex.chatservice.controller.JniController;
 import com.elex.chatservice.model.LanguageKeys;
 import com.elex.chatservice.model.LanguageManager;
 import com.elex.chatservice.model.mail.MailData;
 import com.elex.chatservice.model.mail.battle.RewardParams;
 import com.elex.chatservice.util.LogUtil;
+import com.elex.chatservice.util.MathUtil;
 
-public class ResourceMailData extends MailData {
-	private int unread;
-	private int totalNum;
-	private List<ResourceMailContents> collect;
+public class ResourceMailData extends MailData
+{
+	private int							unread;
+	private int							totalNum;
+	private List<ResourceMailContents>	collect;
 
 	public int getUnread()
 	{
@@ -46,30 +48,32 @@ public class ResourceMailData extends MailData {
 		this.collect = collect;
 	}
 
-	public void parseContents() {
+	public void parseContents()
+	{
 		super.parseContents();
-		if(!getContents().equals(""))
+		if (!getContents().equals(""))
 		{
-			try {
-				collect=new ArrayList<ResourceMailContents>();
-				ResourceMailContents detail=JSON.parseObject(getContents(),ResourceMailContents.class);
-				detail.setUid(getUid());
-				long time=((long)getCreateTime())*1000;
-				detail.setCreateTime(""+time);
-				collect.add(detail);
-				if(collect!=null)
-					hasParseLocal = true;
+			try
+			{
+				collect = new ArrayList<ResourceMailContents>();
+				ResourceMailContents detail = JSON.parseObject(getContents(), ResourceMailContents.class);
 				
-				if(hasParseCompex)
-					return;
-				if(detail == null)
+				if (detail == null)
 				{
 					contentText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_108896);
 				}
 				else
 				{
+					detail.setUid(getUid());
+					long time = ((long) getCreateTime()) * 1000;
+					detail.setCreateTime("" + time);
+					collect.add(detail);
+					hasMailOpend = true;
+					if(needParseByForce)
+						return;
+					
 					boolean resourceResult = false;
-					if(detail.getReward()==null || detail.getReward().size()<=0)
+					if (detail.getReward() == null || detail.getReward().size() <= 0)
 					{
 						resourceResult = false;
 					}
@@ -77,16 +81,17 @@ public class ResourceMailData extends MailData {
 					{
 						resourceResult = true;
 					}
-					
-					if(resourceResult)
+
+					if (resourceResult)
 					{
 						RewardParams reward = detail.getReward().get(0);
-						if(reward!=null)
+						if (reward != null)
 						{
 							int type = reward.getT();
-			                int value = reward.getV();
-			                String icon = ChatServiceController.getInstance().host.getPicByType(type, value);
-			                contentText = "[" + icon + "]" + " + " + value;
+							int value = reward.getV();
+							String icon = JniController.getInstance().excuteJNIMethod("getPicByType",
+									new Object[] { Integer.valueOf(type), Integer.valueOf(value) });
+							contentText = "[" + icon + "]" + " + " + MathUtil.getFormatNumber(value);
 						}
 						else
 						{
@@ -96,11 +101,10 @@ public class ResourceMailData extends MailData {
 					else
 						contentText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_108896);
 				}
-				
-				hasParseCompex = true;
-				
-			} catch (Exception e) {
-				LogUtil.trackMessage("[ResourceMailContents parseContents error]: contents:"+getContents(), "", "");
+			}
+			catch (Exception e)
+			{
+				LogUtil.trackMessage("[ResourceMailContents parseContents error]: contents:" + getContents(), "", "");
 			}
 		}
 	}

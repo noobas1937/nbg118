@@ -2,6 +2,8 @@ package com.elex.chatservice.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 public class MathUtil
 {
@@ -19,6 +21,46 @@ public class MathUtil
 	public static int randomPow(int min, int max, int pow)
 	{
 		return (int) Math.round((double) min + (double) (Math.pow(Math.random(), pow) * (max - min)));
+	}
+
+	public static String getFormatNumber(int num)
+	{
+		NumberFormat formatter = new DecimalFormat("###,###");
+		return formatter.format(num);
+	}
+
+	public static String getRoundFormatNumber(int num)
+	{
+		String result = "";
+		if (num < 0)
+		{
+			num = -num;
+			result = "-";
+		}
+
+		if (num >= 0 && num < 1000)
+		{
+			return result + num;
+		}
+		else if (num >= 1000 && num < 1000000)
+		{
+			int number = Math.round((float) (num / 1000.0));
+			if (number > 0)
+				return result + number + "K";
+		}
+		else if (num >= 1000000 && num < 1000000000)
+		{
+			int number = Math.round((float) (num / 1000000.0));
+			if (number > 0)
+				return result + number + "M";
+		}
+		else if (num >= 1000000000)
+		{
+			int number = Math.round((float) (num / 1000000000.0));
+			if (number > 0)
+				return result + number + "G";
+		}
+		return result + num;
 	}
 
 	public static String md5(String password)

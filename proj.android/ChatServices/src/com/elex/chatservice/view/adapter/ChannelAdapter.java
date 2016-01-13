@@ -8,148 +8,194 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.lang.StringUtils;
 
-import android.app.Activity;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.elex.chatservice.R;
 import com.elex.chatservice.controller.ChatServiceController;
 import com.elex.chatservice.image.AsyncImageLoader;
 import com.elex.chatservice.image.ImageLoaderListener;
+import com.elex.chatservice.model.ChannelListItem;
 import com.elex.chatservice.model.ChatChannel;
-import com.elex.chatservice.model.ConfigManager;
 import com.elex.chatservice.model.MailManager;
 import com.elex.chatservice.model.UserInfo;
 import com.elex.chatservice.model.UserManager;
 import com.elex.chatservice.model.db.DBDefinition;
+import com.elex.chatservice.model.db.DBHelper;
 import com.elex.chatservice.util.BitmapUtil;
 import com.elex.chatservice.util.CombineBitmapManager;
 import com.elex.chatservice.util.ImageUtil;
 import com.elex.chatservice.util.LogUtil;
-import com.elex.chatservice.util.ResUtil;
 import com.elex.chatservice.view.ChannelListActivity;
 import com.elex.chatservice.view.ChannelListFragment;
 
 public class ChannelAdapter extends AbstractMailListAdapter
 {
-	public ChannelAdapter(ChannelListActivity context, ChannelListFragment fragment) {
+	private ConcurrentHashMap<String, Bitmap>	chatroomHeadImages;
+	private int									customPicLoadingCnt;
+	private boolean								chatroomHeadImagesLoading	= false;
+
+	public ChannelAdapter(ChannelListActivity context, ChannelListFragment fragment)
+	{
 		super(context, fragment);
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent)
 	{
-		ChatChannel channel = (ChatChannel)getItem(position);
-		if(channel==null)
-			return null;
-		
-		channel.refreshRenderData();
-		convertView = super.getView(position, convertView, parent);
+		try
+		{
+			ChatChannel channel = (ChatChannel) getItem(position);
+			if (channel == null)
+				return null;
 
-		CategoryViewHolder holder = (CategoryViewHolder) convertView.getTag();
-		int bgColor = 0;
-		if(ChatServiceController.isNewMailUIEnable && this instanceof MsgChannelAdapter) {
-			bgColor = MailManager.getColorByChannelId(((MsgChannelAdapter)this).mChannelId);
+//			LogUtil.printVariablesWithFuctionName(Log.INFO, LogUtil.TAG_DEBUG, "channelAdapter", "channelID nameText", channel.nameText,
+//					"position", position);
+			// channel.refreshRenderData();
+			convertView = super.getView(position, convertView, parent);
+
+			CategoryViewHolder holder = (CategoryViewHolder) convertView.getTag();
+			int bgColor = 0;
+			if (ChatServiceController.isNewMailUIEnable && this instanceof MsgChannelAdapter)
+			{
+				bgColor = MailManager.getColorByChannelId(((MsgChannelAdapter) this).mChannelId);
+			}
+			holder.setContent(context, channel, true, null, channel.nameText, channel.contentText, channel.timeText,
+					fragment.isInEditMode(), position, bgColor);
+
+			holder.item_icon.setTag(channel.channelID);
+			setIcon(channel, holder.item_icon);
+			refreshMenu();
+
 		}
-		holder.setContent(context, channel, true, null, channel.nameText, channel.contentText, channel.timeText, fragment.isInEditMode(), position, bgColor);
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 
-		setIcon(channel, holder.item_icon);
-		refreshMenu();
-		
 		return convertView;
 	}
 
-	private ConcurrentHashMap<String, Bitmap> chatroomHeadImages;
-	private int customPicLoadingCnt;
-	private boolean chatroomHeadImagesLoading = false;
-	
 	private synchronized void setIcon(final ChatChannel channel, final ImageView imageView)
 	{
-		if(channel.channelType == DBDefinition.CHANNEL_TYPE_CHATROOM)
+		if (channel.channelType == DBDefinition.CHANNEL_TYPE_CHATROOM)
 		{
-			if(chatroomHeadImagesLoading) return;
-			
-			if(isChatroomHeadPicExist(channel.channelID) && !channel.isMemberUidChanged)
-			{
-				String fileName = getChatroomHeadPicPath() + getChatroomHeadPicFile(channel.channelID);
-				Bitmap bitmap=AsyncImageLoader.loadBitmapFromStoreSync(fileName);
+			if (chatroomHeadImagesLoading)
+				return;
 
-				ImageUtil.setImageOnUiThread(context, imageView, bitmap);
+			if (channel.memberUidArray == null || channel.memberUidArray.size() == 0)
+			{
+				imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.mail_pic_flag_31));
 				return;
 			}
-			
+
+			String fileName = getChatroomHeadPicPath() + getChatroomHeadPicFile(channel.channelID);
+			if (!channel.isMemberUidChanged)
+			{
+				if (AsyncImageLoader.getInstance().isCacheExistForKey(fileName))
+				{
+					Bitmap bitmap = AsyncImageLoader.getInstance().loadBitmapFromCache(fileName);
+					ImageUtil.setImageOnUiThread(context, imageView, bitmap);
+					return;
+				}
+				else if (isChatroomHeadPicExist(channel.channelID))
+				{
+					AsyncImageLoader.getInstance().loadBitmapFromStore(fileName, new ImageLoaderListener()
+					{
+						@Override
+						public void onImageLoaded(Bitmap bitmap)
+						{
+							String groupId = (String) imageView.getTag();
+							if ((StringUtils.isNotEmpty(groupId) && !groupId.equals(channel.channelID)) || bitmap == null)
+								return;
+							ImageUtil.setImageOnUiThread(context, imageView, bitmap);
+						}
+					});
+					return;
+				}
+			}
+
 			chatroomHeadImages = new ConcurrentHashMap<String, Bitmap>();
 			customPicLoadingCnt = 0;
 			chatroomHeadImagesLoading = true;
-			
+
 			ArrayList<UserInfo> users = new ArrayList<UserInfo>();
 			for (int i = 0; i < channel.memberUidArray.size(); i++)
 			{
 				UserInfo user = UserManager.getInstance().getUser(channel.memberUidArray.get(i));
-				if(user != null){
+				if (user != null)
+				{
 					users.add(user);
 				}
-				if(users.size() >= 9) break;
+				if (users.size() >= 9)
+					break;
 			}
-			
+
 			for (int i = 0; i < users.size(); i++)
 			{
-				UserInfo user = users.get(i);
+				final UserInfo user = users.get(i);
 
-				chatroomHeadImages.put(user.uid,
-						BitmapFactory.decodeResource(context.getResources(), ImageUtil.getHeadResId(context, user.headPic)));
-				
-				if(user.isCustomHeadImage())
+				Bitmap predefinedHeadImage = BitmapFactory.decodeResource(context.getResources(),
+						ImageUtil.getHeadResId(context, user.headPic));
+				// 少数情况可能为null，20 crashes 3 users
+				if (predefinedHeadImage != null)
+				{
+					chatroomHeadImages.put(user.uid, predefinedHeadImage);
+				}
+
+				if (user.isCustomHeadImage())
 				{
 					customPicLoadingCnt++;
-					System.out.println("customPicLoadingCnt++ : " + customPicLoadingCnt);
 					ImageUtil.getCustomHeadImage(user, new ImageLoaderListener()
 					{
 						@Override
-						public void onImageLoaded(String uid, final Bitmap bitmap)
+						public void onImageLoaded(final Bitmap bitmap)
 						{
-							onCustomImageLoaded(channel, uid, bitmap, imageView);
+							onCustomImageLoaded(channel, user.uid, bitmap, imageView);
 						}
 					});
 				}
 			}
-			if(customPicLoadingCnt == 0)
+			if (customPicLoadingCnt == 0)
 			{
 				generateCombinePic(channel, imageView);
 			}
-		}else{
+		}
+		else
+		{
 			UserInfo user = null;
-			if(channel.channelType == DBDefinition.CHANNEL_TYPE_USER)
+			if (channel.channelType == DBDefinition.CHANNEL_TYPE_USER)
 			{
 				user = channel.channelShowUserInfo;
 			}
-			else
+			else if (channel.showItem != null)
 			{
-				if(channel.showItem!=null)
-					user = channel.showItem.getUser();
+				user = channel.showItem.getUser();
 			}
+			if (user != null && StringUtils.isNotEmpty(user.uid))
+				imageView.setTag(user.uid);
 			ImageUtil.setHeadImage(context, channel.channelIcon, imageView, user);
 		}
 	}
-	
+
 	private synchronized void onCustomImageLoaded(ChatChannel channel, String uid, final Bitmap bitmap, ImageView imageView)
 	{
 		if (bitmap != null)
 		{
 			chatroomHeadImages.put(uid, bitmap);
 		}
-		System.out.println("customPicLoadingCnt-- : " + customPicLoadingCnt);
 		customPicLoadingCnt--;
-		if(customPicLoadingCnt == 0)
+		if (customPicLoadingCnt == 0)
 		{
 			generateCombinePic(channel, imageView);
 		}
 	}
-	
+
 	private void generateCombinePic(ChatChannel channel, ImageView imageView)
 	{
 		chatroomHeadImagesLoading = false;
@@ -163,7 +209,7 @@ public class ChannelAdapter extends AbstractMailListAdapter
 				bitmaps.add(chatroomHeadImages.get(key));
 			}
 		}
-		
+
 		Bitmap bitmap = CombineBitmapManager.getInstance().getCombinedBitmap(bitmaps);
 		try
 		{
@@ -183,35 +229,67 @@ public class ChannelAdapter extends AbstractMailListAdapter
 		{
 			LogUtil.printException(e);
 		}
-		
+
+		String groupId = (String) imageView.getTag();
+		if ((StringUtils.isNotEmpty(groupId) && !groupId.equals(channel.channelID)) || bitmap == null)
+			return;
 		ImageUtil.setImageOnUiThread(context, imageView, bitmap);
 	}
-	
+
 	public String getChatroomHeadPicPath()
 	{
-		if(context == null) return null;
-		
-		if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-			String path = context.getFilesDir().getAbsolutePath();
-			return path + "/head/chatroom/";
-		}else{
-			// 会发生NullPointerException 
-			return Environment.getExternalStorageDirectory() + "/data/data/" + context.getPackageName() + "/head/chatroom/";
-		}
+		if (context == null)
+			return null;
+
+		return DBHelper.getHeadDirectoryPath(context) + "chatroom/";
 	}
-	
+
 	public String getChatroomHeadPicFile(String channelId)
+	{
+		return channelId;
+	}
+
+	public String getOldChatroomHeadPicFile(String channelId)
 	{
 		return channelId + ".png";
 	}
-	
+
 	public boolean isChatroomHeadPicExist(String channelId)
 	{
+		try
+		{
+			String fileName = getChatroomHeadPicPath() + getOldChatroomHeadPicFile(channelId);
+			File oldfile = new File(fileName);
+			if (oldfile.exists())
+			{
+				oldfile.delete();
+			}
+
+		}
+		catch (Exception e)
+		{
+		}
+
 		String fileName = getChatroomHeadPicPath() + getChatroomHeadPicFile(channelId);
 		File file = new File(fileName);
-		if(file.exists()){
+		if (file.exists())
+		{
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public int getItemViewType(int position)
+	{
+		ChannelListItem item = getItem(position);
+		if (item != null)
+		{
+			if (item.isUnread())
+				return VIEW_TYPE_READ_AND_DELETE;
+			else
+				return VIEW_TYPE_DELETE;
+		}
+		return VIEW_TYPE_READ_AND_DELETE;
 	}
 }

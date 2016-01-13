@@ -4,7 +4,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.content.Context;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.text.Html.ImageGetter;
@@ -15,7 +14,6 @@ import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.View.MeasureSpec;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.TextView;
@@ -79,7 +77,9 @@ public class HtmlTextUtil
 		return result;
 	}
 	
-	// [ui_silver.png] 转化为 ui_silver
+	/**
+	 * [ui_silver.png] 转化为 ui_silver
+	 */
 	private static String trimResourceIcon(String image)
 	{
 		String result = image.replaceAll("[\\[\\]]", "");

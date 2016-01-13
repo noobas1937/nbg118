@@ -35,12 +35,15 @@ public class ChannelView
 
 	public void init()
 	{
-		if(messagesAdapter != null) messagesAdapter.destroy();
-		if(messagesListView != null){
+		if (messagesAdapter != null)
+			messagesAdapter.destroy();
+		if (messagesListView != null)
+		{
 			messagesListView.setOnScrollListener(null);
 			messagesListView.setAdapter(null);
 		}
-		if(pullDownToLoadListView != null){
+		if (pullDownToLoadListView != null)
+		{
 			pullDownToLoadListView.setListViewLoadListener(null);
 			pullDownToLoadListView.removeAllViews();
 		}
@@ -52,34 +55,11 @@ public class ChannelView
 		chatChannel = null;
 	}
 
-	/**
-	 * @return 0(尚未发过消息的频道)或正整数
-	 */
-	public int getViewMinSeqId()
-	{
-		if (chatChannel == null || chatChannel.msgList == null || chatChannel.msgList.size() == 0) return 0;
-
-		ArrayList<MsgItem> msgList = chatChannel.msgList;
-		int minSeq = msgList.get(0).sequenceId;
-		int count = msgList.size();
-		for (int i = 0; i < count; i++)
-		{
-			if(i < msgList.size()){
-				MsgItem msgItem = msgList.get(i);
-				if (msgItem.sequenceId < minSeq)
-				{
-					minSeq = msgItem.sequenceId;
-				}
-			}
-		}
-		return minSeq;
-	}
-
 	public void setMessagesAdapter(MessagesAdapter adapter)
 	{
 		messagesAdapter = adapter;
 	}
-	
+
 	public MessagesAdapter getMessagesAdapter()
 	{
 		return messagesAdapter;

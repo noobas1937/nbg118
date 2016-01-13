@@ -6,31 +6,29 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Locale;
-import java.util.UUID;
+
+import org.apache.commons.lang.StringUtils;
 
 import com.elex.chatservice.util.LogUtil;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Environment;
 import android.util.Log;
 
 public class ImageStoreCache extends MemoryCache<String, Bitmap>
 {
-	private static final int JPG_FILE_FORMAT = 1;
+	private static final int	JPG_FILE_FORMAT	= 1;
 
-	private static final int PNG_FILE_FORMAT = 2;
+	private static final int	PNG_FILE_FORMAT	= 2;
 
 	public ImageStoreCache(int cacheSize)
 	{
 		super(cacheSize);
 	}
-	
+
 	@Override
-	public void cache(String localUrl,Bitmap value)
+	public void cache(String localUrl, Bitmap value)
 	{
 		if (value == null || isStringInvalid(localUrl))
 		{
@@ -42,16 +40,16 @@ public class ImageStoreCache extends MemoryCache<String, Bitmap>
 
 	public Bitmap cache(String localUrl, byte[] value)
 	{
-		if (value == null || value.length < 1 || isStringInvalid(localUrl))
+		if (value == null || value.length < 1 || StringUtils.isEmpty(localUrl))
 		{
 			return null;
 		}
 
 		cacheRawData(localUrl, value);
-		
+
 		Bitmap ret = null;
-		try{
-			// 极少数情况出现： Fatal Exception: java.lang.OutOfMemoryError 
+		try
+		{
 			ret = BitmapFactory.decodeByteArray(value, 0, value.length);
 		}
 		catch (Exception e)
@@ -61,14 +59,14 @@ public class ImageStoreCache extends MemoryCache<String, Bitmap>
 
 		if (ret != null)
 		{
-			cache(localUrl,ret);
+			cache(localUrl, ret);
 		}
 		return ret;
 	}
 
 	public static void cacheRawData(String localUrl, byte[] value)
 	{
-		if (value == null || value.length < 1 || isStringInvalid(localUrl))
+		if (value == null || value.length < 1 || StringUtils.isEmpty(localUrl))
 		{
 			return;
 		}
@@ -126,7 +124,7 @@ public class ImageStoreCache extends MemoryCache<String, Bitmap>
 			}
 
 			stream = new ByteArrayOutputStream();
-			
+
 			int format = getFileFormat(localUrl);
 			if (format == JPG_FILE_FORMAT)
 			{
@@ -140,9 +138,10 @@ public class ImageStoreCache extends MemoryCache<String, Bitmap>
 			byte[] byteArray = stream.toByteArray();
 			BufferedOutputStream bStream = new BufferedOutputStream(fOut);
 			bStream.write(byteArray);
-			if (bStream != null) {
+			if (bStream != null)
+			{
 				bStream.close();
-			} 
+			}
 
 			fOut.flush();
 			return f.getAbsolutePath();
@@ -164,7 +163,7 @@ public class ImageStoreCache extends MemoryCache<String, Bitmap>
 					fOut.close();
 					fOut = null;
 				}
-				
+
 			}
 			catch (Exception e)
 			{
@@ -211,7 +210,6 @@ public class ImageStoreCache extends MemoryCache<String, Bitmap>
 			}
 			catch (Exception e2)
 			{
-				// TODO: handle exception
 			}
 		}
 		return null;
@@ -220,46 +218,39 @@ public class ImageStoreCache extends MemoryCache<String, Bitmap>
 	@Override
 	public Bitmap get(String key)
 	{
-		if (isStringInvalid(key))
-		{
+		if (StringUtils.isEmpty(key))
 			return null;
-		}
 		Bitmap ret = getFromMemory(key);
-		if (ret == null)
-		{
-			ret = getFromPath(key);
-			if (ret != null)
-			{
-				cacheToMemory(key, ret);
-			}
-		}
 		return ret;
 	}
 
-	public Bitmap getFromPath(String path)
+	public Bitmap getFromLocalPath(String path)
 	{
-		if (isStringInvalid(path))
-		{
+		if (StringUtils.isEmpty(path))
 			return null;
-		}
-//		System.out.println("getFromPath path:"+path);
-		Bitmap ret = getFromMemory(path);
-		if (ret == null)
+		try
 		{
-			try
+			Bitmap ret = BitmapFactory.decodeFile(path);
+			if (ret != null)
 			{
-				// System.out.println("getFromPath 2222");
-				// 极少量异常： Fatal Exception: java.lang.OutOfMemoryError
-				ret = BitmapFactory.decodeFile(path);
-				if (ret != null)
+				cacheToMemory(path, ret);
+			}
+			else
+			{
+				String fileName = path + ".png";
+				File file = new File(fileName);
+				if (file.exists())
 				{
-					// System.out.println("getFromPath 2222111");
-					cacheToMemory(path, ret);
+					ret = BitmapFactory.decodeFile(path);
+					if (ret != null)
+					{
+						cacheToMemory(path, ret);
+					}
 				}
 				else
 				{
-					String fileName = path + ".png";
-					File file = new File(fileName);
+					fileName = path + ".jpg";
+					file = new File(fileName);
 					if (file.exists())
 					{
 						ret = BitmapFactory.decodeFile(path);
@@ -268,50 +259,15 @@ public class ImageStoreCache extends MemoryCache<String, Bitmap>
 							cacheToMemory(path, ret);
 						}
 					}
-					else
-					{
-						fileName = path + ".jpg";
-						file = new File(fileName);
-						if (file.exists())
-						{
-							ret = BitmapFactory.decodeFile(path);
-							if (ret != null)
-							{
-								cacheToMemory(path, ret);
-							}
-						}
-					}
 				}
 			}
-			catch (Exception e)
-			{
-				LogUtil.printException(e);
-			}
+			return ret;
 		}
-		return ret;
-	}
-
-	private Bitmap getFromStore(String localPath)
-	{
-		if (isStringInvalid(localPath))
+		catch (Exception e)
 		{
-			return null;
+			LogUtil.printException(e);
 		}
-		return BitmapFactory.decodeFile(localPath);
-	}
-
-	@Override
-	public boolean containsKey(String localPath)
-	{
-		if (isStringInvalid(localPath))
-		{
-			return false;
-		}
-		boolean ret = false;
-		File file = new File(localPath);
-		ret = file.exists();
-
-		return memoryCacheContainsKey(localPath) || ret;
+		return null;
 	}
 
 	@Override
@@ -339,7 +295,7 @@ public class ImageStoreCache extends MemoryCache<String, Bitmap>
 		}
 		return PNG_FILE_FORMAT;
 	}
-	
+
 	public static boolean isStringInvalid(String str)
 	{
 		if (str == null || str.length() < 1)

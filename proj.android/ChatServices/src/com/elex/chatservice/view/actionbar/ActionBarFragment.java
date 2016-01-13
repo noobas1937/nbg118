@@ -1,7 +1,9 @@
 package com.elex.chatservice.view.actionbar;
 
-import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import android.content.Context;
 import android.graphics.Rect;
@@ -18,109 +20,161 @@ import com.elex.chatservice.util.ResUtil;
 
 public class ActionBarFragment extends Fragment
 {
-	protected MyActionBarActivity activity;
-    protected RelativeLayout fragmentLayout;
+	protected MyActionBarActivity	activity;
+	protected RelativeLayout		fragmentLayout;
+	protected boolean				adjustSizeCompleted	= false;
 
 	public void onViewCreated(View view, Bundle savedInstanceState)
-    {
+	{
 		super.onViewCreated(view, savedInstanceState);
-		
+
 		fragmentLayout = ((RelativeLayout) view.findViewById(ResUtil.getId(this.activity, "id", "fragmentLayout")));
-		
+
 		getMemberSelectButton().setVisibility(View.GONE);
 		getEditButton().setVisibility(View.GONE);
 		getReturnButton().setVisibility(View.GONE);
 		getWriteButton().setVisibility(View.GONE);
-    }
-	
+		getShowFriendButton().setVisibility(View.GONE);
+	}
+
 	protected TextView getTitleLabel()
 	{
+		if (activity == null)
+		{
+			return null;
+		}
 		return activity.titleLabel;
 	}
+
 	protected Button getMemberSelectButton()
 	{
+		if (activity == null)
+		{
+			return null;
+		}
 		return activity.optionButton;
 	}
+
 	protected Button getEditButton()
 	{
+		if (activity == null)
+		{
+			return null;
+		}
 		return activity.editButton;
 	}
+
 	protected Button getWriteButton()
 	{
-		if(activity == null || activity.writeButton == null){
+		if (activity == null)
+		{
 			return null;
 		}
 		return activity.writeButton;
 	}
+
+	protected Button getShowFriendButton()
+	{
+		if (activity == null)
+		{
+			return null;
+		}
+		return activity.showFriend;
+	}
+
 	protected Button getReturnButton()
 	{
+		if (activity == null)
+		{
+			return null;
+		}
 		return activity.returnButton;
 	}
 
-	protected int computeUsableHeight() {
-        Rect r = new Rect();
-        //In effect, this tells you the available area where content can be placed and remain visible to users.
-        fragmentLayout.getWindowVisibleDisplayFrame(r);
-        return (r.bottom - r.top);
-    }
+	protected int computeUsableHeight()
+	{
+		Rect r = new Rect();
+		// In effect, this tells you the available area where content can be
+		// placed and remain visible to users.
+		fragmentLayout.getWindowVisibleDisplayFrame(r);
+		return (r.bottom - r.top);
+	}
 
-    protected int usableHeight = -1;
+	protected int	usableHeight	= -1;
+
 	protected void hideSoftKeyBoard()
 	{
-		InputMethodManager inputManager = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);  
-		inputManager.hideSoftInputFromWindow(fragmentLayout.getWindowToken(), 0); 
+		InputMethodManager inputManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+		inputManager.hideSoftInputFromWindow(fragmentLayout.getWindowToken(), 0);
 	}
-	
+
 	public void saveState()
 	{
-		
 	}
-	
-	protected Timer timer;
-	protected boolean inited = false;
 
-	protected void stopTimer() {
-		if (timer != null){
-			timer.cancel();
-			timer.purge();
-			timer = null;
+	protected boolean	inited	= false;
+
+	protected void stopTimer()
+	{
+		if (service != null)
+		{
+			service.shutdown();
 		}
 	}
 
-	protected void onBecomeVisible() {
-		
+	protected void onBecomeVisible()
+	{
+
 	}
 
 	// 200ms是动画的时间
-	protected int timerDelay = 200;
+	protected int	timerDelay	= 200;
+	private ScheduledExecutorService service;
+
 	protected void startTimer()
 	{
-		timer = new Timer();
-
-		TimerTask timerTask = new TimerTask() {
+		TimerTask timerTask = new TimerTask()
+		{
 			@Override
-			public void run() {
-				if(activity == null) {
-					stopTimer();
-					return;
-				}
-				activity.runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
+			public void run()
+			{
+				try
+				{
+					if (activity == null)
+					{
 						stopTimer();
-						initData();
+						return;
 					}
-				});
+					// 有时activity为null
+					activity.runOnUiThread(new Runnable()
+					{
+						@Override
+						public void run()
+						{
+							stopTimer();
+							initData();
+						}
+					});
+				}
+				catch (Exception e)
+				{
+					LogUtil.printException(e);
+				}
 			}
 		};
-		timer.schedule(timerTask, timerDelay, 1000000);
+		
+		service = Executors.newSingleThreadScheduledExecutor();
+		service.schedule(timerTask, timerDelay, TimeUnit.MILLISECONDS);
 	}
-	
+
 	protected void initData()
 	{
-		if (inited) return;
+		if (inited)
+			return;
 
-		if (activity == null) return;
+		if (activity == null)
+			return;
+
 		activity.runOnUiThread(new Runnable()
 		{
 			@Override
@@ -142,21 +196,20 @@ public class ActionBarFragment extends Fragment
 
 		inited = true;
 	}
-	
+
 	protected void createList()
 	{
-		
 	}
-	
+
 	protected void renderList()
 	{
-		
 	}
-	
-    public void onDestroy() {
-    	System.out.println("ActionBarFragment.onDestroy()");
-    	activity = null;
-    	fragmentLayout = null;
-    	super.onDestroy();
-    }
+
+	public void onDestroy()
+	{
+		System.out.println("ActionBarFragment.onDestroy()");
+		activity = null;
+		fragmentLayout = null;
+		super.onDestroy();
+	}
 }

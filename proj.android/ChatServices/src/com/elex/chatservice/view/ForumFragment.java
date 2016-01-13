@@ -4,12 +4,13 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
+
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -26,7 +27,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.elex.chatservice.controller.ChatServiceController;
 import com.elex.chatservice.model.ConfigManager;
@@ -42,155 +42,190 @@ import com.elex.chatservice.view.actionbar.ActionBarFragment;
 
 public class ForumFragment extends ActionBarFragment
 {
-    private WebView webView;
-    private ProgressBar progressBar;
-    private int webLoadingProgress = 0;
-    private RelativeLayout bottomButtonBar;
-    private LinearLayout navButtonLinearLayout;
-    private RelativeLayout webViewContainer;
-    
-    private ImageButton backButton;
-    private ImageButton forwardButton;
-    private ImageButton refreshButton;
-    private Button translateButton;
-    private Button closeButton;
-    private MyWebChromeClient myWebChromeClient;
-    
-    private static int lastScrollX = -1;
-    private static int lastScrollY = -1;
-    public static String targetUrl = null;
-    public static String gmailAccount="";
-    
-    private boolean webPageTranslated=false;
-    private String currentWebUrl;
-    private boolean isLoadingTranslationPage=true;
-    
-    public ForumFragment()
-    {
-    }
-    
-    public void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        
-        ((ForumActivity)getActivity()).fragment = this;
-    }
-    
-    private static Bundle instanceState;
-    public void saveState()
-    {
-        lastScrollX = webView.getScrollX();
-        lastScrollY = webView.getScrollY();
-        instanceState = new Bundle();
-        webView.saveState(instanceState);
-    }
-    
-    // 打开软键盘时隐藏按钮栏
-    private void checkGlobalLayoutChange()
-    {
-    	int usableHeightNow = computeUsableHeight();
-    	
-    	if(usableHeight == -1 && usableHeightNow > 0){
-        	usableHeight = usableHeightNow;
-        	return;
-        }
-    	
-        if(usableHeight-usableHeightNow>200)
-    	{
-    		showBottomBar(false);
-    	}
-    	else
-    	{
-    		showBottomBar(true);
-    		usableHeight=usableHeightNow;
-    	}
-    }
-    
-    private boolean isPopupWebviewShowing = false;
+	private WebView				webView;
+	private ProgressBar			progressBar;
+	private int					webLoadingProgress						= 0;
+	private RelativeLayout		bottomButtonBar;
+	private LinearLayout		navButtonLinearLayout;
+	private RelativeLayout		webViewContainer;
+
+	private ImageButton			backButton;
+	private ImageButton			forwardButton;
+	private ImageButton			refreshButton;
+	private Button				translateButton;
+	private Button				closeButton;
+	private MyWebChromeClient	myWebChromeClient;
+
+	private static int			lastScrollX								= -1;
+	private static int			lastScrollY								= -1;
+	public static String		targetUrl								= null;
+	public static String		gmailAccount							= "";
+
+	private boolean				webPageTranslated						= false;
+	private String				currentWebUrl;
+	private boolean				isLoadingTranslationPage				= true;
+	public static int			webViewType								= 0;
+	private String				loginUrl								= "";
+
+	public static final int		WEBVIEW_TYPE_FORFUM						= 0;
+	public static final int		WEBVIEW_TYPE_TRANSLATION_OPTIMIZATION	= 1;
+
+	public ForumFragment()
+	{
+	}
+
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+
+		((ForumActivity) getActivity()).fragment = this;
+	}
+
+	private static Bundle	instanceState;
+
+	public void saveState()
+	{
+		lastScrollX = webView.getScrollX();
+		lastScrollY = webView.getScrollY();
+		instanceState = new Bundle();
+		webView.saveState(instanceState);
+	}
+
+	/**
+	 * 打开软键盘时隐藏按钮栏
+	 */
+	private void checkGlobalLayoutChange()
+	{
+		int usableHeightNow = computeUsableHeight();
+
+		if (usableHeight == -1 && usableHeightNow > 0)
+		{
+			usableHeight = usableHeightNow;
+			return;
+		}
+
+		if (usableHeight - usableHeightNow > 200)
+		{
+			showBottomBar(false);
+		}
+		else
+		{
+			showBottomBar(true);
+			usableHeight = usableHeightNow;
+		}
+	}
+
+	private boolean	isPopupWebviewShowing	= false;
+
 	private void showBottomBar(boolean show)
 	{
 		bottomButtonBar.setVisibility(show ? View.VISIBLE : View.GONE);
 	}
-	
+
 	private void showCloseButton(boolean show)
 	{
 		navButtonLinearLayout.setVisibility(show ? View.GONE : View.VISIBLE);
 		translateButton.setVisibility(show ? View.GONE : View.VISIBLE);
 		closeButton.setVisibility(show ? View.VISIBLE : View.GONE);
 	}
-    
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
-        this.activity = ((ForumActivity)getActivity());
-        
-        return inflater.inflate(ResUtil.getId(this, "layout", "cs__forum_fragment"), container, false);
-    }
 
-    private String loginUrl;
-    private void generateForumUrl()
-    {
-    	getGmailAccount(activity);
-    	String accessToken=MathUtil.md5(UserManager.getInstance().getCurrentUser().uid+"accesstoken");
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+	{
+		this.activity = ((ForumActivity) getActivity());
 
-//	    System.out.println("UserManager.getInstance().getCurrentUser().userName:" + UserManager.getInstance().getCurrentUser().userName + " | UserManager.getInstance().getCurrentUser().uid:" + UserManager.getInstance().getCurrentUser().uid + " | gmailAccount:" + gmailAccount);
-    	if(!UserManager.getInstance().getCurrentUser().userName.equals("") && !UserManager.getInstance().getCurrentUser().uid.equals("")){
-    		//gmailAccount可以为空
-    		loginUrl="http://f.elex.com/game_login.php?username="+UserManager.getInstance().getCurrentUser().userName
-    				+"&userid="+UserManager.getInstance().getCurrentUser().uid
-    				+"&useremail="+gmailAccount
-    				+"&accesstoken="+accessToken
-    				+"&lang="+ConfigManager.getInstance().gameLang;
-    	}else{
-    		if(ChatServiceController.getInstance().isInDummyHost()){
-    			loginUrl="http://f.elex.com/game_login.php?username=ceshi&userid=222&useremail=test@qq.com&accesstoken=b9656cbedd14b59e139bdb14379312f2&lang="+ConfigManager.getInstance().gameLang;
-    		}else{
-    			loginUrl="http://f.elex.com/game_login.php?lang="+ConfigManager.getInstance().gameLang;
-    		}
-    	}
-    }
-    
-    public static boolean matchEmail(String account) {
-         Pattern pattern = Pattern.compile("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*");
-         Matcher matcher = pattern.matcher(account);
-         return matcher.matches();
-     }
-    
-    public void getGmailAccount(Context context) {
+		return inflater.inflate(ResUtil.getId(this, "layout", "cs__forum_fragment"), container, false);
+	}
+
+	private void generateWebviewUrl()
+	{
+		if (webViewType == WEBVIEW_TYPE_FORFUM)
+		{
+			getGmailAccount(activity);
+			String accessToken = MathUtil.md5(UserManager.getInstance().getCurrentUser().uid + "accesstoken");
+
+			if (!UserManager.getInstance().getCurrentUser().userName.equals("")
+					&& !UserManager.getInstance().getCurrentUser().uid.equals(""))
+			{
+				// gmailAccount可以为空
+				loginUrl = "http://f.elex.com/game_login.php?username=" + UserManager.getInstance().getCurrentUser().userName + "&userid="
+						+ UserManager.getInstance().getCurrentUser().uid + "&useremail=" + gmailAccount + "&accesstoken=" + accessToken
+						+ "&lang=" + ConfigManager.getInstance().gameLang;
+			}
+			else
+			{
+				if (ChatServiceController.getInstance().isInDummyHost())
+				{
+					loginUrl = "http://f.elex.com/game_login.php?username=ceshi&userid=222&useremail=test@qq.com&accesstoken=b9656cbedd14b59e139bdb14379312f2&lang="
+							+ ConfigManager.getInstance().gameLang;
+				}
+				else
+				{
+					loginUrl = "http://f.elex.com/game_login.php?lang=" + ConfigManager.getInstance().gameLang;
+				}
+			}
+		}
+		else if (webViewType == WEBVIEW_TYPE_TRANSLATION_OPTIMIZATION)
+		{
+			if (ChatServiceController.getInstance().isInDummyHost())
+			{
+				loginUrl = "http://184.173.82.76/translate/add?sign=f33b1689f9a6532115c201aed977b450&uid=1381424418000001&userLang=en&fromLang=zh-Hans";
+			}
+			else
+				loginUrl = targetUrl;
+		}
+	}
+
+	/**
+	 * 判断是否是邮箱
+	 */
+	public static boolean matchEmail(String account)
+	{
+		Pattern pattern = Pattern.compile("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*");
+		Matcher matcher = pattern.matcher(account);
+		return matcher.matches();
+	}
+
+	public void getGmailAccount(Context context)
+	{
 		AccountManager accountManager = AccountManager.get(context);
 		Account[] accounts = accountManager.getAccountsByType("com.google");
 		Account account;
 		int len = accounts.length;
-		for(int i=0;i<len;i++){
+		for (int i = 0; i < len; i++)
+		{
 			account = accounts[i];
-			String accountName =  account.name;
-			if(matchEmail(accountName)){//判断是否是邮箱
+			String accountName = account.name;
+			if (matchEmail(accountName))
+			{
 				gmailAccount = accountName;
 				break;
 			}
 		}
 	}
-    
+
 	@SuppressLint("SetJavaScriptEnabled")
 	public void onViewCreated(View view, Bundle savedInstanceState)
-    {
-		generateForumUrl();
+	{
+		generateWebviewUrl();
 		super.onViewCreated(view, savedInstanceState);
 		bottomButtonBar = (RelativeLayout) view.findViewById(ResUtil.getId(this.activity, "id", "bottomButtonBar"));
 		navButtonLinearLayout = (LinearLayout) view.findViewById(ResUtil.getId(this.activity, "id", "cs__NavButtonLinearLayout"));
-		getTitleLabel().setText(LanguageManager.getLangByKey(LanguageKeys.TITLE_FORUM));
+		if (webViewType == WEBVIEW_TYPE_FORFUM)
+			getTitleLabel().setText(LanguageManager.getLangByKey(LanguageKeys.TITLE_FORUM));
+		else if (webViewType == WEBVIEW_TYPE_TRANSLATION_OPTIMIZATION)
+			getTitleLabel().setText(LanguageManager.getLangByKey(LanguageKeys.TITLE_TRANSLATION_OPTIMIZATION));
 
 		webViewContainer = (RelativeLayout) view.findViewById(ResUtil.getId(this.activity, "id", "messagesListLayout"));
 		webView = (WebView) view.findViewById(ResUtil.getId(this.activity, "id", "cs__webView"));
 		myWebChromeClient = new MyWebChromeClient();
 		webView.setWebChromeClient(myWebChromeClient);
-		webView.getSettings().setJavaScriptEnabled(true); // 界面正确显示需要开启JS
+		// 界面正确显示需要开启JS
+		webView.getSettings().setJavaScriptEnabled(true);
 		webView.getSettings().setSupportMultipleWindows(true);
 		webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
-		// webView.getSettings().setPluginsEnabled(true);
-		// webView.getSettings().setDomStorageEnabled(true);
 		webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
-        
-        // 解决android2.3以下机器点击论坛webview的输入框不显示软键盘的问题
+
+		// 解决android2.3以下机器点击论坛webview的输入框不显示软键盘的问题
 		webView.setOnTouchListener(new View.OnTouchListener()
 		{
 			@SuppressLint("ClickableViewAccessibility")
@@ -209,125 +244,171 @@ public class ForumFragment extends ActionBarFragment
 				return false;
 			}
 		});
-        
-        backButton = (ImageButton)view.findViewById(ResUtil.getId(this.activity, "id", "cs__backButton"));
-        forwardButton = (ImageButton)view.findViewById(ResUtil.getId(this.activity, "id", "cs__forwardButton"));
-        refreshButton = (ImageButton)view.findViewById(ResUtil.getId(this.activity, "id", "cs__refreshButton"));
-        translateButton = (Button)view.findViewById(ResUtil.getId(this.activity, "id", "cs__translateButton"));
-        closeButton = (Button)view.findViewById(ResUtil.getId(this.activity, "id", "cs__closeButton"));
-        translateButton.setText(LanguageManager.getLangByKey(LanguageKeys.MENU_TRANSLATE));
-        backButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view) {
-            	webView.goBack();
-            }
-        });
-        forwardButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view) {
-            	webView.goForward();
-            }
-        });
-        refreshButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view) {
-            	webView.reload();
-            }
-        });
-        
-        translateButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view) {
-            	onTranslateButtonClick();
-            }
-        });
-        closeButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view) {
-            	onCloseButtonClick();
-            }
-        });
-        
-        showCloseButton(false);
-        
-    	refreshButtonState();
-        
-        progressBar = (ProgressBar)view.findViewById(ResUtil.getId(this.activity, "id", "progressBar"));
-        progressBar.setVisibility(View.GONE);
-    	
-        webView.setWebViewClient(new WebViewClient() {
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                return false;
-            }
-            
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            	handlePageStarted();
-            }
-            
-            /**
-             * WebView 在Android4.4的手机上onPageFinished()回调会多调用一次(具体原因待追查)
-             * 需要尽量避免在onPageFinished()中做业务操作，否则会导致重复调用，还有可能会引起逻辑上的错误.
-             */
-            public void onPageFinished(WebView view, String url) {
-            }
-        });
-        
-        ConfigManager.calcScale(activity);
-        
-        FrameLayout content = (FrameLayout) activity.findViewById(android.R.id.content);
-        content.getChildAt(0).getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-	        public void onGlobalLayout() {
-//				checkFirstGlobalLayout();
+
+		backButton = (ImageButton) view.findViewById(ResUtil.getId(this.activity, "id", "cs__backButton"));
+		forwardButton = (ImageButton) view.findViewById(ResUtil.getId(this.activity, "id", "cs__forwardButton"));
+		refreshButton = (ImageButton) view.findViewById(ResUtil.getId(this.activity, "id", "cs__refreshButton"));
+		translateButton = (Button) view.findViewById(ResUtil.getId(this.activity, "id", "cs__translateButton"));
+		closeButton = (Button) view.findViewById(ResUtil.getId(this.activity, "id", "cs__closeButton"));
+		translateButton.setText(LanguageManager.getLangByKey(LanguageKeys.MENU_TRANSLATE));
+		backButton.setOnClickListener(new View.OnClickListener()
+		{
+			public void onClick(View view)
+			{
+				webView.goBack();
+			}
+		});
+		forwardButton.setOnClickListener(new View.OnClickListener()
+		{
+			public void onClick(View view)
+			{
+				webView.goForward();
+			}
+		});
+		refreshButton.setOnClickListener(new View.OnClickListener()
+		{
+			public void onClick(View view)
+			{
+				webView.reload();
+			}
+		});
+
+		translateButton.setOnClickListener(new View.OnClickListener()
+		{
+			public void onClick(View view)
+			{
+				onTranslateButtonClick();
+			}
+		});
+		closeButton.setOnClickListener(new View.OnClickListener()
+		{
+			public void onClick(View view)
+			{
+				onCloseButtonClick();
+			}
+		});
+
+		showCloseButton(false);
+
+		refreshButtonState();
+
+		progressBar = (ProgressBar) view.findViewById(ResUtil.getId(this.activity, "id", "progressBar"));
+		progressBar.setVisibility(View.GONE);
+
+		webView.setWebViewClient(new WebViewClient()
+		{
+			public boolean shouldOverrideUrlLoading(WebView view, String url)
+			{
+				return false;
+			}
+
+			public void onPageStarted(WebView view, String url, Bitmap favicon)
+			{
+				handlePageStarted();
+			}
+
+			/**
+			 * WebView 在Android4.4的手机上onPageFinished()回调会多调用一次(具体原因待追查)
+			 * 需要尽量避免在onPageFinished()中做业务操作，否则会导致重复调用，还有可能会引起逻辑上的错误.
+			 */
+			public void onPageFinished(WebView view, String url)
+			{
+			}
+		});
+
+		ConfigManager.calcScale(activity);
+
+		FrameLayout content = (FrameLayout) activity.findViewById(android.R.id.content);
+		content.getChildAt(0).getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener()
+		{
+			public void onGlobalLayout()
+			{
 				checkGlobalLayoutChange();
 				adjustHeight();
-	        }
-	    });
-        
-        loadFirstPage();
-    }
-	
+			}
+		});
+
+		loadFirstPage();
+	}
+
 	private void loadFirstPage()
 	{
-        boolean hasLogined = true;
-        if(isFirstLogin){
-        	isFirstLogin = false;
-        	hasLogined = false;
-        }else{
-//        	hasLogined = getCookieValue("game_user") != null && getCookieValue("game_user").equals("gameuser");
-        }
-//	    System.out.println("cookiestring: " + CookieManager.getInstance().getCookie(domain));
-//	    System.out.println("getCookieValue(\"game_user\"): " + getCookieValue("game_user"));
-//	    System.out.println("hasLogined:" + hasLogined + " | instanceState:" + (instanceState!=null) + " | targetUrl:" + targetUrl);
-	    
-        if(instanceState != null){
-        	webView.restoreState(instanceState);
-    		needToRecoverLastPosition = true;
-        }
-        
-        if(!hasLogined){
-        	if(targetUrl != null){
-        		loadUrl(loginUrl+"&userurl="+targetUrl);
-        	}else{
-        		loadUrl(loginUrl+"&userurl="+homePage);
-        	}
-        	needToRecoverLastPosition = false;
-        }else{
-        	if(targetUrl != null){
-        		loadUrl(targetUrl);
-            	needToRecoverLastPosition = false;
-        	}else{
-        		if(instanceState == null){
-        			loadUrl(homePageHttp);
-        		}
-        	}
-        }
-		targetUrl = null;
+		boolean hasLogined = true;
+		if (isFirstLogin)
+		{
+			isFirstLogin = false;
+			hasLogined = false;
+		}
+
+		if (instanceState != null)
+		{
+			webView.restoreState(instanceState);
+			needToRecoverLastPosition = true;
+		}
+
+		if (!hasLogined)
+		{
+			if (webViewType == WEBVIEW_TYPE_FORFUM)
+			{
+				if (StringUtils.isNotEmpty(targetUrl))
+				{
+					loadUrl(loginUrl + "&userurl=" + targetUrl);
+				}
+				else
+				{
+					loadUrl(loginUrl + "&userurl=" + homePage);
+				}
+				targetUrl = "";
+			}
+			else if (webViewType == WEBVIEW_TYPE_TRANSLATION_OPTIMIZATION)
+			{
+				loadUrl(loginUrl);
+			}
+			needToRecoverLastPosition = false;
+		}
+		else
+		{
+			if (webViewType == WEBVIEW_TYPE_FORFUM)
+			{
+				if (StringUtils.isNotEmpty(targetUrl))
+				{
+					loadUrl(targetUrl);
+					needToRecoverLastPosition = false;
+				}
+				else
+				{
+					if (instanceState == null)
+					{
+						loadUrl(homePageHttp);
+					}
+				}
+				targetUrl = "";
+			}
+			else if (webViewType == WEBVIEW_TYPE_TRANSLATION_OPTIMIZATION)
+			{
+				loadUrl(loginUrl);
+			}
+		}
 	}
-	
+
 	private void handlePageStarted()
 	{
-        refreshButtonState();
-        webLoadingProgress = 5;
-		new Thread() {
+		refreshButtonState();
+		webLoadingProgress = 5;
+		new Thread()
+		{
 			@Override
-			public void run() {
-				while (webLoadingProgress < 100) {
-					try {
+			public void run()
+			{
+				while (webLoadingProgress < 100)
+				{
+					try
+					{
+						// 正在加载时，退出论坛界面，需停止此线程，否则会反复调用
+						if(activity == null){
+							webLoadingProgress = 100;
+							continue;
+						}
 						activity.runOnUiThread(new Runnable()
 						{
 							@Override
@@ -351,7 +432,9 @@ public class ForumFragment extends ActionBarFragment
 							}
 						});
 						Thread.sleep(100);
-					} catch (Exception e) {
+					}
+					catch (Exception e)
+					{
 						e.printStackTrace();
 					}
 				}
@@ -359,152 +442,171 @@ public class ForumFragment extends ActionBarFragment
 			}
 		}.start();
 	}
-	
+
 	private void onLoadingFinished()
 	{
-		if(activity == null) return;
-    	activity.runOnUiThread(new Runnable() {
-	        @Override
-	        public void run() {
-			    	progressBar.setVisibility(View.GONE);
-            	
-            	if(isLoadingTranslationPage)
-            	{	
-            		isLoadingTranslationPage=false;
-            	}
-            	
-            	refreshButtonState();
-            	
-            	if(needToRecoverLastPosition){
-	        		needToRecoverLastPosition = false;
-            		if(lastScrollX != -1 && lastScrollY != -1){
-            			webView.scrollTo(lastScrollX, lastScrollY);
-            		}
-            		lastScrollX = -1;
-            		lastScrollY = -1;
-            	}
+		if (activity == null)
+			return;
+		activity.runOnUiThread(new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				progressBar.setVisibility(View.GONE);
 
-            	calcCurrentWebUrl();
-            	
-            	if(webView.getUrl().contains("translate.google"))
-            	{
-            		webPageTranslated=true;
-                	translateButton.setText(LanguageManager.getLangByKey(LanguageKeys.MENU_ORIGINALLAN));
-            	}
-            	else
-            	{
-            		webPageTranslated=false;
-            		translateButton.setText(LanguageManager.getLangByKey(LanguageKeys.MENU_TRANSLATE));
-            	}
-	        }
-	    });
-//    	isRefreshingWeb = false;
+				if (isLoadingTranslationPage)
+				{
+					isLoadingTranslationPage = false;
+				}
+
+				refreshButtonState();
+
+				if (needToRecoverLastPosition)
+				{
+					needToRecoverLastPosition = false;
+					if (lastScrollX != -1 && lastScrollY != -1)
+					{
+						webView.scrollTo(lastScrollX, lastScrollY);
+					}
+					lastScrollX = -1;
+					lastScrollY = -1;
+				}
+
+				calcCurrentWebUrl();
+
+				if (webView.getUrl().contains("translate.google"))
+				{
+					webPageTranslated = true;
+					translateButton.setText(LanguageManager.getLangByKey(LanguageKeys.MENU_ORIGINALLAN));
+				}
+				else
+				{
+					webPageTranslated = false;
+					translateButton.setText(LanguageManager.getLangByKey(LanguageKeys.MENU_TRANSLATE));
+				}
+			}
+		});
 	}
-	
+
 	private void calcCurrentWebUrl()
 	{
-    	//获取源语言网页URL
-    	String url = webView.getUrl();
-    	if(url.contains("=http:") && !url.contains("=http://translate.google"))
-    	{
-    		int langpairIndex=url.indexOf("&langpair=");
-    		int httpIndex=url.indexOf("=http:");
-    		int sandboxIndex=url.indexOf("&sandbox=");
-    		int depthIndex=url.indexOf("&depth=");
-    		int usgIndex=url.indexOf("&usg=");
-    		int netErrorIndex=url.indexOf("%3Fs%3D");
-    		
-    		int minIndex=url.length();
-    		if(depthIndex>httpIndex)
-    		{
-    			minIndex=minIndex<depthIndex?minIndex:depthIndex;
-    		}
+		// 获取源语言网页URL
+		String url = webView.getUrl();
+		if (url.contains("=http:") && !url.contains("=http://translate.google"))
+		{
+			int langpairIndex = url.indexOf("&langpair=");
+			int httpIndex = url.indexOf("=http:");
+			int sandboxIndex = url.indexOf("&sandbox=");
+			int depthIndex = url.indexOf("&depth=");
+			int usgIndex = url.indexOf("&usg=");
+			int netErrorIndex = url.indexOf("%3Fs%3D");
 
-    		if(usgIndex>httpIndex)
-    		{	
-    			minIndex=minIndex<usgIndex?minIndex:usgIndex;
-    		}
-    		
-    		if(sandboxIndex>httpIndex)
-    		{	
-    			minIndex=minIndex<sandboxIndex?minIndex:sandboxIndex;
-    		}
-    		
-    		if(langpairIndex>httpIndex)
-    		{
-    			minIndex=minIndex<langpairIndex?minIndex:langpairIndex;
-    		}
-    		
-    		if(netErrorIndex>httpIndex)
-    		{
-    			minIndex=minIndex<netErrorIndex?minIndex:netErrorIndex;
-    		}
-    		
-    		if(minIndex>httpIndex){
-    			currentWebUrl=url.substring(httpIndex+1, minIndex);
-    		}else{
-    			currentWebUrl=url.substring(httpIndex+1);
-    		}
-    	}
-    	else if(url.contains("http://") && url.contains("?s=")){
-    		currentWebUrl=url.substring( url.indexOf("http://"), url.indexOf("?s="));
-    	}
+			int minIndex = url.length();
+			if (depthIndex > httpIndex)
+			{
+				minIndex = minIndex < depthIndex ? minIndex : depthIndex;
+			}
+
+			if (usgIndex > httpIndex)
+			{
+				minIndex = minIndex < usgIndex ? minIndex : usgIndex;
+			}
+
+			if (sandboxIndex > httpIndex)
+			{
+				minIndex = minIndex < sandboxIndex ? minIndex : sandboxIndex;
+			}
+
+			if (langpairIndex > httpIndex)
+			{
+				minIndex = minIndex < langpairIndex ? minIndex : langpairIndex;
+			}
+
+			if (netErrorIndex > httpIndex)
+			{
+				minIndex = minIndex < netErrorIndex ? minIndex : netErrorIndex;
+			}
+
+			if (minIndex > httpIndex)
+			{
+				currentWebUrl = url.substring(httpIndex + 1, minIndex);
+			}
+			else
+			{
+				currentWebUrl = url.substring(httpIndex + 1);
+			}
+		}
+		else if (url.contains("http://") && url.contains("?s="))
+		{
+			currentWebUrl = url.substring(url.indexOf("http://"), url.indexOf("?s="));
+		}
 	}
 
 	private void onTranslateButtonClick()
 	{
-    	if(!isLoadingTranslationPage)
-    	{
-    		if(!webPageTranslated)
-        	{
-    			isLoadingTranslationPage=true;
-        		String localLang=Locale.getDefault().getLanguage();
-            	String newUrl="http://translate.google.com/translate?u="+webView.getUrl()+"&langpair=auto|"+localLang+"&complete=1&hl=auto&newwindow=1&ie=UTF-8&oe=UTF-8&prev=/language_tools";
-            	webView.loadUrl(newUrl);
-        	}
-        	else
-        	{
-        		isLoadingTranslationPage=true;
-        		webView.loadUrl(currentWebUrl);
-        	}
-    	}
+		if (!isLoadingTranslationPage)
+		{
+			if (!webPageTranslated)
+			{
+				isLoadingTranslationPage = true;
+				String localLang = Locale.getDefault().getLanguage();
+				String newUrl = "http://translate.google.com/translate?u=" + webView.getUrl() + "&langpair=auto|" + localLang
+						+ "&complete=1&hl=auto&newwindow=1&ie=UTF-8&oe=UTF-8&prev=/language_tools";
+				webView.loadUrl(newUrl);
+			}
+			else
+			{
+				isLoadingTranslationPage = true;
+				webView.loadUrl(currentWebUrl);
+			}
+		}
 	}
-	
-	public static boolean isFirstLogin = true;
-	
-    private static final String homePage = "f.elex.com/forums/1-Clash-of-Kings";
-    private static final String homePageHttp = "http://f.elex.com/forums/1-Clash-of-Kings";
-	private boolean needToRecoverLastPosition = false;
-    private void loadUrl(String url) {
-        webView.loadUrl(url);
-    }
-    
-    private void refreshButtonState(){
-		if(activity == null) return;
-    	activity.runOnUiThread(new Runnable() {
-	        @Override
-	        public void run() {
-	  		  try{
-	  			CompatibleApiUtil.getInstance().setButtonAlpha(backButton, webView.canGoBack() ? true : false);
-	  	        CompatibleApiUtil.getInstance().setButtonAlpha(forwardButton, webView.canGoForward() ? true : false);
-	  	        backButton.setEnabled(webView.canGoBack() ? true : false);
-	  	        forwardButton.setEnabled(webView.canGoForward() ? true : false);
-			  }catch(Exception e)
-			  {
-				  LogUtil.printException(e);
-			  }
-	        }
-	    });
-    }
-    
-    private boolean adjustSizeCompleted = false;
-	public void adjustHeight() {
-    	if(!ConfigManager.getInstance().scaleFontandUI){
+
+	public static boolean		isFirstLogin				= true;
+
+	private static final String	homePage					= "f.elex.com/forums/1-Clash-of-Kings";
+	private static final String	homePageHttp				= "http://f.elex.com/forums/1-Clash-of-Kings";
+	private boolean				needToRecoverLastPosition	= false;
+
+	private void loadUrl(String url)
+	{
+		webView.loadUrl(url);
+	}
+
+	private void refreshButtonState()
+	{
+		if (activity == null)
+			return;
+		activity.runOnUiThread(new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				try
+				{
+					CompatibleApiUtil.getInstance().setButtonAlpha(backButton, webView.canGoBack() ? true : false);
+					CompatibleApiUtil.getInstance().setButtonAlpha(forwardButton, webView.canGoForward() ? true : false);
+					backButton.setEnabled(webView.canGoBack() ? true : false);
+					forwardButton.setEnabled(webView.canGoForward() ? true : false);
+				}
+				catch (Exception e)
+				{
+					LogUtil.printException(e);
+				}
+			}
+		});
+	}
+
+	public void adjustHeight()
+	{
+		if (!ConfigManager.getInstance().scaleFontandUI)
+		{
 			adjustSizeCompleted = true;
-    		return;
-    	}
-    	
-		if (backButton.getWidth() != 0 && !adjustSizeCompleted) {
+			return;
+		}
+
+		if (backButton.getWidth() != 0 && !adjustSizeCompleted)
+		{
 			backButton.setLayoutParams(new LinearLayout.LayoutParams((int) (backButton.getWidth() * ConfigManager.scaleRatio),
 					(int) (backButton.getHeight() * ConfigManager.scaleRatio)));
 			forwardButton.setLayoutParams(new LinearLayout.LayoutParams((int) (forwardButton.getWidth() * ConfigManager.scaleRatio),
@@ -513,75 +615,48 @@ public class ForumFragment extends ActionBarFragment
 					(int) (refreshButton.getHeight() * ConfigManager.scaleRatio)));
 
 			ScaleUtil.adjustTextSize(translateButton, ConfigManager.scaleRatio);
-			
+
 			adjustSizeCompleted = true;
 		}
 	}
-	
+
 	private void onCloseButtonClick()
 	{
-		if(!isPopupWebviewShowing) return;
-		
+		if (!isPopupWebviewShowing)
+			return;
+
 		myWebChromeClient.onCloseWindow(myWebChromeClient.popupWebView);
 	}
-	
-	public class MyWebChromeClient extends WebChromeClient {
-		private WebView popupWebView;
-		
-        @SuppressLint("SetJavaScriptEnabled")
+
+	public class MyWebChromeClient extends WebChromeClient
+	{
+		private WebView	popupWebView;
+
+		@SuppressLint("SetJavaScriptEnabled")
 		@Override
-        public boolean onCreateWindow(WebView view, boolean dialog, boolean userGesture, android.os.Message resultMsg)
-        {
-            popupWebView = new WebView(view.getContext());
-            popupWebView.getSettings().setJavaScriptEnabled(true); // 需要开启，否则登陆后页面渲染报错
-            popupWebView.setWebChromeClient(this);
-            popupWebView.setWebViewClient(new WebViewClient());
-            popupWebView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-            webViewContainer.addView(popupWebView);
-            WebView.WebViewTransport transport = (WebView.WebViewTransport) resultMsg.obj;
-            transport.setWebView(popupWebView);
-            resultMsg.sendToTarget();
-            isPopupWebviewShowing = true;
-            showCloseButton(true);
-            return true;
-        }
+		public boolean onCreateWindow(WebView view, boolean dialog, boolean userGesture, android.os.Message resultMsg)
+		{
+			popupWebView = new WebView(view.getContext());
+			// 需要开启，否则登录后页面渲染报错
+			popupWebView.getSettings().setJavaScriptEnabled(true);
+			popupWebView.setWebChromeClient(this);
+			popupWebView.setWebViewClient(new WebViewClient());
+			popupWebView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+			webViewContainer.addView(popupWebView);
+			WebView.WebViewTransport transport = (WebView.WebViewTransport) resultMsg.obj;
+			transport.setWebView(popupWebView);
+			resultMsg.sendToTarget();
+			isPopupWebviewShowing = true;
+			showCloseButton(true);
+			return true;
+		}
 
-        @Override
-        public void onCloseWindow(WebView window) {
-        	webViewContainer.removeView(window);
-        	isPopupWebviewShowing = false;
-        	showCloseButton(false);
-        }
-    }
-	
-//	private void printHistory()
-//	{
-//    	System.out.println("current url: "+webView.getUrl());
-//    	WebBackForwardList mWebBackForwardList = webView.copyBackForwardList();
-//    	for (int i = 0; i < mWebBackForwardList.getSize(); i++) {
-//    		System.out.println("history " + i);
-//    		String history = "        [ur]" + mWebBackForwardList.getItemAtIndex(i).getUrl() + "\n        [originalUrl]" + mWebBackForwardList.getItemAtIndex(i).getOriginalUrl() + "\n        [title]" + mWebBackForwardList.getItemAtIndex(i).getTitle();
-//        	System.out.println(history);
-//		}
-//	}
-
-//    private static final String domain = "http://f.elex.com";
-//	public static String getCookieValue(String key) {
-//	    CookieManager cookieManager = CookieManager.getInstance();
-//	    String cookieString = cookieManager.getCookie(domain);
-//	    if (TextUtils.isEmpty(cookieString)) {
-//	        return null;
-//	    }
-//	    String[] cookies =  cookieString.split(";");
-//	    for (int i=0; i<cookies.length; i++) {
-//	        if (TextUtils.isEmpty(cookies[i]) || !cookies[i].contains("=")) {
-//	            continue;
-//	        }
-//	        String[] cookieparts = cookies[i].split("=");
-//	        if(cookieparts[0].trim().equals(key)){
-//	        	return cookieparts[1].trim();
-//	        }
-//	    }
-//	    return null;
-//	}
+		@Override
+		public void onCloseWindow(WebView window)
+		{
+			webViewContainer.removeView(window);
+			isPopupWebviewShowing = false;
+			showCloseButton(false);
+		}
+	}
 }

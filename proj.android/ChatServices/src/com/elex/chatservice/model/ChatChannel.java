@@ -1,14 +1,18 @@
 package com.elex.chatservice.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.graphics.Point;
+import android.util.Log;
 
 import com.elex.chatservice.controller.ChatServiceController;
 import com.elex.chatservice.model.db.ChatTable;
@@ -16,76 +20,104 @@ import com.elex.chatservice.model.db.DBDefinition;
 import com.elex.chatservice.model.db.DBHelper;
 import com.elex.chatservice.model.db.DBManager;
 import com.elex.chatservice.model.mail.MailData;
+import com.elex.chatservice.model.mail.battle.BattleMailContents;
+import com.elex.chatservice.model.mail.battle.BattleMailData;
 import com.elex.chatservice.model.mail.monster.MonsterMailContents;
 import com.elex.chatservice.model.mail.monster.MonsterMailData;
 import com.elex.chatservice.model.mail.resouce.ResourceMailContents;
 import com.elex.chatservice.model.mail.resouce.ResourceMailData;
 import com.elex.chatservice.model.mail.resourcehelp.ResourceHelpMailContents;
 import com.elex.chatservice.model.mail.resourcehelp.ResourceHelpMailData;
+import com.elex.chatservice.net.WebSocketManager;
 import com.elex.chatservice.util.LogUtil;
 import com.elex.chatservice.util.SortUtil;
 import com.elex.chatservice.view.ChannelListFragment;
 
-public class ChatChannel extends ChannelListItem {
-	// 数据库对应
-	public int							channelType				= -1;								// 5种类型
-	public String						channelID;
-	public int							dbMinSeqId				= -1;
-	public int							dbMaxSeqId				= -1;
-	public ArrayList<String>			memberUidArray			= new ArrayList<String>();			// 聊天室成员uid列表
-	public String						roomOwner;													// 聊天室房主
-	public boolean						isMember				= false;							// 是否是聊天室成员
-	public String						customName				= "";								// 聊天室自定义名称
-	public int 							latestTime				= -1;								// 最近消息时间
-	public long 						latestModifyTime		= -1;								// 最近修改时间，仅针对系统邮件
-	public String 						latestId				= "0";								// 最近消息的id（邮件专用）
-	public String						settings;													// 聊天室设置
-	
+public class ChatChannel extends ChannelListItem implements Serializable
+{
+	private static final long	serialVersionUID		= -4351092186878517042L;
+
+	public int					channelType				= -1;
+	public String				channelID;
+	public int					dbMinSeqId				= -1;
+	public int					dbMaxSeqId				= -1;
+	/** 聊天室成员uid列表 */
+	public ArrayList<String>	memberUidArray			= new ArrayList<String>();
+	/** 聊天室房主 */
+	public String				roomOwner;
+	/** 是否是聊天室成员 */
+	public boolean				isMember				= false;
+	/** 聊天室自定义名称 */
+	public String				customName				= "";
+	/** 最近消息时间 */
+	public long					latestTime				= -1;
+	/** 最近修改时间，仅针对系统邮件 */
+	public long					latestModifyTime		= -1;
+	/** 最近消息的id（邮件专用） */
+	public String				latestId				= "0";
+	/** 聊天室设置 */
+	public String				settings;
+
 	// 运行时属性
-	public ArrayList<MsgItem>			msgList					= new ArrayList<MsgItem>();			// 消息对象List，保存所有消息
-	public ArrayList<MsgItem>			sendingMsgList			= new ArrayList<MsgItem>();			// 正在发送的消息
-	public boolean						hasRequestDataBefore	= false;							// 是否获取到消息过
-	public boolean						noMoreDataFlag			= false;							// 是否没有更多消息了
-	
-	public Point						lastPosition			= new Point(-1, -1);
-	
-	public int							serverMinSeqId;												// -1, m
-	public int							serverMaxSeqId;												// -1, n (n>=m)
-	public int							prevDBMaxSeqId;												// 收取前db的最大id
-	public boolean						isLoadingAllNew			= false;							// 是否正在批量加载新消息
-	public boolean						hasLoadingAllNew		= false;							// 是否已经批量加载过新消息
-	public int							firstNewMsgSeqId;
-	public MailData						latestMailData			= null;								//最近的一条邮件信息
-	public boolean						isMemberUidChanged		= false;
-	
-	//显示属性
-	public String						nameText				= "";
-	public String						contentText				= "";
-	public String						channelIcon				= "";
-	public UserInfo 					channelShowUserInfo		= null;
-	public String						timeText				= "";
-	public boolean						usePersonalPic			= false;
-	public MsgItem						showItem				= null;
-	private ChannelView					channelView				= null;
-	
-	//系统邮件属性
-	public ArrayList<MailData>			mailDataList			= new ArrayList<MailData>();		//系统邮件的邮件对象
-	
+	/** 消息对象List，保存所有消息 */
+	public ArrayList<MsgItem>	msgList					= new ArrayList<MsgItem>();
+	/** 正在发送的消息 */
+	public ArrayList<MsgItem>	sendingMsgList			= new ArrayList<MsgItem>();
+	/** 是否获取到消息过 */
+	public boolean				hasRequestDataBefore	= false;
+	/** 是否没有更多消息了 */
+	public boolean				noMoreDataFlag			= false;
+	private int					sysMailCountInDB		= 0;
+
+	public Point				lastPosition			= new Point(-1, -1);
+
+	public int					serverMinSeqId;
+	public int					serverMaxSeqId;
+
+	public long					serverMaxTime;
+	public long					serverMinTime;
+	/** 连ws后台时，登陆后从history.roomsv2接口加载到的新消息数量 **/
+	public int					wsNewMsgCount;
+
+	/** 收取前db的最大id */
+	public int					prevDBMaxSeqId;
+	/** 是否正在批量加载新消息 */
+	public boolean				isLoadingAllNew			= false;
+	/** 是否已经批量加载过新消息 */
+	public boolean				hasLoadingAllNew		= false;
+	public int					firstNewMsgSeqId;
+	/** 最近的一条邮件信息 */
+	public MailData				latestMailData			= null;
+	public boolean				isMemberUidChanged		= false;
+
+	// 显示属性
+	public String				nameText				= "";
+	public String				contentText				= "";
+	public String				channelIcon				= "";
+	public UserInfo				channelShowUserInfo		= null;
+	public String				timeText				= "";
+	public boolean				usePersonalPic			= false;
+	public MsgItem				showItem				= null;
+	private ChannelView			channelView				= null;
+	public List<String>			mailUidList				= new ArrayList<String>();
+
+	/** 系统邮件的邮件对象 */
+	public List<MailData>		mailDataList			= new ArrayList<MailData>();
+	private List<Integer>		msgTimeIndexArray		= null;
 
 	public ChatChannel()
 	{
 	}
-	
+
 	public void refreshRenderData()
 	{
-//		System.out.println("refreshRenderData channelType:"+channelType);
-		if(channelType==DBDefinition.CHANNEL_TYPE_COUNTRY)
+		if (channelType == DBDefinition.CHANNEL_TYPE_COUNTRY)
 		{
 			nameText = LanguageManager.getLangByKey(LanguageKeys.BTN_COUNTRY);
 
 			channelIcon = MailManager.getInstance().getMailIconByName(MailIconName.MAIL_ICON_CHAT_ROOM);
 			timeText = TimeManager.getReadableTime(latestTime);
-			
+
 			if (msgList.size() > 0)
 			{
 				MsgItem msg = msgList.get(msgList.size() - 1);
@@ -99,230 +131,273 @@ public class ChatChannel extends ChannelListItem {
 				}
 			}
 		}
-		else if(channelType==DBDefinition.CHANNEL_TYPE_ALLIANCE)
+		else if (channelType == DBDefinition.CHANNEL_TYPE_ALLIANCE)
 		{
 			nameText = LanguageManager.getLangByKey(LanguageKeys.BTN_ALLIANCE);
 
 			channelIcon = MailManager.getInstance().getMailIconByName(MailIconName.MAIL_ICON_CHAT_ROOM);
 			timeText = TimeManager.getReadableTime(latestTime);
-			
-			if(msgList.size()>0)
+
+			if (msgList.size() > 0)
 			{
-				MsgItem msg=msgList.get(msgList.size()-1);
-				if(msg!=null)
+				MsgItem msg = msgList.get(msgList.size() - 1);
+				if (msg != null)
 				{
-					showItem=msg;
-					if(!msg.translateMsg.equals(""))
-						contentText=msg.translateMsg;
+					showItem = msg;
+					if (!msg.translateMsg.equals(""))
+						contentText = msg.translateMsg;
 					else
-						contentText=msg.msg;
+						contentText = msg.msg;
 				}
 			}
 		}
-		else if(channelType == DBDefinition.CHANNEL_TYPE_USER)
+		else if (channelType == DBDefinition.CHANNEL_TYPE_USER)
 		{
-			if(TimeManager.isInValidTime(latestTime))
-			{
-				latestTime = getLatestTime();
-			}
-			timeText = TimeManager.getReadableTime(latestTime);
+
+			if (StringUtils.isEmpty(channelID))
+				return;
 			
-			if(StringUtils.isNotEmpty(channelID) && channelID.equals(MailManager.CHANNELID_MOD))
+			if (channelID.equals(MailManager.CHANNELID_MOD))
 			{
 				channelIcon = MailManager.getInstance().getMailIconByName(MailIconName.CHANNEL_ICON_MOD);
 				nameText = LanguageManager.getLangByKey(LanguageKeys.MAIL_TABNAME_MOD);
 				contentText = ChannelManager.getInstance().latestModChannelMsg;
+				return;
 			}
-			else if(StringUtils.isNotEmpty(channelID) && channelID.equals(MailManager.CHANNELID_MESSAGE))
+			else if (channelID.equals(MailManager.CHANNELID_MESSAGE))
 			{
 				channelIcon = MailManager.getInstance().getMailIconByName(MailIconName.CHANNEL_ICON_MESSAGE);
 				nameText = LanguageManager.getLangByKey(LanguageKeys.MAIL_NAME_MESSAGE);
 				contentText = ChannelManager.getInstance().latestMessageChannelMsg;
+				return;
 			}
-			else
-			{
-				String fromUid = ChannelManager.getInstance().getModChannelFromUid(channelID);
-				UserManager.getInstance().checkUserExist(fromUid);
-				if(StringUtils.isNotEmpty(fromUid))
-				{
-					UserInfo fromUser=UserManager.getInstance().getUser(fromUid);
-					if(fromUser!=null)
-					{
-						channelIcon=fromUser.headPic;
-						channelShowUserInfo =fromUser;
-						nameText = "";
-						if(StringUtils.isNotEmpty(fromUser.asn)){
-							nameText = "("+fromUser.asn+")";
-						}
-						
-						if(StringUtils.isNotEmpty(fromUser.userName)){
-							nameText += fromUser.userName;
-						}else if(StringUtils.isNotEmpty(customName)){
-							nameText += customName;
-						}else{
-							nameText += fromUser.uid;
-						}
-					}
-					if(fromUid.equals(UserManager.getInstance().getCurrentUserId()))
-					{
-						nameText = LanguageManager.getLangByKey(LanguageKeys.TIP_ALLIANCE);
-					}
-				}
-				else
-				{
-					nameText = channelID;
-				}
-				
-				
-				MsgItem mail = null;
-				if(msgList!=null && msgList.size()>0)
-				{
-					if(StringUtils.isNotEmpty(latestId) && DBManager.getInstance().isTableExists(getChatTable().getTableName()))
-					{
-						mail=DBManager.getInstance().getUserMailByID(getChatTable(), latestId);
-					}
-					
-					if(mail == null)
-						mail = msgList.get(msgList.size() - 1);
-				}
-				
-				if (mail != null)
-				{
-					if(TimeManager.isInValidTime(latestTime))
-					{
-						latestTime = mail.createTime;
-						timeText = TimeManager.getReadableTime(latestTime);
-					}
-					if (mail.canShowTranslateMsg()){
-						contentText = mail.translateMsg;
-					}else{
-						contentText = mail.msg;
-					}
-				}
-			}
-		}
-		else if(channelType==DBDefinition.CHANNEL_TYPE_CHATROOM)
-		{
-			channelIcon = MailManager.getInstance().getMailIconByName(MailIconName.MAIL_ICON_CHAT_ROOM);
-			if(TimeManager.isInValidTime(latestTime))
+			
+			if (TimeManager.isInValidTime(latestTime))
 			{
 				latestTime = getLatestTime();
 			}
 			timeText = TimeManager.getReadableTime(latestTime);
 			
-			nameText = StringUtils.isNotEmpty(customName) ? customName : channelID;
-			
-			MsgItem mail = null;
-			if(msgList.size()>0)
+			String fromUid = ChannelManager.getInstance().getModChannelFromUid(channelID);
+			UserManager.checkUser(fromUid, "", 0);
+
+			if (StringUtils.isNotEmpty(fromUid))
 			{
-				if(StringUtils.isNumeric(latestId) && DBManager.getInstance().isTableExists(getChatTable().getTableName()))
+				UserInfo fromUser = UserManager.getInstance().getUser(fromUid);
+				if (fromUser != null)
 				{
-					mail=DBManager.getInstance().getChatBySequeueId(getChatTable(), Integer.parseInt(latestId));
+					channelIcon = fromUser.headPic;
+					channelShowUserInfo = fromUser;
+					nameText = "";
+					if (StringUtils.isNotEmpty(fromUser.asn))
+					{
+						nameText = "(" + fromUser.asn + ")";
+					}
+
+					if (StringUtils.isNotEmpty(fromUser.userName))
+					{
+						nameText += fromUser.userName;
+					}
+					else if (StringUtils.isNotEmpty(customName))
+					{
+						nameText += customName;
+					}
+					else
+					{
+						nameText += fromUser.uid;
+					}
 				}
-				if(mail == null)
-					mail = msgList.get(msgList.size() - 1);
+				if (fromUid.equals(UserManager.getInstance().getCurrentUserId()))
+				{
+					nameText = LanguageManager.getLangByKey(LanguageKeys.TIP_ALLIANCE);
+				}
 			}
-			
-			if(mail!=null)
+			else
 			{
-				if(TimeManager.isInValidTime(latestTime))
+				nameText = channelID;
+			}
+
+			MsgItem mail = getLatestUserMail();
+
+			if (mail != null)
+			{
+				if (TimeManager.isInValidTime(latestTime))
 				{
 					latestTime = mail.createTime;
 					timeText = TimeManager.getReadableTime(latestTime);
 				}
-				if(mail.canShowTranslateMsg())
+				if (mail.canShowTranslateMsg())
 				{
-					if(mail.isTipMsg())
-						contentText = mail.translateMsg;
-					else
-						contentText = mail.getName() + ":" + mail.translateMsg;
+					contentText = mail.translateMsg;
 				}
 				else
 				{
-					if(mail.isTipMsg())
-						contentText= mail.msg;
-					else
-						contentText= mail.getName() + ":" + mail.msg;
+					contentText = mail.msg;
 				}
 			}
 		}
-		else if(channelType==DBDefinition.CHANNEL_TYPE_OFFICIAL)
+		else if (channelType == DBDefinition.CHANNEL_TYPE_CHATROOM)
 		{
-			if(TimeManager.isInValidTime(latestTime))
+			channelIcon = MailManager.getInstance().getMailIconByName(MailIconName.MAIL_ICON_CHAT_ROOM);
+			if (TimeManager.isInValidTime(latestTime))
 			{
 				latestTime = getLatestTime();
 			}
 			timeText = TimeManager.getReadableTime(latestTime);
-			nameText= getSystemChannelName();
-				
-			if(mailDataList.size()>0)
+
+			nameText = StringUtils.isNotEmpty(customName) ? customName : channelID;
+
+			MsgItem mail = null;
+			if (msgList.size() > 0)
 			{
-				MailData mail=getLatestMailData();
-				if(mail!=null)
+				if (StringUtils.isNotEmpty(latestId) && StringUtils.isNumeric(latestId)
+						&& DBManager.getInstance().isTableExists(getChatTable().getTableName()))
 				{
-					if(TimeManager.isInValidTime(latestTime))
+					mail = DBManager.getInstance().getChatBySequeueId(getChatTable(), Integer.parseInt(latestId));
+				}
+				if (mail == null)
+					mail = msgList.get(msgList.size() - 1);
+			}
+
+			if (mail != null)
+			{
+				if (TimeManager.isInValidTime(latestTime))
+				{
+					latestTime = mail.createTime;
+					timeText = TimeManager.getReadableTime(latestTime);
+				}
+				if (mail.canShowTranslateMsg())
+				{
+					if (mail.isTipMsg())
+						contentText = mail.translateMsg;
+					else
+					{
+						if (mail.isSelfMsg())
+							contentText = LanguageManager.getLangByKey(LanguageKeys.TIP_YOU) + ":" + mail.translateMsg;
+						else
+							contentText = mail.getName() + ":" + mail.translateMsg;
+					}
+				}
+				else
+				{
+					if (mail.isTipMsg())
+						contentText = mail.msg;
+					else
+					{
+						if (mail.isSelfMsg())
+							contentText = LanguageManager.getLangByKey(LanguageKeys.TIP_YOU) + ":" + mail.msg;
+						else
+							contentText = mail.getName() + ":" + mail.msg;
+					}
+				}
+			}
+		}
+		else if (channelType == DBDefinition.CHANNEL_TYPE_OFFICIAL)
+		{
+			if (ChatServiceController.isNewMailUIEnable)
+			{
+				if (channelID.equals(MailManager.CHANNELID_FIGHT))
+					channelIcon = MailManager.getInstance().getMailIconByName(MailIconName.CHANNEL_ICON_FIGHT);
+				else if (channelID.equals(MailManager.CHANNELID_ALLIANCE))
+					channelIcon = MailManager.getInstance().getMailIconByName(MailIconName.CHANNEL_ICON_ALLIANCE);
+				else if (channelID.equals(MailManager.CHANNELID_MESSAGE))
+					channelIcon = MailManager.getInstance().getMailIconByName(MailIconName.CHANNEL_ICON_MESSAGE);
+				else if (channelID.equals(MailManager.CHANNELID_EVENT))
+					channelIcon = MailManager.getInstance().getMailIconByName(MailIconName.CHANNEL_ICON_EVENT);
+			}
+
+			if (channelID.equals(MailManager.CHANNELID_STUDIO))
+				channelIcon = MailManager.getInstance().getMailIconByName(MailIconName.CHANNEL_ICON_STUDIO);
+			else if (channelID.equals(MailManager.CHANNELID_SYSTEM))
+				channelIcon = MailManager.getInstance().getMailIconByName(MailIconName.CHANNEL_ICON_SYSTEM);
+			else if (channelID.equals(MailManager.CHANNELID_RESOURCE))
+				channelIcon = MailManager.getInstance().getMailIconByName(MailIconName.CHANNEL_ICON_RESOURCE);
+			else if (channelID.equals(MailManager.CHANNELID_KNIGHT))
+				channelIcon = MailManager.getInstance().getMailIconByName(MailIconName.CHANNEL_ICON_KNIGHT);
+			else if (channelID.equals(MailManager.CHANNELID_MONSTER))
+				channelIcon = MailManager.getInstance().getMailIconByName(MailIconName.CHANNEL_ICON_MONSTER);
+			else if (channelID.equals(MailManager.CHANNELID_NOTICE))
+				channelIcon = MailManager.getInstance().getMailIconByName(MailIconName.CHANNEL_ICON_ANNOUNCEMENT);
+			
+			nameText = getSystemChannelName();
+			
+			if (channelID.equals(MailManager.CHANNELID_FIGHT) || channelID.equals(MailManager.CHANNELID_ALLIANCE)
+					|| channelID.equals(MailManager.CHANNELID_EVENT) || channelID.equals(MailManager.CHANNELID_STUDIO)
+					|| channelID.equals(MailManager.CHANNELID_SYSTEM) || channelID.equals(MailManager.CHANNELID_KNIGHT)
+					|| channelID.equals(MailManager.CHANNELID_MONSTER) || channelID.equals(MailManager.CHANNELID_RESOURCE))
+				return;
+
+			if (TimeManager.isInValidTime(latestTime))
+			{
+				latestTime = getLatestTime();
+			}
+			timeText = TimeManager.getReadableTime(latestTime);
+			
+			if (mailDataList.size() > 0)
+			{
+				MailData mail = getLatestMailData();
+				if (mail != null)
+				{
+					if (TimeManager.isInValidTime(latestTime))
 					{
 						latestTime = mail.getCreateTime();
 						timeText = TimeManager.getReadableTime(latestTime);
 					}
-					if(nameText.equals(""))
-						nameText=mail.nameText;
-					contentText=mail.contentText;
+					if (StringUtils.isEmpty(nameText))
+						nameText = mail.nameText;
+					contentText = mail.contentText;
 					channelIcon = mail.mailIcon;
 				}
 			}
-			
-			if(ChatServiceController.isNewMailUIEnable)
-			{
-				if(channelID.equals(MailManager.CHANNELID_FIGHT))
-					channelIcon = MailManager.getInstance().getMailIconByName(MailIconName.CHANNEL_ICON_FIGHT);
-				else if(channelID.equals(MailManager.CHANNELID_ALLIANCE))
-					channelIcon = MailManager.getInstance().getMailIconByName(MailIconName.CHANNEL_ICON_ALLIANCE);
-				else if(channelID.equals(MailManager.CHANNELID_MESSAGE))
-					channelIcon = MailManager.getInstance().getMailIconByName(MailIconName.CHANNEL_ICON_MESSAGE);
-				else if(channelID.equals(MailManager.CHANNELID_EVENT))
-					channelIcon = MailManager.getInstance().getMailIconByName(MailIconName.CHANNEL_ICON_EVENT);
-			}
-			
-			if(channelID.equals(MailManager.CHANNELID_STUDIO))
-				channelIcon = MailManager.getInstance().getMailIconByName(MailIconName.CHANNEL_ICON_STUDIO);
-			else if(channelID.equals(MailManager.CHANNELID_SYSTEM))
-				channelIcon = MailManager.getInstance().getMailIconByName(MailIconName.CHANNEL_ICON_SYSTEM);
-			else if(channelID.equals(MailManager.CHANNELID_RESOURCE))
-				channelIcon = MailManager.getInstance().getMailIconByName(MailIconName.CHANNEL_ICON_RESOURCE);
-			else if(channelID.equals(MailManager.CHANNELID_MONSTER))
-				channelIcon = MailManager.getInstance().getMailIconByName(MailIconName.CHANNEL_ICON_MONSTER);
-			else if(channelID.equals(MailManager.CHANNELID_NOTICE))
-				channelIcon = MailManager.getInstance().getMailIconByName(MailIconName.CHANNEL_ICON_ANNOUNCEMENT);
 		}
 	}
-	
+
+	public MsgItem getLatestUserMail()
+	{
+		MsgItem mail = null;
+		if (DBManager.getInstance().hasMsgItemInTable(getChatTable()))
+		{
+			String latestId = DBManager.getInstance().getLatestId(getChatTable());
+			// LogUtil.printVariablesWithFuctionName(Log.INFO,
+			// LogUtil.TAG_DEBUG, "latestId", latestId);
+			if (StringUtils.isNotEmpty(latestId) && DBManager.getInstance().isTableExists(getChatTable().getTableName()))
+			{
+				mail = DBManager.getInstance().getUserMailByID(getChatTable(), latestId);
+			}
+			if (mail == null && msgList != null && msgList.size() > 0)
+				mail = msgList.get(msgList.size() - 1);
+		}
+		return mail;
+	}
+
 	public String getSystemChannelName()
 	{
 		String name = "";
-		if(channelID.equals(MailManager.CHANNELID_SYSTEM))
+		if (channelID.equals(MailManager.CHANNELID_SYSTEM))
 			name = LanguageManager.getLangByKey(LanguageKeys.TIP_SYSTEM);
-		else if(channelID.equals(MailManager.CHANNELID_STUDIO))
+		else if (channelID.equals(MailManager.CHANNELID_STUDIO))
 			name = LanguageManager.getLangByKey(LanguageKeys.MAIL_TABNAME_STUDIO);
-		else if(channelID.equals(MailManager.CHANNELID_FIGHT))
+		else if (channelID.equals(MailManager.CHANNELID_FIGHT))
 			name = LanguageManager.getLangByKey(LanguageKeys.MAIL_TABNAME_FIGHT);
-		else if(channelID.equals(MailManager.CHANNELID_MOD))
+		else if (channelID.equals(MailManager.CHANNELID_MOD))
 			name = LanguageManager.getLangByKey(LanguageKeys.MAIL_TABNAME_MOD);
-		else if(channelID.equals(MailManager.CHANNELID_ALLIANCE))
+		else if (channelID.equals(MailManager.CHANNELID_ALLIANCE))
 			name = LanguageManager.getLangByKey(LanguageKeys.BTN_ALLIANCE);
-		else if(channelID.equals(MailManager.CHANNELID_NOTICE))
+		else if (channelID.equals(MailManager.CHANNELID_NOTICE))
 			name = LanguageManager.getLangByKey(LanguageKeys.MAIL_TABNAME_NOTICE);
-		else if(channelID.equals(MailManager.CHANNELID_RESOURCE))
+		else if (channelID.equals(MailManager.CHANNELID_RESOURCE))
 			name = LanguageManager.getLangByKey(LanguageKeys.MAIL_NAME_RESOURCE);
-		else if(channelID.equals(MailManager.CHANNELID_RESOURCE_HELP))
+		else if (channelID.equals(MailManager.CHANNELID_KNIGHT))
+			name = LanguageManager.getLangByKey(LanguageKeys.MAIL_TABNAME_ACTIVITYREPORT);
+		else if (channelID.equals(MailManager.CHANNELID_RESOURCE_HELP))
 			name = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_RESOURCEHELP);
-		else if(channelID.equals(MailManager.CHANNELID_MONSTER))
+		else if (channelID.equals(MailManager.CHANNELID_MONSTER))
 			name = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_103715);
-		else if(channelID.equals(MailManager.CHANNELID_EVENT))
+		else if (channelID.equals(MailManager.CHANNELID_EVENT))
 			name = LanguageManager.getLangByKey(LanguageKeys.MAIL_TITLE_EVENT);
 		return name;
 	}
-	
+
 	public String getCustomName()
 	{
 		String name = "";
@@ -330,12 +405,12 @@ public class ChatChannel extends ChannelListItem {
 		{
 			name = customName;
 		}
-		else if(channelType == DBDefinition.CHANNEL_TYPE_USER)
+		else if (channelType == DBDefinition.CHANNEL_TYPE_USER)
 		{
 			UserInfo fromUser = UserManager.getInstance().getUser(channelID);
-			if (fromUser !=null)
+			if (fromUser != null)
 			{
-				if(StringUtils.isNotEmpty(fromUser.userName))
+				if (StringUtils.isNotEmpty(fromUser.userName))
 				{
 					name = fromUser.userName;
 					customName = name;
@@ -346,7 +421,7 @@ public class ChatChannel extends ChannelListItem {
 					name = fromUser.uid;
 				}
 			}
-			
+
 		}
 		return name;
 	}
@@ -367,11 +442,11 @@ public class ChatChannel extends ChannelListItem {
 					memberUidArray.add(members[i]);
 				}
 			}
-			
+
 			roomOwner = c.getString(c.getColumnIndex(DBDefinition.CHANNEL_CHATROOM_OWNER));
 			isMember = c.getInt(c.getColumnIndex(DBDefinition.CHANNEL_IS_MEMBER)) == 1;
 			customName = c.getString(c.getColumnIndex(DBDefinition.CHANNEL_CUSTOM_NAME));
-			if(ChannelManager.getInstance().isNeedCalculateUnreadCount(channelID))
+			if (ChannelManager.getInstance().isNeedCalculateUnreadCount(channelID))
 				unreadCount = 0;
 			else
 				unreadCount = c.getInt(c.getColumnIndex(DBDefinition.CHANNEL_UNREAD_COUNT));
@@ -379,13 +454,35 @@ public class ChatChannel extends ChannelListItem {
 			latestTime = c.getInt(c.getColumnIndex(DBDefinition.CHANNEL_LATEST_TIME));
 			latestModifyTime = c.getLong(c.getColumnIndex(DBDefinition.CHANNEL_LATEST_MODIFY_TIME));
 			settings = c.getString(c.getColumnIndex(DBDefinition.CHANNEL_SETTINGS));
-//			refreshRenderData();
+			if (channelType == DBDefinition.CHANNEL_TYPE_COUNTRY || channelType == DBDefinition.CHANNEL_TYPE_ALLIANCE
+					|| channelType == DBDefinition.CHANNEL_TYPE_CHATROOM)
+				getMaxAndMinSeqId();
 		}
 		catch (Exception e)
 		{
 			LogUtil.printException(e);
 		}
 
+	}
+
+	private void getMaxAndMinSeqId()
+	{
+		int maxSeqId = DBManager.getInstance().getMaxDBSeqId(getChatTable());
+		int minSeqId = DBManager.getInstance().getMinDBSeqId(getChatTable());
+		boolean hasChanged = false;
+		if (maxSeqId != 0)
+		{
+			dbMaxSeqId = maxSeqId;
+			hasChanged = true;
+		}
+		if (minSeqId != 0)
+		{
+			dbMinSeqId = minSeqId;
+			hasChanged = true;
+		}
+		if (hasChanged)
+			DBManager.getInstance().updateChannel(this);
+		prevDBMaxSeqId = dbMaxSeqId;
 	}
 
 	public ContentValues getContentValues()
@@ -405,7 +502,7 @@ public class ChatChannel extends ChannelListItem {
 		cv.put(DBDefinition.CHANNEL_LATEST_TIME, latestTime);
 		cv.put(DBDefinition.CHANNEL_LATEST_MODIFY_TIME, latestModifyTime);
 		cv.put(DBDefinition.CHANNEL_SETTINGS, settings);
-		
+
 		return cv;
 	}
 
@@ -440,15 +537,15 @@ public class ChatChannel extends ChannelListItem {
 	 */
 	public int getDBMaxId()
 	{
-		return DBManager.getInstance().getMarginalSequenceNumber(getChatTable().getTableNameAndCreate(), true);
+		return DBManager.getInstance().getMaxDBSeqId(getChatTable());
 	}
-	
+
 	/**
 	 * DB中的最新消息ID（邮件专用）
 	 */
 	public String getDBLatestId()
 	{
-		return DBManager.getInstance().getLatestId(getChatTable().getTableNameAndCreate());
+		return DBManager.getInstance().getLatestId(getChatTable());
 	}
 
 	/**
@@ -456,7 +553,7 @@ public class ChatChannel extends ChannelListItem {
 	 */
 	public int getDBMinId()
 	{
-		return DBManager.getInstance().getMarginalSequenceNumber(getChatTable().getTableNameAndCreate(), false);
+		return DBManager.getInstance().getMinDBSeqId(getChatTable());
 	}
 
 	/**
@@ -464,10 +561,10 @@ public class ChatChannel extends ChannelListItem {
 	 */
 	public boolean canLoadAllNew()
 	{
-		return getNewMsgCount() > ChannelManager.LOAD_ALL_MORE_MIN_COUNT
-				&& getNewMsgActualCount() > 0 && !isNotInitedInDB() && !isLoadingAllNew && !hasLoadingAllNew;
+		return getNewMsgCount() > ChannelManager.LOAD_ALL_MORE_MIN_COUNT && getNewMsgActualCount() > 0 && !isNotInitedInDB()
+				&& !isLoadingAllNew && !hasLoadingAllNew;
 	}
-	
+
 	/**
 	 * channel表的seqId字段尚未被初始化
 	 */
@@ -475,7 +572,7 @@ public class ChatChannel extends ChannelListItem {
 	{
 		return prevDBMaxSeqId <= 0;
 	}
-	
+
 	/**
 	 * 服务器有而本地没有的最早id
 	 */
@@ -484,8 +581,7 @@ public class ChatChannel extends ChannelListItem {
 		int dbMaxId = getDBMaxId();
 		return Math.min(serverMinSeqId, dbMaxId);
 	}
-	
-	
+
 	//
 
 	/**
@@ -493,8 +589,8 @@ public class ChatChannel extends ChannelListItem {
 	 */
 	public int getNewMsgMinSeqId()
 	{
-		// 如果本地db刚初始化或之前没有信息，不显示新消息提示
-		if (isNotInitedInDB()) return serverMaxSeqId;
+		if (isNotInitedInDB())
+			return serverMaxSeqId;
 
 		return serverMinSeqId > prevDBMaxSeqId ? serverMinSeqId : (prevDBMaxSeqId + 1);
 	}
@@ -504,9 +600,12 @@ public class ChatChannel extends ChannelListItem {
 	 */
 	public int getNewMsgMaxSeqId()
 	{
-		if(getChannelView() != null){
-			return getChannelView().getViewMinSeqId() - 1;
-		}else{
+		if (getChannelView() != null)
+		{
+			return getChannelView().chatChannel.getMinSeqId() - 1;
+		}
+		else
+		{
 			return 0;
 		}
 	}
@@ -561,7 +660,8 @@ public class ChatChannel extends ChannelListItem {
 	public static String getMembersString(ArrayList<String> members)
 	{
 		String uidsStr = "";
-		if (members == null) return uidsStr;
+		if (members == null)
+			return uidsStr;
 
 		for (int i = 0; i < members.size(); i++)
 		{
@@ -587,14 +687,6 @@ public class ChatChannel extends ChannelListItem {
 		return isMember;
 	}
 
-//	public void resetChannelMsgData()
-//	{
-//		if (msgList != null) msgList.clear();
-//		if (sendingMsgList != null) sendingMsgList.clear();
-//		hasRequestDataBefore = false;
-//		noMoreDataFlag = false;
-//	}
-
 	public boolean getNoMoreDataFlag(int index)
 	{
 		return serverMinSeqId <= getViewMinId();
@@ -603,14 +695,12 @@ public class ChatChannel extends ChannelListItem {
 	public boolean containCurrentUser()
 	{
 		// 已经退出的国家
-		if (channelType == DBDefinition.CHANNEL_TYPE_COUNTRY
-				&& !channelID.equals(UserManager.getInstance().getCurrentUser().serverId + ""))
+		if (channelType == DBDefinition.CHANNEL_TYPE_COUNTRY && !channelID.equals(UserManager.getInstance().getCurrentUser().serverId + ""))
 		{
 			return false;
 		}
 		// 已经退出的联盟
-		if (channelType == DBDefinition.CHANNEL_TYPE_ALLIANCE
-				&& !channelID.equals(UserManager.getInstance().getCurrentUser().allianceId))
+		if (channelType == DBDefinition.CHANNEL_TYPE_ALLIANCE && !channelID.equals(UserManager.getInstance().getCurrentUser().allianceId))
 		{
 			return false;
 		}
@@ -621,46 +711,26 @@ public class ChatChannel extends ChannelListItem {
 		}
 		return true;
 	}
-	
+
 	private boolean isInMailDataList(MailData mailData)
 	{
-		for (int i = 0; i < mailDataList.size(); i++)
-		{
-			if (mailDataList.get(i).getUid().equals(mailData.getUid()))
-			{
-				return true;
-			}
-		}
+		if (mailUidList != null && mailUidList.contains(mailData.getUid()))
+			return true;
 		return false;
 	}
-	
-//	public void addHistoryMailData(MailData mailData)
-//	{
-//		if(mailData.tabType != MailManager.MAILTAB_USER){
-//			if (!isInMailDataList(mailData))
-//			{
-////				System.out.println("addNewMailData contents:"+mailData.getContents());
-//				mailDataList.add(mailData);
-//				mailData.channel=this;
-//				ChannelListFragment.onMailDataAdded(mailData);
-//				refreshRenderData();
-//				ChannelManager.getInstance().calulateAllChannelUnreadNum();
-//			}
-//		}
-//	}
-	
+
 	public void addNewMailData(MailData mailData)
 	{
-//		System.out.println("addNewMailData uid:"+mailData.getUid());
-		if(mailData.tabType != MailManager.MAILTAB_USER){
+		if (!mailData.isUserMail())
+		{
 			if (!isInMailDataList(mailData))
 			{
 				mailDataList.add(mailData);
-				mailData.channel=this;
-//				System.out.println(mailDataList.size() + " addNewMailData actual uid:"+mailData.getUid());
+				if (mailUidList != null)
+					mailUidList.add(mailData.getUid());
+				mailData.channel = this;
 				ChannelListFragment.onMailDataAdded(mailData);
 				refreshRenderData();
-				ChannelManager.getInstance().calulateAllChannelUnreadNum();
 				SortUtil.getInstance().refreshNewMailListOrder(mailDataList);
 			}
 		}
@@ -670,17 +740,17 @@ public class ChatChannel extends ChannelListItem {
 	{
 		for (int i = 0; i < msgList.size(); i++)
 		{
-			if (msgList.get(i).sequenceId == msg.sequenceId)
+			if (msgList.get(i).msg.equals(msg.msg) && msgList.get(i).createTime == msg.createTime)
 			{
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	private boolean isInUserMailList(MsgItem msg)
 	{
-		if(msg!=null && StringUtils.isNotEmpty(msg.mailId))
+		if (msg != null && StringUtils.isNotEmpty(msg.mailId))
 		{
 			for (int i = 0; i < msgList.size(); i++)
 			{
@@ -692,40 +762,53 @@ public class ChatChannel extends ChannelListItem {
 		}
 		return false;
 	}
-	
-	
 
-	public void addHistoryMsg(MsgItem msg)
+	public boolean addHistoryMsg(MsgItem msg)
 	{
-		if(!isMsgExist(msg)){
-			if(msg.channelType != DBDefinition.CHANNEL_TYPE_USER && firstNewMsgSeqId > 0 && firstNewMsgSeqId == msg.sequenceId){
-				if(this.getNewMsgCount() < ChannelManager.LOAD_ALL_MORE_MAX_COUNT ){
+		if (!isMsgExist(msg) && !isMsgIgnored(msg) && !UserManager.getInstance().isInRestrictList(msg.uid, UserManager.BLOCK_LIST))
+		{
+			if (msg.channelType != DBDefinition.CHANNEL_TYPE_USER && firstNewMsgSeqId > 0 && firstNewMsgSeqId == msg.sequenceId)
+			{
+				if (this.getNewMsgCount() < ChannelManager.LOAD_ALL_MORE_MAX_COUNT)
+				{
 					msg.firstNewMsgState = 1;
-				}else{
+				}
+				else
+				{
 					msg.firstNewMsgState = 2;
 				}
 			}
-			
+
 			addMsg(msg);
-			ChannelManager.getInstance().calulateAllChannelUnreadNum();
+			return true;
 		}
-		
-//		if(msg.createTime>MailManager.getInstance().leastestUserMailCreateTime)
-//		{
-//			MailManager.getInstance().leastestUserMailCreateTime=msg.createTime;
-//			MailManager.getInstance().leastestUserMailUid=msg.uid;
-//		}
+		return false;
 	}
-	
+
 	private boolean isMsgExist(MsgItem msg)
 	{
-		if(msg.channelType == DBDefinition.CHANNEL_TYPE_USER){
+		if (msg.channelType == DBDefinition.CHANNEL_TYPE_USER)
+		{
 			return isInUserMailList(msg);
-		}else{
+		}
+		else
+		{
 			return isInMsgList(msg);
 		}
 	}
-	
+
+	private boolean isMsgIgnored(MsgItem msg)
+	{
+		if (msg.channelType == DBDefinition.CHANNEL_TYPE_USER)
+		{
+			return false;
+		}
+		else
+		{
+			return !WebSocketManager.isWebSocketEnabled() && msg.sequenceId == -1;
+		}
+	}
+
 	public void addMsg(MsgItem msg)
 	{
 		msg.initNullField();
@@ -733,42 +816,43 @@ public class ChatChannel extends ChannelListItem {
 		initMsg(msg);
 	}
 
-	// 由于后台返回的createTime与前台不一样（通常慢几秒），不能按时间排序插入，否则可能新发的消息会插到前面
+	/**
+	 * 由于后台返回的createTime与前台不一样（通常慢几秒），不能按时间排序插入，否则可能新发的消息会插到前面
+	 */
 	public void addDummyMsg(MsgItem msg)
 	{
 		msgList.add(msg);
 		initMsg(msg);
 	}
 
-	// 由于后台返回的createTime与前台不一样（通常慢几秒），不能按时间排序插入，否则会错乱
+	/**
+	 * 由于后台返回的createTime与前台不一样（通常慢几秒），不能按时间排序插入，否则会错乱
+	 */
 	public void replaceDummyMsg(MsgItem msg, int index)
 	{
 		msgList.set(index, msg);
 		initMsg(msg);
 	}
-	
+
 	private void initMsg(MsgItem msg)
 	{
 		msg.chatChannel = this;
 		refreshRenderData();
 	}
-	
+
 	private void addMsgAndSort(MsgItem msg)
 	{
 		int pos = 0;
-
-//		System.out.println("addMsgAndSort() msg.createTime: " + msg.createTime);
-//		for (int i = 0; i < msgList.size(); i++)
-//		{
-//			System.out.println("    " + i + " " + msgList.get(i).createTime);
-//		}
-		
 		for (int i = 0; i < msgList.size(); i++)
 		{
-			if(msg.createTime > msgList.get(i).createTime || (msg.channelType == DBDefinition.CHANNEL_TYPE_CHATROOM && 
-					msg.createTime == msgList.get(i).createTime && msg.sequenceId > msgList.get(i).sequenceId)){
+			if (msg.createTime > msgList.get(i).createTime
+					|| (msg.channelType == DBDefinition.CHANNEL_TYPE_CHATROOM && msg.createTime == msgList.get(i).createTime && msg.sequenceId > msgList
+							.get(i).sequenceId))
+			{
 				pos = i + 1;
-			}else{
+			}
+			else
+			{
 				break;
 			}
 		}
@@ -777,21 +861,21 @@ public class ChatChannel extends ChannelListItem {
 
 	public void addNewMsg(MsgItem msg)
 	{
-		if(!isMsgExist(msg)){
+		if (!isMsgExist(msg) && !isMsgIgnored(msg) && !UserManager.getInstance().isInRestrictList(msg.uid, UserManager.BLOCK_LIST))
+		{
 			addMsg(msg);
-			ChannelManager.getInstance().calulateAllChannelUnreadNum();
-			if(isModChannel())
+			if (isModChannel())
 			{
 				ChannelManager.getInstance().latestModChannelMsg = msg.msg;
 				ChatChannel modChannel = ChannelManager.getInstance().getModChannel();
-				if(modChannel!=null)
+				if (modChannel != null)
 					modChannel.unreadCount++;
 			}
-			else if(isMessageChannel())
+			else if (isMessageChannel())
 			{
 				ChannelManager.getInstance().latestMessageChannelMsg = msg.msg;
 				ChatChannel messageChannel = ChannelManager.getInstance().getMessageChannel();
-				if(messageChannel!=null)
+				if (messageChannel != null)
 					messageChannel.unreadCount++;
 			}
 		}
@@ -799,6 +883,11 @@ public class ChatChannel extends ChannelListItem {
 
 	public void clearFirstNewMsg()
 	{
+		if (WebSocketManager.isRecieveFromWebSocket(channelType) && wsNewMsgCount > ChannelManager.LOAD_ALL_MORE_MIN_COUNT)
+		{
+			return;
+		}
+
 		firstNewMsgSeqId = 0;
 		for (int i = 0; i < msgList.size(); i++)
 		{
@@ -811,45 +900,88 @@ public class ChatChannel extends ChannelListItem {
 		for (Iterator<MailData> iterator = mailDataList.iterator(); iterator.hasNext();)
 		{
 			MailData mailData = (MailData) iterator.next();
-			if(mailData.hasReward()) return true;
+			if (mailData.hasReward())
+				return true;
 		}
 		return false;
 	}
-	
+
+	public List<String> getChannelRewardUidArray()
+	{
+		List<String> rewardUidArray = new ArrayList<String>();
+		if (channelType == DBDefinition.CHANNEL_TYPE_OFFICIAL)
+		{
+			if (mailDataList != null && mailDataList.size() > 0)
+			{
+				for (int i = 0; i < mailDataList.size(); i++)
+				{
+					MailData mailData = mailDataList.get(i);
+					if (mailData.hasReward() && StringUtils.isNotEmpty(mailData.getUid()) && !rewardUidArray.contains(mailData.getUid()))
+					{
+						rewardUidArray.add(mailData.getUid());
+					}
+				}
+			}
+		}
+		return rewardUidArray;
+	}
+
+	public List<String> getChannelUnreadUidArray()
+	{
+		List<String> unReadUidArray = new ArrayList<String>();
+		if (channelType == DBDefinition.CHANNEL_TYPE_OFFICIAL)
+		{
+			if (mailDataList != null && mailDataList.size() > 0)
+			{
+				for (int i = 0; i < mailDataList.size(); i++)
+				{
+					MailData mailData = mailDataList.get(i);
+					if (mailData.isUnread() && StringUtils.isNotEmpty(mailData.getUid()) && !unReadUidArray.contains(mailData.getUid()))
+					{
+						unReadUidArray.add(mailData.getUid());
+					}
+				}
+			}
+		}
+		return unReadUidArray;
+	}
+
 	public List<String> getChannelDeleteUidArray()
 	{
-		List<String> deleteUidArray=new ArrayList<String>();
-		if(channelType==DBDefinition.CHANNEL_TYPE_COUNTRY || channelType==DBDefinition.CHANNEL_TYPE_ALLIANCE)
+		List<String> deleteUidArray = new ArrayList<String>();
+		if (channelType == DBDefinition.CHANNEL_TYPE_COUNTRY || channelType == DBDefinition.CHANNEL_TYPE_ALLIANCE)
 			return deleteUidArray;
-		if(channelType==DBDefinition.CHANNEL_TYPE_USER)
+		if (channelType == DBDefinition.CHANNEL_TYPE_USER)
 		{
-			if(StringUtils.isNotEmpty(channelID) && (channelID.equals(MailManager.CHANNELID_MOD) || channelID.equals(MailManager.CHANNELID_MESSAGE)) && StringUtils.isNotEmpty(latestId))
+			if (StringUtils.isNotEmpty(channelID)
+					&& (channelID.equals(MailManager.CHANNELID_MOD) || channelID.equals(MailManager.CHANNELID_MESSAGE))
+					&& StringUtils.isNotEmpty(latestId))
 			{
 				deleteUidArray.add(latestId);
 			}
 			else
 			{
-				if(msgList!=null && msgList.size()>0)
+				if (msgList != null && msgList.size() > 0)
 				{
-					MsgItem lastItem=msgList.get(0);
-					for(int i=1;i<msgList.size();i++)
+					MsgItem lastItem = msgList.get(0);
+					for (int i = 1; i < msgList.size(); i++)
 					{
-						MsgItem item=msgList.get(i);
-						if(item.createTime>lastItem.createTime)
-							lastItem=item;
+						MsgItem item = msgList.get(i);
+						if (item.createTime > lastItem.createTime)
+							lastItem = item;
 					}
 					deleteUidArray.add(lastItem.mailId);
 				}
 			}
 		}
-		else if(channelType==DBDefinition.CHANNEL_TYPE_OFFICIAL)
+		else if (channelType == DBDefinition.CHANNEL_TYPE_OFFICIAL)
 		{
-			if(mailDataList!=null && mailDataList.size()>0)
+			if (mailDataList != null && mailDataList.size() > 0)
 			{
-				for(int i=0;i<mailDataList.size();i++)
+				for (int i = 0; i < mailDataList.size(); i++)
 				{
-					MailData mailData=mailDataList.get(i);
-					if(mailData.canDelete() && !mailData.getUid().equals("") && !deleteUidArray.contains(mailData.getUid()))
+					MailData mailData = mailDataList.get(i);
+					if (mailData.canDelete() && !mailData.getUid().equals("") && !deleteUidArray.contains(mailData.getUid()))
 					{
 						deleteUidArray.add(mailData.getUid());
 					}
@@ -858,86 +990,133 @@ public class ChatChannel extends ChannelListItem {
 		}
 		return deleteUidArray;
 	}
-	
-	public boolean hasCannotDeleteMail()
+
+	public boolean cannotOperatedForMuti(int type)
 	{
-		boolean ret=false;
-		if(channelType==DBDefinition.CHANNEL_TYPE_OFFICIAL)
+		boolean ret = false;
+		if (channelType == DBDefinition.CHANNEL_TYPE_OFFICIAL)
 		{
-			if(mailDataList!=null && mailDataList.size()>0)
+			if (mailDataList != null && mailDataList.size() > 0)
 			{
-				for(int i=0;i<mailDataList.size();i++)
+				for (int i = 0; i < mailDataList.size(); i++)
 				{
-					MailData mailData=mailDataList.get(i);
-					if(!mailData.canDelete())
+					MailData mailData = mailDataList.get(i);
+					if ((type == ChannelManager.OPERATION_DELETE_MUTI && !mailData.canDelete())
+							|| (type == ChannelManager.OPERATION_REWARD_MUTI && mailData.hasReward()))
 					{
-						ret=true;
+						ret = true;
 						break;
 					}
 				}
 			}
 		}
+		if (type == ChannelManager.OPERATION_REWARD_MUTI)
+			ret = !ret;
 		return ret;
 	}
-	
-	public String getChannelDeleteTypes()
+
+	public String getChannelRewardTypes()
 	{
-		String types="";
-		if(channelType==DBDefinition.CHANNEL_TYPE_COUNTRY || channelType==DBDefinition.CHANNEL_TYPE_ALLIANCE)
-			return types;
-		if(channelType==DBDefinition.CHANNEL_TYPE_USER)
+		String types = "";
+		if (channelType == DBDefinition.CHANNEL_TYPE_OFFICIAL)
 		{
-			types="0";
-		}
-		else if(channelType==DBDefinition.CHANNEL_TYPE_OFFICIAL)
-		{
-			if(mailDataList!=null && mailDataList.size()>0)
+			if (mailDataList != null && mailDataList.size() > 0)
 			{
-				for(int i=0;i<mailDataList.size();i++)
+				for (int i = 0; i < mailDataList.size(); i++)
 				{
-					MailData mailData=mailDataList.get(i);
-					if(mailData.canDelete() && mailData.getType()>0 && !types.contains(""+mailData.getType()))
+					MailData mailData = mailDataList.get(i);
+					if (mailData.hasReward() && mailData.getType() > 0 && !types.contains("" + mailData.getType()))
 					{
-						if(types.equals(""))
-							types+=mailData.getType();
+						if (types.equals(""))
+							types += mailData.getType();
 						else
-							types+=(","+mailData.getType());
+							types += ("," + mailData.getType());
 					}
 				}
 			}
 		}
 		return types;
 	}
-	
-	public int getMinMailCreateTime()
+
+	public String getChannelDeleteTypes()
 	{
-		int result = TimeManager.getInstance().getCurrentTime();
+		String types = "";
+		if (channelType == DBDefinition.CHANNEL_TYPE_COUNTRY || channelType == DBDefinition.CHANNEL_TYPE_ALLIANCE)
+			return types;
+		if (channelType == DBDefinition.CHANNEL_TYPE_USER)
+		{
+			types = "0";
+		}
+		else if (channelType == DBDefinition.CHANNEL_TYPE_OFFICIAL)
+		{
+			if (mailDataList != null && mailDataList.size() > 0)
+			{
+				for (int i = 0; i < mailDataList.size(); i++)
+				{
+					MailData mailData = mailDataList.get(i);
+					if (mailData.canDelete() && mailData.getType() > 0 && !types.contains("" + mailData.getType()))
+					{
+						if (types.equals(""))
+							types += mailData.getType();
+						else
+							types += ("," + mailData.getType());
+					}
+				}
+			}
+		}
+		return types;
+	}
+
+	public int getMinCreateTime()
+	{
+		if (msgList == null || msgList.size() == 0)
+			return 0;
+
+		int result = msgList.get(0).createTime;
 		for (int i = 0; i < msgList.size(); i++)
 		{
-			if(msgList.get(i).createTime < result){
+			if (msgList.get(i).createTime < result)
+			{
 				result = msgList.get(i).createTime;
 			}
 		}
 		return result;
 	}
 
-	public boolean isUnread() {
+	public int getMinSeqId()
+	{
+		if (msgList == null || msgList.size() == 0)
+			return 0;
+
+		int result = msgList.get(0).sequenceId;
+		for (int i = 0; i < msgList.size(); i++)
+		{
+			if (msgList.get(i).sequenceId < result)
+			{
+				result = msgList.get(i).sequenceId;
+			}
+		}
+		return result;
+	}
+
+	public boolean isUnread()
+	{
 		return unreadCount > 0;
 	}
-	
-	public int getChannelTime()
+
+	public long getChannelTime()
 	{
 		return latestTime;
 	}
-	
+
 	public void updateMailList(MailData mailData)
 	{
-		if(mailData==null || mailDataList == null)
+		if (mailData == null || mailDataList == null)
 			return;
-		for(int i=0;i<mailDataList.size();i++)
+		for (int i = 0; i < mailDataList.size(); i++)
 		{
-			MailData mail =mailDataList.get(i);
-			if(mail!=null && mail.getUid().equals(mailData.getUid()))
+			MailData mail = mailDataList.get(i);
+			if (mail != null && mail.getUid().equals(mailData.getUid()))
 			{
 				if (StringUtils.isNotEmpty(mailData.nameText))
 				{
@@ -951,12 +1130,10 @@ public class ChatChannel extends ChannelListItem {
 			}
 		}
 	}
-	
+
 	public MailData getLatestMailData()
 	{
-//		System.out.println("getLatestMailData latestId:"+latestId);
-		
-		if(StringUtils.isEmpty(latestId))
+		if (StringUtils.isEmpty(latestId))
 		{
 			String latestMailId = DBManager.getInstance().getSysMailChannelLatestId(channelID);
 			if (StringUtils.isNotEmpty(latestMailId))
@@ -964,21 +1141,21 @@ public class ChatChannel extends ChannelListItem {
 				latestId = latestMailId;
 			}
 		}
-		
-		if(StringUtils.isNotEmpty(latestId))
+
+		if (StringUtils.isNotEmpty(latestId))
 		{
 			MailData mail = DBManager.getInstance().getSysMailByID(latestId);
-			if(mail!=null)
+			if (mail != null)
 			{
 				return mail;
 			}
 		}
 		else
 		{
-			if(mailDataList!=null && mailDataList.size()>0)
+			if (mailDataList != null && mailDataList.size() > 0)
 			{
-				MailData mail = mailDataList.get(mailDataList.size()-1);
-				if(mail!=null)
+				MailData mail = mailDataList.get(mailDataList.size() - 1);
+				if (mail != null)
 				{
 					return mail;
 				}
@@ -986,225 +1163,471 @@ public class ChatChannel extends ChannelListItem {
 		}
 		return null;
 	}
-	
+
 	public void markAsRead()
 	{
-		if(unreadCount > 0)
+		if (unreadCount > 0)
 		{
 			unreadCount = 0;
-			latestModifyTime=TimeManager.getInstance().getCurrentTimeMS();
+			latestModifyTime = TimeManager.getInstance().getCurrentTimeMS();
 			ChannelManager.getInstance().calulateAllChannelUnreadNum();
 			DBManager.getInstance().updateChannel(this);
 		}
-		
-		if((channelID.equals(MailManager.CHANNELID_MONSTER) || channelID.equals(MailManager.CHANNELID_RESOURCE) || channelID.equals(MailManager.CHANNELID_RESOURCE_HELP)) && mailDataList!=null && mailDataList.size()>0)
-		{
-			for(int i=0;i<mailDataList.size();i++)
-			{
-				MailData mail=mailDataList.get(i);
-				if(mail!=null && mail.isUnread())
-				{
-					mail.setStatus(1);
-					DBManager.getInstance().updateMail(mail);
-				}
-			}
-		}
 	}
-	
+
 	public MailData getMonsterMailData()
 	{
-		if(StringUtils.isNotEmpty(channelID) && channelID.equals(MailManager.CHANNELID_MONSTER) && mailDataList!=null && mailDataList.size()>0)
+		if (StringUtils.isNotEmpty(channelID) && channelID.equals(MailManager.CHANNELID_MONSTER) && mailDataList != null
+				&& mailDataList.size() > 0)
 		{
 			MailData mail = mailDataList.get(0);
-			if(mail!=null)
+			if (mail == null)
+				return null;
+
+			int unreadCount = 0;
+			List<MonsterMailContents> monsterArray = new ArrayList<MonsterMailContents>();
+			for (int i = 0; i < mailDataList.size(); i++)
 			{
-				MonsterMailData monsterMail = new MonsterMailData();
-				monsterMail.setMailData(mail);
-				monsterMail.setTotalNum(mailDataList.size());
-				int unreadCount = 0;
-				List<MonsterMailContents> monsterArray = new ArrayList<MonsterMailContents>();
-				for(int i=0 ;i<mailDataList.size();i++)
+				MailData mailData = mailDataList.get(i);
+				if (mailData == null)
+					continue;
+				if (!mailData.hasMailOpend)
 				{
-					MonsterMailData mailData = (MonsterMailData)mailDataList.get(i);
-					if(mailData!=null)
-					{
-						if(mailData.isUnread())
-							unreadCount++;
-						if(mailData.getMonster()!=null && mailData.getMonster().size()>0)
-						{
-							MonsterMailContents monster = mailData.getMonster().get(0);
-							if(monster!=null && !monsterArray.contains(monster))
-								monsterArray.add(monster);
-						}
-					}
+					mailData.setNeedParseByForce(true);
+					mailData = MailManager.getInstance().parseMailDataContent(mailData);
 				}
-				monsterMail.setUnread(unreadCount);
-				monsterMail.setMonster(monsterArray);
-				return monsterMail;
+				if (mailData instanceof MonsterMailData)
+				{
+					MonsterMailData monsterMail = (MonsterMailData) mailData;
+					if (monsterMail.isUnread())
+						unreadCount++;
+
+					if (monsterMail.getMonster() == null || monsterMail.getMonster().size() <= 0)
+						continue;
+					MonsterMailContents monster = monsterMail.getMonster().get(0);
+					if (monster != null && !monsterArray.contains(monster))
+						monsterArray.add(monster);
+				}
 			}
+
+			MonsterMailData newMail = new MonsterMailData();
+			newMail.setMailData(mail);
+			newMail.setTotalNum(DBManager.getInstance().getSysMailCountByTypeInDB(mail.getChannelId()));
+			newMail.setUnread(unreadCount);
+			newMail.setMonster(monsterArray);
+			return newMail;
 		}
 		return null;
 	}
-	
+
 	public MailData getResourceMailData()
 	{
-		if(StringUtils.isNotEmpty(channelID) && channelID.equals(MailManager.CHANNELID_RESOURCE) && mailDataList!=null && mailDataList.size()>0)
+		if (StringUtils.isNotEmpty(channelID) && channelID.equals(MailManager.CHANNELID_RESOURCE) && mailDataList != null
+				&& mailDataList.size() > 0)
 		{
 			MailData mail = mailDataList.get(0);
-			if(mail!=null)
+			if (mail == null)
+				return null;
+
+			int unreadCount = 0;
+			List<ResourceMailContents> collectArray = new ArrayList<ResourceMailContents>();
+			for (int i = 0; i < mailDataList.size(); i++)
 			{
-				ResourceMailData resourceMail = new ResourceMailData();
-				resourceMail.setMailData(mail);
-				resourceMail.setTotalNum(mailDataList.size());
-				int unreadCount = 0;
-				List<ResourceMailContents> collectArray = new ArrayList<ResourceMailContents>();
-				for(int i=0 ;i<mailDataList.size();i++)
+				MailData mailData = mailDataList.get(i);
+				if (mailData == null)
+					continue;
+				if (!mailData.hasMailOpend)
 				{
-					ResourceMailData mailData = (ResourceMailData)mailDataList.get(i);
-					if(mailData!=null)
-					{
-						if(mailData.isUnread())
-							unreadCount++;
-						if(mailData.getCollect()!=null && mailData.getCollect().size()>0)
-						{
-							ResourceMailContents resource = mailData.getCollect().get(0);
-							if(resource!=null && !collectArray.contains(resource))
-								collectArray.add(resource);
-						}
-					}
+					mailData.setNeedParseByForce(true);
+					mailData = MailManager.getInstance().parseMailDataContent(mailData);
 				}
-				resourceMail.setUnread(unreadCount);
-				resourceMail.setCollect(collectArray);
-				return resourceMail;
+				if (mailData instanceof ResourceMailData)
+				{
+					ResourceMailData resourceMail = (ResourceMailData) mailData;
+					if (resourceMail.isUnread())
+						unreadCount++;
+
+					if (resourceMail.getCollect() == null || resourceMail.getCollect().size() <= 0)
+						continue;
+					ResourceMailContents resource = resourceMail.getCollect().get(0);
+					if (resource != null && !collectArray.contains(resource))
+						collectArray.add(resource);
+				}
 			}
+
+			ResourceMailData newMail = new ResourceMailData();
+			newMail.setMailData(mail);
+			newMail.setTotalNum(DBManager.getInstance().getSysMailCountByTypeInDB(mail.getChannelId()));
+			newMail.setUnread(unreadCount);
+			newMail.setCollect(collectArray);
+			return newMail;
 		}
 		return null;
 	}
-	
+
+	public MailData getKnightMailData()
+	{
+		if (StringUtils.isNotEmpty(channelID) && channelID.equals(MailManager.CHANNELID_KNIGHT) && mailDataList != null
+				&& mailDataList.size() > 0)
+		{
+			MailData mail = mailDataList.get(0);
+			if (mail == null)
+				return null;
+
+			int unreadCount = 0;
+			boolean isLock = false;
+			List<BattleMailContents> knightArray = new ArrayList<BattleMailContents>();
+			for (int i = 0; i < mailDataList.size(); i++)
+			{
+				MailData mailData = mailDataList.get(i);
+				if (mailData == null)
+					continue;
+
+				if (!isLock && mailData.isLock())
+					isLock = true;
+
+				if (!mailData.hasMailOpend)
+				{
+					mailData.setNeedParseByForce(true);
+					mailData = MailManager.getInstance().parseMailDataContent(mailData);
+				}
+				if (mailData instanceof BattleMailData)
+				{
+					BattleMailData knightMail = (BattleMailData) mailData;
+					if (knightMail.isUnread())
+						unreadCount++;
+
+					if (knightMail.getKnight() == null || knightMail.getKnight().size() <= 0)
+						continue;
+					BattleMailContents knight = knightMail.getKnight().get(0);
+					if (knight != null && !knightArray.contains(knight))
+						knightArray.add(knight);
+				}
+			}
+
+			BattleMailData newMail = new BattleMailData();
+			newMail.setIsKnightMail(true);
+			newMail.setMailData(mail);
+			newMail.setSave(isLock ? 1 : 0);
+			newMail.setTotalNum(DBManager.getInstance().getSysMailCountByTypeInDB(mail.getChannelId()));
+			newMail.setUnread(unreadCount);
+			newMail.setKnight(knightArray);
+			newMail.setContents("");
+			newMail.setDetail(null);
+			return newMail;
+		}
+		return null;
+	}
+
 	public MailData getResourceHelpMailData()
 	{
-		if(StringUtils.isNotEmpty(channelID) && channelID.equals(MailManager.CHANNELID_RESOURCE_HELP) && mailDataList!=null && mailDataList.size()>0)
+		if (StringUtils.isNotEmpty(channelID) && channelID.equals(MailManager.CHANNELID_RESOURCE_HELP) && mailDataList != null
+				&& mailDataList.size() > 0)
 		{
 			MailData mail = mailDataList.get(0);
-			if(mail!=null)
+			if (mail == null)
+				return null;
+
+			int unreadCount = 0;
+			List<ResourceHelpMailContents> collectArray = new ArrayList<ResourceHelpMailContents>();
+			for (int i = 0; i < mailDataList.size(); i++)
 			{
-				ResourceHelpMailData resourceHelpMail = new ResourceHelpMailData();
-				resourceHelpMail.setMailData(mail);
-				resourceHelpMail.setTotalNum(mailDataList.size());
-				int unreadCount = 0;
-				List<ResourceHelpMailContents> collectArray = new ArrayList<ResourceHelpMailContents>();
-				for(int i=0 ;i<mailDataList.size();i++)
+				MailData mailData = mailDataList.get(i);
+				if (mailData == null)
+					continue;
+				if (!mailData.hasMailOpend)
 				{
-					ResourceHelpMailData mailData = (ResourceHelpMailData)mailDataList.get(i);
-					if(mailData!=null)
-					{
-						if(mailData.isUnread())
-							unreadCount++;
-						if(mailData.getCollect()!=null && mailData.getCollect().size()>0)
-						{
-							ResourceHelpMailContents resourceHelp = mailData.getCollect().get(0);
-							if(resourceHelp!=null && !collectArray.contains(resourceHelp))
-								collectArray.add(resourceHelp);
-						}
-					}
+					mailData.setNeedParseByForce(true);
+					mailData = MailManager.getInstance().parseMailDataContent(mailData);
 				}
-				resourceHelpMail.setUnread(unreadCount);
-				resourceHelpMail.setCollect(collectArray);
-				return resourceHelpMail;
+				if (mailData instanceof ResourceHelpMailData)
+				{
+					ResourceHelpMailData resourceHelpMail = (ResourceHelpMailData) mailData;
+					if (resourceHelpMail.isUnread())
+						unreadCount++;
+
+					if (resourceHelpMail.getCollect() == null || resourceHelpMail.getCollect().size() <= 0)
+						continue;
+					ResourceHelpMailContents resourceHelp = resourceHelpMail.getCollect().get(0);
+					if (resourceHelp != null && !collectArray.contains(resourceHelp))
+						collectArray.add(resourceHelp);
+				}
 			}
+
+			ResourceHelpMailData newMail = new ResourceHelpMailData();
+			newMail.setMailData(mail);
+			newMail.setTotalNum(DBManager.getInstance().getSysMailCountByTypeInDB(mail.getChannelId()));
+			newMail.setUnread(unreadCount);
+			newMail.setCollect(collectArray);
+			return newMail;
 		}
 		return null;
 	}
-	
-	public void calculateUnreadCount(List<ChannelListItem> mailDataList)
+
+	public void setUnreadCount(int count)
 	{
-		if(mailDataList!=null)
-		{
-			unreadCount = 0;
-			for(int i=0;i<mailDataList.size();i++)
-			{
-				MailData mail = (MailData) mailDataList.get(i);
-				if(mail!=null && mail.getChannelId().equals(channelID) && mail.isUnread())
-					unreadCount++;
-			}
-			DBManager.getInstance().updateChannel(this);
-		}
+		unreadCount = count;
+		DBManager.getInstance().updateChannel(this);
 	}
-	
+
+	public boolean isCountryChannel()
+	{
+		return channelType == DBDefinition.CHANNEL_TYPE_COUNTRY;
+	}
+
+	public boolean isAllianceChannel()
+	{
+		return channelType == DBDefinition.CHANNEL_TYPE_ALLIANCE;
+	}
+
 	public boolean isModChannel()
 	{
-		return channelType == DBDefinition.CHANNEL_TYPE_USER && channelID.endsWith(DBDefinition.CHANNEL_ID_POSTFIX_MOD) && !channelID.equals(MailManager.CHANNELID_MOD);
+		return channelType == DBDefinition.CHANNEL_TYPE_USER && channelID.endsWith(DBDefinition.CHANNEL_ID_POSTFIX_MOD)
+				&& !channelID.equals(MailManager.CHANNELID_MOD);
 	}
-	
+
 	public boolean isMessageChannel()
 	{
-		return (channelType == DBDefinition.CHANNEL_TYPE_USER && !channelID.endsWith(DBDefinition.CHANNEL_ID_POSTFIX_MOD) && !channelID.equals(MailManager.CHANNELID_MOD) && !channelID.equals(MailManager.CHANNELID_MESSAGE)) ||
-				channelType == DBDefinition.CHANNEL_TYPE_CHATROOM;
+		return (channelType == DBDefinition.CHANNEL_TYPE_USER && !channelID.endsWith(DBDefinition.CHANNEL_ID_POSTFIX_MOD)
+				&& !channelID.equals(MailManager.CHANNELID_MOD) && !channelID.equals(MailManager.CHANNELID_MESSAGE))
+				|| channelType == DBDefinition.CHANNEL_TYPE_CHATROOM;
 	}
-	
+
 	public boolean isUserMailChannel()
 	{
-		return channelType == DBDefinition.CHANNEL_TYPE_USER && !channelID.endsWith(DBDefinition.CHANNEL_ID_POSTFIX_MOD) && DBManager.getInstance().isUserMailExistDifferentType(getChatTable(), MsgItem.MSG_TYPE_MOD);
+		return channelType == DBDefinition.CHANNEL_TYPE_USER && !channelID.endsWith(DBDefinition.CHANNEL_ID_POSTFIX_MOD)
+				&& DBManager.getInstance().isUserMailExistDifferentType(getChatTable(), MsgItem.MSG_TYPE_MOD);
 	}
-	
+
 	public String getLatestId()
 	{
-		if(StringUtils.isNotEmpty(channelID))
+		if (StringUtils.isNotEmpty(channelID))
 			return DBManager.getInstance().getSysMailChannelLatestId(channelID);
 		return "";
 	}
-	
-	public int getLatestTime()
+
+	public long getLatestTime()
 	{
-		if(StringUtils.isNotEmpty(channelID))
+		if (StringUtils.isNotEmpty(channelID))
 		{
-			if(channelType == DBDefinition.CHANNEL_TYPE_USER || channelType == DBDefinition.CHANNEL_TYPE_CHATROOM)
-			{
-				return DBManager.getInstance().getChatLatestTime(getChatTable().getTableNameAndCreate());
-			}
-			else if(channelType == DBDefinition.CHANNEL_TYPE_OFFICIAL)
+			if (channelType == DBDefinition.CHANNEL_TYPE_OFFICIAL)
 			{
 				return DBManager.getInstance().getSysMailChannelLatestTime(channelID);
+			}
+			else
+			{
+				return DBManager.getInstance().getChatLatestTime(getChatTable());
 			}
 		}
 		return 0;
 	}
-	
+
 	public boolean hasNoItemInChannel()
 	{
-		if(ChatServiceController.isNewMailUIEnable && 
-				((channelType == DBDefinition.CHANNEL_TYPE_OFFICIAL && !channelID.equals(MailManager.CHANNELID_MONSTER) && !channelID.equals(MailManager.CHANNELID_RESOURCE)))||
-				(channelType == DBDefinition.CHANNEL_TYPE_USER && (channelID.equals(MailManager.CHANNELID_MOD) || channelID.equals(MailManager.CHANNELID_MESSAGE))))
+		if (ChatServiceController.isNewMailUIEnable
+				&& ((channelType == DBDefinition.CHANNEL_TYPE_OFFICIAL && !channelID.equals(MailManager.CHANNELID_MONSTER)
+						&& !channelID.equals(MailManager.CHANNELID_RESOURCE) && !channelID.equals(MailManager.CHANNELID_KNIGHT)))
+				|| (channelType == DBDefinition.CHANNEL_TYPE_USER && (channelID.equals(MailManager.CHANNELID_MOD) || channelID
+						.equals(MailManager.CHANNELID_MESSAGE))))
 			return false;
 		boolean ret = false;
-		if((channelType == DBDefinition.CHANNEL_TYPE_USER || channelType == DBDefinition.CHANNEL_TYPE_CHATROOM) &&
-				(msgList == null || msgList.size() <= 0 ))
+		if ((channelType == DBDefinition.CHANNEL_TYPE_USER || channelType == DBDefinition.CHANNEL_TYPE_CHATROOM) && !hasMsgItemInDB())
 		{
 			ret = true;
 		}
-		else if(channelType == DBDefinition.CHANNEL_TYPE_OFFICIAL && (mailDataList == null || mailDataList.size() <= 0 ))
+		else if (channelType == DBDefinition.CHANNEL_TYPE_OFFICIAL && !hasMailDataInDB())
 		{
 			ret = true;
 		}
 		return ret;
 	}
-	
+
 	public void clearAllSysMail()
 	{
-		if(mailDataList!=null && mailDataList.size()>0)
+		if (mailDataList != null && mailDataList.size() > 0)
 		{
-			for(int i = 0;i<mailDataList.size();i++)
+			boolean hasDetectMail = false;
+			for (int i = 0; i < mailDataList.size(); i++)
 			{
 				MailData mail = mailDataList.get(i);
-				if(mail!=null && StringUtils.isNotEmpty(mail.getUid()))
+				if (mail != null && StringUtils.isNotEmpty(mail.getUid()))
+				{
 					DBManager.getInstance().deleteSysMail(this, mail.getUid());
+					if (!hasDetectMail && mail.getType() == MailManager.MAIL_DETECT_REPORT)
+						hasDetectMail = true;
+				}
 			}
+			if (hasDetectMail)
+				DBManager.getInstance().getDetectMailInfo();
 			mailDataList.clear();
+			mailUidList.clear();
 		}
 
-		unreadCount--;
+		unreadCount = 0;
 		ChannelListFragment.onChannelRefresh();
-		latestModifyTime=TimeManager.getInstance().getCurrentTimeMS();
+		latestModifyTime = TimeManager.getInstance().getCurrentTimeMS();
 		ChannelManager.getInstance().deleteChannel(this);
 	}
+
+	private static int	loadCnt		= 0;
+	private boolean		initLoaded	= false;
+
+	public void loadMoreMsg()
+	{
+		initLoaded = true;
+		loadCnt++;
+
+		// if (channelType != DBDefinition.CHANNEL_TYPE_USER &&
+		// !WebSocketManager.isRecieveFromWebSocket(channelType))
+		// {
+		// int dbMinSeqId = (dbMaxSeqId - ChannelManager.LOAD_MORE_COUNT + 1) >
+		// 0 ? (dbMaxSeqId - ChannelManager.LOAD_MORE_COUNT + 1) : 1;
+		// ChannelManager.getInstance().loadMoreMsgFromDB(this, dbMinSeqId,
+		// prevDBMaxSeqId, -1, false);
+		// }
+		// else
+		// {
+		// // 以前没有这个分支，15.12.2新加，针对MsgChannelAdapter中可能的调用
+		// ChannelManager.getInstance().loadMoreMsgFromDB(this, -1, -1,
+		// getMinCreateTime(), true);
+		// }
+
+		ChannelManager.getInstance().loadMoreMsgFromDB(this, -1, -1, getMinCreateTime(), true);
+	}
+
+	/**
+	 * 聊天型channel已经完成初次加载（从网络或db加载历史消息，收到push消息）
+	 */
+	public boolean hasInitLoaded()
+	{
+		return initLoaded == true || msgList.size() > 0;
+	}
+
+	public boolean hasMsgItemInDB()
+	{
+		return DBManager.getInstance().hasMsgItemInTable(getChatTable());
+	}
+
+	public boolean hasMailDataInDB()
+	{
+		return DBManager.getInstance().hasMailDataInDB(channelID);
+	}
+
+	public List<String> getMailUidArrayByConfigType(int configType)
+	{
+		List<String> uidArray = new ArrayList<String>();
+		List<MailData> mailList = DBManager.getInstance().getSysMailFromDB(channelID, configType);
+		if (mailList != null && mailList.size() > 0)
+		{
+			for (int i = 0; i < mailList.size(); i++)
+			{
+				MailData mailData = mailList.get(i);
+				if (mailData.isUnread() && StringUtils.isNotEmpty(mailData.getUid()) && !uidArray.contains(mailData.getUid()))
+				{
+					uidArray.add(mailData.getUid());
+				}
+			}
+		}
+		return uidArray;
+	}
+
+	public String getMailUidsByConfigType(int configType)
+	{
+		String uids = "";
+		List<String> mailUidArray = getMailUidArrayByConfigType(configType);
+		if (mailUidArray != null && mailUidArray.size() > 0)
+		{
+			uids = ChannelListFragment.getUidsByArray(mailUidArray);
+		}
+		return uids;
+	}
+
+	public void getTimeNeedShowMsgIndex()
+	{
+		if (channelType != DBDefinition.CHANNEL_TYPE_OFFICIAL && msgList != null && msgList.size() > 0)
+		{
+			if (msgTimeIndexArray == null)
+				msgTimeIndexArray = new ArrayList<Integer>();
+			else
+				msgTimeIndexArray.clear();
+			int tempCreateTime = 0;
+			for (int i = 0; i < msgList.size(); i++)
+			{
+				MsgItem msgItem = msgList.get(i);
+				if (msgItem.createTime - tempCreateTime > 5 * 60)
+				{
+					tempCreateTime = msgItem.createTime;
+					msgTimeIndexArray.add(Integer.valueOf(i));
+				}
+			}
+		}
+	}
+
+	public void getLoadedTimeNeedShowMsgIndex(int loadCount)
+	{
+		if (channelType != DBDefinition.CHANNEL_TYPE_OFFICIAL && msgList != null && msgList.size() > 0)
+		{
+			if (msgTimeIndexArray == null)
+			{
+				getTimeNeedShowMsgIndex();
+			}
+			else
+			{
+				if (msgTimeIndexArray.size() > 0)
+					msgTimeIndexArray.remove(Integer.valueOf(0));
+				for (int i = 0; i < msgTimeIndexArray.size(); i++)
+				{
+					Integer indexInt = msgTimeIndexArray.get(i);
+					if (indexInt != null)
+					{
+						msgTimeIndexArray.set(i, Integer.valueOf(indexInt.intValue() + loadCount));
+					}
+				}
+
+				int tempCreateTime = 0;
+				for (int i = 0; i < msgList.size() && i < loadCount + 1; i++)
+				{
+					MsgItem msgItem = msgList.get(i);
+					if (msgItem.createTime - tempCreateTime > 5 * 60)
+					{
+						tempCreateTime = msgItem.createTime;
+						msgTimeIndexArray.add(Integer.valueOf(i));
+					}
+				}
+			}
+		}
+	}
+
+	public List<Integer> getMsgIndexArrayForTimeShow()
+	{
+		return msgTimeIndexArray;
+	}
+
+	public void querySysMailCountFromDB()
+	{
+		sysMailCountInDB = ChannelManager.getInstance().getSysMailDBCount(this);
+	}
+
+	public void updateSysMailCountFromDB(int count)
+	{
+		if (sysMailCountInDB <= 0 || sysMailCountInDB + count < 0)
+			querySysMailCountFromDB();
+		else
+			sysMailCountInDB += count;
+	}
+
+	public int getSysMailCountInDB()
+	{
+		if (sysMailCountInDB == 0)
+			querySysMailCountFromDB();
+		return sysMailCountInDB;
+	}
+
+	public boolean isDialogChannel()
+	{
+		return StringUtils.isNotEmpty(channelID)
+				&& (channelID.equals(MailManager.CHANNELID_RESOURCE) || channelID.equals(MailManager.CHANNELID_KNIGHT) || channelID
+						.equals(MailManager.CHANNELID_MONSTER));
+	}
+
 }

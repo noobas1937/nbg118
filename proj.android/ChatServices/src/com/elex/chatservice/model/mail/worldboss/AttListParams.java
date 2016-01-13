@@ -2,49 +2,73 @@ package com.elex.chatservice.model.mail.worldboss;
 
 import com.elex.chatservice.model.mail.monster.AttParams;
 
-public class AttListParams {
-	private int picVer;
-	private String uid;
-	private String name;
-	private int leader;
-	private AttParams att;
-	private String pic;
-	public int getPicVer() {
+public class AttListParams
+{
+	private int			picVer;
+	private String		uid;
+	private String		name;
+	private int			leader;
+	private AttParams	att;
+	private String		pic;
+
+	public int getPicVer()
+	{
 		return picVer;
 	}
-	public void setPicVer(int picVer) {
+
+	public void setPicVer(int picVer)
+	{
 		this.picVer = picVer;
 	}
-	public String getUid() {
+
+	public String getUid()
+	{
 		return uid;
 	}
-	public void setUid(String uid) {
+
+	public void setUid(String uid)
+	{
 		this.uid = uid;
 	}
-	public String getName() {
+
+	public String getName()
+	{
 		return name;
 	}
-	public void setName(String name) {
+
+	public void setName(String name)
+	{
 		this.name = name;
 	}
-	public int getLeader() {
+
+	public int getLeader()
+	{
 		return leader;
 	}
-	public void setLeader(int leader) {
+
+	public void setLeader(int leader)
+	{
 		this.leader = leader;
 	}
-	public AttParams getAtt() {
+
+	public AttParams getAtt()
+	{
 		return att;
 	}
-	public void setAtt(AttParams att) {
+
+	public void setAtt(AttParams att)
+	{
 		this.att = att;
 	}
-	public String getPic() {
+
+	public String getPic()
+	{
 		return pic;
 	}
-	public void setPic(String pic) {
+
+	public void setPic(String pic)
+	{
 		this.pic = pic;
 	}
-	
-	
+
 }

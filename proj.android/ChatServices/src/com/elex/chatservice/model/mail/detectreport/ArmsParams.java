@@ -1,20 +1,28 @@
 package com.elex.chatservice.model.mail.detectreport;
 
-public class ArmsParams {
-	private String id;
-	private int num;
-	
-	public String getId() {
+public class ArmsParams
+{
+	private String	id;
+	private int		num;
+
+	public String getId()
+	{
 		return id;
 	}
-	public void setId(String id) {
+
+	public void setId(String id)
+	{
 		this.id = id;
 	}
-	public int getNum() {
+
+	public int getNum()
+	{
 		return num;
 	}
-	public void setNum(int num) {
+
+	public void setNum(int num)
+	{
 		this.num = num;
 	}
-	
+
 }

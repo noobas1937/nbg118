@@ -6,7 +6,7 @@ import com.elex.chatservice.util.LogUtil;
 
 public class AllianceApplyMailData extends MailData
 {
-	private AllianceApplyMailContents detail;
+	private AllianceApplyMailContents	detail;
 
 	public AllianceApplyMailContents getDetail()
 	{
@@ -18,27 +18,32 @@ public class AllianceApplyMailData extends MailData
 		this.detail = detail;
 	}
 
-	public void parseContents() {
+	public void parseContents()
+	{
 		super.parseContents();
-		if(!getContents().equals(""))
+		if(!needParseByForce)
+			return;
+		if (!getContents().equals(""))
 		{
-			try {
-				detail=JSON.parseObject(getContents(),AllianceApplyMailContents.class);
-				if(detail!=null)
-					hasParseLocal = true;
-			} catch (Exception e) {
-				LogUtil.trackMessage("[AllianceApplyMailContents parseContents error]: contents:"+getContents(), "", "");
+			try
+			{
+				detail = JSON.parseObject(getContents(), AllianceApplyMailContents.class);
+				hasMailOpend = true;
+			}
+			catch (Exception e)
+			{
+				LogUtil.trackMessage("[AllianceApplyMailContents parseContents error]: contents:" + getContents(), "", "");
 			}
 		}
 	}
-	
+
 	@Override
 	public void setMailDealStatus()
 	{
-		if(detail!=null)
+		if (detail != null)
 		{
 			detail.setDeal(1);
-			if(!getContents().equals("") && getContents().contains("deal"))
+			if (!getContents().equals("") && getContents().contains("deal"))
 			{
 				setContents(JSON.toJSONString(detail));
 			}

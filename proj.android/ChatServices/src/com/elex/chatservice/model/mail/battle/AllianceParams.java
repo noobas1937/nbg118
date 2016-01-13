@@ -1,21 +1,28 @@
 package com.elex.chatservice.model.mail.battle;
 
-public class AllianceParams {
-	private String allianceIcon;
-	private String allianceName;
-	
-	public String getAllianceIcon() {
+public class AllianceParams
+{
+	private String	allianceIcon;
+	private String	allianceName;
+
+	public String getAllianceIcon()
+	{
 		return allianceIcon;
 	}
-	public void setAllianceIcon(String allianceIcon) {
+
+	public void setAllianceIcon(String allianceIcon)
+	{
 		this.allianceIcon = allianceIcon;
 	}
-	public String getAllianceName() {
+
+	public String getAllianceName()
+	{
 		return allianceName;
 	}
-	public void setAllianceName(String allianceName) {
+
+	public void setAllianceName(String allianceName)
+	{
 		this.allianceName = allianceName;
 	}
-	
-	
+
 }
