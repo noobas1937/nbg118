@@ -326,7 +326,7 @@ YesNoDialog* YesNoDialog::show(const char *content,CCCallFunc*yesfunc,int gold,b
         dialog->onClickNoticeBtn(NULL, Control::EventType::TOUCH_DOWN);
     }
     PopupViewController::getInstance()->addPopupView(dialog, false);
-    CC_SAFE_RELEASE_NULL(dialog);
+    if (dialog) dialog->release();
     return dialog;
 }
 
