@@ -382,7 +382,7 @@ void AllianceInviteView::getAllianceMemberData(CCObject* param){
             infoMember->setAbbr(abbr);
             infoMember->setUserLevel(userLv);
             m_data->addObject(infoMember);
-            CC_SAFE_RELEASE_NULL(infoMember);
+            infoMember->release();
         }
     }
     refresh(NULL);
@@ -462,7 +462,7 @@ void AllianceInviteView::updateData(CCObject* param){
             infoMember->setAbbr(abbr);
             infoMember->setUserLevel(userLv);
             m_data->addObject(infoMember);
-            CC_SAFE_RELEASE_NULL(infoMember);
+            infoMember->release();
         }
     }
     refresh(NULL);

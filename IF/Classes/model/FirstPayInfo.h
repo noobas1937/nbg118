@@ -20,7 +20,7 @@ public:
     FirstPayInfo():rewardStatus(0),firstPayReward(NULL){};
     ~FirstPayInfo(){
         if(firstPayReward){
-            CC_SAFE_RELEASE_NULL(firstPayReward);
+            firstPayReward->release();
             firstPayReward = NULL;
         };
     };

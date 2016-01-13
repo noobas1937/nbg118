@@ -31,7 +31,7 @@ UserUpgradeView::UserUpgradeView(){
 };
 
 UserUpgradeView::~UserUpgradeView(){
-    CC_SAFE_RELEASE_NULL(m_cellArr);
+    m_cellArr->release();
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_FBFeedDialogResult);
 };
 

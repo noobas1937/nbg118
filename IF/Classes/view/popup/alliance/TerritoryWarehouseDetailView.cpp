@@ -320,7 +320,7 @@ void TerritoryWarehouseDetailView::onDetailCallback(cocos2d::CCObject *obj) {
                     else
                         m_data->addObject(resInfo);
                     
-                    CC_SAFE_RELEASE_NULL(resInfo);
+                    resInfo->release();
                 }
             }
             m_totalNum = m_data->count();
@@ -329,7 +329,7 @@ void TerritoryWarehouseDetailView::onDetailCallback(cocos2d::CCObject *obj) {
                 resInfo->index = 2;
                 resInfo->open = false;
                 m_data->addObject(resInfo);
-                CC_SAFE_RELEASE_NULL(resInfo);
+                resInfo->release();
             }
         }
     }

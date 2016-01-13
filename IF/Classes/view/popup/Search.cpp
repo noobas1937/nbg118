@@ -355,7 +355,7 @@ void SearchView::getAllianceData(CCObject* param)
             AllianceInfo* allianceInfo = new AllianceInfo();
             allianceInfo->updateAllianceInfo(item);
             m_allianceData->addObject(allianceInfo);
-            CC_SAFE_RELEASE_NULL(allianceInfo);
+            allianceInfo->release();
         }
         if (list->count() < m_totalAllianceNum) {
             m_allianceNumPerPage = list->count();
@@ -372,7 +372,7 @@ void SearchView::getAllianceData(CCObject* param)
                 AllianceInfo* allianceInfo = new AllianceInfo();
                 allianceInfo->updateAllianceInfo(item);
                 m_allianceData->addObject(allianceInfo);
-                CC_SAFE_RELEASE_NULL(allianceInfo);
+                allianceInfo->release();
             }
         }
         generateTabViewMore();

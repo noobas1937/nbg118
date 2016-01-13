@@ -33,7 +33,7 @@ bool AllianceRankListCommand::handleRecieve(cocos2d::CCDictionary *dict)
         vector<AllianceRankInfo*>::iterator it;
         for (it = GlobalData::shared()->rankListInfo.allianceRankList.begin(); it != GlobalData::shared()->rankListInfo.allianceRankList.end(); it++) {
             AllianceRankInfo* tmp = *it;
-            CC_SAFE_RELEASE_NULL(tmp);
+            tmp->release();
             //GlobalData::shared()->allianceDonateAllList.erase(it);
             
         }
@@ -78,7 +78,7 @@ bool AllianceKillRankListCommand::handleRecieve(cocos2d::CCDictionary *dict)
         vector<AllianceRankInfo*>::iterator it;
         for (it = GlobalData::shared()->rankListInfo.allianceRankList.begin(); it != GlobalData::shared()->rankListInfo.allianceRankList.end(); it++) {
             AllianceRankInfo* tmp = *it;
-            CC_SAFE_RELEASE_NULL(tmp);
+            tmp->release();
             //GlobalData::shared()->allianceDonateAllList.erase(it);
             
         }
@@ -123,7 +123,7 @@ bool PlayerRankListCommand::handleRecieve(cocos2d::CCDictionary *dict)
         vector<PlayerRankInfo*>::iterator it;
         for (it = GlobalData::shared()->rankListInfo.playerRankList.begin(); it != GlobalData::shared()->rankListInfo.playerRankList.end(); it++) {
             PlayerRankInfo* tmp = *it;
-            CC_SAFE_RELEASE_NULL(tmp);
+            tmp->release();
             //GlobalData::shared()->allianceDonateAllList.erase(it);
             
         }
@@ -167,7 +167,7 @@ bool PlayerKillRankListCommand::handleRecieve(cocos2d::CCDictionary *dict)
         vector<PlayerRankInfo*>::iterator it;
         for (it = GlobalData::shared()->rankListInfo.playerRankList.begin(); it != GlobalData::shared()->rankListInfo.playerRankList.end(); it++) {
             PlayerRankInfo* tmp = *it;
-            CC_SAFE_RELEASE_NULL(tmp);
+            tmp->release();
             //GlobalData::shared()->allianceDonateAllList.erase(it);
             
         }
@@ -210,7 +210,7 @@ bool PlayerBuildingRankListCommand::handleRecieve(cocos2d::CCDictionary *dict)
         vector<PlayerRankInfo*>::iterator it;
         for (it = GlobalData::shared()->rankListInfo.playerRankList.begin(); it != GlobalData::shared()->rankListInfo.playerRankList.end(); it++) {
             PlayerRankInfo* tmp = *it;
-            CC_SAFE_RELEASE_NULL(tmp);
+            tmp->release();
             //GlobalData::shared()->allianceDonateAllList.erase(it);
             
         }
@@ -251,7 +251,7 @@ bool PlayerLevelRankListCommand::handleRecieve(cocos2d::CCDictionary *dict)
         vector<PlayerRankInfo*>::iterator it;
         for (it = GlobalData::shared()->rankListInfo.playerRankList.begin(); it != GlobalData::shared()->rankListInfo.playerRankList.end(); it++) {
             PlayerRankInfo* tmp = *it;
-            CC_SAFE_RELEASE_NULL(tmp);
+            tmp->release();
         }
         GlobalData::shared()->rankListInfo.playerRankList.clear();
         CCObject *itemObject;

@@ -47,7 +47,7 @@ void DataParse::update(float time){
 
 void DataParse::killSelf(CCObject *obj){
     CCDirector::sharedDirector()->getScheduler()->unscheduleAllForTarget(this);
-    CC_SAFE_RELEASE_NULL(m_dict);
+    m_dict->release();
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, "xiaomiChangeAccount");
     this->release();
 }

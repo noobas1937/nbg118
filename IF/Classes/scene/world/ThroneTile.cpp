@@ -583,7 +583,7 @@ void WarBuildInfoPopUpView::historyDataBack(CCObject *obj){
         info->color = color;
         info->type = 1;
         m_fightInfos->addObject(info);
-        CC_SAFE_RELEASE_NULL(info);
+        info->release();
     }
     CCPoint curr = m_tabView->getContentOffset();
     CCPoint min = m_tabView->minContainerOffset();
@@ -891,7 +891,7 @@ void WarBuildInfoPopUpView::kingRecordCallBack(CCObject *param){
             info->abbr = kAbbr;
             info->kPeriodId = kPeriodId;
             m_recordKings->addObject(info);
-            CC_SAFE_RELEASE_NULL(info);
+            info->release();
         }
     }
     this->sortData();

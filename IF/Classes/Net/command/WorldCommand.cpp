@@ -728,7 +728,7 @@ bool WorldCrossCityMoveCommand::handleRecieve(cocos2d::CCDictionary *dict)
         MailController::getInstance()->quitAllChatRoom();
         CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(REMOVE_ALL_HINT);
         if(SceneController::getInstance()->showBG){
-            CC_SAFE_RELEASE_NULL(SceneController::getInstance()->showBG);
+            SceneController::getInstance()->showBG->release();
             SceneController::getInstance()->showBG = NULL;
         }
         WorldMapView::instance()->removeCover();
@@ -769,7 +769,7 @@ bool WorldCrossCityMoveCommand::handleRecieve(cocos2d::CCDictionary *dict)
         dict->setObject(CCString::create("logout"), "cmd");
         dict->setObject(_params, "params");
         cmd->handleRecieve(dict);
-        CC_SAFE_RELEASE_NULL(cmd);
+        cmd->release();
 //        this->retain();
 //        CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(WorldCrossCityMoveCommand::onNext), this, 0.0f,0, 0.02f, false);
     }

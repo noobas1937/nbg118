@@ -394,7 +394,7 @@ void ChatController::getUserInfoCallback(CCObject *pObj)
         }
     }
     PopupViewController::getInstance()->addPopupInView(RoleInfoView::create(info,1));
-    CC_SAFE_RELEASE_NULL(info);
+    info->release();
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 //    ChatServiceCocos2dx::hideChatInputView();
@@ -483,7 +483,7 @@ void ChatController::getMultiUserInfo(vector<std::string> *uids)
         cmd->sendAndRelease();
     }else{
         CCLOG("isProcessing 会导致超时");
-        CC_SAFE_RELEASE_NULL(cmd);
+        cmd->release();
     }
 }
 
@@ -1050,7 +1050,7 @@ void ChatController::localTranslate(){
     request->setResponseCallback(this, httpresponse_selector(ChatController::onLocalTranslate));
     request->setTag("chat_translate_request");
     CCHttpClient::getInstance()->send(request);
-    CC_SAFE_RELEASE_NULL(request);
+    request->release();
 }
 void ChatController::onLocalTranslate(CCHttpClient *client, CCHttpResponse *response){
     if(!mTransChat)

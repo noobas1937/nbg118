@@ -342,7 +342,7 @@ void TerritoryResourceDetailView::onDetailCallback(cocos2d::CCObject *obj) {
                     m_troopMax = marchInfo.troopMax;
                     m_changeCollectSpdTime = marchInfo.changeCollectSpdTime / 1000;
                 }
-                CC_SAFE_RELEASE_NULL(info);
+                info->release();
             }
         }
     }
@@ -371,14 +371,14 @@ void TerritoryResourceDetailView::onDetailCallback(cocos2d::CCObject *obj) {
             else
                 info->setIndex(2);
             m_data->addObject(info);
-            CC_SAFE_RELEASE_NULL(info);
+            info->release();
         }
         info = new YuanJunInfo();
         CCArray* array = CCArray::create();
         info->setSoldiers(array);
         info->setIndex(3);
         m_data->addObject(info);
-        CC_SAFE_RELEASE_NULL(info);
+        info->release();
     }
     else if (m_cityInfo.m_superMineInfo.trstat == 3 || m_cityInfo.m_superMineInfo.trstat == 4) {
         if (m_data->count() == 0) {
@@ -388,7 +388,7 @@ void TerritoryResourceDetailView::onDetailCallback(cocos2d::CCObject *obj) {
             info->setCanUse(true);
             info->setIndex(2);
             m_data->addObject(info);
-            CC_SAFE_RELEASE_NULL(info);
+            info->release();
 
         }
     }
@@ -724,7 +724,7 @@ void TerritoryResourceDetailView::qianFanCallBack(CCObject *data)
         info->setIndex(2);
         m_data->insertObject(info, num-2);
         //        m_data->addObject(info);
-        CC_SAFE_RELEASE_NULL(info);
+        info->release();
         m_tabView->reloadData();
     }
 }

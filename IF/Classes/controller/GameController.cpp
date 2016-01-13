@@ -351,7 +351,7 @@ void GameController::quitGame(CCObject* p){
 void GameController::redoPushData(float dt){
     if(GlobalData::shared()->pushData != NULL){
         PushBase::handleResponse(GlobalData::shared()->pushData);
-        CC_SAFE_RELEASE_NULL(GlobalData::shared()->pushData);
+        GlobalData::shared()->pushData->release();
         GlobalData::shared()->pushData = NULL;
     }
 }
@@ -492,7 +492,7 @@ void GameController::sendURLRequest(string url)
     tag.append(CC_ITOA(_logseq++));
     pHttpRequest->setTag(tag.c_str());
     CCHttpClient::getInstance()->send(pHttpRequest);
-    CC_SAFE_RELEASE_NULL(pHttpRequest);
+    pHttpRequest->release();
 }
 
 void GameController::doUserLevelUp(cocos2d::CCObject *obj)

@@ -341,7 +341,7 @@ void ChangeServeView::setData(){
     request->setResponseCallback(this, httpresponse_selector(ChangeServeView::onGetServerList));
     request->setTag("error_report");
     CCHttpClient::getInstance()->send(request);
-    CC_SAFE_RELEASE_NULL(request);
+    request->release();
 }
 
 void ChangeServeView::onGetServerList(CCHttpClient* client, CCHttpResponse* response)

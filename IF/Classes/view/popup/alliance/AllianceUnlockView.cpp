@@ -113,7 +113,7 @@ void AllianceUnlockView::getServerData(CCObject* param){
                     info->uid = dicInfo->valueForKey("uid")->getCString();
                     info->picVer = dicInfo->valueForKey("picVer")->intValue();
                     m_srcData->addObject(info);
-                    CC_SAFE_RELEASE_NULL(info);
+                    info->release();
                 }
             }
         }

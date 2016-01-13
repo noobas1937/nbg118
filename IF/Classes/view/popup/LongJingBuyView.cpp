@@ -22,7 +22,7 @@ LongJingBuyView* LongJingBuyView::show(const char *url,const char* title,const c
     dialog->setYesCallback(func);
     dialog->setStartPos(startPos);
     PopupViewController::getInstance()->addPopupView(dialog, false);
-    CC_SAFE_RELEASE_NULL(dialog);
+    dialog->release();
     return dialog;
 }
 

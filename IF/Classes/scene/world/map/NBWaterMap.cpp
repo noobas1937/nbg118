@@ -123,7 +123,7 @@ void NBWaterMap::initProgram()
     pProgram->initWithVertexShaderByteArray(vertSource, fragSource);
     
     setShaderProgram(pProgram);
-    CC_SAFE_RELEASE_NULL(pProgram);
+    pProgram->release();
     
     CHECK_GL_ERROR_DEBUG();
     

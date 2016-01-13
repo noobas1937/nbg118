@@ -255,7 +255,7 @@ void MailGiftCell::refreshData(CCObject *ccObj){
     mItemID = ccInteger->getValue();
     if(ccInteger1){
         setItemCount(ccInteger1->getValue());
-        CC_SAFE_RELEASE_NULL(ccObj);
+        ccObj->release();
     }
     int propCount = 0;
     if(ToolController::getInstance()->m_toolInfos.find(mPropID) != ToolController::getInstance()->m_toolInfos.end()){

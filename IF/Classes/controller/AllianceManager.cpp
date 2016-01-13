@@ -337,7 +337,7 @@ void AllianceManager::parseEvents(CCDictionary* dic){
 void AllianceManager::clearEvents(){
     map<std::string, AllianceEventInfo*>::iterator it;
     for(it = eventsMap.begin(); it != eventsMap.end(); it++){
-        CC_SAFE_RELEASE_NULL(it->second);
+        it->second->release();
     }
     eventsMap.clear();
 }

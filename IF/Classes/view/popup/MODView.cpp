@@ -390,7 +390,7 @@ void MODManagerPopUpView::searchBack(CCObject *obj){
     if(len>1) len = 1;
     m_expBar->setContentSize(CCSize(len*435,23));
 
-    CC_SAFE_RELEASE_NULL(m_currentInfo);
+    m_currentInfo->release();
 }
 
 void MODManagerPopUpView::getData(){
@@ -417,7 +417,7 @@ void MODManagerPopUpView::getDataBack(CCObject *obj){
             m_scrollView->addChild(cell);
             cell->setPosition(0, startY);
             startY += 145;
-            CC_SAFE_RELEASE_NULL(info);
+            info->release();
         }
     }
     auto size = this->m_modContainer->getContentSize();

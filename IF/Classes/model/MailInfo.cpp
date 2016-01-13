@@ -406,7 +406,7 @@ void MailInfo::parseBattleMail(CCDictionary* dict){
         CCARRAY_FOREACH(arr, obj){
             GeneralInfo *info = new GeneralInfo(dynamic_cast<CCDictionary*>(obj));
             ret->addObject(info);
-            CC_SAFE_RELEASE_NULL(info);
+            info->release();
         }
         ret->retain();
         return ret;
@@ -562,109 +562,109 @@ MailInfo::~MailInfo(){
 
     if(detectReport){
         detectReport->removeAllObjects();
-        CC_SAFE_RELEASE_NULL(detectReport);
+        detectReport->release();
         detectReport = NULL;
     }
     if(attUser){
-        CC_SAFE_RELEASE_NULL(attUser);
+        attUser->release();
         attUser = NULL;
     }
     if(defUser){
-        CC_SAFE_RELEASE_NULL(defUser);
+        defUser->release();
         defUser = NULL;
     }
     if(defAlliance){
-        CC_SAFE_RELEASE_NULL(defAlliance);
+        defAlliance->release();
         defAlliance = NULL;
     }
     if(atkAlliance){
-        CC_SAFE_RELEASE_NULL(atkAlliance);
+        atkAlliance->release();
         atkAlliance = NULL;
     }
     if(atkHelpReport){
-        CC_SAFE_RELEASE_NULL(atkHelpReport);
+        atkHelpReport->release();
         atkHelpReport = NULL;
     }
     if(defHelpReport){
-        CC_SAFE_RELEASE_NULL(defHelpReport);
+        defHelpReport->release();
         defHelpReport = NULL;
     }
     if(atkHelper){
-        CC_SAFE_RELEASE_NULL(atkHelper);
+        atkHelper->release();
         atkHelper = NULL;
     }
     if(defHelper){
-        CC_SAFE_RELEASE_NULL(defHelper);
+        defHelper->release();
         defHelper = NULL;
     }
     if(atkArmyTotal){
-        CC_SAFE_RELEASE_NULL(atkArmyTotal);
+        atkArmyTotal->release();
         atkArmyTotal = NULL;
     }
     if(defArmyTotal){
-        CC_SAFE_RELEASE_NULL(defArmyTotal);
+        defArmyTotal->release();
         defArmyTotal = NULL;
     }
     if(trainGenerals){
         trainGenerals->removeAllObjects();
-        CC_SAFE_RELEASE_NULL(trainGenerals);
+        trainGenerals->release();
         trainGenerals = NULL;
     }
     if(trainGeneralExp){
         trainGeneralExp->removeAllObjects();
-        CC_SAFE_RELEASE_NULL(trainGeneralExp);
+        trainGeneralExp->release();
         trainGeneralExp = NULL;
     }
     if(attReport){
         attReport->removeAllObjects();
-        CC_SAFE_RELEASE_NULL(attReport);
+        attReport->release();
     }
     if(defReport){
         defReport->removeAllObjects();
-        CC_SAFE_RELEASE_NULL(defReport);
+        defReport->release();
         defReport = NULL;
     }
     if(atkGen){
         atkGen->removeAllObjects();
-        CC_SAFE_RELEASE_NULL(atkGen);
+        atkGen->release();
         atkGen = NULL;
     }
     if(defGen){
         defGen->removeAllObjects();
-        CC_SAFE_RELEASE_NULL(defGen);
+        defGen->release();
         defGen = NULL;
     }
     if(reward){
         reward->removeAllObjects();
-        CC_SAFE_RELEASE_NULL(reward);
+        reward->release();
         reward = NULL;
     }
     if(occupyGeneral){
         occupyGeneral->removeAllObjects();
-        CC_SAFE_RELEASE_NULL(occupyGeneral);
+        occupyGeneral->release();
         occupyGeneral = NULL;
     }
     if(mazeReward){
         mazeReward->removeAllObjects();
-        CC_SAFE_RELEASE_NULL(mazeReward);
+        mazeReward->release();
         mazeReward = NULL;
     }
     if(mazeSodiler){
-        CC_SAFE_RELEASE_NULL(mazeSodiler);
+        mazeSodiler->release();
         mazeSodiler = NULL;
     }
     if(monsters){
         monsters->removeAllObjects();
-        CC_SAFE_RELEASE_NULL(monsters);
+        monsters->release();
         monsters = NULL;
     }
     if(dialogs){
         dialogs->removeAllObjects();
-        CC_SAFE_RELEASE_NULL(dialogs);
+        dialogs->release();
         dialogs = NULL;
     }
     if(ckfWarInfo){
-        CC_SAFE_RELEASE_NULL(ckfWarInfo);
+        ckfWarInfo->release();
         ckfWarInfo = NULL;
     }
 //    if(crMemberUidArray)

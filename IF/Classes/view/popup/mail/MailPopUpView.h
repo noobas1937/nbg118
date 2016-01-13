@@ -51,7 +51,7 @@ class MailPopUpView : public PopupBaseView
 {
 public:
     static MailPopUpView* create(int panelType = USERMAIL);
-    ~MailPopUpView(){CC_SAFE_RELEASE_NULL(m_data);};
+    ~MailPopUpView(){m_data->release();};
     
 protected:
     // scrollview delegate

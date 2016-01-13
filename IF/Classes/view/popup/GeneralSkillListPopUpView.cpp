@@ -1772,7 +1772,7 @@ LinePath::~LinePath(){
     map<int, CCArray*>::iterator it;
     for(it = m_allLines.begin(); it != m_allLines.end(); it++){
         it->second->removeAllObjects();
-        CC_SAFE_RELEASE_NULL(it->second);
+        it->second->release();
     }
     m_allLines.clear();
 }

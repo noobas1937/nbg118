@@ -170,10 +170,10 @@ void TerritoryTowerTipsView::showAllianceInfo(CCObject* obj)
         alliance->updateAllianceInfo(dicAlliance);
         if(alliance->uid==uid){
             PopupViewController::getInstance()->addPopupInView(CheckAllianceInfoView::create(alliance));
-            CC_SAFE_RELEASE_NULL(alliance);
+            alliance->release();
             break;
         }
-        CC_SAFE_RELEASE_NULL(alliance);
+        alliance->release();
     }
 }
 

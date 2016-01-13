@@ -657,7 +657,7 @@ std::string CCCommonUtils::getBonusString(cocos2d::CCArray *rewards){
        return ret.substr(0, ret.length() - 1);
     }
     return ret;
-    CC_SAFE_RELEASE_NULL(rewards);
+    rewards->release();
 }
 std::string CCCommonUtils::getMoreLanguageType(std::string sysTemKey){
     string type = "";
@@ -1614,7 +1614,7 @@ CCSprite* CCCommonUtils::graylightWithCCSprite(CCSprite* oldSprite,bool isLight)
     texture->initWithImage(finalImage);
     CCSprite* newSprite = CCSprite::createWithTexture(texture);
     delete finalImage;
-    CC_SAFE_RELEASE_NULL(texture);
+    texture->release();
     return newSprite;
 }
 
@@ -3779,7 +3779,7 @@ void CCCommonUtils::initGeneral(CCDictionary *params){
     if (generalArr != NULL && generals.empty()) {
         std::map<std::string, SkillCDInfo*>::iterator cdIt;
         for(cdIt = GeneralManager::getInstance()->SkillCDMap.begin(); cdIt != GeneralManager::getInstance()->SkillCDMap.end(); cdIt++){
-            CC_SAFE_RELEASE_NULL(cdIt->second);
+            cdIt->second->release();
         }
         GeneralManager::getInstance()->SkillCDMap.clear();
         int length = generalArr->count();

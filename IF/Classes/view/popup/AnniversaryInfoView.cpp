@@ -428,7 +428,7 @@ void AnniversaryInfoView::getImgUrl(cocos2d::CCObject *pObj)
     pHttpRequest->setTag("CreateShareImage");
     
     HFHttpClient::getInstance()->send(pHttpRequest);
-    CC_SAFE_RELEASE_NULL(pHttpRequest);
+    pHttpRequest->release();
 }
 
 void AnniversaryInfoView::onHttpRequestCompleted(HFHttpClient *pSender, HFHttpResponse *pResponse)

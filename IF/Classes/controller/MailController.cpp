@@ -118,9 +118,9 @@ void MailController::addMails(cocos2d::CCArray *arr,bool isreadContent){
     for(int i = 0; i < length; i++){
         info = _dict(arr->objectAtIndex(i));
         addMailToList(info,isreadContent);
-        CC_SAFE_RELEASE_NULL(info);
+        info->release();
     }
-    CC_SAFE_RELEASE_NULL(arr);
+    arr->release();
     CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MAIL_LIST_CHANGE);
     CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MAIL_SAVE_LIST_CHANGE);
     CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MAIL_PERSON_CHAT_CHANGE);
@@ -834,7 +834,7 @@ void MailController::removeMail(std::string uids){
                 if(mail->save == 1){
                     mail->save = 2;
                 }else{
-                    CC_SAFE_RELEASE_NULL(mail);
+                    mail->release();
                     GlobalData::shared()->mailList.erase(uid);
                 }
             }
@@ -924,21 +924,21 @@ void MailController::removeResourceMail(std::string mailUid,int index){
         MailResourceHelpCellInfo* tempInfo = dynamic_cast<MailResourceHelpCellInfo*>(it->second);
         MailDialogDeleteCommand* command = new MailDialogDeleteCommand("",MAIL_RESOURCE_HELP);
         command->sendAndRelease();
-        CC_SAFE_RELEASE_NULL(tempInfo);
+        tempInfo->release();
         GlobalData::shared()->mailCountObj.sysT -=1;
         GlobalData::shared()->mailCountObj.sysR -=tempInfo->unread;
     }else if(it->second->type==MAIL_RESOURCE){
         MailResourceCellInfo* tempInfo = dynamic_cast<MailResourceCellInfo*>(it->second);
         MailDialogDeleteCommand* command = new MailDialogDeleteCommand("",MAIL_RESOURCE);
         command->sendAndRelease();
-        CC_SAFE_RELEASE_NULL(tempInfo);
+        tempInfo->release();
         GlobalData::shared()->mailCountObj.sysT -=1;
         GlobalData::shared()->mailCountObj.sysR -=tempInfo->unread;
     }else if(it->second->type==MAIL_ATTACKMONSTER){
         MailMonsterCellInfo* tempInfo = dynamic_cast<MailMonsterCellInfo*>(it->second);
         MailDialogDeleteCommand* command = new MailDialogDeleteCommand("",MAIL_ATTACKMONSTER);
         command->sendAndRelease();
-        CC_SAFE_RELEASE_NULL(tempInfo);
+        tempInfo->release();
         GlobalData::shared()->mailCountObj.sysT -=1;
         GlobalData::shared()->mailCountObj.sysR -=tempInfo->unread;
     }
@@ -971,12 +971,8 @@ void MailController::removeSlectChatRoom(string groupId)
     }
     GlobalData::shared()->mailCountObj.perT -=1;
     GlobalData::shared()->mailCountObj.perR -=it->second->unreadDialogNum;
-    if (dynamic_cast<MailInfo*>(it->second) != nullptr)
-    {
-        dynamic_cast<MailInfo*>(it->second)->release();
-        it->second = nullptr;
-    }
     GlobalData::shared()->mailList.erase(it);
+    dynamic_cast<MailInfo*>(it->second)->release();
     CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MAIL_LIST_CHANGE);
 #if(CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
     ChatServiceCocos2dx::deleteChatRoom(groupId);
@@ -993,7 +989,7 @@ void MailController::removeDialogMail(std::string fromUid, std::string mailUid,i
     MailInfo* info = it->second;
     MailDialogDeleteCommand* command = new MailDialogDeleteCommand(info->fromUid, -1, info->uid);
     command->sendAndRelease();
-    CC_SAFE_RELEASE_NULL(info);
+    info->release();
     if(info->tabType == MAILTAB5){
         GlobalData::shared()->mailCountObj.modT -=1;
         GlobalData::shared()->mailCountObj.modR -=it->second->unreadDialogNum;
@@ -1189,7 +1185,7 @@ void MailController::removeMail(std::string uids, std::string type,int index){
                 ChatServiceCocos2dx::deleteMail(mail->uid ,CHANNEL_TYPE_OFFICIAL,mail->type);
             }
 #endif
-            CC_SAFE_RELEASE_NULL(mail);
+            mail->release();
             i++;
         }
          map<string, MailInfo*>::iterator it1;
@@ -1326,7 +1322,7 @@ void MailController::refreshMailContent(std::string uid, CCDictionary *dict){
                         ret->addObject(info);
                     }
                     CCLOGFUNC("addGeneral 2");
-                    CC_SAFE_RELEASE_NULL(info);
+                    info->release();
                 }
             }
              CCLOGFUNC("addGeneral 3");
@@ -2502,7 +2498,7 @@ void MailController::refreshGeneralTrainConten(std::string uid, CCDictionary *di
         CCDictionary *generalDict = _dict(dict->objectForKey("genneral"));
         GeneralInfo *info = new GeneralInfo(generalDict);
         generalArr->addObject(info);
-        CC_SAFE_RELEASE_NULL(info);
+        info->release();
         it->second->trainGeneralExp = expArr;
         it->second->trainGenerals = generalArr;
     }
@@ -2906,7 +2902,7 @@ int MailController::updateMailCount(std::string mailUid){
             GlobalData::shared()->mailCountObj.upR-=1;
         }
         GlobalData::shared()->mailList.erase(it);
-        CC_SAFE_RELEASE_NULL(mail);
+        mail->release();
     }
     return 0;
 }
@@ -2955,7 +2951,7 @@ int MailController::updateMailCountByType(int type){
         }
         MailInfo* mail = it->second;
         GlobalData::shared()->mailList.erase(it);
-        CC_SAFE_RELEASE_NULL(mail);
+        mail->release();
         ++iter;
     }
     if(hasReward==true)
@@ -3667,7 +3663,7 @@ void MailController::localTranslate(){
     request->setResponseCallback(this, httpresponse_selector(MailController::onMailLocalTranslate));
     request->setTag("mail_translate_request");
     CCHttpClient::getInstance()->send(request);
-    CC_SAFE_RELEASE_NULL(request);
+    request->release();
 }
 void MailController::onMailLocalTranslate(CCHttpClient *client, CCHttpResponse *response){
     if(!mTransMailDialog)

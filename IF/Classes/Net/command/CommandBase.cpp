@@ -35,7 +35,7 @@ void CommandBase::callFail(CCObject *result)
     setFailCallback(NULL);
     func->setObject(result);
     func->execute();
-    CC_SAFE_RELEASE_NULL(func);
+    func->release();
 }
 
 void CommandBase::callSuccess(NetResult *result)
@@ -48,6 +48,6 @@ void CommandBase::callSuccess(NetResult *result)
     setSuccessCallback(NULL);
     func->setObject(result);
     func->execute();
-    CC_SAFE_RELEASE_NULL(func);
+    func->release();
 }
 

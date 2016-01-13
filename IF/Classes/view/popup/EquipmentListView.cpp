@@ -661,7 +661,7 @@ void EquipmentListCell::setData(int itemId, bool isLvFirst, bool isInForging, bo
         m_progrossBar->removeFromParent();
         m_barClipNode->addChild(m_progrossBar);
         m_progrossBar->setPosition(0, 0);
-        CC_SAFE_RELEASE_NULL(m_progrossBar);
+        m_progrossBar->release();
         m_barClipNode->setPosition(pos);
         update(1.0f);
     }

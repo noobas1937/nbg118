@@ -63,7 +63,7 @@ void SpriteBlur::initProgram()
     CCGLProgram* pProgram = new CCGLProgram();
     pProgram->initWithVertexShaderByteArray(ccPositionTextureColor_vert, fragSource);
     setShaderProgram(pProgram);
-    CC_SAFE_RELEASE_NULL(pProgram);
+    pProgram->release();
     
     CHECK_GL_ERROR_DEBUG();
     

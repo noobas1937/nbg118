@@ -35,7 +35,7 @@ bool GetAllianceRankCommand::handleRecieve(cocos2d::CCDictionary *dict)
     }else{
         map<std::string, PlayerInfo*>::iterator it;
         for(it = AllianceManager::getInstance()->rankPlayerList.begin(); it != AllianceManager::getInstance()->rankPlayerList.end(); it++){
-            CC_SAFE_RELEASE_NULL(it->second);
+            it->second->release();
         }
         AllianceManager::getInstance()->rankPlayerList.clear();
         CCArray* arr =  (CCArray*)params->objectForKey("list");

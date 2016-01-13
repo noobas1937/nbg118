@@ -193,7 +193,7 @@ void CCLineSprite::onEnter() {
 
 void CCLineSprite::onExit() {
     CCDirector::sharedDirector()->getScheduler()->unscheduleUpdateForTarget(this);
-    CC_SAFE_RELEASE_NULL(m_atlas);
+    m_atlas->release();
     CCNode::onExit();
 }
 

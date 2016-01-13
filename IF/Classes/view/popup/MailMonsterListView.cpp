@@ -323,7 +323,7 @@ void MailMonsterListView::onDeleteClick(cocos2d::CCObject *pSender, CCControlEve
     
     CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MAIL_LIST_CHANGE);
     PopupViewController::getInstance()->goBackPopupView();
-    CC_SAFE_RELEASE_NULL(tempInfo);
+    tempInfo->release();
     
 }
 void MailMonsterListView::onAddSaveClick(cocos2d::CCObject *pSender, CCControlEvent event){

@@ -542,7 +542,7 @@ void CCLoadSprite::doLoadResourceAsync(const char *path, CCCallFuncO* selector, 
         selector->retain();
         selector->setObject(NULL);
         selector->execute();
-        CC_SAFE_RELEASE_NULL(selector);
+        selector->release();
         return;
     }
     if (buffer)
@@ -610,7 +610,7 @@ void ImageLoadAsync::addImageCallback(CCObject* obj)
             setSuccessCallback(NULL);
             func->setObject(pTexture);
             func->execute();
-            CC_SAFE_RELEASE_NULL(func);
+            func->release();
         }
     }
     else
@@ -642,11 +642,11 @@ CCSize CCLoadSprite::getSpriteSize(const char *path, int index, const char *file
             CCDictionary* fileDict = (CCDictionary*)framesDict->objectForKey(fileName);
             if (fileDict) {
                 string _strSize = fileDict->valueForKey("sourceSize")->getCString();
-                CC_SAFE_RELEASE_NULL(dict);
+                dict->release();
                 return cocos2d::SizeFromString(_strSize.c_str());
             }
         }
-        CC_SAFE_RELEASE_NULL(dict);
+        dict->release();
     }
     return CCSize(0,0);
 }
