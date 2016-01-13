@@ -369,10 +369,10 @@ void AllianceRankListCell::showAllianceInfo(cocos2d::CCObject *data){
         alliance->updateAllianceInfo(dicAlliance);
         if(alliance->name==m_info->alliancename){
             PopupViewController::getInstance()->addPopupInView(CheckAllianceInfoView::create(alliance));
-            alliance->release();
+            CC_SAFE_RELEASE_NULL(alliance);
             break;
         }
-        alliance->release();
+        CC_SAFE_RELEASE_NULL(alliance);
     }
 }
 

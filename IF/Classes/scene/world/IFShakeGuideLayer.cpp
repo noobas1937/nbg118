@@ -83,7 +83,7 @@ bool IFShakeGuideLayer::initData()
     }
     m_clipNode->setAnchorPoint(ccp(0, 0));
     m_clipNode->addChild(m_bgNode);
-    m_bgNode->release();
+    CC_SAFE_RELEASE_NULL(m_bgNode);
     this->addChild(m_clipNode);
     return true;
 }

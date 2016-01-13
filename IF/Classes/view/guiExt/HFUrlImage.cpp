@@ -37,7 +37,7 @@ void HFUrlImage::startLoadImageAsync(const char *url, cocos2d::CCCallFuncO *call
     request->setRequestType(CCHttpRequest::Type::GET);
     request->setResponseCallback(this, httpresponse_selector(HFUrlImage::onLoadCompleted));
     CCHttpClient::getInstance()->send(request);
-    request->release();
+    CC_SAFE_RELEASE_NULL(request);
     m_completedCallback = callback;
     CC_SAFE_RETAIN(m_completedCallback);
     m_state = kImageLoading;

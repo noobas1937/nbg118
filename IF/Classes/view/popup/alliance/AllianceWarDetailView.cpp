@@ -343,7 +343,7 @@ bool AllianceWarDetailView::init(){
                 info->setIndex(2);
                 info->setNum(m_info->getAttackId());//m_info->getTargetId()
                 m_data->addObject(info);
-                info->release();
+                CC_SAFE_RELEASE_NULL(info);
                 
             }
             info = new YuanJunInfo();
@@ -356,7 +356,7 @@ bool AllianceWarDetailView::init(){
             info->setIndex(3);
             info->setNum(m_info->getTargetId());
             m_data->addObject(info);
-            info->release();
+            CC_SAFE_RELEASE_NULL(info);
         }
         m_jieSanBtn->setVisible(false);
         m_attackBtn->setVisible(false);
@@ -495,7 +495,7 @@ bool AllianceWarDetailView::init(){
                 self->setpicVer(GlobalData::shared()->playerInfo.picVer);
                 armys->addObject(self);
                 armys->addObjectsFromArray(m_info->getReinforce());
-                self->release();
+                CC_SAFE_RELEASE_NULL(self);
                 int count = m_data->count();
                 bool haveSelf = false;
                 for (int i=0; i<count; i++) {
@@ -672,7 +672,7 @@ void AllianceWarDetailView::updateTime(float _time){
                 info->setIndex(2);
                 info->setNum(m_info->getTargetId());
                 m_data->addObject(info);
-                info->release();
+                CC_SAFE_RELEASE_NULL(info);
                 if(m_data->count()>=2){
                     m_data->swap(m_data->count()-2, m_data->count()-1);
                 }
@@ -798,7 +798,7 @@ void AllianceWarDetailView::sendBackArmy(CCObject* obj){
     self->setpicVer(GlobalData::shared()->playerInfo.picVer);
     armys->addObject(self);
     armys->addObjectsFromArray(m_info->getReinforce());
-    self->release();
+    CC_SAFE_RELEASE_NULL(self);
     int num = armys->count();
     offX = 58*num;
     int numSoldier = m_info->getReinforce()->count()+1;
