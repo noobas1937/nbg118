@@ -446,7 +446,7 @@ void MailWritePopUpView::onChoosePlayer(cocos2d::CCObject *p){
                         }
                         m_nameEditBox->setText(showStr);
                     }
-                    array->release();
+                    CC_SAFE_RELEASE_NULL(array);
                     updateBtnStatus();
                 }
             }

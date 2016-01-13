@@ -36,7 +36,7 @@ public:
     ~AchievementInfo(){
         if(reward){
             reward->removeAllObjects();
-            reward->release();
+            CC_SAFE_RELEASE_NULL(reward);
         }
     };
     std::string groupId;//系列的id

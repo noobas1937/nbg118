@@ -35,15 +35,29 @@ USING_NS_CC;
 
 void _spAtlasPage_createTexture (spAtlasPage* self, const char* path) {
 	Texture2D* texture = Director::getInstance()->getTextureCache()->addImage(path);
-    CCASSERT(!texture, "Spine Can't create texture");
-	texture->retain();
-	self->rendererObject = texture;
-	self->width = texture->getPixelsWide();
-	self->height = texture->getPixelsHigh();
+    CCASSERT(texture, "Spine Can't create texture");
+    if (texture)
+    {
+        texture->retain();
+        self->rendererObject = texture;
+        self->width = texture->getPixelsWide();
+        self->height = texture->getPixelsHigh();
+    }
+    else
+    {
+        CCLog("You are pretty much fucked (_spAtlasPage_createTexture) : %s", path);
+    }
 }
 
 void _spAtlasPage_disposeTexture (spAtlasPage* self) {
-	((Texture2D*)self->rendererObject)->release();
+    if (self->rendererObject)
+    {
+        ((Texture2D*)self->rendererObject)->release();
+    }
+    else
+    {
+        CCLog("You are pretty much fucked (_spAtlasPage_disposeTexture)");
+    }
 }
 
 char* _spUtil_readFile (const char* path, int* length) {

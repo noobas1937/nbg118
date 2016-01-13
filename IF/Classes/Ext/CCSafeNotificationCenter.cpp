@@ -22,7 +22,7 @@ CCSafeNotificationCenter::CCSafeNotificationCenter()
 CCSafeNotificationCenter::~CCSafeNotificationCenter()
 {
     for (ObserversMap::const_iterator it = m_observers.begin(); it != m_observers.end(); ++it) {
-        it->second->release();
+        if (it->second) it->second->release();
     }
     m_observers.clear();
 }
@@ -80,7 +80,7 @@ void CCSafeNotificationCenter::removeObserver(CCObject *target,const char *name)
     const pair<ObserversMap::iterator,ObserversMap::iterator> &range=m_observers.equal_range(name);
     for (ObserversMap::iterator it2=range.first; it2!=range.second; ++it2) {
         if (it2->second->getTarget()==target) {
-            it2->second->release();
+            CC_SAFE_RELEASE_NULL(it2->second);
             m_observers.erase(it2);
            // CCLOG("CCSafeNotificationCenter::removeObserver %s removed with target 0x%X", name, target);
             return;
