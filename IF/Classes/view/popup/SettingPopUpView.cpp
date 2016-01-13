@@ -165,6 +165,7 @@ CCNode* SettingPopUpView::getGuideNode(string _key)
 void SettingPopUpView::generateShowSetting(){
     m_showSettings.clear();
     bool inviteFlag = GlobalData::shared()->isInviteOpen;
+    inviteFlag = true;//fusheng test
     bool activityFlag = false;
     int i = Setting_BINDING;
     while (i < Setting_Max) {
@@ -188,11 +189,12 @@ void SettingPopUpView::generateShowSetting(){
                     }
                 }
                 else if(i == Setting_CDKEY){
-#if(CC_TARGET_PLATFORM==CC_PLATFORM_IOS)
-                    if(!activityFlag){
-                        pushFlag = false;
-                    }
-#endif
+//#if(CC_TARGET_PLATFORM==CC_PLATFORM_IOS)
+//                    if(!activityFlag){
+//                        pushFlag = false;
+//                    }
+//#endif
+                    pushFlag = false;//fusheng 干掉CDKEY
                 }
                 //去掉声音和音效按钮
                 else if(i == Setting_EffectSound || i == Setting_bgMusic ){//|| i == Setting_Clause

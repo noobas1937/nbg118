@@ -51,6 +51,7 @@ private:
     CCSafeObject<CCSprite> m_soleOutSpr1;
     CCSafeObject<CCSprite> m_arrowSpr;
     CCSafeObject<CCNode> m_animNode;
+    CCSafeObject<CCSprite> m_nbClosebtn;
     
     CCSafeObject<CCLabelIF> m_liBaoName;
     
