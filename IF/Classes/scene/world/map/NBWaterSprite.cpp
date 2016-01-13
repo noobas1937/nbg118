@@ -27,12 +27,12 @@ NBWaterSprite::~NBWaterSprite()
 {
     CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_COME_TO_FOREGROUND);
     if(m_pFoam){
-        m_pFoam->release();
+        CC_SAFE_RELEASE_NULL(m_pFoam);
         m_pFoam = NULL;
     }
     if(m_pShape)
     {
-        m_pShape->release();
+        CC_SAFE_RELEASE_NULL(m_pShape);
         m_pShape = NULL;
     }
 }
@@ -134,7 +134,7 @@ void NBWaterSprite::initProgram()
     pProgram->initWithVertexShaderByteArray(vertSource, fragSource);
     
     setShaderProgram(pProgram);
-    pProgram->release();
+    CC_SAFE_RELEASE_NULL(pProgram);
     
     CHECK_GL_ERROR_DEBUG();
     

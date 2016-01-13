@@ -283,7 +283,7 @@ void PlayerInfoBtnPopUpView::callFunc(CCObject* param){
     }
     PopupViewController::getInstance()->removePopupView(this);
     PopupViewController::getInstance()->addPopupInView(RoleInfoView::create(info,1));
-    info->release();
+    CC_SAFE_RELEASE_NULL(info);
 }
 
 void PlayerInfoBtnPopUpView::onBlockBtnClick(CCObject * pSender, Control::EventType pCCControlEvent)

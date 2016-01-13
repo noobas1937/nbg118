@@ -149,7 +149,7 @@ void AllianceTerritoryView::updateInfo(CCObject* data)///////默认为显示哨�
                 else if (info->m_territoryType == tile_banner) {
                     m_bannerData->addObject(info);
                 }
-                info->release();
+                CC_SAFE_RELEASE_NULL(info);
             }
         }
     }
@@ -176,7 +176,7 @@ void AllianceTerritoryView::updateInfo(CCObject* data)///////默认为显示哨�
         info->m_territoryCount = i + m_territoryDataCount + 1;
         info->m_territoryName = _lang_1("115312", CC_ITOA(info->m_territoryCount));
         m_territoryData->addObject(info);
-        info->release();
+        CC_SAFE_RELEASE_NULL(info);
     }
     
     /////超级矿
@@ -226,7 +226,7 @@ void AllianceTerritoryView::updateInfo(CCObject* data)///////默认为显示哨�
                     break;
             }
             m_resourceData->addObject(info);
-            info->release();
+            CC_SAFE_RELEASE_NULL(info);
         }
     }
     else if (m_resourceData->count() == 1) {//超级矿已放置状态，返回已放置的超级矿数据，前台自行生成其他三个显示数据
@@ -293,10 +293,10 @@ void AllianceTerritoryView::updateInfo(CCObject* data)///////默认为显示哨�
             default:
                 break;
         }
-        info1->release();
-        info2->release();
-        info3->release();
-        info4->release();
+        CC_SAFE_RELEASE_NULL(info1);
+        CC_SAFE_RELEASE_NULL(info2);
+        CC_SAFE_RELEASE_NULL(info3);
+        CC_SAFE_RELEASE_NULL(info4);
     }
     
     /////箭塔
@@ -347,7 +347,7 @@ void AllianceTerritoryView::updateInfo(CCObject* data)///////默认为显示哨�
             info->m_territoryCount = i + m_towerDataCount + 1;
             info->m_territoryName = _lang_1("115406", CC_ITOA(info->m_territoryCount));
             m_towerData->addObject(info);
-            info->release();
+            CC_SAFE_RELEASE_NULL(info);
         }
     }
     
@@ -372,7 +372,7 @@ void AllianceTerritoryView::updateInfo(CCObject* data)///////默认为显示哨�
         }
         info->m_territoryName = _lang("115364");
         m_warehouseData->addObject(info);
-        info->release();
+        CC_SAFE_RELEASE_NULL(info);
     }
 
     if (GlobalData::shared()->alliance_territory_banner_switch == 1) {
@@ -398,7 +398,7 @@ void AllianceTerritoryView::updateInfo(CCObject* data)///////默认为显示哨�
             }
             info->m_territoryName = _lang("115534");
             m_bannerData->addObject(info);
-            info->release();
+            CC_SAFE_RELEASE_NULL(info);
         }
     }
     

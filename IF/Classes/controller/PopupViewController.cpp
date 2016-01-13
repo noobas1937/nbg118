@@ -37,11 +37,11 @@ static int _view_count = 0;
 
 PopupViewController::~PopupViewController() {
     for (auto stack : m_stack) {
-        stack.second->release();
+        CC_SAFE_RELEASE_NULL(stack.second);
     }
     m_stack.clear();
     for (auto gbstack : m_gobackStack) {
-        gbstack.second->release();
+        CC_SAFE_RELEASE_NULL(gbstack.second);
     }
     m_gobackStack.clear();
 }
@@ -488,7 +488,7 @@ void PopupViewController::whenPalyBackInAnim(){
             tmpView->getParent()->removeChild(tmpView);
         }
         tmpView->removeFromLayer(false);
-        tmpView->release();
+        CC_SAFE_RELEASE_NULL(tmpView);
         if (!m_stack.empty()) {
             auto it = m_stack.end();
             m_currentId = (--it)->first;
@@ -505,7 +505,7 @@ void PopupViewController::whenPalyBackInAnim(){
     
     m_stack.insert(pair<int, PopupBaseView*> (++_view_count,gobackView));
     gobackView->_id = _view_count;
-    gobackView->release();
+    CC_SAFE_RELEASE_NULL(gobackView);
     m_currentId = _view_count;
     m_isPlayingInAnim = false;
 
@@ -598,7 +598,7 @@ int PopupViewController::goBackPopupView(PopupBaseView *removeView /*=NULL*/)
 //        if(isPlay){
 //            gobackView->setReturnPlayAnim();
 //        }
-        gobackView->release();
+        CC_SAFE_RELEASE_NULL(gobackView);
         return m_currentId;
     }
     else
@@ -641,7 +641,7 @@ void PopupViewController::removePopupView(PopupBaseView *view,bool clare,bool is
             JNIScheduleObject::getInstance()->goBackToNewMailList();
 #endif
         view->removeFromLayer(false,isNewMailListPopup);
-        view->release();
+        CC_SAFE_RELEASE_NULL(view);
         if (!m_stack.empty()) {
             auto it = m_stack.end();
             m_currentId = (--it)->first;
@@ -735,14 +735,14 @@ void PopupViewController::removeAllPopupView() {
     for(map<int, PopupBaseView*>::iterator it = m_stack.begin();it!=m_stack.end();++it)
     {
         it->second->removeFromLayer(false);
-        it->second->release();
+        CC_SAFE_RELEASE_NULL(it->second);
     }
     m_stack.clear();
     for(map<int, PopupBaseView*>::iterator it = m_gobackStack.begin();it!=m_gobackStack.end();++it)
     {
         it->second->removeFromLayer(false);
-        it->second->release();
-        it->second->release();
+        CC_SAFE_RELEASE_NULL(it->second);
+        CC_SAFE_RELEASE_NULL(it->second);
     }
 
     m_gobackStack.clear();
@@ -809,7 +809,7 @@ void PopupViewController::showPushPop()
             UserUpgradeView* upView = dynamic_cast<UserUpgradeView*>(*it);
             if (upView) {
                 addPopupView(upView);
-                upView->release();
+                CC_SAFE_RELEASE_NULL(upView);
                 m_pushPopStack.erase(it);
                 st = false;
                 break;
@@ -817,7 +817,7 @@ void PopupViewController::showPushPop()
         }
         if (st) {
             addPopupView(m_pushPopStack[0]);
-            m_pushPopStack[0]->release();
+            CC_SAFE_RELEASE_NULL(m_pushPopStack[0]);
             m_pushPopStack.erase(m_pushPopStack.begin());
         }
     }
@@ -952,7 +952,7 @@ void PopupViewController::addPopFlyHint(FlyHint* flyhint)
 void PopupViewController::removePopFlyHint(FlyHint* flyhint)
 {
     if (m_flyHintStack.size() > 0) {
-        m_flyHintStack[0]->release();
+        CC_SAFE_RELEASE_NULL(m_flyHintStack[0]);
         m_flyHintStack.erase(m_flyHintStack.begin());
     }
     

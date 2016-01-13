@@ -179,7 +179,7 @@ bool EquipSiteView::init()
     m_progrossBar->removeFromParent();
     m_barClipNode->addChild(m_progrossBar);
     m_progrossBar->setPosition(0, 0);
-    m_progrossBar->release();
+    CC_SAFE_RELEASE_NULL(m_progrossBar);
     m_barClipNode->setPosition(pos);
     
     m_isInitEnd = false;

@@ -2602,8 +2602,8 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string>Common/Common_1.plist</string>
-									<string>Btn_shoucang.png</string>
+									<string>Common/Common_2.plist</string>
+									<string>icon_resource_belt.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -2618,6 +2618,8 @@
 								</array>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -2639,14 +2641,6 @@
 								<integer>2</integer>
 								<key>properties</key>
 								<array>
-									<dict>
-										<key>name</key>
-										<string>visible</string>
-										<key>type</key>
-										<string>Check</string>
-										<key>value</key>
-										<false/>
-									</dict>
 									<dict>
 										<key>name</key>
 										<string>position</string>
@@ -2969,8 +2963,6 @@
 						<false/>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>

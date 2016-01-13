@@ -2438,7 +2438,7 @@ extern "C" {
             CCLOGFUNCF("contents: %s",mailInfoDic->valueForKey("contents")->getCString());
             MailController::getInstance()->addMailFromAndroidToList(mailInfoDic,true);
         }
-        mailData->release();
+        CC_SAFE_RELEASE_NULL(mailData);
     }
     
     void Java_com_elex_chatservice_host_GameHost_deleteSingleMail(JNIEnv* env, jobject object, jint tabType,jint type,jstring mailUid,jstring fromUid)

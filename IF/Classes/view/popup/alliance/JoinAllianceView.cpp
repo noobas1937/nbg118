@@ -210,7 +210,7 @@ void JoinAllianceView::updateAlliances(CCObject* data){
             CCLOG("OKKKK");
         }
         allianceArray->addObject(alliance);
-        alliance->release();
+        CC_SAFE_RELEASE_NULL(alliance);
     }
     //搜索无结果处理
     if(m_total_receive == 0){

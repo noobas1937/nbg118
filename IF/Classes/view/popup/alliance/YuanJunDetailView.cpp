@@ -102,7 +102,7 @@ void YuanJunDetailView::getServerData(CCObject* data){
                     YuanJunInfo* info = new YuanJunInfo();
                     info->parseInfo(yuan);
                     m_data->addObject(info);
-                    info->release();
+                    CC_SAFE_RELEASE_NULL(info);
                 }
             }
             m_tip->setVisible(num<=0);
