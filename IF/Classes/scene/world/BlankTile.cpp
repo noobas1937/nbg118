@@ -171,7 +171,13 @@ void BlankTile::onClickPlace(cocos2d::CCObject *pSender, Control::EventType pCCC
 {
     SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
     AllianceManager::getInstance()->tmpCityIndex = m_cityInfo.cityIndex;
-    PopupViewController::getInstance()->addPopupInView(AllianceTerritoryView::create(m_cityInfo.cityIndex,true));
+    //fusheng 屏蔽联盟领地放置功能
+    CCCommonUtils::flyHint("", "", _lang("E100008"));
+   
+    if (false) {
+        PopupViewController::getInstance()->addPopupInView(AllianceTerritoryView::create(m_cityInfo.cityIndex,true));
+    }
+    
     closeThis();
 }
 void BlankTile::onClickOccupy(CCObject * pSender, Control::EventType pCCControlEvent) {

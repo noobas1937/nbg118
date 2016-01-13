@@ -1025,6 +1025,9 @@ void AllianceFunCell::clickHandle(CCObject *pSender, CCControlEvent event){
             break;
         case 2:
         {
+            CCCommonUtils::flyHint("", "", _lang("E100008")); //fusheng 屏蔽联盟领地放置功能
+
+            return;
             unsigned int index = WorldController::getIndexByPoint(WorldController::getInstance()->selfPoint);
             PopupViewController::getInstance()->addPopupInView(AllianceTerritoryView::create(index,false));
         }
