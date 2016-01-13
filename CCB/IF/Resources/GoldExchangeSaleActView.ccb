@@ -1024,8 +1024,6 @@
 												<string>2d 16:57:46</string>
 											</dict>
 										</array>
-										<key>selected</key>
-										<true/>
 									</dict>
 									<dict>
 										<key>baseClass</key>
@@ -1162,6 +1160,8 @@
 												<real>0.0</real>
 											</dict>
 										</array>
+										<key>selected</key>
+										<true/>
 									</dict>
 									<dict>
 										<key>baseClass</key>
@@ -1237,7 +1237,7 @@
 												<string>FloatScale</string>
 												<key>value</key>
 												<array>
-													<real>24</real>
+													<real>26</real>
 													<integer>0</integer>
 												</array>
 											</dict>
@@ -1249,8 +1249,8 @@
 												<key>value</key>
 												<array>
 													<integer>254</integer>
-													<integer>255</integer>
-													<integer>255</integer>
+													<integer>251</integer>
+													<integer>62</integer>
 												</array>
 											</dict>
 											<dict>
