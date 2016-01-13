@@ -35,7 +35,7 @@ USING_NS_CC;
 
 void _spAtlasPage_createTexture (spAtlasPage* self, const char* path) {
 	Texture2D* texture = Director::getInstance()->getTextureCache()->addImage(path);
-    CCASSERT(!texture, "Spine Can't create texture");
+//    CCASSERT(!texture, "Spine Can't create texture");
 	texture->retain();
 	self->rendererObject = texture;
 	self->width = texture->getPixelsWide();

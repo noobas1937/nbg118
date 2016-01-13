@@ -135,7 +135,8 @@ void AllianceWarView::refreshTableView(){
     m_data->removeAllObjects();
     bool flag = checkOpenMonster();
     if (flag) {//有怪物的队伍，显示分栏
-        m_listH = 615;
+//        m_listH = 615;
+        m_listH = 615 - 30;//fusheng 调低30
         if (CCCommonUtils::isIosAndroidPad()) {
             m_listH = 1555;
         }
@@ -143,7 +144,8 @@ void AllianceWarView::refreshTableView(){
         changeTableData();
     }else{
         m_tabNode->setVisible(false);
-        m_listH = 710;
+//        m_listH = 710;
+        m_listH = 710 - 30;//fusheng 调低30
         if (CCCommonUtils::isIosAndroidPad())
         {
             m_listH = 1700;

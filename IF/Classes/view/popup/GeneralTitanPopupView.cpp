@@ -1274,10 +1274,12 @@ void GeneralTitanPopupView::resetAttribute(CCObject* obj)
             if(GlobalData::shared()->titanInfo.level == 1)
                 m_titanFeedTxt->setString(_lang("500011"));//fusheng 孵化
             changeUpterms(true,bottomBraceState::BBSHOW);
+            
+            m_titanExtTxt_1->setColor({28,255,0});
         }
         else
         {
-            
+            m_titanExtTxt_1->setColor({255,124,28});
             if(m_titanInfo.feedcdfix!=0)//fusheng 修改 feedCD
             {
                 

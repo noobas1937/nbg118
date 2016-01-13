@@ -37,7 +37,7 @@ private:
     virtual void onTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
     void onClickConfirm(CCObject *pSender, CCControlEvent event);
     void onClickCancel(CCObject *pSender, CCControlEvent event);
-    
+    CCSafeObject<CCSprite> m_viewBg1;
     CCSafeObject<CCArray> m_data;
     CCSafeObject<CCNode> m_listContainer;
     CCSafeObject<CCNode> m_viewBg;
