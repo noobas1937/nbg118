@@ -3055,33 +3055,45 @@ void WorldMapView::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEve
                     return ;
                 }
             }
-            if (DynamicResourceController::getInstance()->checkMinimapViewResource()) {
-                auto miniMap = MinimapView::create(GlobalData::shared()->playerInfo.currentServerId);
-                PopupViewController::getInstance()->addPopupInView(miniMap);
-                miniMap->setTag(miniMapTag);
-                if(m_layers[WM_TILE]->getChildrenCount() > 0){
-                    auto tilePop = dynamic_cast<NewBaseTileInfo*>(m_layers[WM_TILE]->getChildren().at(0));
-                    tilePop->closeThis();
-                }
-                tilePops->removeAllObjects();
+            
+            // TODO : guo.jiang
+            auto miniMap = MinimapView::create(GlobalData::shared()->playerInfo.currentServerId);
+            PopupViewController::getInstance()->addPopupInView(miniMap);
+            miniMap->setTag(miniMapTag);
+            if (m_layers[WM_TILE]->getChildrenCount() > 0)
+            {
+                auto tilePop = dynamic_cast<NewBaseTileInfo*>(m_layers[WM_TILE]->getChildren().at(0));
+                tilePop->closeThis();
             }
-            else {
-//                isDownloadingMinimap = true;
-                CCCommonUtils::flyHint("", "", _lang("E100091"), 3, 0, true);
-                auto temploadingIcon = CCLoadSprite::createSprite("loading_1.png");
-                auto loadingSize = m_loadingIcon->getContentSize();
-                if (CCCommonUtils::isIosAndroidPad()) {
-                    temploadingIcon->setScale(2);
-                }
-                temploadingIcon->setPosition(UIComponent::getInstance()->m_miniBG->getParent()->getPosition());
-                m_layers[WM_GUI]->addChild(temploadingIcon);
-                CCActionInterval * rotateto1 = CCRotateTo::create(3.0, 4320);
-                CCFiniteTimeAction* rotateAction = CCSequence::create(rotateto1,CCRemoveSelf::create(),NULL);
-                temploadingIcon->runAction(rotateAction);
-//                CCActionInterval * rotateForever =CCRepeatForever::create((CCActionInterval* )rotateAction);
-//                CCActionInterval * rotateSixTimes = CCRepeat::create(rotateAction, 6);
-//                temploadingIcon->setTag(MinimapLoadingTag);
-            }
+            tilePops->removeAllObjects();
+            
+//            if (DynamicResourceController::getInstance()->checkMinimapViewResource()) {
+//                auto miniMap = MinimapView::create(GlobalData::shared()->playerInfo.currentServerId);
+//                PopupViewController::getInstance()->addPopupInView(miniMap);
+//                miniMap->setTag(miniMapTag);
+//                if(m_layers[WM_TILE]->getChildrenCount() > 0){
+//                    auto tilePop = dynamic_cast<NewBaseTileInfo*>(m_layers[WM_TILE]->getChildren().at(0));
+//                    tilePop->closeThis();
+//                }
+//                tilePops->removeAllObjects();
+//            }
+//            else {
+////                isDownloadingMinimap = true;
+//                CCCommonUtils::flyHint("", "", _lang("E100091"), 3, 0, true);
+//                auto temploadingIcon = CCLoadSprite::createSprite("loading_1.png");
+//                auto loadingSize = m_loadingIcon->getContentSize();
+//                if (CCCommonUtils::isIosAndroidPad()) {
+//                    temploadingIcon->setScale(2);
+//                }
+//                temploadingIcon->setPosition(UIComponent::getInstance()->m_miniBG->getParent()->getPosition());
+//                m_layers[WM_GUI]->addChild(temploadingIcon);
+//                CCActionInterval * rotateto1 = CCRotateTo::create(3.0, 4320);
+//                CCFiniteTimeAction* rotateAction = CCSequence::create(rotateto1,CCRemoveSelf::create(),NULL);
+//                temploadingIcon->runAction(rotateAction);
+////                CCActionInterval * rotateForever =CCRepeatForever::create((CCActionInterval* )rotateAction);
+////                CCActionInterval * rotateSixTimes = CCRepeat::create(rotateAction, 6);
+////                temploadingIcon->setTag(MinimapLoadingTag);
+//            }
         }
     }
     if(isMiniMapModel()){
