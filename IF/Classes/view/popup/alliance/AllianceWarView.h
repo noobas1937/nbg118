@@ -93,6 +93,9 @@ public:
     static AllianceWarCell* create(AllianceTeamInfo* info,int index);
     AllianceWarCell(AllianceTeamInfo* info,int index):m_info(info),m_index(index){};
     void setData(AllianceTeamInfo* info);
+    
+    CCSafeObject<CCNode> m_liantiao1;
+    CCSafeObject<CCNode> m_liantiao2;
 private:
     bool init();
     virtual void onEnter();
@@ -169,6 +172,9 @@ private:
     CCSafeObject<CCLabelIF> m_tTimeTxt;
     CCSafeObject<CCNode> m_tPosNode;
     CCSafeObject<HFHeadImgNode> m_headImgNode;
+    
+    
+    
     int m_index;
     CCPoint m_touchPos;
     bool m_freshRally;
