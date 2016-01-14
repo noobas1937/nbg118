@@ -350,7 +350,8 @@ bool CCRichLabelTTF::updateTexture()
     this->setTexture(tex);
     
     // release it
-    CC_SAFE_RELEASE_NULL(tex);
+    // CC_SAFE_RELEASE_NULL(tex);
+    tex->release();
     
     // set the size in the sprite
     CCRect rect =CCRectZero;
