@@ -80,7 +80,7 @@ void CCSafeNotificationCenter::removeObserver(CCObject *target,const char *name)
     const pair<ObserversMap::iterator,ObserversMap::iterator> &range=m_observers.equal_range(name);
     for (ObserversMap::iterator it2=range.first; it2!=range.second; ++it2) {
         if (it2->second->getTarget()==target) {
-            CC_SAFE_RELEASE_NULL(it2->second);
+            CC_SAFE_RELEASE(it2->second);
             m_observers.erase(it2);
            // CCLOG("CCSafeNotificationCenter::removeObserver %s removed with target 0x%X", name, target);
             return;

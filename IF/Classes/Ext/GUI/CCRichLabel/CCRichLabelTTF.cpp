@@ -400,7 +400,7 @@ bool CCRichLabelTTF::updateTexture()
 	}
     
     // release it
-    CC_SAFE_RELEASE_NULL(tex);
+    CC_SAFE_RELEASE(tex);
     
     //ok
     return true;

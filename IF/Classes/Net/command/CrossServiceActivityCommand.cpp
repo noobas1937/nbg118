@@ -33,7 +33,7 @@ bool CrossServiceActivityCommand::handleRecieve(cocos2d::CCDictionary *dict)
         }
         CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(REMOVE_ALL_HINT);
         if(SceneController::getInstance()->showBG){
-            CC_SAFE_RELEASE_NULL(SceneController::getInstance()->showBG);
+            CC_SAFE_RELEASE(SceneController::getInstance()->showBG);
             SceneController::getInstance()->showBG = NULL;
         }
         if (WorldMapView::instance()) {

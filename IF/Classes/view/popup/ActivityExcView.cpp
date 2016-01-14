@@ -571,7 +571,7 @@ bool ActivityExcNewCell::init()
     p2 = m_rightBg->getPosition();
     CCCommonUtils::setButtonTitle(m_exchangeBtn, _lang("133076").c_str());
     m_glowNode = new CCAniNode();
-    CC_SAFE_RELEASE_NULL(m_glowNode);
+    CC_SAFE_RELEASE(m_glowNode);
     m_mainNode->addChild(m_glowNode);
     CCBLoadFile("ActExcGlowNode", m_glowNode, m_glowNode);
     m_glowNode->setVisible(false);

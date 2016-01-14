@@ -22,7 +22,7 @@ PropSpeedupView* PropSpeedupView::show(int type,int bid, int qid){
     PropSpeedupView* dialog = new PropSpeedupView();
     dialog->init(type,bid,qid);
     PopupViewController::getInstance()->addPopupView(dialog, false);
-    CC_SAFE_RELEASE_NULL(dialog);
+    CC_SAFE_RELEASE(dialog);
     return dialog;
 }
 

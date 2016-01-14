@@ -196,7 +196,7 @@ void ChooseUserView::updateList(CCObject *ccObj){
         if(iter!=mDatas.end()){
             (*iter).second.isOpen = show;
         }
-        CC_SAFE_RELEASE_NULL(array);
+        CC_SAFE_RELEASE(array);
     }
     m_tabList->reloadData();
     
