@@ -1223,8 +1223,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>324.06005859375</real>
-											<real>350.780029296875</real>
+											<real>184.06005859375</real>
+											<real>347.780029296875</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -1235,7 +1235,7 @@
 										<string>Point</string>
 										<key>value</key>
 										<array>
-											<real>1</real>
+											<real>0.0</real>
 											<real>0.5</real>
 										</array>
 									</dict>
@@ -1309,7 +1309,7 @@
 										<key>type</key>
 										<string>IntegerLabeled</string>
 										<key>value</key>
-										<integer>2</integer>
+										<integer>0</integer>
 									</dict>
 									<dict>
 										<key>name</key>
@@ -1317,7 +1317,7 @@
 										<key>type</key>
 										<string>IntegerLabeled</string>
 										<key>value</key>
-										<integer>0</integer>
+										<integer>1</integer>
 									</dict>
 									<dict>
 										<key>name</key>
@@ -1351,8 +1351,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>333.83340454101562</real>
-											<real>350.79998779296875</real>
+											<real>411</real>
+											<real>347.79998779296875</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -1363,7 +1363,7 @@
 										<string>Point</string>
 										<key>value</key>
 										<array>
-											<real>0.0</real>
+											<real>0.5</real>
 											<real>0.5</real>
 										</array>
 									</dict>
@@ -1414,9 +1414,9 @@
 										<string>Color3</string>
 										<key>value</key>
 										<array>
-											<integer>0</integer>
-											<integer>175</integer>
-											<integer>205</integer>
+											<integer>254</integer>
+											<integer>255</integer>
+											<integer>255</integer>
 										</array>
 									</dict>
 									<dict>
@@ -1437,7 +1437,7 @@
 										<key>type</key>
 										<string>IntegerLabeled</string>
 										<key>value</key>
-										<integer>0</integer>
+										<integer>1</integer>
 									</dict>
 									<dict>
 										<key>name</key>
@@ -1445,7 +1445,7 @@
 										<key>type</key>
 										<string>IntegerLabeled</string>
 										<key>value</key>
-										<integer>0</integer>
+										<integer>1</integer>
 									</dict>
 									<dict>
 										<key>name</key>
@@ -5117,7 +5117,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>329.00006103515625</real>
+									<real>179.00006103515625</real>
 									<real>179.33334350585938</real>
 									<integer>0</integer>
 								</array>
@@ -5129,7 +5129,7 @@
 								<string>Point</string>
 								<key>value</key>
 								<array>
-									<real>1</real>
+									<real>0.0</real>
 									<real>0.5</real>
 								</array>
 							</dict>
@@ -5203,7 +5203,7 @@
 								<key>type</key>
 								<string>IntegerLabeled</string>
 								<key>value</key>
-								<integer>2</integer>
+								<integer>0</integer>
 							</dict>
 							<dict>
 								<key>name</key>
@@ -5211,7 +5211,7 @@
 								<key>type</key>
 								<string>IntegerLabeled</string>
 								<key>value</key>
-								<integer>0</integer>
+								<integer>1</integer>
 							</dict>
 							<dict>
 								<key>name</key>
@@ -5381,7 +5381,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>331.33340454101562</real>
+									<real>411</real>
 									<real>179.30000305175781</real>
 									<integer>0</integer>
 								</array>
@@ -5393,7 +5393,7 @@
 								<string>Point</string>
 								<key>value</key>
 								<array>
-									<real>0.0</real>
+									<real>0.5</real>
 									<real>0.5</real>
 								</array>
 							</dict>
@@ -5444,9 +5444,9 @@
 								<string>Color3</string>
 								<key>value</key>
 								<array>
-									<integer>0</integer>
-									<integer>175</integer>
-									<integer>205</integer>
+									<integer>254</integer>
+									<integer>255</integer>
+									<integer>255</integer>
 								</array>
 							</dict>
 							<dict>
@@ -5467,7 +5467,7 @@
 								<key>type</key>
 								<string>IntegerLabeled</string>
 								<key>value</key>
-								<integer>0</integer>
+								<integer>1</integer>
 							</dict>
 							<dict>
 								<key>name</key>
@@ -5475,7 +5475,7 @@
 								<key>type</key>
 								<string>IntegerLabeled</string>
 								<key>value</key>
-								<integer>0</integer>
+								<integer>1</integer>
 							</dict>
 							<dict>
 								<key>name</key>

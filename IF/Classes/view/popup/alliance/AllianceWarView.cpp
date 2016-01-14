@@ -535,9 +535,9 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                 posXY.append(CC_ITOA(pt.y));
                 m_tCoordTxt->setString(posXY);
                 m_tTitleTxt->setString(_lang("115311"));
-                m_tTitleTxt->setColor({0,175,205});
-                m_tStatusTxt->setColor({0,175,205});
-                m_tTimeTxt->setColor({0,175,205});
+                m_tTitleTxt->setColor({181,237,45});
+                m_tStatusTxt->setColor({181,237,45});
+                m_tTimeTxt->setColor({181,237,45});
                 std::string pName = "";
                 pName = "";
                 if(m_info->getAttackAAbb()!=""){
@@ -648,13 +648,13 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                     m_sTxt4->setString(posXY);
                     m_teamTargetPosTxt1->setString(posXY);
 
-                    m_sTitleTxt->setColor({230,32,0});
-                    m_sStatusTxt->setColor({230,32,0});
-                    m_sTimeTxt->setColor({230,32,0});
+                    m_sTitleTxt->setColor({255,212,6});
+                    m_sStatusTxt->setColor({255,212,6});
+                
                     
-                    m_teamTitleTxt->setColor({230,32,0});
-                    m_teamStatusTxt->setColor({230,32,0});
-                    m_teamTimeTxt->setColor({230,32,0});
+                    m_teamTitleTxt->setColor({255,212,6});
+                    m_teamStatusTxt->setColor({255,212,6});
+
                     
                     pName = "";
                     if(m_info->getAttackAAbb()!=""){
@@ -698,13 +698,13 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                     posXY.append(CC_ITOA(pt.y));
                     m_sTxt4->setString(posXY);
                     
-                    m_sTitleTxt->setColor({0,175,205});
-                    m_sStatusTxt->setColor({0,175,205});
-                    m_sTimeTxt->setColor({0,175,205});
+                    m_sTitleTxt->setColor({181,237,45});
+                    m_sStatusTxt->setColor({181,237,45});
+              
                     
-                    m_teamTitleTxt->setColor({0,175,205});
-                    m_teamStatusTxt->setColor({0,175,205});
-                    m_teamTimeTxt->setColor({0,175,205});
+                    m_teamTitleTxt->setColor({181,237,45});
+                    m_teamStatusTxt->setColor({181,237,45});
+
                     
                     pName = "";
                     if(m_info->getAttackAAbb()!=""){
@@ -1099,13 +1099,13 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                 m_sTxt4->setString(posXY);
                 m_teamTargetPosTxt1->setString(posXY);
                 
-                m_sTitleTxt->setColor({230,32,0});
-                m_sStatusTxt->setColor({230,32,0});
-                m_sTimeTxt->setColor({230,32,0});
+                m_sTitleTxt->setColor({255,212,6});
+                m_sStatusTxt->setColor({255,212,6});
+      
                 
-                m_teamTitleTxt->setColor({230,32,0});
-                m_teamStatusTxt->setColor({230,32,0});
-                m_teamTimeTxt->setColor({230,32,0});
+                m_teamTitleTxt->setColor({255,212,6});
+                m_teamStatusTxt->setColor({255,212,6});
+
                 
                 pName = "";
                 if(m_info->getAttackAAbb()!=""){
@@ -1149,13 +1149,13 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                 posXY.append(CC_ITOA(pt.y));
                 m_sTxt4->setString(posXY);
                 
-                m_sTitleTxt->setColor({0,175,205});
-                m_sStatusTxt->setColor({0,175,205});
-                m_sTimeTxt->setColor({0,175,205});
+                m_sTitleTxt->setColor({181,237,45});
+                m_sStatusTxt->setColor({181,237,45});
+
                 
-                m_teamTitleTxt->setColor({0,175,205});
-                m_teamStatusTxt->setColor({0,175,205});
-                m_teamTimeTxt->setColor({0,175,205});
+                m_teamTitleTxt->setColor({181,237,45});
+                m_teamStatusTxt->setColor({181,237,45});
+
                 
                 pName = "";
                 if(m_info->getAttackAAbb()!=""){
