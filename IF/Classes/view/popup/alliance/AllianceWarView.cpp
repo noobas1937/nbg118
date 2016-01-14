@@ -355,6 +355,25 @@ CCTableViewCell* AllianceWarView::tableCellAtIndex(CCTableView *table, ssize_t i
         }
     }
     table->getContainer()->reorderChild(cell,m_data->count() - idx);
+    
+    if(idx == m_data->count()-1)//fusheng 最后一行
+    {
+        cell->m_liantiao2->setVisible(false);
+    }
+    if(idx != 0)//fusheng
+    {
+        cell->m_liantiao1->setVisible(false);
+    }
+    
+    if(idx == 0)
+    {
+        AllianceTeamInfo* info = (AllianceTeamInfo*)m_data->objectAtIndex(idx);
+
+        if (info && !(info->getBattleType()==2||info->getBattleType()==3)) {
+            cell->m_liantiao1->setPositionY(26);
+        }
+
+    }
     return cell;
 }
 
@@ -1773,6 +1792,11 @@ SEL_CCControlHandler AllianceWarCell::onResolveCCBCCControlSelector(cocos2d::CCO
 
 bool AllianceWarCell::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode)
 {
+    
+ 
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_liantiao1", CCNode*, this->m_liantiao1);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_liantiao2", CCNode*, this->m_liantiao2);
+    
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_posNode2", CCNode*, this->m_posNode2);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_clickNode", CCNode*, this->m_clickNode);
     
