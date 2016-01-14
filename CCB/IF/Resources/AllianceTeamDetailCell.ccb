@@ -1506,25 +1506,13 @@ dfdsfdsfsfdsfdsfdsfdsfdsfsfdssdf</string>
 								<array>
 									<dict>
 										<key>name</key>
-										<string>position</string>
-										<key>type</key>
-										<string>Position</string>
-										<key>value</key>
-										<array>
-											<real>2.3686785697937012</real>
-											<real>2.7987055778503418</real>
-											<integer>0</integer>
-										</array>
-									</dict>
-									<dict>
-										<key>name</key>
 										<string>contentSize</string>
 										<key>type</key>
 										<string>Size</string>
 										<key>value</key>
 										<array>
-											<real>500</real>
-											<real>100</real>
+											<real>640</real>
+											<real>104</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -1561,6 +1549,8 @@ dfdsfdsfsfdsfdsfdsfdsfdsfsfdssdf</string>
 										<false/>
 									</dict>
 								</array>
+								<key>selected</key>
+								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>
@@ -3822,8 +3812,6 @@ dfdsfdsfsfdsfdsfdsfdsfdsfsfdssdf</string>
 								<false/>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 				</array>
 				<key>customClass</key>
