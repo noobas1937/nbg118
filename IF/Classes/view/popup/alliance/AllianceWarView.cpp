@@ -331,7 +331,7 @@ CCSize AllianceWarView::tableCellSizeForIndex(CCTableView *table, ssize_t idx)
     if (CCCommonUtils::isIosAndroidPad()) {
         return CCSize(1536, 700);
     }
-    return CCSize(640, 220);
+    return CCSize(640, 225);
 }
 
 CCSize AllianceWarView::cellSizeForTable(CCTableView *table)
@@ -1656,16 +1656,36 @@ void AllianceWarCell::updateTime(float t){
             m_normal_progress->setSpriteFrame(spf);
             m_jijie_progress->setSpriteFrame(spf);
             
+            double progressLength = 140 * len;
             
             if (m_info && !(m_info->getBattleType()==2||m_info->getBattleType()==3)) {//fusheng 单人进攻
                 
-                m_normal_progress->setPreferredSize(CCSize(140 * len, 30));
-                m_normal_progress->setVisible(140 * len > 10);
+                
+                if (progressLength > spf->getOriginalSize().width) {
+                    m_normal_progress->setPreferredSize(CCSize(140 * len, 30));
+                }
+                else
+                {
+                    m_normal_progress->setScale(progressLength/spf->getOriginalSize().width);
+                }
+                
+//                m_normal_progress->setPreferredSize(CCSize(140 * len, 30));
+//                m_normal_progress->setVisible(140 * len > 10);
             }
             else
             {
-                m_jijie_progress->setPreferredSize(CCSize(140 * len, 30));
-                m_jijie_progress->setVisible(140 * len > 10);
+                
+                if (progressLength > spf->getOriginalSize().width) {
+                    m_jijie_progress->setPreferredSize(CCSize(140 * len, 30));
+                }
+                else
+                {
+                    m_jijie_progress->setScale(progressLength/spf->getOriginalSize().width);
+                }
+                
+                
+//                m_jijie_progress->setPreferredSize(CCSize(140 * len, 30));
+//                m_jijie_progress->setVisible(140 * len > 10);
             }
             
             
@@ -1701,15 +1721,33 @@ void AllianceWarCell::updateTime(float t){
             m_normal_progress->setSpriteFrame(spf);
             m_jijie_progress->setSpriteFrame(spf);
             
+            
+            double progressLength = 140 * len;
+            
+            
+            
             if (m_info && !(m_info->getBattleType()==2||m_info->getBattleType()==3)) {//fusheng 单人进攻
+                if (progressLength > spf->getOriginalSize().width) {
+                    m_normal_progress->setPreferredSize(CCSize(140 * len, 30));
+                }
+                else
+                {
+                    m_normal_progress->setScale(progressLength/spf->getOriginalSize().width);
+                }
                 
-                m_normal_progress->setPreferredSize(CCSize(140 * len, 30));
-                m_normal_progress->setVisible(140 * len > 10);
+//                m_normal_progress->setVisible(140 * len > 10);
             }
             else
             {
-                m_jijie_progress->setPreferredSize(CCSize(140 * len, 30));
-                m_jijie_progress->setVisible(140 * len > 10);
+                if (progressLength > spf->getOriginalSize().width) {
+                    m_jijie_progress->setPreferredSize(CCSize(140 * len, 30));
+                }
+                else
+                {
+                    m_jijie_progress->setScale(progressLength/spf->getOriginalSize().width);
+                }
+//                m_jijie_progress->setPreferredSize(CCSize(140 * len, 30));
+//                m_jijie_progress->setVisible(140 * len > 10);
             }
             
             
