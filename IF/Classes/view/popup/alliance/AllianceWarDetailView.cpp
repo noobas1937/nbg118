@@ -287,7 +287,7 @@ bool AllianceWarDetailView::init(){
 //        }
         auto house = NBWorldMapMainCity::getMainCity(0, level, -1);
         house->setAnchorPoint({.5, .5});
-        house->setPosition({.5, .5});
+        house->setPosition({0, 0});
         m_cityIconNode->addChild(house);
         
         m_targetTitle->setString(_lang("115224"));

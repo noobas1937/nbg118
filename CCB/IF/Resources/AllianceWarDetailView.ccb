@@ -44,6 +44,89 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
+							<real>216</real>
+							<real>604</real>
+							<integer>0</integer>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>anchorPoint</string>
+						<key>type</key>
+						<string>Point</string>
+						<key>value</key>
+						<array>
+							<real>0.5</real>
+							<real>0.5</real>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>scale</string>
+						<key>type</key>
+						<string>ScaleLock</string>
+						<key>value</key>
+						<array>
+							<real>1</real>
+							<real>1</real>
+							<false/>
+							<integer>0</integer>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>ignoreAnchorPointForPosition</string>
+						<key>type</key>
+						<string>Check</string>
+						<key>value</key>
+						<false/>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>displayFrame</string>
+						<key>type</key>
+						<string>SpriteFrame</string>
+						<key>value</key>
+						<array>
+							<string>Common/Common_7.plist</string>
+							<string>AllianceWarDetailView_bg0.png</string>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>blendFunc</string>
+						<key>type</key>
+						<string>Blendmode</string>
+						<key>value</key>
+						<array>
+							<integer>770</integer>
+							<integer>771</integer>
+						</array>
+					</dict>
+				</array>
+			</dict>
+			<dict>
+				<key>baseClass</key>
+				<string>CCSprite</string>
+				<key>children</key>
+				<array/>
+				<key>customClass</key>
+				<string></string>
+				<key>displayName</key>
+				<string>CCSprite</string>
+				<key>memberVarAssignmentName</key>
+				<string></string>
+				<key>memberVarAssignmentType</key>
+				<integer>0</integer>
+				<key>properties</key>
+				<array>
+					<dict>
+						<key>name</key>
+						<string>position</string>
+						<key>type</key>
+						<string>Position</string>
+						<key>value</key>
+						<array>
 							<real>640</real>
 							<real>806</real>
 							<integer>0</integer>
@@ -2063,8 +2146,8 @@
 														<string>SpriteFrame</string>
 														<key>value</key>
 														<array>
-															<string>Common/Common_2.plist</string>
-															<string>g038.png</string>
+															<string>World/World_4.plist</string>
+															<string>lv1.png</string>
 														</array>
 													</dict>
 													<dict>
@@ -2391,8 +2474,6 @@
 														<real>10</real>
 													</dict>
 												</array>
-												<key>selected</key>
-												<true/>
 											</dict>
 											<dict>
 												<key>baseClass</key>

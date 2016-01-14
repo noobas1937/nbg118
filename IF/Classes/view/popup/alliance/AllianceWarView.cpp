@@ -21,6 +21,7 @@
 #include "ActivityController.h"
 #include "ActivityEventObj.h"
 #include "DynamicTiledMap.h"
+#include "NBWorldMapMainCity.hpp"
 
 #define  MSG_UPDATE_ALLIANCE_WAR_CELL_DATA       "msg_update_alliance_war_cell_data"
 
@@ -1183,35 +1184,40 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
             cityClipper->addChild(cityNode);
             
             int level = m_info->getTargetCityLevel();
-            int mapIndex = 3;
-            while (mapIndex >= 0) {
-                auto arr = WorldMapView::getCityPicArr(mapIndex, level, false);
-                int posX = _tile_width / 2;
-                int posY = _tile_height / 2;
-                if(mapIndex == 0 || mapIndex == 2){
-                    posX = _tile_width;
-                }
-                if(mapIndex == 3){
-                    posX = _tile_width + posX;
-                }
-                if(mapIndex == 1 || mapIndex == 3){
-                    posY = _tile_height;
-                }
-                if(mapIndex == 2){
-                    posY = _tile_height + posY;
-                }
-                CCObject *obj = NULL;
-                CCARRAY_FOREACH(arr, obj){
-                    std::string picName = _dict(obj)->valueForKey("pic")->getCString();
-                    int addX = _dict(obj)->valueForKey("x")->intValue();
-                    int addY = _dict(obj)->valueForKey("y")->intValue();
-                    auto sprite = CCLoadSprite::createSprite(picName.c_str());
-                    sprite->setAnchorPoint(ccp(0, 0));
-                    cityNode->addChild(sprite);
-                    sprite->setPosition(ccp(posX, posY) - ccp(_tile_width / 2, _tile_height / 2) + ccp(addX, addY) + ccp(-_tile_width/1.6 - 5,-_tile_height/1.6));
-                }
-                mapIndex--;
-            }
+//            int mapIndex = 3;
+//            while (mapIndex >= 0) {
+//                auto arr = WorldMapView::getCityPicArr(mapIndex, level, false);
+//                int posX = _tile_width / 2;
+//                int posY = _tile_height / 2;
+//                if(mapIndex == 0 || mapIndex == 2){
+//                    posX = _tile_width;
+//                }
+//                if(mapIndex == 3){
+//                    posX = _tile_width + posX;
+//                }
+//                if(mapIndex == 1 || mapIndex == 3){
+//                    posY = _tile_height;
+//                }
+//                if(mapIndex == 2){
+//                    posY = _tile_height + posY;
+//                }
+//                CCObject *obj = NULL;
+//                CCARRAY_FOREACH(arr, obj){
+//                    std::string picName = _dict(obj)->valueForKey("pic")->getCString();
+//                    int addX = _dict(obj)->valueForKey("x")->intValue();
+//                    int addY = _dict(obj)->valueForKey("y")->intValue();
+//                    auto sprite = CCLoadSprite::createSprite(picName.c_str());
+//                    sprite->setAnchorPoint(ccp(0, 0));
+//                    cityNode->addChild(sprite);
+//                    sprite->setPosition(ccp(posX, posY) - ccp(_tile_width / 2, _tile_height / 2) + ccp(addX, addY) + ccp(-_tile_width/1.6 - 5,-_tile_height/1.6));
+//                }
+//                mapIndex--;
+//            }
+            
+            auto house = NBWorldMapMainCity::getMainCity(0, level, -1);
+            // house->setAnchorPoint({.5, .5});
+            house->setPosition({-20, 0});
+            cityNode->addChild(house);
             
             if (m_info->getTargetType() == ActBossTile) {
 //                CCLoadSprite::doResourceByCommonIndex(206, true);
