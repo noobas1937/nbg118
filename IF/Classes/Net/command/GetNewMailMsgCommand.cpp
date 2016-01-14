@@ -498,7 +498,7 @@ bool GetNewMailMsgCommand::handleRecieve(cocos2d::CCDictionary *dict){
                                     CCLog("system Mail 对象不存在" );
                                 }
                             }
-                            ChatServiceCocos2dx::pushSystemMailMsgWithMsgArray(mailInfoArray);
+//                            ChatServiceCocos2dx::pushSystemMailMsgWithMsgArray(mailInfoArray); 
                         }
 #endif
                     }
@@ -522,7 +522,7 @@ bool GetNewMailMsgCommand::handleRecieve(cocos2d::CCDictionary *dict){
             ChatServiceCocos2dx::handleGetNewMailMsg(newMsgInfo);
 #elif(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     if (ChatServiceCocos2dx::Mail_OC_Native_Enable) {
-        ChatServiceCocos2dx::pushChatMailMsgWithArray(chatInfoArr_IOSMailList);
+//        ChatServiceCocos2dx::pushChatMailMsgWithArray(chatInfoArr_IOSMailList);
     }
 #endif
         }

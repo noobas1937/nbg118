@@ -1058,7 +1058,7 @@ void ChatServiceCocos2dx::refreshChatInfo(int channelType)
 }
 
 #pragma mark - 系统邮件消息接受
-void ChatServiceCocos2dx::pushSystemMailMsgWithMsgArray(cocos2d::CCArray *vSystemMailArray){
+void ChatServiceCocos2dx::pushSystemMailMsgWithMsgArray(cocos2d::CCArray *vSystemMailArray ,int commandType){
     NSMutableArray *tempArray =[[NSMutableArray alloc]init];
     for (int x = 0; x<vSystemMailArray->count(); x++) {
         MailInfo *tempMailInfo = (MailInfo *)vSystemMailArray->objectAtIndex(x);
@@ -1133,7 +1133,7 @@ void ChatServiceCocos2dx::pushSystemMailMsgWithMsgArray(cocos2d::CCArray *vSyste
 
 }
 
-void ChatServiceCocos2dx::pushChatMailMsgWithArray(cocos2d::CCArray *vChatArray){
+void ChatServiceCocos2dx::pushChatMailMsgWithArray(int commandType,cocos2d::CCArray *vChatArray){
     for (int x = 0; x <vChatArray->count(); x++) {
         ChatMailInfo *tempMailInfo = (ChatMailInfo *)vChatArray->objectAtIndex(x);
         CCLOG("%s",tempMailInfo->id.c_str());
