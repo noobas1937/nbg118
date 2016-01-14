@@ -65,8 +65,8 @@ private:
     CCSafeObject<CCNode> m_viewBg;
     CCSafeObject<CCLabelIF> m_statusTxt;
     CCSafeObject<CCNode> m_bottomNode;
-    CCSafeObject<CCNode> m_fireNode1;
-    CCSafeObject<CCNode> m_fireNode2;
+//    CCSafeObject<CCNode> m_fireNode1;
+//    CCSafeObject<CCNode> m_fireNode2;
     CCSafeObject<CCControlButton> m_jieSanBtn;
     CCSafeObject<CCControlButton> m_attackBtn;
     CCSafeObject<CCControlButton> m_supportBtn;
