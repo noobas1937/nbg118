@@ -25,7 +25,7 @@ static SceneController *_instance = NULL;
 SceneController::~SceneController() {
     for (auto &map : m_levelMap) {
         for (auto &layer : map.second) {
-            CC_SAFE_RELEASE_NULL(layer.second);
+            CC_SAFE_RELEASE(layer.second);
         }
         map.second.clear();
     }
@@ -79,7 +79,7 @@ void SceneController::clearLayerByLevelAndSceneId(int level, int sceneId) {
     }
     auto oldLayer = (m_levelMap[level])[sceneId];
     if (oldLayer) {
-        CC_SAFE_RELEASE_NULL(oldLayer);
+        CC_SAFE_RELEASE(oldLayer);
         (m_levelMap[level]).erase(sceneId);
     }
 }

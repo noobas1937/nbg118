@@ -44,7 +44,7 @@ MailResourceHelpCellInfo::~MailResourceHelpCellInfo(){
     
     if(collect){
         collect->removeAllObjects();
-        CC_SAFE_RELEASE_NULL(collect);
+        CC_SAFE_RELEASE(collect);
         collect = NULL;
     }
     

@@ -184,7 +184,7 @@ void DragonBuildListView::updateInfo(int pos)
         ArcInfo* info = new ArcInfo(i,btnNames[i],btnIcons[i], isLock);
         info->maxIconSize = 100;
         arr->addObject(info);
-        CC_SAFE_RELEASE_NULL(info);
+        CC_SAFE_RELEASE(info);
     }
     m_arcScroll = ArcScrollView::create(arr, 2, showPos);//arr->count()-1
     m_arcScroll->setCallback(this, callfunc_selector(DragonBuildListView::arcButtonClick));

@@ -66,7 +66,7 @@ bool LoginServiceView::init(){
         request->setResponseCallback(this, httpresponse_selector(LoginServiceView::onGetServerList));
         request->setTag("error_report");
         CCHttpClient::getInstance()->send(request);
-        CC_SAFE_RELEASE_NULL(request);
+        CC_SAFE_RELEASE(request);
     }else{
         showTableView();
     }

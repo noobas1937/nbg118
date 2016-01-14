@@ -26,7 +26,7 @@ class MailSystemListPopUp : public PopupBaseView
 {
 public:
     static MailSystemListPopUp* create(int panelType = 2);
-    ~MailSystemListPopUp(){CC_SAFE_RELEASE_NULL(m_data);};
+    ~MailSystemListPopUp(){CC_SAFE_RELEASE(m_data);};
     
 protected:
     // scrollview delegate

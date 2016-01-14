@@ -155,6 +155,10 @@ void AllianceWarView::refreshTableView(){
     m_infoList->setContentSize(CCSizeMake(m_infoList->getContentSize().width, m_listH+m_addHeight));
     m_tableView->setViewSize(m_infoList->getContentSize());
     m_tableView->reloadData();
+    float x = m_tableView->getContentOffset().x;
+    m_tableView->setContentOffset({m_tableView->getContentOffset().x+1,m_tableView->getContentOffset().y});
+    m_tableView->setContentOffset({m_tableView->getContentOffset().x-1,m_tableView->getContentOffset().y});
+ 
     if(m_data->count()<=0 && GlobalData::shared()->playerInfo.isInAlliance() && !m_first){
         m_infoTxt->setString(_lang("115129"));
     }else{
@@ -213,7 +217,7 @@ void AllianceWarView::updateInfo(CCObject* data)
                 if (info->getMonsterCount()>0) {
                     monsterNum+=1;
                 }
-                CC_SAFE_RELEASE_NULL(info);
+                CC_SAFE_RELEASE(info);
             }
         }
         m_srcData->addObjectsFromArray(zuduiArray);
@@ -320,12 +324,12 @@ CCSize AllianceWarView::tableCellSizeForIndex(CCTableView *table, ssize_t idx)
         if (CCCommonUtils::isIosAndroidPad()) {
             return CCSize(1536, 1000);
         }
-        return CCSize(640,450);//215
+        return CCSize(640,340);//215
     }
     if (CCCommonUtils::isIosAndroidPad()) {
         return CCSize(1536, 700);
     }
-    return CCSize(640, 280);
+    return CCSize(640, 220);
 }
 
 CCSize AllianceWarView::cellSizeForTable(CCTableView *table)
@@ -333,7 +337,7 @@ CCSize AllianceWarView::cellSizeForTable(CCTableView *table)
     if (CCCommonUtils::isIosAndroidPad()) {
         return CCSize(1536, 1000);
     }
-    return CCSize(640,450);
+    return CCSize(640,370);
 }
 
 CCTableViewCell* AllianceWarView::tableCellAtIndex(CCTableView *table, ssize_t idx)
@@ -453,9 +457,9 @@ bool AllianceWarCell::init()
     });
     m_ccbNode= CCBLoadFile("NewAllianceWarCell",this,this);
     if (CCCommonUtils::isIosAndroidPad()) {
-        m_ccbNode->setPositionX(776);
+//        m_ccbNode->setPositionX(776);
     } else {
-        m_ccbNode->setPositionX(323);
+//        m_ccbNode->setPositionX(323);
     }
     
     m_isClickMosnter = false;
@@ -468,16 +472,16 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
     if(info->getBattleType()==2 || info->getBattleType()==3){
         if (CCCommonUtils::isIosAndroidPad())
         {
-            m_ccbNode->setPositionY(460);
+//            m_ccbNode->setPositionY(460);
         } else {
-            m_ccbNode->setPositionY(200);
+//            m_ccbNode->setPositionY(200);
         }
     }else{
         if (CCCommonUtils::isIosAndroidPad())
         {
-            m_ccbNode->setPositionY(300);
+//            m_ccbNode->setPositionY(300);
         } else {
-            m_ccbNode->setPositionY(120);
+//            m_ccbNode->setPositionY(120);
         }
     }
     if (CCCommonUtils::isIosAndroidPad())
@@ -560,7 +564,7 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                     string uid = "";
                     int picVer = 0;
                     if(useNum>=5 && i==4 && limitNum < maxNum){
-                        iconStr = "icon_hospital.png";
+                        iconStr = "Allance_team_Plus.png";
                     }else{
                         if(i<useNum){
                             YuanJunInfo* yuan = (YuanJunInfo*)marchArmy->objectAtIndex(i);
@@ -572,7 +576,7 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                             }
                             iconStr.append(".png");
                         }else{
-                            iconStr = "icon_hospital.png";
+                            iconStr = "Allance_team_Plus.png";
                         }
                     }
                     AllianceWarHeadCell* cell = AllianceWarHeadCell::create(iconStr,i,uid,picVer);
@@ -930,7 +934,7 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                             string uid = "";
                             int picVer = 0;
                             if(useNum>=5 && i==4 && limitNum < maxNum){
-                                iconStr = "icon_hospital.png";
+                                iconStr = "Allance_team_Plus.png";
                             }else{
                                 if(i<useNum){
                                     YuanJunInfo* yuan = (YuanJunInfo*)marchArmy->objectAtIndex(i);
@@ -942,7 +946,7 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                                     }
                                     iconStr.append(".png");
                                 }else{
-                                    iconStr = "icon_hospital.png";
+                                    iconStr = "Allance_team_Plus.png";
                                 }
                             }
                             AllianceWarHeadCell* cell = AllianceWarHeadCell::create(iconStr,i,uid,picVer);
@@ -988,7 +992,7 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                             string uid = "";
                             int picVer = 0;
                             if(num>=5 && i==4 && m_info->getMaxSoldiers()!=m_info->getCurrSoldiers()){
-                                iconStr = "icon_hospital.png";
+                                iconStr = "Allance_team_Plus.png";
                             }else{
                                 YuanJunInfo* yuan = (YuanJunInfo*)m_info->getMember()->objectAtIndex(i);
                                 iconStr = yuan->getPic();
@@ -1017,7 +1021,7 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                             string uid = "";
                             int picVer = 0;
                             if(num>=5 && i==4 && m_info->getMaxSoldiers()!=m_info->getCurrSoldiers()){
-                                iconStr = "icon_hospital.png";
+                                iconStr = "Allance_team_Plus.png";
                             }else{
                                 if(i<num){
                                     YuanJunInfo* yuan = (YuanJunInfo*)armys->objectAtIndex(i);
@@ -1029,7 +1033,7 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                                     }
                                     iconStr.append(".png");
                                 }else{
-                                    iconStr = "icon_hospital.png";
+                                    iconStr = "Allance_team_Plus.png";
                                 }
                             }
                             AllianceWarHeadCell* cell = AllianceWarHeadCell::create(iconStr,i,uid,picVer);
@@ -1408,7 +1412,7 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                         string uid = "";
                         int picVer = 0;
                         if(useNum>=5 && i==4 && limitNum < maxNum){
-                            iconStr = "icon_hospital.png";
+                            iconStr = "Allance_team_Plus.png";
                         }else{
                             if(i<useNum){
                                 YuanJunInfo* yuan = (YuanJunInfo*)marchArmy->objectAtIndex(i);
@@ -1420,7 +1424,7 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                                 }
                                 iconStr.append(".png");
                             }else{
-                                iconStr = "icon_hospital.png";
+                                iconStr = "Allance_team_Plus.png";
                             }
                         }
                         AllianceWarHeadCell* cell = AllianceWarHeadCell::create(iconStr,i,uid,picVer);
@@ -1439,7 +1443,7 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                     self->setUid(m_info->getTargetUid());
                     armys->addObject(self);
                     armys->addObjectsFromArray(m_info->getReinforce());
-                    CC_SAFE_RELEASE_NULL(self);
+                    CC_SAFE_RELEASE(self);
                     num = armys->count();
                     if (num>5) {
                         num = 5;
@@ -1494,13 +1498,13 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                         int picVer = 0;
                         if(m_info->getMonsterCount()>0){
                             if(num>=5 && i==4){
-                                iconStr = "icon_hospital.png";
+                                iconStr = "Allance_team_Plus.png";
                             }else{
                                 iconStr = "tile_pop_icon21.png";
                             }
                         }else{
                             if(num>=5 && i==4 && m_info->getMaxSoldiers()!=m_info->getCurrSoldiers()){
-                                iconStr = "icon_hospital.png";
+                                iconStr = "Allance_team_Plus.png";
                             }else{
                                 YuanJunInfo* yuan = (YuanJunInfo*)m_info->getMember()->objectAtIndex(i);
                                 iconStr = yuan->getPic();
@@ -1523,7 +1527,7 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                     self->setUid(m_info->getTargetUid());
                     armys->addObject(self);
                     armys->addObjectsFromArray(m_info->getReinforce());
-                    CC_SAFE_RELEASE_NULL(self);
+                    CC_SAFE_RELEASE(self);
                     num = armys->count();
                     int limitNum = num;
                     if(num<5 && m_info->getMaxSoldiers()!=m_info->getCurrSoldiers()){
@@ -1535,7 +1539,7 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                         string uid = "";
                         int picVer = 0;
                         if(num>=5 && i==4 && m_info->getMaxSoldiers()!=m_info->getCurrSoldiers()){
-                            iconStr = "icon_hospital.png";
+                            iconStr = "Allance_team_Plus.png";
                         }else{
                             if(i<num){
                                 YuanJunInfo* yuan = (YuanJunInfo*)armys->objectAtIndex(i);
@@ -1547,7 +1551,7 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                                 }
                                 iconStr.append(".png");
                             }else{
-                                iconStr = "icon_hospital.png";
+                                iconStr = "Allance_team_Plus.png";
                             }
                         }
                         AllianceWarHeadCell* cell = AllianceWarHeadCell::create(iconStr,i,uid,picVer);
@@ -1627,6 +1631,7 @@ void AllianceWarCell::updateTime(float t){
 
 void AllianceWarCell::onEnter() {
     CCNode::onEnter();
+    setSwallowsTouches(true);
     setTouchEnabled(true);
     //CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, Touch_Popup, true);
     this->schedule(schedule_selector(AllianceWarCell::updateTime), 1);
@@ -1750,7 +1755,8 @@ void AllianceWarCell::playScaleAniEnd(){
     } else {
         m_teamNode2->setScale(1.0);
     }
-    PopupViewController::getInstance()->addPopupInViewWithAnim(AllianceWarDetailView::create(m_info));
+//    PopupViewController::getInstance()->addPopupInViewWithAnim(AllianceWarDetailView::create(m_info));
+    PopupViewController::getInstance()->addPopupInView(AllianceWarDetailView::create(m_info));
 }
 
 void AllianceWarCell::onTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent){
@@ -1805,9 +1811,9 @@ bool AllianceWarCell::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, con
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_teamDefNode", CCNode*, this->m_teamDefNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_teamAttNode2", CCNode*, this->m_teamAttNode2);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_teamDefNode2", CCNode*, this->m_teamDefNode2);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_signClick1", CCNode*, this->m_signClick1);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_signClick1", CCNode*, this->m_signClick1);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_signClick2", CCNode*, this->m_signClick2);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_signClick3", CCNode*, this->m_signClick3);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_signClick3", CCNode*, this->m_signClick3);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_signClick4", CCNode*, this->m_signClick4);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_tTargetTxt", CCLabelIF*, this->m_tTargetTxt);

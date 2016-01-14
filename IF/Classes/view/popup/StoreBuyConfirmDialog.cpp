@@ -22,7 +22,7 @@ StoreBuyConfirmDialog* StoreBuyConfirmDialog::show(const char *url,const char* t
     dialog->setYesCallback(func);
     dialog->setStartPos(startPos);
     PopupViewController::getInstance()->addPopupView(dialog, false);
-    CC_SAFE_RELEASE_NULL(dialog);
+    CC_SAFE_RELEASE(dialog);
     return dialog;
 }
 
