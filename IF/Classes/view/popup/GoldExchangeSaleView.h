@@ -82,6 +82,8 @@ private:
     GoldExchangeItem *m_dataItem;
     CCScrollView* m_parentScrollView;
     int m_parentType;
+    
+    CCSafeObject<CCScale9Sprite> m_titleLabelBg; //ljf
 };
 
 class GoldExchangeSaleCell :
