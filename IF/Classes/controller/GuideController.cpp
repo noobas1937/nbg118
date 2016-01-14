@@ -85,7 +85,7 @@ void GuideController::purgeData(){
         m_gView = NULL;
     }
     if(m_node){
-        CC_SAFE_RELEASE_NULL(m_node);
+        CC_SAFE_RELEASE(m_node);
         m_node = NULL;
         PopupViewController::getInstance()->CanPopPushView = true;
         PopupViewController::getInstance()->showPushPop();
@@ -97,7 +97,7 @@ void GuideController::purgeData(){
     updateWorldInfo = true;
     m_currentId = "";
     
-    CC_SAFE_RELEASE_NULL(_instance);
+    CC_SAFE_RELEASE(_instance);
     _instance = NULL;
 }
 
@@ -204,7 +204,7 @@ void GuideController::setGuide(std::string guideId){
         m_gView = nullptr;
     }
     if(m_node){
-        CC_SAFE_RELEASE_NULL(m_node);
+        CC_SAFE_RELEASE(m_node);
         m_node = NULL;
     }
     
@@ -447,7 +447,7 @@ void GuideController::onEnterFrame(float dt){
         if(m_gView->getParent()){
             m_gView->getParent()->removeChild(m_gView);
         }
-        CC_SAFE_RELEASE_NULL(m_node);
+        CC_SAFE_RELEASE(m_node);
         m_node = NULL;
         m_gView = NULL;
         next();
@@ -549,7 +549,7 @@ void GuideController::addGuideView(bool movingFlag){
     std::string area = CCCommonUtils::getPropById(m_currentId, "area");
     if(area == "WL_wood" || area == "WL_relic" || area == "WL_food"){
         if(m_node){
-            CC_SAFE_RELEASE_NULL(m_node);
+            CC_SAFE_RELEASE(m_node);
         }
         m_node = getNode(area);
         updateWorldInfo = true;
@@ -702,7 +702,7 @@ void GuideController::addLevelUpPop(UserUpgradeView *pop){
 
 void GuideController::removeLevelUpPop(){
     if(m_panel){
-        CC_SAFE_RELEASE_NULL(m_panel);
+        CC_SAFE_RELEASE(m_panel);
     }
     m_panel = NULL;
 }

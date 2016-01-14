@@ -225,7 +225,7 @@ void GeneralManager::removeGeneralAbility(GeneralInfo &generalInfo, std::string 
     if(it != generalInfo.generalSkillMap.end()){
         map<std::string, GeneralSkillInfo*>::iterator skillIt;
         for(skillIt = it->second.begin(); skillIt != it->second.end(); skillIt++){
-            CC_SAFE_RELEASE_NULL(skillIt->second);
+            CC_SAFE_RELEASE(skillIt->second);
         }
         it->second.clear();
         generalInfo.generalSkillMap.erase(it);

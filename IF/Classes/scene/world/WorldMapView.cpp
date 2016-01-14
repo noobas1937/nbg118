@@ -1051,11 +1051,11 @@ void WorldMapView::onExit() {
     }
     for(auto it = m_marchArmy.begin(); it != m_marchArmy.end(); it++){
         it->second->armyDelete();
-        CC_SAFE_RELEASE_NULL(it->second);
+        CC_SAFE_RELEASE(it->second);
     }
     if(tilePops){
         tilePops->removeAllObjects();
-        CC_SAFE_RELEASE_NULL(tilePops);
+        CC_SAFE_RELEASE(tilePops);
         tilePops = NULL;
     }
     m_marchArmy.clear();
@@ -1309,7 +1309,7 @@ void WorldMapView::asyncCityInfoParse(cocos2d::CCObject *obj) {
 void WorldMapView::asyncReleaseInMainThread(CCObject* obj)
 {
     if( obj != NULL ) {
-        CC_SAFE_RELEASE_NULL(obj);
+        CC_SAFE_RELEASE(obj);
     }
 }
 
@@ -1461,7 +1461,7 @@ void WorldMapView::clearAllMarch(){
     if(needClearAll){
         for(auto it = m_marchArmy.begin(); it != m_marchArmy.end(); it++){
             it->second->armyDelete();
-            CC_SAFE_RELEASE_NULL(it->second);
+            CC_SAFE_RELEASE(it->second);
         }
         m_marchArmy.clear();
         WorldMapView::instance()->m_mapMarchNode1->removeAllChildren();
@@ -1496,7 +1496,7 @@ void WorldMapView::addCityInMainThread(cocos2d::CCObject *obj) {
     
     auto boolObj = dynamic_cast<CCBoolean*>(obj);
     bool isSinglePoint = boolObj->getValue();
-    CC_SAFE_RELEASE_NULL(boolObj);
+    CC_SAFE_RELEASE(boolObj);
     
     // clear old under node
     if (isSinglePoint) {
@@ -2992,7 +2992,7 @@ void WorldMapView::finishBattleAni(cocos2d::CCObject *obj) {
     map<unsigned int, MarchArmy*>::iterator it = m_marchArmy.find(info.marchTag);
     if(it != m_marchArmy.end()){
         it->second->armyDelete();
-        CC_SAFE_RELEASE_NULL(it->second);
+        CC_SAFE_RELEASE(it->second);
         m_marchArmy.erase(it);
     }
     if(m_drawRoadNode->getChildByTag(info.marchTag)){
@@ -3153,7 +3153,7 @@ bool WorldMapView::updateMarchTarget(MarchInfo &info, double now, float delta) {
             map<unsigned int, MarchArmy*>::iterator it = m_marchArmy.find(info.marchTag);
             if(it != m_marchArmy.end()){
                 it->second->armyDelete();
-                CC_SAFE_RELEASE_NULL(it->second);
+                CC_SAFE_RELEASE(it->second);
                 m_marchArmy.erase(it);
             }
             node->removeFromParentAndCleanup(true);
@@ -4296,7 +4296,7 @@ CCSprite* WorldMapView::createMarchSprite(MarchInfo& info) {
                         sp1->retain();
                         sp1->removeFromParentAndCleanup(false);
                         m_cityAttackNode->addChild(sp1);
-                        CC_SAFE_RELEASE_NULL(sp1);
+                        CC_SAFE_RELEASE(sp1);
                     }
                     return sp1;
                 }

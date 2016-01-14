@@ -85,7 +85,7 @@ UpdateManager::~UpdateManager()
     if (_schedule)
     {
         CCDirector::sharedDirector()->getScheduler()->unscheduleAllForTarget(_schedule);
-        CC_SAFE_RELEASE_NULL(_schedule);
+        CC_SAFE_RELEASE(_schedule);
     }
 }
 

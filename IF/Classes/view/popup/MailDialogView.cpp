@@ -55,7 +55,7 @@ MailDialogView::~MailDialogView(){
         it = GlobalData::shared()->mailList.find(m_mailInfo->uid);
         if (GlobalData::shared()->mailList.end() != it) {
             MailInfo* mail = it->second;
-            CC_SAFE_RELEASE_NULL(mail);
+            CC_SAFE_RELEASE(mail);
             GlobalData::shared()->mailList.erase(it);
         }
 

@@ -180,7 +180,7 @@ YesNoDialog* YesNoDialog::showTime(const char * content,CCCallFunc* yesfunc,int 
     }
     
     PopupViewController::getInstance()->addPopupView(dialog, false);
-    CC_SAFE_RELEASE_NULL(dialog);
+    CC_SAFE_RELEASE(dialog);
     return dialog;
 }
 
@@ -230,7 +230,7 @@ YesNoDialog* YesNoDialog::showResCost(const char * content,CCCallFunc* yesfunc, 
     }
     
     PopupViewController::getInstance()->addPopupView(dialog, false);
-    CC_SAFE_RELEASE_NULL(dialog);
+    CC_SAFE_RELEASE(dialog);
     return dialog;
 }
 
@@ -243,7 +243,7 @@ YesNoDialog* YesNoDialog::showTimeWithDes(const char * content,const char* timeD
     dialog->onEnterFrame1(0);
     CCCommonUtils::setButtonTitle(dialog->m_btnOk, "");
     PopupViewController::getInstance()->addPopupView(dialog, false);
-    CC_SAFE_RELEASE_NULL(dialog);
+    CC_SAFE_RELEASE(dialog);
     return dialog;
 }
 YesNoDialog* YesNoDialog::showQueueConfirm(const char * content,CCCallFunc* yesfunc,const char* t1,const char* t2,int time1,int time2,const char * buttonName,int gold){
@@ -267,7 +267,7 @@ YesNoDialog* YesNoDialog::showQueueConfirm(const char * content,CCCallFunc* yesf
     }
     
     PopupViewController::getInstance()->addPopupView(dialog, false);
-    CC_SAFE_RELEASE_NULL(dialog);
+    CC_SAFE_RELEASE(dialog);
     return dialog;
 }
 YesNoDialog* YesNoDialog::show(const char *content,CCCallFunc*yesfunc,int gold,bool canShowMulti, CCCallFunc* nofunc, CCCallFunc* selfunc, const char * buttonStr, const char * iconName)
@@ -353,7 +353,7 @@ YesNoDialog* YesNoDialog::marchAlertShow(const char *content,CCCallFunc*yesfunc,
         dialog->setNoCallback(CCCallFunc::create(dialog, callfunc_selector(YesNoDialog::closeSelf)));
     
     PopupViewController::getInstance()->addPopupView(dialog, false);
-    CC_SAFE_RELEASE_NULL(dialog);
+    CC_SAFE_RELEASE(dialog);
     return dialog;
 }
 
@@ -400,7 +400,7 @@ YesNoDialog* YesNoDialog::lotteryShow(const char * content,CCCallFunc* yesfunc,i
         dialog->onClickNoticeBtn(NULL, Control::EventType::TOUCH_DOWN);
     }
     PopupViewController::getInstance()->addPopupView(dialog, false);
-    CC_SAFE_RELEASE_NULL(dialog);
+    CC_SAFE_RELEASE(dialog);
     return dialog;
 }
 
@@ -425,7 +425,7 @@ YesNoDialog* YesNoDialog::show(const char *content,function<void()> function,int
     dialog->m_function = function;
 
     PopupViewController::getInstance()->addPopupView(dialog, false);
-    CC_SAFE_RELEASE_NULL(dialog);
+    CC_SAFE_RELEASE(dialog);
     return dialog;
 }
 
@@ -479,7 +479,7 @@ YesNoDialog* YesNoDialog::showYesDialog(const char *content,bool canShowMulti,CC
         dialog->setYesCallback(YesFunc);
     }
     PopupViewController::getInstance()->addPopupView(dialog, false);
-    CC_SAFE_RELEASE_NULL(dialog);
+    CC_SAFE_RELEASE(dialog);
     return dialog;
 }
 
@@ -534,7 +534,7 @@ YesNoDialog* YesNoDialog::showVariableTitle(const char * content, CCCallFunc * f
         dialog->setCloseCallback(func);
     }
     PopupViewController::getInstance()->addPopupView(dialog, false);
-    CC_SAFE_RELEASE_NULL(dialog);
+    CC_SAFE_RELEASE(dialog);
     return dialog;
 }
 
@@ -553,7 +553,7 @@ YesNoDialog* YesNoDialog::showButtonAndGold(const char * content,CCCallFunc * fu
     }
     
     PopupViewController::getInstance()->addPopupView(dialog, false);
-    CC_SAFE_RELEASE_NULL(dialog);
+    CC_SAFE_RELEASE(dialog);
     return dialog;
 }
 
@@ -603,7 +603,7 @@ YesNoDialog* YesNoDialog::showButtonAndPriceType(const char * content,CCCallFunc
     dialog->m_btnText->setString(buttonName);
     dialog->m_goldNum->setString(CC_CMDITOA(value));
     PopupViewController::getInstance()->addPopupView(dialog, false);
-    CC_SAFE_RELEASE_NULL(dialog);
+    CC_SAFE_RELEASE(dialog);
     return dialog;
 }
 
@@ -625,7 +625,7 @@ YesNoDialog* YesNoDialog::showAllianceConfirm(const char * content,const char * 
     dialog->init(content,buttonName);
     dialog->m_isAlliance = true;
     PopupViewController::getInstance()->addPopupView(dialog, false);
-    CC_SAFE_RELEASE_NULL(dialog);
+    CC_SAFE_RELEASE(dialog);
     return dialog;
 }
 
@@ -668,7 +668,7 @@ YesNoDialog* YesNoDialog::showConfirmCloseAllView(const char * content,const cha
     dialog->init(content,buttonName);
     dialog->m_closeAll = true;
     PopupViewController::getInstance()->addPopupView(dialog, false);
-    CC_SAFE_RELEASE_NULL(dialog);
+    CC_SAFE_RELEASE(dialog);
     return dialog;
 }
 
@@ -678,7 +678,7 @@ YesNoDialog* YesNoDialog::showQuitDialog(cocos2d::CCCallFunc *func,bool forLoadi
     dialog->init(_lang("dialog_message_exit_confirm").c_str());
     dialog->setYesCallback(func);
     PopupViewController::getInstance()->addPopupView(dialog, false);
-    CC_SAFE_RELEASE_NULL(dialog);
+    CC_SAFE_RELEASE(dialog);
     return dialog;
 }
 

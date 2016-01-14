@@ -126,7 +126,7 @@ void NetController::getServerStatus(){
     request->setTag("get_server_status");
     CCHttpClient::getInstance()->setTimeoutForConnect(10);
     CCHttpClient::getInstance()->send(request);
-    CC_SAFE_RELEASE_NULL(request);
+    CC_SAFE_RELEASE(request);
 }
 
 void NetController::getServerStatusBack(CCHttpClient* client, CCHttpResponse* response){
@@ -234,7 +234,7 @@ void NetController::sendLog(std::string type, std::string cmd){
         request->setRequestType(CCHttpRequest::Type::POST);
         CCHttpClient::getInstance()->setTimeoutForConnect(1);
         CCHttpClient::getInstance()->send(request);
-        CC_SAFE_RELEASE_NULL(request);
+        CC_SAFE_RELEASE(request);
     }
 }
 
@@ -1356,7 +1356,7 @@ extern "C" {
         CCDictionary * result=(CCDictionary*)response;
         CCLOGFUNCF(result->valueForKey("cmd")->getCString());
         NetController::shared()->handleRecieve(result);
-        CC_SAFE_RELEASE_NULL(result);
+        CC_SAFE_RELEASE(result);
 	}
     
 	jlong Java_org_nbg_IF_Net_nativeCCDictionary()
@@ -1371,7 +1371,7 @@ extern "C" {
         CCDictionary* dict=(CCDictionary*)d;
         CCObject* value=(CCObject*)v;
         dict->setObject(value, JniHelper::jstring2string(key).c_str());
-        CC_SAFE_RELEASE_NULL(value);
+        CC_SAFE_RELEASE(value);
     }
     
 	void Java_org_nbg_IF_Net_nativeAddStringToCCDictionary(JNIEnv* env, jobject thiz, jlong d, jstring key, jstring v)
@@ -1406,7 +1406,7 @@ extern "C" {
         CCArray* arr=(CCArray*)d;
         CCObject* value=(CCObject*)v;
         arr->addObject(value);
-        CC_SAFE_RELEASE_NULL(value);
+        CC_SAFE_RELEASE(value);
     }
     
 	jobject Java_org_nbg_IF_Jni_nativeGetAppId(JNIEnv* env)

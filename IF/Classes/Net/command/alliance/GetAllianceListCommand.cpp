@@ -61,7 +61,7 @@ bool GetAllianceListCommand::handleRecieve(cocos2d::CCDictionary *dict)
         if(m_key!=""){
             map<std::string, AllianceInfo*>::iterator it;
             for(it = AllianceManager::getInstance()->allianceList.begin(); it != AllianceManager::getInstance()->allianceList.end(); it++){
-                CC_SAFE_RELEASE_NULL(it->second);
+                CC_SAFE_RELEASE(it->second);
             }
             AllianceManager::getInstance()->allianceList.clear();
         }

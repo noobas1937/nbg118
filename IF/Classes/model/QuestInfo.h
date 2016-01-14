@@ -14,7 +14,7 @@
 class QuestInfo : public cocos2d::CCObject {
 public:
     CREATE_FUNC(QuestInfo);
-    ~QuestInfo(){if(reward)CC_SAFE_RELEASE_NULL(reward);};
+    ~QuestInfo(){if(reward)CC_SAFE_RELEASE(reward);};
     virtual bool init(){
         reward = NULL;
         currPhase = 0;

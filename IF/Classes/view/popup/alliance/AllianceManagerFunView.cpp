@@ -686,7 +686,7 @@ void AllianceManagerFunView::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCE
                     }
                     
                     //PopupViewController::getInstance()->addPopupInView(AllianceResourceTradeView::create(playerInfo));
-                    CC_SAFE_RELEASE_NULL(playerInfo);
+                    CC_SAFE_RELEASE(playerInfo);
                 }else{
                     CCCommonUtils::flyHint("", "", _lang("E100008"));
 //        CCCommonUtils::flyHint("", "", _lang("115075"));//fusheng 资源帮助提示

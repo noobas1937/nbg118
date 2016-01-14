@@ -293,7 +293,7 @@ void StoreBagView::refreashData(CCObject* obj){
                     }
                 }
             }
-            CC_SAFE_RELEASE_NULL(arr);
+            CC_SAFE_RELEASE(arr);
         }
     }
     refreashData();

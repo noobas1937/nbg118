@@ -87,7 +87,7 @@ public:
         } else {
             CCLOG("Error in Load cocosBuilder data :%s", pCCBFileName);
         }
-        CC_SAFE_RELEASE_NULL(ccbReader);
+        CC_SAFE_RELEASE(ccbReader);
         return node;
 
     }
