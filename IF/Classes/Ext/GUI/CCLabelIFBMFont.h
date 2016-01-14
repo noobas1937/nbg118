@@ -19,7 +19,8 @@ enum NB_FONT
     NB_FONT_Bold_Border,
     NB_FONT_Bold_Outline,
     NB_FONT_Bold,
-    NB_FONT_Gradient
+    NB_FONT_Gradient,
+    NB_HetTi_Light_Border,
 };
 const char * getNBFont(NB_FONT f);
 
