@@ -2605,34 +2605,39 @@ void WorldMapView::doTeleport(unsigned int type, unsigned int index, const strin
     auto cityNode = CCNode::create();
     
     int level = player.cityLv;
-    int mapIndex = 3;
-    while (mapIndex >= 0) {
-        auto arr = getCityPicArr(mapIndex, level, player.officer == KINGDOM_KING_ID);
-        int posX = 0;
-        int posY = 0;
-        if(mapIndex == 1){
-            posX = -_tile_width / 2;
-            posY = _tile_height / 2;
-        }
-        if(mapIndex == 2){
-            posY = _tile_height;
-        }
-        if(mapIndex == 3){
-            posX = _tile_width / 2;
-            posY = _tile_height / 2;
-        }
-        CCObject *obj = NULL;
-        CCARRAY_FOREACH(arr, obj){
-            std::string picName = _dict(obj)->valueForKey("pic")->getCString();
-            int addX = _dict(obj)->valueForKey("x")->intValue();
-            int addY = _dict(obj)->valueForKey("y")->intValue();
-            auto sprite = CCLoadSprite::createSprite(picName.c_str());
-            sprite->setAnchorPoint(ccp(0, 0));
-            cityNode->addChild(sprite);
-            sprite->setPosition(ccp(posX, posY) - ccp(_tile_width / 2, _tile_height / 2) + ccp(addX, addY));
-        }
-        mapIndex--;
-    }
+//    int mapIndex = 3;
+//    while (mapIndex >= 0) {
+//        auto arr = getCityPicArr(mapIndex, level, player.officer == KINGDOM_KING_ID);
+//        int posX = 0;
+//        int posY = 0;
+//        if(mapIndex == 1){
+//            posX = -_tile_width / 2;
+//            posY = _tile_height / 2;
+//        }
+//        if(mapIndex == 2){
+//            posY = _tile_height;
+//        }
+//        if(mapIndex == 3){
+//            posX = _tile_width / 2;
+//            posY = _tile_height / 2;
+//        }
+//        CCObject *obj = NULL;
+//        CCARRAY_FOREACH(arr, obj){
+//            std::string picName = _dict(obj)->valueForKey("pic")->getCString();
+//            int addX = _dict(obj)->valueForKey("x")->intValue();
+//            int addY = _dict(obj)->valueForKey("y")->intValue();
+//            auto sprite = CCLoadSprite::createSprite(picName.c_str());
+//            sprite->setAnchorPoint(ccp(0, 0));
+//            cityNode->addChild(sprite);
+//            sprite->setPosition(ccp(posX, posY) - ccp(_tile_width / 2, _tile_height / 2) + ccp(addX, addY));
+//        }
+//        mapIndex--;
+//    }
+    
+    auto house = NBWorldMapMainCity::getMainCity(0, player.cityLv, -1);
+    house->setPosition(0, _tile_height / 2);
+    house->setAnchorPoint({.5, .5});
+    cityNode->addChild(house);
     
     cityNode->setTag(index);
     auto pos = m_map->getViewPointByTilePoint(info.cityTilePoint);

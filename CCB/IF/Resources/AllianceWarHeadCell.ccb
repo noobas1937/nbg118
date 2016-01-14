@@ -60,9 +60,9 @@
 								<string>ScaleLock</string>
 								<key>value</key>
 								<array>
-									<real>1</real>
-									<real>1</real>
-									<false/>
+									<real>0.75999999046325684</real>
+									<real>0.75999999046325684</real>
+									<true/>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -82,7 +82,7 @@
 								<key>value</key>
 								<array>
 									<string>Common/Common_7.plist</string>
-									<string>Allance_team_head_frame.png</string>
+									<string>nb_alliance_war_jijie_cell_pic_bg.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -92,8 +92,8 @@
 								<string>Size</string>
 								<key>value</key>
 								<array>
-									<real>70</real>
-									<real>70</real>
+									<real>87</real>
+									<real>87</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -189,8 +189,8 @@
 										<string>ScaleLock</string>
 										<key>value</key>
 										<array>
-											<real>0.44999998807907104</real>
-											<real>0.44999998807907104</real>
+											<real>0.75999999046325684</real>
+											<real>0.75999999046325684</real>
 											<true/>
 											<integer>0</integer>
 										</array>
@@ -226,6 +226,8 @@
 										</array>
 									</dict>
 								</array>
+								<key>selected</key>
+								<true/>
 							</dict>
 						</array>
 						<key>customClass</key>
