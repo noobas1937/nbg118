@@ -26,11 +26,18 @@
 #include "SceneController.h"
 #include "WorldMapView.h"
 #include "YesNoDialog.h"
+#include "NBWorldMapMainCity.hpp"
 
 #define  MSG_ALLIANCE_WAR_DETAIL_CELL_CLICK       "msg_alliance_war_detail_cell_click"
 
 static int teamPlayerNum = 0;
 static int teamBattleType = 0;
+
+#include "YuanYunReturnCommand.h"
+#include "EnemyInfoController.h"
+
+const int CELL_W = 640;
+const int CELL_H = 104;
 
 AllianceWarDetailView::AllianceWarDetailView(AllianceTeamInfo* info):m_info(info),m_isLeaderUser(false){
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(AllianceWarDetailView::updateArriveTime), MSG_CHANGE_ALLIANCE_TEAM_ARRIVE_TIME, NULL);
@@ -53,13 +60,12 @@ AllianceWarDetailView *AllianceWarDetailView::create(AllianceTeamInfo* info){
 void AllianceWarDetailView::onEnter(){
     this->setTitleName(_lang("115138"));
     PopupBaseView::onEnter();
-    CCLoadSprite::doResourceByCommonIndex(204, true);
-    CCLoadSprite::doResourceByCommonIndex(7, true);
-    setCleanFunction([](){
-        CCLoadSprite::doResourceByCommonIndex(204, false);
-        CCLoadSprite::doResourceByCommonIndex(7, false);
-    });
-    m_tabView->reloadData();
+    
+//    m_tabView->reloadData();
+//    auto pt = m_tabView->minContainerOffset();
+//    m_tabView->setContentOffset(pt);
+//    m_tabView->updateCellAtIndex(0);
+    
     setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
     setTouchEnabled(true);
     //CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, 0, false);
@@ -128,10 +134,13 @@ bool AllianceWarDetailView::init(){
     teamPlayerNum = 0;
     teamBattleType = 0;
     if(PopupBaseView::init()){
+        
+        CCLoadSprite::doResourceByCommonIndex(204, true);
         CCLoadSprite::doResourceByCommonIndex(7, true);
         CCLoadSprite::doResourceByCommonIndex(8, true);
         CCLoadSprite::doResourceByCommonIndex(205, true);
         setCleanFunction([](){
+            CCLoadSprite::doResourceByCommonIndex(204, false);
             CCLoadSprite::doResourceByCommonIndex(7, false);
             CCLoadSprite::doResourceByCommonIndex(8, false);
             CCLoadSprite::doResourceByCommonIndex(205, false);
@@ -233,43 +242,53 @@ bool AllianceWarDetailView::init(){
         }
         
         m_cityIconNode->removeAllChildrenWithCleanup(true);
-        CCClipNode* cityClipper = CCClipNode::create(CCSize(136,136));
-        cityClipper->setPosition(ccp(-136/2, -136/2));
-        m_cityIconNode->addChild(cityClipper);
-        
-        CCNode* cityNode = CCNode::create();
-        cityNode->setScale(0.8);
-        cityClipper->addChild(cityNode);
+//        CCClipNode* cityClipper = CCClipNode::create(CCSize(136,136));
+//        cityClipper->setPosition(ccp(-136/2, -136/2));
+//        m_cityIconNode->addChild(cityClipper);
+//        
+//        CCNode* cityNode = CCNode::create();
+//        cityNode->setScale(0.8);
+//        cityClipper->addChild(cityNode);
         int level = m_info->getTargetCityLevel();
-        int mapIndex = 3;
-        while (mapIndex >= 0) {
-            auto arr = WorldMapView::getCityPicArr(mapIndex, level, false);
-            int posX = _tile_width / 2;
-            int posY = _tile_height / 2;
-            if(mapIndex == 0 || mapIndex == 2){
-                posX = _tile_width;
-            }
-            if(mapIndex == 3){
-                posX = _tile_width + posX;
-            }
-            if(mapIndex == 1 || mapIndex == 3){
-                posY = _tile_height;
-            }
-            if(mapIndex == 2){
-                posY = _tile_height + posY;
-            }
-            CCObject *obj = NULL;
-            CCARRAY_FOREACH(arr, obj){
-                std::string picName = _dict(obj)->valueForKey("pic")->getCString();
-                int addX = _dict(obj)->valueForKey("x")->intValue();
-                int addY = _dict(obj)->valueForKey("y")->intValue();
-                auto sprite = CCLoadSprite::createSprite(picName.c_str());
-                sprite->setAnchorPoint(ccp(0, 0));
-                cityNode->addChild(sprite);
-                sprite->setPosition(ccp(posX, posY) - ccp(_tile_width / 2, _tile_height / 2) + ccp(addX, addY) + ccp(-_tile_width/1.6 - 5,-_tile_height/1.6));
-            }
-            mapIndex--;
-        }
+//        int mapIndex = 3;
+//        while (mapIndex >= 0) {
+//            auto arr = WorldMapView::getCityPicArr(mapIndex, level, false);
+//            int posX = _tile_width / 2;
+//            int posY = _tile_height / 2;
+//            if(mapIndex == 0 || mapIndex == 2){
+//                posX = _tile_width;
+//            }
+//            if(mapIndex == 3){
+//                posX = _tile_width + posX;
+//            }
+//            if(mapIndex == 1 || mapIndex == 3){
+//                posY = _tile_height;
+//            }
+//            if(mapIndex == 2){
+//                posY = _tile_height + posY;
+//            }
+//            CCObject *obj = NULL;
+//            CCARRAY_FOREACH(arr, obj){
+//                std::string picName = _dict(obj)->valueForKey("pic")->getCString();
+//                int addX = _dict(obj)->valueForKey("x")->intValue();
+//                int addY = _dict(obj)->valueForKey("y")->intValue();
+//                auto sprite = CCLoadSprite::createSprite(picName.c_str());
+//                sprite->setAnchorPoint(ccp(0, 0));
+//                cityNode->addChild(sprite);
+//                sprite->setPosition(ccp(posX, posY) - ccp(_tile_width / 2, _tile_height / 2) + ccp(addX, addY) + ccp(-_tile_width/1.6 - 5,-_tile_height/1.6));
+//            }
+//            mapIndex--;
+//        }
+        
+//        auto island = NBWorldMapMainCity::getMainCityIslandImage(0, _tile_width / 2, _tile_height / 2);
+//        if (island)
+//        {
+//            m_cityIconNode->addChild(island);
+//        }
+        auto house = NBWorldMapMainCity::getMainCity(0, level, -1);
+        house->setAnchorPoint({.5, .5});
+        house->setPosition({.5, .5});
+        m_cityIconNode->addChild(house);
         
         m_targetTitle->setString(_lang("115224"));
         m_teamTitle->setString(_lang("115223"));
@@ -367,16 +386,17 @@ bool AllianceWarDetailView::init(){
         int type = m_info->getBattleType();//0 个人进攻， 1 个人防守，2 组队进攻 3 组队防守
         CCArray* armys = CCArray::create();
         
-        m_clipper = CCClipNode::create(CCSize(416,30));
-        m_clipper->setPosition(ccp(0, 0));
-        m_clipperNode->addChild(m_clipper);
+//        m_clipper = CCClipNode::create(CCSize(416,30));
+//        m_clipper->setPosition(ccp(0, 0));
+//        m_clipperNode->addChild(m_clipper);
         std::string flagIcon = "";
-        std::string leader = _lang("115222");
+        std::string leader = "";
         std::string posInfo = "";
+        m_statusTxt->setFntFile(getNBFont(NB_FONT_Bold_Border));
         if(m_info->getMySide()==1){
             flagIcon = "Allance_team_jindutiao01.png";
-            m_statusTxt->setColor({255,211,0});
-            m_txtNum1->setColor({244,36,0});
+//            m_statusTxt->setColor({255,211,0});
+//            m_txtNum1->setColor({244,36,0});
             m_battleTxt->setColor({244,36,0});
             if(m_info->getAttackAAbb()!=""){
                 leader.append("(");
@@ -385,12 +405,12 @@ bool AllianceWarDetailView::init(){
             }
             leader += m_info->getAttackName();
             m_battleTxt->setString(_lang("108582"));
-            m_attNode->setVisible(true);
-            m_defNode->setVisible(false);
+//            m_attNode->setVisible(true);
+//            m_defNode->setVisible(false);
         }else{
             flagIcon = "Allance_team_jindutiao02.png";
-            m_statusTxt->setColor({117,211,255});
-            m_txtNum1->setColor({0,162,196});
+//            m_statusTxt->setColor({117,211,255});
+//            m_txtNum1->setColor({0,162,196});
             m_battleTxt->setColor({0,162,196});
             if(m_info->getTargetAAbbr()!=""){
                 leader.append("(");
@@ -399,8 +419,8 @@ bool AllianceWarDetailView::init(){
             }
             leader += m_info->getTargetName();
             m_battleTxt->setString(_lang("115221"));
-            m_attNode->setVisible(false);
-            m_defNode->setVisible(true);
+//            m_attNode->setVisible(false);
+//            m_defNode->setVisible(true);
         }
         CCPoint pt = WorldController::getPointByIndex(m_info->getTargetId());
         posInfo = "";
@@ -408,6 +428,7 @@ bool AllianceWarDetailView::init(){
         posInfo.append(",");
         posInfo.append(CC_ITOA(pt.y));
         m_targetPosTxt->setString(posInfo);
+        m_leader115222Txt->setString(_lang("115222").c_str());
         m_leaderTxt->setString(leader.c_str());
         std::string pName = m_info->getTargetName();
         
@@ -418,7 +439,7 @@ bool AllianceWarDetailView::init(){
             bossSpr->setScale(1.4);
             int bsW = bossSpr->getContentSize().width*bossSpr->getScale();
             bossSpr->setPosition(ccp(bsW/2, bsW/2));
-            cityNode->addChild(bossSpr);
+            m_cityIconNode->addChild(bossSpr);
         }
         if (m_info->getTerritoryFlag() == "true") {
             CCLoadSprite::doResourceByCommonIndex(504, true);
@@ -427,13 +448,13 @@ bool AllianceWarDetailView::init(){
                 auto territorySpr = CCLoadSprite::createSprite("territory_building_lv1.png");
                 territorySpr->setScale(1.25);
                 territorySpr->setAnchorPoint(ccp(0, 0));
-                cityNode->addChild(territorySpr);
+                m_cityIconNode->addChild(territorySpr);
             }
             else if (m_info->getTerritoryType() == "flag") {
                 auto territorySpr = CCLoadSprite::createSprite("territory_tower0.png");
                 territorySpr->setScale(1.25);
                 territorySpr->setAnchorPoint(ccp(0, 0));
-                cityNode->addChild(territorySpr);
+                m_cityIconNode->addChild(territorySpr);
             }
         }
         
@@ -443,14 +464,14 @@ bool AllianceWarDetailView::init(){
         }
         m_teamTargetTxt->setString(pName);
         
-        CCScale9Sprite* icon = CCLoadSprite::createScale9Sprite(flagIcon.c_str());
-        icon->setInsetBottom(2);
-        icon->setInsetLeft(30);
-        icon->setInsetRight(30);
-        icon->setInsetBottom(2);
-        icon->setAnchorPoint(ccp(0, 0));
-        icon->setContentSize(CCSize(416,30));
-        m_clipper->addChild(icon);
+//        CCScale9Sprite* icon = CCLoadSprite::createScale9Sprite(flagIcon.c_str());
+//        icon->setInsetBottom(2);
+//        icon->setInsetLeft(30);
+//        icon->setInsetRight(30);
+//        icon->setInsetBottom(2);
+//        icon->setAnchorPoint(ccp(0, 0));
+//        icon->setContentSize(CCSize(416,30));
+//        m_clipper->addChild(icon);
         
         m_teamArmys = CCArray::create();
         
@@ -590,6 +611,9 @@ bool AllianceWarDetailView::init(){
     {
         m_isLeaderUser = (m_info->getAttackUid()==GlobalData::shared()->playerInfo.uid);
     }
+    
+    m_tabView->reloadData();
+    
     return ret;
 }
 
@@ -603,23 +627,35 @@ void AllianceWarDetailView::updateTime(float _time){
     }
     m_jieSanBtn->setEnabled(haveTime>0);
     if(haveTime>0){
+        m_statusTxt->getParent()->setVisible(true);
         totalTime = (m_info->getWaitTime() - m_info->getCreateTime());
         len = haveTime/totalTime;
         len = MAX(len,0);
         len = MIN(len,1);
-        m_clipper->setContentSize(CCSize((1-len)*416,30));
-        m_statusTxt->setString(_lang_1("115130",CC_SECTOA((int)haveTime)));
+//        m_clipper->setContentSize(CCSize((1-len)*416,30));
+        
+        m_progress->setPreferredSize(CCSize(175 * len, 30));
+        m_progress->setVisible(175 * len > 10);
+        
+        m_statusXXXTxt->setString(_lang_1("115130", ""));
+        m_statusTxt->setString(CC_SECTOA((int)haveTime));
     }else if(march>0){
+        m_statusTxt->getParent()->setVisible(true);
         totalTime = (m_info->getMarchTime() - m_info->getWaitTime());
         len = march/totalTime;
         len = MAX(len,0);
         len = MIN(len,1);
-        m_clipper->setContentSize(CCSize((1-len)*416,30));
-        m_statusTxt->setString(_lang_1("115131",CC_SECTOA((int)march)));
+//        m_clipper->setContentSize(CCSize((1-len)*416,30));
+        
+        m_progress->setPreferredSize(CCSize(175 * len, 30));
+        m_progress->setVisible(175 * len > 10);
+        
+        m_statusXXXTxt->setString(_lang_1("115131", ""));
+        m_statusTxt->setString(CC_SECTOA((int)march));
         
     }else{
-        m_statusTxt->setString("");
-        m_clipper->setContentSize(CCSize(416,30));
+        m_statusTxt->getParent()->setVisible(false);
+//        m_clipper->setContentSize(CCSize(416,30));
         this->unschedule(schedule_selector(AllianceWarDetailView::updateTime));
         this->closeSelf();
         return ;
@@ -813,6 +849,7 @@ void AllianceWarDetailView::sendBackArmy(CCObject* obj){
 bool AllianceWarDetailView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode){
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_infoList", CCNode*, this->m_infoList);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_viewBg", CCNode*, this->m_viewBg);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_statusXXXTxt", CCLabelIF*, this->m_statusXXXTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_statusTxt", CCLabelIF*, this->m_statusTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_bottomNode", CCNode*, this->m_bottomNode);
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_fireNode1", CCNode*, this->m_fireNode1);
@@ -822,7 +859,7 @@ bool AllianceWarDetailView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarge
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_supportBtn", CCControlButton*, this->m_supportBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_goHomeBtn", CCControlButton*, this->m_goHomeBtn);
     
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_clipperNode", CCNode*, this->m_clipperNode);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_clipperNode", CCNode*, this->m_clipperNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_txtNum1", CCLabelIF*, this->m_txtNum1);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_armyNum", CCLabelIF*, this->m_armyNum);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_posNode1", CCNode*, this->m_posNode1);
@@ -832,11 +869,13 @@ bool AllianceWarDetailView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarge
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_targetPosTxt", CCLabelIF*, this->m_targetPosTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_teamTargetTxt", CCLabelIF*, this->m_teamTargetTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_teamTitle", CCLabelIF*, this->m_teamTitle);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_leader115222Txt", CCLabelIFTTF*, this->m_leader115222Txt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_leaderTxt", CCLabelIFTTF*, this->m_leaderTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_cityIconNode", CCNode*, this->m_cityIconNode);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_defNode", CCNode*, this->m_defNode);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_attNode", CCNode*, this->m_attNode);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_defNode", CCNode*, this->m_defNode);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_attNode", CCNode*, this->m_attNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_renSpr", CCSprite*, this->m_renSpr);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_progress", CCScale9Sprite*, this->m_progress);
     return false;
 }
 
@@ -857,26 +896,28 @@ CCSize AllianceWarDetailView::tableCellSizeForIndex(CCTableView *table, ssize_t 
     if (obj->getOpen()) {
         int num = obj->getSoldiers()->count();
         int row = num/2 + (num%2==0?0:1);
-        int addH = row*100;
+        int addH = row*100 + 20;
         if (CCCommonUtils::isIosAndroidPad()) {
             addH = row*200;
         }
         if (obj->getUid()!=GlobalData::shared()->playerInfo.uid && !obj->getIsLeader() && m_isLeaderUser && m_info->getBattleType()==2)
         {
             if (CCCommonUtils::isIosAndroidPad()) {
-                return CCSize(1450, 283+addH+336);
+                return CCSize(1470, 250+addH+120);
             }
-            return CCSize(604, 118+addH+140);
+            return CCSize(CELL_W, CELL_H+addH+50);
         }
-        if (CCCommonUtils::isIosAndroidPad()) {
-            return CCSize(1450, 283+addH+144);
+        else {
+            if (CCCommonUtils::isIosAndroidPad()) {
+                return CCSize(1470, 250+addH+40);
+            }
+            return CCSize(CELL_W, CELL_H+addH+50);
         }
-        return CCSize(604, 118+addH+60);
     }
     if (CCCommonUtils::isIosAndroidPad()) {
-        return CCSize(1450, 283);
+        return CCSize(1470, 250);
     }
-    return CCSize(604, 118);
+    return CCSize(CELL_W, CELL_H);
 }
 
 CCSize AllianceWarDetailView::cellSizeForTable(CCTableView *table)
@@ -884,7 +925,7 @@ CCSize AllianceWarDetailView::cellSizeForTable(CCTableView *table)
     if (CCCommonUtils::isIosAndroidPad()) {
         return CCSize(1450, 283);
     }
-    return CCSize(604, 118);
+    return CCSize(CELL_W, CELL_H);
 }
 
 CCTableViewCell* AllianceWarDetailView::tableCellAtIndex(CCTableView *table, ssize_t idx)
@@ -913,8 +954,7 @@ void AllianceWarDetailView::tableCellWillRecycle(CCTableView* table, CCTableView
 {
 }
 
-#include "YuanYunReturnCommand.h"
-#include "EnemyInfoController.h"
+#pragma mark -
 
 AllianceTeamDetailCell *AllianceTeamDetailCell::create(YuanJunInfo* info,CCNode* clickNode,bool isLeaderUser,int battleType,string teamId){
     AllianceTeamDetailCell *ret = new AllianceTeamDetailCell(info,clickNode,isLeaderUser,battleType,teamId);
@@ -989,23 +1029,26 @@ void AllianceTeamDetailCell::setData(YuanJunInfo* info,bool isLeaderUser,int bat
             useArmyId = armyId;
         }
     }
-    m_lineBg->setVisible(m_info->getOpen());
+    
+    const int OPEN_BG_TAG = 10010;
+    m_renderBg->getParent()->removeChildByTag(OPEN_BG_TAG);
+
     double haveTime = (m_info->getArrivalTime() - GlobalData::shared()->getWorldTime());
     double totalTime = (m_info->getArrivalTime() - m_info->getStartTime());
     if(m_info->getOpen()){
         num = m_info->getSoldiers()->count();
         int row = num/2 + (num%2==0?0:1);
-        int addH = row*100 + 60;
-        if (CCCommonUtils::isIosAndroidPad()) {
-            addH = row*200 + 144;
-        }
+        int addH = row * 100 + 70;
+//        if (CCCommonUtils::isIosAndroidPad()) {
+//            addH = row*200 + 144;
+//        }
         if (m_info->getUid()!=GlobalData::shared()->playerInfo.uid && !m_info->getIsLeader() && m_isLeaderUser && m_battleType==2)
         {
-            if (CCCommonUtils::isIosAndroidPad()) {
-                addH+=192;
-            }
-            else
-                addH += 80;
+//            if (CCCommonUtils::isIosAndroidPad()) {
+//                addH+=192;
+//            }
+//            else
+//                addH += 80;
         }
         if(CCCommonUtils::isIosAndroidPad()){
             m_moveNode->setPosition(ccp(0, addH));
@@ -1025,7 +1068,11 @@ void AllianceTeamDetailCell::setData(YuanJunInfo* info,bool isLeaderUser,int bat
                 cell->setPosition(ccp(col==0?40:680, -220-rowIndex*200));
             }
             else
-                cell->setPosition(ccp(col==0?10:330, -100-rowIndex*100));
+//                cell->setPosition(ccp(col==0?10:330, -100-rowIndex*100));
+                cell->setPosition(ccp(col == 0 ? 33 : 327, - 122 - rowIndex * 128));
+            
+            cell->m_bg->setScaleY(rowIndex % 2 == 0 ? 1 : -1);
+            
             m_soldierNode->addChild(cell);
             count = dic->valueForKey("count")->intValue();
             std::string armyId = dic->valueForKey("armyId")->getCString();
@@ -1055,38 +1102,47 @@ void AllianceTeamDetailCell::setData(YuanJunInfo* info,bool isLeaderUser,int bat
             m_soldierNode->addChild(button);
         }
         
-        m_renderBg->initWithSpriteFrame(CCLoadSprite::loadResource("Allance_team_Members.png"));
+        // m_renderBg->initWithSpriteFrame(CCLoadSprite::loadResource("Allance_team_Members.png"));
         m_renderBg->setAnchorPoint(CCPoint(0,0));
         if (CCCommonUtils::isIosAndroidPad()) {
             m_renderBg->setContentSize(CCSize(1430,283+addH));
         }
         else
-            m_renderBg->setContentSize(CCSize(596,118+addH));
+            m_renderBg->setContentSize(CCSize(CELL_W, CELL_H+addH));
+        
+        m_renderBg->removeAllChildrenWithCleanup(true);
+        Scale9Sprite* sp = CCLoadSprite::createScale9Sprite("nb_al_members_bg.png");
+        sp->setTag(OPEN_BG_TAG);
+        sp->setZOrder(-OPEN_BG_TAG);
+        sp->setContentSize({CELL_W - 30.0f, row * 118 + 50.0f});
+        sp->setPosition({m_renderBg->getPositionX() + CELL_W / 2.0f, m_renderBg->getPositionY() + m_renderBg->getContentSize().height / 2 - CELL_H / 2 + 20});
+        m_renderBg->getParent()->addChild(sp);
+        
         m_funNode->setVisible(true);
     }else{
         m_funNode->setVisible(false);
         m_moveNode->setPosition(ccp(0, 0));
         m_soldierNode->setPosition(ccp(0, 0));
         if((haveTime<=0 && (m_info->getIndex()==2))||!m_info->getCanUse()){
-            m_renderBg->initWithSpriteFrame(CCLoadSprite::loadResource("Allance_team_Members_grey.png"));
+            // m_renderBg->initWithSpriteFrame(CCLoadSprite::loadResource("Allance_team_Members_grey.png"));
             if(haveTime<=0 && m_info->getIndex()==2){
                 m_unUseNode->setVisible(false);
                 m_scienceNode->setVisible(true);
                 m_scienceTxt->setString(_lang("115219"));
             }
             m_tipTxt->setString(_lang("115145"));
-            m_tipTxt->setColor({120,120,120});
+//            m_tipTxt->setColor({120,120,120});
             
         }else{
-            m_renderBg->initWithSpriteFrame(CCLoadSprite::loadResource("Allance_team_Members.png"));
-            m_tipTxt->setColor({169,183,189});
+            // m_renderBg->initWithSpriteFrame(CCLoadSprite::loadResource("Allance_team_Members.png"));
+//            m_tipTxt->setColor({169,183,189});
         }
         m_renderBg->setAnchorPoint(CCPoint(0,0));
         if (CCCommonUtils::isIosAndroidPad()) {
             m_renderBg->setContentSize(CCSize(1430,283));
         }
         else
-            m_renderBg->setContentSize(CCSize(596,118));
+            m_renderBg->setContentSize(CCSize(CELL_W, CELL_H));
     }
     if(m_info->getGenerals() && m_info->getGenerals()->count()>0){
         std::string head = m_info->getPic();
@@ -1261,7 +1317,7 @@ bool AllianceTeamDetailCell::onAssignCCBMemberVariable(cocos2d::CCObject * pTarg
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_proTxt", CCLabelIF*, this->m_proTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_buttonNode", CCNode*, this->m_buttonNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_soldierNode", CCNode*, this->m_soldierNode);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_lineBg", CCScale9Sprite*, this->m_lineBg);
+
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_scienceNode", CCNode*, this->m_scienceNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_scienceTxt", CCLabelIF*, this->m_scienceTxt);
     return false;

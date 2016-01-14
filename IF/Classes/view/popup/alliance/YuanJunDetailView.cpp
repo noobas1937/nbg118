@@ -446,6 +446,11 @@ void YuanJunSoldierCell::onExit(){
 }
 
 bool YuanJunSoldierCell::init(){
+    CCLoadSprite::doResourceByCommonIndex(504, true);
+    setCleanFunction([](){
+        CCLoadSprite::doResourceByCommonIndex(504, false);
+    });
+    
     auto bg = CCBLoadFile("YuanJunSoldierCell", this, this);
     this->setContentSize(bg->getContentSize());
     std::string armyId = m_info->valueForKey("armyId")->getCString();
@@ -478,13 +483,25 @@ bool YuanJunSoldierCell::init(){
     m_nameTxt->setString(name);
     m_LvTxt->setString(level);
     m_numTxt->setString(CC_CMDITOA(atoi(count.c_str())));
+
+    float scale = 0.6;
+    // TODO:
+    if (name == "Dragon")
+    {
+        string id = CC_ITOA(GlobalData::shared()->titanInfo.tid);
+        string picName = CCCommonUtils::getPropById(id, "dragonUI");
+        picName.append(".png");
+        icon = picName; // armyId "ico107408_small.png"
+        scale = 1;
+    }
+    
     CCSprite* spr = CCLoadSprite::createSprite(icon.c_str());
     spr->setAnchorPoint({.5, 0});
     if (CCCommonUtils::isIosAndroidPad()) {
         spr->setScale(1.4);
     }
     else
-        spr->setScale(0.6);
+        spr->setScale(scale);
     m_icon->addChild(spr);
     m_icon->addChild(pic);
     return true;
