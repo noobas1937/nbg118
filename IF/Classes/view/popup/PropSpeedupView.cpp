@@ -452,6 +452,8 @@ void PropSpeedupView::sliderCallBack(Ref *pSender, NBSlider::EventType type){
         m_chooseCount = 1;
     }
     m_editBox->setText(CC_CMDITOA(m_chooseCount).c_str());
+    m_editBox->setScale(0);
+    m_editBox->setScale(1);
     if(m_chooseCount>0){
         CCCommonUtils::setSpriteGray(m_sprBtn, false);
     }else{
