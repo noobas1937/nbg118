@@ -24,6 +24,7 @@ class AllianceWarView: public PopupBaseView
 ,public CCBMemberVariableAssigner
 ,public CCTableViewDataSource
 ,public DefaultTableViewDelegate
+
 {
 public:
     static AllianceWarView* create(int initTab=0);
@@ -37,6 +38,7 @@ public:
     virtual ssize_t numberOfCellsInTableView(CCTableView *table);
     virtual void tableCellWillRecycle(CCTableView* table, CCTableViewCell* cell);
     
+    
 private:
     virtual void onEnter();
     virtual void onExit();
@@ -45,6 +47,8 @@ private:
     virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(cocos2d::CCObject * pTarget, const char * pSelectorName){return NULL;}
 	virtual SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName);
 	virtual bool onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode);
+    
+    virtual void scrollViewDidScroll(CCScrollView* view);
     
     void onBtnAttClick(CCObject * pSender, Control::EventType pCCControlEvent);
     void onBtnDefClick(CCObject * pSender, Control::EventType pCCControlEvent);
@@ -172,6 +176,9 @@ private:
     CCSafeObject<CCLabelIF> m_tTimeTxt;
     CCSafeObject<CCNode> m_tPosNode;
     CCSafeObject<HFHeadImgNode> m_headImgNode;
+    
+    CCSafeObject<CCScale9Sprite> m_jijie_progress;
+    CCSafeObject<CCScale9Sprite> m_normal_progress;
     
     
     

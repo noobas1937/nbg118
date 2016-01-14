@@ -129,6 +129,7 @@ bool AllianceWarView::init(int initTab)
     }else{
         onClickTab2(NULL,Control::EventType::TOUCH_DOWN);
     }
+    m_tableView->setDelegate(this);
     return true;
 }
 
@@ -371,7 +372,7 @@ CCTableViewCell* AllianceWarView::tableCellAtIndex(CCTableView *table, ssize_t i
         AllianceTeamInfo* info = (AllianceTeamInfo*)m_data->objectAtIndex(idx);
 
         if (info && !(info->getBattleType()==2||info->getBattleType()==3)) {
-            cell->m_liantiao1->setPositionY(26);
+            cell->m_liantiao1->setPositionY(22);
         }
 
     }
@@ -401,6 +402,24 @@ void AllianceWarView::openJoinAlliance(CCObject * pSender, Control::EventType pC
     PopupViewController::getInstance()->addPopupInView(JoinAllianceView::create(11));
 }
 
+void AllianceWarView::scrollViewDidScroll(CCScrollView* view){
+    
+    //fusheng add 保留滑动手感
+    auto layout = view -> getContainer();
+    
+    float currentY = layout -> getPositionY();
+    
+    
+    //fusheng 需要上拉更新数据
+    //    if (currentY > 0 && layout -> getContentSize().height - view -> getViewSize().height >= 0) {
+    //        view -> setContentOffset(Vec2(0, 0));
+    //    }
+    
+    
+    if (-currentY > layout -> getContentSize().height - view -> getViewSize().height)      {
+        view -> setContentOffset(Vec2(0, -layout -> getContentSize().height + view -> getViewSize().height));
+    }
+}
 void AllianceWarView::onClickResult(CCObject * pSender, Control::EventType pCCControlEvent){
     PopupViewController::getInstance()->addPopupInView(AllianceWarResultView::create());
 }
@@ -1626,6 +1645,34 @@ void AllianceWarCell::updateTime(float t){
             m_sStatusTxt->setString(_lang_1("115130",""));
             m_teamTimeTxt->setString(CC_SECTOA(haveTime));
             m_teamStatusTxt->setString(_lang_1("115130",""));
+            
+            double totalTime = (m_info->getWaitTime() - m_info->getCreateTime());
+            
+            double len = haveTime/totalTime;
+            len = MAX(len,0);
+            len = MIN(len,1);
+            
+            CCSpriteFrame* spf = SpriteFrameCache::getInstance()->getSpriteFrameByName("AllianceWarDetailView_progress.png");//fusheng temp
+            m_normal_progress->setSpriteFrame(spf);
+            m_jijie_progress->setSpriteFrame(spf);
+            
+            
+            if (m_info && !(m_info->getBattleType()==2||m_info->getBattleType()==3)) {//fusheng 单人进攻
+                
+                m_normal_progress->setPreferredSize(CCSize(140 * len, 30));
+                m_normal_progress->setVisible(140 * len > 10);
+            }
+            else
+            {
+                m_jijie_progress->setPreferredSize(CCSize(140 * len, 30));
+                m_jijie_progress->setVisible(140 * len > 10);
+            }
+            
+            
+            
+            m_teamStatusTxt->setColor({255,212,6});
+            m_sStatusTxt->setColor({255,212,6});
+            
         }else if(march>=0){
             if(m_freshRally && m_info->getBattleType()==2){
                 int num = m_info->getMember()->count();
@@ -1643,10 +1690,36 @@ void AllianceWarCell::updateTime(float t){
                 m_teamTxt2->setString(CC_ITOA(useNum));
                 m_freshRally = false;
             }
+            
+            double totalTime = (m_info->getMarchTime() - m_info->getWaitTime());
+            
+            double len = march/totalTime;
+            len = MAX(len,0);
+            len = MIN(len,1);
+            
+            CCSpriteFrame* spf = SpriteFrameCache::getInstance()->getSpriteFrameByName("nb_bar_lv.png");
+            m_normal_progress->setSpriteFrame(spf);
+            m_jijie_progress->setSpriteFrame(spf);
+            
+            if (m_info && !(m_info->getBattleType()==2||m_info->getBattleType()==3)) {//fusheng 单人进攻
+                
+                m_normal_progress->setPreferredSize(CCSize(140 * len, 30));
+                m_normal_progress->setVisible(140 * len > 10);
+            }
+            else
+            {
+                m_jijie_progress->setPreferredSize(CCSize(140 * len, 30));
+                m_jijie_progress->setVisible(140 * len > 10);
+            }
+            
+            
             m_sTimeTxt->setString(CC_SECTOA(march));
             m_sStatusTxt->setString(_lang_1("115131",""));
             m_teamTimeTxt->setString(CC_SECTOA(march));
             m_teamStatusTxt->setString(_lang_1("115131",""));
+            
+            m_teamStatusTxt->setColor({181,237,45});
+            m_sStatusTxt->setColor({181,237,45});
         }else{
             this->unschedule(schedule_selector(AllianceWarCell::updateTime));
             CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_UPDATE_ALLIANCE_WAR_CELL_DATA);
@@ -1799,6 +1872,8 @@ SEL_CCControlHandler AllianceWarCell::onResolveCCBCCControlSelector(cocos2d::CCO
 bool AllianceWarCell::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode)
 {
     
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_normal_progress", CCScale9Sprite*, this->m_normal_progress);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_jijie_progress", CCScale9Sprite*, this->m_jijie_progress);
  
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_liantiao1", CCNode*, this->m_liantiao1);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_liantiao2", CCNode*, this->m_liantiao2);
