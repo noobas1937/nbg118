@@ -60,6 +60,10 @@ public:
     std::string sendLocalTime; //本地发送时间戳
     int sequenceId;
     int lastUpdateTime;
+    string teamUid;         //集结队伍ID
+    string lotteryInfo; //抓盘分享ID
+    string redPackets;      //红包ID
+    int server;     //红包服务器ID
 };
 
 #endif /* defined(__IF__ChatMailInfo__) */

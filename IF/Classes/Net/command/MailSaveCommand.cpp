@@ -22,7 +22,8 @@ bool MailSaveCommand::handleRecieve(cocos2d::CCDictionary *dict)
         CCCommonUtils::flyText((_lang(pStr->getCString()).c_str()));
     }else{
 #if(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-        ChatServiceCocos2dx::setMailSave(m_uid,m_type,1);
+//        ChatServiceCocos2dx::setMailSave(m_uid,m_type,1);
+        ChatServiceCocos2dx::setMailSave(m_uid,1);
 #endif
     }
     
@@ -46,7 +47,7 @@ bool MailCancelSaveCommand::handleRecieve(cocos2d::CCDictionary *dict)
             //MailController::getInstance()->removeMail(uid->getCString());
         }
 #if(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-        ChatServiceCocos2dx::setMailSave(m_uid,m_type,0);
+        ChatServiceCocos2dx::setMailSave(m_uid,0);
 #endif
     }
     

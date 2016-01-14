@@ -3608,9 +3608,8 @@ void CCCommonUtils::initPlayerInfo(CCDictionary *params){
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     ChatServiceCocos2dx::setCurrentUserId(playerInfo.uid);
-    ChatServiceCocos2dx::initDatabase();
-    ChatServiceCocos2dx::setPlayerInfo();
-    ChatServiceCocos2dx::setPlayerAllianceInfo(playerInfo.allianceInfo.shortName.c_str(),playerInfo.getAllianceId().c_str(),playerInfo.allianceInfo.rank,playerInfo.isfirstJoin);
+    bool isNewUser = playerInfo.level <= 2;
+    ChatServiceCocos2dx::initDatabase(isNewUser);
 #elif(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     ChatServiceCocos2dx::setCurrentUserId(playerInfo.uid);
 //初始化db暂时不需要
@@ -3658,8 +3657,8 @@ void CCCommonUtils::initMails(CCDictionary *params){
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     if(MailController::getInstance()->getIsNewMailListEnable())
     {
-        ChatServiceCocos2dx::setGlobalMailCount(GlobalData::shared()->mailCountObj.saveR,GlobalData::shared()->mailCountObj.studioR,
-                                                GlobalData::shared()->mailCountObj.fightR,GlobalData::shared()->mailCountObj.modR);
+//        ChatServiceCocos2dx::setGlobalMailCount(GlobalData::shared()->mailCountObj.saveR,GlobalData::shared()->mailCountObj.studioR,
+//                                                GlobalData::shared()->mailCountObj.fightR,GlobalData::shared()->mailCountObj.modR);
     }
 #endif
     CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MAIL_LIST_CHANGE);

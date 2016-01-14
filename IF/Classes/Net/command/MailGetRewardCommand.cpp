@@ -21,7 +21,7 @@ bool MailGetRewardCommand::handleRecieve(cocos2d::CCDictionary *dict){
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     if (MailController::getInstance()->getIsNewMailListEnable())
-        ChatServiceCocos2dx::setMailRewardStatus(m_uid, m_type);
+        ChatServiceCocos2dx::setMailRewardStatus(m_uid);
 #endif
     
     const CCString *pStr = params->valueForKey("errorCode");
