@@ -48,11 +48,14 @@ bool MinimapView::init(){
     bool ret = false;
     if(PopupBaseView::init()){
         setIsHDPanel(true);
+//        actor("World/World_6.plist", 0); // guo.jiang
         setCleanFunction([](){
+            CCLoadSprite::doResourceByPathIndex("World/World_6.plist", 0, false);
             CCLoadSprite::doResourceByCommonIndex(208, false);
-            DynamicResourceController::getInstance()->loadNameTypeResource(DynamicResource_MINIMAPVIEW_TEXTURE,true);
+            // DynamicResourceController::getInstance()->loadNameTypeResource(DynamicResource_MINIMAPVIEW_TEXTURE,true);
         });
-        DynamicResourceController::getInstance()->loadNameTypeResource(DynamicResource_MINIMAPVIEW_TEXTURE,false);
+        // DynamicResourceController::getInstance()->loadNameTypeResource(DynamicResource_MINIMAPVIEW_TEXTURE,false);
+        CCLoadSprite::doResourceByPathIndex("World/World_6.plist", 0, true);
         CCLoadSprite::doResourceByCommonIndex(208, true);
         setIsHDPanel(true);
         isAllShow = true;
@@ -940,6 +943,10 @@ void MinimapView::doClickShowMember(){
 
 void MinimapView::clickServerBtn()
 {
+    // TODO:
+    CCCommonUtils::flyHint("", "", _lang("E100008"));
+    return;
+    
     if(m_bCanClickServerBtn)
     {
         m_bCanClickServerBtn = false;
@@ -1954,6 +1961,12 @@ void MinimapView::addCity(int index, int type){//0 self 1 chief 2 member 3 relic
     else
     {
         sprite->setVisible(true);
+    }
+    
+    // TODO
+    if (3 == type)
+    {
+        sprite->setVisible(false);
     }
 }
 void MinimapView::resetSettingNode(CCObject* ccObj){

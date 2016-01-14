@@ -809,7 +809,11 @@ void WorldMapView::openTilePanel(unsigned int index) {
             view1 = ActBossPopUp::create(info);
         }
             break;
-        case Throne:{
+        case Throne:
+        {
+            // TODO:
+            break;
+            
             SoundController::sharedSound()->playEffects(Music_Sfx_city_castle);
             if(info.kingBuildInfo.openTime == 0){
                 //                CCCommonUtils::flyHint("", "", _lang("110020"));
@@ -827,7 +831,11 @@ void WorldMapView::openTilePanel(unsigned int index) {
             view3 = ThroneTile::create(info);
         }
             break;
-        case Trebuchet:{
+        case Trebuchet:
+        {
+            // TODO:
+            break;
+            
             SoundController::sharedSound()->playEffects(Music_Sfx_city_military);
             if(info.trebuchetInfo.openTime == 0){
                 CCCommonUtils::flyHint("", "", _lang("110020"));
@@ -5746,7 +5754,11 @@ void WorldMapView::addUnderNode(unsigned int index) {
             NBWorldMonster::addActBossTileUnderNode(info, pos, index);
         }
             break;
-        case Trebuchet:{
+        case Trebuchet:
+        {
+            // TODO:
+            break;
+            
             auto under = CCLoadSprite::createSprite(getSpriteName(info).c_str());
             under->setAnchorPoint(ccp(0, 0));
             under->setTag(index);
@@ -5830,7 +5842,11 @@ void WorldMapView::addUnderNode(unsigned int index) {
             }
         }
             break;
-        case Throne:{
+        case Throne:
+        {
+            // TODO:
+            break;
+            
             m_throneNode->removeAllChildren();
             m_towerNode->removeAllChildren();
             
