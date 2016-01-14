@@ -4325,6 +4325,14 @@
 										<array>
 											<dict>
 												<key>name</key>
+												<string>visible</string>
+												<key>type</key>
+												<string>Check</string>
+												<key>value</key>
+												<false/>
+											</dict>
+											<dict>
+												<key>name</key>
 												<string>position</string>
 												<key>type</key>
 												<string>Position</string>
@@ -4435,6 +4443,8 @@
 												<string>kill</string>
 											</dict>
 										</array>
+										<key>selected</key>
+										<true/>
 									</dict>
 									<dict>
 										<key>baseClass</key>
@@ -4571,8 +4581,6 @@
 												<string>kill</string>
 											</dict>
 										</array>
-										<key>selected</key>
-										<true/>
 									</dict>
 									<dict>
 										<key>baseClass</key>
@@ -4589,6 +4597,14 @@
 										<integer>0</integer>
 										<key>properties</key>
 										<array>
+											<dict>
+												<key>name</key>
+												<string>visible</string>
+												<key>type</key>
+												<string>Check</string>
+												<key>value</key>
+												<false/>
+											</dict>
 											<dict>
 												<key>name</key>
 												<string>position</string>
@@ -4934,8 +4950,8 @@
 												<string>Size</string>
 												<key>value</key>
 												<array>
-													<real>106</real>
-													<real>86</real>
+													<real>105</real>
+													<real>104</real>
 													<integer>0</integer>
 												</array>
 											</dict>
@@ -4978,7 +4994,7 @@
 												<key>value</key>
 												<array>
 													<string>Common/Common_1.plist</string>
-													<string>icon_kuang.png</string>
+													<string>power_di1.png</string>
 												</array>
 											</dict>
 											<dict>
@@ -5001,7 +5017,7 @@
 												<key>value</key>
 												<array>
 													<string>Common/Common_1.plist</string>
-													<string>icon_kuang.png</string>
+													<string>power_di1.png</string>
 												</array>
 											</dict>
 											<dict>
@@ -5435,6 +5451,14 @@
 										<integer>0</integer>
 										<key>properties</key>
 										<array>
+											<dict>
+												<key>name</key>
+												<string>visible</string>
+												<key>type</key>
+												<string>Check</string>
+												<key>value</key>
+												<false/>
+											</dict>
 											<dict>
 												<key>name</key>
 												<string>position</string>

@@ -44,18 +44,6 @@
 						<array>
 							<dict>
 								<key>name</key>
-								<string>position</string>
-								<key>type</key>
-								<string>Position</string>
-								<key>value</key>
-								<array>
-									<real>1</real>
-									<real>0.0</real>
-									<integer>0</integer>
-								</array>
-							</dict>
-							<dict>
-								<key>name</key>
 								<string>anchorPoint</string>
 								<key>type</key>
 								<string>Point</string>
@@ -94,7 +82,7 @@
 								<key>value</key>
 								<array>
 									<string>Common/Common_7.plist</string>
-									<string>Alliance_WarResult_frame_grey.png</string>
+									<string>nb_alliance_war_detail_item_bg.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -104,8 +92,8 @@
 								<string>Size</string>
 								<key>value</key>
 								<array>
-									<real>620</real>
-									<real>92</real>
+									<real>640</real>
+									<real>91</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -430,8 +418,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>305</real>
-							<real>42</real>
+							<real>320</real>
+							<real>45</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -491,18 +479,6 @@
 						<array>
 							<dict>
 								<key>name</key>
-								<string>position</string>
-								<key>type</key>
-								<string>Position</string>
-								<key>value</key>
-								<array>
-									<real>1</real>
-									<real>0.0</real>
-									<integer>0</integer>
-								</array>
-							</dict>
-							<dict>
-								<key>name</key>
 								<string>anchorPoint</string>
 								<key>type</key>
 								<string>Point</string>
@@ -541,7 +517,7 @@
 								<key>value</key>
 								<array>
 									<string>Common/Common_7.plist</string>
-									<string>Alliance_WarResult_frame_blue.png</string>
+									<string>nb_alliance_war_detail_item_bg.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -551,8 +527,8 @@
 								<string>Size</string>
 								<key>value</key>
 								<array>
-									<real>620</real>
-									<real>92</real>
+									<real>640</real>
+									<real>91</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -633,7 +609,7 @@
 								<key>value</key>
 								<array>
 									<real>-206</real>
-									<real>0.0</real>
+									<real>-1</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -716,7 +692,7 @@
 								<key>value</key>
 								<array>
 									<real>-6</real>
-									<real>0.0</real>
+									<real>-1</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -799,7 +775,7 @@
 								<key>value</key>
 								<array>
 									<real>194</real>
-									<real>0.0</real>
+									<real>-1</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -877,8 +853,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>305</real>
-							<real>42</real>
+							<real>320</real>
+							<real>45</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -1067,9 +1043,9 @@
 								<string>Color3</string>
 								<key>value</key>
 								<array>
-									<integer>0</integer>
-									<integer>171</integer>
-									<integer>220</integer>
+									<integer>58</integer>
+									<integer>55</integer>
+									<integer>35</integer>
 								</array>
 							</dict>
 							<dict>
@@ -1195,9 +1171,9 @@
 								<string>Color3</string>
 								<key>value</key>
 								<array>
-									<integer>101</integer>
-									<integer>153</integer>
-									<integer>178</integer>
+									<integer>58</integer>
+									<integer>55</integer>
+									<integer>35</integer>
 								</array>
 							</dict>
 							<dict>
@@ -1323,9 +1299,9 @@
 								<string>Color3</string>
 								<key>value</key>
 								<array>
-									<integer>0</integer>
-									<integer>171</integer>
-									<integer>220</integer>
+									<integer>58</integer>
+									<integer>55</integer>
+									<integer>35</integer>
 								</array>
 							</dict>
 							<dict>
@@ -1451,9 +1427,9 @@
 								<string>Color3</string>
 								<key>value</key>
 								<array>
-									<integer>101</integer>
-									<integer>153</integer>
-									<integer>178</integer>
+									<integer>58</integer>
+									<integer>55</integer>
+									<integer>35</integer>
 								</array>
 							</dict>
 							<dict>
@@ -1493,6 +1469,8 @@
 								<string>10小时 之前</string>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -1579,9 +1557,9 @@
 								<string>Color3</string>
 								<key>value</key>
 								<array>
-									<integer>101</integer>
-									<integer>153</integer>
-									<integer>178</integer>
+									<integer>58</integer>
+									<integer>55</integer>
+									<integer>35</integer>
 								</array>
 							</dict>
 							<dict>
@@ -1640,7 +1618,7 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>305</real>
+							<real>318</real>
 							<real>41</real>
 							<integer>0</integer>
 						</array>
