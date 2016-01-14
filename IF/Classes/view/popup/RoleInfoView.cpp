@@ -114,7 +114,7 @@ void RoleInfoView::onGetPlayerInfoCallback(cocos2d::CCObject *obj) {
     PopupViewController::getInstance()->addPopupInView(this);
     
     this->release();
-    CC_SAFE_RELEASE_NULL(playerInfo);
+    CC_SAFE_RELEASE(playerInfo);
 }
 
 

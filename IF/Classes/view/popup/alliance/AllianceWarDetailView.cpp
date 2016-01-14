@@ -129,9 +129,11 @@ bool AllianceWarDetailView::init(){
     teamBattleType = 0;
     if(PopupBaseView::init()){
         CCLoadSprite::doResourceByCommonIndex(7, true);
+        CCLoadSprite::doResourceByCommonIndex(8, true);
         CCLoadSprite::doResourceByCommonIndex(205, true);
         setCleanFunction([](){
             CCLoadSprite::doResourceByCommonIndex(7, false);
+            CCLoadSprite::doResourceByCommonIndex(8, false);
             CCLoadSprite::doResourceByCommonIndex(205, false);
             CCLoadSprite::doResourceByCommonIndex(206, false);
             CCLoadSprite::releaseDynamicResourceByType(CCLoadSpriteType_MONSTERLAYERLITTLE);
@@ -200,11 +202,11 @@ bool AllianceWarDetailView::init(){
             m_bottomNode->setPositionY(m_bottomNode->getPositionY()-dh);
         }
         
-        ParticleFireAni* par = ParticleFireAni::create();
-        m_fireNode1->addChild(par);
+//        ParticleFireAni* par = ParticleFireAni::create();
+//        m_fireNode1->addChild(par);
         
-        ParticleFireAni* par2 = ParticleFireAni::create();
-        m_fireNode2->addChild(par2);
+//        ParticleFireAni* par2 = ParticleFireAni::create();
+//        m_fireNode2->addChild(par2);
         
         CCCommonUtils::setButtonTitle(m_jieSanBtn, _lang("115191").c_str());
         CCCommonUtils::setButtonTitle(m_attackBtn, _lang("115193").c_str());
@@ -343,7 +345,7 @@ bool AllianceWarDetailView::init(){
                 info->setIndex(2);
                 info->setNum(m_info->getAttackId());//m_info->getTargetId()
                 m_data->addObject(info);
-                CC_SAFE_RELEASE_NULL(info);
+                CC_SAFE_RELEASE(info);
                 
             }
             info = new YuanJunInfo();
@@ -356,7 +358,7 @@ bool AllianceWarDetailView::init(){
             info->setIndex(3);
             info->setNum(m_info->getTargetId());
             m_data->addObject(info);
-            CC_SAFE_RELEASE_NULL(info);
+            CC_SAFE_RELEASE(info);
         }
         m_jieSanBtn->setVisible(false);
         m_attackBtn->setVisible(false);
@@ -495,7 +497,7 @@ bool AllianceWarDetailView::init(){
                 self->setpicVer(GlobalData::shared()->playerInfo.picVer);
                 armys->addObject(self);
                 armys->addObjectsFromArray(m_info->getReinforce());
-                CC_SAFE_RELEASE_NULL(self);
+                CC_SAFE_RELEASE(self);
                 int count = m_data->count();
                 bool haveSelf = false;
                 for (int i=0; i<count; i++) {
@@ -672,7 +674,7 @@ void AllianceWarDetailView::updateTime(float _time){
                 info->setIndex(2);
                 info->setNum(m_info->getTargetId());
                 m_data->addObject(info);
-                CC_SAFE_RELEASE_NULL(info);
+                CC_SAFE_RELEASE(info);
                 if(m_data->count()>=2){
                     m_data->swap(m_data->count()-2, m_data->count()-1);
                 }
@@ -798,7 +800,7 @@ void AllianceWarDetailView::sendBackArmy(CCObject* obj){
     self->setpicVer(GlobalData::shared()->playerInfo.picVer);
     armys->addObject(self);
     armys->addObjectsFromArray(m_info->getReinforce());
-    CC_SAFE_RELEASE_NULL(self);
+    CC_SAFE_RELEASE(self);
     int num = armys->count();
     offX = 58*num;
     int numSoldier = m_info->getReinforce()->count()+1;
@@ -813,8 +815,8 @@ bool AllianceWarDetailView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarge
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_viewBg", CCNode*, this->m_viewBg);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_statusTxt", CCLabelIF*, this->m_statusTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_bottomNode", CCNode*, this->m_bottomNode);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_fireNode1", CCNode*, this->m_fireNode1);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_fireNode2", CCNode*, this->m_fireNode2);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_fireNode1", CCNode*, this->m_fireNode1);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_fireNode2", CCNode*, this->m_fireNode2);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_jieSanBtn", CCControlButton*, this->m_jieSanBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_attackBtn", CCControlButton*, this->m_attackBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_supportBtn", CCControlButton*, this->m_supportBtn);

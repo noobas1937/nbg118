@@ -267,7 +267,7 @@ void AllianceDonateRankView::refreshDataByUid(CCObject* data){
     for (it = GlobalData::shared()->allianceDonateAllList.begin(); it != GlobalData::shared()->allianceDonateAllList.end(); it++) {
         AllianceDonateInfo* tmp = *it;
         if(tmp->uid==uid->getCString()){
-            CC_SAFE_RELEASE_NULL(tmp);
+            CC_SAFE_RELEASE(tmp);
             GlobalData::shared()->allianceDonateAllList.erase(it);
             break;
         }
@@ -276,7 +276,7 @@ void AllianceDonateRankView::refreshDataByUid(CCObject* data){
     for (it = GlobalData::shared()->allianceDonateTodayList.begin(); it != GlobalData::shared()->allianceDonateTodayList.end(); it++) {
         AllianceDonateInfo* tmp1 = *it;
         if(tmp1->uid==uid->getCString()){
-            CC_SAFE_RELEASE_NULL(tmp1);
+            CC_SAFE_RELEASE(tmp1);
             GlobalData::shared()->allianceDonateTodayList.erase(it);
             refreashData(NULL);
             break;

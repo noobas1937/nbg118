@@ -127,7 +127,7 @@ static void* networkThread(void *data)
         HFHttpResponse *response = new HFHttpResponse(request);
         
         // request's refcount = 2 here, it's retained by HttpRespose constructor
-        CC_SAFE_RELEASE_NULL(request);
+        CC_SAFE_RELEASE(request);
         // ok, refcount = 1 now, only HttpResponse hold it.
         
         long responseCode = -1;
@@ -224,9 +224,9 @@ static void* networkThread(void *data)
         pthread_mutex_destroy(&s_SleepMutexHF);
         pthread_cond_destroy(&s_SleepConditionHF);
 
-        CC_SAFE_RELEASE_NULL(s_requestQueueHF);
+        CC_SAFE_RELEASE(s_requestQueueHF);
         s_requestQueueHF = NULL;
-        CC_SAFE_RELEASE_NULL(s_responseQueueHF);
+        CC_SAFE_RELEASE(s_responseQueueHF);
         s_responseQueueHF = NULL;
     }
 
@@ -580,7 +580,7 @@ void HFHttpClient::dispatchResponseCallbacks(float delta)
             (pTarget->*pSelector)(this, response);
         }
 //        CCLOGFUNCF("start release the response: %p",response);
-        CC_SAFE_RELEASE_NULL(response);
+        CC_SAFE_RELEASE(response);
 //        CCLOGFUNC("end release the response");
     }
     

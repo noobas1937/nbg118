@@ -349,9 +349,6 @@ bool CCRichLabelTTF::updateTexture()
     // set the texture
     this->setTexture(tex);
     
-    // release it
-    CC_SAFE_RELEASE_NULL(tex);
-    
     // set the size in the sprite
     CCRect rect =CCRectZero;
     rect.size   = _texture->getContentSize();
@@ -401,6 +398,9 @@ bool CCRichLabelTTF::updateTexture()
 		menu->setPosition(ccp(p.x / CC_CONTENT_SCALE_FACTOR(),
 							  p.y / CC_CONTENT_SCALE_FACTOR()));
 	}
+    
+    // release it
+    CC_SAFE_RELEASE(tex);
     
     //ok
     return true;

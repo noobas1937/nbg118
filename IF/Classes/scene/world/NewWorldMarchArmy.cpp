@@ -803,13 +803,13 @@ void Soldier::spreadTo(CCObject *arr){
     auto _array = dynamic_cast<CCArray*>(arr);
     if(m_currentState == 2 && _array){
         _array->removeAllObjects();
-        CC_SAFE_RELEASE_NULL(_array);
+        CC_SAFE_RELEASE(_array);
         _array = NULL;
         return;
     }
     if(_array->count() == 0){
         if(_array){
-            CC_SAFE_RELEASE_NULL(_array);
+            CC_SAFE_RELEASE(_array);
             _array = NULL;
         }
         attack();
@@ -1179,7 +1179,7 @@ int Phalanx::getW(){
 Phalanx::~Phalanx(){
     for(auto it : m_soldiers){
         it.second->soldierDelete();
-        CC_SAFE_RELEASE_NULL(it.second);
+        CC_SAFE_RELEASE(it.second);
     }
     m_soldiers.clear();
 }
@@ -1510,7 +1510,7 @@ bool MarchArmy::isHaveArmy(int type){
 void MarchArmy::addArmyByType(int type, float direction, int num, CCSprite *sprite, int startLine){
     map<int, Phalanx*>::iterator it = m_phalanx.find(type);
     if(it != m_phalanx.end()){
-        CC_SAFE_RELEASE_NULL(it->second);
+        CC_SAFE_RELEASE(it->second);
         m_phalanx.erase(it);
     }
     Phalanx *phalanx = Phalanx::create(type, direction, num, sprite, ccp(gapX, gapY), m_info);
@@ -1522,7 +1522,7 @@ void MarchArmy::addArmyByType(int type, float direction, int num, CCSprite *spri
 MarchArmy::~MarchArmy(){
     map<int, Phalanx*>::iterator it;
     for(it = m_phalanx.begin(); it != m_phalanx.end(); it++){
-        CC_SAFE_RELEASE_NULL(it->second);
+        CC_SAFE_RELEASE(it->second);
     }
     m_phalanx.clear();
     WorldMapView::instance()->delBatchItem(Rock, getStartIndex(m_info));

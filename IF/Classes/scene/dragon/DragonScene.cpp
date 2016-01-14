@@ -447,7 +447,7 @@ void DragonScene::onExit()
             build->onBuildDelete();
         }
         m_nodeBuildings[i]->removeAllChildren();
-        CC_SAFE_RELEASE_NULL(m_nodeBuildings[i]);
+        CC_SAFE_RELEASE(m_nodeBuildings[i]);
     }
     m_buildItems.clear();
     

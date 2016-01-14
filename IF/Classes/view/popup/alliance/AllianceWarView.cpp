@@ -135,7 +135,8 @@ void AllianceWarView::refreshTableView(){
     m_data->removeAllObjects();
     bool flag = checkOpenMonster();
     if (flag) {//有怪物的队伍，显示分栏
-        m_listH = 615;
+//        m_listH = 615;
+        m_listH = 615 - 30;//fusheng 调低30
         if (CCCommonUtils::isIosAndroidPad()) {
             m_listH = 1555;
         }
@@ -143,7 +144,8 @@ void AllianceWarView::refreshTableView(){
         changeTableData();
     }else{
         m_tabNode->setVisible(false);
-        m_listH = 710;
+//        m_listH = 710;
+        m_listH = 710 - 30;//fusheng 调低30
         if (CCCommonUtils::isIosAndroidPad())
         {
             m_listH = 1700;
@@ -211,7 +213,7 @@ void AllianceWarView::updateInfo(CCObject* data)
                 if (info->getMonsterCount()>0) {
                     monsterNum+=1;
                 }
-                CC_SAFE_RELEASE_NULL(info);
+                CC_SAFE_RELEASE(info);
             }
         }
         m_srcData->addObjectsFromArray(zuduiArray);
@@ -1437,7 +1439,7 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                     self->setUid(m_info->getTargetUid());
                     armys->addObject(self);
                     armys->addObjectsFromArray(m_info->getReinforce());
-                    CC_SAFE_RELEASE_NULL(self);
+                    CC_SAFE_RELEASE(self);
                     num = armys->count();
                     if (num>5) {
                         num = 5;
@@ -1521,7 +1523,7 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                     self->setUid(m_info->getTargetUid());
                     armys->addObject(self);
                     armys->addObjectsFromArray(m_info->getReinforce());
-                    CC_SAFE_RELEASE_NULL(self);
+                    CC_SAFE_RELEASE(self);
                     num = armys->count();
                     int limitNum = num;
                     if(num<5 && m_info->getMaxSoldiers()!=m_info->getCurrSoldiers()){
