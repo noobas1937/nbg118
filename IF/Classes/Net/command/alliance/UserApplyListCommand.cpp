@@ -33,7 +33,7 @@ bool UserApplyListCommand::handleRecieve(cocos2d::CCDictionary *dict)
     }else{
         map<std::string, AllianceInfo*>::iterator it;
         for(it = AllianceManager::getInstance()->applyAllianceList.begin(); it != AllianceManager::getInstance()->applyAllianceList.end(); it++){
-            it->second->release();
+            CC_SAFE_RELEASE_NULL(it->second);
         }
         AllianceManager::getInstance()->applyAllianceList.clear();
         CCArray* arr =  (CCArray*)params->objectForKey("list");

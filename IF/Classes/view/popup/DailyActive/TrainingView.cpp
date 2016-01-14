@@ -444,7 +444,7 @@ bool Training2View::init()
     m_bNode->addChild(m_fixedWireNode, 1);
     m_parAniNode = new CCAniNode();
     m_parNode->addChild(m_parAniNode);
-    m_parAniNode->release();
+    CC_SAFE_RELEASE_NULL(m_parAniNode);
     m_isInAtk = false;
     m_isInTouching = false;
     m_isInCellWiring = false;

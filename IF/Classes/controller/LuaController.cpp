@@ -1835,7 +1835,7 @@ void LuaController::createChatNotice(CCDictionary *dict){
         lua_call(ls, 3, 1);
         needTime  = lua_tonumber(ls, -1);
     }
-    dict->release();
+    CC_SAFE_RELEASE_NULL(dict);
     if(bSys==false){
         if(PopupViewController::getInstance()->getCurrViewCount()>0){
             showSceneNotice(false);
@@ -1913,7 +1913,7 @@ void LuaController::clearChatNotice(){
     if(mChatNoticeV.size()>0){
         auto iter = mChatNoticeV.begin();
         while (iter!=mChatNoticeV.end()) {
-            (*iter)->release();
+            CC_SAFE_RELEASE_NULL((*iter));
             ++iter;
         }
         mChatNoticeV.clear();

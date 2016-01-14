@@ -107,7 +107,7 @@ void UploadImageController::getHeadImgBack(cocos2d::CCObject *pObj)
         pHttpRequest->setTag("UploadPhoto");
         
         HFHttpClient::getInstance()->send(pHttpRequest);
-        pHttpRequest->release();
+        CC_SAFE_RELEASE_NULL(pHttpRequest);
     }
     else
     {

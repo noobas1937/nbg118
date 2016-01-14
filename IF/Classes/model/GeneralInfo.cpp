@@ -274,7 +274,7 @@ GeneralInfo::~GeneralInfo(){
     for(abilityIt = generalSkillMap.begin(); abilityIt != generalSkillMap.end(); abilityIt++){
         std::map<std::string, GeneralSkillInfo*>::iterator skillIt;
         for(skillIt = abilityIt->second.begin(); skillIt != abilityIt->second.end(); skillIt++){
-            skillIt->second->release();
+            CC_SAFE_RELEASE_NULL(skillIt->second);
         }
         abilityIt->second.clear();
     }

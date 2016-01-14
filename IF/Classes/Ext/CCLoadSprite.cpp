@@ -302,6 +302,7 @@ void CCLoadSprite::parseLoadOrRelease(bool isLoad,int sceneId, CCDictionary *dic
                 }
                 actor("World/nb_ocean.plist", 0); // guo.jiang
                 actor("World/World_5.plist", 0); // guo.jiang
+                actor("World/World_6.plist", 0); // guo.jiang
 //                DynamicResourceController::getInstance()->loadNameTypeResource(DynamicResource_SERVERFIGHT_TEXTURE,isLoad);
             } else {
             }
@@ -541,7 +542,7 @@ void CCLoadSprite::doLoadResourceAsync(const char *path, CCCallFuncO* selector, 
         selector->retain();
         selector->setObject(NULL);
         selector->execute();
-        selector->release();
+        CC_SAFE_RELEASE_NULL(selector);
         return;
     }
     if (buffer)
@@ -609,7 +610,7 @@ void ImageLoadAsync::addImageCallback(CCObject* obj)
             setSuccessCallback(NULL);
             func->setObject(pTexture);
             func->execute();
-            func->release();
+            CC_SAFE_RELEASE_NULL(func);
         }
     }
     else
@@ -641,11 +642,11 @@ CCSize CCLoadSprite::getSpriteSize(const char *path, int index, const char *file
             CCDictionary* fileDict = (CCDictionary*)framesDict->objectForKey(fileName);
             if (fileDict) {
                 string _strSize = fileDict->valueForKey("sourceSize")->getCString();
-                dict->release();
+                CC_SAFE_RELEASE_NULL(dict);
                 return cocos2d::SizeFromString(_strSize.c_str());
             }
         }
-        dict->release();
+        CC_SAFE_RELEASE_NULL(dict);
     }
     return CCSize(0,0);
 }

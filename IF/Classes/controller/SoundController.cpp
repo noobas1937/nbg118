@@ -17,9 +17,9 @@ SoundController* SoundController::m_sSound = NULL;
 SoundController::~SoundController()
 {
     _musicArr->removeAllObjects();
-    _musicArr->release();
+    CC_SAFE_RELEASE_NULL(_musicArr);
     _effectArr->removeAllObjects();
-    _effectArr->release();
+    CC_SAFE_RELEASE_NULL(_effectArr);
     CCDirector::sharedDirector()->getScheduler()->unscheduleAllForTarget(this);
     m_sSound = NULL;
 }

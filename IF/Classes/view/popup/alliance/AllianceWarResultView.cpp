@@ -148,7 +148,7 @@ void AllianceWarResultView::getServerData(CCObject* data){
                     AllianceFightInfo* info = new AllianceFightInfo();
                     info->parseInfo(item->getCString());
                     m_data->addObject(info);
-                    info->release();
+                    CC_SAFE_RELEASE_NULL(info);
                 }
             }
         }

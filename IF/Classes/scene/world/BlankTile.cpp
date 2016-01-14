@@ -50,19 +50,34 @@ bool BlankTile::init() {
                 setButtonCallback(2,cccontrol_selector(BlankTile::onClickTeleport));
                 setButtonCallback(1,cccontrol_selector(BlankTile::onClickInviteTeleport));
             }else{
-                setButtonCount(4);
+                //fusheng 不显示联盟建筑放置按钮
+//                setButtonCount(4);
+//                setButtonName(3, _lang("108720")); // occupy
+//                setButtonName(2, _lang("108719")); // teleport
+//                setButtonName(4, _lang("115285")); // invite teleport
+//                setButtonName(5, _lang("115302"));// territory
+//                setButtonState(3, ButtonOccupy);
+//                setButtonState(2, ButtonTeleport);
+//                setButtonState(4, ButtonWorldInviteTeleport);
+//                setButtonState(5, ButtonPlace);
+//                setButtonCallback(3, cccontrol_selector(BlankTile::onClickOccupy));
+//                setButtonCallback(2,cccontrol_selector(BlankTile::onClickTeleport));
+//                setButtonCallback(4,cccontrol_selector(BlankTile::onClickInviteTeleport));
+//                setButtonCallback(5,cccontrol_selector(BlankTile::onClickPlace));
+                
+                
+                
+                setButtonCount(3);
                 setButtonName(3, _lang("108720")); // occupy
                 setButtonName(2, _lang("108719")); // teleport
-                setButtonName(4, _lang("115285")); // invite teleport
-                setButtonName(5, _lang("115302"));// territory
+                setButtonName(1, _lang("115285")); // invite teleport
                 setButtonState(3, ButtonOccupy);
                 setButtonState(2, ButtonTeleport);
-                setButtonState(4, ButtonWorldInviteTeleport);
-                setButtonState(5, ButtonPlace);
+                setButtonState(1, ButtonWorldInviteTeleport);
                 setButtonCallback(3, cccontrol_selector(BlankTile::onClickOccupy));
                 setButtonCallback(2,cccontrol_selector(BlankTile::onClickTeleport));
-                setButtonCallback(4,cccontrol_selector(BlankTile::onClickInviteTeleport));
-                setButtonCallback(5,cccontrol_selector(BlankTile::onClickPlace));
+                setButtonCallback(1,cccontrol_selector(BlankTile::onClickInviteTeleport));
+                
             }
 
         }else if (rank >= 3){
@@ -171,7 +186,13 @@ void BlankTile::onClickPlace(cocos2d::CCObject *pSender, Control::EventType pCCC
 {
     SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
     AllianceManager::getInstance()->tmpCityIndex = m_cityInfo.cityIndex;
-    PopupViewController::getInstance()->addPopupInView(AllianceTerritoryView::create(m_cityInfo.cityIndex,true));
+    //fusheng 屏蔽联盟领地放置功能
+    CCCommonUtils::flyHint("", "", _lang("E100008"));
+   
+    if (false) {
+        PopupViewController::getInstance()->addPopupInView(AllianceTerritoryView::create(m_cityInfo.cityIndex,true));
+    }
+    
     closeThis();
 }
 void BlankTile::onClickOccupy(CCObject * pSender, Control::EventType pCCControlEvent) {

@@ -211,7 +211,7 @@ void AllianceWarView::updateInfo(CCObject* data)
                 if (info->getMonsterCount()>0) {
                     monsterNum+=1;
                 }
-                info->release();
+                CC_SAFE_RELEASE_NULL(info);
             }
         }
         m_srcData->addObjectsFromArray(zuduiArray);
@@ -1437,7 +1437,7 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                     self->setUid(m_info->getTargetUid());
                     armys->addObject(self);
                     armys->addObjectsFromArray(m_info->getReinforce());
-                    self->release();
+                    CC_SAFE_RELEASE_NULL(self);
                     num = armys->count();
                     if (num>5) {
                         num = 5;
@@ -1521,7 +1521,7 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                     self->setUid(m_info->getTargetUid());
                     armys->addObject(self);
                     armys->addObjectsFromArray(m_info->getReinforce());
-                    self->release();
+                    CC_SAFE_RELEASE_NULL(self);
                     num = armys->count();
                     int limitNum = num;
                     if(num<5 && m_info->getMaxSoldiers()!=m_info->getCurrSoldiers()){

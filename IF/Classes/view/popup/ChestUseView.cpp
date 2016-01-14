@@ -151,8 +151,8 @@ void ChestUseView::onExit()
         }
         std::string rewardStr = RewardController::getInstance()->retReward(m_dataArr);//同步数据
         CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_REFREASH_TOOL_DATA);
-        m_dataDict->release();
-        m_eqNumDict->release();
+        CC_SAFE_RELEASE_NULL(m_dataDict);
+        CC_SAFE_RELEASE_NULL(m_eqNumDict);
     }
     setTouchEnabled(false);
 //    m_dataArr->release();
