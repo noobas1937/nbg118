@@ -203,6 +203,8 @@ void SceneController::doSceneInit(int sceneId, bool shouldSave, bool shouldClean
                     viewPoint = WorldController::getPointByIndex(subSceneId, WorldController::getInstance()->getMapXByType(mapType), WorldController::getInstance()->getMapYByType(mapType));
                 }
                 layer = WorldMapView::create(viewPoint, mapType);
+                
+                WorldController::getInstance()->addGuideData();//fusheng test
             }
             case SCENE_ID_CROP:
             case SCENE_ID_WOOD:

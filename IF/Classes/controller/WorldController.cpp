@@ -2112,46 +2112,65 @@ void WorldController::addGuideData(){
     SoundController::sharedSound()->playEffects(Music_Sfx_world_click_march);
     auto getIndex = [](CCPoint &pt, int index){
         CCPoint result = ccp(-1, -1);
-        if (index == 1) {
-            result.x = pt.x - 4 + rand() % 3;
-            result.y = pt.y - 4 + rand() % 3;
-        }else if(index == 2){
-            result.x = pt.x - 1 + rand() % 3;
-            result.y = pt.y + 4 + rand() % 3;
-        }else if(index == 3){
-            result.x = pt.x + 4 + rand() % 3;
-            result.y = pt.y - 1 + rand() % 3;
-        }
+//        if (index == 1) {
+//            result.x = pt.x - 4 + rand() % 3;
+//            result.y = pt.y - 4 + rand() % 3;
+//        }else if(index == 2){
+//            result.x = pt.x - 1 + rand() % 3;
+//            result.y = pt.y + 4 + rand() % 3;
+//        }else if(index == 3){
+//            result.x = pt.x + 4 + rand() % 3;
+//            result.y = pt.y - 1 + rand() % 3;
+//        }
+        
+        result.x = pt.x - 2;
+        result.y = pt.y + 2;
         int value = WorldController::getInstance()->getIndexByPoint(result);
         return value;
     };
     CCArray *arr = CCArray::create();
     int index = 1;
     int selfPt = getIndexByPoint(selfPoint);
-    while (index <= 3) {
-        CCDictionary *dict = CCDictionary::create();
-        dict->setObject(CCString::create(CC_ITOA(index)), "uuid");
-        int startPt = getIndex(WorldController::getInstance()->selfPoint, index);
-        dict->setObject(CCString::create(CC_ITOA(startPt)), "sp");
-        dict->setObject(CCString::create(CC_ITOA(selfPt)), "dp");
-        dict->setObject(CCString::create(CC_ITOA(getTime() - 10 * 1000)), "st");
-        dict->setObject(CCString::create(CC_ITOA(getTime() + 5 * 1000)), "et");
-        dict->setObject(CCString::create(CC_ITOA(int(MethodBattle))), "mType");
-        dict->setObject(CCString::create(CC_ITOA(int(CityTile))), "tType");
-        dict->setObject(CCString::create(CC_ITOA(int(PlayerSelf))), "oType");
-        dict->setObject(CCString::create(CC_ITOA(int(StateReturn))), "sType");
-        dict->setObject(CCString::create(""), "o");
-        dict->setObject(CCString::create(CC_ITOA(1)), "color");
-        CCArray *soldierArr = CCArray::create();
-        CCDictionary *soldier = CCDictionary::create();
-        soldier->setObject(CCString::create(CC_ITOA(index - 1)), "armId");
-        soldier->setObject(CCString::create("100000"), "total");
-        soldier->setObject(CCString::create("0"), "dead");
-        soldierArr->addObject(soldier);
-        dict->setObject(soldierArr, "army");
-        arr->addObject(dict);
-        index++;
-    }
+//    while (index <= 1) {
+    CCDictionary *dict = CCDictionary::create();
+    dict->setObject(CCString::create(CC_ITOA(index)), "uuid");
+    int startPt = getIndex(WorldController::getInstance()->selfPoint, index);
+    dict->setObject(CCString::create(CC_ITOA(startPt)), "sp");
+    dict->setObject(CCString::create(CC_ITOA(selfPt)), "dp");
+    dict->setObject(CCString::create(CC_ITOA(getTime() - 0 * 1000)), "st");
+    dict->setObject(CCString::create(CC_ITOA(getTime() + 5 * 1000)), "et");
+    dict->setObject(CCString::create(CC_ITOA(int(MethodBattle))), "mType");
+    dict->setObject(CCString::create(CC_ITOA(int(CityTile))), "tType");
+    dict->setObject(CCString::create(CC_ITOA(int(PlayerSelf))), "oType");
+    dict->setObject(CCString::create(CC_ITOA(int(StateReturn))), "sType");
+    dict->setObject(CCString::create(""), "o");
+    dict->setObject(CCString::create(CC_ITOA(1)), "color");
+    CCArray *soldierArr = CCArray::create();
+    CCDictionary *soldier = CCDictionary::create();
+    soldier->setObject(CCString::create("3"), "armId");//fusheng 三只部队
+    soldier->setObject(CCString::create("100000"), "total");
+    soldier->setObject(CCString::create("0"), "dead");
+    soldierArr->addObject(soldier);
+    
+    
+    CCDictionary *soldier2 = CCDictionary::create();
+    soldier2->setObject(CCString::create("1"), "armId");
+    soldier2->setObject(CCString::create("100000"), "total");
+    soldier2->setObject(CCString::create("0"), "dead");
+    soldierArr->addObject(soldier2);
+    
+    
+    CCDictionary *soldier3 = CCDictionary::create();
+    soldier3->setObject(CCString::create("2"), "armId");
+    soldier3->setObject(CCString::create("100000"), "total");
+    soldier3->setObject(CCString::create("0"), "dead");
+    soldierArr->addObject(soldier3);
+    
+    
+    dict->setObject(soldierArr, "army");
+    arr->addObject(dict);
+//        index++;
+//    }
     
     initMarchInfo(arr);
 }
