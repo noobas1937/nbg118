@@ -5096,64 +5096,56 @@ void WorldMapView::addUnderNode(unsigned int index) {
         case tile_superMine:{
             if (true) {
                 
-                if (info.m_superMineInfo.type != Wood)
-                {
-                    CCArray *arr = getCityPicArr(info, 1,getPicIdByCityInfo(info));
-                    int i = 0;
-                    while (i < arr->count()) {
-                        auto pics = _dict(arr->objectAtIndex(i));
-                        std::string picStr = pics->valueForKey("pic")->getCString();
-                        int x = pics->valueForKey("x")->intValue();
-                        int y = pics->valueForKey("y")->intValue();
-                        auto under = CCLoadSprite::createSprite(picStr.c_str());
-                        under->setAnchorPoint(ccp(0, 0));
-                        under->setTag(index);
-                        under->setPosition(ccp(pos.x-_halfTileSize.width,pos.y-_halfTileSize.height) + ccp(x, y)); // left-bottom corner
-                        m_cityItem[index].push_back(under);
-                        m_batchNode->addChild(under, index + i);
-                        i++;
-                    }
-                }
-                
                 if (info.parentCityIndex == info.cityIndex)
                 {
-                    if (info.m_superMineInfo.type == Wood)
-                    {
-                        Node* under = Node::create();
-                        under->setAnchorPoint(ccp(0, 0));
-                        under->setPosition(ccp(pos.x, pos.y + _halfTileSize.height)); // left-bottom corner
-                        m_cityItem[index].push_back(under);
-                        m_batchNode->addChild(under, index);
-                        
-                        auto island = NBWorldMapMainCity::getMainCityIslandImage(0, pos.x, pos.y);
-                        if (island)
-                        {
-                            island->setPosition(-_halfTileSize.width * 1.5, -_halfTileSize.height * 1.5);
-                            under->addChild(island);
-                        }
-                        
-                        auto tower = CCLoadSprite::createSprite("super_mine_sawmill.png");
-                        tower->setPosition(ccp(-25, 52)); // left-bottom corner
-                        under->addChild(tower);
-                    }
-                    
                     string fullName = "";
-                    switch (info.m_superMineInfo.type) {
+                    string tower_fullName = "";
+                    switch (info.m_superMineInfo.type)
+                    {
                         case Food:
                             fullName = _lang("115376");
+                            tower_fullName = "super_mine_farm.png";
                             break;
                         case Wood:
                             fullName = _lang("115377");
+                            tower_fullName = "super_mine_sawmill.png";
                             break;
                         case Iron:
                             fullName = _lang("115378");
+                            tower_fullName = "super_mine_Mithril.png";
                             break;
                         case Stone:
                             fullName = _lang("115379");
+                            tower_fullName = "super_mine_EssenceShrine.png";
                             break;
                         default:
                             break;
                     }
+                    
+                    //
+                    
+                    Node* under = Node::create();
+                    under->setAnchorPoint(ccp(0, 0));
+                    under->setPosition(ccp(pos.x, pos.y + _halfTileSize.height)); // left-bottom corner
+                    m_cityItem[index].push_back(under);
+                    m_batchNode->addChild(under, index);
+
+                    auto island = NBWorldMapMainCity::getMainCityIslandImage(0, pos.x, pos.y);
+                    if (island)
+                    {
+                        island->setPosition(-_halfTileSize.width * 1.5, -_halfTileSize.height * 1.5);
+                        under->addChild(island);
+                    }
+
+                    if (tower_fullName.length() > 0)
+                    {
+                        auto tower = CCLoadSprite::createSprite(tower_fullName.c_str());
+                        tower->setPosition(ccp(-25, 52)); // left-bottom corner
+                        under->addChild(tower);
+                    }
+                    
+                    //
+                    
                     AAreaState _state = AAreaState(info.m_superMineInfo.trstat);
                     string stateStr("");
                     string ccbName("");

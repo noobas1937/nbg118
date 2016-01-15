@@ -7,7 +7,7 @@
             <key>UI_map_Arrow.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{996,4},{18,28}}</string>
+                <string>{{996,42},{18,28}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -20,15 +20,15 @@
             <key>forbidden.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{980,106},{35,35}}</string>
+                <string>{{980,106},{31,31}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{35,35}}</string>
+                <string>{{0,0},{31,31}}</string>
                 <key>sourceSize</key>
-                <string>{35,35}</string>
+                <string>{31,31}</string>
             </dict>
             <key>minimap_1.png</key>
             <dict>
@@ -111,7 +111,7 @@
             <key>minimap_arrow1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{528,1244},{150,126}}</string>
+                <string>{{528,1270},{150,126}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -124,7 +124,7 @@
             <key>minimap_arrow2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{824,1208},{150,126}}</string>
+                <string>{{824,1234},{150,126}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -137,7 +137,7 @@
             <key>minimap_serBg.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{528,1208},{290,30}}</string>
+                <string>{{528,1234},{290,30}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -147,44 +147,57 @@
                 <key>sourceSize</key>
                 <string>{290,30}</string>
             </dict>
-            <key>position_alli.png</key>
+            <key>minimap_timer_bg.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{980,147},{28,44}}</string>
+                <string>{{528,1208},{430,20}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{28,44}}</string>
+                <string>{{0,0},{430,20}}</string>
                 <key>sourceSize</key>
-                <string>{28,44}</string>
+                <string>{430,20}</string>
+            </dict>
+            <key>position_alli.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{996,4},{22,32}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{22,32}}</string>
+                <key>sourceSize</key>
+                <string>{22,32}</string>
             </dict>
             <key>position_city.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{947,199},{47,80}}</string>
+                <string>{{894,324},{55,74}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{47,80}}</string>
+                <string>{{0,0},{55,74}}</string>
                 <key>sourceSize</key>
-                <string>{47,80}</string>
+                <string>{55,74}</string>
             </dict>
             <key>position_lord.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{894,199},{47,80}}</string>
+                <string>{{894,199},{68,119}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{47,80}}</string>
+                <string>{{0,0},{68,119}}</string>
                 <key>sourceSize</key>
-                <string>{47,80}</string>
+                <string>{68,119}</string>
             </dict>
             <key>position_territory.png</key>
             <dict>
@@ -202,15 +215,15 @@
             <key>relic_city.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{684,1340},{139,94}}</string>
+                <string>{{996,76},{3,2}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{139,94}}</string>
+                <string>{{0,0},{3,2}}</string>
                 <key>sourceSize</key>
-                <string>{139,94}</string>
+                <string>{3,2}</string>
             </dict>
             <key>resource_belt.png</key>
             <dict>

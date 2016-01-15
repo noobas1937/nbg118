@@ -1223,8 +1223,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>184.06005859375</real>
-											<real>347.780029296875</real>
+											<real>195.06005859375</real>
+											<real>348.780029296875</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -1275,7 +1275,7 @@
 										<string>FloatScale</string>
 										<key>value</key>
 										<array>
-											<real>24</real>
+											<real>18</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -1330,6 +1330,52 @@
 								</array>
 							</dict>
 							<dict>
+								<key>animatedProperties</key>
+								<dict>
+									<key>1</key>
+									<dict>
+										<key>opacity</key>
+										<dict>
+											<key>keyframes</key>
+											<array>
+												<dict>
+													<key>easing</key>
+													<dict>
+														<key>type</key>
+														<integer>1</integer>
+													</dict>
+													<key>name</key>
+													<string>opacity</string>
+													<key>time</key>
+													<real>0.0</real>
+													<key>type</key>
+													<integer>5</integer>
+													<key>value</key>
+													<integer>0</integer>
+												</dict>
+												<dict>
+													<key>easing</key>
+													<dict>
+														<key>type</key>
+														<integer>1</integer>
+													</dict>
+													<key>name</key>
+													<string>opacity</string>
+													<key>time</key>
+													<real>0.3333333432674408</real>
+													<key>type</key>
+													<integer>5</integer>
+													<key>value</key>
+													<integer>255</integer>
+												</dict>
+											</array>
+											<key>name</key>
+											<string>opacity</string>
+											<key>type</key>
+											<integer>5</integer>
+										</dict>
+									</dict>
+								</dict>
 								<key>baseClass</key>
 								<string>CCScale9Sprite</string>
 								<key>children</key>
@@ -1351,8 +1397,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>333</real>
-											<real>332</real>
+											<real>322.10000610351562</real>
+											<real>339.70001220703125</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -1384,8 +1430,8 @@
 										<string>SpriteFrame</string>
 										<key>value</key>
 										<array>
-											<string>Common/Common_7.plist</string>
-											<string>AllianceWarDetailView_progress_bg.png</string>
+											<string>Common/Common_1.plist</string>
+											<string>nb_progressBarBg.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -1396,11 +1442,13 @@
 										<key>value</key>
 										<array>
 											<real>140</real>
-											<real>30</real>
+											<real>17</real>
 											<integer>0</integer>
 										</array>
 									</dict>
 									<dict>
+										<key>baseValue</key>
+										<integer>255</integer>
 										<key>name</key>
 										<string>opacity</string>
 										<key>type</key>
@@ -1476,8 +1524,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>333</real>
-											<real>332</real>
+											<real>323.13555908203125</real>
+											<real>339.81985473632812</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -1509,8 +1557,8 @@
 										<string>SpriteFrame</string>
 										<key>value</key>
 										<array>
-											<string>Common/Common_7.plist</string>
-											<string>AllianceWarDetailView_progress.png</string>
+											<string>Common/Common_1.plist</string>
+											<string>nb_new_progress_bar.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -1521,7 +1569,7 @@
 										<key>value</key>
 										<array>
 											<real>140</real>
-											<real>30</real>
+											<real>17</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -1540,9 +1588,9 @@
 										<string>Color3</string>
 										<key>value</key>
 										<array>
-											<integer>255</integer>
-											<integer>255</integer>
-											<integer>255</integer>
+											<integer>251</integer>
+											<integer>165</integer>
+											<integer>73</integer>
 										</array>
 									</dict>
 									<dict>
@@ -1551,7 +1599,7 @@
 										<key>type</key>
 										<string>Float</string>
 										<key>value</key>
-										<real>10</real>
+										<real>0.0</real>
 									</dict>
 									<dict>
 										<key>name</key>
@@ -1559,7 +1607,7 @@
 										<key>type</key>
 										<string>Float</string>
 										<key>value</key>
-										<real>10</real>
+										<real>0.0</real>
 									</dict>
 									<dict>
 										<key>name</key>
@@ -1567,7 +1615,7 @@
 										<key>type</key>
 										<string>Float</string>
 										<key>value</key>
-										<real>10</real>
+										<real>0.0</real>
 									</dict>
 									<dict>
 										<key>name</key>
@@ -1575,7 +1623,7 @@
 										<key>type</key>
 										<string>Float</string>
 										<key>value</key>
-										<real>10</real>
+										<real>0.0</real>
 									</dict>
 								</array>
 							</dict>
@@ -1602,7 +1650,7 @@
 										<key>value</key>
 										<array>
 											<real>404</real>
-											<real>347.79998779296875</real>
+											<real>348.79998779296875</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -1653,7 +1701,7 @@
 										<string>FloatScale</string>
 										<key>value</key>
 										<array>
-											<real>24</real>
+											<real>18</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -5367,7 +5415,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>179.00006103515625</real>
+									<real>199.00006103515625</real>
 									<real>179.33334350585938</real>
 									<integer>0</integer>
 								</array>
@@ -5419,7 +5467,7 @@
 								<string>FloatScale</string>
 								<key>value</key>
 								<array>
-									<real>24</real>
+									<real>18</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -5610,6 +5658,52 @@
 						</array>
 					</dict>
 					<dict>
+						<key>animatedProperties</key>
+						<dict>
+							<key>1</key>
+							<dict>
+								<key>opacity</key>
+								<dict>
+									<key>keyframes</key>
+									<array>
+										<dict>
+											<key>easing</key>
+											<dict>
+												<key>type</key>
+												<integer>1</integer>
+											</dict>
+											<key>name</key>
+											<string>opacity</string>
+											<key>time</key>
+											<real>0.0</real>
+											<key>type</key>
+											<integer>5</integer>
+											<key>value</key>
+											<integer>0</integer>
+										</dict>
+										<dict>
+											<key>easing</key>
+											<dict>
+												<key>type</key>
+												<integer>1</integer>
+											</dict>
+											<key>name</key>
+											<string>opacity</string>
+											<key>time</key>
+											<real>0.3333333432674408</real>
+											<key>type</key>
+											<integer>5</integer>
+											<key>value</key>
+											<integer>255</integer>
+										</dict>
+									</array>
+									<key>name</key>
+									<string>opacity</string>
+									<key>type</key>
+									<integer>5</integer>
+								</dict>
+							</dict>
+						</dict>
 						<key>baseClass</key>
 						<string>CCScale9Sprite</string>
 						<key>children</key>
@@ -5631,8 +5725,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>333</real>
-									<real>162</real>
+									<real>326.41482543945312</real>
+									<real>169.56101989746094</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -5664,8 +5758,8 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string>Common/Common_7.plist</string>
-									<string>AllianceWarDetailView_progress_bg.png</string>
+									<string>Common/Common_1.plist</string>
+									<string>nb_progressBarBg.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -5676,11 +5770,13 @@
 								<key>value</key>
 								<array>
 									<real>140</real>
-									<real>30</real>
+									<real>17</real>
 									<integer>0</integer>
 								</array>
 							</dict>
 							<dict>
+								<key>baseValue</key>
+								<integer>255</integer>
 								<key>name</key>
 								<string>opacity</string>
 								<key>type</key>
@@ -5756,8 +5852,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>333</real>
-									<real>161</real>
+									<real>327.18649291992188</real>
+									<real>168.52345275878906</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -5790,7 +5886,7 @@
 								<key>value</key>
 								<array>
 									<string>Common/Common_1.plist</string>
-									<string>nb_bar_lv.png</string>
+									<string>nb_new_progress_bar.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -5800,8 +5896,8 @@
 								<string>Size</string>
 								<key>value</key>
 								<array>
-									<real>140</real>
-									<real>30</real>
+									<real>100</real>
+									<real>17</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -5820,9 +5916,9 @@
 								<string>Color3</string>
 								<key>value</key>
 								<array>
-									<integer>255</integer>
-									<integer>255</integer>
-									<integer>255</integer>
+									<integer>251</integer>
+									<integer>165</integer>
+									<integer>73</integer>
 								</array>
 							</dict>
 							<dict>
@@ -5858,8 +5954,6 @@
 								<real>0.0</real>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -5884,7 +5978,7 @@
 								<key>value</key>
 								<array>
 									<real>404</real>
-									<real>177.30000305175781</real>
+									<real>178.30000305175781</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -5935,7 +6029,7 @@
 								<string>FloatScale</string>
 								<key>value</key>
 								<array>
-									<real>24</real>
+									<real>18</real>
 									<integer>0</integer>
 								</array>
 							</dict>

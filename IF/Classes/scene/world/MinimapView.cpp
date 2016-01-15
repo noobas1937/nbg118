@@ -52,11 +52,14 @@ bool MinimapView::init(){
         setCleanFunction([](){
             CCLoadSprite::doResourceByPathIndex("World/World_6.plist", 0, false);
             CCLoadSprite::doResourceByCommonIndex(208, false);
+            CCLoadSprite::doResourceByCommonIndex(7, false);
             // DynamicResourceController::getInstance()->loadNameTypeResource(DynamicResource_MINIMAPVIEW_TEXTURE,true);
         });
         // DynamicResourceController::getInstance()->loadNameTypeResource(DynamicResource_MINIMAPVIEW_TEXTURE,false);
         CCLoadSprite::doResourceByPathIndex("World/World_6.plist", 0, true);
         CCLoadSprite::doResourceByCommonIndex(208, true);
+        CCLoadSprite::doResourceByCommonIndex(7, true);
+        
         setIsHDPanel(true);
         isAllShow = true;
         m_bCanClickServerBtn = true;
@@ -121,13 +124,13 @@ bool MinimapView::init(){
         this->addChild(m_viewPort);
         
         auto size = CCDirector::sharedDirector()->getWinSize();
-        auto pos = ccp(size.width / 2, size.height - 40);
+        auto pos = ccp(size.width / 2, size.height - 60);
         m_nameContainer->setPosition(pos);
         m_nameContainer->setTag(Title_Node_Tag);
         this->addChild(m_nameContainer);
         
         //返回按钮
-        m_returnBtn = CCLoadSprite::createSprite("bnt_02.png");
+        m_returnBtn = CCLoadSprite::createSprite("nb_btn0_bg_minimap.png");
         if (CCCommonUtils::isIosAndroidPad()) {
             m_returnBtn->setScale(2);
         }
@@ -146,7 +149,7 @@ bool MinimapView::init(){
         btnSprite2->setPosition(m_returnBtn->getPosition());
         
         //服务器列表按钮
-        m_serverListBtn = CCLoadSprite::createSprite("bnt_02.png");
+        m_serverListBtn = CCLoadSprite::createSprite("nb_btn0_bg_minimap.png");
         if (CCCommonUtils::isIosAndroidPad()) {
             m_serverListBtn->setScale(2);
         }
@@ -231,20 +234,23 @@ bool MinimapView::init(){
         m_arrowBatchNode->addChild(m_dSerTitle);
         //设置按钮：资源带和联盟玩家位置
         m_settingNode = CCNode::create();
+        auto d_bg = CCLoadSprite::createSprite("d-bg.png");;
         m_settingBtn = CCLoadSprite::createSprite("d-biyan.png");
         if (CCCommonUtils::isIosAndroidPad()) {
             m_settingBtn->setScale(2);
         }
         this->addChild(m_settingNode);
+        this->addChild(d_bg);
         this->addChild(m_settingBtn);
         
-        CCSize setBtnSize = m_settingBtn->getContentSize();
+        CCSize setBtnSize = d_bg->getContentSize();
         CCPoint orgPos = CCDirector::sharedDirector()->getVisibleOrigin();
         m_settingNode->setPosition(ccp(winSize.width - orgPos.x - setBtnSize.width, m_returnBtn->getPositionY()+ 5));
          if (CCCommonUtils::isIosAndroidPad()) {
              m_settingNode->setPosition(ccp(winSize.width - orgPos.x - setBtnSize.width-setBtnSize.width/3, m_returnBtn->getPositionY()+ 5));
          }
         
+        d_bg->setPosition(ccp(m_settingNode->getPositionX() + setBtnSize.width * 0.5, m_returnBtn->getPositionY() + 5));
         m_settingBtn->setPosition(ccp(m_settingNode->getPositionX() + setBtnSize.width * 0.5, m_returnBtn->getPositionY() + 5));
         CCScale9Sprite *bgScale = CCScale9Sprite::createWithSpriteFrameName ("shu-hei.png");
         bgScale->setAnchorPoint(ccp(0.5, 0));
@@ -284,7 +290,7 @@ bool MinimapView::init(){
             m_alianceTouchLayer = CCLayerColor::create(ccc4(255, 0, 0, 0), touchSize.width,touchSize.height);
             m_settingNode->addChild(m_alianceTouchLayer);
             m_alianceTouchLayer->setPosition(m_allAlianceBtn->getPosition() - ccp(touchSize.width*0.5, touchSize.height*0.5));
-            auto btnSprite3 = CCLoadSprite::createSprite("alliances_help.png");
+            auto btnSprite3 = CCLoadSprite::createSprite("nb_minimap_alliances_help.png");
             if (CCCommonUtils::isIosAndroidPad()) {
                 btnSprite3->setScale(2);
             }
@@ -301,7 +307,7 @@ bool MinimapView::init(){
             m_settingNode->addChild(m_alianceHideIcon);
             m_alianceHideIcon->setAnchorPoint(ccp(1, 0));
             CCSize hideSize = m_alianceHideIcon->getContentSize();
-            m_alianceHideIcon->setPosition(m_allAlianceBtn->getPosition() + ccp(resBtnSize.width - hideSize.width,0));
+            m_alianceHideIcon->setPosition(m_allAlianceBtn->getPosition() + ccp(resBtnSize.width + hideSize.width * 1.5,0));
             m_allAlianceBtn->setOpacity(0);
             m_alianceHideIcon->setOpacity(0);
         }
@@ -338,7 +344,7 @@ bool MinimapView::init(){
         }
         m_hideIcon->setAnchorPoint(ccp(1, 0));
         CCSize hideSize = m_hideIcon->getContentSize();
-        m_hideIcon->setPosition(m_resourceBtn->getPosition() + ccp(resBtnSize.width - hideSize.width,0));
+        m_hideIcon->setPosition(m_resourceBtn->getPosition() + ccp(resBtnSize.width + hideSize.width * 1.5,0));
         m_hideIcon->setVisible(true);
         m_hideIcon->setOpacity(0);
         m_resourceBtn->setOpacity(0);
@@ -398,67 +404,52 @@ void MinimapView::addLegend(){
     if (CCCommonUtils::isIosAndroidPad()) {
         node->setScale(MINIMAP_HD_SCALE);
     }
+    auto size = CCDirector::sharedDirector()->getWinSize();
+    // auto orgPos = CCDirector::sharedDirector()->getVisibleOrigin();
+    node->setPosition(0, size.height);
     this->addChild(node);
+    
     int totalW = 0;
     int totalH = 10;
-    auto bg = CCLoadSprite::createScale9Sprite("technology_11.png");
+    const int HEIGHT = 40;
+    auto bg = LayerColor::create({50, 50, 50, 100}, size.width, HEIGHT);
     node->addChild(bg, 1);
-    bg->setAnchorPoint(ccp(0, 0));
-    auto addText = [](CCLabelIF *label, std::string iconStr, int &w, int &h, CCNode *parent){
-        label->setColor(ccc3(221, 221, 221));
-        label->setAnchorPoint(ccp(0, 0.5));
-        label->setAlignment(kCCTextAlignmentLeft);
+    bg->ignoreAnchorPointForPosition(false);
+    bg->setAnchorPoint(ccp(0, 1));
+//    bg->setPreferredSize(CCSize(size.width, HEIGHT));
+    
+    auto addText = [](CCLabelIF *label, std::string iconStr, int x, int h, CCNode *parent){
+
         label->setVerticalAlignment(kCCVerticalTextAlignmentCenter);
         auto sprite = CCLoadSprite::createSprite(iconStr.c_str());
-        float s = 1.0;
-        if(iconStr == "position_alli.png"){
-            s = 0.8;
-        }
-        int orgW = 40;
-        int spriteW = orgW * s;
-        int spriteH = orgW * s;
-
-        CCCommonUtils::setSpriteMaxSize(sprite, spriteW);
-        auto spriteSize = sprite->getContentSize();
+        CCCommonUtils::setSpriteMaxSize(sprite, h);
+        sprite->setPosition(x + h / 2, -h / 2);
+        
+        label->setFontSize(18);
+        label->setColor(ccc3(211, 211, 211));
+        label->setAnchorPoint(ccp(0, 0.5));
+        label->setAlignment(kCCTextAlignmentLeft);
+        label->setPosition(x + h + 1, -h / 2);
         
         parent->addChild(sprite, 2);
         parent->addChild(label, 2);
-        int textW = label->getContentSize().width * label->getOriginScaleX();
-        int textH = label->getContentSize().height * label->getOriginScaleY();
-        
-        int gapX = 5;
-        int gapY = 3;
-        int showH = textH;
-        int showW = textW + spriteW + gapX * 3;
-
-        if(showW > w){
-            w = showW;
-        }
-        if(showH < spriteH){
-            showH = spriteH;
-        }
-        showH += 2 * gapY;
-        sprite->setPosition(ccp(orgW / 2 + gapX, h + showH / 2));
-        label->setPosition(orgW + gapX * 2, h + showH / 2);
-        h += showH;
     };
 
-    if(GlobalData::shared()->playerInfo.isInAlliance()){
-        addText(CCLabelIF::create(_lang("115357").c_str()), "position_territory.png", totalW, totalH, node);
-        addText(CCLabelIF::create(_lang("110099").c_str()), "position_alli.png", totalW, totalH, node);
-        addText(CCLabelIF::create(_lang("103756").c_str()), "position_lord.png", totalW, totalH, node);
+    int idx = 0;
+    const int count = 4;
+    if (GlobalData::shared()->playerInfo.isInAlliance())
+    {
+        addText(CCLabelIF::create(_lang("115357").c_str()), "position_territory.png", size.width * (idx++) / count, HEIGHT, node);
+        addText(CCLabelIF::create(_lang("110099").c_str()), "position_alli.png", size.width * (idx++) / count, HEIGHT, node);
+        addText(CCLabelIF::create(_lang("103756").c_str()), "position_lord.png", size.width * (idx++) / count, HEIGHT, node);
     }
-    addText(CCLabelIF::create(_lang("108678").c_str()), "position_city.png", totalW, totalH, node);
-
-    totalW += 15;
-    totalH += 10;
-    bg->setPreferredSize(CCSize(totalW, totalH));
-    auto size = CCDirector::sharedDirector()->getWinSize();
-    auto orgPos = CCDirector::sharedDirector()->getVisibleOrigin();
-    node->setPosition((size.width - totalW) * 0.5, orgPos.y + 20);
-    if(isAllShow){
+    addText(CCLabelIF::create(_lang("108678").c_str()), "position_city.png", size.width * (idx++) / count, HEIGHT, node);
+    
+    if (isAllShow)
+    {
         showLegendEffect();
-        if(GlobalData::shared()->playerInfo.isInAlliance()){
+        if (GlobalData::shared()->playerInfo.isInAlliance())
+        {
             m_alianceHideIcon->setVisible(false);
         }
     }
@@ -491,35 +482,14 @@ void MinimapView::onExit(){
 
 void MinimapView::addTitle(){
     m_nameContainer->removeAllChildren();
-    auto sprite1 = CCLoadSprite::createSprite("UI-tishikuang.png");
+    auto sprite1 = CCLoadSprite::createSprite("AllianceWarDetailView_army_num_bg.png");
     m_nameContainer->addChild(sprite1);
-    auto sprite2 = CCLoadSprite::createSprite("UI-tishikuang.png");
-    m_nameContainer->addChild(sprite2);
-    auto sprite3 = CCLoadSprite::createSprite("UI-tishikuang.png");
-    m_nameContainer->addChild(sprite3);
-    auto sprite4 = CCLoadSprite::createSprite("UI-tishikuang.png");
-    m_nameContainer->addChild(sprite4);
-    //sprite1->setPosition(pos);
-    sprite1->setFlipY(true);
-    sprite1->setFlipX(true);
-    sprite1->setAnchorPoint(ccp(1, 0));
-    //sprite2->setPosition(pos);
-    sprite2->setFlipY(true);
-    sprite2->setAnchorPoint(ccp(0, 0));
-    //sprite3->setPosition(pos);
-    sprite3->setAnchorPoint(ccp(1, 1));
-    sprite3->setFlipX(true);
-    //sprite4->setPosition(pos);
-    sprite4->setAnchorPoint(ccp(0, 1));
+    sprite1->setAnchorPoint(ccp(.5, .5));
+    
     m_title = CCLabelIF::create();
     m_nameContainer->addChild(m_title);
-    //m_title->setPosition(pos);
-    m_title->setFontSize(24);
-    m_title->setColor(ccc3(220, 180, 90));
-    sprite1->setScale(0.45);
-    sprite2->setScale(0.45);
-    sprite3->setScale(0.45);
-    sprite4->setScale(0.45);
+    m_title->setFontSize(26);
+    m_title->setColor(ccc3(255, 236, 160));
     
     std::string kingName = "";
     std::string banner = "";
@@ -534,8 +504,8 @@ void MinimapView::addTitle(){
             break;
         }
     }
-    int posY = sprite3->getPositionY() - sprite3->getContentSize().height / 2 + 15;
-    int posX = sprite3->getPositionX();
+    int posY = sprite1->getPositionY() - sprite1->getContentSize().height / 2 + 15;
+    int posX = sprite1->getPositionX();
     
     if(kingName != ""){
         std::string str = "";
@@ -583,19 +553,13 @@ void MinimapView::addTitle(){
     
     WorldActivityState state = WorldController::getInstance()->getKingActivityStateByType(WorldActivityType::FIGHT_OF_KING);
 
-    if(m_currentServerId == GlobalData::shared()->playerInfo.selfServerId && state != NotOpen){
-        auto kingNameBG = CCLoadSprite::createSprite("UI_facebook_title.png");
+    if (m_currentServerId == GlobalData::shared()->playerInfo.selfServerId && state != NotOpen)
+    {
+        auto kingNameBG = CCLoadSprite::createSprite("minimap_timer_bg.png");
         m_nameContainer->addChild(kingNameBG);
-        kingNameBG->setAnchorPoint(ccp(0, 0.5));
+        kingNameBG->setAnchorPoint(ccp(0.5, 1));
         kingNameBG->setPosition(ccp(posX, posY - kingNameBG->getContentSize().height / 2));
-        kingNameBG->setScaleX(312.0 / kingNameBG->getContentSize().width / 2.0);
-
-        auto kingNameBG1 = CCLoadSprite::createSprite("UI_facebook_title.png");
-        m_nameContainer->addChild(kingNameBG1);
-        kingNameBG1->setFlipX(true);
-        kingNameBG1->setAnchorPoint(ccp(1, 0.5));
-        kingNameBG1->setPosition(ccp(posX, posY - kingNameBG->getContentSize().height / 2));
-        kingNameBG1->setScaleX(312.0 / kingNameBG1->getContentSize().width / 2.0);
+        kingNameBG->setScaleX(312.0 / kingNameBG->getContentSize().width);
 
         std::string dialogId = "";
         if(state == OpenNoKing){
@@ -609,23 +573,23 @@ void MinimapView::addTitle(){
         auto label = CCLabelIF::create(_lang(dialogId).c_str());
         label->setAlignment(kCCTextAlignmentLeft);
         label->setVerticalAlignment(kCCVerticalTextAlignmentCenter);
-        label->setAnchorPoint(ccp(0, 0.5));
-        label->setColor(ccc3(241,15,115));
-        label->setFontSize(20);
+        label->setAnchorPoint(ccp(0, .5));
+        label->setColor(ccc3(231,74,85));
+        label->setFontSize(18);
         m_nameContainer->addChild(label);
         int lw = label->getOriginScaleX() * label->getContentSize().width;
         
         m_timeText = CCLabelIF::create("00:00:00");
-        m_timeText->setColor(ccc3(255,242,201));
-        m_timeText->setFontSize(20);
-        m_timeText->setAnchorPoint(ccp(0, 0.5));
+        m_timeText->setColor(ccc3(211,211,211));
+        m_timeText->setFontSize(18);
+        m_timeText->setAnchorPoint(ccp(0, .5));
         m_timeText->setAlignment(kCCTextAlignmentLeft);
         m_timeText->setVerticalAlignment(kCCVerticalTextAlignmentCenter);
         m_nameContainer->addChild(m_timeText);
         
         int startX = 200;
-        label->setPosition(posX - kingNameBG->getContentSize().width * kingNameBG->getScaleX() + 50, kingNameBG->getPositionY());
-        m_timeText->setPosition(label->getPositionX() + 5 + lw, kingNameBG->getPositionY());
+        label->setPosition(posX - lw, kingNameBG->getPositionY() - kingNameBG->getContentSize().height / 2);
+        m_timeText->setPosition(label->getPositionX() + 5 + lw, kingNameBG->getPositionY() - kingNameBG->getContentSize().height / 2);
     }
     
     m_title->setString(titleStr);
@@ -1751,11 +1715,11 @@ void MinimapView::showLegendEffect(){
                 CCNode *node = dynamic_cast<CCNode*>(child);
                 if(node){
                     CCNode *node = dynamic_cast<CCNode*>(obj);
-                    node->stopAllActions();
+                    if (node) node->stopAllActions();
                     if(dynamic_cast<CCRGBAProtocol*>(obj)){
                         if(dynamic_cast<CCRGBAProtocol*>(obj)->getOpacity()>0){
                             CCSequence* sequence = CCSequence::create(CCFadeOut::create(0.2),NULL);
-                            node->runAction(sequence);
+                            if (node) node->runAction(sequence);
                         }
                     }
                 }
@@ -1961,12 +1925,6 @@ void MinimapView::addCity(int index, int type){//0 self 1 chief 2 member 3 relic
     else
     {
         sprite->setVisible(true);
-    }
-    
-    // TODO
-    if (3 == type)
-    {
-        sprite->setVisible(false);
     }
 }
 void MinimapView::resetSettingNode(CCObject* ccObj){
