@@ -393,23 +393,14 @@ void LoadingScene::getDownloadContents()
         // >>>>>>>
         auto dlc_xml = NBDLCController::create("manifest/local_xml_main.manifest", "local_xml_version.manifest", "local_xml_project.manifest.temp", "local_xml_project.manifest");
         dlc_xml->start("manifest/local_xml_main.manifest", [this](string manifest_file_path_as_key, EventAssetsManagerEx * event){
-            LocalController::shared()->purgeData();
-            LocalController::shared()->init();
             
-            setLoadingTips();
-            LoadingScene::showLoading();
-            
-            //为月卡做记录
-            int loadCount = CCUserDefault::sharedUserDefault()->getIntegerForKey("day_load_count");
-            loadCount+=1;
-            CCUserDefault::sharedUserDefault()->setIntegerForKey("day_load_count", loadCount);
-            CCUserDefault::sharedUserDefault()->flush();
         });
         // <<<<<<
     };
     auto dlc_ini = NBDLCController::create(manifest_file_path, version_filename, temp_manifest_filename, manifest_filename);
     dlc_ini->start(manifest_file_path, cb_ini);
-#else
+#endif
+    
     LocalController::shared()->purgeData();
     LocalController::shared()->init();
     
@@ -421,7 +412,6 @@ void LoadingScene::getDownloadContents()
     loadCount+=1;
     CCUserDefault::sharedUserDefault()->setIntegerForKey("day_load_count", loadCount);
     CCUserDefault::sharedUserDefault()->flush();
-#endif
 }
 
 #pragma mark *
@@ -651,7 +641,7 @@ void LoadingScene::onLoginTimeout(float t)
     request->setTag("get_server_status");
     CCHttpClient::getInstance()->setTimeoutForConnect(10);
     CCHttpClient::getInstance()->send(request);
-    request->release();
+    CC_SAFE_RELEASE(request);
     
 }
 
@@ -804,7 +794,7 @@ void LoadingScene::sendCmdGetServerList(CCObject* p){
     request->setTag("get_server_list");
     CCHttpClient::getInstance()->setTimeoutForConnect(30);
     CCHttpClient::getInstance()->send(request);
-    request->release();
+    CC_SAFE_RELEASE(request);
     m_getServerListRetryTime++;
     int maxTime = 3;
     if(m_getServerListRetryTime <= maxTime){
@@ -1035,7 +1025,7 @@ void LoadingScene::gotoMainScene(float t)
         GameController::getInstance()->trackVisit();
         SceneController::getInstance()->addGUI();
         if(SceneController::getInstance()->showBG){
-            SceneController::getInstance()->showBG->release();
+            CC_SAFE_RELEASE(SceneController::getInstance()->showBG);
             SceneController::getInstance()->showBG = NULL;
             SceneController::getInstance()->gotoScene(SCENE_ID_WORLD);
         }else{

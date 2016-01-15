@@ -63,7 +63,18 @@ bool GoldExchangeSaleView::init()
         CCBLoadFile("GoldExchangeSaleActView",this,this);
     }
     */
-    CCBLoadFile("GoldExchangeSaleActView",this,this);
+    string ccbFile = "GoldExchangeSaleActView";
+    if(m_dataItem->popup_image == "Build")
+    {
+        ccbFile = "GoldExchangeSaleActViewCityBuild";
+    }
+    if(m_dataItem->popup_image == "Newbie_Hot")
+    {
+        ccbFile = "GoldExchangeSaleActViewNewUser";
+    }
+    CCBLoadFile(ccbFile.c_str(),this,this);
+    //CCBLoadFile("GoldExchangeSaleActViewNewUser",this,this);
+    //CCBLoadFile("GoldExchangeSaleActViewCityBuild",this,this);
     this->setContentSize(CCSizeMake(640, 852));
     
 //    m_titleLabel->setColor(ccc3(70,186,68));
@@ -71,6 +82,13 @@ bool GoldExchangeSaleView::init()
         //m_titleLabel->setString(_lang("102148").c_str());
         //m_titleLabel->setString(_lang("101224").c_str());
         m_titleLabel->setString(_lang(m_dataItem->name).c_str());
+        if(m_titleLabelBg)
+        {
+            float sizeW = m_titleLabel->getContentSize().width + 15;
+            if(sizeW < 200)
+                sizeW = 200;
+            m_titleLabelBg->setPreferredSize(CCSize(sizeW, m_titleLabelBg->getContentSize().height));
+        }
     }
     m_getLabel->setString(_lang_1("115073",""));
     
@@ -79,7 +97,7 @@ bool GoldExchangeSaleView::init()
   //  CCCommonUtils::setButtonTitle(m_moreBtn, _lang("102162").c_str());
     //m_moreLabel->setString(_lang("102162").c_str()); //d by ljf, 新版界面未提供此控件
     if(m_parentType==1){
-        m_listNode->setContentSize(CCSize(m_listNode->getContentSize().width, m_listNode->getContentSize().height+60 ));
+        //m_listNode->setContentSize(CCSize(m_listNode->getContentSize().width, m_listNode->getContentSize().height+60 )); //d by ljf
     }
     m_scrollView = CCScrollView::create(m_listNode->getContentSize());
     m_scrollView->setDirection(kCCScrollViewDirectionVertical);
@@ -100,11 +118,11 @@ bool GoldExchangeSaleView::init()
     m_oldPriceLabel->setString(oldPrice);
     //end a by ljf
     m_newPriceLabel->setString(dollar);
-    if(m_oldPriceLabel->getContentSize().width>90){
-        extWidth = m_oldPriceLabel->getContentSize().width - 90;
+    if(m_oldPriceLabel->getContentSize().width>120){
+        extWidth = m_oldPriceLabel->getContentSize().width - 120; //ljf, 90 to 120
     }
-    if(m_newPriceLabel->getContentSize().width>90){
-        extWidth += m_newPriceLabel->getContentSize().width - 90;
+    if(m_newPriceLabel->getContentSize().width>120){
+        extWidth += m_newPriceLabel->getContentSize().width - 120;
     }
     if(extWidth>0){
         CCSize costSize = m_costBtn->getContentSize();
@@ -318,6 +336,8 @@ bool GoldExchangeSaleView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_moreNode", CCNode*, this->m_moreNode);//更多箭头的父结点
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nodeBuy", CCNode*, this->m_nodeBuy); //底下按钮的父结点
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_btnGivePackage", CCControlButton*, this->m_btnGivePackage); //礼物包按钮
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titleLabelBg", CCScale9Sprite*, this->m_titleLabelBg);
     return false;
 }
 
@@ -432,7 +452,18 @@ bool GoldExchangeSaleCell::init(int itemId, int num,string popUpImage,int type)
         CCBLoadFile("GoldHalloweenSaleCell",this,this);
     }
     */
-    CCBLoadFile("RechargeSaleCell",this,this);
+    string ccbFile = "RechargeSaleCell";
+    if(popUpImage == "Build")
+    {
+        ccbFile = "RechargeSaleCellCityBuild";
+    }
+    if(popUpImage == "Newbie_Hot")
+    {
+        ccbFile = "RechargeSaleCellNewUser";
+    }
+    CCBLoadFile(ccbFile.c_str(),this,this);
+    //CCBLoadFile("RechargeSaleCellNewUser",this,this);
+    //CCBLoadFile("RechargeSaleCellCityBuild",this,this);
     string name ="";
     string picStr = "";
     if(type == 0){
@@ -446,11 +477,15 @@ bool GoldExchangeSaleCell::init(int itemId, int num,string popUpImage,int type)
             CCCommonUtils::setSpriteMaxSize(icon, 52, true);
             m_iconNode->addChild(icon);
             m_nameLabel->setString(name);
-            m_numLabel->setString(CC_ITOA(num));
+            std::string numText = "x";
+            numText = numText + CC_ITOA(num); //ljf
+            m_numLabel->setString(numText);
         }
         else {//道具
             CCCommonUtils::createGoodsIcon(itemId, m_iconNode, CCSize(55, 55),NULL,m_nameLabel);
-            m_numLabel->setString(CC_ITOA(num));
+            std::string numText = "x";
+            numText = numText + CC_ITOA(num); //ljf
+            m_numLabel->setString(numText);
 //            auto& toolInfo = ToolController::getInstance()->getToolInfoById(itemId);
 //            name = _lang(toolInfo.name);
 //            picStr = CCCommonUtils::getIcon(CC_ITOA(itemId));
@@ -463,7 +498,9 @@ bool GoldExchangeSaleCell::init(int itemId, int num,string popUpImage,int type)
         auto& eInfo = EquipmentController::getInstance()->EquipmentInfoMap[itemId];
         name = _lang(eInfo.name);
         m_nameLabel->setString(name);
-        m_numLabel->setString(CC_ITOA(num));
+        std::string numText = "x";
+        numText = numText + CC_ITOA(num); //ljf
+        m_numLabel->setString(numText);
         string bgPath = CCCommonUtils::getToolBgByColor(eInfo.color);
         auto iconBg = CCLoadSprite::createSprite(bgPath.c_str());
         CCCommonUtils::setSpriteMaxSize(iconBg, 55, true);

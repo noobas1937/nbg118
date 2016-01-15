@@ -33,7 +33,7 @@ bool UserInviteListCommand::handleRecieve(cocos2d::CCDictionary *dict)
     }else{
         map<std::string, AllianceInfo*>::iterator it;
         for(it = AllianceManager::getInstance()->invitesAllianceList.begin(); it != AllianceManager::getInstance()->invitesAllianceList.end(); it++){
-            it->second->release();
+            CC_SAFE_RELEASE(it->second);
         }
         AllianceManager::getInstance()->invitesAllianceList.clear();
         CCArray* arr =  (CCArray*)params->objectForKey("list");

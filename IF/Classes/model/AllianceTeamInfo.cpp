@@ -212,7 +212,7 @@ void AllianceTeamInfo::parseInfo(CCDictionary* dict){
                     info->setIsLeader(m_attackUid==info->getUid());
                     info->setTeamSoldier(m_maxSoldiers - m_currSoldiers);
                     m_member->addObject(info);
-                    info->release();
+                    CC_SAFE_RELEASE(info);
                 }
             }
         }
@@ -228,7 +228,7 @@ void AllianceTeamInfo::parseInfo(CCDictionary* dict){
                     YuanJunInfo* info = new YuanJunInfo();
                     info->parseInfo(dic);
                     m_reinforce->addObject(info);
-                    info->release();
+                    CC_SAFE_RELEASE(info);
                 }
             }
         }

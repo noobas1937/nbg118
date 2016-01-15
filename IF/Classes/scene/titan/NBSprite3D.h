@@ -41,7 +41,7 @@ public:
     void releaseTex(){
         if (m_shining_texture)
         {
-            m_shining_texture->release();
+            CC_SAFE_RELEASE(m_shining_texture);
         }
     }
 protected:

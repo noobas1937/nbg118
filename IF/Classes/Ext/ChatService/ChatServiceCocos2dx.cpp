@@ -3203,7 +3203,7 @@ extern "C" {
                 }
             }
         }
-        mailData->release();
+        CC_SAFE_RELEASE(mailData);
     }
     
     JNIEXPORT void JNICALL Java_com_elex_chatservice_host_GameHost_deleteSingleMail(JNIEnv* env, jobject object, jint tabType,jint type,jstring mailUid,jstring fromUid)

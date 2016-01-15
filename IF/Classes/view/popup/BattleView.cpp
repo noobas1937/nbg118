@@ -58,6 +58,7 @@ BattleView::~BattleView()
 }
 
 void BattleView::loadResource(){
+    CCLoadSprite::doResourceByCommonIndex(204, true);
     CCLoadSprite::doResourceByCommonIndex(8, true);
     CCLoadSprite::doResourceByCommonIndex(7, true);
     CCLoadSprite::doResourceByCommonIndex(6, true);
@@ -72,6 +73,7 @@ bool BattleView::init(unsigned int startIndex,unsigned int targetIndex,unsigned 
     }
     loadResource();
     setCleanFunction([](){
+        CCLoadSprite::doResourceByCommonIndex(204, false);
         CCLoadSprite::doResourceByCommonIndex(8, false);
         CCLoadSprite::doResourceByCommonIndex(7, false);
         CCLoadSprite::doResourceByCommonIndex(6, false);
@@ -268,7 +270,6 @@ bool BattleView::init(unsigned int startIndex,unsigned int targetIndex,unsigned 
 }
 
 void BattleView::loadResource(float _time){
-    CCLoadSprite::doResourceByCommonIndex(204, true);
     updateInfo();
 }
 
@@ -340,7 +341,6 @@ void BattleView::updateInfo()
 void BattleView::onEnter()
 {
     CCNode::onEnter();
-    loadResource();
     setAddBtnState();
     updateLoadInfo(NULL);
     switch (m_bType) {
@@ -1551,6 +1551,13 @@ SoldierCell* SoldierCell::create(string itemId, int num, int type, int rally)
 
 bool SoldierCell::init(string itemId, int num, int type, int rally)
 {
+    CCLoadSprite::doResourceByCommonIndex(8, true);
+    CCLoadSprite::doResourceByCommonIndex(204, true);
+    setCleanFunction([](){
+        CCLoadSprite::doResourceByCommonIndex(8, false);
+        CCLoadSprite::doResourceByCommonIndex(204, false);
+    });
+    
     bool ret = true;
     CCBLoadFile("March2",this,this);
     setContentSize(CCSize(604, 134));
@@ -1597,7 +1604,7 @@ bool SoldierCell::init(string itemId, int num, int type, int rally)
     m_sliderNode->addChild(m_slider, 1);
     
     auto editSize = m_editNode->getContentSize();
-    m_editBox = CCEditBox::create(editSize, CCLoadSprite::createScale9Sprite("cz_bt_1.png"));
+    m_editBox = CCEditBox::create(editSize, CCLoadSprite::createScale9Sprite("cz_bt_01.png"));
     m_editBox->setInputMode(kEditBoxInputModeNumeric);
     m_editBox->setText("0");
     m_editBox->setDelegate(this);
@@ -1605,11 +1612,8 @@ bool SoldierCell::init(string itemId, int num, int type, int rally)
     m_editBox->setMaxLength(12);
     m_editBox->setReturnType(kKeyboardReturnTypeDone);
     m_editBox->setPosition(ccp(editSize.width/2, editSize.height/2));
+    m_editBox->setFontColor({0xB6, 0xD1, 0xEC});
     m_editNode->addChild(m_editBox);
-
-    setCleanFunction([](){
-        CCLoadSprite::doResourceByCommonIndex(204, false);
-    });
 
     setData(itemId, num, type, rally);
     return ret;

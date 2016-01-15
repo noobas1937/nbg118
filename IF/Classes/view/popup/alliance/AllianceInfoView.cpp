@@ -390,13 +390,13 @@ void AllianceInfoView::initFun(){
     // tao.yu 第一版不开放联盟领地和联盟科技
     //fusheng 加权限管理
     
-    int num = 3;//fusheng 最后一个不显示
+    int num = 2;//fusheng 最后一个不显示
 
     if (AllianceManager::getInstance()->checkRight(SHOW_ALLIANCE_LANGUAGE, GlobalData::shared()->playerInfo.allianceInfo.rank)) {
-        num = 4;
+        num = 3;
     }
     
-    const int nbUseIndex[4] = {1,4,5,6};//fusheng 保留原有逻辑  方便功能修改
+    const int nbUseIndex[3] = {4,5,6};//fusheng 保留原有逻辑  方便功能修改
     const char* titles3[7] = {"115190","115301","115159","115206","115077","115929","115258"};
     const char* icons3[7] = {"allianceWar.png","AllianceTerritory.png","allianceScience.png","allianceShop.png","allianceHelp.png","icon_comment.png","icon_nb_alliance_manager.png"};
 
@@ -1025,6 +1025,9 @@ void AllianceFunCell::clickHandle(CCObject *pSender, CCControlEvent event){
             break;
         case 2:
         {
+            CCCommonUtils::flyHint("", "", _lang("E100008")); //fusheng 屏蔽联盟领地放置功能
+
+            return;
             unsigned int index = WorldController::getIndexByPoint(WorldController::getInstance()->selfPoint);
             PopupViewController::getInstance()->addPopupInView(AllianceTerritoryView::create(index,false));
         }
@@ -1557,8 +1560,8 @@ void AllianceBottomNode::onExit()
                 return ;
             
             
-            CCCommonUtils::flyHint("", "", _lang("E100008"));
-            return;
+//            CCCommonUtils::flyHint("", "", _lang("E100008"));
+//            return;
             
             //fusheng 是否移除上一个界面
 //            PopupViewController::getInstance()->removeLastPopupView();
@@ -1622,14 +1625,14 @@ void AllianceBottomNode::updateNum(CCObject* param)
 {
   
     
-//    if(GlobalData::shared()->playerInfo.isInAlliance() && GlobalData::shared()->playerInfo.allianceInfo.uid == m_info->uid && GlobalData::shared()->playerInfo.allianceInfo.militaryNum>0 ){
-//        m_warNumNode->setVisible(true);
-//        m_warTipNum->setString(CC_ITOA(GlobalData::shared()->playerInfo.allianceInfo.militaryNum));
-//    }else{
-//        m_warNumNode->setVisible(false);
-//    }
+    if(GlobalData::shared()->playerInfo.isInAlliance() && GlobalData::shared()->playerInfo.allianceInfo.uid == m_info->uid && GlobalData::shared()->playerInfo.allianceInfo.militaryNum>0 ){
+        m_warNumNode->setVisible(true);
+        m_warTipNum->setString(CC_ITOA(GlobalData::shared()->playerInfo.allianceInfo.militaryNum));
+    }else{
+        m_warNumNode->setVisible(false);
+    }
     
-    m_warNumNode->setVisible(false);
+//    m_warNumNode->setVisible(false);
     
     
     if (GlobalData::shared()->playerInfo.allianceInfo.uid == m_info->uid && GlobalData::shared()->playerInfo.allianceInfo.rank >= 4 && GlobalData::shared()->playerInfo.allianceInfo.applyNum > 0) {

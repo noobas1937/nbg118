@@ -288,7 +288,7 @@ void TerritoryInformationView::onDetailCallback(cocos2d::CCObject *obj) {
                 info->setIndex(1);
                 info->setOpen(false);
                 m_data->addObject(info);
-                info->release();
+                CC_SAFE_RELEASE(info);
             }
         }
     }

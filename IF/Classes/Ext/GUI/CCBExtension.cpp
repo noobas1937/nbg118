@@ -92,7 +92,7 @@ CCNode* CCBLoadFile(const char * pCCBFileName, CCNode* pParent /*= NULL*/, CCObj
     } else {
         CCLOG("Error in Load cocosBuilder data :%s", pCCBFileName);
     }
-    ccbReader->release();
+    CC_SAFE_RELEASE(ccbReader);
     return node;
 }
 

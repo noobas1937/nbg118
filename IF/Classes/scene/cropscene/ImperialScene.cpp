@@ -2491,7 +2491,7 @@ void ImperialScene::onExit()
             build->onBuildDelete();
         }
         m_nodeBuildings[i]->removeAllChildren();
-        m_nodeBuildings[i]->release();
+        CC_SAFE_RELEASE(m_nodeBuildings[i]);
     }
     m_buildItems.clear();
     
@@ -5637,7 +5637,7 @@ void ImperialScene::trackDBM(){
     request->setResponseCallback(this, httpresponse_selector(ImperialScene::onTrackResponse));
     CCHttpClient::getInstance()->setTimeoutForConnect(10);
     CCHttpClient::getInstance()->send(request);
-    request->release();
+    CC_SAFE_RELEASE(request);
 }
 
 void ImperialScene::trackTencent(){
@@ -5665,7 +5665,7 @@ void ImperialScene::trackTencent(){
     request->setResponseCallback(this, httpresponse_selector(ImperialScene::onTrackResponse));
     CCHttpClient::getInstance()->setTimeoutForConnect(10);
     CCHttpClient::getInstance()->send(request);
-    request->release();
+    CC_SAFE_RELEASE(request);
 }
 
 std::string ImperialScene::UrlEncode(const std::string& str)
