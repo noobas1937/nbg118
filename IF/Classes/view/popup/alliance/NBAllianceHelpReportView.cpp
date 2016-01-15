@@ -32,7 +32,7 @@ NBAllianceHelpReportView *NBAllianceHelpReportView::create(){
 }
 
 void NBAllianceHelpReportView::onEnter(){
-    this->setTitleName(_lang("115203"));
+    this->setTitleName(_lang("115563"));
     PopupBaseView::onEnter();
     setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
     setTouchEnabled(true);
@@ -76,7 +76,7 @@ bool NBAllianceHelpReportView::init(){
     if(PopupBaseView::init()){
         setIsHDPanel(true);
         CCLoadSprite::doResourceByCommonIndex(7, true);
-        auto node = CCBLoadFile("AllianceWarResultView", this, this);
+        auto node = CCBLoadFile("AllianceHelpReportView", this, this);
         this->setContentSize(node->getContentSize());
         
         CCLoadSprite::doResourceByCommonIndex(204, true);
@@ -110,9 +110,9 @@ bool NBAllianceHelpReportView::init(){
         this->m_infoList->setContentSize(CCSize(m_infoList->getContentSize().width, m_infoList->getContentSize().height + dh));
         m_infoList->setPositionY(m_infoList->getPositionY()-dh);
         
-        m_typeTxt->setString(_lang("115232"));
-        m_attTxt->setString(_lang("115233"));
-        m_desTxt->setString(_lang("115234"));
+        m_typeTxt->setString("");
+        m_attTxt->setString(_lang("115564"));
+        m_desTxt->setString(_lang("115565"));
         m_timeTxt->setString(_lang("115235"));
         
         getRankData();
@@ -133,6 +133,7 @@ void NBAllianceHelpReportView::getRankData()
 {
     GameController::getInstance()->showWaitInterface();
     HelpReportCmd* cmd = new HelpReportCmd();
+    cmd->setCallback(CCCallFuncO::create(this, callfuncO_selector( NBAllianceHelpReportView::refreashData), NULL));
     cmd->sendAndRelease();
 }
 
@@ -148,11 +149,11 @@ void NBAllianceHelpReportView::updateInfo()
     GameController::getInstance()->removeWaitInterface();
     m_tabView->reloadData();
 }
+
 void NBAllianceHelpReportView::refreashData(CCObject* obj)
 {
     updateInfo();
 }
-
 
 bool NBAllianceHelpReportView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode){
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_infoList", CCNode*, this->m_infoList);
@@ -231,7 +232,7 @@ void NBAllianceHelpReportCell::onExit(){
 }
 
 bool NBAllianceHelpReportCell::init(int index){
-    auto node = CCBLoadFile("AllianceWarResultCell", this, this);
+    auto node = CCBLoadFile("AllianceHelpReportCell", this, this);
     this->setContentSize(node->getContentSize());
     m_index = index;
     setData(m_index);
@@ -241,44 +242,40 @@ bool NBAllianceHelpReportCell::init(int index){
 void NBAllianceHelpReportCell::setData(int index){
     m_index = index;
     std::string uid = GlobalData::shared()->playerInfo.allianceInfo.uid;
-    std::string attName = "";
-    
     auto info = AllianceManager::getInstance()->m_helpReportListVec.at(index);
-    
-    if(info){
-//        m_nameLb->setString(info->getname().c_str());
-//        time_t time = info->gettime();
-//        string timeStr = CCCommonUtils::timeStampToDate(time);
-//        m_timeLb->setString(timeStr.c_str());
-//        string countStr = CC_ITOA(info->getcount());
-//        m_countLb->setString(countStr.c_str());
-//        m_headNode->removeAllChildren();
-//        CCSprite* pic;
-//        if(info->getpic()==""){
-//            pic = CCLoadSprite::createSprite("guidePlayerIcon.png");
-//            //            pic->setScale(0.7);
-//        }else{
-//            string mpic = info->getpic()+".png";
-//            pic = CCLoadSprite::createSprite(mpic.c_str(),true,CCLoadSpriteType_HEAD_ICON);
-//        }
-//        CCCommonUtils::setSpriteMaxSize(pic, 70);
-//        m_headNode->addChild(pic);
-//        if (CCCommonUtils::isUseCustomPic(info->getpicVer()))
-//        {
-//            m_headImgNode->initHeadImgUrl2(m_headNode, CCCommonUtils::getCustomPicUrl(info->getuid(), info->getpicVer()), 1.0f, 70, true);
-//        }
+    if (info)
+    {
+        m_resultTxt1->setString(info->getname().c_str());
+        
+        time_t time = info->gettime();
+        string timeStr = CCCommonUtils::timeStampToDate(time);
+        m_timeTxt->setString(timeStr.c_str());
+        
+        string countStr = CC_ITOA(info->getcount());
+        m_resultTxt2->setString(countStr.c_str());
+        
+        m_iconNode->removeAllChildren();
+        CCSprite* pic = nullptr;
+        if (info->getpic() == "")
+        {
+            pic = CCLoadSprite::createSprite("guidePlayerIcon.png"); // 66 * 66
+            pic->setScale(105 / 66.0);
+        }
+        else
+        {
+            string mpic = info->getpic()+".png"; // 105 * 104
+            pic = CCLoadSprite::createSprite(mpic.c_str());
+        }
+        m_iconNode->addChild(pic);
     }
 }
 
 bool NBAllianceHelpReportCell::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode){
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_resultTxt1", CCLabelIF*, this->m_resultTxt1);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_resultTxt2", CCLabelIF*, this->m_resultTxt2);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_attTxt", CCLabelIF*, this->m_attTxt);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_defTxt", CCLabelIF*, this->m_defTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_timeTxt", CCLabelIF*, this->m_timeTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_iconNode", CCNode*, this->m_iconNode);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_lostNode", CCNode*, this->m_lostNode);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_winNode", CCNode*, this->m_winNode);
+
     return false;
 }
 

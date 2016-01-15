@@ -82,12 +82,8 @@ private:
     
     CCSafeObject<CCLabelIF> m_resultTxt1;
     CCSafeObject<CCLabelIF> m_resultTxt2;
-    CCSafeObject<CCLabelIF> m_attTxt;
-    CCSafeObject<CCLabelIF> m_defTxt;
     CCSafeObject<CCLabelIF> m_timeTxt;
     CCSafeObject<CCNode> m_iconNode;
-    CCSafeObject<CCNode> m_lostNode;
-    CCSafeObject<CCNode> m_winNode;
 
     int m_index;
     CCPoint m_startPoint;

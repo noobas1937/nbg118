@@ -302,6 +302,8 @@ bool HelpReportCmd::handleRecieve(cocos2d::CCDictionary *dict)
 //         tempInfo->setcount(110);
 //         tempInfo->settime(time(NULL));
 //         AllianceManager::getInstance()->m_helpReportListVec.push_back(tempInfo);
+        
+        callSuccess(nullptr);
          
         CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(ALLIANCE_HELP_RANK);
     }
