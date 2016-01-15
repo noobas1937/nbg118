@@ -8,6 +8,8 @@
 
 #include "AllRankCommand.h"
 #include "AllianceRankInfo.h"
+#include "IFAllianceHelpReportInfo.hpp"
+#include "AllianceManager.h"
 //alliance power rank
 bool AllianceRankListCommand::handleRecieve(cocos2d::CCDictionary *dict)
 {
@@ -265,6 +267,43 @@ bool PlayerLevelRankListCommand::handleRecieve(cocos2d::CCDictionary *dict)
         }
         
         CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(PLAYER_RANK);
+    }
+    return true;
+}
+bool HelpReportCmd::handleRecieve(cocos2d::CCDictionary *dict)
+{
+    if (dict->valueForKey("cmd")->compare(ALLIANCE_HELP_RANK) != 0)
+        return false;
+    
+    CCDictionary *params=_dict(dict->objectForKey("params"));
+    if (!params) {
+        return false;
+    }
+    GameController::getInstance()->removeWaitInterface();
+    const CCString *pStr = params->valueForKey("errorCode");
+    if (pStr->compare("")!=0) {
+        CCCommonUtils::flyText(pStr->getCString());
+    }else{
+        CCArray* dataArr = dynamic_cast<CCArray*>(params->objectForKey("recordList"));
+        if (dataArr >0) {
+            AllianceManager::getInstance()->m_helpReportListVec.clear();
+            CCObject* pElem = NULL;
+            CCARRAY_FOREACH(dataArr, pElem){
+                auto modelDic = _dict(pElem);
+                IFAllianceHelpReportInfo* modelInfo = new IFAllianceHelpReportInfo();
+                modelInfo->parseData(modelDic);
+                AllianceManager::getInstance()->m_helpReportListVec.push_back(modelInfo);
+            }
+        }
+        
+         //testdata
+//         IFAllianceHelpReportInfo* tempInfo = new IFAllianceHelpReportInfo();
+//         tempInfo->setname("fff");
+//         tempInfo->setcount(110);
+//         tempInfo->settime(time(NULL));
+//         AllianceManager::getInstance()->m_helpReportListVec.push_back(tempInfo);
+         
+        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(ALLIANCE_HELP_RANK);
     }
     return true;
 }
