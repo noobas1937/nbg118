@@ -897,7 +897,7 @@ void GoldExchangeAdvertisingCommCell::refreshData(){
         spriteName = "abox_newuser_ad.png";
     }
     CCSpriteFrame* newSp = CCLoadSprite::getSF(spriteName.c_str());
-    m_liebiaoBg->setDisplayFrame(newSp);
+    //m_liebiaoBg->setDisplayFrame(newSp);
     //end ljf
     onEnterFrame(0.0);
     
