@@ -1640,7 +1640,7 @@ void AllianceWarCell::updateTime(float t){
     else{
         double haveTime = (m_info->getWaitTime() - GlobalData::shared()->getWorldTime());
         double march = m_info->getMarchTime() - GlobalData::shared()->getWorldTime();
-        if(haveTime>0){
+        if(haveTime>0){//fusheng 集结
             m_sTimeTxt->setString(CC_SECTOA(haveTime));
             m_sStatusTxt->setString(_lang_1("115130",""));
             m_teamTimeTxt->setString(CC_SECTOA(haveTime));
@@ -1652,21 +1652,22 @@ void AllianceWarCell::updateTime(float t){
             len = MAX(len,0);
             len = MIN(len,1);
             
-            CCSpriteFrame* spf = SpriteFrameCache::getInstance()->getSpriteFrameByName("AllianceWarDetailView_progress.png");//fusheng temp
-            m_normal_progress->setSpriteFrame(spf);
-            m_jijie_progress->setSpriteFrame(spf);
+
+            m_normal_progress->setColor({0xff,0xce,0x06});//fusheng 黄色
+            m_jijie_progress->setColor({0xff,0xce,0x06});
+
             
             double progressLength = 140 * len;
             
             if (m_info && !(m_info->getBattleType()==2||m_info->getBattleType()==3)) {//fusheng 单人进攻
                 
                 
-                if (progressLength > spf->getOriginalSize().width) {
-                    m_normal_progress->setPreferredSize(CCSize(140 * len, 30));
+                if (progressLength > m_normal_progress->getOriginalSize().width) {
+                    m_normal_progress->setPreferredSize(CCSize(140 * len, 17));
                 }
                 else
                 {
-                    m_normal_progress->setScale(progressLength/spf->getOriginalSize().width);
+                    m_normal_progress->setScaleX(progressLength/m_normal_progress->getOriginalSize().width);
                 }
                 
 //                m_normal_progress->setPreferredSize(CCSize(140 * len, 30));
@@ -1675,12 +1676,12 @@ void AllianceWarCell::updateTime(float t){
             else
             {
                 
-                if (progressLength > spf->getOriginalSize().width) {
-                    m_jijie_progress->setPreferredSize(CCSize(140 * len, 30));
+                if (progressLength > m_jijie_progress->getOriginalSize().width) {
+                    m_jijie_progress->setPreferredSize(CCSize(140 * len, 17));
                 }
                 else
                 {
-                    m_jijie_progress->setScale(progressLength/spf->getOriginalSize().width);
+                    m_jijie_progress->setScaleX(progressLength/m_jijie_progress->getOriginalSize().width);
                 }
                 
                 
@@ -1693,7 +1694,7 @@ void AllianceWarCell::updateTime(float t){
             m_teamStatusTxt->setColor({255,212,6});
             m_sStatusTxt->setColor({255,212,6});
             
-        }else if(march>=0){
+        }else if(march>=0){//fusheng 行军
             if(m_freshRally && m_info->getBattleType()==2){
                 int num = m_info->getMember()->count();
                 int useNum = 0;
@@ -1717,34 +1718,33 @@ void AllianceWarCell::updateTime(float t){
             len = MAX(len,0);
             len = MIN(len,1);
             
-            CCSpriteFrame* spf = SpriteFrameCache::getInstance()->getSpriteFrameByName("nb_bar_lv.png");
-            m_normal_progress->setSpriteFrame(spf);
-            m_jijie_progress->setSpriteFrame(spf);
-            
+            m_normal_progress->setColor({0xac,0xd1,0x2b});//fusheng 绿色 acd12b
+            m_jijie_progress->setColor({0xac,0xd1,0x2b});
+
             
             double progressLength = 140 * len;
             
             
             
             if (m_info && !(m_info->getBattleType()==2||m_info->getBattleType()==3)) {//fusheng 单人进攻
-                if (progressLength > spf->getOriginalSize().width) {
-                    m_normal_progress->setPreferredSize(CCSize(140 * len, 30));
+                if (progressLength > m_normal_progress->getOriginalSize().width) {
+                    m_normal_progress->setPreferredSize(CCSize(140 * len, 17));
                 }
                 else
                 {
-                    m_normal_progress->setScale(progressLength/spf->getOriginalSize().width);
+                    m_normal_progress->setScaleX(progressLength/m_normal_progress->getOriginalSize().width);
                 }
                 
 //                m_normal_progress->setVisible(140 * len > 10);
             }
             else
             {
-                if (progressLength > spf->getOriginalSize().width) {
-                    m_jijie_progress->setPreferredSize(CCSize(140 * len, 30));
+                if (progressLength > m_jijie_progress->getOriginalSize().width) {
+                    m_jijie_progress->setPreferredSize(CCSize(140 * len, 17));
                 }
                 else
                 {
-                    m_jijie_progress->setScale(progressLength/spf->getOriginalSize().width);
+                    m_jijie_progress->setScaleX(progressLength/m_jijie_progress->getOriginalSize().width);
                 }
 //                m_jijie_progress->setPreferredSize(CCSize(140 * len, 30));
 //                m_jijie_progress->setVisible(140 * len > 10);
