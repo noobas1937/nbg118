@@ -104,5 +104,5 @@ void ChatShieldInfo::addToList(cocos2d::CCDictionary *dict){
     }
 
     shieldList->addObject(info);
-    CC_SAFE_RELEASE_NULL(info);
+    CC_SAFE_RELEASE(info);
 }

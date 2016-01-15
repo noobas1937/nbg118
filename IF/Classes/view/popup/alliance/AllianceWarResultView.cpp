@@ -148,7 +148,7 @@ void AllianceWarResultView::getServerData(CCObject* data){
                     AllianceFightInfo* info = new AllianceFightInfo();
                     info->parseInfo(item->getCString());
                     m_data->addObject(info);
-                    CC_SAFE_RELEASE_NULL(info);
+                    CC_SAFE_RELEASE(info);
                 }
             }
         }
@@ -318,22 +318,22 @@ void AllianceWarResultCell::setData(AllianceFightInfo* info,int index){
         if(m_info->getWin()==0){
             m_lostNode->setVisible(false);
             m_winNode->setVisible(true);
-            m_resultTxt1->setColor({0,171,220});
-            m_resultTxt2->setColor({0,171,220});
-            m_attTxt->setColor({101,153,178});
-            m_defTxt->setColor({101,153,178});
-            m_timeTxt->setColor({101,153,178});
+//            m_resultTxt1->setColor({0,171,220});
+//            m_resultTxt2->setColor({0,171,220});
+//            m_attTxt->setColor({101,153,178});
+//            m_defTxt->setColor({101,153,178});
+//            m_timeTxt->setColor({101,153,178});
             
             m_resultTxt1->setString(_lang("115236"));
             m_resultTxt2->setString(_lang("115237"));
         }else{
             m_lostNode->setVisible(true);
             m_winNode->setVisible(false);
-            m_resultTxt1->setColor({148,148,148});
-            m_resultTxt2->setColor({148,148,148});
-            m_attTxt->setColor({148,148,148});
-            m_defTxt->setColor({148,148,148});
-            m_timeTxt->setColor({148,148,148});
+//            m_resultTxt1->setColor({148,148,148});
+//            m_resultTxt2->setColor({148,148,148});
+//            m_attTxt->setColor({148,148,148});
+//            m_defTxt->setColor({148,148,148});
+//            m_timeTxt->setColor({148,148,148});
             m_resultTxt1->setString(_lang("115237"));
             m_resultTxt2->setString(_lang("115236"));
         }
@@ -341,22 +341,22 @@ void AllianceWarResultCell::setData(AllianceFightInfo* info,int index){
         if(m_info->getWin()==1){
             m_lostNode->setVisible(false);
             m_winNode->setVisible(true);
-            m_resultTxt1->setColor({0,171,220});
-            m_resultTxt2->setColor({0,171,220});
-            m_attTxt->setColor({101,153,178});
-            m_defTxt->setColor({101,153,178});
-            m_timeTxt->setColor({101,153,178});
+//            m_resultTxt1->setColor({0,171,220});
+//            m_resultTxt2->setColor({0,171,220});
+//            m_attTxt->setColor({101,153,178});
+//            m_defTxt->setColor({101,153,178});
+//            m_timeTxt->setColor({101,153,178});
             
             m_resultTxt1->setString(_lang("115237"));
             m_resultTxt2->setString(_lang("115236"));
         }else{
             m_lostNode->setVisible(true);
             m_winNode->setVisible(false);
-            m_resultTxt1->setColor({148,148,148});
-            m_resultTxt2->setColor({148,148,148});
-            m_attTxt->setColor({148,148,148});
-            m_defTxt->setColor({148,148,148});
-            m_timeTxt->setColor({148,148,148});
+//            m_resultTxt1->setColor({148,148,148});
+//            m_resultTxt2->setColor({148,148,148});
+//            m_attTxt->setColor({148,148,148});
+//            m_defTxt->setColor({148,148,148});
+//            m_timeTxt->setColor({148,148,148});
             m_resultTxt1->setString(_lang("115236"));
             m_resultTxt2->setString(_lang("115237"));
         }

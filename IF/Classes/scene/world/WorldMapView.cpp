@@ -809,7 +809,11 @@ void WorldMapView::openTilePanel(unsigned int index) {
             view1 = ActBossPopUp::create(info);
         }
             break;
-        case Throne:{
+        case Throne:
+        {
+            // TODO:
+            break;
+            
             SoundController::sharedSound()->playEffects(Music_Sfx_city_castle);
             if(info.kingBuildInfo.openTime == 0){
                 //                CCCommonUtils::flyHint("", "", _lang("110020"));
@@ -827,7 +831,11 @@ void WorldMapView::openTilePanel(unsigned int index) {
             view3 = ThroneTile::create(info);
         }
             break;
-        case Trebuchet:{
+        case Trebuchet:
+        {
+            // TODO:
+            break;
+            
             SoundController::sharedSound()->playEffects(Music_Sfx_city_military);
             if(info.trebuchetInfo.openTime == 0){
                 CCCommonUtils::flyHint("", "", _lang("110020"));
@@ -1043,11 +1051,11 @@ void WorldMapView::onExit() {
     }
     for(auto it = m_marchArmy.begin(); it != m_marchArmy.end(); it++){
         it->second->armyDelete();
-        CC_SAFE_RELEASE_NULL(it->second);
+        CC_SAFE_RELEASE(it->second);
     }
     if(tilePops){
         tilePops->removeAllObjects();
-        CC_SAFE_RELEASE_NULL(tilePops);
+        CC_SAFE_RELEASE(tilePops);
         tilePops = NULL;
     }
     m_marchArmy.clear();
@@ -1301,7 +1309,7 @@ void WorldMapView::asyncCityInfoParse(cocos2d::CCObject *obj) {
 void WorldMapView::asyncReleaseInMainThread(CCObject* obj)
 {
     if( obj != NULL ) {
-        CC_SAFE_RELEASE_NULL(obj);
+        CC_SAFE_RELEASE(obj);
     }
 }
 
@@ -1453,7 +1461,7 @@ void WorldMapView::clearAllMarch(){
     if(needClearAll){
         for(auto it = m_marchArmy.begin(); it != m_marchArmy.end(); it++){
             it->second->armyDelete();
-            CC_SAFE_RELEASE_NULL(it->second);
+            CC_SAFE_RELEASE(it->second);
         }
         m_marchArmy.clear();
         WorldMapView::instance()->m_mapMarchNode1->removeAllChildren();
@@ -1488,7 +1496,7 @@ void WorldMapView::addCityInMainThread(cocos2d::CCObject *obj) {
     
     auto boolObj = dynamic_cast<CCBoolean*>(obj);
     bool isSinglePoint = boolObj->getValue();
-    CC_SAFE_RELEASE_NULL(boolObj);
+    CC_SAFE_RELEASE(boolObj);
     
     // clear old under node
     if (isSinglePoint) {
@@ -2597,34 +2605,39 @@ void WorldMapView::doTeleport(unsigned int type, unsigned int index, const strin
     auto cityNode = CCNode::create();
     
     int level = player.cityLv;
-    int mapIndex = 3;
-    while (mapIndex >= 0) {
-        auto arr = getCityPicArr(mapIndex, level, player.officer == KINGDOM_KING_ID);
-        int posX = 0;
-        int posY = 0;
-        if(mapIndex == 1){
-            posX = -_tile_width / 2;
-            posY = _tile_height / 2;
-        }
-        if(mapIndex == 2){
-            posY = _tile_height;
-        }
-        if(mapIndex == 3){
-            posX = _tile_width / 2;
-            posY = _tile_height / 2;
-        }
-        CCObject *obj = NULL;
-        CCARRAY_FOREACH(arr, obj){
-            std::string picName = _dict(obj)->valueForKey("pic")->getCString();
-            int addX = _dict(obj)->valueForKey("x")->intValue();
-            int addY = _dict(obj)->valueForKey("y")->intValue();
-            auto sprite = CCLoadSprite::createSprite(picName.c_str());
-            sprite->setAnchorPoint(ccp(0, 0));
-            cityNode->addChild(sprite);
-            sprite->setPosition(ccp(posX, posY) - ccp(_tile_width / 2, _tile_height / 2) + ccp(addX, addY));
-        }
-        mapIndex--;
-    }
+//    int mapIndex = 3;
+//    while (mapIndex >= 0) {
+//        auto arr = getCityPicArr(mapIndex, level, player.officer == KINGDOM_KING_ID);
+//        int posX = 0;
+//        int posY = 0;
+//        if(mapIndex == 1){
+//            posX = -_tile_width / 2;
+//            posY = _tile_height / 2;
+//        }
+//        if(mapIndex == 2){
+//            posY = _tile_height;
+//        }
+//        if(mapIndex == 3){
+//            posX = _tile_width / 2;
+//            posY = _tile_height / 2;
+//        }
+//        CCObject *obj = NULL;
+//        CCARRAY_FOREACH(arr, obj){
+//            std::string picName = _dict(obj)->valueForKey("pic")->getCString();
+//            int addX = _dict(obj)->valueForKey("x")->intValue();
+//            int addY = _dict(obj)->valueForKey("y")->intValue();
+//            auto sprite = CCLoadSprite::createSprite(picName.c_str());
+//            sprite->setAnchorPoint(ccp(0, 0));
+//            cityNode->addChild(sprite);
+//            sprite->setPosition(ccp(posX, posY) - ccp(_tile_width / 2, _tile_height / 2) + ccp(addX, addY));
+//        }
+//        mapIndex--;
+//    }
+    
+    auto house = NBWorldMapMainCity::getMainCity(0, player.cityLv, -1);
+    house->setPosition(0, _tile_height / 2);
+    house->setAnchorPoint({.5, .5});
+    cityNode->addChild(house);
     
     cityNode->setTag(index);
     auto pos = m_map->getViewPointByTilePoint(info.cityTilePoint);
@@ -2984,7 +2997,7 @@ void WorldMapView::finishBattleAni(cocos2d::CCObject *obj) {
     map<unsigned int, MarchArmy*>::iterator it = m_marchArmy.find(info.marchTag);
     if(it != m_marchArmy.end()){
         it->second->armyDelete();
-        CC_SAFE_RELEASE_NULL(it->second);
+        CC_SAFE_RELEASE(it->second);
         m_marchArmy.erase(it);
     }
     if(m_drawRoadNode->getChildByTag(info.marchTag)){
@@ -3145,7 +3158,7 @@ bool WorldMapView::updateMarchTarget(MarchInfo &info, double now, float delta) {
             map<unsigned int, MarchArmy*>::iterator it = m_marchArmy.find(info.marchTag);
             if(it != m_marchArmy.end()){
                 it->second->armyDelete();
-                CC_SAFE_RELEASE_NULL(it->second);
+                CC_SAFE_RELEASE(it->second);
                 m_marchArmy.erase(it);
             }
             node->removeFromParentAndCleanup(true);
@@ -4288,7 +4301,7 @@ CCSprite* WorldMapView::createMarchSprite(MarchInfo& info) {
                         sp1->retain();
                         sp1->removeFromParentAndCleanup(false);
                         m_cityAttackNode->addChild(sp1);
-                        CC_SAFE_RELEASE_NULL(sp1);
+                        CC_SAFE_RELEASE(sp1);
                     }
                     return sp1;
                 }
@@ -5083,64 +5096,56 @@ void WorldMapView::addUnderNode(unsigned int index) {
         case tile_superMine:{
             if (true) {
                 
-                if (info.m_superMineInfo.type != Wood)
-                {
-                    CCArray *arr = getCityPicArr(info, 1,getPicIdByCityInfo(info));
-                    int i = 0;
-                    while (i < arr->count()) {
-                        auto pics = _dict(arr->objectAtIndex(i));
-                        std::string picStr = pics->valueForKey("pic")->getCString();
-                        int x = pics->valueForKey("x")->intValue();
-                        int y = pics->valueForKey("y")->intValue();
-                        auto under = CCLoadSprite::createSprite(picStr.c_str());
-                        under->setAnchorPoint(ccp(0, 0));
-                        under->setTag(index);
-                        under->setPosition(ccp(pos.x-_halfTileSize.width,pos.y-_halfTileSize.height) + ccp(x, y)); // left-bottom corner
-                        m_cityItem[index].push_back(under);
-                        m_batchNode->addChild(under, index + i);
-                        i++;
-                    }
-                }
-                
                 if (info.parentCityIndex == info.cityIndex)
                 {
-                    if (info.m_superMineInfo.type == Wood)
-                    {
-                        Node* under = Node::create();
-                        under->setAnchorPoint(ccp(0, 0));
-                        under->setPosition(ccp(pos.x, pos.y + _halfTileSize.height)); // left-bottom corner
-                        m_cityItem[index].push_back(under);
-                        m_batchNode->addChild(under, index);
-                        
-                        auto island = NBWorldMapMainCity::getMainCityIslandImage(0, pos.x, pos.y);
-                        if (island)
-                        {
-                            island->setPosition(-_halfTileSize.width * 1.5, -_halfTileSize.height * 1.5);
-                            under->addChild(island);
-                        }
-                        
-                        auto tower = CCLoadSprite::createSprite("super_mine_sawmill.png");
-                        tower->setPosition(ccp(-25, 52)); // left-bottom corner
-                        under->addChild(tower);
-                    }
-                    
                     string fullName = "";
-                    switch (info.m_superMineInfo.type) {
+                    string tower_fullName = "";
+                    switch (info.m_superMineInfo.type)
+                    {
                         case Food:
                             fullName = _lang("115376");
+                            tower_fullName = "super_mine_farm.png";
                             break;
                         case Wood:
                             fullName = _lang("115377");
+                            tower_fullName = "super_mine_sawmill.png";
                             break;
                         case Iron:
                             fullName = _lang("115378");
+                            tower_fullName = "super_mine_Mithril.png";
                             break;
                         case Stone:
                             fullName = _lang("115379");
+                            tower_fullName = "super_mine_EssenceShrine.png";
                             break;
                         default:
                             break;
                     }
+                    
+                    //
+                    
+                    Node* under = Node::create();
+                    under->setAnchorPoint(ccp(0, 0));
+                    under->setPosition(ccp(pos.x, pos.y + _halfTileSize.height)); // left-bottom corner
+                    m_cityItem[index].push_back(under);
+                    m_batchNode->addChild(under, index);
+
+                    auto island = NBWorldMapMainCity::getMainCityIslandImage(0, pos.x, pos.y);
+                    if (island)
+                    {
+                        island->setPosition(-_halfTileSize.width * 1.5, -_halfTileSize.height * 1.5);
+                        under->addChild(island);
+                    }
+
+                    if (tower_fullName.length() > 0)
+                    {
+                        auto tower = CCLoadSprite::createSprite(tower_fullName.c_str());
+                        tower->setPosition(ccp(-25, 52)); // left-bottom corner
+                        under->addChild(tower);
+                    }
+                    
+                    //
+                    
                     AAreaState _state = AAreaState(info.m_superMineInfo.trstat);
                     string stateStr("");
                     string ccbName("");
@@ -5746,7 +5751,11 @@ void WorldMapView::addUnderNode(unsigned int index) {
             NBWorldMonster::addActBossTileUnderNode(info, pos, index);
         }
             break;
-        case Trebuchet:{
+        case Trebuchet:
+        {
+            // TODO:
+            break;
+            
             auto under = CCLoadSprite::createSprite(getSpriteName(info).c_str());
             under->setAnchorPoint(ccp(0, 0));
             under->setTag(index);
@@ -5830,7 +5839,11 @@ void WorldMapView::addUnderNode(unsigned int index) {
             }
         }
             break;
-        case Throne:{
+        case Throne:
+        {
+            // TODO:
+            break;
+            
             m_throneNode->removeAllChildren();
             m_towerNode->removeAllChildren();
             

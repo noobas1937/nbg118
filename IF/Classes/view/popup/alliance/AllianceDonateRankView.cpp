@@ -267,7 +267,7 @@ void AllianceDonateRankView::refreshDataByUid(CCObject* data){
     for (it = GlobalData::shared()->allianceDonateAllList.begin(); it != GlobalData::shared()->allianceDonateAllList.end(); it++) {
         AllianceDonateInfo* tmp = *it;
         if(tmp->uid==uid->getCString()){
-            CC_SAFE_RELEASE_NULL(tmp);
+            CC_SAFE_RELEASE(tmp);
             GlobalData::shared()->allianceDonateAllList.erase(it);
             break;
         }
@@ -276,7 +276,7 @@ void AllianceDonateRankView::refreshDataByUid(CCObject* data){
     for (it = GlobalData::shared()->allianceDonateTodayList.begin(); it != GlobalData::shared()->allianceDonateTodayList.end(); it++) {
         AllianceDonateInfo* tmp1 = *it;
         if(tmp1->uid==uid->getCString()){
-            CC_SAFE_RELEASE_NULL(tmp1);
+            CC_SAFE_RELEASE(tmp1);
             GlobalData::shared()->allianceDonateTodayList.erase(it);
             refreashData(NULL);
             break;
@@ -462,6 +462,7 @@ void AllianceDonateRankCell::setData(AllianceDonateInfo* info,int index)
     {
         m_headImgNode->initHeadImgUrl2(m_headNode, CCCommonUtils::getCustomPicUrl(info->uid, info->picVer), 1.0f, 60, true);
     }
+    // TODO tao.yu 联盟成员管理问号按钮点开后显示
     string rankstr = "Alliance_R";
     rankstr.append(CC_ITOA(m_info->rank));
     rankstr.append(".png");

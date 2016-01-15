@@ -76,7 +76,7 @@ public:
             return;
         
         task->execute();
-        CC_SAFE_RELEASE_NULL(task);
+        CC_SAFE_RELEASE(task);
     }
     
 private:

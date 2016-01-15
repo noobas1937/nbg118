@@ -4,10 +4,23 @@
     <dict>
         <key>frames</key>
         <dict>
+            <key>activity1_12.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{4,4},{260,68}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{260,68}}</string>
+                <key>sourceSize</key>
+                <string>{260,68}</string>
+            </dict>
             <key>frame_light.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,4},{298,84}}</string>
+                <string>{{270,4},{298,84}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -20,7 +33,7 @@
             <key>frame_line.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{308,4},{126,126}}</string>
+                <string>{{574,4},{126,126}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>

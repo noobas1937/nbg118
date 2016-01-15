@@ -155,7 +155,7 @@ bool FilterSprite::initWithTexture(CCTexture2D* pTexture, const CCRect& tRect){
         pProgram->initWithVertexShaderByteArray(ccPositionTextureColor_vert, pszFragSource);
 #endif
         this->setShaderProgram(pProgram);
-        CC_SAFE_RELEASE_NULL(pProgram);
+        CC_SAFE_RELEASE(pProgram);
         CHECK_GL_ERROR_DEBUG();
         
         this->getShaderProgram()->addAttribute(kCCAttributeNamePosition, kCCVertexAttrib_Position);

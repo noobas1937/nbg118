@@ -1560,8 +1560,8 @@ void AllianceBottomNode::onExit()
                 return ;
             
             
-            CCCommonUtils::flyHint("", "", _lang("E100008"));
-            return;
+//            CCCommonUtils::flyHint("", "", _lang("E100008"));
+//            return;
             
             //fusheng 是否移除上一个界面
 //            PopupViewController::getInstance()->removeLastPopupView();
@@ -1625,14 +1625,14 @@ void AllianceBottomNode::updateNum(CCObject* param)
 {
   
     
-//    if(GlobalData::shared()->playerInfo.isInAlliance() && GlobalData::shared()->playerInfo.allianceInfo.uid == m_info->uid && GlobalData::shared()->playerInfo.allianceInfo.militaryNum>0 ){
-//        m_warNumNode->setVisible(true);
-//        m_warTipNum->setString(CC_ITOA(GlobalData::shared()->playerInfo.allianceInfo.militaryNum));
-//    }else{
-//        m_warNumNode->setVisible(false);
-//    }
+    if(GlobalData::shared()->playerInfo.isInAlliance() && GlobalData::shared()->playerInfo.allianceInfo.uid == m_info->uid && GlobalData::shared()->playerInfo.allianceInfo.militaryNum>0 ){
+        m_warNumNode->setVisible(true);
+        m_warTipNum->setString(CC_ITOA(GlobalData::shared()->playerInfo.allianceInfo.militaryNum));
+    }else{
+        m_warNumNode->setVisible(false);
+    }
     
-    m_warNumNode->setVisible(false);
+//    m_warNumNode->setVisible(false);
     
     
     if (GlobalData::shared()->playerInfo.allianceInfo.uid == m_info->uid && GlobalData::shared()->playerInfo.allianceInfo.rank >= 4 && GlobalData::shared()->playerInfo.allianceInfo.applyNum > 0) {

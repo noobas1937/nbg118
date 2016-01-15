@@ -69,10 +69,24 @@ bool StoreMallView::init()
     
     m_mallGallery = CCGallery::create(Size(232,130), Size(640,130));
     m_mallGallery->setBackScale(0.9);
+    
+    std::map<int, std::string> langMap;
+    langMap[1] = _lang("101224");  // 热卖
+    langMap[2] = _lang("104953");  // 增益
+    langMap[3] = _lang("104902");  // 战争
+    langMap[4] = _lang("104905");  // 其他
+    langMap[5] = _lang("104904");  // 资源
     for (int i = 0; i < 5; i++) {
         Node* node = Node::create();
         auto spr = CCLoadSprite::createSprite((std::string("shop_bn_")+ CC_ITOA(i+1) + ".png").c_str());
         node->addChild(spr);
+        auto label = CCLabelIF::create(langMap[i+1].c_str());
+        label->setFontSize(28);
+        label->setColor({255,220,0});
+        label->setAnchorPoint({1,0});
+        label->setPosition(90, -55);
+        label->setFntFile(getNBFont(NB_FONT_Bold_Border));
+        node->addChild(label);
         m_mallGallery->addChild(node);
     }
     m_mallGallery->addChildFinish();
@@ -80,11 +94,11 @@ bool StoreMallView::init()
     m_galleryLayer->addChild(m_mallGallery);
 //    int layerposY = size.height - 170 -130 - 852/2;
 //    m_galleryLayer->setPositionY(layerposY);
-//    CCCommonUtils::setButtonTitle(m_buffBtn, _lang("104953").c_str());
-//    CCCommonUtils::setButtonTitle(m_warBtn, _lang("104902").c_str());
-//    CCCommonUtils::setButtonTitle(m_resBtn, _lang("104904").c_str());
-//    CCCommonUtils::setButtonTitle(m_othBtn, _lang("104905").c_str());
-//    CCCommonUtils::setButtonTitle(m_hotBtn, _lang("101224").c_str());
+//    CCCommonUtils::setButtonTitle(m_buffBtn, _lang("104953").c_str());//2
+//    CCCommonUtils::setButtonTitle(m_warBtn, _lang("104902").c_str());//3
+//    CCCommonUtils::setButtonTitle(m_resBtn, _lang("104904").c_str());//5
+//    CCCommonUtils::setButtonTitle(m_othBtn, _lang("104905").c_str());//4
+//    CCCommonUtils::setButtonTitle(m_hotBtn, _lang("101224").c_str());//1
 //    m_btnPartNode->setPositionY(m_btnPartNode->getPositionY()+20);
 //    int count = (size.height-170)/44+1; //fusheng 不使用这些图片拼背景
 //    for (int i=0; i<count; i++) {

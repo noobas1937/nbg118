@@ -257,7 +257,7 @@ void AllianceManager::openYuanYunView(int pointId){
         return;
     }
     if(pointId<=0) return;
-    CCCommonUtils::flyHint("", "", _lang("E100008"));return;//fusheng 12.29 屏蔽士兵援助
+//    CCCommonUtils::flyHint("", "", _lang("E100008"));return;//fusheng 12.29 屏蔽士兵援助
     
     PopupViewController::getInstance()->addPopupView(YuanJunTipView::create(pointId));
 }
@@ -337,7 +337,7 @@ void AllianceManager::parseEvents(CCDictionary* dic){
 void AllianceManager::clearEvents(){
     map<std::string, AllianceEventInfo*>::iterator it;
     for(it = eventsMap.begin(); it != eventsMap.end(); it++){
-        CC_SAFE_RELEASE_NULL(it->second);
+        CC_SAFE_RELEASE(it->second);
     }
     eventsMap.clear();
 }

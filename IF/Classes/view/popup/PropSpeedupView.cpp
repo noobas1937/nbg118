@@ -22,7 +22,7 @@ PropSpeedupView* PropSpeedupView::show(int type,int bid, int qid){
     PropSpeedupView* dialog = new PropSpeedupView();
     dialog->init(type,bid,qid);
     PopupViewController::getInstance()->addPopupView(dialog, false);
-    CC_SAFE_RELEASE_NULL(dialog);
+    CC_SAFE_RELEASE(dialog);
     return dialog;
 }
 
@@ -452,6 +452,8 @@ void PropSpeedupView::sliderCallBack(Ref *pSender, NBSlider::EventType type){
         m_chooseCount = 1;
     }
     m_editBox->setText(CC_CMDITOA(m_chooseCount).c_str());
+    m_editBox->setScale(0);
+    m_editBox->setScale(1);
     if(m_chooseCount>0){
         CCCommonUtils::setSpriteGray(m_sprBtn, false);
     }else{

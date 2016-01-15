@@ -235,6 +235,8 @@
 		3642EC75184DBF8600D49597 /* FBUtilies.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3642EC73184DBF8600D49597 /* FBUtilies.mm */; };
 		3642EC77184DBFBE00D49597 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3642EC76184DBFBE00D49597 /* MessageUI.framework */; };
 		3646A6751BB945D200248935 /* NBSprite3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3646A6731BB945D200248935 /* NBSprite3D.cpp */; };
+		366500841C47919E0059EB86 /* helvetica_lighting_border.png in Resources */ = {isa = PBXBuildFile; fileRef = 366500821C47919E0059EB86 /* helvetica_lighting_border.png */; };
+		366500851C47919E0059EB86 /* helvetica_lighting_border.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 366500831C47919E0059EB86 /* helvetica_lighting_border.fnt */; };
 		366751601C2A442900447EDE /* Arial_Bold_Border.png in Resources */ = {isa = PBXBuildFile; fileRef = 366751581C2A442900447EDE /* Arial_Bold_Border.png */; };
 		366751611C2A442900447EDE /* Arial_Bold_Regular.png in Resources */ = {isa = PBXBuildFile; fileRef = 366751591C2A442900447EDE /* Arial_Bold_Regular.png */; };
 		366751621C2A442900447EDE /* Arial_Bold.png in Resources */ = {isa = PBXBuildFile; fileRef = 3667515A1C2A442900447EDE /* Arial_Bold.png */; };
@@ -1703,6 +1705,8 @@
 		3642EC76184DBFBE00D49597 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		3646A6731BB945D200248935 /* NBSprite3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NBSprite3D.cpp; path = ../scene/titan/NBSprite3D.cpp; sourceTree = "<group>"; };
 		3646A6741BB945D200248935 /* NBSprite3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBSprite3D.h; path = ../scene/titan/NBSprite3D.h; sourceTree = "<group>"; };
+		366500821C47919E0059EB86 /* helvetica_lighting_border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = helvetica_lighting_border.png; path = Resources/helvetica_lighting_border.png; sourceTree = "<group>"; };
+		366500831C47919E0059EB86 /* helvetica_lighting_border.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = helvetica_lighting_border.fnt; path = Resources/helvetica_lighting_border.fnt; sourceTree = "<group>"; };
 		366751581C2A442900447EDE /* Arial_Bold_Border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Arial_Bold_Border.png; path = Resources/Arial_Bold_Border.png; sourceTree = "<group>"; };
 		366751591C2A442900447EDE /* Arial_Bold_Regular.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Arial_Bold_Regular.png; path = Resources/Arial_Bold_Regular.png; sourceTree = "<group>"; };
 		3667515A1C2A442900447EDE /* Arial_Bold.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Arial_Bold.png; path = Resources/Arial_Bold.png; sourceTree = "<group>"; };
@@ -6034,6 +6038,8 @@
 		DB9F590717CD9A520037F7E5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				366500821C47919E0059EB86 /* helvetica_lighting_border.png */,
+				366500831C47919E0059EB86 /* helvetica_lighting_border.fnt */,
 				36CC276A1C3D175900581CC2 /* helvetica_bold.png */,
 				36CC276B1C3D175900581CC2 /* helvetica_border.png */,
 				36CC276C1C3D175900581CC2 /* helvetica_gradient.png */,
@@ -7383,6 +7389,7 @@
 				59D7F0371AF0BF85000120F9 /* HS-delete-button.png in Resources */,
 				272AB66C1B15C7BC0052E896 /* Images.xcassets in Resources */,
 				272AB64F1B15C7BC0052E896 /* gm.png in Resources */,
+				366500841C47919E0059EB86 /* helvetica_lighting_border.png in Resources */,
 				272AB63E1B15C7BC0052E896 /* chuzheng_frame02.png in Resources */,
 				272AB63B1B15C7BC0052E896 /* chat_to_bg_pressed.png in Resources */,
 				366751641C2A442900447EDE /* Arial_Bold_Border.fnt in Resources */,
@@ -7402,6 +7409,7 @@
 				272AB6481B15C7BC0052E896 /* g026.png in Resources */,
 				59D7F0361AF0BF85000120F9 /* HS-camera-button@3x.png in Resources */,
 				272AB65C1B15C7BC0052E896 /* input.png in Resources */,
+				366500851C47919E0059EB86 /* helvetica_lighting_border.fnt in Resources */,
 				272AB64D1B15C7BC0052E896 /* g044_middle.png in Resources */,
 				272AB6371B15C7BC0052E896 /* chat_system_left_bg_normal.png in Resources */,
 				59D7F0501AF0BF85000120F9 /* HelpshiftConfigDark.plist in Resources */,

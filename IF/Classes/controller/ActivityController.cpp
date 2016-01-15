@@ -819,7 +819,7 @@ void ActivityController::removeActivity(int type){
     if(it != activity.end()){
         auto info = it->second;
         activity.erase(it);
-        CC_SAFE_RELEASE_NULL(info);
+        CC_SAFE_RELEASE(info);
     }
 }
 
@@ -1416,7 +1416,7 @@ void ActivityController::leaveCKFServer(CCDictionary *params){
     }
     CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(REMOVE_ALL_HINT);
     if(SceneController::getInstance()->showBG){
-        CC_SAFE_RELEASE_NULL(SceneController::getInstance()->showBG);
+        CC_SAFE_RELEASE(SceneController::getInstance()->showBG);
         SceneController::getInstance()->showBG = NULL;
     }
     if (WorldMapView::instance()) {

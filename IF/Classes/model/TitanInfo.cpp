@@ -63,7 +63,7 @@ int TitanInfo::resetTitanInfo(CCDictionary* dict)//0没有改变 1数值改变(�
             level = newLevel;
             tid = 60000 + level;
             auto temp = dynamic_cast<CCDictionary*>(LocalController::shared()->DBXMLManager()->getGroupByKey("titan")->objectForKey(CCString::createWithFormat("%d", tid)->getCString()));
-//            if(temp)
+//            if(temp)//fusheng 这个应该被干掉
 //            {
 //                feedFoodNum = temp->valueForKey("needfood")->intValue();
 //                nextExp = temp->valueForKey("needexp")->intValue();

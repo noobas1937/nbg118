@@ -259,18 +259,23 @@ bool InviteForGiftView::init(){
       m_isIOS=false;
    }
     m_inviterUid = "";
-    m_inviterName = "";
-    m_inviterServer = "";
-    m_isInvited = false;
-    m_inviCode = GlobalData::shared()->playerInfo.inviCode;//邀请码
-    m_requestArr = CCArray::create();
+   m_inviterName = "";
+   m_inviterServer = "";
+   m_isInvited = false;
+   m_inviCode = GlobalData::shared()->playerInfo.inviCode;//邀请码
+   m_requestArr = CCArray::create();
    m_installData = CCArray::create();
    m_inviteData = CCArray::create();
    
-    int preH = m_buildBG->getContentSize().height;
-    changeBGHeight(m_buildBG);
-    int newH = m_buildBG->getContentSize().height;
-    int addH = newH - preH;
+   int preH = m_buildBG->getContentSize().height;
+   changeBGHeight(m_buildBG);
+   int newH = m_buildBG->getContentSize().height;
+   int addH = newH - preH;
+   
+   changeBGMaxHeight(m_buildBG);
+   
+   m_buildBG->setPositionY(m_buildBG->getPositionY() + m_buildBG->getContentSize().height - newH);
+   
    
    if (CCCommonUtils::isIosAndroidPad())
    {

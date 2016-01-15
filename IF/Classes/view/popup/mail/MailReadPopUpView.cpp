@@ -1524,10 +1524,10 @@ void MailAllianceInviteCell::showAllianceInfo(CCObject* obj)
         alliance->updateAllianceInfo(dicAlliance);
         if(alliance->uid==m_mailInfo.allianceId){
             PopupViewController::getInstance()->addPopupInView(CheckAllianceInfoView::create(alliance));
-            CC_SAFE_RELEASE_NULL(alliance);
+            CC_SAFE_RELEASE(alliance);
             break;
         }
-        CC_SAFE_RELEASE_NULL(alliance);
+        CC_SAFE_RELEASE(alliance);
     }
 }
 //------cl

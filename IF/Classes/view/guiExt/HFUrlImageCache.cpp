@@ -137,7 +137,7 @@ void HFUrlImageCache::cancelImageLoad(const string& url, CCObject* target)
     for (CallbacksMap::iterator it2 = range.first; it2 != range.second; ++it2) {
 //        CCLOGFUNCF("get for loader %s : %p", it2->first.c_str(),it2->second->getTargetCallback());
         if (it2->second->getTargetCallback() == target) {
-            CC_SAFE_RELEASE_NULL(it2->second);
+            CC_SAFE_RELEASE(it2->second);
             m_callbacks.erase(it2);
 //            CCLOGFUNCF("remove image load callback with target: %p url: %s",target, url.c_str());
             return;
@@ -153,7 +153,7 @@ void HFUrlImageCache::doLoadCompletedCallback(const string& url, CCObject* objec
         if (callback) {
             callback->setObject(object);
             callback->execute();
-            CC_SAFE_RELEASE_NULL(callback);
+            CC_SAFE_RELEASE(callback);
         }
     }
     m_callbacks.erase(url);
@@ -171,11 +171,11 @@ void HFUrlImageCache::doLoadCompletedCallback(const string& url, HFUrlImage* loa
             loader->saveToFile(cacheFile.c_str(),false);
 #endif
             doLoadCompletedCallback(url, CCString::create(cacheFile));
-            CC_SAFE_RELEASE_NULL(loader);
+            CC_SAFE_RELEASE(loader);
             return;
         }else{
             // load image fail, release the loader
-            CC_SAFE_RELEASE_NULL(loader);
+            CC_SAFE_RELEASE(loader);
         }
     }
     doLoadCompletedCallback(url, texture);
