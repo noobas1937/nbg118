@@ -1640,7 +1640,7 @@ void AllianceWarCell::updateTime(float t){
     else{
         double haveTime = (m_info->getWaitTime() - GlobalData::shared()->getWorldTime());
         double march = m_info->getMarchTime() - GlobalData::shared()->getWorldTime();
-        if(haveTime>0){
+        if(haveTime>0){//fusheng 集结
             m_sTimeTxt->setString(CC_SECTOA(haveTime));
             m_sStatusTxt->setString(_lang_1("115130",""));
             m_teamTimeTxt->setString(CC_SECTOA(haveTime));
@@ -1652,48 +1652,74 @@ void AllianceWarCell::updateTime(float t){
             len = MAX(len,0);
             len = MIN(len,1);
             
-            CCSpriteFrame* spf = SpriteFrameCache::getInstance()->getSpriteFrameByName("AllianceWarDetailView_progress.png");//fusheng temp
-            m_normal_progress->setSpriteFrame(spf);
-            m_jijie_progress->setSpriteFrame(spf);
+
+            m_normal_progress->setColor({0xff,0xce,0x06});//fusheng 黄色
+            m_jijie_progress->setColor({0xff,0xce,0x06});
+
             
             double progressLength = 140 * len;
-            
-            if (m_info && !(m_info->getBattleType()==2||m_info->getBattleType()==3)) {//fusheng 单人进攻
-                
-                
-                if (progressLength > spf->getOriginalSize().width) {
-                    m_normal_progress->setPreferredSize(CCSize(140 * len, 30));
-                }
-                else
-                {
-                    m_normal_progress->setScale(progressLength/spf->getOriginalSize().width);
-                }
-                
-//                m_normal_progress->setPreferredSize(CCSize(140 * len, 30));
-//                m_normal_progress->setVisible(140 * len > 10);
-            }
-            else
+            if(m_info)
             {
-                
-                if (progressLength > spf->getOriginalSize().width) {
-                    m_jijie_progress->setPreferredSize(CCSize(140 * len, 30));
+                if (m_info->getBattleType()==0) {//fusheng 单人进攻
+                    
+                    if (progressLength > m_normal_progress->getOriginalSize().width) {
+                        m_normal_progress->setPreferredSize(CCSize(140 * len, 17));
+                        m_normal_progress->setScaleX(1);
+                    }
+                    else
+                    {
+                        m_normal_progress->setScaleX(progressLength/m_normal_progress->getOriginalSize().width);
+                    }
+                    
+                    m_teamStatusTxt->setColor({255,212,6});
+                    m_sStatusTxt->setColor({255,212,6});
                 }
-                else
+                else if (m_info->getBattleType()==2)//fusheng 组队进攻
                 {
-                    m_jijie_progress->setScale(progressLength/spf->getOriginalSize().width);
+                    
+                    if (progressLength > m_jijie_progress->getOriginalSize().width) {
+                        m_jijie_progress->setPreferredSize(CCSize(140 * len, 17));
+                        m_jijie_progress->setScaleX(1);
+                    }
+                    else
+                    {
+                        m_jijie_progress->setScaleX(progressLength/m_jijie_progress->getOriginalSize().width);
+                    }
+                    
+                    m_teamStatusTxt->setColor({0xff,0xce,0x06});
+                    m_sStatusTxt->setColor({0xff,0xce,0x06});
+                    
+                }
+                else if (m_info->getBattleType()==3)//fusheng 组队防守 f8953a
+                {
+                    if (progressLength > m_jijie_progress->getOriginalSize().width) {
+                        m_jijie_progress->setPreferredSize(CCSize(140 * len, 17));
+                        m_jijie_progress->setScaleX(1);
+                    }
+                    else
+                    {
+                        m_jijie_progress->setScaleX(progressLength/m_jijie_progress->getOriginalSize().width);
+                    }
+                    
+                    m_teamStatusTxt->setColor({0xf8,0x95,0x3a});
+                    m_sStatusTxt->setColor({0xf8,0x95,0x3a});
+                    
+                    m_normal_progress->setColor({0xf8,0x95,0x3a});//fusheng 橙色
+                    m_jijie_progress->setColor({0xf8,0x95,0x3a});
+
                 }
                 
-                
-//                m_jijie_progress->setPreferredSize(CCSize(140 * len, 30));
-//                m_jijie_progress->setVisible(140 * len > 10);
+
             }
             
             
             
-            m_teamStatusTxt->setColor({255,212,6});
-            m_sStatusTxt->setColor({255,212,6});
             
-        }else if(march>=0){
+            
+            
+//            int type = m_info->getBattleType();//0 个人进攻， 1 个人防守，2 组队进攻 3 组队防守
+            
+        }else if(march>=0){//fusheng 行军
             if(m_freshRally && m_info->getBattleType()==2){
                 int num = m_info->getMember()->count();
                 int useNum = 0;
@@ -1717,34 +1743,35 @@ void AllianceWarCell::updateTime(float t){
             len = MAX(len,0);
             len = MIN(len,1);
             
-            CCSpriteFrame* spf = SpriteFrameCache::getInstance()->getSpriteFrameByName("nb_bar_lv.png");
-            m_normal_progress->setSpriteFrame(spf);
-            m_jijie_progress->setSpriteFrame(spf);
-            
+            m_normal_progress->setColor({0xac,0xd1,0x2b});//fusheng 绿色 acd12b
+            m_jijie_progress->setColor({0xac,0xd1,0x2b});
+
             
             double progressLength = 140 * len;
             
             
             
             if (m_info && !(m_info->getBattleType()==2||m_info->getBattleType()==3)) {//fusheng 单人进攻
-                if (progressLength > spf->getOriginalSize().width) {
-                    m_normal_progress->setPreferredSize(CCSize(140 * len, 30));
+                if (progressLength > m_normal_progress->getOriginalSize().width) {
+                    m_normal_progress->setPreferredSize(CCSize(140 * len, 17));
+                    m_normal_progress->setScaleX(1);
                 }
                 else
                 {
-                    m_normal_progress->setScale(progressLength/spf->getOriginalSize().width);
+                    m_normal_progress->setScaleX(progressLength/m_normal_progress->getOriginalSize().width);
                 }
                 
 //                m_normal_progress->setVisible(140 * len > 10);
             }
             else
             {
-                if (progressLength > spf->getOriginalSize().width) {
-                    m_jijie_progress->setPreferredSize(CCSize(140 * len, 30));
+                if (progressLength > m_jijie_progress->getOriginalSize().width) {
+                    m_jijie_progress->setPreferredSize(CCSize(140 * len, 17));
+                    m_jijie_progress->setScaleX(1);
                 }
                 else
                 {
-                    m_jijie_progress->setScale(progressLength/spf->getOriginalSize().width);
+                    m_jijie_progress->setScaleX(progressLength/m_jijie_progress->getOriginalSize().width);
                 }
 //                m_jijie_progress->setPreferredSize(CCSize(140 * len, 30));
 //                m_jijie_progress->setVisible(140 * len > 10);
@@ -1756,8 +1783,24 @@ void AllianceWarCell::updateTime(float t){
             m_teamTimeTxt->setString(CC_SECTOA(march));
             m_teamStatusTxt->setString(_lang_1("115131",""));
             
-            m_teamStatusTxt->setColor({181,237,45});
-            m_sStatusTxt->setColor({181,237,45});
+            
+            
+            int type = m_info->getBattleType();//0 个人进攻， 1 个人防守，2 组队进攻 3 组队防守
+            if(type == 1|| type == 3)//fusheng 防守
+            {
+                m_teamStatusTxt->setColor({0xf8,0x95,0x3a});
+                m_sStatusTxt->setColor({0xf8,0x95,0x3a});
+                
+                m_normal_progress->setColor({0xf8,0x95,0x3a});//fusheng 橙色
+                m_jijie_progress->setColor({0xf8,0x95,0x3a});
+            }
+            else
+            {
+                m_teamStatusTxt->setColor({181,237,45});
+                m_sStatusTxt->setColor({181,237,45});
+            }
+            
+            
         }else{
             this->unschedule(schedule_selector(AllianceWarCell::updateTime));
             CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_UPDATE_ALLIANCE_WAR_CELL_DATA);
