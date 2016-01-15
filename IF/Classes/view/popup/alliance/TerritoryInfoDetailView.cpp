@@ -436,7 +436,7 @@ void TerritoryInfoDetailView::onDetailCallback(cocos2d::CCObject *obj) {
                         if (info->getUid()==GlobalData::shared()->playerInfo.uid) {
                             tempFlag = false;
                         }
-                        info->release();
+                        CC_SAFE_RELEASE(info);
                         if (m_cityInfo.cityType == Tile_allianceArea && m_cityInfo.m_allianceAreaInfo.state == 6) {
                             if (item != NULL && item->objectForKey("totalTroops")) {
                                 destroyingArmy += item->valueForKey("totalTroops")->intValue();
@@ -467,14 +467,14 @@ void TerritoryInfoDetailView::onDetailCallback(cocos2d::CCObject *obj) {
                     else
                         info->setIndex(2);
                     m_data->addObject(info);
-                    info->release();
+                    CC_SAFE_RELEASE(info);
                 }
                 info = new YuanJunInfo();
                 CCArray* array = CCArray::create();
                 info->setSoldiers(array);
                 info->setIndex(3);
                 m_data->addObject(info);
-                info->release();
+                CC_SAFE_RELEASE(info);
             }
         }
         else {
@@ -495,7 +495,7 @@ void TerritoryInfoDetailView::onDetailCallback(cocos2d::CCObject *obj) {
                                 YuanJunInfo* info = new YuanJunInfo();
                                 info->parseInfo(item);
                                 m_data->addObject(info);
-                                info->release();
+                                CC_SAFE_RELEASE(info);
                                 if (m_cityInfo.cityType == Tile_allianceArea && m_cityInfo.m_allianceAreaInfo.state == 6) {
                                     if (item != NULL && item->objectForKey("totalTroops")) {
                                         destroyingArmy += item->valueForKey("totalTroops")->intValue();
@@ -1469,7 +1469,7 @@ void TerritoryInfoDetailView::qianFanCallBack(CCObject *data)
         info->setIndex(2);
         m_data->insertObject(info, num-1);
         //        m_data->addObject(info);
-        info->release();
+        CC_SAFE_RELEASE(info);
         m_tabView->reloadData();
     }
 }

@@ -30,7 +30,7 @@ bool AllianceDonateAllCommand::handleRecieve(cocos2d::CCDictionary *dict)
         vector<AllianceDonateInfo*>::iterator it;
         for (it = GlobalData::shared()->allianceDonateAllList.begin(); it != GlobalData::shared()->allianceDonateAllList.end(); it++) {
             AllianceDonateInfo* tmp = *it;
-            tmp->release();
+            CC_SAFE_RELEASE(tmp);
             //GlobalData::shared()->allianceDonateAllList.erase(it);
             
         }
@@ -70,7 +70,7 @@ bool AllianceDonateTodayCommand::handleRecieve(cocos2d::CCDictionary *dict)
         vector<AllianceDonateInfo*>::iterator it;
         for (it = GlobalData::shared()->allianceDonateTodayList.begin(); it != GlobalData::shared()->allianceDonateTodayList.end(); it++) {
             AllianceDonateInfo* tmp = *it;
-            tmp->release();
+            CC_SAFE_RELEASE(tmp);
             //GlobalData::shared()->allianceDonateTodayList.erase(it);
             
         }
@@ -112,7 +112,7 @@ bool AllianceDonateWeekCommand::handleRecieve(cocos2d::CCDictionary *dict)
         vector<AllianceDonateInfo*>::iterator it;
         for (it = GlobalData::shared()->allianceDonateWeekList.begin(); it != GlobalData::shared()->allianceDonateWeekList.end(); it++) {
             AllianceDonateInfo* tmp = *it;
-            tmp->release();
+            CC_SAFE_RELEASE(tmp);
         }
         GlobalData::shared()->allianceDonateWeekList.clear();
         CCObject *itemObject;

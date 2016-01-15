@@ -122,6 +122,7 @@ private:
     void onClickMailBtn(CCObject *pSender, CCControlEvent event);
     void onClickInviteBtn(CCObject *pSender, CCControlEvent event);
     void onClickExitBtn(CCObject *pSender, CCControlEvent event);
+    void onClanHostTouched(CCObject *pSender, CCControlEvent event);
     
     void dismissAlliance();
     void onDismissAlliance(CCObject* obj);

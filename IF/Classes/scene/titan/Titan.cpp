@@ -416,7 +416,7 @@ sAnimationInfo* Titan::getAnimationByType(eActState e)
 
     
 
-    animInfo->release();
+    CC_SAFE_RELEASE(animInfo);
     return nullptr;
 }
 

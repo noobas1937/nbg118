@@ -230,7 +230,7 @@ void QuestController::updateTask(CCArray* tasks){
                         view->retain();
                         PopupViewController::getInstance()->removePopupView(view);
                         PopupViewController::getInstance()->pushPop(view, true);
-                        view->release();
+                        CC_SAFE_RELEASE(view);
                     }
                 }
             }
@@ -287,7 +287,7 @@ void QuestController::addQuest(std::string itemId, int state, int type){
 void QuestController::removeQuest(std::string itemId, bool postNotification){
     QuestInfo *info = getQuestFormMapById(itemId);
     if(info){
-        info->release();
+        CC_SAFE_RELEASE(info);
         questList.erase(itemId);
         buildQuestList.erase(itemId);
         researchQuestList.erase(itemId);
@@ -516,7 +516,7 @@ void QuestController::setQuestReward(std::string questId, CCArray *arr){
 void QuestController::resetBuildQuest(bool postNotification){
     map<std::string, QuestInfo*>::iterator it;
     for(it = buildQuestList.begin(); it != buildQuestList.end(); it++){
-        it->second->release();
+        CC_SAFE_RELEASE(it->second);
     }
     buildQuestList.clear();
     auto group = LocalController::shared()->DBXMLManager()->getGroupByKey("building");
@@ -635,7 +635,7 @@ bool QuestController::goToQuestTarget(QuestInfo* quest, bool isSt){
 void QuestController::resetResearchQuest(){
     map<std::string, QuestInfo*>::iterator it;
     for(it = researchQuestList.begin(); it != researchQuestList.end(); it++){
-        it->second->release();
+        CC_SAFE_RELEASE(it->second);
     }
     buildQuestList.clear();
     int i = 0;

@@ -1024,6 +1024,8 @@
 												<string>2d 16:57:46</string>
 											</dict>
 										</array>
+										<key>selected</key>
+										<true/>
 									</dict>
 									<dict>
 										<key>baseClass</key>
@@ -1031,13 +1033,13 @@
 										<key>children</key>
 										<array/>
 										<key>customClass</key>
-										<string></string>
+										<string>CCScale9Sprite</string>
 										<key>displayName</key>
 										<string>CCScale9Sprite</string>
 										<key>memberVarAssignmentName</key>
-										<string></string>
+										<string>m_titleLabelBg</string>
 										<key>memberVarAssignmentType</key>
-										<integer>0</integer>
+										<integer>2</integer>
 										<key>properties</key>
 										<array>
 											<dict>
@@ -1047,20 +1049,9 @@
 												<string>Position</string>
 												<key>value</key>
 												<array>
-													<real>329.20001220703125</real>
+													<real>200</real>
 													<real>174.13218688964844</real>
 													<integer>0</integer>
-												</array>
-											</dict>
-											<dict>
-												<key>name</key>
-												<string>anchorPoint</string>
-												<key>type</key>
-												<string>Point</string>
-												<key>value</key>
-												<array>
-													<real>0.5</real>
-													<real>0.0</real>
 												</array>
 											</dict>
 											<dict>
@@ -1102,7 +1093,7 @@
 												<string>Size</string>
 												<key>value</key>
 												<array>
-													<real>250</real>
+													<real>400</real>
 													<real>46</real>
 													<integer>0</integer>
 												</array>
@@ -1160,8 +1151,6 @@
 												<real>0.0</real>
 											</dict>
 										</array>
-										<key>selected</key>
-										<true/>
 									</dict>
 									<dict>
 										<key>baseClass</key>
@@ -1185,8 +1174,8 @@
 												<string>Position</string>
 												<key>value</key>
 												<array>
-													<real>211.60000610351562</real>
-													<real>181.19999694824219</real>
+													<real>213.60000610351562</real>
+													<real>178</real>
 													<integer>0</integer>
 												</array>
 											</dict>
@@ -1287,7 +1276,7 @@
 												<key>type</key>
 												<string>Text</string>
 												<key>value</key>
-												<string>Building Fund Gift </string>
+												<string>abghghghg</string>
 											</dict>
 										</array>
 									</dict>

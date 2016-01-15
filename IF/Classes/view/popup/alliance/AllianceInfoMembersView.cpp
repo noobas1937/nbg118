@@ -87,6 +87,7 @@ SEL_CCControlHandler AllianceInfoMembersView::onResolveCCBCCControlSelector(coco
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onClickMailBtn", AllianceInfoMembersView::onClickMailBtn);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onClickInviteBtn", AllianceInfoMembersView::onClickInviteBtn);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onClickExitBtn", AllianceInfoMembersView::onClickExitBtn);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onClanHostTouched", AllianceInfoMembersView::onClanHostTouched);
     
     return NULL;
 }
@@ -446,6 +447,23 @@ void AllianceInfoMembersView::onClickExitBtn(CCObject *pSender, CCControlEvent e
         YesNoDialog::showVariableTitle(_lang("115040").c_str(),CCCallFunc::create(this, callfunc_selector(AllianceInfoMembersView::dismissAlliance)),_lang("confirm").c_str());
     }else {
         YesNoDialog::showVariableTitle(_lang("115042").c_str(),CCCallFunc::create(this, callfunc_selector(AllianceInfoMembersView::secondConfirm)),_lang("confirm").c_str());
+    }
+}
+
+void AllianceInfoMembersView::onClanHostTouched(CCObject *pSender, CCControlEvent event)
+{
+    for (int j = 0; j < m_datas.size(); j++)
+    {
+        auto infoMember = &m_datas[j];
+        if (infoMember->getRank() == 5)
+        {
+            SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
+
+            CCPoint pos = m_nametxt->getParent()->convertToWorldSpace(m_nametxt->getPosition());
+            PopupViewController::getInstance()->addPopupView(AllianceManagerFunView::create(infoMember, pos), false, false);
+            
+            break;
+        }
     }
 }
 

@@ -51,7 +51,7 @@ void SpriteSheetAni::createAnimation()
             CCAnimationFrame *pAnimationFrame = new CCAnimationFrame();
             pAnimationFrame->initWithSpriteFrame(pSpriteFrame, 0.3f,ValueMap());
             pArray.pushBack(pAnimationFrame);
-            pAnimationFrame->release();
+            CC_SAFE_RELEASE(pAnimationFrame);
         }
         CCAnimation *pAnimation = CCAnimation::create(pArray, 0.3f,1);
         pAnimation->setDelayPerUnit(mdelayPerUnit);

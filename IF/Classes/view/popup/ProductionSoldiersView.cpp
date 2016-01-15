@@ -224,7 +224,7 @@ bool ProductionSoldiersView::init()
     m_progrossBar->removeFromParent();
     m_barClipNode->addChild(m_progrossBar);
     m_progrossBar->setPosition(0, 0);
-    m_progrossBar->release();
+    CC_SAFE_RELEASE(m_progrossBar);
     m_barClipNode->setPosition(pos);
     
     m_qid = QID_MAX;
@@ -453,7 +453,7 @@ void ProductionSoldiersView::refreshResource(CCObject* p)
     CCDictionary * d = CCDictionary::create();
     d->retain();
     refresh(d);
-    d->release();
+    CC_SAFE_RELEASE(d);
 }
 
 void ProductionSoldiersView::refresh(CCObject* p){

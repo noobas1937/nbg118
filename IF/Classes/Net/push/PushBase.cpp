@@ -95,7 +95,7 @@ void PushBase::handleResponse(cocos2d::CCDictionary *dict)
     if (GlobalData::shared()->isPause) {
         if(cmd == "push.pay"){
             if(GlobalData::shared()->pushData != NULL)
-                GlobalData::shared()->pushData->release();
+                CC_SAFE_RELEASE(GlobalData::shared()->pushData);
             GlobalData::shared()->pushData = dict;
             dict->retain();
         }

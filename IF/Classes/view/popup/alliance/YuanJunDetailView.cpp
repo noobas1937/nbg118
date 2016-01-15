@@ -23,6 +23,9 @@
 #define  MSG_YUAN_JUN_CELL_CLICK       "msg_yuan_jun_cell_click"
 #define  MSG_REMOVE_ONE_YUAN_JUN_CELL       "msg_remove_one_yuan_jun_cell"
 
+const int CELL_W = 640;
+const int CELL_H = 104;
+
 YuanJunDetailView* YuanJunDetailView::create(){
     YuanJunDetailView* ret = new YuanJunDetailView();
     if(ret && ret->init()){
@@ -39,13 +42,17 @@ bool YuanJunDetailView::init()
     if (!PopupBaseView::init()) {
         return false;
     }
+    
+    CCLoadSprite::doResourceByCommonIndex(204, true);
+    CCLoadSprite::doResourceByCommonIndex(8, true);
+    setCleanFunction([](){
+        CCLoadSprite::doResourceByCommonIndex(8, false);
+        CCLoadSprite::doResourceByCommonIndex(204, false);
+    });
+    
     setIsHDPanel(true);
     auto tmpCCB = CCBLoadFile("YuanJunDetailView",this,this);
     this->setContentSize(tmpCCB->getContentSize());
-    CCLoadSprite::doResourceByCommonIndex(204, true);
-    setCleanFunction([](){
-        CCLoadSprite::doResourceByCommonIndex(204, false);
-    });
     
     if (!CCCommonUtils::isIosAndroidPad()) {
         int preH = m_viewBg->getContentSize().height;
@@ -102,7 +109,7 @@ void YuanJunDetailView::getServerData(CCObject* data){
                     YuanJunInfo* info = new YuanJunInfo();
                     info->parseInfo(yuan);
                     m_data->addObject(info);
-                    info->release();
+                    CC_SAFE_RELEASE(info);
                 }
             }
             m_tip->setVisible(num<=0);
@@ -123,12 +130,12 @@ CCSize YuanJunDetailView::tableCellSizeForIndex(CCTableView *table, ssize_t idx)
         int num = obj->getSoldiers()->count();
         int row = num/2 + (num%2==0?0:1);
         if (CCCommonUtils::isIosAndroidPad()) {
-            int addH = row*200;
+            int addH = row*125;
             return CCSize(1440, 225+addH+100);
         }
         else {
-            int addH = row*100;
-            return CCSize(604, 120+addH+60);
+            int addH = row*125;
+            return CCSize(CELL_W, CELL_H+addH+60);
         }
     }
     
@@ -136,7 +143,7 @@ CCSize YuanJunDetailView::tableCellSizeForIndex(CCTableView *table, ssize_t idx)
         return CCSize(1440, 225);
     }
     else
-        return CCSize(604, 115);
+        return CCSize(CELL_W, CELL_H);
 }
 CCSize YuanJunDetailView::cellSizeForTable(CCTableView *table)
 {
@@ -144,7 +151,7 @@ CCSize YuanJunDetailView::cellSizeForTable(CCTableView *table)
         return CCSize(1440, 225);
     }
     else
-        return CCSize(604, 115);
+        return CCSize(CELL_W, CELL_H);
 }
 
 CCTableViewCell* YuanJunDetailView::tableCellAtIndex(CCTableView *table, ssize_t idx)
@@ -273,6 +280,10 @@ void YuanJunDetailCell::setData(YuanJunInfo* info){
             useArmyId = armyId;
         }
     }
+    
+    const int OPEN_BG_TAG = 10010;
+    m_bg->getParent()->removeChildByTag(OPEN_BG_TAG);
+    
     if(m_info->getOpen()){
         num = m_info->getSoldiers()->count();
         int row = num/2 + (num%2==0?0:1);
@@ -281,9 +292,10 @@ void YuanJunDetailCell::setData(YuanJunInfo* info){
             addH = row*200 + 100;
         }
         else
-            addH = row*100 + 60;
+            addH = row*125 + 60;
         m_moveNode->setPosition(ccp(0, addH));
         m_soldierNode->setPosition(ccp(0, addH));
+        
         maxCount = 0;
         for (int i=0; i<num; i++) {
             auto dic = _dict(m_info->getSoldiers()->objectAtIndex(i));
@@ -294,7 +306,13 @@ void YuanJunDetailCell::setData(YuanJunInfo* info){
                 cell->setPosition(ccp(col==0?20:818, -200-rowIndex*200));
             }
             else
-                cell->setPosition(ccp(col==0?10:330, -100-rowIndex*100));
+                cell->setPosition(ccp(col == 0 ? 33 : 327, -125-rowIndex*125));
+            
+            if (rowIndex % 2 == 1)
+            {
+                cell->m_bg->setScaleY(-1);
+            }
+            
             m_soldierNode->addChild(cell);
             count = dic->valueForKey("count")->intValue();
             std::string armyId = dic->valueForKey("armyId")->getCString();
@@ -307,7 +325,16 @@ void YuanJunDetailCell::setData(YuanJunInfo* info){
             m_bg->setContentSize(CCSize(1440, 225+addH));
         }
         else
-            m_bg->setContentSize(CCSize(604,110+addH));
+            m_bg->setContentSize(CCSize(CELL_W,CELL_H+addH));
+        
+        m_bg->removeAllChildrenWithCleanup(true);
+        Scale9Sprite* sp = CCLoadSprite::createScale9Sprite("nb_al_members_bg.png");
+        sp->setTag(OPEN_BG_TAG);
+        sp->setZOrder(-OPEN_BG_TAG);
+        sp->setContentSize({CELL_W - 30.0f, addH + 10.0f});
+        sp->setPosition({m_bg->getPositionX() + CELL_W / 2.0f, m_bg->getPositionY() + addH / 2.0f + 15.f});
+        m_bg->getParent()->addChild(sp);
+        
         if (num>0) {
             m_sendHomeBtn->setVisible(true);
         }
@@ -319,7 +346,7 @@ void YuanJunDetailCell::setData(YuanJunInfo* info){
             m_bg->setContentSize(CCSize(1440,225));
         }
         else
-            m_bg->setContentSize(CCSize(604,110));
+            m_bg->setContentSize(CCSize(CELL_W,CELL_H));
     }
     if(m_info->getGenerals() && m_info->getGenerals()->count()>0){
         std::string head = m_info->getPic();
@@ -359,6 +386,13 @@ void YuanJunDetailCell::onExit(){
 }
 
 bool YuanJunDetailCell::init(){
+    CCLoadSprite::doResourceByCommonIndex(504, true);
+    CCLoadSprite::doResourceByCommonIndex(7, true);
+    setCleanFunction([](){
+        CCLoadSprite::doResourceByCommonIndex(504, false);
+        CCLoadSprite::doResourceByCommonIndex(7, false);
+    });
+    
     auto bg = CCBLoadFile("YuanJunDetailCell", this, this);
     if (CCCommonUtils::isIosAndroidPad()) {
         this->setContentSize(CCSize(1440, 225));
@@ -446,6 +480,11 @@ void YuanJunSoldierCell::onExit(){
 }
 
 bool YuanJunSoldierCell::init(){
+    CCLoadSprite::doResourceByCommonIndex(504, true);
+    setCleanFunction([](){
+        CCLoadSprite::doResourceByCommonIndex(504, false);
+    });
+    
     auto bg = CCBLoadFile("YuanJunSoldierCell", this, this);
     this->setContentSize(bg->getContentSize());
     std::string armyId = m_info->valueForKey("armyId")->getCString();
@@ -478,13 +517,25 @@ bool YuanJunSoldierCell::init(){
     m_nameTxt->setString(name);
     m_LvTxt->setString(level);
     m_numTxt->setString(CC_CMDITOA(atoi(count.c_str())));
+
+    float scale = 0.6;
+    // TODO:
+    if (name == "Dragon")
+    {
+        string id = CC_ITOA(GlobalData::shared()->titanInfo.tid);
+        string picName = CCCommonUtils::getPropById(id, "dragonUI");
+        picName.append(".png");
+        icon = picName; // armyId "ico107408_small.png"
+        scale = 1;
+    }
+    
     CCSprite* spr = CCLoadSprite::createSprite(icon.c_str());
     spr->setAnchorPoint({.5, 0});
     if (CCCommonUtils::isIosAndroidPad()) {
         spr->setScale(1.4);
     }
     else
-        spr->setScale(0.6);
+        spr->setScale(scale);
     m_icon->addChild(spr);
     m_icon->addChild(pic);
     return true;

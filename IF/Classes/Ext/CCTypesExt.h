@@ -255,14 +255,14 @@ public:
     
 	~CCSafeObject()
 	{
-        if(_ptr != nullptr) {_ptr->release();}
+        if(_ptr != nullptr) {CC_SAFE_RELEASE(_ptr);}
 	}
     
 	//Assign a pointer
 	CCSafeObject &operator=(T* ptr)
 	{
         if(ptr != nullptr) {ptr->retain();}
-        if(_ptr != nullptr) {_ptr->release();}
+        if(_ptr != nullptr) {CC_SAFE_RELEASE(_ptr);}
         _ptr = ptr;
         return (*this);
 	}
