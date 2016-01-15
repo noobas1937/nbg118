@@ -569,8 +569,23 @@ void ActivityBox::initChunjieParticle(){
 //begin a by ljf
 void ActivityBox::loadSpine()
 {
-    const string spineJsonName = "Spine/Imperial/activitybox.json";
+    std::string id = m_dataItem->id;
+    std::string pop_image = m_dataItem->popup_image;
+    int pop = m_dataItem->popup;
+    
+    string spineJsonName = "Spine/Imperial/activitybox.json";
+    if(m_dataItem->popup_image == "Build" && CCFileUtils::sharedFileUtils()->isFileExist("Spine/Imperial/activitybox_chengjian.json"))
+    {
+        spineJsonName = "Spine/Imperial/activitybox_chengjian.json";
+    }
+    if(m_dataItem->popup_image == "Newbie_Hot" && CCFileUtils::sharedFileUtils()->isFileExist("Spine/Imperial/activitybox_cailiao.json"))
+    {
+        spineJsonName = "Spine/Imperial/activitybox_cailiao.json";
+    }
+    //const string spineJsonName = "Spine/Imperial/activitybox_cailiao.json";
+    //const string spineJsonName = "Spine/Imperial/activitybox_chengjian.json";
     const string spineAtlasName = "Imperial/Imperial_30.atlas";
+    
     
     if (CCFileUtils::sharedFileUtils()->isFileExist(spineJsonName) &&
         CCFileUtils::sharedFileUtils()->isFileExist(spineAtlasName))
