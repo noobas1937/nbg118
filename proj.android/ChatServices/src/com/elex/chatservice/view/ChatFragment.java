@@ -23,6 +23,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
+import android.util.Log;
 import android.util.Pair;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -1974,7 +1975,11 @@ public class ChatFragment extends ActionBarFragment
 		{
 			isInAlliance = UserManager.getInstance().getCurrentUser().allianceId.equals("") ? false : true;
 		}
-
+		LogUtil.printVariables(
+				Log.INFO,
+				LogUtil.TAG_CORE,
+				"current user updated:\n"
+						+ LogUtil.compareObjects(new Object[] { UserManager.getInstance().getCurrentUser(), UserManager.getInstance().getCurrentUser() }));
 		for (int i = 0; i < getChannelViewCount(); i++)
 		{
 			if (getChannelView(i).pullDownToLoadListView != null)

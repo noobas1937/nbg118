@@ -451,19 +451,19 @@ public class IF extends Cocos2dxActivity implements IAnalyticTracker ,IJniCallHe
 	}
 
 	// 若isAccountChanged，则强制重新初始化db
-    public static void initDatabase(boolean isAccountChanged)
-    {
-		System.out.println("IF.initDatabase() : " + isAccountChanged);
-		if(isAccountChanged && DBManager.getInstance().isDBAvailable()){
-			DBManager.getInstance().closeDB();
-		}
-    	if(!DBManager.getInstance().isDBAvailable() && instance != null){
-    		DBManager.getInstance().initDB(instance);
-    	}
-		if(isAccountChanged){
-			ChatServiceController.getInstance().reset();
-		}
-    }
+//    public static void initDatabase(boolean isAccountChanged)
+//    {
+//		System.out.println("IF.initDatabase() : " + isAccountChanged);
+//		if(isAccountChanged && DBManager.getInstance().isDBAvailable()){
+//			DBManager.getInstance().closeDB();
+//		}
+//    	if(!DBManager.getInstance().isDBAvailable() && instance != null){
+//    		DBManager.getInstance().initDB(instance);
+//    	}
+//		if(isAccountChanged){
+//			ChatServiceController.getInstance().reset();
+//		}
+//    }
 	
 	private static String getUrlParam(String url, String paramName) {
 		String paramValue = "";
@@ -1042,7 +1042,7 @@ public class IF extends Cocos2dxActivity implements IAnalyticTracker ,IJniCallHe
 	public String getPublishChannelName() {
 		// TODO Auto-generated method stub
 //		return IF.getInstance().getPublishImpl().getPublishChannel()
-		return "debug" ;
+		return "" ;
 	}
 
 	@Override
