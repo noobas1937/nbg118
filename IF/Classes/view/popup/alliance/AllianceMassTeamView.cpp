@@ -40,6 +40,8 @@ void AllianceMassTeamView::onExit(){
 
 bool AllianceMassTeamView::init(){
     bool ret = false;
+
+    
     if(PopupBaseView::init()){
         CCLoadSprite::doResourceByCommonIndex(502, true);
         setCleanFunction([](){
@@ -51,7 +53,9 @@ bool AllianceMassTeamView::init(){
             this->setContentSize(CCDirector::sharedDirector()->getWinSize());
         }
         else
-            this->setContentSize(node->getContentSize());
+            this->setContentSize(node->getContentSize());//fusheng edit
+
+        this->setModelLayerOpacity(0);
         //changeBGHeight(m_viewBg);
         
         m_infoTxt->setString(_lang("115132"));
@@ -98,6 +102,8 @@ bool AllianceMassTeamView::init(){
 
 bool AllianceMassTeamView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode){
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_listContainer", CCNode*, this->m_listContainer);
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_viewBg1", CCSprite*, this->m_viewBg1);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_viewBg", CCNode*, this->m_viewBg);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_infoTxt", CCLabelIF*, this->m_infoTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_txt1", CCLabelIF*, this->m_txt1);
@@ -128,7 +134,7 @@ bool AllianceMassTeamView::onTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEve
 }
 
 void AllianceMassTeamView::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent){
-    if(!isTouchInside(m_viewBg,pTouch)){
+    if(!isTouchInside(m_viewBg1,pTouch)){
         PopupViewController::getInstance()->removePopupView(this);
         return ;
     }

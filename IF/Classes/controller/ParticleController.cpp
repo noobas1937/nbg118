@@ -129,7 +129,7 @@ CCParticleSystemQuad* ParticleController::createParticleForLua(const char* name)
         pRet->setPositionType(kCCPositionTypeRelative);
         pRet->initTextureBySpriteFrame(spriteFrame);
         
-        dict->release();
+        CC_SAFE_RELEASE(dict);
         
         pRet->autorelease();
         

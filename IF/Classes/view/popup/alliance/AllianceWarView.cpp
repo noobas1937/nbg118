@@ -21,6 +21,7 @@
 #include "ActivityController.h"
 #include "ActivityEventObj.h"
 #include "DynamicTiledMap.h"
+#include "NBWorldMapMainCity.hpp"
 
 #define  MSG_UPDATE_ALLIANCE_WAR_CELL_DATA       "msg_update_alliance_war_cell_data"
 
@@ -128,6 +129,7 @@ bool AllianceWarView::init(int initTab)
     }else{
         onClickTab2(NULL,Control::EventType::TOUCH_DOWN);
     }
+    m_tableView->setDelegate(this);
     return true;
 }
 
@@ -135,7 +137,8 @@ void AllianceWarView::refreshTableView(){
     m_data->removeAllObjects();
     bool flag = checkOpenMonster();
     if (flag) {//有怪物的队伍，显示分栏
-        m_listH = 615;
+//        m_listH = 615;
+        m_listH = 615 - 30;//fusheng 调低30
         if (CCCommonUtils::isIosAndroidPad()) {
             m_listH = 1555;
         }
@@ -143,7 +146,8 @@ void AllianceWarView::refreshTableView(){
         changeTableData();
     }else{
         m_tabNode->setVisible(false);
-        m_listH = 710;
+//        m_listH = 710;
+        m_listH = 710 - 30;//fusheng 调低30
         if (CCCommonUtils::isIosAndroidPad())
         {
             m_listH = 1700;
@@ -153,6 +157,10 @@ void AllianceWarView::refreshTableView(){
     m_infoList->setContentSize(CCSizeMake(m_infoList->getContentSize().width, m_listH+m_addHeight));
     m_tableView->setViewSize(m_infoList->getContentSize());
     m_tableView->reloadData();
+    float x = m_tableView->getContentOffset().x;
+    m_tableView->setContentOffset({m_tableView->getContentOffset().x+1,m_tableView->getContentOffset().y});
+    m_tableView->setContentOffset({m_tableView->getContentOffset().x-1,m_tableView->getContentOffset().y});
+ 
     if(m_data->count()<=0 && GlobalData::shared()->playerInfo.isInAlliance() && !m_first){
         m_infoTxt->setString(_lang("115129"));
     }else{
@@ -211,7 +219,7 @@ void AllianceWarView::updateInfo(CCObject* data)
                 if (info->getMonsterCount()>0) {
                     monsterNum+=1;
                 }
-                info->release();
+                CC_SAFE_RELEASE(info);
             }
         }
         m_srcData->addObjectsFromArray(zuduiArray);
@@ -318,12 +326,12 @@ CCSize AllianceWarView::tableCellSizeForIndex(CCTableView *table, ssize_t idx)
         if (CCCommonUtils::isIosAndroidPad()) {
             return CCSize(1536, 1000);
         }
-        return CCSize(640,450);//215
+        return CCSize(640,340);//215
     }
     if (CCCommonUtils::isIosAndroidPad()) {
         return CCSize(1536, 700);
     }
-    return CCSize(640, 280);
+    return CCSize(640, 225);
 }
 
 CCSize AllianceWarView::cellSizeForTable(CCTableView *table)
@@ -331,7 +339,7 @@ CCSize AllianceWarView::cellSizeForTable(CCTableView *table)
     if (CCCommonUtils::isIosAndroidPad()) {
         return CCSize(1536, 1000);
     }
-    return CCSize(640,450);
+    return CCSize(640,370);
 }
 
 CCTableViewCell* AllianceWarView::tableCellAtIndex(CCTableView *table, ssize_t idx)
@@ -349,6 +357,25 @@ CCTableViewCell* AllianceWarView::tableCellAtIndex(CCTableView *table, ssize_t i
         }
     }
     table->getContainer()->reorderChild(cell,m_data->count() - idx);
+    
+    if(idx == m_data->count()-1)//fusheng 最后一行
+    {
+        cell->m_liantiao2->setVisible(false);
+    }
+    if(idx != 0)//fusheng
+    {
+        cell->m_liantiao1->setVisible(false);
+    }
+    
+    if(idx == 0)
+    {
+        AllianceTeamInfo* info = (AllianceTeamInfo*)m_data->objectAtIndex(idx);
+
+        if (info && !(info->getBattleType()==2||info->getBattleType()==3)) {
+            cell->m_liantiao1->setPositionY(22);
+        }
+
+    }
     return cell;
 }
 
@@ -375,6 +402,24 @@ void AllianceWarView::openJoinAlliance(CCObject * pSender, Control::EventType pC
     PopupViewController::getInstance()->addPopupInView(JoinAllianceView::create(11));
 }
 
+void AllianceWarView::scrollViewDidScroll(CCScrollView* view){
+    
+    //fusheng add 保留滑动手感
+    auto layout = view -> getContainer();
+    
+    float currentY = layout -> getPositionY();
+    
+    
+    //fusheng 需要上拉更新数据
+    //    if (currentY > 0 && layout -> getContentSize().height - view -> getViewSize().height >= 0) {
+    //        view -> setContentOffset(Vec2(0, 0));
+    //    }
+    
+    
+    if (-currentY > layout -> getContentSize().height - view -> getViewSize().height)      {
+        view -> setContentOffset(Vec2(0, -layout -> getContentSize().height + view -> getViewSize().height));
+    }
+}
 void AllianceWarView::onClickResult(CCObject * pSender, Control::EventType pCCControlEvent){
     PopupViewController::getInstance()->addPopupInView(AllianceWarResultView::create());
 }
@@ -451,9 +496,9 @@ bool AllianceWarCell::init()
     });
     m_ccbNode= CCBLoadFile("NewAllianceWarCell",this,this);
     if (CCCommonUtils::isIosAndroidPad()) {
-        m_ccbNode->setPositionX(776);
+//        m_ccbNode->setPositionX(776);
     } else {
-        m_ccbNode->setPositionX(323);
+//        m_ccbNode->setPositionX(323);
     }
     
     m_isClickMosnter = false;
@@ -466,16 +511,16 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
     if(info->getBattleType()==2 || info->getBattleType()==3){
         if (CCCommonUtils::isIosAndroidPad())
         {
-            m_ccbNode->setPositionY(460);
+//            m_ccbNode->setPositionY(460);
         } else {
-            m_ccbNode->setPositionY(200);
+//            m_ccbNode->setPositionY(200);
         }
     }else{
         if (CCCommonUtils::isIosAndroidPad())
         {
-            m_ccbNode->setPositionY(300);
+//            m_ccbNode->setPositionY(300);
         } else {
-            m_ccbNode->setPositionY(120);
+//            m_ccbNode->setPositionY(120);
         }
     }
     if (CCCommonUtils::isIosAndroidPad())
@@ -509,9 +554,9 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                 posXY.append(CC_ITOA(pt.y));
                 m_tCoordTxt->setString(posXY);
                 m_tTitleTxt->setString(_lang("115311"));
-                m_tTitleTxt->setColor({0,175,205});
-                m_tStatusTxt->setColor({0,175,205});
-                m_tTimeTxt->setColor({0,175,205});
+                m_tTitleTxt->setColor({181,237,45});
+                m_tStatusTxt->setColor({181,237,45});
+                m_tTimeTxt->setColor({181,237,45});
                 std::string pName = "";
                 pName = "";
                 if(m_info->getAttackAAbb()!=""){
@@ -558,7 +603,7 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                     string uid = "";
                     int picVer = 0;
                     if(useNum>=5 && i==4 && limitNum < maxNum){
-                        iconStr = "icon_hospital.png";
+                        iconStr = "Allance_team_Plus.png";
                     }else{
                         if(i<useNum){
                             YuanJunInfo* yuan = (YuanJunInfo*)marchArmy->objectAtIndex(i);
@@ -570,7 +615,7 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                             }
                             iconStr.append(".png");
                         }else{
-                            iconStr = "icon_hospital.png";
+                            iconStr = "Allance_team_Plus.png";
                         }
                     }
                     AllianceWarHeadCell* cell = AllianceWarHeadCell::create(iconStr,i,uid,picVer);
@@ -622,13 +667,13 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                     m_sTxt4->setString(posXY);
                     m_teamTargetPosTxt1->setString(posXY);
 
-                    m_sTitleTxt->setColor({230,32,0});
-                    m_sStatusTxt->setColor({230,32,0});
-                    m_sTimeTxt->setColor({230,32,0});
+                    m_sTitleTxt->setColor({255,212,6});
+                    m_sStatusTxt->setColor({255,212,6});
+                
                     
-                    m_teamTitleTxt->setColor({230,32,0});
-                    m_teamStatusTxt->setColor({230,32,0});
-                    m_teamTimeTxt->setColor({230,32,0});
+                    m_teamTitleTxt->setColor({255,212,6});
+                    m_teamStatusTxt->setColor({255,212,6});
+
                     
                     pName = "";
                     if(m_info->getAttackAAbb()!=""){
@@ -672,13 +717,13 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                     posXY.append(CC_ITOA(pt.y));
                     m_sTxt4->setString(posXY);
                     
-                    m_sTitleTxt->setColor({0,175,205});
-                    m_sStatusTxt->setColor({0,175,205});
-                    m_sTimeTxt->setColor({0,175,205});
+                    m_sTitleTxt->setColor({181,237,45});
+                    m_sStatusTxt->setColor({181,237,45});
+              
                     
-                    m_teamTitleTxt->setColor({0,175,205});
-                    m_teamStatusTxt->setColor({0,175,205});
-                    m_teamTimeTxt->setColor({0,175,205});
+                    m_teamTitleTxt->setColor({181,237,45});
+                    m_teamStatusTxt->setColor({181,237,45});
+
                     
                     pName = "";
                     if(m_info->getAttackAAbb()!=""){
@@ -928,7 +973,7 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                             string uid = "";
                             int picVer = 0;
                             if(useNum>=5 && i==4 && limitNum < maxNum){
-                                iconStr = "icon_hospital.png";
+                                iconStr = "Allance_team_Plus.png";
                             }else{
                                 if(i<useNum){
                                     YuanJunInfo* yuan = (YuanJunInfo*)marchArmy->objectAtIndex(i);
@@ -940,7 +985,7 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                                     }
                                     iconStr.append(".png");
                                 }else{
-                                    iconStr = "icon_hospital.png";
+                                    iconStr = "Allance_team_Plus.png";
                                 }
                             }
                             AllianceWarHeadCell* cell = AllianceWarHeadCell::create(iconStr,i,uid,picVer);
@@ -986,7 +1031,7 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                             string uid = "";
                             int picVer = 0;
                             if(num>=5 && i==4 && m_info->getMaxSoldiers()!=m_info->getCurrSoldiers()){
-                                iconStr = "icon_hospital.png";
+                                iconStr = "Allance_team_Plus.png";
                             }else{
                                 YuanJunInfo* yuan = (YuanJunInfo*)m_info->getMember()->objectAtIndex(i);
                                 iconStr = yuan->getPic();
@@ -1015,7 +1060,7 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                             string uid = "";
                             int picVer = 0;
                             if(num>=5 && i==4 && m_info->getMaxSoldiers()!=m_info->getCurrSoldiers()){
-                                iconStr = "icon_hospital.png";
+                                iconStr = "Allance_team_Plus.png";
                             }else{
                                 if(i<num){
                                     YuanJunInfo* yuan = (YuanJunInfo*)armys->objectAtIndex(i);
@@ -1027,7 +1072,7 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                                     }
                                     iconStr.append(".png");
                                 }else{
-                                    iconStr = "icon_hospital.png";
+                                    iconStr = "Allance_team_Plus.png";
                                 }
                             }
                             AllianceWarHeadCell* cell = AllianceWarHeadCell::create(iconStr,i,uid,picVer);
@@ -1073,13 +1118,13 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                 m_sTxt4->setString(posXY);
                 m_teamTargetPosTxt1->setString(posXY);
                 
-                m_sTitleTxt->setColor({230,32,0});
-                m_sStatusTxt->setColor({230,32,0});
-                m_sTimeTxt->setColor({230,32,0});
+                m_sTitleTxt->setColor({255,212,6});
+                m_sStatusTxt->setColor({255,212,6});
+      
                 
-                m_teamTitleTxt->setColor({230,32,0});
-                m_teamStatusTxt->setColor({230,32,0});
-                m_teamTimeTxt->setColor({230,32,0});
+                m_teamTitleTxt->setColor({255,212,6});
+                m_teamStatusTxt->setColor({255,212,6});
+
                 
                 pName = "";
                 if(m_info->getAttackAAbb()!=""){
@@ -1123,13 +1168,13 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                 posXY.append(CC_ITOA(pt.y));
                 m_sTxt4->setString(posXY);
                 
-                m_sTitleTxt->setColor({0,175,205});
-                m_sStatusTxt->setColor({0,175,205});
-                m_sTimeTxt->setColor({0,175,205});
+                m_sTitleTxt->setColor({181,237,45});
+                m_sStatusTxt->setColor({181,237,45});
+
                 
-                m_teamTitleTxt->setColor({0,175,205});
-                m_teamStatusTxt->setColor({0,175,205});
-                m_teamTimeTxt->setColor({0,175,205});
+                m_teamTitleTxt->setColor({181,237,45});
+                m_teamStatusTxt->setColor({181,237,45});
+
                 
                 pName = "";
                 if(m_info->getAttackAAbb()!=""){
@@ -1177,35 +1222,40 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
             cityClipper->addChild(cityNode);
             
             int level = m_info->getTargetCityLevel();
-            int mapIndex = 3;
-            while (mapIndex >= 0) {
-                auto arr = WorldMapView::getCityPicArr(mapIndex, level, false);
-                int posX = _tile_width / 2;
-                int posY = _tile_height / 2;
-                if(mapIndex == 0 || mapIndex == 2){
-                    posX = _tile_width;
-                }
-                if(mapIndex == 3){
-                    posX = _tile_width + posX;
-                }
-                if(mapIndex == 1 || mapIndex == 3){
-                    posY = _tile_height;
-                }
-                if(mapIndex == 2){
-                    posY = _tile_height + posY;
-                }
-                CCObject *obj = NULL;
-                CCARRAY_FOREACH(arr, obj){
-                    std::string picName = _dict(obj)->valueForKey("pic")->getCString();
-                    int addX = _dict(obj)->valueForKey("x")->intValue();
-                    int addY = _dict(obj)->valueForKey("y")->intValue();
-                    auto sprite = CCLoadSprite::createSprite(picName.c_str());
-                    sprite->setAnchorPoint(ccp(0, 0));
-                    cityNode->addChild(sprite);
-                    sprite->setPosition(ccp(posX, posY) - ccp(_tile_width / 2, _tile_height / 2) + ccp(addX, addY) + ccp(-_tile_width/1.6 - 5,-_tile_height/1.6));
-                }
-                mapIndex--;
-            }
+//            int mapIndex = 3;
+//            while (mapIndex >= 0) {
+//                auto arr = WorldMapView::getCityPicArr(mapIndex, level, false);
+//                int posX = _tile_width / 2;
+//                int posY = _tile_height / 2;
+//                if(mapIndex == 0 || mapIndex == 2){
+//                    posX = _tile_width;
+//                }
+//                if(mapIndex == 3){
+//                    posX = _tile_width + posX;
+//                }
+//                if(mapIndex == 1 || mapIndex == 3){
+//                    posY = _tile_height;
+//                }
+//                if(mapIndex == 2){
+//                    posY = _tile_height + posY;
+//                }
+//                CCObject *obj = NULL;
+//                CCARRAY_FOREACH(arr, obj){
+//                    std::string picName = _dict(obj)->valueForKey("pic")->getCString();
+//                    int addX = _dict(obj)->valueForKey("x")->intValue();
+//                    int addY = _dict(obj)->valueForKey("y")->intValue();
+//                    auto sprite = CCLoadSprite::createSprite(picName.c_str());
+//                    sprite->setAnchorPoint(ccp(0, 0));
+//                    cityNode->addChild(sprite);
+//                    sprite->setPosition(ccp(posX, posY) - ccp(_tile_width / 2, _tile_height / 2) + ccp(addX, addY) + ccp(-_tile_width/1.6 - 5,-_tile_height/1.6));
+//                }
+//                mapIndex--;
+//            }
+            
+            auto house = NBWorldMapMainCity::getMainCity(0, level, -1);
+            // house->setAnchorPoint({.5, .5});
+            house->setPosition({-20, 0});
+            cityNode->addChild(house);
             
             if (m_info->getTargetType() == ActBossTile) {
 //                CCLoadSprite::doResourceByCommonIndex(206, true);
@@ -1406,7 +1456,7 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                         string uid = "";
                         int picVer = 0;
                         if(useNum>=5 && i==4 && limitNum < maxNum){
-                            iconStr = "icon_hospital.png";
+                            iconStr = "Allance_team_Plus.png";
                         }else{
                             if(i<useNum){
                                 YuanJunInfo* yuan = (YuanJunInfo*)marchArmy->objectAtIndex(i);
@@ -1418,7 +1468,7 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                                 }
                                 iconStr.append(".png");
                             }else{
-                                iconStr = "icon_hospital.png";
+                                iconStr = "Allance_team_Plus.png";
                             }
                         }
                         AllianceWarHeadCell* cell = AllianceWarHeadCell::create(iconStr,i,uid,picVer);
@@ -1437,7 +1487,7 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                     self->setUid(m_info->getTargetUid());
                     armys->addObject(self);
                     armys->addObjectsFromArray(m_info->getReinforce());
-                    self->release();
+                    CC_SAFE_RELEASE(self);
                     num = armys->count();
                     if (num>5) {
                         num = 5;
@@ -1492,13 +1542,13 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                         int picVer = 0;
                         if(m_info->getMonsterCount()>0){
                             if(num>=5 && i==4){
-                                iconStr = "icon_hospital.png";
+                                iconStr = "Allance_team_Plus.png";
                             }else{
                                 iconStr = "tile_pop_icon21.png";
                             }
                         }else{
                             if(num>=5 && i==4 && m_info->getMaxSoldiers()!=m_info->getCurrSoldiers()){
-                                iconStr = "icon_hospital.png";
+                                iconStr = "Allance_team_Plus.png";
                             }else{
                                 YuanJunInfo* yuan = (YuanJunInfo*)m_info->getMember()->objectAtIndex(i);
                                 iconStr = yuan->getPic();
@@ -1521,7 +1571,7 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                     self->setUid(m_info->getTargetUid());
                     armys->addObject(self);
                     armys->addObjectsFromArray(m_info->getReinforce());
-                    self->release();
+                    CC_SAFE_RELEASE(self);
                     num = armys->count();
                     int limitNum = num;
                     if(num<5 && m_info->getMaxSoldiers()!=m_info->getCurrSoldiers()){
@@ -1533,7 +1583,7 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                         string uid = "";
                         int picVer = 0;
                         if(num>=5 && i==4 && m_info->getMaxSoldiers()!=m_info->getCurrSoldiers()){
-                            iconStr = "icon_hospital.png";
+                            iconStr = "Allance_team_Plus.png";
                         }else{
                             if(i<num){
                                 YuanJunInfo* yuan = (YuanJunInfo*)armys->objectAtIndex(i);
@@ -1545,7 +1595,7 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
                                 }
                                 iconStr.append(".png");
                             }else{
-                                iconStr = "icon_hospital.png";
+                                iconStr = "Allance_team_Plus.png";
                             }
                         }
                         AllianceWarHeadCell* cell = AllianceWarHeadCell::create(iconStr,i,uid,picVer);
@@ -1590,12 +1640,86 @@ void AllianceWarCell::updateTime(float t){
     else{
         double haveTime = (m_info->getWaitTime() - GlobalData::shared()->getWorldTime());
         double march = m_info->getMarchTime() - GlobalData::shared()->getWorldTime();
-        if(haveTime>0){
+        if(haveTime>0){//fusheng 集结
             m_sTimeTxt->setString(CC_SECTOA(haveTime));
             m_sStatusTxt->setString(_lang_1("115130",""));
             m_teamTimeTxt->setString(CC_SECTOA(haveTime));
             m_teamStatusTxt->setString(_lang_1("115130",""));
-        }else if(march>=0){
+            
+            double totalTime = (m_info->getWaitTime() - m_info->getCreateTime());
+            
+            double len = haveTime/totalTime;
+            len = MAX(len,0);
+            len = MIN(len,1);
+            
+
+            m_normal_progress->setColor({0xff,0xce,0x06});//fusheng 黄色
+            m_jijie_progress->setColor({0xff,0xce,0x06});
+
+            
+            double progressLength = 140 * len;
+            if(m_info)
+            {
+                if (m_info->getBattleType()==0) {//fusheng 单人进攻
+                    
+                    if (progressLength > m_normal_progress->getOriginalSize().width) {
+                        m_normal_progress->setPreferredSize(CCSize(140 * len, 17));
+                        m_normal_progress->setScaleX(1);
+                    }
+                    else
+                    {
+                        m_normal_progress->setScaleX(progressLength/m_normal_progress->getOriginalSize().width);
+                    }
+                    
+                    m_teamStatusTxt->setColor({255,212,6});
+                    m_sStatusTxt->setColor({255,212,6});
+                }
+                else if (m_info->getBattleType()==2)//fusheng 组队进攻
+                {
+                    
+                    if (progressLength > m_jijie_progress->getOriginalSize().width) {
+                        m_jijie_progress->setPreferredSize(CCSize(140 * len, 17));
+                        m_jijie_progress->setScaleX(1);
+                    }
+                    else
+                    {
+                        m_jijie_progress->setScaleX(progressLength/m_jijie_progress->getOriginalSize().width);
+                    }
+                    
+                    m_teamStatusTxt->setColor({0xff,0xce,0x06});
+                    m_sStatusTxt->setColor({0xff,0xce,0x06});
+                    
+                }
+                else if (m_info->getBattleType()==3)//fusheng 组队防守 f8953a
+                {
+                    if (progressLength > m_jijie_progress->getOriginalSize().width) {
+                        m_jijie_progress->setPreferredSize(CCSize(140 * len, 17));
+                        m_jijie_progress->setScaleX(1);
+                    }
+                    else
+                    {
+                        m_jijie_progress->setScaleX(progressLength/m_jijie_progress->getOriginalSize().width);
+                    }
+                    
+                    m_teamStatusTxt->setColor({0xf8,0x95,0x3a});
+                    m_sStatusTxt->setColor({0xf8,0x95,0x3a});
+                    
+                    m_normal_progress->setColor({0xf8,0x95,0x3a});//fusheng 橙色
+                    m_jijie_progress->setColor({0xf8,0x95,0x3a});
+
+                }
+                
+
+            }
+            
+            
+            
+            
+            
+            
+//            int type = m_info->getBattleType();//0 个人进攻， 1 个人防守，2 组队进攻 3 组队防守
+            
+        }else if(march>=0){//fusheng 行军
             if(m_freshRally && m_info->getBattleType()==2){
                 int num = m_info->getMember()->count();
                 int useNum = 0;
@@ -1612,10 +1736,71 @@ void AllianceWarCell::updateTime(float t){
                 m_teamTxt2->setString(CC_ITOA(useNum));
                 m_freshRally = false;
             }
+            
+            double totalTime = (m_info->getMarchTime() - m_info->getWaitTime());
+            
+            double len = march/totalTime;
+            len = MAX(len,0);
+            len = MIN(len,1);
+            
+            m_normal_progress->setColor({0xac,0xd1,0x2b});//fusheng 绿色 acd12b
+            m_jijie_progress->setColor({0xac,0xd1,0x2b});
+
+            
+            double progressLength = 140 * len;
+            
+            
+            
+            if (m_info && !(m_info->getBattleType()==2||m_info->getBattleType()==3)) {//fusheng 单人进攻
+                if (progressLength > m_normal_progress->getOriginalSize().width) {
+                    m_normal_progress->setPreferredSize(CCSize(140 * len, 17));
+                    m_normal_progress->setScaleX(1);
+                }
+                else
+                {
+                    m_normal_progress->setScaleX(progressLength/m_normal_progress->getOriginalSize().width);
+                }
+                
+//                m_normal_progress->setVisible(140 * len > 10);
+            }
+            else
+            {
+                if (progressLength > m_jijie_progress->getOriginalSize().width) {
+                    m_jijie_progress->setPreferredSize(CCSize(140 * len, 17));
+                    m_jijie_progress->setScaleX(1);
+                }
+                else
+                {
+                    m_jijie_progress->setScaleX(progressLength/m_jijie_progress->getOriginalSize().width);
+                }
+//                m_jijie_progress->setPreferredSize(CCSize(140 * len, 30));
+//                m_jijie_progress->setVisible(140 * len > 10);
+            }
+            
+            
             m_sTimeTxt->setString(CC_SECTOA(march));
             m_sStatusTxt->setString(_lang_1("115131",""));
             m_teamTimeTxt->setString(CC_SECTOA(march));
             m_teamStatusTxt->setString(_lang_1("115131",""));
+            
+            
+            
+            int type = m_info->getBattleType();//0 个人进攻， 1 个人防守，2 组队进攻 3 组队防守
+            if(type == 1|| type == 3)//fusheng 防守
+            {
+                m_teamStatusTxt->setColor({0xf8,0x95,0x3a});
+                m_sStatusTxt->setColor({0xf8,0x95,0x3a});
+                
+                m_normal_progress->setColor({0xf8,0x95,0x3a});//fusheng 橙色
+                m_jijie_progress->setColor({0xf8,0x95,0x3a});
+            }
+            else
+            {
+                m_teamStatusTxt->setColor({181,237,45});
+                m_sStatusTxt->setColor({181,237,45});
+            }
+            
+            
         }else{
             this->unschedule(schedule_selector(AllianceWarCell::updateTime));
             CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_UPDATE_ALLIANCE_WAR_CELL_DATA);
@@ -1625,6 +1810,7 @@ void AllianceWarCell::updateTime(float t){
 
 void AllianceWarCell::onEnter() {
     CCNode::onEnter();
+    setSwallowsTouches(true);
     setTouchEnabled(true);
     //CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, Touch_Popup, true);
     this->schedule(schedule_selector(AllianceWarCell::updateTime), 1);
@@ -1748,7 +1934,8 @@ void AllianceWarCell::playScaleAniEnd(){
     } else {
         m_teamNode2->setScale(1.0);
     }
-    PopupViewController::getInstance()->addPopupInViewWithAnim(AllianceWarDetailView::create(m_info));
+//    PopupViewController::getInstance()->addPopupInViewWithAnim(AllianceWarDetailView::create(m_info));
+    PopupViewController::getInstance()->addPopupInView(AllianceWarDetailView::create(m_info));
 }
 
 void AllianceWarCell::onTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent){
@@ -1765,6 +1952,13 @@ SEL_CCControlHandler AllianceWarCell::onResolveCCBCCControlSelector(cocos2d::CCO
 
 bool AllianceWarCell::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode)
 {
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_normal_progress", CCScale9Sprite*, this->m_normal_progress);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_jijie_progress", CCScale9Sprite*, this->m_jijie_progress);
+ 
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_liantiao1", CCNode*, this->m_liantiao1);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_liantiao2", CCNode*, this->m_liantiao2);
+    
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_posNode2", CCNode*, this->m_posNode2);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_clickNode", CCNode*, this->m_clickNode);
     
@@ -1803,9 +1997,9 @@ bool AllianceWarCell::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, con
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_teamDefNode", CCNode*, this->m_teamDefNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_teamAttNode2", CCNode*, this->m_teamAttNode2);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_teamDefNode2", CCNode*, this->m_teamDefNode2);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_signClick1", CCNode*, this->m_signClick1);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_signClick1", CCNode*, this->m_signClick1);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_signClick2", CCNode*, this->m_signClick2);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_signClick3", CCNode*, this->m_signClick3);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_signClick3", CCNode*, this->m_signClick3);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_signClick4", CCNode*, this->m_signClick4);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_tTargetTxt", CCLabelIF*, this->m_tTargetTxt);

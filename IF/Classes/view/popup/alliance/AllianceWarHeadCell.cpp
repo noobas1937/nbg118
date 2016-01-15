@@ -26,10 +26,10 @@ bool AllianceWarHeadCell::init(){
     if (m_icon == "scws.png") {
          head  = CCLoadSprite::createSprite(m_icon.c_str(),true,CCLoadSpriteType_MONSTERLAYERLITTLE);
     }
-    if (m_icon!="icon_hospital.png") {
+    if (m_icon!="Allance_team_Plus.png") {
         CCCommonUtils::setSpriteMaxSize(head, 61);
     }
-    head->setScale(m_icon=="icon_hospital.png"?1:0.45);
+    head->setScale(m_icon=="Allance_team_Plus.png"?1:0.76);
     m_iconNode->addChild(head);
     if (CCCommonUtils::isUseCustomPic(m_picVer)) {
         m_headImgNode = HFHeadImgNode::create();

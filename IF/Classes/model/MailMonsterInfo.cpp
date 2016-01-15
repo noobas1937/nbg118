@@ -96,6 +96,6 @@ void MailMonsterInfo::parse(CCDictionary *dict){
 MailMonsterInfo::~MailMonsterInfo(){
     if(normalReward){
         normalReward->removeAllObjects();
-        normalReward->release();
+        CC_SAFE_RELEASE(normalReward);
     }
 }

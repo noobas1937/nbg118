@@ -1604,7 +1604,7 @@ bool SoldierCell::init(string itemId, int num, int type, int rally)
     m_sliderNode->addChild(m_slider, 1);
     
     auto editSize = m_editNode->getContentSize();
-    m_editBox = CCEditBox::create(editSize, CCLoadSprite::createScale9Sprite("cz_bt_1.png"));
+    m_editBox = CCEditBox::create(editSize, CCLoadSprite::createScale9Sprite("cz_bt_01.png"));
     m_editBox->setInputMode(kEditBoxInputModeNumeric);
     m_editBox->setText("0");
     m_editBox->setDelegate(this);
@@ -1612,6 +1612,7 @@ bool SoldierCell::init(string itemId, int num, int type, int rally)
     m_editBox->setMaxLength(12);
     m_editBox->setReturnType(kKeyboardReturnTypeDone);
     m_editBox->setPosition(ccp(editSize.width/2, editSize.height/2));
+    m_editBox->setFontColor({0xB6, 0xD1, 0xEC});
     m_editNode->addChild(m_editBox);
 
     setData(itemId, num, type, rally);

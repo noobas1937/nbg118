@@ -63,17 +63,18 @@ private:
     CCSafeObject<CCArray> m_data;
     CCSafeObject<CCNode> m_infoList;
     CCSafeObject<CCNode> m_viewBg;
+    CCSafeObject<CCLabelIF> m_statusXXXTxt;
     CCSafeObject<CCLabelIF> m_statusTxt;
     CCSafeObject<CCNode> m_bottomNode;
-    CCSafeObject<CCNode> m_fireNode1;
-    CCSafeObject<CCNode> m_fireNode2;
+//    CCSafeObject<CCNode> m_fireNode1;
+//    CCSafeObject<CCNode> m_fireNode2;
     CCSafeObject<CCControlButton> m_jieSanBtn;
     CCSafeObject<CCControlButton> m_attackBtn;
     CCSafeObject<CCControlButton> m_supportBtn;
     CCSafeObject<CCControlButton> m_goHomeBtn;
     
-    CCSafeObject<CCNode> m_clipperNode;
-    CCSafeObject<CCClipNode> m_clipper;
+//    CCSafeObject<CCNode> m_clipperNode;
+//    CCSafeObject<CCClipNode> m_clipper;
     CCSafeObject<CCLabelIF> m_txtNum1;
     CCSafeObject<CCLabelIF> m_armyNum;
     
@@ -83,11 +84,13 @@ private:
     CCSafeObject<CCLabelIF> m_targetPosTxt;
     CCSafeObject<CCLabelIF> m_teamTargetTxt;
     CCSafeObject<CCLabelIF> m_teamTitle;
+    CCSafeObject<CCLabelIFTTF> m_leader115222Txt;
     CCSafeObject<CCLabelIFTTF> m_leaderTxt;
     CCSafeObject<CCNode> m_cityIconNode;
-    CCSafeObject<CCNode> m_defNode;
-    CCSafeObject<CCNode> m_attNode;
+//    CCSafeObject<CCNode> m_defNode;
+//    CCSafeObject<CCNode> m_attNode;
     CCSafeObject<CCSprite> m_renSpr;
+    CCSafeObject<CCScale9Sprite> m_progress;
     
     CCSafeObject<CCTableView> m_tabView;
     CCSafeObject<AllianceTeamInfo> m_info;
@@ -144,7 +147,6 @@ private:
     CCSafeObject<CCLabelIF> m_proTxt;
     CCSafeObject<CCNode> m_soldierNode;
     CCSafeObject<CCNode> m_buttonNode;
-    CCSafeObject<CCScale9Sprite> m_lineBg;
     CCSafeObject<CCNode> m_scienceNode;
     CCSafeObject<CCLabelIF> m_scienceTxt;
     CCSafeObject<HFHeadImgNode> m_headImgNode;

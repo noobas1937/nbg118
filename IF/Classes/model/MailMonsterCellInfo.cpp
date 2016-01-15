@@ -50,7 +50,7 @@ MailMonsterCellInfo::~MailMonsterCellInfo(){
     
     if(monster){
         monster->removeAllObjects();
-        monster->release();
+        CC_SAFE_RELEASE(monster);
         monster = NULL;
     }
     

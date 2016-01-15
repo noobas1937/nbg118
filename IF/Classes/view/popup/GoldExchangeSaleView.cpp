@@ -71,6 +71,10 @@ bool GoldExchangeSaleView::init()
         //m_titleLabel->setString(_lang("102148").c_str());
         //m_titleLabel->setString(_lang("101224").c_str());
         m_titleLabel->setString(_lang(m_dataItem->name).c_str());
+        if(m_titleLabelBg)
+        {
+            m_titleLabelBg->setPreferredSize(CCSize(m_titleLabel->getContentSize().width + 15, m_titleLabelBg->getContentSize().height));
+        }
     }
     m_getLabel->setString(_lang_1("115073",""));
     
@@ -318,6 +322,8 @@ bool GoldExchangeSaleView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_moreNode", CCNode*, this->m_moreNode);//更多箭头的父结点
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nodeBuy", CCNode*, this->m_nodeBuy); //底下按钮的父结点
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_btnGivePackage", CCControlButton*, this->m_btnGivePackage); //礼物包按钮
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titleLabelBg", CCScale9Sprite*, this->m_titleLabelBg);
     return false;
 }
 

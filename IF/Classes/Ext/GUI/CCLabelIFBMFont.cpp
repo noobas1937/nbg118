@@ -24,6 +24,8 @@ const char * getNBFont(NB_FONT f)
         case NB_FONT_Gradient:
             return "helvetica_gradient.fnt";
 //            return "Arial_Bold_Gradient.fnt";
+        case NB_HetTi_Light_Border:
+            return "helvetica_lighting_border.fnt";
     }
     return "";
 }

@@ -321,7 +321,7 @@ void MailResourceHelpView::onDeleteClick(cocos2d::CCObject *pSender, CCControlEv
     
     CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MAIL_LIST_CHANGE);
     PopupViewController::getInstance()->goBackPopupView();
-    tempInfo->release();
+    CC_SAFE_RELEASE(tempInfo);
     
 }
 void MailResourceHelpView::onAddSaveClick(cocos2d::CCObject *pSender, CCControlEvent event){

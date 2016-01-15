@@ -64,7 +64,7 @@ LotteryRotateView::LotteryRotateView()
 
 LotteryRotateView::~LotteryRotateView()
 {
-    m_pTouches->release();
+    CC_SAFE_RELEASE(m_pTouches);
 }
 
 LotteryRotateView* LotteryRotateView::create()
