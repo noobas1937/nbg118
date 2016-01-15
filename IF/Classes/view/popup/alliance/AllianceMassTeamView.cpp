@@ -40,6 +40,8 @@ void AllianceMassTeamView::onExit(){
 
 bool AllianceMassTeamView::init(){
     bool ret = false;
+
+    
     if(PopupBaseView::init()){
         CCLoadSprite::doResourceByCommonIndex(502, true);
         setCleanFunction([](){
@@ -51,7 +53,9 @@ bool AllianceMassTeamView::init(){
             this->setContentSize(CCDirector::sharedDirector()->getWinSize());
         }
         else
-            this->setContentSize(node->getContentSize());
+            this->setContentSize(node->getContentSize());//fusheng edit
+
+        this->setModelLayerOpacity(0);
         //changeBGHeight(m_viewBg);
         
         m_infoTxt->setString(_lang("115132"));
