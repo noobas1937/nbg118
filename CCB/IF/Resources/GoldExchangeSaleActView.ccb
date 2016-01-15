@@ -1024,8 +1024,6 @@
 												<string>2d 16:57:46</string>
 											</dict>
 										</array>
-										<key>selected</key>
-										<true/>
 									</dict>
 									<dict>
 										<key>baseClass</key>
@@ -1082,8 +1080,8 @@
 												<string>SpriteFrame</string>
 												<key>value</key>
 												<array>
-													<string>Common/Common_1.plist</string>
-													<string>frame_02png.png</string>
+													<string>Common/Common_8.plist</string>
+													<string>activitybox_newuser_title_bg.png</string>
 												</array>
 											</dict>
 											<dict>
@@ -1093,8 +1091,8 @@
 												<string>Size</string>
 												<key>value</key>
 												<array>
-													<real>400</real>
-													<real>46</real>
+													<real>273</real>
+													<real>45</real>
 													<integer>0</integer>
 												</array>
 											</dict>
@@ -1151,6 +1149,8 @@
 												<real>0.0</real>
 											</dict>
 										</array>
+										<key>selected</key>
+										<true/>
 									</dict>
 									<dict>
 										<key>baseClass</key>
@@ -1925,7 +1925,7 @@
 										<string>Size</string>
 										<key>value</key>
 										<array>
-											<real>307</real>
+											<real>311</real>
 											<real>83</real>
 											<integer>0</integer>
 										</array>
@@ -2261,7 +2261,7 @@
 										<key>type</key>
 										<string>Text</string>
 										<key>value</key>
-										<string>＄ 9.99</string>
+										<string>＄ 9.999999</string>
 									</dict>
 								</array>
 							</dict>
@@ -2389,7 +2389,7 @@
 										<key>type</key>
 										<string>Text</string>
 										<key>value</key>
-										<string>＄ 39.96</string>
+										<string>＄ 39.9699</string>
 									</dict>
 								</array>
 							</dict>
@@ -2808,7 +2808,7 @@
 								<key>value</key>
 								<array>
 									<real>480</real>
-									<real>360</real>
+									<real>420</real>
 									<integer>0</integer>
 								</array>
 							</dict>
