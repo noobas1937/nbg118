@@ -462,6 +462,7 @@ void AllianceDonateRankCell::setData(AllianceDonateInfo* info,int index)
     {
         m_headImgNode->initHeadImgUrl2(m_headNode, CCCommonUtils::getCustomPicUrl(info->uid, info->picVer), 1.0f, 60, true);
     }
+    // TODO tao.yu 联盟成员管理问号按钮点开后显示
     string rankstr = "Alliance_R";
     rankstr.append(CC_ITOA(m_info->rank));
     rankstr.append(".png");
