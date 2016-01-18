@@ -13,7 +13,9 @@
 #include "cocos-ext.h"
 #include <string>
 
-//#define USING_DLC
+#if COCOS2D_DEBUG > 0
+#define USING_DLC
+#endif
 
 USING_NS_CC;
 USING_NS_CC_EXT;
