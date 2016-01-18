@@ -455,6 +455,7 @@ bool ActivityBox::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const c
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_timeLabel", CCLabelIF*, this->m_timeLabel);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_contentNode", CCNode*, this->m_contentNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_ani", CCNode*, this->m_ani);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_timeNode", CCNode*, this->m_timeNode);
     return false;
 }
 
@@ -572,16 +573,19 @@ void ActivityBox::loadSpine()
     std::string id = m_dataItem->id;
     std::string pop_image = m_dataItem->popup_image;
     int pop = m_dataItem->popup;
-    
+    Vec2 timePos(0, 0);
     string spineJsonName = "Spine/Imperial/activitybox.json";
     if(m_dataItem->popup_image == "Build" && CCFileUtils::sharedFileUtils()->isFileExist("Spine/Imperial/activitybox_chengjian.json"))
     {
         spineJsonName = "Spine/Imperial/activitybox_chengjian.json";
+        timePos.y = 10;
     }
     if(m_dataItem->popup_image == "Newbie_Hot" && CCFileUtils::sharedFileUtils()->isFileExist("Spine/Imperial/activitybox_cailiao.json"))
     {
         spineJsonName = "Spine/Imperial/activitybox_cailiao.json";
+        timePos.y = 10;
     }
+    
     //const string spineJsonName = "Spine/Imperial/activitybox_cailiao.json";
     //const string spineJsonName = "Spine/Imperial/activitybox_chengjian.json";
     const string spineAtlasName = "Imperial/Imperial_30.atlas";
@@ -592,12 +596,14 @@ void ActivityBox::loadSpine()
     {
         
         IFSkeletonAnimation * m_spineAni = new IFSkeletonAnimation(spineJsonName.c_str(), spineAtlasName.c_str());
+        
         if (m_spineAni && m_ani )
         {
             
             //m_spineAni->setVisibleStop(true);
             
             m_ani->addChild(m_spineAni);
+            m_timeNode->setPosition(timePos);
             spTrackEntry* entry = m_spineAni->setAnimation(0, "loop", true);
             m_spineAni->setTimeScale(1);
             m_spineAni->setTag(88022);
