@@ -1015,6 +1015,16 @@ CCNode* FunBuildBtnsView::getGuideNode(string _key)
                 return NULL;
             }
         }
+        else if (_key == "tool")
+        {
+            if (m_btn5Node->isVisible()) {
+                guidKey = _key;
+                return m_btn5;
+            }
+            else {
+                return NULL;
+            }
+        }
         else if(_key=="soldier") {
             guidKey = _key;
             return m_btn3;
@@ -1056,6 +1066,11 @@ void FunBuildBtnsView::onGuidClick()
     else if(guidKey=="forge") {
         guidKey = "";
         onBtn3Click(NULL,Control::EventType::TOUCH_DOWN);
+    }
+    else if(guidKey == "tool")
+    {
+        guidKey = "";
+        onBtn5Click(NULL,Control::EventType::TOUCH_DOWN);
     }
 }
 int FunBuildBtnsView::getSPDTypeByBuildingState(){
