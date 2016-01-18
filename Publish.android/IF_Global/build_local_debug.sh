@@ -110,15 +110,16 @@ cp -rf ../../proj.android/obj/local/armeabi $copyPath >/dev/null
 echo "3.Cleaning for packing APK..."
 ant clean #>$logfileName.log 2>$logfileName.err
 rm -rf kit-libs
-ant crashlytics-update-dependencies
+cp -r ../kit-libs ./
+# ant crashlytics-update-dependencies
 sed -i.bak 's/'"manifestmerger.enabled=true"'/'"manifestmerger.enabled=false"'/g' project.properties
 rm -f project.properties.bak
-rm -rf kit-libs/com-crashlytics-sdk-android_crashlytics-ndk-labs/libs/arm64-v8a
-rm -rf kit-libs/com-crashlytics-sdk-android_crashlytics-ndk-labs/libs/armeabi-v7a
-rm -rf kit-libs/com-crashlytics-sdk-android_crashlytics-ndk-labs/libs/mips
-rm -rf kit-libs/com-crashlytics-sdk-android_crashlytics-ndk-labs/libs/mips64
-rm -rf kit-libs/com-crashlytics-sdk-android_crashlytics-ndk-labs/libs/x86
-rm -rf kit-libs/com-crashlytics-sdk-android_crashlytics-ndk-labs/libs/x86_64
+# rm -rf kit-libs/com-crashlytics-sdk-android_crashlytics-ndk-labs/libs/arm64-v8a
+# rm -rf kit-libs/com-crashlytics-sdk-android_crashlytics-ndk-labs/libs/armeabi-v7a
+# rm -rf kit-libs/com-crashlytics-sdk-android_crashlytics-ndk-labs/libs/mips
+# rm -rf kit-libs/com-crashlytics-sdk-android_crashlytics-ndk-labs/libs/mips64
+# rm -rf kit-libs/com-crashlytics-sdk-android_crashlytics-ndk-labs/libs/x86
+# rm -rf kit-libs/com-crashlytics-sdk-android_crashlytics-ndk-labs/libs/x86_64
 errorMsg=`cat $logfileName.err`
 if [ ! -n "$errorMsg" ]; then
 	echo "[Done]"
