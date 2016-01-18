@@ -854,6 +854,7 @@ bool GoldExchangeAdvertisingCommCell::init()
     m_newPriceLabel->setPositionX(m_costBtn->getPositionX());
     
     refreshData();
+    
     return true;
 }
 void GoldExchangeAdvertisingCommCell::refreshData(){
@@ -884,6 +885,20 @@ void GoldExchangeAdvertisingCommCell::refreshData(){
     string dollar = PayController::getInstance()->getDollarText(m_dataItem->dollar,m_dataItem->product_id);
     this->m_newPriceLabel->setString(dollar.c_str());
     m_btnGivePackage->setVisible(m_dataItem->send_mail);
+    
+    //begin ljf
+    string spriteName = "nb_libaoBG.png";
+    if(m_dataItem->popup_image == "Build")
+    {
+        spriteName = "abox_citybuild_ad.png";
+    }
+    if(m_dataItem->popup_image == "Newbie_Hot")
+    {
+        spriteName = "abox_newuser_ad.png";
+    }
+    CCSpriteFrame* newSp = CCLoadSprite::getSF(spriteName.c_str());
+    m_liebiaoBg->setDisplayFrame(newSp);
+    //end ljf
     onEnterFrame(0.0);
     
 }
@@ -936,6 +951,8 @@ bool GoldExchangeAdvertisingCommCell::onAssignCCBMemberVariable(cocos2d::CCObjec
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_costBtn", CCControlButton*, this->m_costBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_showMoneyNode", CCNode*, this->m_showMoneyNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_btnGivePackage", CCControlButton*, this->m_btnGivePackage);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_liebiaoBg", CCSprite*, this->m_liebiaoBg);
+    
     return false;
 }
 void GoldExchangeAdvertisingCommCell::onClickCostBtn(CCObject * pSender, Control::EventType pCCControlEvent){

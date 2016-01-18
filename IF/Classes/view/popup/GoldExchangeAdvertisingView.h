@@ -198,6 +198,7 @@ private:
     CCSafeObject<CCNode> m_animNode;
     CCSafeObject<CCNode> m_showMoneyNode;
     CCSafeObject<CCControlButton> m_btnGivePackage;
+    CCSafeObject<CCSprite> m_liebiaoBg;
     GoldExchangeItem *m_dataItem;
     
     CCPoint m_touchLocation;

@@ -278,6 +278,8 @@
 						<real>0.0</real>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>
@@ -528,7 +530,7 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>233</real>
+							<real>104</real>
 							<real>36</real>
 							<integer>0</integer>
 						</array>
@@ -540,7 +542,7 @@
 						<string>Point</string>
 						<key>value</key>
 						<array>
-							<real>0.5</real>
+							<real>0.0</real>
 							<real>0.5</real>
 						</array>
 					</dict>
@@ -633,8 +635,6 @@
 						<string>Sample Text</string>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>
