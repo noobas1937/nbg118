@@ -278,8 +278,6 @@
 						<real>0.0</real>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>
@@ -363,6 +361,8 @@
 						</array>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>
@@ -469,7 +469,7 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>33</real>
+							<real>32</real>
 							<real>36</real>
 							<integer>0</integer>
 						</array>
