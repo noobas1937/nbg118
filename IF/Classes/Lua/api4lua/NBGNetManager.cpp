@@ -109,7 +109,7 @@ static jobject ValueVector2SFSArray(JNIEnv* env, const ValueVector& valueVector,
 //             continue;
         
 //         JniMethodInfo minfo;
-//         if (! JniHelper::getStaticMethodInfo(minfo, "org/hcg/IF/Net", "addToIntArray", "(Ljava/util/Collection;I)V") )
+//         if (! JniHelper::getStaticMethodInfo(minfo, "org/nbg/IF/Net", "addToIntArray", "(Ljava/util/Collection;I)V") )
 //             continue;
 //         jobject jobj=minfo.env->CallStaticObjectMethod(minfo.classID, minfo.methodID, ret, intValue->getValue());
 //         minfo.env->DeleteLocalRef(minfo.classID);

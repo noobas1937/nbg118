@@ -2819,7 +2819,6 @@ void CCCommonUtils::initConfigData(CCDictionary *params){
         
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         ChatServiceCocos2dx::enableNativeChat = function_on->valueForKey("k2")->intValue();
-        CCLOG("ChatServiceCocos2dx::enableNativeChat %d");
 #elif(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         //原生聊天开关
         
