@@ -46,6 +46,12 @@ GoldExchangeAdvertisingView* GoldExchangeAdvertisingView::create(){
 
 bool GoldExchangeAdvertisingView::init()
 {
+    //begin a by ljf
+    CCLoadSprite::doResourceByCommonIndex(800, true);
+    setCleanFunction([](){
+        CCLoadSprite::doResourceByCommonIndex(800, false);
+    });
+    //end a by ljf
 
 //    CCLoadSprite::doResourceByCommonIndex(100, true);
     m_data = CCArray::create();
