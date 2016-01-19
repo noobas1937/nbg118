@@ -8,6 +8,7 @@
 #include "PopupBaseView.h"
 #include "DefaultTableViewDelegate.h"
 #include "CCTableViewTouchIFCell.h"
+#include "HFHeadImgNode.h"
 #define MAIL_GIFT_ITEM_COL 4
 #define MSG_MAIL_GIFT_CHOOSE "msg.mail.gift.choose"
 class MailGiftView{
@@ -136,7 +137,7 @@ private:
     CCSafeObject<CCNode> m_picNode[MAIL_GIFT_ITEM_COL];
     CCSafeObject<CCSprite>  m_selectSpr;
     int mItemID[MAIL_GIFT_ITEM_COL];
-    CCNode* m_touchNode;
+    CCSafeObject<CCNode> m_touchNode;
     CCPoint m_startPoint;
     int mPropID;
 };
@@ -151,6 +152,10 @@ public:
     };
     static MailGiftReadPopUpView* create(MailInfo& info);
     void refreshContent(CCObject* p = NULL);
+protected:
+    virtual bool onTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void onTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void onTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
 private:
     virtual void onEnter();
     virtual void onExit();
@@ -163,15 +168,18 @@ private:
     void onRewardClick(CCObject *pSender, CCControlEvent event);
     void onAddSaveClick(CCObject * pSender, Control::EventType pCCControlEvent);
     void onDeleteClick(CCObject *pSender, CCControlEvent event);
+    void onReturnClick(CCObject *pSender, CCControlEvent event);
+    void onWriteClick(CCObject *pSender, CCControlEvent event);
     void onOkDeleteMail();
     MailInfo& m_info;
     
     CCSafeObject<CCNode> m_totalNode;
-    CCSafeObject<CCScale9Sprite> m_bg;
+//    CCSafeObject<CCScale9Sprite> m_bg;
     CCSafeObject<CCScale9Sprite> m_buildBG;
-    CCSafeObject<CCScale9Sprite> m_line;
+//    CCSafeObject<CCScale9Sprite> m_line;
     CCSafeObject<CCLabelIF> m_nameText;
     CCSafeObject<CCLabelIF> m_titleText;
+    CCSafeObject<CCLabelIF> m_mailTitle;
     CCSafeObject<CCLabelIF> m_timeText;
     CCSafeObject<CCLabelIF> m_contentText;
     CCSafeObject<CCLabelIF> m_rewardTitle;
@@ -179,16 +187,22 @@ private:
     CCSafeObject<CCScale9Sprite> m_sprContent;
     CCSafeObject<CCControlButton> m_rewardBtn;
     CCSafeObject<CCNode> m_giftNode;
+    CCSafeObject<CCNode> m_bgNode;
+    CCSafeObject<CCNode> m_downNode;
     CCSafeObject<CCNode> m_userHeadContainer;
     
     CCSafeObject<CCControlButton> m_addSaveBtn;
-    CCSafeObject<CCControlButton> m_unSaveBtn;
+//    CCSafeObject<CCControlButton> m_unSaveBtn;
     CCSafeObject<CCControlButton> m_deleteBtn;
+    CCSafeObject<CCControlButton> m_returnBtn;
+    CCSafeObject<CCSprite> m_returnSpr;
+    CCSafeObject<CCControlButton> m_writeBtn;
     CCSafeObject<CCNode> m_rewardNode;
     CCSafeObject<CCNode> m_listNode;
-    
+    CCSafeObject<CCRenderTexture> m_selfModelLayer;
     CCSafeObject<CCNode> m_nodeCount;
     CCSafeObject<CCLabelIF> m_numLabel;
+    CCSafeObject<HFHeadImgNode> m_headImgNode;
     
     WaitInterface* m_waitInterface;
 };

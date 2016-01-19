@@ -11,6 +11,9 @@
 #include "MailSendCommand.h"
 #include "ParticleController.h"
 #include "StoreBagView.h"
+#include "MailWritePopUpView.h"
+#include "UIComponent.h"
+#include "FunBuildController.h"
 //
 // MailGiftView
 //
@@ -83,13 +86,16 @@ bool MailGiftCell::init(CCSize size,int itemid,int propID){
         CCLoadSprite::releaseDynamicResourceByType(CCLoadSpriteType_GOODS);
     });
     this->mPropID = propID;
-    auto tmpCCB = CCBLoadFile("MailGiftCell",this,this);
+    auto tmpCCB = CCBLoadFile("NEWMailGiftCell",this,this);
     this->setContentSize(tmpCCB->getContentSize());
     m_lblTitle->setString(_lang("102160"));
     m_lblName->setString(_lang("101381"));
     refreshData(CCInteger::create(itemid));
     mContentSize = CCSize(size.width, size.height);
-    
+    m_numLabel->setFntFile("Arial_Bold_Regular.fnt");
+    m_lblInfo->setFntFile("Arial_Bold_Regular.fnt");
+    m_lblName->setFntFile("Arial_Bold_Regular.fnt");
+    m_lblDes->setFntFile("Arial_Bold_Regular.fnt");
     m_effLayer = CCLayer::create();
     CCSize sizeHead = m_headNode->getContentSize();
     m_effLayer->setContentSize(sizeHead);
@@ -255,7 +261,7 @@ void MailGiftCell::refreshData(CCObject *ccObj){
     mItemID = ccInteger->getValue();
     if(ccInteger1){
         setItemCount(ccInteger1->getValue());
-        CC_SAFE_RELEASE(ccObj);
+        ccObj->release();
     }
     int propCount = 0;
     if(ToolController::getInstance()->m_toolInfos.find(mPropID) != ToolController::getInstance()->m_toolInfos.end()){
@@ -306,17 +312,28 @@ bool MailGiftItemView::init(CCSize &viewSize,int propID)
 {
     if(!PopupBaseView::init())
         return false;
+    setIsHDPanel(true);
     auto ccb = CCBLoadFile("MailGiftItemView",this,this);
     CCSize contentSize = ccb->getContentSize();
     setContentSize(contentSize);
+    if (!CCCommonUtils::isIosAndroidPad()) {
+        float addh = CCDirector::sharedDirector()->getWinSize().height - 852;
+        addh += 200;
+        m_touchNode->setContentSize(CCSize(m_touchNode->getContentSize().width, m_touchNode->getContentSize().height + addh));
+        m_bgSpr->setPreferredSize(CCSize(584, 450 + addh));
+        m_nodeList->setContentSize(CCSize(m_nodeList->getContentSize().width, m_nodeList->getContentSize().height + addh));
+        m_touchNode->setPositionY(m_touchNode->getPositionY() - addh / 2.0);
+        m_bgSpr->setPositionY(m_bgSpr->getPositionY() - addh / 2.0);
+        m_nodeList->setPositionY(m_nodeList->getPositionY() - addh / 2.0);
+    }
     mPropID = propID;
-    m_bgSpr->setPreferredSize(viewSize);
-    m_bgSpr->setPosition(ccp(-viewSize.width*0.5, -contentSize.height * 0.5 + 120));
-    m_touchNode->setContentSize(viewSize);
-    m_touchNode->setPosition(m_bgSpr->getPosition());
-    CCPoint pos = m_bgSpr->getPosition() + ccp(20, 25);
-    m_nodeList->setContentSize(CCSize(viewSize.width - 20, viewSize.height - 50));
-    m_nodeList->setPosition(pos);
+//    m_bgSpr->setPreferredSize(viewSize);
+//    m_bgSpr->setPosition(ccp(-viewSize.width*0.5, -contentSize.height * 0.5 + 120));
+//    m_touchNode->setContentSize(viewSize);
+//    m_touchNode->setPosition(m_bgSpr->getPosition());
+//    CCPoint pos = m_bgSpr->getPosition() + ccp(20, 25);
+//    m_nodeList->setContentSize(CCSize(viewSize.width - 20, viewSize.height - 50));
+//    m_nodeList->setPosition(pos);
     
 //    auto size = CCDirector::sharedDirector()->getWinSize();
 //    float dh = size.height-852-8;
@@ -613,10 +630,15 @@ bool MailGiftItemCell::onAssignCCBMemberVariable(cocos2d::CCObject *pTarget, con
 
 void MailGiftReadPopUpView::onEnter(){
     PopupBaseView::onEnter();
+    UIComponent::getInstance()->showPopupView(UIPopupViewType_ArcPop_TitanUpgrade);
+    UIComponent::getInstance()->hideReturnBtn();
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(MailGiftReadPopUpView::refreshContent), MIAL_GET_REWARD_REFRESH, NULL);
+    setTouchEnabled(true);
+    
 }
 void MailGiftReadPopUpView::onExit(){
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MIAL_GET_REWARD_REFRESH);
+    setTouchEnabled(false);
     PopupBaseView::onExit();
 }
 MailGiftReadPopUpView* MailGiftReadPopUpView::create(MailInfo& info){
@@ -638,22 +660,78 @@ bool MailGiftReadPopUpView::init(){
         CCLoadSprite::doResourceByCommonIndex(11, false);
         CCLoadSprite::releaseDynamicResourceByType(CCLoadSpriteType_GOODS);
     });
-    auto bg = CCBLoadFile("MailGiftReadView", this, this);
-    this->setContentSize(bg->getContentSize());
-    setTitleName(_lang("105513"));
-    int preHeight = this->m_buildBG->getContentSize().height;
-    changeBGHeight(m_buildBG);
-    int dh = m_buildBG->getContentSize().height - preHeight;
-    this->m_bg->setContentSize(CCSize(m_bg->getContentSize().width, m_bg->getContentSize().height + dh));
+    setIsHDPanel(true);
+    auto bg = CCBLoadFile("NEWMailGiftReadView", this, this);
+    if (CCCommonUtils::isIosAndroidPad()) {
+        this->setContentSize(CCDirector::sharedDirector()->getWinSize());
+    }
+    else
+        this->setContentSize(bg->getContentSize());
+//    setTitleName(_lang("105513"));
+    m_mailTitle->setString(_lang("105513"));
+    if (CCCommonUtils::isIosAndroidPad()) {
+        int extH = getExtendHeight();
+        this->m_listNode->setContentSize(CCSize(m_listNode->getContentSize().width, m_listNode->getContentSize().height + extH));
+        m_listNode->setPositionY(m_listNode->getPositionY() + extH);
+        m_contentText->setPositionY(m_contentText->getPositionY() - extH);
+        m_rewardNode->setPositionY(m_rewardNode->getPositionY() - extH);
+        m_downNode->setPositionY(m_downNode->getPositionY() - extH);
+        m_bgNode->setPositionY(m_bgNode->getPositionY() - extH);
+        auto tbg = CCLoadSprite::loadResource("Mail_diban.png");
+        auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
+        auto picBg1 = CCLoadSprite::createSprite("Mail_diban.png");
+        picBg1->setAnchorPoint(ccp(0, 0));
+        picBg1->setPosition(ccp(0, 0));
+        picBg1->setScaleX(2.4);
+        tBatchNode->addChild(picBg1);
+        int maxHeight = CCDirector::sharedDirector()->getWinSize().height;
+        int curHeight = picBg1->getContentSize().height;
+        while(curHeight < maxHeight)
+        {
+            auto picBg2 = CCLoadSprite::createSprite("Mail_diban.png");
+            picBg2->setAnchorPoint(ccp(0, 0));
+            picBg2->setPosition(ccp(0, curHeight));
+            picBg2->setScaleX(2.4);
+            tBatchNode->addChild(picBg2);
+            curHeight += picBg2->getContentSize().height;
+        }
+        m_bgNode->addChild(tBatchNode);
+    }
+    else {
+        int extH = getExtendHeight();
+        this->m_listNode->setContentSize(CCSize(m_listNode->getContentSize().width, m_listNode->getContentSize().height + extH));
+        m_listNode->setPositionY(m_listNode->getPositionY() + extH);
+        m_contentText->setPositionY(m_contentText->getPositionY() - extH);
+        m_rewardNode->setPositionY(m_rewardNode->getPositionY() - extH);
+        m_downNode->setPositionY(m_downNode->getPositionY() - extH);
+        m_bgNode->setPositionY(m_bgNode->getPositionY() - extH);
+        auto tbg = CCLoadSprite::loadResource("Mail_diban.png");
+        auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
+        auto picBg1 = CCLoadSprite::createSprite("Mail_diban.png");
+        picBg1->setAnchorPoint(ccp(0, 0));
+        picBg1->setPosition(ccp(0, 0));
+        tBatchNode->addChild(picBg1);
+        int maxHeight = CCDirector::sharedDirector()->getWinSize().height;
+        int curHeight = picBg1->getContentSize().height;
+        while(curHeight < maxHeight)
+        {
+            auto picBg2 = CCLoadSprite::createSprite("Mail_diban.png");
+            picBg2->setAnchorPoint(ccp(0, 0));
+            picBg2->setPosition(ccp(0, curHeight));
+            tBatchNode->addChild(picBg2);
+            curHeight += picBg2->getContentSize().height;
+        }
+        m_bgNode->addChild(tBatchNode);
+    }
     
-    m_listNode->setContentSize(CCSize(m_listNode->getContentSize().width, m_listNode->getContentSize().height + dh));
-    m_listNode->setPositionY(m_listNode->getPositionY() - dh);
-    m_contentText->setPositionY(m_contentText->getPositionY() + dh);
-    m_rewardNode->setPositionY(m_rewardNode->getPositionY() + dh);
-    
-    this->m_nameText->setFntFile(getNBFont(NB_FONT_Bold));
-    this->m_titleText->setFntFile(getNBFont(NB_FONT_Bold));
-    //this->m_guideTxt->setFntFile(getNBFont(NB_FONT_Bold));
+    this->m_nameText->setFntFile("Arial_Bold.fnt");
+    this->m_titleText->setFntFile("Arial_Bold_Regular.fnt");
+    this->m_timeText->setFntFile("Arial_Bold_Regular.fnt");
+    this->m_numLabel->setFntFile("Arial_Bold_Regular.fnt");
+//    this->m_rewardTitle->setFntFile("Arial_Bold_Regular.fnt");
+    this->m_rewardDesc->setFntFile("Arial_Bold_Regular.fnt");
+    this->m_contentText->setFntFile("Arial_Bold_Regular.fnt");
+    //this->m_guideTxt->setFntFile("Arial_Bold.fnt");
     this->m_nameText->setString(m_info.fromName.c_str());
     string nameExt = m_info.fromName;
     if(m_info.alliance!=""){
@@ -662,10 +740,20 @@ bool MailGiftReadPopUpView::init(){
     }
     this->m_titleText->setString(m_info.title.c_str());
     this->m_timeText->setString(CCCommonUtils::timeStampToDate(m_info.createTime).c_str());
+    string littleStr="";
+    if(m_info.rewardId!=""&&m_info.mbLevel>0 && m_info.mbLevel >= FunBuildController::getInstance()->getMainCityLv())
+    {
+        littleStr=_lang_1("105784", CC_ITOA(m_info.mbLevel));
+        littleStr+="\r\n \r\n";
+    }
+    string contents=littleStr+m_info.contents;
     CCRichLabelTTF* ccrichlabel = CCRichLabelTTF::create("", "Helvetica", 22,CCSize(570,0),kCCTextAlignmentLeft,kCCVerticalTextAlignmentTop);
     
     ccrichlabel->setString(m_info.contents.c_str());
-    ccrichlabel->setFontFillColor(m_contentText->getColor());
+    ccrichlabel->setFontFillColor(ccBLACK);
+    
+    ccrichlabel->setString(contents.c_str());
+    
     float textH = ccrichlabel->getContentSize().height;
     if(textH > 120){
         
@@ -698,6 +786,8 @@ bool MailGiftReadPopUpView::init(){
         ccrichlabel->setPosition(ccp(lblPos.x,lblPos.y));
     }
     CCSprite* pic;
+    int picVer = 0;
+    std::string fromUid = "";
     if(m_info.pic=="0"||m_info.pic==""){
         string mpic = GlobalData::shared()->playerInfo.pic;
         mpic = mpic+".png";
@@ -705,11 +795,39 @@ bool MailGiftReadPopUpView::init(){
     }else{
         std::string head = m_info.pic;
         head.append(".png");
+        picVer = m_info.picVer;
+        fromUid = m_info.fromUid;
         pic = CCLoadSprite::createSprite(head.c_str());
     }
-    CCCommonUtils::setSpriteMaxSize(pic, 92);
-    pic->setPosition(ccp(10, 4));
-    m_userHeadContainer->addChild(pic);
+    CCCommonUtils::setSpriteMaxSize(pic, 70);
+//    m_userHeadContainer->addChild(pic);
+    
+    auto sizeLayer = CCSize(80, 80);
+    m_selfModelLayer = CCRenderTexture::create(sizeLayer.width, sizeLayer.height);
+    m_selfModelLayer->setAnchorPoint(ccp(0.5, 0.5));
+    ccBlendFunc cbf = {GL_ZERO,GL_ONE_MINUS_SRC_ALPHA};
+    auto spr = CCLoadSprite::createSprite("Mail_headBack.png");
+    spr->setScale(1);
+    spr->setPosition(ccp(sizeLayer.width / 2, sizeLayer.height / 2));
+    auto bgCircle = CCLoadSprite::createSprite("Mail_head_backBattle.png");
+    bgCircle->setBlendFunc(cbf);
+    bgCircle->setPosition(ccp(sizeLayer.width / 2, sizeLayer.height / 2));
+    pic->setPosition(ccp(sizeLayer.width / 2, sizeLayer.height / 2 - 3));
+    //    pic->removeFromParent();
+    m_selfModelLayer->begin();
+    spr->visit();
+    pic->visit();
+    bgCircle->visit();
+    m_selfModelLayer->end();
+    m_userHeadContainer->addChild(m_selfModelLayer);
+    if (CCCommonUtils::isUseCustomPic(picVer) && fromUid != "")
+    {
+        m_headImgNode = HFHeadImgNode::create();
+        string backImg = "Mail_headBack.png";
+        string renderImg = "Mail_head_backBattle.png";
+//        m_headImgNode->initHeadImgUrl3(m_userHeadContainer, CCCommonUtils::getCustomPicUrl(fromUid, picVer), 1.0f, 74, true, ccp(sizeLayer.width / 2, sizeLayer.height / 2 - 2), sizeLayer, backImg, renderImg);  simon
+    }
+    
     std::vector<std::string> arSplit;
     CCCommonUtils::splitString(m_info.rewardId, ",", arSplit);
     if(arSplit.size()>2){
@@ -724,12 +842,10 @@ bool MailGiftReadPopUpView::init(){
         }
     }
     if(m_info.save==0){
-        m_unSaveBtn->setVisible(true);
-        m_addSaveBtn->setVisible(false);
+        m_addSaveBtn->setHighlighted(false);
         
     }else{
-        m_unSaveBtn->setVisible(false);
-        m_addSaveBtn->setVisible(true);
+        m_addSaveBtn->setHighlighted(true);
     }
     refreshContent();
     return true;
@@ -779,19 +895,22 @@ void MailGiftReadPopUpView::refreshContent(CCObject* p){
 bool MailGiftReadPopUpView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode){
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_totalNode", CCNode*, this->m_totalNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_buildBG", CCScale9Sprite*, this->m_buildBG);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bg", CCScale9Sprite*, this->m_bg);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_line", CCScale9Sprite*, this->m_line);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nameText", CCLabelIF*, this->m_nameText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_timeText", CCLabelIF*, this->m_timeText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titleText", CCLabelIF*, this->m_titleText);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_mailTitle", CCLabelIF*, this->m_mailTitle);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_deleteBtn", CCControlButton*, this->m_deleteBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_addSaveBtn", CCControlButton*, this->m_addSaveBtn);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_unSaveBtn", CCControlButton*, this->m_unSaveBtn);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_returnBtn", CCControlButton*, this->m_returnBtn);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_returnSpr", CCSprite*, this->m_returnSpr);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_writeBtn", CCControlButton*, this->m_writeBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_userHeadContainer", CCNode*, this->m_userHeadContainer);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_contentText", CCLabelIF*, this->m_contentText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_rewardTitle", CCLabelIF*, this->m_rewardTitle);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_rewardDesc", CCLabelIF*, this->m_rewardDesc);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_giftNode", CCNode*, this->m_giftNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bgNode", CCNode*, this->m_bgNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_downNode", CCNode*, this->m_downNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_sprContent", CCScale9Sprite*, this->m_sprContent);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_rewardBtn", CCControlButton*, this->m_rewardBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_rewardNode", CCNode*, this->m_rewardNode);
@@ -805,6 +924,8 @@ SEL_CCControlHandler MailGiftReadPopUpView::onResolveCCBCCControlSelector(cocos2
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onDeleteClick", MailGiftReadPopUpView::onDeleteClick);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onAddSaveClick", MailGiftReadPopUpView::onAddSaveClick);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onRewardClick", MailGiftReadPopUpView::onRewardClick);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onWriteClick", MailGiftReadPopUpView::onWriteClick);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onReturnClick", MailGiftReadPopUpView::onReturnClick);
     return NULL;
 }
 void MailGiftReadPopUpView::onDeleteClick(cocos2d::CCObject *pSender, CCControlEvent event){
@@ -828,6 +949,13 @@ void MailGiftReadPopUpView::onOkDeleteMail(){
     //    this->closeSelf();
     PopupViewController::getInstance()->goBackPopupView();
 }
+void MailGiftReadPopUpView::onReturnClick(cocos2d::CCObject *pSender, CCControlEvent pCCControlEvent){
+    PopupViewController::getInstance()->goBackPopupView();
+}
+
+void MailGiftReadPopUpView::onWriteClick(cocos2d::CCObject *pSender, CCControlEvent pCCControlEvent){
+    PopupViewController::getInstance()->addPopupInView(MailWritePopUpView::create("", ""));
+}
 void MailGiftReadPopUpView::onAddSaveClick(cocos2d::CCObject *pSender, CCControlEvent event){
     if(PopupViewController::getInstance()->getPlayingInAnim())
         return;
@@ -839,8 +967,7 @@ void MailGiftReadPopUpView::onAddSaveClick(cocos2d::CCObject *pSender, CCControl
         cmd->sendAndRelease();
         m_info.save = 0;
         CCCommonUtils::flyHint("quest_icon_1.png", "", _lang("105576"));
-        m_unSaveBtn->setVisible(true);
-        m_addSaveBtn->setVisible(false);
+        m_addSaveBtn->setHighlighted(false);
     }else{
         if(MailController::getInstance()->isMailFull(2)){
             CCCommonUtils::flyText("full");
@@ -850,8 +977,7 @@ void MailGiftReadPopUpView::onAddSaveClick(cocos2d::CCObject *pSender, CCControl
         cmd->sendAndRelease();
         m_info.save = 1;
         CCCommonUtils::flyHint("quest_icon_1.png", "", _lang("105575"));
-        m_unSaveBtn->setVisible(false);
-        m_addSaveBtn->setVisible(true);
+        m_addSaveBtn->setHighlighted(true);
     }
 }
 void MailGiftReadPopUpView::onRewardClick(CCObject *pSender, CCControlEvent event){
@@ -861,10 +987,29 @@ void MailGiftReadPopUpView::onRewardClick(CCObject *pSender, CCControlEvent even
     if(!m_info.rewardId.empty() && m_info.rewardStatus == 0){
         if(PopupViewController::getInstance()->getPlayingInAnim())
             return;
+        if(m_info.mbLevel>0 && m_info.mbLevel >= FunBuildController::getInstance()->getMainCityLv())
+        {
+            CCCommonUtils::flyText(_lang_1("105784", CC_ITOA(m_info.mbLevel)));
+            return;
+        }
         m_waitInterface = GameController::getInstance()->showWaitInterface(m_rewardBtn);
         MailGetRewardCommand* cmd = new MailGetRewardCommand(m_info.uid, m_info.type);
         cmd->sendAndRelease();
     }else{
         PopupViewController::getInstance()->addPopupInViewWithAnim(MailWritePopUpView::create(m_info.fromName, "","",m_info.uid));
+    }
+}
+bool MailGiftReadPopUpView::onTouchBegan(CCTouch *pTouch, CCEvent *pEvent){
+    if(isTouchInside(m_returnSpr, pTouch)){
+        return true;
+    }
+    return false;
+}
+void MailGiftReadPopUpView::onTouchMoved(CCTouch *pTouch, CCEvent *pEvent){
+    
+}
+void MailGiftReadPopUpView::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent){
+    if (isTouchInside(m_returnSpr, pTouch)) {
+        PopupViewController::getInstance()->goBackPopupView();
     }
 }
