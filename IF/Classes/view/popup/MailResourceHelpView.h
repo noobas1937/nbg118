@@ -56,6 +56,8 @@ private:
     void onPostBtnClick(CCObject * pSender, Control::EventType pCCControlEvent);
     void onAddSaveClick(CCObject * pSender, Control::EventType pCCControlEvent);
     void onDeleteClick(CCObject * pSender, Control::EventType pCCControlEvent);
+    void onReturnClick(CCObject * pSender, CCControlEvent pCCControlEvent);
+    void onWriteClick(CCObject * pSender, CCControlEvent pCCControlEvent);
     void readDialogContent();
     void addLoadingAni();
     void removeLoadingAni();
@@ -68,18 +70,22 @@ private:
     CCSafeObject<CCNode> m_infoList;
     CCSafeObject<CCNode> m_battlePicNode;
     CCSafeObject<CCNode> m_downNode;
+    CCSafeObject<CCNode> m_bgNode;
     CCSafeObject<CCScale9Sprite> m_buildBG;
-    CCSafeObject<CCScale9Sprite> m_bg;
+//    CCSafeObject<CCScale9Sprite> m_bg;
     
     CCSafeObject<CCLabelIF> m_titleText;
     CCSafeObject<CCControlButton> m_addSaveBtn;
-    CCSafeObject<CCControlButton> m_unSaveBtn;
+//    CCSafeObject<CCControlButton> m_unSaveBtn;
     CCSafeObject<CCControlButton> m_deleteBtn;
+    CCSafeObject<CCControlButton> m_returnBtn;
+    CCSafeObject<CCSprite> m_returnSpr;
+    CCSafeObject<CCControlButton> m_writeBtn;
     
     CCSafeObject<CCTableView> m_tabView;
     CCSafeObject<CCArray> m_data;
     
-    MailResourceHelpCellInfo* m_mailInfo;
+    CCSafeObject<MailResourceHelpCellInfo> m_mailInfo;
     bool m_isLoadMore;
     float m_currMinOffsetY;
     float m_currOffsetY;
@@ -151,8 +157,8 @@ private:
     CCPoint m_touchPoint;
     
     int m_idx;
-    MailResourceHelpInfo* m_dialogInfo;
-    MailResourceHelpCellInfo* m_mailInfo;
+    CCSafeObject<MailResourceHelpInfo> m_dialogInfo;
+    CCSafeObject<MailResourceHelpCellInfo> m_mailInfo;
 };
 
 #endif /* defined(__IF__MailResourceHelpView__) */

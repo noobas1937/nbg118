@@ -24,12 +24,13 @@ class MailWritePopUpView : public PopupBaseView
 public:
     static MailWritePopUpView* create(std::string toName, std::string title,std::string allianceId="",std::string thxMail = "");
     static MailWritePopUpView* createWithGift(std::string toName, int giftid = -1,int propID = 200010);
+    void setIsRetainRes(bool flag);
 protected:
     virtual bool onTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
     virtual void onTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
     virtual void onTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
 private:
-    MailWritePopUpView(std::string toName, std::string title, std::string allianceId,std::string thxMail) : m_toName(toName), m_title(title),m_allianceId(allianceId),mType(0),m_thanksMail(thxMail),/*m_waitInterface(NULL)*/m_isSendingGift(false),mInited(false),mChooseUids(""),mUserCount(0){};
+    MailWritePopUpView(std::string toName, std::string title, std::string allianceId,std::string thxMail) : m_toName(toName), m_title(title),m_allianceId(allianceId),mType(0),m_thanksMail(thxMail),/*m_waitInterface(NULL)*/m_isSendingGift(false),mInited(false),mChooseUids(""),mUserCount(0),m_bRetainHeadPicRes(false){};
     virtual void onEnter();
     virtual void onExit();
     virtual bool init();
@@ -47,7 +48,7 @@ private:
     void onChoosePlayer(CCObject* p);
     void updateBtnStatus();
     void onRefreshName(CCObject *p);
-    
+    void onReturnClick(CCObject * pSender, CCControlEvent pCCControlEvent);
     void showChooseView();
     
     
@@ -58,15 +59,18 @@ private:
     CCSafeObject<CCControlButton> m_sendBtn;
     CCSafeObject<CCControlButton> m_inviteBtn;
     CCSafeObject<CCControlButton> m_closeBtn;
-    CCSafeObject<CCNode> m_titleContainer;
+    CCSafeObject<CCControlButton> m_returnBtn;
+    CCSafeObject<CCSprite> m_returnSpr;
+//    CCSafeObject<CCNode> m_titleContainer;
     CCSafeObject<CCNode> m_contentContainer;
     CCSafeObject<CCNode> m_nameContainer;
     
-    CCSafeObject<CCLabelIF> m_nameText;
+//    CCSafeObject<CCLabelIF> m_nameText;
     CCSafeObject<CCLabelIF> m_titleText;
-    CCSafeObject<CCLabelIF> m_contentText;
+//    CCSafeObject<CCLabelIF> m_contentText;
     CCSafeObject<CCNode> m_downNode;
-    CCSafeObject<CCScale9Sprite> m_bg;
+    CCSafeObject<CCNode> m_bgNode;
+//    CCSafeObject<CCScale9Sprite> m_bg;
     CCSafeObject<CCScale9Sprite> m_buildBG;
     
     CCSafeObject<InputFieldMultiLine> m_nameEditBox;
@@ -80,7 +84,7 @@ private:
     CCSafeObject<CCNode> m_nodeContent;
     bool m_isSendingGift;
 //    WaitInterface* m_waitInterface;
-    CCSafeObject<CCNode> m_waitingNode;
+//    CCSafeObject<CCNode> m_waitingNode;
     void onSendGift();
     void onSendGiftBack(CCObject* p);
     int mType;
@@ -89,6 +93,7 @@ private:
     int mUserCount;
     
     bool mInited;
+    bool m_bRetainHeadPicRes;
 };
 
 #endif

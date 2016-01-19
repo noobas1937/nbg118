@@ -27,7 +27,10 @@
 #include "CountryChatCommand.h"
 #include "ChatServiceCocos2dx.h"
 #include "ActivityController.h"
+#include "MailWritePopUpView.h"
+#include "UIComponent.h"
 
+#define ADD_TIMES 30
 BattleReportMailPopUpView::~BattleReportMailPopUpView(){
     mAtkWarEff.clear();
     mDefWarEff.clear();
@@ -44,13 +47,16 @@ BattleReportMailPopUpView *BattleReportMailPopUpView::create(MailInfo *info){
 
 void BattleReportMailPopUpView::onEnter(){
     PopupBaseView::onEnter();
+    UIComponent::getInstance()->showPopupView(UIPopupViewType_ArcPop_TitanUpgrade,true);//simon;
+    UIComponent::getInstance()->hideReturnBtn();
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(BattleReportMailPopUpView::refreshView), MAIL_CONTENT_READ, NULL);
     setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
     setTouchEnabled(true);
     //CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, Touch_Default, false);
     if(m_info->checkMail){
+        m_attackText->setString(_lang("115281"));
+//        setTitleName(_lang("115281"));
         m_mailTitle->setString(_lang("115281"));
-        setTitleName(_lang("115281"));
     }
 }
 
@@ -64,66 +70,151 @@ bool BattleReportMailPopUpView::init(){
     bool ret = false;
     if(PopupBaseView::init()){
         setIsHDPanel(true);
-        auto bg = CCBLoadFile("BattleReportMailCCB", this, this);
-        this->setContentSize(bg->getContentSize());
-        setTitleName(_lang("105513"));
+        setMailUuid(m_info->uid);
+        if(m_info->checkMail){
+            auto cf = CCLoadSprite::getSF("Mail_BG1.png");
+//            auto cf = CCLoadSprite::getSF("Mail_diban.png");
+            if (cf==NULL) {
+                CCLoadSprite::doResourceByCommonIndex(6, true);
+                CCLoadSprite::doResourceByCommonIndex(8, true);
+                CCLoadSprite::doResourceByCommonIndex(105, true);
+                CCLoadSprite::doResourceByCommonIndex(500, true);
+                setCleanFunction([](){
+                    CCLoadSprite::doResourceByCommonIndex(6, false);
+                    CCLoadSprite::doResourceByCommonIndex(8, false);
+                    CCLoadSprite::doResourceByCommonIndex(105, false);
+                    CCLoadSprite::doResourceByCommonIndex(500, false);
+                    CCLoadSprite::releaseDynamicResourceByType(CCLoadSpriteType_GOODS);
+                });
+            }
+            else {
+                CCLoadSprite::doResourceByCommonIndex(8, true);
+                CCLoadSprite::doResourceByCommonIndex(105, true);
+                CCLoadSprite::doResourceByCommonIndex(500, true);
+                setCleanFunction([](){
+                    CCLoadSprite::doResourceByCommonIndex(8, false);
+                    CCLoadSprite::doResourceByCommonIndex(105, false);
+                    CCLoadSprite::doResourceByCommonIndex(500, false);
+                    CCLoadSprite::releaseDynamicResourceByType(CCLoadSpriteType_GOODS);
+                });
+            }
+        }
+        else {
+            auto cf = CCLoadSprite::getSF("Mail_BG1.png");
+            if (cf==NULL) {
+                CCLoadSprite::doResourceByCommonIndex(6, true);
+                CCLoadSprite::doResourceByCommonIndex(105, true);
+                CCLoadSprite::doResourceByCommonIndex(500, true);
+                setCleanFunction([](){
+                    CCLoadSprite::doResourceByCommonIndex(6, false);
+                    CCLoadSprite::doResourceByCommonIndex(105, false);
+                    CCLoadSprite::doResourceByCommonIndex(500, false);
+                    CCLoadSprite::releaseDynamicResourceByType(CCLoadSpriteType_GOODS);
+                });
+            }
+            else {
+                CCLoadSprite::doResourceByCommonIndex(105, true);
+                CCLoadSprite::doResourceByCommonIndex(500, true);
+                setCleanFunction([](){
+                    CCLoadSprite::doResourceByCommonIndex(105, false);
+                    CCLoadSprite::doResourceByCommonIndex(500, false);
+                    CCLoadSprite::releaseDynamicResourceByType(CCLoadSpriteType_GOODS);
+                });
+            }
+        }
+        auto bg = CCBLoadFile("NEW_BattleReportMailCCB", this, this);
+        if (CCCommonUtils::isIosAndroidPad()) {
+            this->setContentSize(CCDirector::sharedDirector()->getWinSize());
+        }
+        else
+            this->setContentSize(bg->getContentSize());
+//        setTitleName(_lang("105513"));
+        m_mailTitle->setString(_lang("105513"));
         //CCCommonUtils::setButtonTitle(m_reportBtn, _lang("105519").c_str());
         this->m_timeText->setString(CCCommonUtils::timeStampToDate(m_info->createTime).c_str());
-        CCLoadSprite::doResourceByCommonIndex(105, true);
-        CCLoadSprite::doResourceByCommonIndex(500, true);
-//        CCLoadSprite::doResourceByCommonIndex(6, true);
-        setCleanFunction([](){
-            CCLoadSprite::doResourceByCommonIndex(105, false);
-            CCLoadSprite::doResourceByCommonIndex(500, false);
-//            CCLoadSprite::doResourceByCommonIndex(6, false);
-            CCLoadSprite::releaseDynamicResourceByType(CCLoadSpriteType_GOODS);
-        });
-        if(m_info->checkMail){
-            CCLoadSprite::doResourceByCommonIndex(6, true);
-            CCLoadSprite::doResourceByCommonIndex(8, true);
-            setCleanFunction([](){
-                CCLoadSprite::doResourceByCommonIndex(6, false);
-                CCLoadSprite::doResourceByCommonIndex(8, false);
-            });
-        }
         m_ListNode = CCNode::create();
-        int preHeight = this->m_buildBG->getContentSize().height;
-        changeBGHeight(m_buildBG);
-        //changeBGHeight(m_bg);
-        int dh = m_buildBG->getContentSize().height - preHeight;
-        if (CCCommonUtils::isIosAndroidPad())
-        {
-            dh = CCDirector::sharedDirector()->getWinSize().height - 2048.0;
+        if (CCCommonUtils::isIosAndroidPad()) {
+            int extH = getExtendHeight();
+            this->m_listContainer->setContentSize(CCSize(m_listContainer->getContentSize().width, m_listContainer->getContentSize().height + extH));
+            m_downNode->setPositionY(m_downNode->getPositionY() - extH);
+            m_bgNode->setPositionY(m_bgNode->getPositionY() - extH);
+            auto tbg = CCLoadSprite::loadResource("Mail_diban.png");
+            auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
+            auto picBg1 = CCLoadSprite::createSprite("Mail_diban.png");
+            picBg1->setAnchorPoint(ccp(0, 0));
+            picBg1->setPosition(ccp(0, 0));
+            picBg1->setScaleX(2.4);
+            tBatchNode->addChild(picBg1);
+            int maxHeight = CCDirector::sharedDirector()->getWinSize().height;
+            int curHeight = picBg1->getContentSize().height;
+            while(curHeight < maxHeight)
+            {
+                auto picBg2 = CCLoadSprite::createSprite("Mail_diban.png");
+                picBg2->setAnchorPoint(ccp(0, 0));
+                picBg2->setPosition(ccp(0, curHeight));
+                picBg2->setScaleX(2.4);
+                tBatchNode->addChild(picBg2);
+                curHeight += picBg2->getContentSize().height;
+            }
+            m_bgNode->addChild(tBatchNode);
         }
-        m_bg->setContentSize(CCSize(m_bg->getContentSize().width,m_bg->getContentSize().height+dh));
-        this->m_listContainer->setContentSize(CCSize(m_listContainer->getContentSize().width, m_listContainer->getContentSize().height + dh));
-        
+        else {
+            int extH = getExtendHeight();
+            this->m_listContainer->setContentSize(CCSize(m_listContainer->getContentSize().width, m_listContainer->getContentSize().height + extH));
+            m_downNode->setPositionY(m_downNode->getPositionY() - extH);
+            m_bgNode->setPositionY(m_bgNode->getPositionY() - extH);
+            auto tbg = CCLoadSprite::loadResource("Mail_diban.png");
+            auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
+            auto picBg1 = CCLoadSprite::createSprite("Mail_diban.png");
+            picBg1->setAnchorPoint(ccp(0, 0));
+            picBg1->setPosition(ccp(0, 0));
+            tBatchNode->addChild(picBg1);
+            int maxHeight = CCDirector::sharedDirector()->getWinSize().height;
+            int curHeight = picBg1->getContentSize().height;
+            while(curHeight < maxHeight)
+            {
+                auto picBg2 = CCLoadSprite::createSprite("Mail_diban.png");
+                picBg2->setAnchorPoint(ccp(0, 0));
+                picBg2->setPosition(ccp(0, curHeight));
+                tBatchNode->addChild(picBg2);
+                curHeight += picBg2->getContentSize().height;
+            }
+            m_bgNode->addChild(tBatchNode);
+        }
         m_scrollView = CCScrollView::create(m_listContainer->getContentSize());
         m_scrollView->setDirection(kCCScrollViewDirectionVertical);
         m_scrollView->setAnchorPoint(ccp(0, 1));
         m_scrollView->setTouchPriority(Touch_Popup);
         m_listContainer->addChild(m_scrollView);
-        m_downNode->setPositionY(m_downNode->getPositionY() - dh);
 
+        this->m_attackText->setFntFile("Arial_Bold_Regular.fnt");
+        this->m_timeText->setFntFile("Arial_Bold_Regular.fnt");
+        this->m_hintText->setFntFile("Arial_Bold_Regular.fnt");
 //        m_deleteBtnTitle->setString(_lang("108523").c_str());
         this->m_totalNode->removeChild(this->m_firstNode);
         this->m_totalNode->removeChild(this->m_upNode);
         this->m_totalNode->removeChild(this->m_failNode);
         this->m_scrollView->addChild(this->m_ListNode);
         this->m_ListNode->addChild(m_upNode);
-        this->m_upNode->setPositionX(0);
+        if (CCCommonUtils::isIosAndroidPad()) {
+            this->m_upNode->setPositionX(768);
+        }
+        else
+            this->m_upNode->setPositionX(320);
         m_totalH = 0;
-        this->m_upNode->setPositionY(m_totalH-300);
-        m_totalH-=300;
         if (CCCommonUtils::isIosAndroidPad())
         {
-            this->m_upNode->setPositionY(-625);
-            m_totalH = -650;
+            this->m_upNode->setPositionY(0);
+            m_totalH = -528;
+        }
+        else {
+            this->m_upNode->setPositionY(0);
+            m_totalH-=220;////////
         }
         isaddHeight = false;
         m_Listheight = 305;
         if (CCCommonUtils::isIosAndroidPad()) {
-            m_Listheight = 630;
+            m_Listheight = 732;
         }
         if(m_info->checkMail){
             ownerUid = m_info->shareUid;
@@ -145,34 +236,50 @@ bool BattleReportMailPopUpView::init(){
 
 void BattleReportMailPopUpView::refreshView(CCObject* p){
     m_shareBtn->setVisible(false);
+    if( m_info == nullptr )
+        return;
+        
     if(m_info->save==0){
-        m_unSaveBtn->setVisible(true);
-        m_addSaveBtn->setVisible(false);
+        m_addSaveBtn->setHighlighted(false);
     }else{
-        m_unSaveBtn->setVisible(false);
-        m_addSaveBtn->setVisible(true);
+        m_addSaveBtn->setHighlighted(true);
     }
-    this->m_mailTitle->setString(_lang_2("105518", CC_ITOA(m_info->warPoint.x), CC_ITOA(m_info->warPoint.y)));
+    this->m_attackText->setString(_lang_2("105518", CC_ITOA(m_info->warPoint.x), CC_ITOA(m_info->warPoint.y)));
     int h = 0;
-    std::string attName = m_info->attUser->valueForKey("name")->getCString();
-    if(m_info->attUser->objectForKey("alliance")){
-        std::string attAlName = m_info->attUser->valueForKey("alliance")->getCString();
-        if(!attAlName.empty()){
-            attName = "(" + attAlName +")" + attName;
-        }
-    }
-    attUid = m_info->attUser->valueForKey("uid")->getCString();
     
-    std::string defName = m_info->defUser->valueForKey("name")->getCString();
-    if(m_info->defUser->objectForKey("alliance")){
-        std::string defAlName = m_info->defUser->valueForKey("alliance")->getCString();
-        if(!defAlName.empty()){
-            defName = "(" + defAlName +")" + defName;
+    string attName = "";
+    if( m_info->attUser != nullptr)
+    {
+        if(m_info->attUser->objectForKey("name"))
+            attName = m_info->attUser->valueForKey("name")->getCString();
+        if(m_info->attUser->objectForKey("alliance")){
+            std::string attAlName = m_info->attUser->valueForKey("alliance")->getCString();
+            if(!attAlName.empty()){
+                attName = "(" + attAlName +")" + attName;
+            }
         }
+        if(m_info->attUser->objectForKey("uid"))
+            attUid = m_info->attUser->valueForKey("uid")->getCString();
     }
-    defUid = m_info->defUser->valueForKey("uid")->getCString();
-
-    std::string npcId = m_info->defUser->valueForKey("npcId")->getCString();
+    
+    string defName = "";
+    string npcId ="";
+    if( m_info->defUser != nullptr)
+    {
+        if(m_info->defUser->objectForKey("name"))
+            defName = m_info->defUser->valueForKey("name")->getCString();
+        if(m_info->defUser->objectForKey("alliance")){
+            std::string defAlName = m_info->defUser->valueForKey("alliance")->getCString();
+            if(!defAlName.empty()){
+                defName = "(" + defAlName +")" + defName;
+            }
+        }
+        if(m_info->defUser->objectForKey("uid"))
+            defUid = m_info->defUser->valueForKey("uid")->getCString();
+        if(m_info->defUser->objectForKey("npcId"))
+            npcId = m_info->defUser->valueForKey("npcId")->getCString();
+    }
+    
     bool isBoss = npcId!="";
     bool isAtt = false;
     if(ownerUid==attUid){
@@ -214,27 +321,40 @@ void BattleReportMailPopUpView::refreshView(CCObject* p){
         }
     }
     if(m_info->atkAlliance){
-        std::string nameStr = m_info->attUser->valueForKey("name")->getCString();
-        if(m_info->attUser->objectForKey("alliance")){
-            std::string alNameStr = m_info->attUser->valueForKey("alliance")->getCString();
-            if(!alNameStr.empty()){
-                nameStr = "(" + alNameStr + ")" + nameStr;
+        std::string nameStr = "";
+        if (m_info->attUser!=nullptr) {
+            if(m_info->attUser->objectForKey("name"))
+            {
+                nameStr = m_info->attUser->valueForKey("name")->getCString();
+            }
+            std::string alNameStr = "";
+            if(m_info->attUser->objectForKey("alliance"))
+            {
+                alNameStr = m_info->attUser->valueForKey("alliance")->getCString();
+                if(!alNameStr.empty()){
+                    nameStr = "(" + alNameStr + ")" + nameStr;
+                }
             }
         }
+        
         nameStr= _lang_1("105595", nameStr.c_str());
-
-       // string leagueName = m_info->atkAlliance->valueForKey("allianceName")->getCString();
         if(nameStr!=""){
             attName =nameStr;
         }
     }
+    
     if(m_info->defAlliance){
        // string leagueName = m_info->defAlliance->valueForKey("allianceName")->getCString();
-        std::string nameStr = m_info->defUser->valueForKey("name")->getCString();
-        if(m_info->defUser->objectForKey("alliance")){
-            std::string alNameStr = m_info->defUser->valueForKey("alliance")->getCString();
-            if(!alNameStr.empty()){
-                nameStr = "(" + alNameStr + ")" + nameStr;
+        std::string nameStr = "";
+        if( m_info->defUser != nullptr)
+        {
+            if(m_info->defUser->objectForKey("name"))
+                nameStr = m_info->defUser->valueForKey("name")->getCString();
+            if(m_info->defUser->objectForKey("alliance")){
+                std::string alNameStr = m_info->defUser->valueForKey("alliance")->getCString();
+                if(!alNameStr.empty()){
+                    nameStr = "(" + alNameStr +")" + nameStr;
+                }
             }
         }
         nameStr= _lang_1("105595", nameStr.c_str());
@@ -252,9 +372,9 @@ void BattleReportMailPopUpView::refreshView(CCObject* p){
     }
     if(npcId!=""){
         defName = CCCommonUtils::getNameById(npcId);
-        m_attackText->setString(_lang_2("105547", attName.c_str(), defName.c_str()));
+//        m_attackText->setString(_lang_2("105547", attName.c_str(), defName.c_str()));
     }else{
-        m_attackText->setString(_lang_2("105547", attName.c_str(), defName.c_str()));
+//        m_attackText->setString(_lang_2("105547", attName.c_str(), defName.c_str()));
     }
     //this->m_attackText->setString((attName + " " + _lang("105123") + " " + defName).c_str());
     
@@ -275,34 +395,39 @@ void BattleReportMailPopUpView::refreshView(CCObject* p){
     }
     switch (reportState) {
         case WIN:{
-            setTitleName(_lang("105117"));
+//            setTitleName(_lang("105117"));
+            m_mailTitle->setString(_lang("105117"));
             break;
         }
         case LOOSE:{
-            setTitleName(_lang("105118"));
+//            setTitleName(_lang("105118"));
+            m_mailTitle->setString(_lang("105118"));
             break;
         }
         default:{
-            setTitleName(_lang("105549"));
+//            setTitleName(_lang("105549"));
+            m_mailTitle->setString(_lang("105549"));
             break;
         }
     }
     if (m_info->msReport==1) {
         m_attackText->setString("");
-        this->m_mailTitle->setString("");
-        this->setTitleName(_lang("133053"));
+        this->m_attackText->setString("");
+//        this->setTitleName(_lang("133053"));
+        m_mailTitle->setString(_lang("133053"));
     }
     if (m_info->ckfWarInfo!=NULL) {
         handleLianShengInfo(0);
     }
+    m_battlePicNode->removeAllChildren();
     if(reportState==WIN){
         if(m_info->battleType==2){//caiji
             auto battlePic = CCLoadSprite::createSprite("Mail_caiji.png");
             this->m_battlePicNode->addChild(battlePic);
             if(isAtt||isatkHelp){
-                this->m_upTitle->setString(_lang("105117").c_str());
+                this->m_mailTitle->setString(_lang("105117").c_str());
             }else{
-                this->m_upTitle->setString(_lang("105117").c_str());
+                this->m_mailTitle->setString(_lang("105117").c_str());
             }
         }else if(m_info->battleType==3){
             std::string picUrl = "";
@@ -345,21 +470,21 @@ void BattleReportMailPopUpView::refreshView(CCObject* p){
                     }
                 }
             }
-            this->m_upTitle->setString(name.c_str());
+            this->m_mailTitle->setString(name.c_str());
             auto battlePic = CCLoadSprite::createSprite(picUrl.c_str());
             this->m_battlePicNode->addChild(battlePic);
         }else if(m_info->battleType==4){//zhaying
-            auto battlePic = CCLoadSprite::createSprite("Mail_zhencha_succeed.png");
+            auto battlePic = CCLoadSprite::createSprite("Mail_gongcheng_succeed.png");
             this->m_battlePicNode->addChild(battlePic);
             if(isAtt||isatkHelp){
-                this->m_upTitle->setString(_lang("105117").c_str());
+                this->m_mailTitle->setString(_lang("105117").c_str());
             }else{
-                this->m_upTitle->setString(_lang("105117").c_str());
+                this->m_mailTitle->setString(_lang("105117").c_str());
             }
         }else if(m_info->battleType==6){
             auto battlePic = CCLoadSprite::createSprite("Mail_monster.png");
             this->m_battlePicNode->addChild(battlePic);
-            this->m_upTitle->setString(_lang("133053"));
+            this->m_mailTitle->setString(_lang("133053"));
             handleMonsterBattleInfo(0);
         }else if(m_info->battleType==7){
             auto battlePic = CCLoadSprite::createSprite("Mail_gongcheng_succeed.png");
@@ -381,16 +506,16 @@ void BattleReportMailPopUpView::refreshView(CCObject* p){
                     titleStr = _lang("115542");
                 }
             }
-            this->m_upTitle->setString(titleStr.c_str());
+            this->m_mailTitle->setString(titleStr.c_str());
         }else if(m_info->msReport==1){
             auto battlePic = CCLoadSprite::createSprite("Mail_monster.png");
             this->m_battlePicNode->addChild(battlePic);
-            this->m_upTitle->setString(_lang("133083"));
+            this->m_mailTitle->setString(_lang("133083"));
             handleMonsterBattleInfo(0);
         }else{
             auto battlePic = CCLoadSprite::createSprite("Mail_gongcheng_succeed.png");
             this->m_battlePicNode->addChild(battlePic);
-            this->m_upTitle->setString(_lang("105117").c_str());
+            this->m_mailTitle->setString(_lang("105117").c_str());
         }
     }else{
 
@@ -398,9 +523,9 @@ void BattleReportMailPopUpView::refreshView(CCObject* p){
             auto battlePic = CCLoadSprite::createSprite("Mail_gongcheng_Failure.png");
             this->m_battlePicNode->addChild(battlePic);
             if(isAtt||isatkHelp){
-                this->m_upTitle->setString(_lang("105118").c_str());
+                this->m_mailTitle->setString(_lang("105118").c_str());
             }else{
-                this->m_upTitle->setString(_lang("105118").c_str());
+                this->m_mailTitle->setString(_lang("105118").c_str());
             }
         }else if(m_info->battleType==3){
             this->m_battlePicNode->removeAllChildren();
@@ -487,19 +612,19 @@ void BattleReportMailPopUpView::refreshView(CCObject* p){
             }
             auto battlePic = CCLoadSprite::createSprite(picUrl.c_str());
             this->m_battlePicNode->addChild(battlePic);
-            this->m_upTitle->setString(name.c_str());
+            this->m_mailTitle->setString(name.c_str());
         }else if(m_info->battleType==4){
             auto battlePic = CCLoadSprite::createSprite("Mail_gongcheng_Failure.png");
             this->m_battlePicNode->addChild(battlePic);
             if(isAtt||isatkHelp){
-                this->m_upTitle->setString(_lang("105118").c_str());
+                this->m_mailTitle->setString(_lang("105118").c_str());
             }else{
-                this->m_upTitle->setString(_lang("105118").c_str());
+                this->m_mailTitle->setString(_lang("105118").c_str());
             }
         }else if(m_info->battleType==6){
             auto battlePic = CCLoadSprite::createSprite("Mail_monster.png");
             this->m_battlePicNode->addChild(battlePic);
-            this->m_upTitle->setString(_lang("133053"));
+            this->m_mailTitle->setString(_lang("133053"));
             handleMonsterBattleInfo(0);
         }else if(m_info->battleType==7){
             auto battlePic = CCLoadSprite::createSprite("Mail_gongcheng_Failure.png");
@@ -521,64 +646,68 @@ void BattleReportMailPopUpView::refreshView(CCObject* p){
                     titleStr = _lang("115543");
                 }
             }
-            this->m_upTitle->setString(titleStr.c_str());
+            this->m_mailTitle->setString(titleStr.c_str());
         }else if(m_info->msReport==1){
             auto battlePic = CCLoadSprite::createSprite("Mail_monster.png");
             this->m_battlePicNode->addChild(battlePic);
-            this->m_upTitle->setString(_lang("133083"));
+            this->m_mailTitle->setString(_lang("133083"));
             handleMonsterBattleInfo(0);
         }else{
             auto battlePic = CCLoadSprite::createSprite("Mail_gongcheng_Failure.png");
             this->m_battlePicNode->addChild(battlePic);
-            this->m_upTitle->setString(_lang("105118").c_str());
+            this->m_mailTitle->setString(_lang("105118").c_str());
         }
     }
+    ///////////
     if(m_info->battleType==6){//怪物攻城
         addMonsterAndUserInfo(0, h, m_info->defGen, m_info->defReport,isBoss);
     }else if(m_info->msReport!=1){
         if(isbigLoss){
-            DetectBgCell* bgCell = DetectBgCell::create("");
+//            DetectBgCell* bgCell = DetectBgCell::create("");
             int cellH = m_hintBG->getContentSize().height + 60;
             if (CCCommonUtils::isIosAndroidPad())
             {
-                cellH = m_hintBG->getContentSize().height * 2 + 120;
+                cellH = m_hintBG->getContentSize().height+ 144;
             }
-            bgCell->setBgHeight(cellH);
+//            bgCell->setBgHeight(cellH);
+//            bgCell->setPosition(0, m_totalH-10);
+            m_failNode->setPosition(320, m_totalH);
+            if (CCCommonUtils::isIosAndroidPad())
+            {
+                m_failNode->setPosition(768, m_totalH);
+            }
             m_totalH -= cellH;
-            bgCell->setPosition(0, m_totalH-10);
-            if (CCCommonUtils::isIosAndroidPad())
-            {
-                bgCell->setPositionX(30);
-            }
-            this->m_ListNode->addChild(bgCell);
-            bgCell->addChild(m_failNode);
-            bgCell->m_kuangbg->setVisible(false);
-            m_failNode->setPosition(310, cellH*0.5);
-            if (CCCommonUtils::isIosAndroidPad())
-            {
-                m_failNode->setPosition(710, m_hintBG->getContentSize().height + 18);
-            }
+//            if (CCCommonUtils::isIosAndroidPad())
+//            {
+//                bgCell->setPositionX(0);
+//            }
+            this->m_ListNode->addChild(m_failNode);
+//            m_totalNode->addChild(m_failNode);
+//            bgCell->m_kuangbg->setVisible(false);
+            
             m_Listheight += cellH-30;
         }else{
             if(m_info->isResourceShieldState){
-                DetectBgCell* bgCell = DetectBgCell::create("");
+//                DetectBgCell* bgCell = DetectBgCell::create("");
                 int cellH = m_hintBG->getContentSize().height + 60;
                 if (CCCommonUtils::isIosAndroidPad()) {
-                    cellH = m_hintBG->getContentSize().height * m_hintBG->getScaleY() + 120;
+                    cellH = m_hintBG->getContentSize().height * m_hintBG->getScaleY() + 144;
                 }
-                bgCell->setBgHeight(cellH);
-                m_totalH -= cellH;
-                bgCell->setPosition(0, m_totalH-10);
-                this->m_ListNode->addChild(bgCell);
-                bgCell->addChild(m_failNode);
-                bgCell->m_kuangbg->setVisible(false);
+//                bgCell->setBgHeight(cellH);
+//                
+//                bgCell->setPosition(0, m_totalH-10);
+                this->m_ListNode->addChild(m_failNode);
+//                m_totalNode->addChild(m_failNode);
+//                bgCell->m_kuangbg->setVisible(false);
                 if (CCCommonUtils::isIosAndroidPad())
                 {
-                    m_failNode->setPosition(710, cellH*0.5);
+                    m_failNode->setPosition(768, m_totalH);
+                    m_totalH -= cellH;
                     m_Listheight+=cellH;
                     m_totalH -= 50;
                 } else {
-                    m_failNode->setPosition(310, cellH*0.5);
+                    m_failNode->setPosition(320, m_totalH);
+                    m_totalH -= cellH;
                     m_Listheight+=cellH;
                     m_totalH -= 25;
                 }
@@ -591,20 +720,20 @@ void BattleReportMailPopUpView::refreshView(CCObject* p){
             int h1 = 0;
             int h2 = 0;
             if(isatkHelp||attUid == ownerUid){
-                h1 = addUserInfo(0, h, m_info->atkGen, m_info->attReport);
-                h2 = addUserInfo(this->m_listContainer->getContentSize().width / 2, h, m_info->defGen, m_info->defReport,isBoss);
-                int height1 = addUserEffect(0, 0, mAtkWarEff);
-                int height2 = addUserEffect(this->m_listContainer->getContentSize().width / 2,0,mDefWarEff);
+                h1 = addUserInfo(7, h, m_info->atkGen, m_info->attReport);
+                h2 = addUserInfo(this->m_listContainer->getContentSize().width / 2 + 7, h, m_info->defGen, m_info->defReport,isBoss);
+                int height1 = addUserEffect(7, 0, mAtkWarEff);
+                int height2 = addUserEffect(this->m_listContainer->getContentSize().width / 2 + 7,0,mDefWarEff);
                 int addH = MAX(height1, height2);
                 if(addH>0){
                     m_Listheight += addH + 15;
                     m_totalH -= (addH + 30);
                 }
             }else{
-                h1 = addUserInfo(0, h, m_info->defGen, m_info->defReport,isBoss);
-                h2 = addUserInfo(this->m_listContainer->getContentSize().width / 2, h, m_info->atkGen, m_info->attReport);
-                int height1 =  addUserEffect(0, 0, mDefWarEff);
-                int height2 = addUserEffect(this->m_listContainer->getContentSize().width / 2,0,mAtkWarEff);
+                h1 = addUserInfo(7, h, m_info->defGen, m_info->defReport,isBoss);
+                h2 = addUserInfo(this->m_listContainer->getContentSize().width / 2 + 7, h, m_info->atkGen, m_info->attReport);
+                int height1 =  addUserEffect(7, 0, mDefWarEff);
+                int height2 = addUserEffect(this->m_listContainer->getContentSize().width / 2 + 7,0,mAtkWarEff);
                 int addH = MAX(height1, height2);
                 if(addH>0){
                     m_Listheight += addH + 15;
@@ -642,7 +771,7 @@ void BattleReportMailPopUpView::refreshView(CCObject* p){
             {
                 m_totalH -= 30;
                 //m_detailBtn->setPosition(160, m_totalH-32);
-                m_detailBtn->setPosition(740, m_totalH-64);
+                m_detailBtn->setPosition(768, m_totalH-64);
                 m_totalH -= 128;
                 m_Listheight+=190;
             } else {
@@ -675,10 +804,10 @@ void BattleReportMailPopUpView::refreshView(CCObject* p){
     
     if(m_info->checkMail){
         m_addSaveBtn->setVisible(false);
-        m_unSaveBtn->setVisible(false);
         m_deleteBtn->setVisible(false);
+        m_attackText->setString(_lang("115281"));
+//        setTitleName(_lang("115281"));
         m_mailTitle->setString(_lang("115281"));
-        setTitleName(_lang("115281"));
     }
     if(GlobalData::shared()->playerInfo.isInAlliance() && !m_info->checkMail && m_info->battleType!=6 && m_info->msReport!=1){
         m_shareBtn->setVisible(true);
@@ -694,23 +823,23 @@ int BattleReportMailPopUpView::addMonsterAndUserInfo(int startX, int startY, CCA
         m_totalH -= 300;
     }
     cell1->setPosition(0, m_totalH);
-    if (CCCommonUtils::isIosAndroidPad())
-    {
-        cell1->setPositionX(30);
-    }
+//    if (CCCommonUtils::isIosAndroidPad())
+//    {
+//        cell1->setPositionX(30);
+//    }
     if (m_info->failTimes>0) {
         if (CCCommonUtils::isIosAndroidPad())
         {
-            m_Listheight += 580;
-            m_totalH -= 580;
+            m_Listheight += 660;
+            m_totalH -= 660;
         } else {
             m_Listheight+=275;
             m_totalH -= 275;
         }
     }else{
         if (CCCommonUtils::isIosAndroidPad()) {
-            m_Listheight+=560;
-            m_totalH -= 560;
+            m_Listheight+=636;
+            m_totalH -= 636;
         } else {
             m_Listheight+=265;
             m_totalH -= 265;
@@ -719,9 +848,9 @@ int BattleReportMailPopUpView::addMonsterAndUserInfo(int startX, int startY, CCA
     cell1 = MonsterInfoCell::create(m_info->defUser,m_info->defGen,m_info);
     this->m_ListNode->addChild(cell1);
     cell1->setPosition(0, m_totalH);
-    if (CCCommonUtils::isIosAndroidPad()) {
-        cell1->setPositionX(30);
-    }
+//    if (CCCommonUtils::isIosAndroidPad()) {
+//        cell1->setPositionX(30);
+//    }
     
     if (CCCommonUtils::isIosAndroidPad())
     {
@@ -753,8 +882,10 @@ int BattleReportMailPopUpView::getReportResult(){
             }
         }
     }
-    attUid = m_info->attUser->valueForKey("uid")->getCString();
-    defUid = m_info->defUser->valueForKey("uid")->getCString();
+    if(m_info->attUser!=nullptr && m_info->attUser->objectForKey("uid"))
+        attUid = m_info->attUser->valueForKey("uid")->getCString();
+    if(m_info->defUser!=nullptr && m_info->defUser->objectForKey("uid"))
+        defUid = m_info->defUser->valueForKey("uid")->getCString();
     if(attUid==ownerUid){
         isatkHelp = true;
     }
@@ -780,78 +911,197 @@ int BattleReportMailPopUpView::addRewards(int offY){
     if(m_info->reward->count()<=0){
         return 0;
     }
-    float startY = offY;
-    CCArray *arr = m_info->reward;
-    int rowNum = arr->count();
-    DetectBgCell* bgCell = DetectBgCell::create(_lang("104904").c_str());
-    float preh =bgCell->getBgCellHeight();
-    if(rowNum>2){
+    CCArray* rewardSort = sortResource();
+    
+    if (getReportResult() == LOOSE && ownerUid == defUid) {
+        rewardSort->reverseObjects();
+        float startY = offY;
+        CCArray *arr = m_info->reward;
+        DetectBgCell* bgCell = DetectBgCell::create(_lang("104904").c_str());
+        float preh =bgCell->getBgCellHeight();
+        int rowNum = 4;//4种资源
         int bgHeight = (rowNum-2)*40+bgCell->getBgCellHeight();
         if (CCCommonUtils::isIosAndroidPad())
         {
-            bgHeight = (rowNum - 2) * 80 + bgCell->getBgCellHeight();
+            bgHeight = (rowNum - 2) * 96 + bgCell->getBgCellHeight();
         }
         bgCell->setBgHeight(bgHeight);
-    }
-    m_totalH -= bgCell->getBgCellHeight() + 10;
-    if (CCCommonUtils::isIosAndroidPad())
-    {
-//        m_totalH -= 10;
-    }
-    bgCell->setPosition(0, m_totalH);
-    if (CCCommonUtils::isIosAndroidPad())
-    {
-        bgCell->setPositionX(30);
-    }
-    this->m_ListNode->addChild(bgCell);
-    m_Listheight+=40;
-    m_Listheight+=bgCell->getBgCellHeight();
-    int i = 0;
-
-    std::string defUid = m_info->defUser->valueForKey("uid")->getCString();
-    while(i < m_info->reward->count()){
-        CCDictionary *dict = dynamic_cast<CCDictionary*>(m_info->reward->objectAtIndex(i));
-        int type = 0;
-        int value = 0;
-        int itemId = 0;
-        if(offY<0){
-            type = dict->valueForKey("t")->intValue();
-            value = dict->valueForKey("v")->intValue();
-            itemId = dict->valueForKey("id")->intValue();
-        }else{
-            type = dict->valueForKey("t")->intValue();
-            value = dict->valueForKey("v")->intValue();
-            itemId = dict->valueForKey("v")->intValue();
+        m_totalH -= bgCell->getBgCellHeight() + 10;
+        bgCell->setPosition(0, m_totalH);
+        if (CCCommonUtils::isIosAndroidPad())
+        {
+            bgCell->setPositionX(0);
         }
-        if(defUid == ownerUid){
+        this->m_ListNode->addChild(bgCell);
+        m_Listheight+=40;
+        m_Listheight+=bgCell->getBgCellHeight();
+        int i = 0;
         
-            //value= -value;
-        }
-        auto cell = DetectRewardPreviewCell::create(type, value);
-        cell->setAnchorPoint(ccp(0, 0));
-        int posX = 60;
-        cell->setPosition(ccp(posX,  40+i*40));
-        if (CCCommonUtils::isIosAndroidPad()) {
-//            posX = 120;
-            cell->setPosition(ccp(posX, 65 + i * 80));
-        }
-
-        i++;
-        if(rowNum==1){
-            cell->setPosition(ccp(posX,  40+20));
-            if (CCCommonUtils::isIosAndroidPad()) {
-                cell->setPosition(ccp(posX, 65 + 40));
+        std::string defUid = "";
+        if(m_info->defUser!=nullptr && m_info->defUser->objectForKey("uid"))
+            defUid = m_info->defUser->valueForKey("uid")->getCString();
+        while(i < rewardSort->count()){
+            CCDictionary *dict = dynamic_cast<CCDictionary*>(rewardSort->objectAtIndex(i));
+            int type = 0;
+            int value = 0;
+            int itemId = 0;
+            int total = 0;
+            if(offY<0){
+                type = dict->valueForKey("t")->intValue();
+                value = dict->valueForKey("v")->intValue();
+                itemId = dict->valueForKey("id")->intValue();
+            }else{
+                type = dict->valueForKey("t")->intValue();
+                value = dict->valueForKey("v")->intValue();
+                itemId = dict->valueForKey("v")->intValue();
             }
+            if(defUid == ownerUid){
+                
+                //value= -value;
+            }
+            ///防守方余多少资源
+            if (type == R_FOOD) {
+                if (m_info->defRemainRes && m_info->defRemainRes->objectForKey("food")) {
+                    total = m_info->defRemainRes->valueForKey("food")->intValue();
+                }
+            }
+            else if (type == R_WOOD) {
+                if (m_info->defRemainRes && m_info->defRemainRes->objectForKey("wood")) {
+                    total = m_info->defRemainRes->valueForKey("wood")->intValue();
+                }
+            }
+            else if (type == R_STONE) {
+                if (m_info->defRemainRes && m_info->defRemainRes->objectForKey("stone")) {
+                    total = m_info->defRemainRes->valueForKey("stone")->intValue();
+                }
+            }
+            else if (type == R_IRON) {
+                if (m_info->defRemainRes && m_info->defRemainRes->objectForKey("iron")) {
+                    total = m_info->defRemainRes->valueForKey("iron")->intValue();
+                }
+            }
+            
+            auto cell = BattleReportRewardCell::create(type, value, 0, total+abs(value));
+            cell->setAnchorPoint(ccp(0, 0));
+            switch (rewardSort->count()) {
+                case 1: {
+                    cell->setPosition(265,0);
+                    if (CCCommonUtils::isIosAndroidPad()) {
+                        cell->setPosition(636, 0);
+                    }
+                }
+                    break;
+                case 2: {
+                    cell->setPosition(105+i*320,0);
+                    if (CCCommonUtils::isIosAndroidPad()) {
+                        cell->setPosition(252+i*768, 0);
+                    }
+                
+                }
+                    break;
+                case 3: {
+                    cell->setPosition(52+i*213,0);
+                    if (CCCommonUtils::isIosAndroidPad()) {
+                        cell->setPosition(125+i*511, 0);
+                    }
+                }
+                    break;
+                case 4: {
+                    cell->setPosition(25+i*160,0);
+                    if (CCCommonUtils::isIosAndroidPad()) {
+                        cell->setPosition(60+i*384, 0);
+                    }
+                }
+                    break;
+                default:
+                    break;
+            }
+            bgCell->m_bg->addChild(cell);
+            i++;
         }
-        bgCell->m_bg->addChild(cell);
+        m_totalH-=15;
+        if (CCCommonUtils::isIosAndroidPad()) {
+            m_totalH -= 15;
+        }
         
+        return startY;
     }
-    m_totalH-=15;
-    if (CCCommonUtils::isIosAndroidPad()) {
-        m_totalH -= 15;
+    else {
+        float startY = offY;
+        CCArray *arr = m_info->reward;
+        int rowNum = arr->count();
+        DetectBgCell* bgCell = DetectBgCell::create(_lang("104904").c_str());
+        float preh =bgCell->getBgCellHeight();
+        if(rowNum>2){
+            int bgHeight = (rowNum-2)*40+bgCell->getBgCellHeight();
+            if (CCCommonUtils::isIosAndroidPad())
+            {
+                bgHeight = (rowNum - 2) * 96 + bgCell->getBgCellHeight();
+            }
+            bgCell->setBgHeight(bgHeight);
+        }
+        m_totalH -= bgCell->getBgCellHeight() + 10;
+        if (CCCommonUtils::isIosAndroidPad())
+        {
+            //        m_totalH -= 10;
+        }
+        bgCell->setPosition(0, m_totalH);
+        if (CCCommonUtils::isIosAndroidPad())
+        {
+            bgCell->setPositionX(0);
+        }
+        this->m_ListNode->addChild(bgCell);
+        m_Listheight+=40;
+        m_Listheight+=bgCell->getBgCellHeight();
+        int i = 0;
+        
+        std::string defUid = "";
+        if(m_info->defUser!=nullptr && m_info->defUser->objectForKey("uid"))
+            defUid = m_info->defUser->valueForKey("uid")->getCString();
+        while(i < rewardSort->count()){
+            CCDictionary *dict = dynamic_cast<CCDictionary*>(rewardSort->objectAtIndex(i));
+            int type = 0;
+            int value = 0;
+            int itemId = 0;
+            if(offY<0){
+                type = dict->valueForKey("t")->intValue();
+                value = dict->valueForKey("v")->intValue();
+                itemId = dict->valueForKey("id")->intValue();
+            }else{
+                type = dict->valueForKey("t")->intValue();
+                value = dict->valueForKey("v")->intValue();
+                itemId = dict->valueForKey("v")->intValue();
+            }
+            if(defUid == ownerUid){
+                
+                //value= -value;
+            }
+            auto cell = DetectRewardPreviewCell::create(type, value);
+            cell->setAnchorPoint(ccp(0, 0));
+            int posX = 60;
+            cell->setPosition(ccp(posX,  40+i*40));
+            if (CCCommonUtils::isIosAndroidPad()) {
+                //            posX = 120;
+                cell->setPosition(ccp(posX, 96 + i * 96));
+            }
+            
+            i++;
+            if(rowNum==1){
+                cell->setPosition(ccp(posX,  40+20));
+                if (CCCommonUtils::isIosAndroidPad()) {
+                    cell->setPosition(ccp(posX, 96 + 48));
+                }
+            }
+            bgCell->m_bg->addChild(cell);
+            
+        }
+        m_totalH-=15;
+        if (CCCommonUtils::isIosAndroidPad()) {
+            m_totalH -= 15;
+        }
+        
+        return startY;
     }
-
-    return startY;
 }
 
 int BattleReportMailPopUpView::handleMonsterBattleInfo(int offY){
@@ -863,15 +1113,15 @@ int BattleReportMailPopUpView::handleMonsterBattleInfo(int offY){
         int bgHeight = (rowNum-2)*40+bgCell->getBgCellHeight();
         if (CCCommonUtils::isIosAndroidPad())
         {
-            bgHeight = (rowNum - 2) * 80 + bgCell->getBgCellHeight();
+            bgHeight = (rowNum - 2) * 96 + bgCell->getBgCellHeight();
         }
         bgCell->setBgHeight(bgHeight);
     }
     m_totalH -= bgCell->getBgCellHeight() + 10;
     bgCell->setPosition(0, m_totalH);
-    if (CCCommonUtils::isIosAndroidPad()) {
-        bgCell->setPositionX(30);
-    }
+//    if (CCCommonUtils::isIosAndroidPad()) {
+//        bgCell->setPositionX(30);
+//    }
     this->m_ListNode->addChild(bgCell);
     m_Listheight+=40;
     m_Listheight+=bgCell->getBgCellHeight();
@@ -882,6 +1132,7 @@ int BattleReportMailPopUpView::handleMonsterBattleInfo(int offY){
     
     if (m_info->msReport==1) {
         txt = CCLabelIF::create("", 20);
+        txt->setFntFile("Arial_Bold_Regular.fnt");
         txt->setAnchorPoint(ccp(0, 0.5));
         txt->setColor({130,99,56});
         txt->setPosition(ccp(30, 145));
@@ -910,6 +1161,7 @@ int BattleReportMailPopUpView::handleMonsterBattleInfo(int offY){
         }
         
         txt = CCLabelIF::create("", 20);
+        txt->setFntFile("Arial_Bold_Regular.fnt");
         txt->setAnchorPoint(ccp(0, 0.5));
         txt->setColor({130,99,56});
         txt->setPosition(ccp(30, hTxt));
@@ -922,6 +1174,7 @@ int BattleReportMailPopUpView::handleMonsterBattleInfo(int offY){
         }
         
         CCLabelIF* boTxt = CCLabelIF::create("", 20);
+        boTxt->setFntFile("Arial_Bold_Regular.fnt");
         boTxt->setAnchorPoint(ccp(0, 0.5));
         boTxt->setColor({125,35,29});
         boTxt->setPosition(ccp(30+txt->getContentSize().width*txt->getOriginScaleX()+10, hTxt));
@@ -938,6 +1191,7 @@ int BattleReportMailPopUpView::handleMonsterBattleInfo(int offY){
             hTxt -= 10;
         }
         txt = CCLabelIF::create("", 20);
+        txt->setFntFile("Arial_Bold_Regular.fnt");
         txt->setAnchorPoint(ccp(0, 0.5));
         txt->setColor({130,99,56});
         txt->setPosition(ccp(30, hTxt));
@@ -950,6 +1204,7 @@ int BattleReportMailPopUpView::handleMonsterBattleInfo(int offY){
         }
         
         CCLabelIF* killTxt = CCLabelIF::create("", 20);
+        killTxt->setFntFile("Arial_Bold_Regular.fnt");
         killTxt->setAnchorPoint(ccp(0, 0.5));
         killTxt->setColor({125,35,29});
         killTxt->setPosition(ccp(30+txt->getContentSize().width*txt->getOriginScaleX()+10, hTxt));
@@ -963,13 +1218,15 @@ int BattleReportMailPopUpView::handleMonsterBattleInfo(int offY){
         hTxt -= txt->getContentSize().height*txt->getOriginScaleY();
         hTxt -= 5;
         if (CCCommonUtils::isIosAndroidPad()) {
-            hTxt -= 5;
+            hTxt -= 10;
         }
         txt = CCLabelIF::create("", 20);
+        txt->setFntFile("Arial_Bold_Regular.fnt");
         txt->setAnchorPoint(ccp(0, 0.5));
         txt->setColor({130,99,56});
         txt->setPosition(ccp(30, hTxt));
         txt->setString(_lang("133056"));
+        txt->setDimensions(CCSize(530, 0));
         bgCell->m_bg->addChild(txt);
         if (CCCommonUtils::isIosAndroidPad()) {
             txt->setFontSize(40);
@@ -977,6 +1234,7 @@ int BattleReportMailPopUpView::handleMonsterBattleInfo(int offY){
         }
     }else{
         txt = CCLabelIF::create("", 20);
+        txt->setFntFile("Arial_Bold_Regular.fnt");
         txt->setAnchorPoint(ccp(0, 0.5));
         txt->setColor({130,99,56});
         txt->setPosition(ccp(30, 130));
@@ -990,6 +1248,7 @@ int BattleReportMailPopUpView::handleMonsterBattleInfo(int offY){
         }
         
         CCLabelIF* killTxt = CCLabelIF::create("", 20);
+        killTxt->setFntFile("Arial_Bold_Regular.fnt");
         killTxt->setAnchorPoint(ccp(0, 0.5));
         killTxt->setColor({125,35,29});
         killTxt->setPosition(ccp(30+txt->getContentSize().width*txt->getOriginScaleX()+10, 130));
@@ -1001,10 +1260,12 @@ int BattleReportMailPopUpView::handleMonsterBattleInfo(int offY){
         }
         
         txt = CCLabelIF::create("", 20);
+        txt->setFntFile("Arial_Bold_Regular.fnt");
         txt->setAnchorPoint(ccp(0, 0.5));
         txt->setColor({130,99,56});
         txt->setPosition(ccp(30, 100));
         txt->setString(_lang("133056"));
+        txt->setDimensions(CCSize(530, 0));
         bgCell->m_bg->addChild(txt);
         if (CCCommonUtils::isIosAndroidPad()) {
             txt->setFontSize(40);
@@ -1045,6 +1306,7 @@ int BattleReportMailPopUpView::handleLianShengInfo(int offY){
     string temp = "";
     
     txt = CCLabelIF::create("", 20);
+    txt->setFntFile("Arial_Bold_Regular.fnt");
     txt->setAnchorPoint(ccp(0, 0.5));
     txt->setColor({130,99,56});
     txt->setPosition(ccp(30, 145));
@@ -1067,6 +1329,7 @@ int BattleReportMailPopUpView::handleLianShengInfo(int offY){
         hTxt = 292 - txt->getContentSize().height * txt->getOriginScaleY() - 10;
     }
     txt = CCLabelIF::create("", 20);
+    txt->setFntFile("Arial_Bold_Regular.fnt");
     txt->setAnchorPoint(ccp(0, 0.5));
     txt->setColor({130,99,56});
     txt->setPosition(ccp(30, hTxt));
@@ -1086,6 +1349,7 @@ int BattleReportMailPopUpView::handleLianShengInfo(int offY){
         hTxt -= 5;
     }
     txt = CCLabelIF::create("", 20);
+    txt->setFntFile("Arial_Bold_Regular.fnt");
     txt->setAnchorPoint(ccp(0, 0.5));
     txt->setColor({130,99,56});
     txt->setPosition(ccp(30, hTxt));
@@ -1098,7 +1362,10 @@ int BattleReportMailPopUpView::handleLianShengInfo(int offY){
         if (defUid==m_info->winner) {
             temp = _lang("138154");
         }else{
-            temp = _lang_2("138119",m_info->ckfWarInfo->valueForKey("winNum")->getCString(),m_info->ckfWarInfo->valueForKey("addScore")->getCString());
+            int addScore = m_info->ckfWarInfo->valueForKey("addScore")->intValue();
+            if (addScore>0) {
+                temp = _lang_2("138119",m_info->ckfWarInfo->valueForKey("winNum")->getCString(),m_info->ckfWarInfo->valueForKey("addScore")->getCString());
+            }
         }
 
     }else{
@@ -1125,11 +1392,11 @@ int BattleReportMailPopUpView::addUserInfo(int startX, int startY, CCArray *arr,
         m_Listheight+=height+15;
         m_totalH -=(height -15);
     }
-    playerCell->setPosition(startX + 8, m_totalH);
+    playerCell->setPosition(startX, m_totalH);
     
     if (CCCommonUtils::isIosAndroidPad())
     {
-        playerCell->setPositionX(playerCell->getPositionX() + 20);
+        playerCell->setPositionX(playerCell->getPositionX() + 10);
     }
 
     return startY;
@@ -1141,7 +1408,7 @@ int BattleReportMailPopUpView::addUserEffect(int startX, int startY, std::vector
         int height = pEffCell->getContentSize().height;
         pEffCell->setPosition(startX,m_totalH - (height + 20));
         if (CCCommonUtils::isIosAndroidPad()) {
-            pEffCell->setPositionX(pEffCell->getPositionX() + 28);
+            pEffCell->setPositionX(pEffCell->getPositionX() + 10);
         }
         return height;
     }
@@ -1198,6 +1465,7 @@ void BattleReportMailPopUpView::initBattleReportWarEffect(std::map<int,int> &eff
                 eff.effectOrder = (*iter).second.mail_order;
                 eff.effectType = (*iter).second.show;
                 eff.effectValue = value;
+                eff.effectMark = (*iter).second.buff;
                 if(attack){
                     mAtkWarEff.push_back(eff);
                 }else{
@@ -1283,27 +1551,31 @@ void BattleReportMailPopUpView::getData(){
 bool BattleReportMailPopUpView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode){
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_listContainer", CCNode*, this->m_listContainer);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_mailTitle", CCLabelIF*, this->m_mailTitle);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_attackText", Label*, this->m_attackText);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_attackText", CCLabelIF*, this->m_attackText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_failNode", CCNode*, this->m_failNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_timeText", CCLabelIF*, this->m_timeText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_hintText", CCLabelIF*, this->m_hintText);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_upTitle", CCLabelIF*, this->m_upTitle);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_upTitle", CCLabelIF*, this->m_upTitle);
     //CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_reportBtn", CCControlButton*, this->m_reportBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_deleteBtn", CCControlButton*, this->m_deleteBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_buildBG", CCScale9Sprite*, this->m_buildBG);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_downNode", CCNode*, this->m_downNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bgNode", CCNode*, this->m_bgNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_firstNode", CCNode*, this->m_firstNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_upNode", CCNode*, this->m_upNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_totalNode", CCNode*, this->m_totalNode);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bg", CCScale9Sprite*, this->m_bg);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bg", CCScale9Sprite*, this->m_bg);
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_detailBtn", CCControlButton*, this->m_detailBtn);
 
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_unSaveBtn", CCControlButton*, this->m_unSaveBtn);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_unSaveBtn", CCControlButton*, this->m_unSaveBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_addSaveBtn", CCControlButton*, this->m_addSaveBtn);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_writeBtn", CCControlButton*, this->m_writeBtn);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_returnBtn", CCControlButton*, this->m_returnBtn);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_returnSpr", CCSprite*, this->m_returnSpr);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_battlePicNode", CCNode*, this->m_battlePicNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_shareBtn", CCControlButton*, this->m_shareBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_hintBG", CCScale9Sprite*, this->m_hintBG);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_hintLine", CCSprite*, this->m_hintLine);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_hintLine", CCSprite*, this->m_hintLine);
 
     return false;
 }
@@ -1314,9 +1586,17 @@ SEL_CCControlHandler BattleReportMailPopUpView::onResolveCCBCCControlSelector(co
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onBattleDetailClick", BattleReportMailPopUpView::onBattleDetailClick);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onAddSaveClick", BattleReportMailPopUpView::onAddSaveClick);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onShareClick", BattleReportMailPopUpView::onShareClick);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onReturnClick", BattleReportMailPopUpView::onReturnClick);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onWriteClick", BattleReportMailPopUpView::onWriteClick);
     return NULL;
 }
+void BattleReportMailPopUpView::onReturnClick(cocos2d::CCObject *pSender, CCControlEvent pCCControlEvent){
+    PopupViewController::getInstance()->goBackPopupView();
+}
 
+void BattleReportMailPopUpView::onWriteClick(cocos2d::CCObject *pSender, CCControlEvent pCCControlEvent){
+    PopupViewController::getInstance()->addPopupInView(MailWritePopUpView::create("", ""));
+}
 void BattleReportMailPopUpView::onShareClick(CCObject *pSender, CCControlEvent event){
     double gapTime = m_info->shareTime -GlobalData::shared()->getWorldTime();
     if(gapTime<0){
@@ -1325,14 +1605,20 @@ void BattleReportMailPopUpView::onShareClick(CCObject *pSender, CCControlEvent e
         int result = this->getReportResult();
         std::string attName = "";
         if(m_info->attUser){
-            attName = m_info->attUser->valueForKey("name")->getCString();
+            if (m_info->attUser->objectForKey("name")) {
+                attName = m_info->attUser->valueForKey("name")->getCString();
+            }
             if(m_info->attUser->objectForKey("alliance"))
             {
                 std::string asn = m_info->attUser->valueForKey("alliance")->getCString();
                 attName = std::string("(") + asn + ")" + m_info->attUser->valueForKey("name")->getCString();
             }
+            if(m_info->attUser->objectForKey("uid"))
+            {
+                attUid = m_info->attUser->valueForKey("uid")->getCString();
+            }
         }
-        attUid = m_info->attUser->valueForKey("uid")->getCString();
+       
         
         std::string defName = "";
         if(m_info->defUser){
@@ -1382,11 +1668,14 @@ void BattleReportMailPopUpView::onShareClick(CCObject *pSender, CCControlEvent e
             }
         }
         
+        string dialog = reportLang;
+        CCArray* msgArr = CCArray::create();
+        msgArr->addObject(CCString::create(param1));
         msg = _lang_1(reportLang, param1.c_str());
-        CountryChatCommand * cmd = new CountryChatCommand(CHAT_STATE_ALLIANCE_COMMAND,msg.c_str(),CHAT_TYPE_BATTLE_SHARE);
-        cmd->putParam("reportUid", CCString::create(m_info->uid));
-        cmd->putParam("reportLang",CCString::create(reportLang));
-        cmd->sendAndRelease();
+//        CountryChatCommand * cmd = new CountryChatCommand(CHAT_STATE_ALLIANCE_COMMAND,msg.c_str(),CHAT_TYPE_BATTLE_SHARE, "", dialog.c_str(), msgArr);
+//        cmd->putParam("reportUid", CCString::create(m_info->uid));
+//        cmd->putParam("reportLang",CCString::create(reportLang));
+//        cmd->sendAndRelease();  simon
         double shareTime = GlobalData::shared()->getWorldTime();
         shareTime = shareTime + 10*60 - 1;
         m_info->shareTime = shareTime;
@@ -1418,11 +1707,9 @@ void BattleReportMailPopUpView::onAddSaveClick(cocos2d::CCObject *pSender, CCCon
         CCCommonUtils::flyHint("quest_icon_1.png", "", _lang("105575"));
     }
     if(m_info->save==0){
-        m_unSaveBtn->setVisible(true);
-        m_addSaveBtn->setVisible(false);
+        m_addSaveBtn->setHighlighted(false);
     }else{
-        m_unSaveBtn->setVisible(false);
-        m_addSaveBtn->setVisible(true);
+        m_addSaveBtn->setHighlighted(true);
     }
 }
 void BattleReportMailPopUpView::onBattleDetailClick(CCObject *pSender, CCControlEvent event){
@@ -1450,6 +1737,9 @@ bool BattleReportMailPopUpView::onTouchBegan(CCTouch *pTouch, CCEvent *pEvent){
     if(isTouchInside(this->m_listContainer, pTouch)){
         return true;
     }
+    if (isTouchInside(this->m_returnSpr, pTouch)) {
+        return true;
+    }
     return false;
 }
 
@@ -1457,6 +1747,11 @@ void BattleReportMailPopUpView::onTouchMoved(CCTouch *pTouch, CCEvent *pEvent){
     
 }
 void BattleReportMailPopUpView::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent){
+    AutoSafeRef tmp(this);
+    
+    if (isTouchInside(this->m_returnSpr, pTouch)) {
+        PopupViewController::getInstance()->goBackPopupView();
+    }
     if(!isTouchInside(this->m_listContainer, pTouch)){
         return;
     }
@@ -1559,19 +1854,77 @@ void BattleReportMailPopUpView::autoResizeHintNode(){
         int addH = hintBGSize.height - 40 - hintSize.height;
         if(addH<0){
             m_hintBG->setPreferredSize(CCSize(hintBGSize.width,hintSize.height+40));
-            m_hintLine->setPositionY(m_hintLine->getPositionY() - addH*0.5);
+//            m_hintLine->setPositionY(m_hintLine->getPositionY() - addH*0.5);
             //        m_hintBG->setPositionY(m_hintBG->getPositionY() + addH*0.5);
             //        m_hintText->setPositionY(m_hintBG->getPositionY());
         }
     } else {
-        int addH = hintBGSize.height * 2 - 60 - hintSize.height;
+        int addH = hintBGSize.height * 2 - 96 - hintSize.height;
         if (addH < 0) {
-            m_hintBG->setPreferredSize(CCSize(hintBGSize.width, (hintSize.height + 60)) / 2.0);
-            m_hintLine->setPositionY(m_hintLine->getPositionY() - addH * 0.5);
+            m_hintBG->setPreferredSize(CCSize(hintBGSize.width, (hintSize.height + 96)) / 2.0);
+//            m_hintLine->setPositionY(m_hintLine->getPositionY() - addH * 0.5);
         }
     }
 }
-//----------
+
+CCArray* BattleReportMailPopUpView::sortResource(){
+    /////将资源进行排序木粮铁银
+    CCArray *sortedReward = CCArray::createWithCapacity(m_info->reward->count());
+    
+    int j = 0;
+    while (j < m_info->reward->count()) {
+        CCDictionary *dict = dynamic_cast<CCDictionary*>(m_info->reward->objectAtIndex(j));
+        int type = -1;
+        type = dict->valueForKey("t")->intValue();
+        if (type == Stone) {
+            sortedReward->addObject(dict);
+            break;
+        }
+        else
+            j++;
+    }
+    
+    j = 0;
+    while (j < m_info->reward->count()) {
+        CCDictionary *dict = dynamic_cast<CCDictionary*>(m_info->reward->objectAtIndex(j));
+        int type = -1;
+        type = dict->valueForKey("t")->intValue();
+        if (type == Iron) {
+            sortedReward->addObject(dict);
+            break;
+        }
+        else
+            j++;
+    }
+
+    j = 0;
+    while (j < m_info->reward->count()) {
+        CCDictionary *dict = dynamic_cast<CCDictionary*>(m_info->reward->objectAtIndex(j));
+        int type = -1;
+        type = dict->valueForKey("t")->intValue();
+        if (type == Food) {
+            sortedReward->addObject(dict);
+            break;
+        }
+        else
+            j++;
+    }
+    
+    j = 0;
+    while (j < m_info->reward->count()) {
+        CCDictionary *dict = dynamic_cast<CCDictionary*>(m_info->reward->objectAtIndex(j));
+        int type = -1;
+        type = dict->valueForKey("t")->intValue();
+        if (type == Wood) {
+            sortedReward->addObject(dict);
+            break;
+        }
+        else
+            j++;
+    }
+    
+    return sortedReward;
+}
 
 GeneralInfoCell *GeneralInfoCell::create(GeneralInfo *info, CCDictionary *dict,bool boss){
     GeneralInfoCell *ret = new GeneralInfoCell(info, dict,boss);
@@ -1646,41 +1999,66 @@ PlayerInfoCell *PlayerInfoCell::create(CCDictionary *obj,CCArray* generals,MailI
 }
 
 bool PlayerInfoCell::init(){
-    auto bg = CCBLoadFile("BattleReportPlayerInfoCellCCB", this, this);
+    auto bg = CCBLoadFile("NEW_BattleReportPlayerInfoCellCCB", this, this);
     this->setContentSize(bg->getContentSize());
-    
+    m_killNumText->setFntFile("Arial_Bold_Regular.fnt");
+    m_trapLossTxt->setFntFile("Arial_Bold_Regular.fnt");
+    m_trapLossNum->setFntFile("Arial_Bold_Regular.fnt");
+    m_posText->setFntFile("Arial_Bold_Regular.fnt");
+    m_killText->setFntFile("Arial_Bold_Regular.fnt");
+    m_loseText->setFntFile("Arial_Bold_Regular.fnt");
+    m_loseNumText->setFntFile("Arial_Bold_Regular.fnt");
+    m_woundedText->setFntFile("Arial_Bold_Regular.fnt");
+    m_woundedNumText->setFntFile("Arial_Bold_Regular.fnt");
+    m_surplusNumText->setFntFile("Arial_Bold_Regular.fnt");
+    m_surplusText->setFntFile("Arial_Bold_Regular.fnt");
     std::string nameStr = "";
-    if(m_info->objectForKey("alliance")){
+    if(m_info!=nullptr && m_info->objectForKey("alliance")){
         std::string allianceStr =m_info->valueForKey("alliance")->getCString();
         nameStr.append("("+allianceStr+")");
     }
     bool isMonster = false;
-    if(m_info->objectForKey("monster")){
+    if(m_info!=nullptr && m_info->objectForKey("monster")){
         isMonster = m_info->valueForKey("monster")->boolValue();
     }
-    nameStr.append(m_info->valueForKey("name")->getCString());
-    m_pointID = m_info->valueForKey("pointId")->intValue();
+    if(m_info!=nullptr && m_info->objectForKey("name"))
+        nameStr.append(m_info->valueForKey("name")->getCString());
+    if(m_info!=nullptr && m_info->objectForKey("pointId"))
+        m_pointID = m_info->valueForKey("pointId")->intValue();
     CCPoint pt = WorldController::getPointByIndex(m_pointID);
-    if (m_mail->ckf==1) {
-        pt = WorldController::getPointByMapTypeAndIndex(m_pointID,SERVERFIGHT_MAP);
-    }
+//    if (m_mail->serverType>=SERVER_BATTLE_FIELD) {
+//        pt = WorldController::getPointByMapTypeAndIndex(m_pointID,(MapType)m_mail->serverType);
+//    }  simon
     m_posText->setString(_lang_2("105521", CC_ITOA(pt.x), CC_ITOA(pt.y)));
+    m_underlineSpr->setContentSize(CCSize(m_posText->getContentSize().width*m_posText->getOriginScaleX(), m_underlineSpr->getContentSize().height));
     string picstr = "";
     int picVer = 0;
     string uid = "";
     if(m_generals == m_mail->atkGen){
-        picstr = m_mail->attUser->valueForKey("pic")->getCString();
-        picVer = m_mail->attUser->valueForKey("picVer")->intValue();
-        uid = m_mail->attUser->valueForKey("uid")->getCString();
+        if (m_mail->attUser!=nullptr) {
+            if(m_mail->attUser->objectForKey("pic"))
+                picstr = m_mail->attUser->valueForKey("pic")->getCString();
+            if(m_mail->attUser->objectForKey("picVer"))
+               picVer = m_mail->attUser->valueForKey("picVer")->intValue();
+            if(m_mail->attUser->objectForKey("uid"))
+                uid = m_mail->attUser->valueForKey("uid")->getCString();
+        }
+        
         if(picstr==""){
             picstr ="g044.png";
         }else{
             picstr+=".png";
         }
     }else{
-        picstr = m_mail->defUser->valueForKey("pic")->getCString();
-        picVer = m_mail->defUser->valueForKey("picVer")->intValue();
-        uid = m_mail->defUser->valueForKey("uid")->getCString();
+        
+        if (m_mail->defUser!=nullptr) {
+            if(m_mail->defUser->objectForKey("pic"))
+                picstr = m_mail->defUser->valueForKey("pic")->getCString();
+            if(m_mail->defUser->objectForKey("picVer"))
+                picVer = m_mail->defUser->valueForKey("picVer")->intValue();
+            if(m_mail->defUser->objectForKey("uid"))
+                uid = m_mail->defUser->valueForKey("uid")->getCString();
+        }
         if(picstr==""){
             picstr ="g044.png";
         }else{
@@ -1688,20 +2066,24 @@ bool PlayerInfoCell::init(){
         }
     }
     if(isMonster){
-        string mid = m_info->valueForKey("uid")->getCString();
+        string mid = "";
+        if(m_info!=nullptr && m_info->objectForKey("uid"))
+            mid = m_info->valueForKey("uid")->getCString();
         nameStr = CCCommonUtils::getNameById(mid);
         picstr = "tile_pop_icon21.png";
     }
     m_nameText->setString(nameStr.c_str());
     m_pic= CCLoadSprite::createSprite(picstr.c_str());
-    CCCommonUtils::setSpriteMaxSize(m_pic, 94);
+    CCCommonUtils::setSpriteMaxSize(m_pic, 70);
     
     if(nameStr==GlobalData::shared()->playerInfo.name){
         
     }else{
         // m_pic= CCLoadSprite::createSprite("g044.png");
     }
-    std::string npc = m_info->valueForKey("npcId")->getCString();
+    std::string npc = "";
+    if(m_info!=nullptr && m_info->objectForKey("npcId"))
+        npc = m_info->valueForKey("npcId")->getCString();
     int dead = 0;
     int num = 0;
     int hurt = 0;
@@ -1796,16 +2178,41 @@ bool PlayerInfoCell::init(){
             powerStr.append(appendStr);
             m_powerText->setString(powerStr.c_str());
         }
-        m_pic->setScale((94/m_pic->getContentSize().width));
-        m_picNode->addChild(m_pic);
-        
-        if (CCCommonUtils::isUseCustomPic(picVer))
-        {
-            m_headImgNode = HFHeadImgNode::create();
-            m_headImgNode->initHeadImgUrl2(m_picNode, CCCommonUtils::getCustomPicUrl(uid, picVer), 1.0f, 85, true);
-        }
+        m_pic->setScale((70/m_pic->getContentSize().width));
+//        m_picNode->addChild(m_pic);
+//        
+//        if (CCCommonUtils::isUseCustomPic(picVer))
+//        {
+//            m_headImgNode = HFHeadImgNode::create();
+//            m_headImgNode->initHeadImgUrl2(m_picNode, CCCommonUtils::getCustomPicUrl(uid, picVer), 1.0f, 70, true);
+//        }
     }
     total = dead+num+hurt;
+    ////////融合底图
+    auto sizeLayer = CCSize(80, 80);
+    m_selfModelLayer = CCRenderTexture::create(sizeLayer.width, sizeLayer.height);
+    m_selfModelLayer->setAnchorPoint(ccp(0.5, 0.5));
+    ccBlendFunc cbf = {GL_ZERO,GL_ONE_MINUS_SRC_ALPHA};
+    auto spr = CCLoadSprite::createSprite("Mail_headBack.png");
+    spr->setScale(1);
+    spr->setPosition(ccp(sizeLayer.width / 2, sizeLayer.height / 2));
+    auto bgCircle = CCLoadSprite::createSprite("Mail_head_backBattle.png");
+    bgCircle->setBlendFunc(cbf);
+    bgCircle->setPosition(ccp(sizeLayer.width / 2, sizeLayer.height / 2));
+    m_pic->setPosition(ccp(sizeLayer.width / 2, sizeLayer.height / 2 - 3));
+    m_selfModelLayer->begin();
+    spr->visit();
+    m_pic->visit();
+    bgCircle->visit();
+    m_selfModelLayer->end();
+    m_picNode->addChild(m_selfModelLayer);
+    if (CCCommonUtils::isUseCustomPic(picVer) && uid != "")
+    {
+        m_headImgNode = HFHeadImgNode::create();
+        string backImg = "Mail_headBack.png";
+        string renderImg = "Mail_head_backBattle.png";
+//        m_headImgNode->initHeadImgUrl3(m_picNode, CCCommonUtils::getCustomPicUrl(uid, picVer), 1.0f, 74, true, ccp(sizeLayer.width / 2, sizeLayer.height / 2 - 2), sizeLayer, backImg, renderImg);
+    }
     
     //m_totalText->setString(_lang("105542").c_str());
    // m_totalText->setString("");
@@ -1813,7 +2220,11 @@ bool PlayerInfoCell::init(){
     m_loseText->setString(_lang("105544").c_str());
     m_woundedText->setString(_lang("105545").c_str());
     m_surplusText->setString(_lang("114113").c_str());
-    
+    m_killText->setColor({130,99,56});
+    m_loseText->setColor({130,99,56});
+    m_woundedText->setColor({130,99,56});
+    m_surplusText->setColor({130,99,56});
+    m_trapLossTxt->setColor({130,99,56});
     //m_totalNumText->setString(CC_CMDITOA(total));
     //m_totalNumText->setString("");
     m_killNumText->setString(CC_CMDITOA(kill));
@@ -1853,7 +2264,9 @@ void PlayerInfoCell::addShowTeamInfo(){
 //            m_pic->setScale((94/m_pic->getContentSize().height));
 //            m_picNode->addChild(m_pic);
            // m_nameText->setString(leagueName.c_str());
-            std::string nameStr = m_info->valueForKey("name")->getCString();
+            std::string nameStr = "";
+            if(m_info!=nullptr && m_info->objectForKey("name"))
+                nameStr = m_info->valueForKey("name")->getCString();
             nameStr= _lang_1("105595", nameStr.c_str());
             m_nameText->setString(nameStr.c_str());
            // m_powerText->setString(nameStr.c_str());
@@ -1910,7 +2323,9 @@ void PlayerInfoCell::addShowTeamInfo(){
 //            m_pic->setScale((94/m_pic->getContentSize().height));
 //            m_picNode->addChild(m_pic);
            // m_nameText->setString(leagueName.c_str());
-            std::string nameStr = m_info->valueForKey("name")->getCString();
+            std::string nameStr = "";
+            if(m_info!=nullptr && m_info->objectForKey("name"))
+                nameStr = m_info->valueForKey("name")->getCString();
             nameStr= _lang_1("105595", nameStr.c_str());
             m_nameText->setString(nameStr.c_str());
            // m_powerText->setString(nameStr.c_str());
@@ -1946,11 +2361,13 @@ void PlayerInfoCell::addShowTeamInfo(){
 void PlayerInfoCell::onBossPosClick(CCObject * pSender, Control::EventType pCCControlEvent){
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     ChatServiceCocos2dx::stopReturnToChat();
+#elif(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+//simon    ChatServiceCocos2dx::stopReturnToChat();
 #endif
     CCPoint pt = WorldController::getPointByIndex(m_pointID);
-    if (m_mail && m_mail->ckf==1) {
-        pt = WorldController::getPointByMapTypeAndIndex(m_pointID,SERVERFIGHT_MAP);
-    }
+//    if (m_mail && m_mail->serverType>=SERVER_BATTLE_FIELD) {
+//        pt = WorldController::getPointByMapTypeAndIndex(m_pointID,(MapType)m_mail->serverType);
+//    } simon
     WorldController::getInstance()->openTargetIndex = m_pointID;
     if(SceneController::getInstance()->currentSceneId == SCENE_ID_WORLD){
         WorldMapView::instance()->gotoTilePoint(pt);
@@ -1958,23 +2375,29 @@ void PlayerInfoCell::onBossPosClick(CCObject * pSender, Control::EventType pCCCo
         int index = WorldController::getIndexByPoint(pt);
         SceneController::getInstance()->gotoScene(SCENE_ID_WORLD, false, true, index);
     }
+    //zym 2015.12.11
+//    PopupViewController::getInstance()->forceClearAll(true);  simon
     PopupViewController::getInstance()->removeAllPopupView();
 }
 
 void PlayerInfoCell::onPosBtnClick(CCObject * pSender, Control::EventType pCCControlEvent){
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     ChatServiceCocos2dx::stopReturnToChat();
+#elif(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+//simon    ChatServiceCocos2dx::stopReturnToChat();
 #endif
     CCPoint pt = WorldController::getPointByIndex(m_pointID);
-    if (m_mail && m_mail->ckf==1) {
-        pt = WorldController::getPointByMapTypeAndIndex(m_pointID,SERVERFIGHT_MAP);
-    }
+//    if (m_mail && m_mail->serverType>=SERVER_BATTLE_FIELD) {
+//        pt = WorldController::getPointByMapTypeAndIndex(m_pointID,(MapType)m_mail->serverType);
+//    } simon
     if(SceneController::getInstance()->currentSceneId == SCENE_ID_WORLD){
         WorldMapView::instance()->gotoTilePoint(pt);
     }else{
         int index = WorldController::getIndexByPoint(pt);
         SceneController::getInstance()->gotoScene(SCENE_ID_WORLD, false, true, index);
     }
+    //zym 2015.12.11
+//    PopupViewController::getInstance()->forceClearAll(true); simon
     PopupViewController::getInstance()->removeAllPopupView();
 }
 
@@ -1982,7 +2405,7 @@ bool PlayerInfoCell::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, cons
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nameText", Label*, this->m_nameText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_posText", CCLabelIF*, this->m_posText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_powerText", CCLabelIF*, this->m_powerText);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_powerText1", CCLabelIF*, this->m_powerText1);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_powerText1", CCLabelIF*, this->m_powerText1);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_totalText", CCLabelIF*, this->m_totalText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_totalNumText", CCLabelIF*, this->m_totalNumText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_killText", CCLabelIF*, this->m_killText);
@@ -2008,8 +2431,8 @@ bool PlayerInfoCell::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, cons
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_boxBg", CCScale9Sprite*, this->m_boxBg);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_posBG", CCNode*, this->m_posBG);
     
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_iconBtn", CCControlButton*, this->m_iconBtn);
-    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_iconBtn", CCSprite*, this->m_iconBtn);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_underlineSpr", CCScale9Sprite*, m_underlineSpr);
     return false;
 }
 
@@ -2023,7 +2446,10 @@ SEL_CCControlHandler PlayerInfoCell::onResolveCCBCCControlSelector(cocos2d::CCOb
 void PlayerInfoCell::playHeadClick(CCObject *pSender, CCControlEvent event){
 //    std::string npc = m_info->valueForKey("npcId")->getCString();
 //    if(npc!="")return ;
-    std::string uid = m_info->valueForKey("uid")->getCString();
+    std::string uid = "";
+    if (m_info!=nullptr && m_info->objectForKey("uid")) {
+        uid = m_info->valueForKey("uid")->getCString();
+    }
     if (uid == GlobalData::shared()->playerInfo.uid) {
         PopupViewController::getInstance()->addPopupInView(RoleInfoView::create(&(GlobalData::shared()->playerInfo)));
     }
@@ -2036,20 +2462,34 @@ void PlayerInfoCell::cellTouch(CCTouch *pTouch){
     if(isTouchInside(m_posBG, pTouch)){
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         ChatServiceCocos2dx::stopReturnToChat();
+#elif(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+//simon        ChatServiceCocos2dx::stopReturnToChat();
 #endif
-        int pos = m_info->valueForKey("pointId")->intValue();
-        WorldController::getInstance()->openTargetIndex = pos;
-        CCPoint pt = WorldController::getPointByIndex(pos);
-        if (m_mail && m_mail->ckf==1) {
-            pt = WorldController::getPointByMapTypeAndIndex(m_pointID,SERVERFIGHT_MAP);
+        if(m_info!=nullptr && m_info->objectForKey("pointId"))
+        {
+            int pos = m_info->valueForKey("pointId")->intValue();
+            WorldController::getInstance()->openTargetIndex = pos;
+            CCPoint pt = WorldController::getPointByIndex(pos);
+//            if (m_mail && m_mail->serverType>=SERVER_BATTLE_FIELD) {
+//                pt = WorldController::getPointByMapTypeAndIndex(m_pointID,(MapType)m_mail->serverType);
+//                if (GlobalData::shared()->serverType<=SERVER_TEST) {
+//                    YesNoDialog::show(_lang("140195").c_str(), NULL);
+//                    return ;
+//                }
+//            } simon
+            if (m_info->objectForKey("serverId")) {
+                GlobalData::shared()->playerInfo.currentServerId = m_info-> valueForKey("serverId")->intValue();
+            }
+            if(SceneController::getInstance()->currentSceneId == SCENE_ID_WORLD){
+                WorldMapView::instance()->gotoTilePoint(pt);
+            }else{
+                int index = WorldController::getIndexByPoint(pt);
+                SceneController::getInstance()->gotoScene(SCENE_ID_WORLD, false, true, index);
+            }
+            //zym 2015.12.11
+//            PopupViewController::getInstance()->forceClearAll(true);simon
+            PopupViewController::getInstance()->removeAllPopupView();
         }
-        if(SceneController::getInstance()->currentSceneId == SCENE_ID_WORLD){
-            WorldMapView::instance()->gotoTilePoint(pt);
-        }else{
-            int index = WorldController::getIndexByPoint(pt);
-            SceneController::getInstance()->gotoScene(SCENE_ID_WORLD, false, true, index);
-        }
-        PopupViewController::getInstance()->removeAllPopupView();
     }else if(isTouchInside(m_iconBtn, pTouch)){
         this->playHeadClick(NULL,Control::EventType::TOUCH_DOWN);
     }
@@ -2079,7 +2519,7 @@ PlayerEffectCell *PlayerEffectCell::create(vector<BattleReportWarEffect> &effArr
 
 bool PlayerEffectCell::init(vector<BattleReportWarEffect> &effArr){
     if(CCNode::init()){
-        CCBLoadFile("BattleReportPlayerInfoCellCCB_1", this, this);
+        CCBLoadFile("NEW_BattleReportPlayerInfoCellCCB_1", this, this);
         m_nameText->setString(_lang("114140"));
         auto iter = effArr.begin();
         int iIndex = 0;
@@ -2088,18 +2528,26 @@ bool PlayerEffectCell::init(vector<BattleReportWarEffect> &effArr){
             std::string effecDes = (*iter).effectName;
             float value = (*iter).effectValue;
             std::string valueDes = "";
-            if((*iter).effectType == 0){
-                valueDes = std::string("+") + CC_ITOA(round(value)) + "%";
-            }else{
-                valueDes = std::string("+") + CC_ITOA(round(value));
+            if ((*iter).effectMark == 1) {
+                valueDes.append("-");
             }
+            else if ((*iter).effectMark == 2) {
+                valueDes.append("+");
+            }
+            
+            if((*iter).effectType == 0){
+                valueDes.append(CC_ITOA(round(value))).append("%");
+            }else{
+                valueDes.append(CC_ITOA(round(value)));
+            }
+            
             tmpH = createContent(effecDes,valueDes,tmpH);
             ++iIndex;
             ++iter;
         }
         if (CCCommonUtils::isIosAndroidPad())
         {
-            tmpH = tmpH + 120;
+            tmpH = tmpH + 144;
         } else {
             tmpH = tmpH + 60;
         }
@@ -2108,8 +2556,8 @@ bool PlayerEffectCell::init(vector<BattleReportWarEffect> &effArr){
         m_sprBG->setPreferredSize(CCSize(tmpW,tmpH));
         float changeH = tmpH - oldH;
         m_sprBG->setPositionY(m_sprBG->getPositionY() + changeH*0.5);
-        m_sprTitleBG->setPositionY(m_sprTitleBG->getPositionY()+changeH);
-        m_nameText->setPositionY(m_sprTitleBG->getPositionY());
+//        m_sprTitleBG->setPositionY(m_sprTitleBG->getPositionY()+changeH);
+        m_nameText->setPositionY(m_nameText->getPositionY()+changeH);
         CCSize oldNodeSize = m_nodeList->getContentSize();
         m_nodeList->setContentSize(CCSize(oldNodeSize.width, oldNodeSize.height + changeH));
         setContentSize(CCSize(tmpW, tmpH));
@@ -2121,13 +2569,14 @@ bool PlayerEffectCell::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, co
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_sprBG", CCScale9Sprite*, this->m_sprBG);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nameText", CCLabelIF*, this->m_nameText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nodeList", CCNode*, this->m_nodeList);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_sprTitleBG", CCScale9Sprite*, this->m_sprTitleBG);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_sprTitleBG", CCScale9Sprite*, this->m_sprTitleBG);
     return false;
 }
 float PlayerEffectCell::createContent(std::string desc,std::string percent,float nowH){
     ccColor3B tColor = {130,99,56};
     ccColor3B pColor = {127,35,29};
     CCLabelIF *lable1 = CCLabelIF::create("", 20);
+    lable1->setFntFile("Arial_Bold_Regular.fnt");
     lable1->setAnchorPoint(ccp(0, 0.5));
     lable1->setAlignment(kCCTextAlignmentLeft);
     lable1->setColor(tColor);
@@ -2135,18 +2584,19 @@ float PlayerEffectCell::createContent(std::string desc,std::string percent,float
     lable1->setString(desc);
     if (CCCommonUtils::isIosAndroidPad())
     {
-        lable1->setFontSize(40);
-        lable1->setDimensions(CCSize(500, 0));
+        lable1->setFontSize(48);
+        lable1->setDimensions(CCSize(504, 0));
     }
     m_nodeList->addChild(lable1);
     float labelH = lable1->getContentSize().height * lable1->getOriginScaleY();
     lable1->setPosition(ccp(20, nowH + labelH*0.5));
     if (CCCommonUtils::isIosAndroidPad())
     {
-        lable1->setPosition(30, nowH + labelH * 0.5);
+        lable1->setPosition(48, nowH + labelH * 0.5);
     }
     
     CCLabelIF *lable2 = CCLabelIF::create("", 20);
+    lable2->setFntFile("Arial_Bold_Regular.fnt");
     lable2->setAnchorPoint(ccp(1, 0.5));
     lable2->setAlignment(kCCTextAlignmentRight);
     lable2->setColor(pColor);
@@ -2155,9 +2605,9 @@ float PlayerEffectCell::createContent(std::string desc,std::string percent,float
     m_nodeList->addChild(lable2);
     lable2->setPosition(ccp(280, lable1->getPositionY()));
     if (CCCommonUtils::isIosAndroidPad()) {
-        lable2->setFontSize(40);
-        lable2->setDimensions(CCSize(240, 0));
-        lable2->setPositionX(620);
+        lable2->setFontSize(48);
+        lable2->setDimensions(CCSize(288, 0));
+        lable2->setPositionX(672);
     }
     
     nowH += labelH + 5;
@@ -2216,20 +2666,36 @@ MonsterInfoCell *MonsterInfoCell::create(CCDictionary *obj,CCArray* generals,Mai
 }
 
 bool MonsterInfoCell::init(){
-    auto bg = CCBLoadFile("BattleMonsterInfoCell", this, this);
+    auto bg = CCBLoadFile("NEW_BattleMonsterInfoCell", this, this);
     this->setContentSize(bg->getContentSize());
     
+    m_posText->setFntFile("Arial_Bold_Regular.fnt");
+    m_txt1->setFntFile("Arial_Bold_Regular.fnt");
+    m_txtv1->setFntFile("Arial_Bold_Regular.fnt");
+    m_txt2->setFntFile("Arial_Bold_Regular.fnt");
+    m_txtv2->setFntFile("Arial_Bold_Regular.fnt");
+    m_txt3->setFntFile("Arial_Bold_Regular.fnt");
+    m_txtv3->setFntFile("Arial_Bold_Regular.fnt");
+    m_txtTip->setFntFile("Arial_Bold_Regular.fnt");
+    
     std::string nameStr = "";
-    if(m_info->objectForKey("alliance")){
-        std::string allianceStr =m_info->valueForKey("alliance")->getCString();
-        nameStr.append("("+allianceStr+")");
+     bool isMonster = false;
+    if (m_info!=nullptr) {
+        if(m_info->objectForKey("alliance")){
+            std::string allianceStr =m_info->valueForKey("alliance")->getCString();
+            nameStr.append("("+allianceStr+")");
+        }
+        if(m_info->objectForKey("monster")){
+            isMonster = m_info->valueForKey("monster")->boolValue();
+        }
+        if(m_info->objectForKey("name")){
+             nameStr.append(m_info->valueForKey("name")->getCString());
+        }
+        if(m_info->objectForKey("pointId")){
+            m_pointID = m_info->valueForKey("pointId")->intValue();
+        }
     }
-    bool isMonster = false;
-    if(m_info->objectForKey("monster")){
-        isMonster = m_info->valueForKey("monster")->boolValue();
-    }
-    nameStr.append(m_info->valueForKey("name")->getCString());
-    m_pointID = m_info->valueForKey("pointId")->intValue();
+    
     CCPoint pt = WorldController::getPointByIndex(m_pointID);
     m_posText->setString(_lang_2("105521", CC_ITOA(pt.x), CC_ITOA(pt.y)));
     string picstr = "";
@@ -2262,12 +2728,36 @@ bool MonsterInfoCell::init(){
     }
 
     auto pic = CCLoadSprite::createSprite(picstr.c_str());
-    CCCommonUtils::setSpriteMaxSize(pic, 90);
-    m_picNode->addChild(pic);
-    if (!isMonster && CCCommonUtils::isUseCustomPic(picVer))
+    CCCommonUtils::setSpriteMaxSize(pic, 70);
+//    m_picNode->addChild(pic);
+    if (!isMonster)
     {
-        m_headImgNode = HFHeadImgNode::create();
-        m_headImgNode->initHeadImgUrl2(m_picNode, CCCommonUtils::getCustomPicUrl(uid, picVer), 1.0f, 90, true);
+        ////////融合底图
+        auto sizeLayer = CCSize(80, 80);
+        m_selfModelLayer = CCRenderTexture::create(sizeLayer.width, sizeLayer.height);
+        m_selfModelLayer->setAnchorPoint(ccp(0.5, 0.5));
+        ccBlendFunc cbf = {GL_ZERO,GL_ONE_MINUS_SRC_ALPHA};
+        auto spr = CCLoadSprite::createSprite("Mail_headBack.png");
+        spr->setScale(1);
+        spr->setPosition(ccp(sizeLayer.width / 2, sizeLayer.height / 2));
+        auto bgCircle = CCLoadSprite::createSprite("Mail_head_backBattle.png");
+        bgCircle->setBlendFunc(cbf);
+        bgCircle->setPosition(ccp(sizeLayer.width / 2, sizeLayer.height / 2));
+        pic->setPosition(ccp(sizeLayer.width / 2, sizeLayer.height / 2 - 3));
+        //    pic->removeFromParent();
+        m_selfModelLayer->begin();
+        spr->visit();
+        pic->visit();
+        bgCircle->visit();
+        m_selfModelLayer->end();
+        m_picNode->addChild(m_selfModelLayer);
+        if (CCCommonUtils::isUseCustomPic(picVer) && uid != "")
+        {
+            m_headImgNode = HFHeadImgNode::create();
+            string backImg = "Mail_headBack.png";
+            string renderImg = "Mail_head_backBattle.png";
+//            m_headImgNode->initHeadImgUrl3(m_picNode, CCCommonUtils::getCustomPicUrl(uid, picVer), 1.0f, 74, true, ccp(sizeLayer.width / 2, sizeLayer.height / 2 - 2), sizeLayer, backImg, renderImg);
+        }
     }
     
     if (isMonster) {
@@ -2285,14 +2775,37 @@ bool MonsterInfoCell::init(){
             mType = 1;
             color = 3;
         }
+        ////////融合底图
+        auto sizeLayer = CCSize(80, 80);
+        m_selfModelLayer = CCRenderTexture::create(sizeLayer.width, sizeLayer.height);
+        m_selfModelLayer->setAnchorPoint(ccp(0.5, 0.5));
+        ccBlendFunc cbf = {GL_ZERO,GL_ONE_MINUS_SRC_ALPHA};
+        auto spr = CCLoadSprite::createSprite("Mail_headBack.png");
+        spr->setScale(1);
+        spr->setPosition(ccp(sizeLayer.width / 2, sizeLayer.height / 2));
+        auto bgCircle = CCLoadSprite::createSprite("Mail_head_backBattle.png");
+        bgCircle->setBlendFunc(cbf);
+        bgCircle->setPosition(ccp(sizeLayer.width / 2, sizeLayer.height / 2));
+        pic->setPosition(ccp(sizeLayer.width / 2, sizeLayer.height / 2));
+        //    pic->removeFromParent();
+        m_selfModelLayer->begin();
+        spr->visit();
+        auto iconBg = CCLoadSprite::createSprite(CCCommonUtils::getToolBgByColor(color).c_str());
+        CCCommonUtils::setSpriteMaxSize(iconBg, 75,true);
+        //        m_picNode->addChild(iconBg,-100);
+        iconBg->setPosition(ccp(sizeLayer.width / 2, sizeLayer.height / 2));
+        iconBg->visit();
         if(mType!=2){
             auto preBg = CCLoadSprite::createSprite(CCString::createWithFormat("Activty_icon_BG%d.png",mType)->getCString());
-            CCCommonUtils::setSpriteMaxSize(preBg, 92,true);
-            m_picNode->addChild(preBg);
+            CCCommonUtils::setSpriteMaxSize(preBg, 75,true);
+//            m_picNode->addChild(preBg);
+            preBg->setPosition(ccp(sizeLayer.width / 2, sizeLayer.height / 2 - 3));
+            preBg->visit();
         }
-        auto iconBg = CCLoadSprite::createSprite(CCCommonUtils::getToolBgByColor(color).c_str());
-        CCCommonUtils::setSpriteMaxSize(iconBg, 90,true);
-        m_picNode->addChild(iconBg,-100);
+        pic->visit();
+        bgCircle->visit();
+        m_selfModelLayer->end();
+        m_picNode->addChild(m_selfModelLayer);
     }
     int dead = 0;
     int num = 0;
@@ -2319,18 +2832,18 @@ bool MonsterInfoCell::init(){
             temp.append("\n");
             temp.append(_lang_1("133057",CC_ITOA(m_mail->failTimes)));
             m_txtTip->setString(temp);
-            m_bg->setContentSize(CCSize(624.0,230.0));
-            if (CCCommonUtils::isIosAndroidPad())
-            {
-                m_bg->setContentSize(CCSize(1420, 460));
-            }
+            m_bg->setContentSize(CCSize(640,230.0));
+//            if (CCCommonUtils::isIosAndroidPad())
+//            {
+//                m_bg->setContentSize(CCSize(1536, 460));
+//            }
         }else{
             m_txtTip->setString(temp);
-            m_bg->setContentSize(CCSize(624.0,200.0));
-            if (CCCommonUtils::isIosAndroidPad())
-            {
-                m_bg->setContentSize(CCSize(1420, 400));
-            }
+            m_bg->setContentSize(CCSize(640,200.0));
+//            if (CCCommonUtils::isIosAndroidPad())
+//            {
+//                m_bg->setContentSize(CCSize(1536, 400));
+//            }
         }
 
         if(m_mail->attReport){
@@ -2399,6 +2912,8 @@ bool MonsterInfoCell::init(){
 void MonsterInfoCell::onPosBtnClick(CCObject * pSender, Control::EventType pCCControlEvent){
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     ChatServiceCocos2dx::stopReturnToChat();
+#elif(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+//simon    ChatServiceCocos2dx::stopReturnToChat();
 #endif
     CCPoint pt = WorldController::getPointByIndex(m_pointID);
     if(SceneController::getInstance()->currentSceneId == SCENE_ID_WORLD){
@@ -2435,16 +2950,99 @@ void MonsterInfoCell::cellTouch(CCTouch *pTouch){
     if(isTouchInside(m_posBG, pTouch)){
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         ChatServiceCocos2dx::stopReturnToChat();
+#elif(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+//simon        ChatServiceCocos2dx::stopReturnToChat();
 #endif
-        int pos = m_info->valueForKey("pointId")->intValue();
-        WorldController::getInstance()->openTargetIndex = pos;
-        CCPoint pt = WorldController::getPointByIndex(pos);
-        if(SceneController::getInstance()->currentSceneId == SCENE_ID_WORLD){
-            WorldMapView::instance()->gotoTilePoint(pt);
-        }else{
-            int index = WorldController::getIndexByPoint(pt);
-            SceneController::getInstance()->gotoScene(SCENE_ID_WORLD, false, true, index);
+        if (m_info!=nullptr && m_info->objectForKey("pointId")) {
+            int pos = m_info->valueForKey("pointId")->intValue();
+            WorldController::getInstance()->openTargetIndex = pos;
+            CCPoint pt = WorldController::getPointByIndex(pos);
+            if(SceneController::getInstance()->currentSceneId == SCENE_ID_WORLD){
+                WorldMapView::instance()->gotoTilePoint(pt);
+            }else{
+                int index = WorldController::getIndexByPoint(pt);
+                SceneController::getInstance()->gotoScene(SCENE_ID_WORLD, false, true, index);
+            }
+            PopupViewController::getInstance()->removeAllPopupView();
+            //zym 2015.12.11
+//            PopupViewController::getInstance()->forceClearAll(true); simon
         }
-        PopupViewController::getInstance()->removeAllPopupView();
     }
+}
+
+//BattleReportRewardCell
+BattleReportRewardCell *BattleReportRewardCell::create(int type, int value, int num, int total){
+    BattleReportRewardCell *ret = new BattleReportRewardCell(type,value,num,total);
+    if(ret && ret->init()){
+        ret->autorelease();
+    }else{
+        CC_SAFE_DELETE(ret);
+    }
+    return ret;
+}
+
+bool BattleReportRewardCell::init(){
+    auto bg = CCBLoadFile("NEW_BattleReportRewardCell", this, this);
+    this->setContentSize(bg->getContentSize());
+    
+    m_picNode1->removeAllChildren();
+    if(m_type == R_GOODS){
+        CCCommonUtils::createGoodsIcon(m_value, m_picNode1, CCSize(50,50));
+    }else{
+        auto icon = CCLoadSprite::createSprite(RewardController::getInstance()->getPicByType(m_type, m_value).c_str());
+        m_picNode1->addChild(icon);
+        icon->setAnchorPoint(ccp(0.5, 0.5));
+        CCCommonUtils::setSpriteMaxSize(icon, 50);
+    }
+    m_nameText1->setFntFile("Arial_Bold_Regular.fnt");
+    m_numText1->setFntFile("Arial_Bold_Regular.fnt");
+    std::string namestr = RewardController::getInstance()->getNameByType(m_type, m_value);
+    m_nameText1->setString(namestr.c_str());
+    
+    std::string numstr = "";
+    if(m_type == R_GOODS){
+        numstr.append(CC_CMDITOA(m_num));
+    }else{
+        numstr.append(CC_CMDITOA(m_value));
+    }
+//    m_numText1->setString(numstr.c_str());
+    
+    m_proTimer = CCProgressTimer::create(CCLoadSprite::createSprite("Mail_red.png"));
+    m_proTimer->setType(kCCProgressTimerTypeRadial);
+    m_proTimer->setPercentage(0);
+    m_proNode1->addChild(m_proTimer);
+
+    toNum = m_value;
+    fromNum = 0;
+    dt = (toNum - fromNum) / ADD_TIMES - 1;
+    this->schedule(schedule_selector(BattleReportRewardCell::updateTime), 1 / ADD_TIMES, ADD_TIMES  , 0);
+//    m_numText1->setString(numstr.c_str());
+    return true;
+}
+void BattleReportRewardCell::updateTime(float _time){
+    fromNum += dt;
+    if (fromNum <= toNum) {
+        fromNum = toNum;
+    }
+    double from = abs(fromNum);
+    double to = abs(m_total);
+    m_percentage = from / to;
+    if (m_total == 0) {
+        m_percentage = 0.0;
+    }
+    std::string numStr = "";
+    numStr.append(CC_CMDITOA(fromNum));
+    m_numText1->setString(numStr.c_str());
+    m_proTimer->setPercentage(m_percentage * 100);
+}
+bool BattleReportRewardCell::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode){
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_rewardNode1", CCNode*, this->m_rewardNode1);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_numText1", CCLabelIF*, this->m_numText1);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nameText1", CCLabelIF*, this->m_nameText1);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_picNode1", CCNode*, this->m_picNode1);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_proNode1", CCNode*, this->m_proNode1);
+    return false;
+}
+SEL_CCControlHandler BattleReportRewardCell::onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName){
+    return NULL;
 }

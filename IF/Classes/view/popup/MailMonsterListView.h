@@ -56,6 +56,8 @@ private:
     void onPostBtnClick(CCObject * pSender, Control::EventType pCCControlEvent);
     void onAddSaveClick(CCObject * pSender, Control::EventType pCCControlEvent);
     void onDeleteClick(CCObject * pSender, Control::EventType pCCControlEvent);
+    void onReturnClick(CCObject * pSender,CCControlEvent pCCControlEvent);
+    void onWriteClick(CCObject * pSender, CCControlEvent pCCControlEvent);
     void readDialogContent();
     void addLoadingAni();
     void removeLoadingAni();
@@ -69,17 +71,22 @@ private:
     CCSafeObject<CCNode> m_battlePicNode;
     CCSafeObject<CCNode> m_downNode;
     CCSafeObject<CCScale9Sprite> m_buildBG;
-    CCSafeObject<CCScale9Sprite> m_bg;
-    
+//    CCSafeObject<CCScale9Sprite> m_bg;
+    CCSafeObject<CCNode> m_bgNode;
     CCSafeObject<CCLabelIF> m_titleText;
+    CCSafeObject<CCLabelIF> m_mailTitle;
+    CCSafeObject<CCLabelIF> m_timeText;
     CCSafeObject<CCControlButton> m_addSaveBtn;
-    CCSafeObject<CCControlButton> m_unSaveBtn;
+//    CCSafeObject<CCControlButton> m_unSaveBtn;
+    CCSafeObject<CCControlButton> m_writeBtn;
+    CCSafeObject<CCControlButton> m_returnBtn;
+    CCSafeObject<CCSprite> m_returnSpr;
     CCSafeObject<CCControlButton> m_deleteBtn;
     
     CCSafeObject<CCTableView> m_tabView;
     CCSafeObject<CCArray> m_data;
     
-    MailMonsterCellInfo* m_mailInfo;
+    CCSafeObject<MailMonsterCellInfo> m_mailInfo;
     bool m_isLoadMore;
     float m_currMinOffsetY;
     float m_currOffsetY;
@@ -108,8 +115,8 @@ private:
 	virtual SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName);
     
     int m_idx;
-    MailMonsterInfo* m_dialogInfo;
-    MailMonsterCellInfo* m_mailInfo;
+    CCSafeObject<MailMonsterInfo> m_dialogInfo;
+    CCSafeObject<MailMonsterCellInfo> m_mailInfo;
     CCSafeObject<CCNode> m_cellNode;
     CCSafeObject<CCLabelIF>m_tipLoadingText;
 };
@@ -169,8 +176,8 @@ private:
     
     CCPoint m_touchPoint;
     int m_idx;
-    MailMonsterInfo* m_dialogInfo;
-    MailMonsterCellInfo* m_mailInfo;
+    CCSafeObject<MailMonsterInfo> m_dialogInfo;
+    CCSafeObject<MailMonsterCellInfo> m_mailInfo;
 };
 
 //.fail cell
@@ -230,8 +237,8 @@ private:
     
     CCPoint m_touchPoint;
     int m_idx;
-    MailMonsterInfo* m_dialogInfo;
-    MailMonsterCellInfo* m_mailInfo;
+    CCSafeObject<MailMonsterInfo> m_dialogInfo;
+    CCSafeObject<MailMonsterCellInfo> m_mailInfo;
     
 };
 //.victiory cell
@@ -289,7 +296,7 @@ private:
     
     CCPoint m_touchPoint;
     int m_idx;
-    MailMonsterInfo* m_dialogInfo;
-    MailMonsterCellInfo* m_mailInfo;
+    CCSafeObject<MailMonsterInfo> m_dialogInfo;
+    CCSafeObject<MailMonsterCellInfo> m_mailInfo;
 };
 #endif /* defined(__IF__MailMonsterListView__) */

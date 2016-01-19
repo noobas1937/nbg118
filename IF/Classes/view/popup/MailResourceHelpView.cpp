@@ -38,7 +38,7 @@
 #include "WorldController.h"
 #include "WorldMapView.h"
 #include "ChatServiceCocos2dx.h"
-
+#include "MailWritePopUpView.h"
 MailResourceHelpView* MailResourceHelpView::create(MailResourceHelpCellInfo* info ){
     MailResourceHelpView* ret = new MailResourceHelpView(info);
     if(ret && ret->init()){
@@ -64,24 +64,69 @@ bool MailResourceHelpView::init()
     if (!PopupBaseView::init()) {
         return false;
     }
-    //    CCLoadSprite::doResourceByCommonIndex(6, true);
-    //    setCleanFunction([](){
-    //        CCLoadSprite::doResourceByCommonIndex(6, false);
-    //
-    //    });
+//    auto cf = CCLoadSprite::getSF("Mail_diban.png");
+    auto cf = CCLoadSprite::getSF("Mail_BG1.png");
+    if (cf==NULL) {
+        CCLoadSprite::doResourceByCommonIndex(6, true);
+        setCleanFunction([](){
+            CCLoadSprite::doResourceByCommonIndex(6, false);
+        });
+    }
     setIsHDPanel(true);
-    auto tmpCCB = CCBLoadFile("MailResourceCCB",this,this);
+    setMailUuid(m_mailInfo->uid);
+    auto tmpCCB = CCBLoadFile("NEW_MailResourceCCB",this,this);
     if (CCCommonUtils::isIosAndroidPad()) {
         this->setContentSize(CCDirector::sharedDirector()->getWinSize());
+        this->setContentSize(tmpCCB->getContentSize());
+        int extH = getExtendHeight();
+        this->m_infoList->setContentSize(CCSize(m_infoList->getContentSize().width, m_infoList->getContentSize().height + extH));
+        //        m_bg->setContentSize(CCSize(m_bg->getContentSize().width, m_bg->getContentSize().height + dh));
+        m_downNode->setPositionY(m_downNode->getPositionY() - extH);
+        m_bgNode->setPositionY(m_bgNode->getPositionY() - extH);
+        auto tbg = CCLoadSprite::loadResource("Mail_diban.png");
+        auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
+        auto picBg1 = CCLoadSprite::createSprite("Mail_diban.png");
+        picBg1->setAnchorPoint(ccp(0, 0));
+        picBg1->setPosition(ccp(0, 0));
+        picBg1->setScaleX(2.4);
+        tBatchNode->addChild(picBg1);
+        int maxHeight = CCDirector::sharedDirector()->getWinSize().height;
+        int curHeight = picBg1->getContentSize().height;
+        while(curHeight < maxHeight)
+        {
+            auto picBg2 = CCLoadSprite::createSprite("Mail_diban.png");
+            picBg2->setAnchorPoint(ccp(0, 0));
+            picBg2->setPosition(ccp(0, curHeight));
+            picBg2->setScaleX(2.4);
+            tBatchNode->addChild(picBg2);
+            curHeight += picBg2->getContentSize().height;
+        }
+        m_bgNode->addChild(tBatchNode);
     }
     else {
         this->setContentSize(tmpCCB->getContentSize());
-        int preHeight = this->m_buildBG->getContentSize().height;
-        changeBGHeight(m_buildBG);
-        int dh = m_buildBG->getContentSize().height - preHeight;
-        this->m_infoList->setContentSize(CCSize(m_infoList->getContentSize().width, m_infoList->getContentSize().height + dh));
-        m_bg->setContentSize(CCSize(m_bg->getContentSize().width, m_bg->getContentSize().height + dh));
-        m_downNode->setPositionY(m_downNode->getPositionY() - dh);
+        int extH = getExtendHeight();
+        this->m_infoList->setContentSize(CCSize(m_infoList->getContentSize().width, m_infoList->getContentSize().height + extH));
+        //        m_bg->setContentSize(CCSize(m_bg->getContentSize().width, m_bg->getContentSize().height + dh));
+        m_downNode->setPositionY(m_downNode->getPositionY() - extH);
+        m_bgNode->setPositionY(m_bgNode->getPositionY() - extH);
+        auto tbg = CCLoadSprite::loadResource("Mail_diban.png");
+        auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
+        auto picBg1 = CCLoadSprite::createSprite("Mail_diban.png");
+        picBg1->setAnchorPoint(ccp(0, 0));
+        picBg1->setPosition(ccp(0, 0));
+        tBatchNode->addChild(picBg1);
+        int maxHeight = CCDirector::sharedDirector()->getWinSize().height;
+        int curHeight = picBg1->getContentSize().height;
+        while(curHeight < maxHeight)
+        {
+            auto picBg2 = CCLoadSprite::createSprite("Mail_diban.png");
+            picBg2->setAnchorPoint(ccp(0, 0));
+            picBg2->setPosition(ccp(0, curHeight));
+            tBatchNode->addChild(picBg2);
+            curHeight += picBg2->getContentSize().height;
+        }
+        m_bgNode->addChild(tBatchNode);
     }
     setTitleName(_lang("105513"));
     m_titleText->setString(_lang("114121").c_str());
@@ -101,11 +146,9 @@ bool MailResourceHelpView::init()
 }
 void MailResourceHelpView::refresh(CCObject* obj){
     if(m_mailInfo->save ==0){
-        m_unSaveBtn->setVisible(true);
-        m_addSaveBtn->setVisible(false);
+        m_addSaveBtn->setHighlighted(false);
     }else{
-        m_unSaveBtn->setVisible(false);
-        m_addSaveBtn->setVisible(true);
+        m_addSaveBtn->setHighlighted(true);
     }
     setData();
     bool ishasChild = false;
@@ -140,7 +183,9 @@ void MailResourceHelpView::readDialogContent(){
 void MailResourceHelpView::onEnter()
 {
     CCNode::onEnter();
-    setTitleName(_lang("105513"));
+    UIComponent::getInstance()->showPopupView(UIPopupViewType_ArcPop_TitanUpgrade,true);//simon;
+    UIComponent::getInstance()->hideReturnBtn();
+//    setTitleName(_lang("105513"));
     //    setTitleName(m_mailInfo->fromName);
     
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(MailResourceHelpView::refresh), MAIL_RESOURCE_LIST_CHANGE, NULL);
@@ -165,6 +210,9 @@ void MailResourceHelpView::onExit()
 
 bool MailResourceHelpView::onTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
+    if (isTouchInside(m_returnSpr, pTouch)) {
+        return true;
+    }
     m_tabView->setBounceable(true);
     if(m_isLoadMore)
         return true;
@@ -201,6 +249,11 @@ void MailResourceHelpView::onTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEve
 }
 void MailResourceHelpView::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 {
+    AutoSafeRef temp(this);
+    
+    if (isTouchInside(m_returnSpr, pTouch)) {
+        PopupViewController::getInstance()->goBackPopupView();
+    }
     if(m_isLoadMore){
         m_currMinOffsetY = m_tabView->minContainerOffset().y;
         m_currOffsetY = m_tabView->getContentOffset().y;
@@ -286,6 +339,8 @@ SEL_CCControlHandler MailResourceHelpView::onResolveCCBCCControlSelector(cocos2d
     
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onAddSaveClick", MailResourceHelpView::onAddSaveClick);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onDeleteClick", MailResourceHelpView::onDeleteClick);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onReturnClick", MailResourceHelpView::onReturnClick);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onWriteClick", MailResourceHelpView::onWriteClick);
     return NULL;
 }
 
@@ -295,14 +350,18 @@ bool MailResourceHelpView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titleText", CCLabelIF*, this->m_titleText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_infoList", CCNode*, this->m_infoList);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_downNode", CCNode*, this->m_downNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bgNode", CCNode*, this->m_bgNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_buildBG", CCScale9Sprite*, this->m_buildBG);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bg", CCScale9Sprite*, this->m_bg);
-    
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_unSaveBtn", CCControlButton*, this->m_unSaveBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_addSaveBtn", CCControlButton*, this->m_addSaveBtn);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_returnBtn", CCControlButton*, this->m_returnBtn);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_returnSpr", CCSprite*, this->m_returnSpr);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_writeBtn", CCControlButton*, this->m_writeBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_battlePicNode", CCNode*, m_battlePicNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_deleteBtn", CCControlButton*, this->m_deleteBtn);
     return false;
+}
+void MailResourceHelpView::onWriteClick(cocos2d::CCObject *pSender, CCControlEvent pCCControlEvent){
+    PopupViewController::getInstance()->addPopupInView(MailWritePopUpView::create("", ""));
 }
 void MailResourceHelpView::onDeleteClick(cocos2d::CCObject *pSender, CCControlEvent event){
     map<string, MailInfo*>::iterator it;
@@ -318,10 +377,11 @@ void MailResourceHelpView::onDeleteClick(cocos2d::CCObject *pSender, CCControlEv
     GlobalData::shared()->mailCountObj.sysR -=tempInfo->unread;
     GlobalData::shared()->mailList.erase(it);
     tempInfo->unread = 0;
+    AutoSafeRef temp(this);
     
     CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MAIL_LIST_CHANGE);
     PopupViewController::getInstance()->goBackPopupView();
-    CC_SAFE_RELEASE(tempInfo);
+    tempInfo->release();
     
 }
 void MailResourceHelpView::onAddSaveClick(cocos2d::CCObject *pSender, CCControlEvent event){
@@ -332,16 +392,14 @@ void MailResourceHelpView::onAddSaveClick(cocos2d::CCObject *pSender, CCControlE
         cmd->sendAndRelease();
         m_mailInfo->save = 0;
         CCCommonUtils::flyHint("quest_icon_1.png", "", _lang("105576"));
-        m_unSaveBtn->setVisible(true);
-        m_addSaveBtn->setVisible(false);
+        m_addSaveBtn->setHighlighted(false);
     }else{
         
         MailDialogSaveCommand *cmd = new MailDialogSaveCommand("", 1,MAIL_RESOURCE_HELP);
         cmd->sendAndRelease();
         m_mailInfo->save = 1;
         CCCommonUtils::flyHint("quest_icon_1.png", "", _lang("105575"));
-        m_unSaveBtn->setVisible(false);
-        m_addSaveBtn->setVisible(true);
+        m_addSaveBtn->setHighlighted(true);
     }
     
 }
@@ -349,8 +407,13 @@ void MailResourceHelpView::onPostBtnClick(cocos2d::CCObject *pSender, Control::E
     
     
 }
+void MailResourceHelpView::onReturnClick(cocos2d::CCObject *pSender, CCControlEvent pCCControlEvent){
+    PopupViewController::getInstance()->goBackPopupView();
+}
 void MailResourceHelpView::setData(){
     m_data->removeAllObjects();
+    if(m_mailInfo->collect==NULL)
+        return;
     if(m_mailInfo->collect->count()<m_mailInfo->totalNum){
         m_isLoadMore = true;
     }else{
@@ -382,26 +445,26 @@ void MailResourceHelpView::tableCellTouched(CCTableView* table, CCTableViewCell*
 }
 CCSize MailResourceHelpView::tableCellSizeForIndex(CCTableView *table, ssize_t idx)
 {
-    int height = 142;
-    if(m_isLoadMore&&idx==m_data->count()-1){
-        return CCSize(604,50);
-    }
+    int height = 140;
     MailResourceHelpInfo* info =dynamic_cast<MailResourceHelpInfo*>(m_data->objectAtIndex(idx)) ;
     if(info&&info->reward&&info->reward->count()>2){
-        height+=80;
+        height+=40;
+    }
+    if(m_isLoadMore&&idx==m_data->count()-1){
+        return CCSize(614,50);
     }
     if (CCCommonUtils::isIosAndroidPad()) {
-        return CCSize(1450, height*2.4);
+        return CCSize(1474, height*2.4);
     }
-    return CCSize(604,height);
+    return CCSize(614,height);
 }
 
 cocos2d::CCSize MailResourceHelpView::cellSizeForTable(CCTableView *table)
 {
     if (CCCommonUtils::isIosAndroidPad()) {
-        return CCSize(1392, 2352);
+        return CCSize(1474, 336);
     }
-    return CCSize(580, 980);
+    return CCSize(614, 140);
 }
 
 CCTableViewCell* MailResourceHelpView::tableCellAtIndex(CCTableView *table, ssize_t idx)
@@ -446,12 +509,12 @@ MailResourceHelpCell* MailResourceHelpCell::create(MailResourceHelpInfo* dialogI
 bool MailResourceHelpCell::init()
 {
     bool ret = true;
-    m_ccbNode = CCBLoadFile("MailResourceHelpCell",this,this);
+    m_ccbNode = CCBLoadFile("NEW_MailResourceHelpCell",this,this);
     if (CCCommonUtils::isIosAndroidPad()) {
-        this->setContentSize(CCSizeMake(1536, 312));
+        this->setContentSize(CCSizeMake(1536, 336));
     }
     else
-        this->setContentSize(CCSizeMake(640, 130));
+        this->setContentSize(CCSizeMake(640, 140));
     m_tipLoadingText = CCLabelIF::create();
     if (CCCommonUtils::isIosAndroidPad()) {
         m_tipLoadingText->setFontSize(53);
@@ -473,12 +536,13 @@ bool MailResourceHelpCell::init()
     m_PicNode1 = CCNode::create();
     m_PicNode2 = CCNode::create();
     m_PicNode3 = CCNode::create();
+    m_PicNode->setPosition(100, 53.3);
     m_rewardNode->addChild(m_PicNode1);
-    m_PicNode1->setPosition(370, 53.3);
+    m_PicNode1->setPosition(400, 53.3);
     m_rewardNode->addChild(m_PicNode2);
-    m_PicNode2->setPosition(68.8, 53.3-60);
+    m_PicNode2->setPosition(100, 53.3-60);
     m_rewardNode->addChild(m_PicNode3);
-    m_PicNode3->setPosition(370, 53.3-60);
+    m_PicNode3->setPosition(400, 53.3-60);
     m_rewardNodeArr->addObject(m_PicNode1);
     m_rewardNodeArr->addObject(m_PicNode2);
     m_rewardNodeArr->addObject(m_PicNode3);
@@ -494,7 +558,7 @@ void MailResourceHelpCell::setData(MailResourceHelpInfo* dialogInfo,MailResource
     m_dialogInfo=dialogInfo;
     m_mailInfo = mailInfo;
     m_idx = index;
-    m_deleteBtn->setVisible(false);
+//    m_deleteBtn->setVisible(false);
     if(m_dialogInfo->type==3){
         m_tipLoadingText->setVisible(true);
         m_ccbNode->setVisible(false);
@@ -522,30 +586,40 @@ void MailResourceHelpCell::setData(MailResourceHelpInfo* dialogInfo,MailResource
             int type = dict->valueForKey("t")->intValue();
             int value = dict->valueForKey("v")->intValue();
             CCSprite* icon = CCLoadSprite::createSprite(RewardController::getInstance()->getPicByType(type, value).c_str());
+            icon->setScale(0.8);
             dynamic_cast<CCNode*>(m_rewardNodeArr->objectAtIndex(i))->addChild(icon);
 
             std:: string numstr ="+ ";
             numstr.append(CC_CMDITOA(value));
 //            this->m_numText->setString(numstr);
             CCLabelIF* label = CCLabelIF::create();
+            label->setFntFile("Arial_Bold_Regular.fnt");
             dynamic_cast<CCNode*>(m_rewardNodeArr->objectAtIndex(i))->addChild(label);
             label->setPosition(52, 0);
             label->setAnchorPoint(ccp(0, 0.5));
-            label->setColor({125,98,63});
+            label->setColor({139, 29, 20});
             label->setFontSize(23);
             label->setString(numstr.c_str());
         }
         if(count>2){
-            m_rewardBG->setContentSize(CCSize(m_rewardBG->getContentSize().width, m_rewardBG->getContentSize().height+80));
-            m_totalNode->setPositionY(80);
+            m_rewardBG->setContentSize(CCSize(m_rewardBG->getContentSize().width, m_rewardBG->getContentSize().height+40));
+            m_totalNode->setPositionY(40);
+        }
+        else {
+            m_PicNode->setPositionY(53 - 15);
+            m_PicNode1->setPositionY(53 - 15);
         }
     }
+    m_nameText->setFntFile("Arial_Bold_Regular.fnt");
+    m_posTxt->setFntFile("Arial_Bold_Regular.fnt");
+    m_timeText->setFntFile("Arial_Bold_Regular.fnt");
     CCPoint pos = WorldController::getPointByIndex(dialogInfo->pointId);
     std::string strPos = _lang_2("105521", CC_ITOA(pos.x), CC_ITOA(pos.y));
     //    strPos.append(CC_ITOA(pos.x));
     //    strPos.append(",");
     //    strPos.append(CC_ITOA(pos.y));
     m_posTxt->setString(strPos.c_str());
+    m_posTxt->setColor({0,102,173});
     time_t timeT = dialogInfo->createTime;
     string timestr = CCCommonUtils::timeStampToDate(timeT);
     m_timeText->setString(timestr);
@@ -597,7 +671,7 @@ bool MailResourceHelpCell::onAssignCCBMemberVariable(cocos2d::CCObject *pTarget,
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_posTxt", CCLabelIF*, this->m_posTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_timeText", CCLabelIF*, this->m_timeText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_numText", CCLabelIF*, this->m_numText);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_deleteBtn", CCControlButton*, this->m_deleteBtn);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_deleteBtn", CCControlButton*, this->m_deleteBtn);
     
     
     return false;
@@ -632,6 +706,8 @@ void MailResourceHelpCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEve
     }
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     ChatServiceCocos2dx::stopReturnToChat();
+#elif(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+//simon    ChatServiceCocos2dx::stopReturnToChat();
 #endif
     int pos = m_dialogInfo->pointId;
     WorldController::getInstance()->openTargetIndex = pos;
@@ -642,6 +718,8 @@ void MailResourceHelpCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEve
         int index = WorldController::getIndexByPoint(pt);
         SceneController::getInstance()->gotoScene(SCENE_ID_WORLD, false, true, index);
     }
+    //zym 2015.12.11
+//    PopupViewController::getInstance()->forceClearAll(true); simon
     PopupViewController::getInstance()->removeAllPopupView();
 }
 void MailResourceHelpCell::openChatFun(){

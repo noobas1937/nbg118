@@ -99,6 +99,11 @@ bool MailPopUpView::init(){
     }
     setIsHDPanel(true);
     MailController::getInstance()->initTranslateMails();
+//    CCLoadSprite::doResourceByCommonIndex(6, true,true); simon
+//    setCleanFunction([](){
+//        CCLoadSprite::doResourceByCommonIndex(6, false,true);
+//        
+//    });
     CCLoadSprite::doResourceByCommonIndex(6, true);
     setCleanFunction([](){
         CCLoadSprite::doResourceByCommonIndex(6, false);
@@ -108,7 +113,7 @@ bool MailPopUpView::init(){
     m_loadingIcon=NULL;
     m_addNum = 0;
     m_deleteY = 0;
-    m_cellWith = 150;
+    m_cellWith = 159;
     if (CCCommonUtils::isIosAndroidPad()) {
         m_cell_HD_Width = 309;
     }
@@ -125,7 +130,7 @@ bool MailPopUpView::init(){
         this->m_bg->setContentSize(CCSize(m_bg->getContentSize().width, m_bg->getContentSize().height +dh));
         this->m_bg1->setContentSize(CCSize(m_bg1->getContentSize().width, m_bg1->getContentSize().height +dh));
         this->m_listContainer->setContentSize(CCSize(m_listContainer->getContentSize().width, m_listContainer->getContentSize().height + dh));
-        this->m_downNode->setPositionY(m_downNode->getPositionY() - dh + 77/*bg sprite's height*/);
+        this->m_downNode->setPositionY(m_downNode->getPositionY() - dh);
     }
     
     setTitleName(_lang("105513"));
@@ -803,7 +808,7 @@ void MailPopUpView::onDeleteClick(CCObject *pSender, CCControlEvent event){
 void MailPopUpView::onOkDeleteMail(){
     string deleteUids = "";
     string type = "";
-    if(m_data==NULL || m_data->count()<=0) return ;
+    if(m_data==nullptr || m_data->count()<=0) return ;
     int num = m_data->count();
     for(int i=0;i<num;i++){
         std::string id = dynamic_cast<CCString*>(m_data->objectAtIndex(i))->getCString();
@@ -907,6 +912,16 @@ CCTableViewCell* MailPopUpView::tableCellAtIndex(CCTableView *table, ssize_t idx
     }
     MailCell* cell = (MailCell*)table->dequeueCell();
     MailInfo *info = NULL;
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    /**
+     *  c++原生端对邮件重新进行排序 规则是严格按照时间排序 (排除带有二级列表的邮件)
+     *
+     *  @param m_data 需要进行排序的数据
+     *
+     *  @return 排序后的数据
+     */
+    m_data = MailController::getInstance()->getSortMailByTimeToIOS(m_data);
+#endif
     if(idx<m_data->count()){
         std::string str = dynamic_cast<CCString*>(m_data->objectAtIndex(idx))->getCString();
         info = GlobalData::shared()->mailList[str];
@@ -1096,11 +1111,10 @@ void MailPopUpView::onSaveMailClick(CCObject *pSender, CCControlEvent event){
 bool MailPopUpView::onTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
     m_tabView->setBounceable(true);
-    return true;
-//    if(m_isLoadMore&&(!m_isGetAllContent))
-//        return true;
-//    else
-//        return false;
+    if(m_isLoadMore&&(!m_isGetAllContent))
+        return true;
+    else
+        return false;
 //    if(isTouchInside(m_bg, pTouch)){
 //        return true;
 //    }
@@ -1116,6 +1130,13 @@ void MailPopUpView::onTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEv
             y += m_currMinOffsetY;
         }
         m_tabView->setContentOffset(ccp(0,y));
+//        float y = 40;
+//        if (m_currMinOffsetY>0) {
+//            y=m_currMinOffsetY+40;
+//        }
+//        if(offsetY>=y){
+//            m_tabView->setContentOffset(ccp(0,y));
+//        }
     }
     if(m_isLoadMore && offsetY>-30){
         auto cell = dynamic_cast<MailCell*>(m_tabView->cellAtIndex(m_data->count()));

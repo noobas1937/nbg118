@@ -12,7 +12,6 @@
 #include "CommonInclude.h"
 #include "PopupBaseView.h"
 #include "HFHeadImgNode.h"
-
 class DetectBgCell;
 
 class DetectMailPopUpView : public PopupBaseView
@@ -41,6 +40,9 @@ private:
     void onDeleteClick(CCObject *pSender, CCControlEvent event);
     void onAddSaveClick(CCObject * pSender, Control::EventType pCCControlEvent);
     void onShareClick(CCObject * pSender, Control::EventType pCCControlEvent);
+    void onReturnClick(CCObject * pSender, CCControlEvent pCCControlEvent);
+    void onWriteClick(CCObject * pSender, CCControlEvent pCCControlEvent);
+    
     void refreshView(CCObject* p = NULL);
     void getData();
     
@@ -66,6 +68,7 @@ private:
     CCSafeObject<CCControlButton> m_deleteBtn;
     CCSafeObject<CCLabelIF> m_mailTitle;
     CCSafeObject<CCLabelIF> m_timeText;
+    CCSafeObject<CCLabelIF> m_titleText;
    // CCSafeObject<CCLabelIF> m_attackText;
    // CCSafeObject<CCLabelIF> m_titleText;
     //CCSafeObject<CCLabelIF> m_vsText;
@@ -73,12 +76,15 @@ private:
     CCSafeObject<CCNode> m_downNode;
     CCSafeObject<CCScale9Sprite> m_buildBG;    
     CCSafeObject<CCScrollView> m_scrollView;
-    CCSafeObject<CCScale9Sprite> m_bg;
+    CCSafeObject<CCNode> m_bgNode;
     CCSafeObject<CCNode> m_listNode;
 
     CCSafeObject<CCControlButton> m_addSaveBtn;
-    CCSafeObject<CCControlButton> m_unSaveBtn;
+//    CCSafeObject<CCControlButton> m_unSaveBtn;
     CCSafeObject<CCControlButton> m_shareBtn;
+    CCSafeObject<CCControlButton> m_returnBtn;
+    CCSafeObject<CCSprite> m_returnSpr;
+    CCSafeObject<CCControlButton> m_writeBtn;
 
     
 };
@@ -109,6 +115,7 @@ private:
     CCSafeObject<CCNode> m_battlePicNode;
     CCSafeObject<HFHeadImgNode> m_headImgNode;
     CCSafeObject<MailInfo> m_info;
+    CCSafeObject<CCRenderTexture> m_selfModelLayer;
 };
 
 class DetectedByPlayerCell : public Layer
@@ -130,11 +137,14 @@ private:
 	void onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent);
     CCSafeObject<MailInfo> m_info;
     CCSafeObject<CCNode> m_playHeadNode;
-    CCSafeObject<Label> m_tipText;
-    CCSafeObject<CCLabelIF> m_playerTitle;
+    CCSafeObject<CCLabelIF> m_tipText;
+    CCSafeObject<CCLabelIF> m_nameText;
+//    CCSafeObject<CCLabelIF> m_playerTitle;
     CCSafeObject<CCNode> m_battlePicNode;
-    CCSafeObject<CCScale9Sprite> m_headBG;
+    CCSafeObject<CCSprite> m_headBG;
     CCSafeObject<HFHeadImgNode> m_headImgNode;
+    CCSafeObject<CCNode> m_PicNode;
+    CCSafeObject<CCRenderTexture> m_selfModelLayer;
     CCPoint m_startPoint;
 };
 
@@ -181,8 +191,8 @@ class DetectBgCell : public CCNode
 {
 public:
     static DetectBgCell *create(std::string title);
-    CCSafeObject<CCScale9Sprite> m_bg;
-    CCSafeObject<CCNode> m_kuangbg;
+    CCSafeObject<CCNode> m_bg;
+//    CCSafeObject<CCNode> m_kuangbg;
     CCSafeObject<CCNode> m_titleBG;
 
     int getBgCellHeight();
@@ -256,6 +266,7 @@ private:
     CCSafeObject<CCNode> m_icon;
 
     CCSafeObject<CCDictionary> m_dict;
+    CCSafeObject<RenderTexture> m_selfModelLayer;
     int m_totalH;
 };
 #endif /* defined(__IF__DetectMailPopUpView__) */

@@ -48,6 +48,7 @@ void ResourceMailPopUpView::onExit(){
 bool ResourceMailPopUpView::init(){
     bool ret = false;
     if(PopupBaseView::init()){
+        setMailUuid(m_info->uid);
         auto bg = CCBLoadFile("ResourceMailCCB", this, this);
         this->setContentSize(bg->getContentSize());
 //        CCLoadSprite::doResourceByCommonIndex(6, true);
@@ -182,6 +183,8 @@ void ResourceMailPopUpView::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent){
     if(isTouchInside(this->m_posBG, pTouch)){
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         ChatServiceCocos2dx::stopReturnToChat();
+#elif(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+//simon        ChatServiceCocos2dx::stopReturnToChat();
 #endif
         int pos = m_info->pointId;
         WorldController::getInstance()->openTargetIndex = pos;
@@ -192,6 +195,8 @@ void ResourceMailPopUpView::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent){
             int index = WorldController::getIndexByPoint(pt);
             SceneController::getInstance()->gotoScene(SCENE_ID_WORLD, false, true, index);
         }
+        //zym 2015.12.11
+//        PopupViewController::getInstance()->forceClearAll(true);
         PopupViewController::getInstance()->removeAllPopupView();
         return;
     }
@@ -203,7 +208,7 @@ cocos2d::CCSize ResourceMailPopUpView::gridSizeForTable(cocos2d::extension::CCMu
     return CCSize(600, 85);
 }
 
-CCTableViewCell* ResourceMailPopUpView::gridAtIndex(cocos2d::extension::CCMultiColTableView *table, unsigned int idx){
+CCTableViewCell* ResourceMailPopUpView::gridAtIndex(cocos2d::extension::CCMultiColTableView *table, ssize_t idx){
     if(idx >= m_info->reward->count()){
         return NULL;
     }
@@ -225,7 +230,7 @@ ssize_t ResourceMailPopUpView::numberOfCellsInTableView(cocos2d::extension::CCMu
     return m_info->reward->count();
 }
 
-unsigned int ResourceMailPopUpView::numberOfGridsInCell(cocos2d::extension::CCMultiColTableView *multiTable){
+ssize_t ResourceMailPopUpView::numberOfGridsInCell(cocos2d::extension::CCMultiColTableView *multiTable){
     return 1;
 }
 void ResourceMailPopUpView::onAddSaveClick(cocos2d::CCObject *pSender, CCControlEvent event){
@@ -258,6 +263,8 @@ void ResourceMailPopUpView::onAddSaveClick(cocos2d::CCObject *pSender, CCControl
 void ResourceMailPopUpView::onPosClick(CCObject *pSender, CCControlEvent event){
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     ChatServiceCocos2dx::stopReturnToChat();
+#elif(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+//simon    ChatServiceCocos2dx::stopReturnToChat();
 #endif
     int pos = m_info->pointId;
     WorldController::getInstance()->openTargetIndex = pos;
@@ -268,6 +275,8 @@ void ResourceMailPopUpView::onPosClick(CCObject *pSender, CCControlEvent event){
         int index = WorldController::getIndexByPoint(pt);
         SceneController::getInstance()->gotoScene(SCENE_ID_WORLD, false, true, index);
     }
+    //zym 2015.12.11
+//    PopupViewController::getInstance()->forceClearAll(true);
     PopupViewController::getInstance()->removeAllPopupView();
 }
 

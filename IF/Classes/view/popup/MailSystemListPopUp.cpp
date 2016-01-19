@@ -22,7 +22,7 @@
 
 #define MAIL_SYS_VIEW_EDIT_BOX_HEIGHT 80
 void MailSystemListPopUp::onEnter(){
-    CCLoadSprite::doResourceByCommonIndex(6, true);
+    //CCLoadSprite::doResourceByCommonIndex(6, true);
     PopupBaseView::onEnter();
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(MailSystemListPopUp::refreshView), MAIL_SAVE_LIST_CHANGE, NULL);
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(MailSystemListPopUp::refreshAddList), MAIL_LIST_ADD, NULL);
@@ -44,7 +44,7 @@ void MailSystemListPopUp::onEnter(){
         setTitleName(_lang("105519"));
     }
     
-    UIComponent::getInstance()->showPopupView(UIPopupViewType_Mail);
+    UIComponent::getInstance()->showPopupView(UIPopupViewType_Mail,true);
     if(!isInit){
         refreshView(NULL);
     }
@@ -133,10 +133,10 @@ bool MailSystemListPopUp::init(){
         m_cell_HD_Width = 309;
     }
     m_isChangeTab = false;
-    CCLoadSprite::doResourceByCommonIndex(6, true);
-//    setCleanFunction([](){
-//        CCLoadSprite::doResourceByCommonIndex(6, false);
-//    });
+    CCLoadSprite::doResourceByCommonIndex(6, true); //simon
+    setCleanFunction([](){
+        CCLoadSprite::doResourceByCommonIndex(6, false); //simon
+    });
     auto bg = CCBLoadFile("MailView", this, this);
     if (CCCommonUtils::isIosAndroidPad()) {
         this->setContentSize(CCDirector::sharedDirector()->getWinSize());
@@ -150,7 +150,7 @@ bool MailSystemListPopUp::init(){
         this->m_bg->setContentSize(CCSize(m_bg->getContentSize().width, m_bg->getContentSize().height +dh));
         this->m_bg1->setContentSize(CCSize(m_bg1->getContentSize().width, m_bg1->getContentSize().height +dh));
         this->m_listContainer->setContentSize(CCSize(m_listContainer->getContentSize().width, m_listContainer->getContentSize().height + dh));
-        this->m_downNode->setPositionY(m_downNode->getPositionY() - dh + 77/*bg sprite's height*/);
+        this->m_downNode->setPositionY(m_downNode->getPositionY() - dh);
 
     }
     m_data = CCArray::create();
@@ -424,6 +424,7 @@ int MailSystemListPopUp::getMaxMailNum(){
 void MailSystemListPopUp::generateDataArr(){
     m_data->removeAllObjects();
     CCArray *readData = CCArray::create();
+    CCArray *unUpdateData = CCArray::create();
     map<std::string, MailInfo*>::iterator it;
     for(it = GlobalData::shared()->mailList.begin(); it != GlobalData::shared()->mailList.end(); it++){
         bool addFlag = false;
@@ -453,14 +454,27 @@ void MailSystemListPopUp::generateDataArr(){
             }
         }
         if(addFlag){
-            if(m_panelType != MAILTAB4 && it->second->status == READ){
-                readData->addObject(CCString::create(it->second->uid));
-            }else{
-                m_data->addObject(CCString::create(it->second->uid));
+            if (it->second->type == MAIL_SYSUPDATE) {
+                if(it->second->rewardId != "" && it->second->rewardStatus==0){
+                    m_data->addObject(CCString::create(it->second->uid));
+                }else{
+                    readData->addObject(CCString::create(it->second->uid));
+                }
+            }
+            else {
+                if(m_panelType != MAILTAB4 && it->second->status == READ){
+                    readData->addObject(CCString::create(it->second->uid));
+                }else{
+                    unUpdateData->addObject(CCString::create(it->second->uid));
+                }
             }
         }
     }
     m_data = MailController::getInstance()->getSortMailByTime(m_data);
+    if (unUpdateData->count()>0) {
+        unUpdateData = MailController::getInstance()->getSortMailByTime(unUpdateData);
+        m_data->addObjectsFromArray(unUpdateData);
+    }
     if(readData->count()>0){
         readData = MailController::getInstance()->getSortMailByTime(readData);
         m_data->addObjectsFromArray(readData);
@@ -613,7 +627,7 @@ void MailSystemListPopUp::onDeleteClick(CCObject *pSender, CCControlEvent event)
 void MailSystemListPopUp::onOkDeleteMail(){
     string deleteUids = "";
     string type = "";
-    if(m_data==NULL || m_data->count()<=0) return ;
+    if(m_data==nullptr || m_data->count()<=0) return ;
     int num = m_data->count();
     for(int i=0;i<num;i++){
         std::string id = dynamic_cast<CCString*>(m_data->objectAtIndex(i))->getCString();

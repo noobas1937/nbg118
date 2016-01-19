@@ -39,6 +39,7 @@
 #include "ChatMailInfo.h"
 #include "WorldBossRewardMailView.h"
 #include "WorldBossMailView.h"
+//#include "ChatRoomView.h" simon
 
 static int predeleteNum = 0;
 MailCell* MailCell::create(MailInfo *info,CCTableView *tableView){
@@ -140,7 +141,7 @@ bool MailCell::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char
 
 void MailCell::showDelState(CCObject* obj)
 {
-    if(m_mailInfo==NULL){
+    if(m_mailInfo==nullptr){
         return;
     }
 //    if (m_mailInfo->tabType==2 || m_mailInfo->tabType==3|| m_mailInfo->tabType==4) {
@@ -171,7 +172,7 @@ SEL_CCControlHandler MailCell::onResolveCCBCCControlSelector(cocos2d::CCObject *
 /**邮件cell 点击触发方法*/
 void MailCell::showReadPopUp(){
     bool issaveRead = false;
-    if(m_mailInfo==NULL){
+    if(m_mailInfo==nullptr){
         return;
     }
     if(m_mailInfo->status==0){
@@ -231,7 +232,9 @@ void MailCell::showReadPopUp(){
         }else if(m_mailInfo->type==MAIL_SYSUPDATE){
             PopupViewController::getInstance()->addPopupInViewWithAnim(MailAnnouncePopUp::create(m_mailInfo));
         }else if(m_mailInfo->type == MAIL_ATTACKMONSTER){
-            PopupViewController::getInstance()->addPopupInViewWithAnim(MailMonsterListView::create(dynamic_cast<MailMonsterCellInfo*>(m_mailInfo.getObject())));
+            //zym 2015.10.22
+            if( dynamic_cast<MailMonsterCellInfo*>(m_mailInfo.getObject()) )
+                PopupViewController::getInstance()->addPopupInViewWithAnim(MailMonsterListView::create(dynamic_cast<MailMonsterCellInfo*>(m_mailInfo.getObject())));
         }else if(m_mailInfo->type == MAIL_GIFT){
             PopupViewController::getInstance()->addPopupInViewWithAnim(MailGiftReadPopUpView::create(*m_mailInfo));
         }else if(m_mailInfo->type == MAIL_WORLD_BOSS){
@@ -257,10 +260,6 @@ void MailCell::showReadPopUp(){
             CCLOGFUNCF("m_mailInfo->type %d",m_mailInfo->type);
             if (m_mailInfo->type ==CHAT_ROOM) {
                 ChatServiceCocos2dx::setMailInfo(m_mailInfo->crGroupId.c_str(),m_mailInfo->uid.c_str(),m_mailInfo->fromName.c_str(),m_mailInfo->type);
-//                if (m_mailInfo->dialogs!=NULL&& m_mailInfo->dialogs->count()<=1){
-//                     CCLOGFUNCF("!getHasRequestDataBefore m_mailInfo->fromName.c_str() %s",m_mailInfo->fromName.c_str());
-//                    MailController::getInstance()->getChatRoomMsgRecord(false, m_mailInfo->crGroupId);
-//                }
                 if(!ChatServiceCocos2dx::isChatShowing){
                     CCLOG("!ChatServiceCocos2dx::isChatShowing");
                     ChatServiceCocos2dx::m_channelType=CHANNEL_TYPE_CHATROOM;
@@ -282,11 +281,7 @@ void MailCell::showReadPopUp(){
                 CCLOG("showReadPopUp USERMAIL %d,ChatServiceCocos2dx::m_curSendMailIndex:%d",m_mailInfo->dialogs->count(),ChatServiceCocos2dx::m_curSendMailIndex);
                 
                 ChatServiceCocos2dx::setMailInfo(m_mailInfo->fromUid.c_str(),m_mailInfo->uid.c_str(),m_mailInfo->fromName.c_str(),m_mailInfo->type);
-//                if (!ChatServiceCocos2dx::getHasRequestDataBefore(m_mailInfo->fromUid)) {
-//                    
-//                }
                 
-                CCLOG("!ChatServiceCocos2dx::getHasRequestDataBefore");
                 if(mailInfoArr->count()>20)
                 {
                     CCArray* mailArr=CCArray::create();
@@ -352,11 +347,7 @@ void MailCell::showReadPopUp(){
             }
             if (m_mailInfo->type ==CHAT_ROOM) {
                 ChatServiceCocos2dx::setMailInfo(m_mailInfo->crGroupId.c_str(),m_mailInfo->uid.c_str(),m_mailInfo->fromName.c_str(),m_mailInfo->type);
-                //                if (m_mailInfo->dialogs!=NULL&& m_mailInfo->dialogs->count()<=1){
-                //                     CCLOGFUNCF("!getHasRequestDataBefore m_mailInfo->fromName.c_str() %s",m_mailInfo->fromName.c_str());
-                //                    MailController::getInstance()->getChatRoomMsgRecord(false, m_mailInfo->crGroupId);
-                //                }
-                 ChatServiceCocos2dx:: settingGroupChatMailVCChatChannel();
+                ChatServiceCocos2dx:: settingGroupChatMailVCChatChannel();
                 if(!ChatServiceCocos2dx::isChatShowing_fun()){
                     CCLOG("!ChatServiceCocos2dx::isChatShowing");
                    
@@ -380,10 +371,13 @@ void MailCell::showReadPopUp(){
                 CCLOG("showReadPopUp USERMAIL %d,ChatServiceCocos2dx::m_curSendMailIndex:%d",m_mailInfo->dialogs->count(),ChatServiceCocos2dx::m_curSendMailIndex);
                 
                 ChatServiceCocos2dx::setMailInfo(m_mailInfo->fromUid.c_str(),m_mailInfo->uid.c_str(),m_mailInfo->fromName.c_str(),m_mailInfo->type);
-//                if (!ChatServiceCocos2dx::getHasRequestDataBefore(m_mailInfo->fromUid)) {
                 ChatServiceCocos2dx:: settingGroupChatMailVCChatChannel();
                 if(mailInfoArr->count()>0)
                 {
+                    /**
+                     * 判断 是否是 第一次打开邮件列表中的对话框
+                     * 如果是第一打开 需要把数据传递给IOS
+                     */
                     if(!ChatServiceCocos2dx::isFirstOpenMailToPlayer(m_mailInfo->fromUid.c_str()))
                         ChatServiceCocos2dx::handleChatPush(mailInfoArr, channelType ,m_mailInfo->fromUid.c_str());
 //                    ChatServiceCocos2dx::m_curSendMailIndex++;
@@ -412,6 +406,10 @@ void MailCell::showReadPopUp(){
                 PopupViewController::getInstance()->addPopupInView(MailDialogView::create(m_mailInfo));
             }
         }
+#else
+        if(m_mailInfo->type == CHAT_ROOM){
+            PopupViewController::getInstance()->addPopupInView(ChatRoomView::create(m_mailInfo->crGroupId));
+        }
 #endif
     }
     else{//个人邮件
@@ -424,7 +422,7 @@ void MailCell::showReadPopUp(){
 }
 
 void MailCell::refreshStatus(){
-    if(m_mailInfo==NULL)
+    if(m_mailInfo==nullptr)
         return;
     this->setScale(1.0);
 
@@ -562,7 +560,7 @@ void MailCell::setDeleteStatusFlag(bool isNeedAnim ){
 
 }
 void MailCell::showLoadingMoreAnim(){
-    if(m_mailInfo==NULL){
+    if(m_mailInfo==nullptr){
         m_tipLoadingText->setVisible(true);
     }
 }
@@ -572,7 +570,7 @@ void MailCell::setData(MailInfo *mailInfo,CCTableView *tableView){
     this->m_mailInfo = mailInfo;
     this->m_tableView =tableView;
     m_tipLoadingText->setVisible(false);
-    if(this->m_mailInfo==NULL){
+    if(this->m_mailInfo==nullptr){
         m_tipLoadingText->setVisible(true);
         m_ccbNode->setVisible(false);
         return ;
@@ -848,7 +846,7 @@ void MailCell::addRewardIcon(){
     
     //4个文本框
     auto label = CCLabelTTF::create();
-//    label->setFntFile(getNBFont(NB_FONT_Bold));
+//    label->setFntFile("Arial_Bold_Regular.fnt");
     if (CCCommonUtils::isIosAndroidPad()) {
         label->setFontSize(48);
     }
@@ -863,7 +861,7 @@ void MailCell::addRewardIcon(){
     m_rewardNode1->addChild(label);
     
     auto label1 = CCLabelIF::create();
-    label1->setFntFile(getNBFont(NB_FONT_Bold));
+    label1->setFntFile("Arial_Bold_Regular.fnt");
     if (CCCommonUtils::isIosAndroidPad()) {
         label1->setFontSize(48);
     }
@@ -873,7 +871,7 @@ void MailCell::addRewardIcon(){
     m_rewardNode1->addChild(label1);
     
     auto label2 = CCLabelIF::create();
-    label2->setFntFile(getNBFont(NB_FONT_Bold));
+    label2->setFntFile("Arial_Bold_Regular.fnt");
     if (CCCommonUtils::isIosAndroidPad()) {
         label2->setFontSize(48);
     }
@@ -883,7 +881,7 @@ void MailCell::addRewardIcon(){
     m_rewardNode1->addChild(label2);
     
     auto label3 = CCLabelIF::create();
-    label3->setFntFile(getNBFont(NB_FONT_Bold));
+    label3->setFntFile("Arial_Bold_Regular.fnt");
     if (CCCommonUtils::isIosAndroidPad()) {
         label3->setFontSize(48);
     }
@@ -909,26 +907,37 @@ void MailCell::addRewardIcon(){
     bool isCreateContent = false;
     if(m_mailInfo->type == MAIL_ATTACKMONSTER){
         MailMonsterCellInfo* monstInfo = dynamic_cast<MailMonsterCellInfo*>(m_mailInfo.getObject());
-        MailMonsterInfo* monsterInfo1 = dynamic_cast<MailMonsterInfo*>(monstInfo->monster->objectAtIndex(0));
-        std::string name = CCCommonUtils::getNameById(monsterInfo1->monsterId);
-        string level = CCCommonUtils::getPropById(monsterInfo1->monsterId,"level");
-        name+=" Lv.";
-        name+=level;
-        label->setString(name.c_str());
-        label1->setAlignment(kCCTextAlignmentRight);
-        label1->setAnchorPoint(ccp(1.0, 0.5));
-        label1->setPosition(ccp(425, 0));
-        
-        if(monsterInfo1->monsterResult==1){
-//        _lang("105117")//
-            label1->setString(_lang("103758"));
-            
-        }else if(monsterInfo1->monsterResult==2){
-            label1->setString(_lang("105118"));
-        }else if(monsterInfo1->monsterResult == 4){
-            label1->setString(_lang("103786"));
-        }else{
-            label1->setString(_lang("105117"));
+        if( monstInfo )
+        {
+            MailMonsterInfo* monsterInfo1 = dynamic_cast<MailMonsterInfo*>(monstInfo->monster->objectAtIndex(0));
+            if( monsterInfo1 )
+            {
+                std::string name = CCCommonUtils::getNameById(monsterInfo1->monsterId);
+                string level = CCCommonUtils::getPropById(monsterInfo1->monsterId,"level");
+                name+=" Lv.";
+                name+=level;
+                label->setString(name.c_str());
+                label1->setAlignment(kCCTextAlignmentRight);
+                label1->setAnchorPoint(ccp(1.0, 0.5));
+                if (CCCommonUtils::isIosAndroidPad()) {
+                    label1->setPosition(ccp(1140, 0));
+                }
+                else
+                    label1->setPosition(ccp(475, 0));
+                
+                if(monsterInfo1->monsterResult==1){
+                    //        _lang("105117")//
+                    label1->setString(_lang("103758"));
+                    
+                }else if(monsterInfo1->monsterResult==2){
+                    label1->setString(_lang("105118"));
+                }else if(monsterInfo1->monsterResult == 4){
+                    label1->setString(_lang("103786"));
+                }else{
+                    label1->setString(_lang("105117"));
+                }
+
+            }
         }
         
    
@@ -954,10 +963,14 @@ void MailCell::addRewardIcon(){
         if(m_mailInfo->atkHelper!=NULL){
             cocos2d::CCObject* obj;
             CCARRAY_FOREACH(m_mailInfo->atkHelper, obj){
-                string helpUid = dynamic_cast<CCString*>(obj)->getCString();
-                if(helpUid==GlobalData::shared()->playerInfo.uid){
-                    isAtt = true;
-                    break;
+                CCString* pStr = dynamic_cast<CCString*>(obj);
+                if( pStr )
+                {
+                    string helpUid = pStr->getCString();
+                    if(helpUid==GlobalData::shared()->playerInfo.uid){
+                        isAtt = true;
+                        break;
+                    }
                 }
             }
         }
@@ -1278,7 +1291,7 @@ void MailCell::addRewardIcon(){
     }else if(m_mailInfo->type == MAIL_RESOURCE_HELP){
         label->setDimensions(CCSizeZero);
         MailResourceHelpCellInfo* tempInfo = dynamic_cast<MailResourceHelpCellInfo*>(m_mailInfo.getObject());
-        CCArray* arr = tempInfo->collect;
+        CCArray* arr = tempInfo?tempInfo->collect:NULL;
         if(arr){
             MailResourceHelpInfo* first = dynamic_cast<MailResourceHelpInfo*>(arr->objectAtIndex(0));
             bool outofrange = false;
@@ -1286,6 +1299,7 @@ void MailCell::addRewardIcon(){
                 CCArray* firstReward = first->reward;
                 int arrSize = firstReward->count();
                 CCDictionary* dictHelp = dynamic_cast<CCDictionary*>(firstReward->objectAtIndex(0));
+                
                 int type = dictHelp->valueForKey("t")->intValue();
                 int value = dictHelp->valueForKey("v")->intValue();
                 CCSprite* icon = CCLoadSprite::createSprite(RewardController::getInstance()->getPicByType(type, value).c_str());
@@ -1368,7 +1382,11 @@ void MailCell::addRewardIcon(){
             label->setString(m_mailInfo->contents.c_str());
         }else{
             int pointType = m_mailInfo->pointType;
-            CCDictionary *dict = dynamic_cast<CCDictionary*>(m_mailInfo->detectReport->objectForKey("user"));
+            CCDictionary *dict = NULL;
+            
+            if( m_mailInfo->detectReport )
+                dict = dynamic_cast<CCDictionary*>(m_mailInfo->detectReport->objectForKey("user"));
+            
             std::string titile = "";
             switch (pointType) {
                 case Throne:{ //王座
@@ -1452,9 +1470,9 @@ void MailCell::addRewardIcon(){
     }
     else if(m_mailInfo->type == MAIL_ENCAMP){
         CCPoint pt = WorldController::getPointByIndex(m_mailInfo->occupyPointId);
-        if (m_mailInfo->ckf==1) {
-            pt = WorldController::getPointByMapTypeAndIndex(m_mailInfo->occupyPointId,SERVERFIGHT_MAP);
-        }
+//        if (m_mailInfo && m_mailInfo->serverType>=SERVER_BATTLE_FIELD) { simon
+//            pt = WorldController::getPointByMapTypeAndIndex(m_mailInfo->occupyPointId,(MapType)m_mailInfo->serverType);
+//        }
         isCreateContent = true;
         std::string title = "";
         string  description1 = "";
@@ -1681,7 +1699,7 @@ bool MailCell::onTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
     if(popUP == NULL){//由于有过渡动画会导致动画过程中邮件可以删除。造成崩溃
         return false;
     }
-    if(m_mailInfo==NULL){
+    if(m_mailInfo==nullptr){
         return false;
     }
     if(m_tableView->isTouchMoved()){
@@ -1906,7 +1924,7 @@ void MailCell::deleteMailByOp(){
     }
 }
 void MailCell::onDeleteMail(){
-    if(m_mailInfo==NULL){
+    if(m_mailInfo==nullptr){
         return;
     }
     if(m_mailInfo->rewardStatus==0&&m_mailInfo->rewardId!=""){
@@ -1921,7 +1939,7 @@ void MailCell::onDeleteMail(){
     onDeleteMailCommand();
 }
 void MailCell::onDeleteMailCommand(){
-    if(m_mailInfo==NULL){
+    if(m_mailInfo==nullptr){
         return;
     }
     int index = getIdx();

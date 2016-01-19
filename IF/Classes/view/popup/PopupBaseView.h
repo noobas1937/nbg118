@@ -21,7 +21,28 @@ class PopupViewController;
 #define DOWN_HEIGHT_HD 210
 #define DEF_HEIGHT 852
 #define DEF_HEIGHT_HD 2048
+class AutoSafeRef
+{
+public:
+    AutoSafeRef(Ref* p)
+    {
+        _node = p;
+        if( _node )
+            _node->retain();
+    }
+    ~AutoSafeRef()
+    {
+        if( _node )
+            _node->release();
+    }
+private:
+    Ref*  _node;
+};
 
+enum FromNativePanelType{
+    DEFAULT,
+    IOS1,
+};
 class PopupBaseView : public CCAniNode
 {
 public:
@@ -78,6 +99,7 @@ private:
     CC_SYNTHESIZE(int, _id, ViewID);
     CC_SYNTHESIZE(int, m_closeId, CloseId);
     CC_SYNTHESIZE(bool, m_isSystemMail, IsSystemMail);
+     CC_SYNTHESIZE(string, m_mailUuid, MailUuid);
     bool m_isAniComplete;
     int m_x;
     int m_y;

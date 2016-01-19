@@ -50,24 +50,44 @@
 #include "ChatServiceCocos2dx.h"
 #include "GetAllianceListCommand.h"
 #include "LuaController.h"
+#include "UIComponent.h"
+#include "ChatServiceCocos2dx.h"
 
+#include "AllianceShopView.h"
+#include "AllianceHelpView.h"
+#include "AllianceTerritoryView.h"
+#include "AllianceWarView.h"
+#include "FunBuildController.h"
 void MailReadPopUpView::onEnter(){
     PopupBaseView::onEnter();
+    UIComponent::getInstance()->showPopupView(UIPopupViewType_ArcPop_TitanUpgrade,true);
+    UIComponent::getInstance()->hideReturnBtn();
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(MailReadPopUpView::refreshContent), MAIL_CONTENT_READ, NULL);
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(MailReadPopUpView::refreshContent), MIAL_GET_REWARD_REFRESH, NULL);
-    if(m_info.type==MAIL_ALLIANCEAPPLY || m_info.type==MAIL_ALLIANCEINVITE){
-        setTitleName(m_info.title.c_str());
-    }else{
-        setTitleName(m_info.fromName.c_str());
+    if(m_info->type==MAIL_ALLIANCEAPPLY){
+//        setTitleName(m_info.title.c_str());
+        this->m_mailTitle->setString(m_info->title.c_str());
+    }else if(m_info->type==MAIL_ALLIANCEINVITE) {
+        this->m_mailTitle->setString(_lang("102394"));
     }
-    if (m_info.type == MAIL_INVITE_TELEPORT) {
-        setTitleName(m_info.title.c_str());
+    else{
+//        setTitleName(m_info.fromName.c_str());
+        this->m_mailTitle->setString(m_info->fromName.c_str());
+    }
+    if (m_info->type == MAIL_INVITE_TELEPORT) {
+//        setTitleName(m_info.title.c_str());
         m_titleText->setString("");
+        this->m_mailTitle->setString(_lang("115295"));/////////////
     }
-    if (m_info.type == MAIL_ALLIANCE_KICKOUT || m_info.type == MAIL_REFUSE_ALL_APPLY) {
-        setTitleName(m_info.title.c_str());
-        m_titleText->setString(m_info.title.c_str());
+    if (m_info->type == MAIL_ALLIANCE_KICKOUT || m_info->type == MAIL_REFUSE_ALL_APPLY) {
+//        setTitleName(m_info.title.c_str());
+        m_titleText->setString(m_info->title.c_str());
+        this->m_mailTitle->setString(m_info->title.c_str());
     }
+    if (m_info->type == MAIL_ALLIANCE_RANKCHANGE) {
+        this->m_mailTitle->setString(m_info->title.c_str());
+    }
+    setTouchEnabled(true);
     //CCTransitionSlideInR action = CCTransitionSlideInR::transitionWithDuration();
 //    float x = m_ccbNode->getPositionX();
 //    float y = m_ccbNode->getPositionY();
@@ -82,6 +102,7 @@ void MailReadPopUpView::onExit(){
     if(m_modelLayer){
         CCDirector::sharedDirector()->getRunningScene()->removeChild(m_modelLayer);
     }
+    setTouchEnabled(false);
     PopupBaseView::onExit();
 }
 
@@ -100,54 +121,118 @@ bool MailReadPopUpView::init(){
         return false;
     }
     setIsHDPanel(true);
+    setMailUuid(m_info->uid);
     m_listArr = CCArray::create();
     m_listAnimArr = CCArray::create();
-    auto bg = CCBLoadFile("MailReadView", this, this);
+//    auto cf = CCLoadSprite::getSF("Mail_diban.png");
+    auto cf = CCLoadSprite::getSF("Mail_BG1.png");
+    if (cf==NULL) {
+        CCLoadSprite::doResourceByCommonIndex(6, true);
+        CCLoadSprite::doResourceByCommonIndex(7, true);
+        CCLoadSprite::doResourceByCommonIndex(8, true);
+        CCLoadSprite::doResourceByCommonIndex(205, true);
+        setCleanFunction([](){
+            CCLoadSprite::doResourceByCommonIndex(7, false);
+            CCLoadSprite::doResourceByCommonIndex(8, false);
+            CCLoadSprite::doResourceByCommonIndex(6, false);
+            CCLoadSprite::doResourceByCommonIndex(205, false);
+            
+        });
+    }
+    else {
+        CCLoadSprite::doResourceByCommonIndex(7, true);
+        CCLoadSprite::doResourceByCommonIndex(8, true);
+        CCLoadSprite::doResourceByCommonIndex(205, true);
+        setCleanFunction([](){
+            CCLoadSprite::doResourceByCommonIndex(7, false);
+            CCLoadSprite::doResourceByCommonIndex(8, false);
+            CCLoadSprite::doResourceByCommonIndex(205, false);
+            
+        });
+    }
+    auto bg = CCBLoadFile("NEW_MailReadView", this, this);
     m_ccbNode = bg;
     if (CCCommonUtils::isIosAndroidPad()) {
         this->setContentSize(CCDirector::sharedDirector()->getWinSize());
     }
     else
         this->setContentSize(bg->getContentSize());
-//    CCLoadSprite::doResourceByCommonIndex(6, true);
 
-    CCLoadSprite::doResourceByCommonIndex(7, true);
-    CCLoadSprite::doResourceByCommonIndex(8, true);
-    CCLoadSprite::doResourceByCommonIndex(205, true);
-    setCleanFunction([](){
-        CCLoadSprite::doResourceByCommonIndex(7, false);
-        CCLoadSprite::doResourceByCommonIndex(8, false);
-//        CCLoadSprite::doResourceByCommonIndex(6, false);
-        CCLoadSprite::doResourceByCommonIndex(205, false);
-        
-    });
-    setTitleName(_lang("105513"));
-
-    if (!CCCommonUtils::isIosAndroidPad()) {
-        int preHeight = this->m_buildBG->getContentSize().height;
-        changeBGHeight(m_buildBG);
-        int dh = m_buildBG->getContentSize().height - preHeight;
-        this->m_contentContainer->setContentSize(CCSize(m_contentContainer->getContentSize().width, m_contentContainer->getContentSize().height + dh));
-        this->m_downNode->setPositionY(this->m_downNode->getPositionY() - dh);
-        
-        this->m_bg->setContentSize(CCSize(m_bg->getContentSize().width, m_bg->getContentSize().height + dh));
-
+    this->m_mailTitle->setString(_lang("105513"));
+    if (CCCommonUtils::isIosAndroidPad()) {
+        int extH = getExtendHeight();
+        this->m_contentContainer->setContentSize(CCSize(m_contentContainer->getContentSize().width, m_contentContainer->getContentSize().height + extH));
+        m_downNode->setPositionY(m_downNode->getPositionY() - extH);
+        m_bgNode->setPositionY(m_bgNode->getPositionY() - extH);
+        auto tbg = CCLoadSprite::loadResource("Mail_diban.png");
+        auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
+        auto picBg1 = CCLoadSprite::createSprite("Mail_diban.png");
+        picBg1->setAnchorPoint(ccp(0, 0));
+        picBg1->setPosition(ccp(0, 0));
+        picBg1->setScaleX(2.4);
+        tBatchNode->addChild(picBg1);
+        int maxHeight = CCDirector::sharedDirector()->getWinSize().height;
+        int curHeight = picBg1->getContentSize().height;
+        while(curHeight < maxHeight)
+        {
+            auto picBg2 = CCLoadSprite::createSprite("Mail_diban.png");
+            picBg2->setAnchorPoint(ccp(0, 0));
+            picBg2->setPosition(ccp(0, curHeight));
+            picBg2->setScaleX(2.4);
+            tBatchNode->addChild(picBg2);
+            curHeight += picBg2->getContentSize().height;
+        }
+        m_bgNode->addChild(tBatchNode);
     }
-    this->m_totalNode->removeChild(this->m_rewardNode);
-    this->m_nameText->setFntFile(getNBFont(NB_FONT_Bold));
-    this->m_titleText->setFntFile(getNBFont(NB_FONT_Bold));
-    //this->m_guideTxt->setFntFile(getNBFont(NB_FONT_Bold));
-    this->m_nameText->setString(m_info.fromName.c_str());
-    string nameExt = m_info.fromName;
-    if(m_info.alliance!=""){
-        nameExt = "("+m_info.alliance+")"+m_info.fromName;
+    else {
+        int extH = getExtendHeight();
+        this->m_contentContainer->setContentSize(CCSize(m_contentContainer->getContentSize().width, m_contentContainer->getContentSize().height + extH));
+        m_downNode->setPositionY(m_downNode->getPositionY() - extH);
+        m_bgNode->setPositionY(m_bgNode->getPositionY() - extH);
+        auto tbg = CCLoadSprite::loadResource("Mail_diban.png");
+        auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
+        auto picBg1 = CCLoadSprite::createSprite("Mail_diban.png");
+        picBg1->setAnchorPoint(ccp(0, 0));
+        picBg1->setPosition(ccp(0, 0));
+        tBatchNode->addChild(picBg1);
+        int maxHeight = CCDirector::sharedDirector()->getWinSize().height;
+        int curHeight = picBg1->getContentSize().height;
+        while(curHeight < maxHeight)
+        {
+            auto picBg2 = CCLoadSprite::createSprite("Mail_diban.png");
+            picBg2->setAnchorPoint(ccp(0, 0));
+            picBg2->setPosition(ccp(0, curHeight));
+            tBatchNode->addChild(picBg2);
+            curHeight += picBg2->getContentSize().height;
+        }
+        m_bgNode->addChild(tBatchNode);
+    }
+    
+//    this->m_totalNode->removeChild(this->m_rewardNode);
+    this->m_rewardNode->removeFromParent();
+    this->m_nameText->setFntFile("Arial_Bold.fnt");
+    this->m_titleText->setFntFile("Arial_Bold_Regular.fnt");
+    this->m_timeText->setFntFile("Arial_Bold_Regular.fnt");
+    //this->m_guideTxt->setFntFile("Arial_Bold.fnt");
+    this->m_nameText->setString(m_info->fromName.c_str());
+    string nameExt = m_info->fromName;
+    if(m_info->alliance!=""){
+        nameExt = "("+m_info->alliance+")"+m_info->fromName;
         this->m_nameText->setString(nameExt);
     }
-    if(m_info.type==MAIL_Alliance_ALL){
+    if(m_info->type==MAIL_Alliance_ALL){
         this->m_nameText->setString(nameExt+_lang("105589"));
     }
-    this->m_titleText->setString(m_info.title.c_str());
-    this->m_timeText->setString(CCCommonUtils::timeStampToDate(m_info.createTime).c_str());
+    if(m_info->type==MAIL_INVITE_TELEPORT){
+        this->m_nameText->setString(m_info->inviterName.c_str());
+    }
+    this->m_titleText->setString(m_info->title.c_str());
+    this->m_timeText->setString(CCCommonUtils::timeStampToDate(m_info->createTime).c_str());
+    int titleHeight = m_titleText->getContentSize().height * m_titleText->getOriginScaleY();
+    int timeHeight = m_timeText->getContentSize().height * m_timeText->getOriginScaleY();
+    if (titleHeight >= timeHeight) {
+        m_underLineNode->setPositionY(m_underLineNode->getPositionY() - titleHeight + timeHeight);
+    }
     int w = m_contentContainer->getContentSize().width;
     int h = m_contentContainer->getContentSize().height;
     m_scroll = CCScrollView::create(CCSize(w, h));
@@ -156,9 +241,10 @@ bool MailReadPopUpView::init(){
     m_scroll->setDirection(kCCScrollViewDirectionVertical);
     m_contentContainer->addChild(m_scroll);
     m_ListNode = CCNode::create();
+    m_blendFlag = true;
     m_scroll->addChild(m_ListNode);
-    if(!m_info.isReadContent){
-        MailController::getInstance()->readMailFromServer(m_info.uid, CC_ITOA(m_info.type));
+    if(!m_info->isReadContent){
+        MailController::getInstance()->readMailFromServer(m_info->uid, CC_ITOA(m_info->type));
         GameController::getInstance()->showWaitInterface();
     }else{
         refreshContent(NULL);
@@ -168,47 +254,80 @@ bool MailReadPopUpView::init(){
     int picVer = 0;
     string uid = "";
     CCSprite* pic;
-    if(m_info.type!=MAIL_USER&&m_info.type != MAIL_SELF_SEND&&m_info.type != MAIL_ALLIANCEINVITE&&m_info.type!=MAIL_MOD_SEND&&m_info.type != MAIL_MOD_PERSONAL && m_info.type != MAIL_ALLIANCEAPPLY && m_info.type != MAIL_INVITE_TELEPORT && m_info.type != MAIL_ALLIANCE_KICKOUT && m_info.type != MAIL_REFUSE_ALL_APPLY){
-        pic = CCLoadSprite::createSprite("guidePlayerIcon.png");
-        pic->setScale(0.7);
-    } else if (m_info.type == MAIL_ALLIANCEAPPLY) {
+    if(m_info->type!=MAIL_USER&&m_info->type != MAIL_SELF_SEND&&m_info->type != MAIL_ALLIANCEINVITE&&m_info->type!=MAIL_MOD_SEND&&m_info->type != MAIL_MOD_PERSONAL && m_info->type != MAIL_ALLIANCEAPPLY && m_info->type != MAIL_INVITE_TELEPORT && m_info->type != MAIL_ALLIANCE_KICKOUT && m_info->type != MAIL_REFUSE_ALL_APPLY){
+        if (m_info->fromName.compare(_lang("3140051")) == 0) {
+            pic = CCLoadSprite::createSprite("mail_princessIcon.png");
+        }
+        else
+            pic = CCLoadSprite::createSprite("guidePlayerIcon.png");
+        pic->setScale(0.5);
+    } else if (m_info->type == MAIL_ALLIANCEAPPLY) {
         showCustomPic = true;
-        picVer = m_info.picVer;
-        uid = m_info.fromUid;
-        if(m_info.pic=="0"||m_info.pic==""){
+        picVer = m_info->picVer;
+        uid = m_info->fromUid;
+        if(m_info->pic=="0"||m_info->pic==""){
             string mpic = "g044";
             mpic = mpic+".png";
             pic = CCLoadSprite::createSprite(mpic.c_str());
         }else{
-            std::string head = m_info.pic;
+            std::string head = m_info->pic;
             head.append(".png");
             pic = CCLoadSprite::createSprite(head.c_str());
         }
-        CCCommonUtils::setSpriteMaxSize(pic, 92);
+       
+        CCCommonUtils::setSpriteMaxSize(pic, 70);
     }else{
         showCustomPic = true;
-        if(m_info.pic=="0"||m_info.pic==""){
+        if(m_info->pic=="0"||m_info->pic==""){
             string mpic = GlobalData::shared()->playerInfo.pic;
             mpic = mpic+".png";
             pic = CCLoadSprite::createSprite(mpic.c_str());
             picVer = GlobalData::shared()->playerInfo.picVer;
             uid = GlobalData::shared()->playerInfo.uid;
         }else{
-            std::string head = m_info.pic;
+            std::string head = m_info->pic;
             head.append(".png");
             pic = CCLoadSprite::createSprite(head.c_str());
-            picVer = m_info.picVer;
-            uid = m_info.fromUid;
+            picVer = m_info->picVer;
+            uid = m_info->fromUid;
         }
-        CCCommonUtils::setSpriteMaxSize(pic, 92);
+        CCCommonUtils::setSpriteMaxSize(pic, 70);
     }
-    pic->setPosition(ccp(10, 4));
-    m_userHeadContainer->addChild(pic);
-    if (showCustomPic && CCCommonUtils::isUseCustomPic(picVer))
-    {
-        m_headImgNode->initHeadImgUrl2(m_userHeadContainer, CCCommonUtils::getCustomPicUrl(uid, picVer), 1.0f, 92, true, ccp(10, 4));
+//    m_userHeadContainer->addChild(pic);
+//    pic->setPositionY(pic->getPositionY() - 3);
+//    if (showCustomPic && CCCommonUtils::isUseCustomPic(picVer))
+//    {
+//        m_headImgNode->initHeadImgUrl2(m_userHeadContainer, CCCommonUtils::getCustomPicUrl(uid, picVer), 1.0f, 70, true, ccp(0, -3));
+//    }
+    
+    ////////融合底图
+    if (m_blendFlag) {
+        auto sizeLayer = CCSize(80, 80);
+        m_selfModelLayer = CCRenderTexture::create(sizeLayer.width, sizeLayer.height);
+        m_selfModelLayer->setAnchorPoint(ccp(0.5, 0.5));
+        ccBlendFunc cbf = {GL_ZERO,GL_ONE_MINUS_SRC_ALPHA};
+        auto spr = CCLoadSprite::createSprite("Mail_headBack.png");
+        spr->setScale(1);
+        spr->setPosition(ccp(sizeLayer.width / 2, sizeLayer.height / 2));
+        auto bgCircle = CCLoadSprite::createSprite("Mail_head_backBattle.png");
+        bgCircle->setBlendFunc(cbf);
+        bgCircle->setPosition(ccp(sizeLayer.width / 2, sizeLayer.height / 2));
+        pic->setPosition(ccp(sizeLayer.width / 2, sizeLayer.height / 2 - 3));
+        //    pic->removeFromParent();
+        m_selfModelLayer->begin();
+        spr->visit();
+        pic->visit();
+        bgCircle->visit();
+        m_selfModelLayer->end();
+        m_userHeadContainer->addChild(m_selfModelLayer);
+        if (showCustomPic && CCCommonUtils::isUseCustomPic(picVer) && uid != "")
+        {
+            string backImg = "Mail_headBack.png";
+            string renderImg = "Mail_head_backBattle.png";
+//            m_headImgNode->initHeadImgUrl3(m_userHeadContainer, CCCommonUtils::getCustomPicUrl(uid, picVer), 1.0f, 74, true, ccp(sizeLayer.width / 2, sizeLayer.height / 2 - 2), sizeLayer, backImg, renderImg); simon
+        }
     }
-    ckfRewardHandle();
+    
     return true;
 }
 void MailReadPopUpView::setAllBtnPosition(){
@@ -245,6 +364,8 @@ void MailReadPopUpView::setAllBtnPosition(){
         m_replyBtn->setScale(2.4);
     }
     m_replyBtn->addTargetWithActionForControlEvents(this, cccontrol_selector(MailReadPopUpView::onReplyClick), CCControlEventTouchUpInside);
+    auto btngrayPic2 = CCLoadSprite::createScale9Sprite("Mail_btn06.png");
+    m_replyBtn->setBackgroundSpriteForState(btngrayPic2, CCControlStateDisabled);
     CCCommonUtils::setButtonTitle(m_replyBtn, _lang("105506").c_str());
     m_replyBtn->setVisible(false);
     
@@ -289,7 +410,7 @@ void MailReadPopUpView::setAllBtnPosition(){
     m_totalH-=10;
     CCArray* btnArr = CCArray::create();
     //1.blockBtn show conditions
-    if(m_info.type ==MAIL_USER||m_info.type==MAIL_Alliance_ALL/*||m_info.type==MAIL_ALLIANCEINVITE*/){
+    if(m_info->type ==MAIL_USER||m_info->type==MAIL_Alliance_ALL/*||m_info.type==MAIL_ALLIANCEINVITE*/){
         this->m_ListNode->addChild(m_blockBtn);
         if (CCCommonUtils::isIosAndroidPad()) {
             m_blockBtn->setPosition(0, m_totalH-77);
@@ -301,22 +422,23 @@ void MailReadPopUpView::setAllBtnPosition(){
     }
     //2. rewardBtn show conditons
     
-    if(m_info.rewardId!=""){
+    if(m_info->rewardId!="" && checkRewardBtnVisible()){
         this->m_ListNode->addChild(m_rewardBtn);
         if (CCCommonUtils::isIosAndroidPad()) {
             m_rewardBtn->setPosition(0, m_totalH-77);
         }
         else
             m_rewardBtn->setPosition(0, m_totalH-32);
-        if(m_info.rewardStatus==0){
+        if(m_info->rewardStatus==0){
         
         }else{
             m_rewardBtn->setEnabled(false);
         }
+       
         m_rewardBtn->setVisible(true);
         btnArr->addObject(m_rewardBtn);
     }
-    if (m_info.like==1 && !GlobalData::shared()->isXiaoMiPlatForm()) {
+    if (m_info->like==1 && !GlobalData::shared()->isXiaoMiPlatForm()) {
         this->m_ListNode->addChild(m_likeBtn);
         if (CCCommonUtils::isIosAndroidPad()) {
             m_likeBtn->setPosition(0, m_totalH-77);
@@ -327,7 +449,7 @@ void MailReadPopUpView::setAllBtnPosition(){
         btnArr->addObject(m_likeBtn);
     }
     
-    if (m_info.goToDonate == 1) {
+    if (m_info->goToDonate == 1) {
         this->m_ListNode->addChild(m_donateBtn);
         if (CCCommonUtils::isIosAndroidPad()) {
             m_donateBtn->setPosition(0, m_totalH-77);
@@ -339,7 +461,7 @@ void MailReadPopUpView::setAllBtnPosition(){
     }
     
     //3.replayBtn show conditions
-    if(m_info.type ==MAIL_USER||m_info.type==MAIL_Alliance_ALL/*||m_info.type==MAIL_ALLIANCEINVITE*/||(m_info.type==ALL_SERVICE&&(m_info.reply==1))){
+    if(m_info->type ==MAIL_USER||m_info->type==MAIL_Alliance_ALL/*||m_info.type==MAIL_ALLIANCEINVITE*/||(m_info->type==ALL_SERVICE&&(m_info->reply==1))){
         this->m_ListNode->addChild(m_replyBtn);
         if (CCCommonUtils::isIosAndroidPad()) {
             m_replyBtn->setPosition(0, m_totalH-77);
@@ -348,6 +470,18 @@ void MailReadPopUpView::setAllBtnPosition(){
             m_replyBtn->setPosition(0, m_totalH-32);
         m_replyBtn->setVisible(true);
         btnArr->addObject(m_replyBtn);
+    }else if(m_info->type == MAIL_ALLIANCE_PACKAGE){
+        setButtonTitle(m_replyBtn, _lang("101386").c_str());
+        this->m_ListNode->addChild(m_replyBtn);
+        if (CCCommonUtils::isIosAndroidPad()) {
+            m_replyBtn->setPosition(0, m_totalH-77);
+        }else{
+            m_replyBtn->setPosition(0, m_totalH-32);
+        }
+        m_replyBtn->setVisible(true);
+        m_replyBtn->setEnabled(!m_info->isThanks);
+        btnArr->insertObject(m_replyBtn, 0);
+//        btnArr->addObject(m_replyBtn);
     }
     int count = btnArr->count();
     int wh = m_contentContainer->getContentSize().width;
@@ -387,12 +521,12 @@ void MailReadPopUpView::setAllBtnPosition(){
         }
     }
     btnArr->removeAllObjects();
-    if(GlobalData::shared()->chatShieldInfo.isShield(m_info.fromUid)){
+    if(GlobalData::shared()->chatShieldInfo.isShield(m_info->fromUid)){
         m_blockBtn->setEnabled(false);
         CCCommonUtils::setButtonTitle(m_blockBtn, _lang("101219").c_str());
     }
     
-    if(m_rewardBtn->isVisible()&&m_info.rewardStatus==0){
+    if(m_rewardBtn->isVisible()&&m_info->rewardStatus==0){
         auto sprAnim = CCLoadSprite::createSprite("Mail_btn00.png");
 //        this->m_ListNode->addChild(sprAnim);
 //        float wh =m_rewardBtn->getPreferredSize().width;
@@ -406,12 +540,12 @@ void MailReadPopUpView::setAllBtnPosition(){
 //        sprAnim->runAction(CCRepeatForever::create(CCSequence::create(CCFadeTo::create(1,80),CCFadeTo::create(1,0),NULL)));
         
     }
-    if(m_info.type == MAIL_FRESHER || m_info.type == MAIL_DIGONG){
-        m_line->setVisible(false);
-        m_nameText->setString("");
-        m_guideNode->setVisible(true);
-        m_userHeadContainer->setVisible(false);
-    }
+//    if(m_info.type == MAIL_FRESHER || m_info.type == MAIL_DIGONG){
+////        m_line->setVisible(false);
+//        m_nameText->setString("");
+//        m_guideNode->setVisible(true);
+//        m_userHeadContainer->setVisible(false);
+//    }
     if(count>0){
         if (CCCommonUtils::isIosAndroidPad()) {
             m_totalH-=154;
@@ -422,43 +556,59 @@ void MailReadPopUpView::setAllBtnPosition(){
     //    m_deleteBtnTitle->setString(_lang("108523").c_str());
     
     
-    if(m_info.save==0){
-        m_unSaveBtn->setVisible(true);
-        m_addSaveBtn->setVisible(false);
+    if(m_info->save==0){
+        m_addSaveBtn->setHighlighted(false);
         
     }else{
-        m_unSaveBtn->setVisible(false);
-        m_addSaveBtn->setVisible(true);
+        m_addSaveBtn->setHighlighted(true);
     }
     
-    //m_addSaveBtn->setVisible(false);
-    if(m_info.type == MAIL_SELF_SEND || m_info.type == MAIL_MOD_PERSONAL){
+    if(m_info->type == MAIL_SELF_SEND || m_info->type == MAIL_MOD_PERSONAL){
         m_addSaveBtn->setVisible(false);
-        m_unSaveBtn->setVisible(false);
+    }
+}
+bool MailReadPopUpView::onTouchBegan(CCTouch *pTouch, CCEvent *pEvent){
+    if (isTouchInside(m_returnSpr, pTouch)) {
+        return true;
+    }
+    return false;
+}
+void MailReadPopUpView::onTouchMoved(CCTouch *pTouch, CCEvent *pEvent){
+    
+}
+void MailReadPopUpView::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent){
+    if (isTouchInside(m_returnSpr, pTouch)) {
+        PopupViewController::getInstance()->goBackPopupView();
     }
 }
 bool MailReadPopUpView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode){
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_contentContainer", CCNode*, this->m_contentContainer);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_userHeadContainer", CCNode*, this->m_userHeadContainer);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_userHeadBack", CCSprite*, this->m_userHeadBack);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_downNode", CCNode*, this->m_downNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bgNode", CCNode*, this->m_bgNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nameText", CCLabelIF*, this->m_nameText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_timeText", CCLabelIF*, this->m_timeText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titleText", CCLabelIF*, this->m_titleText);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_mailTitle", CCLabelIF*, this->m_mailTitle);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_deleteBtn", CCControlButton*, this->m_deleteBtn);
 
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_addSaveBtn", CCControlButton*, this->m_addSaveBtn);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_unSaveBtn", CCControlButton*, this->m_unSaveBtn);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_writeBtn", CCControlButton*, this->m_writeBtn);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_returnBtn", CCControlButton*, this->m_returnBtn);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_returnSpr", CCSprite*, this->m_returnSpr);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_unSaveBtn", CCControlButton*, this->m_unSaveBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_rewardContainer", CCNode*, this->m_rewardContainer);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_buildBG", CCScale9Sprite*, this->m_buildBG);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bg", CCScale9Sprite*, this->m_bg);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bg", CCScale9Sprite*, this->m_bg);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_listBG", CCScale9Sprite*, this->m_listBG);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_kuangBG", CCScale9Sprite*, this->m_kuangBG);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_line", CCScale9Sprite*, this->m_line);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_kuangBG", CCScale9Sprite*, this->m_kuangBG);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_line", CCScale9Sprite*, this->m_line);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_guideNode", CCNode*, this->m_guideNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_totalNode", CCNode*, this->m_totalNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_rewardNode", CCNode*, this->m_rewardNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_rewardTitleText", CCLabelIF*, this->m_rewardTitleText);
-
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_underLineNode", Node*, this->m_underLineNode);
     return false;
 }
 
@@ -468,48 +618,50 @@ SEL_CCControlHandler MailReadPopUpView::onResolveCCBCCControlSelector(cocos2d::C
 //    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onReplyClick", MailReadPopUpView::onReplyClick);
 //    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onRewardClick", MailReadPopUpView::onRewardClick);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onAddSaveClick", MailReadPopUpView::onAddSaveClick);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onReturnClick", MailReadPopUpView::onReturnClick);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onWriteClick", MailReadPopUpView::onWriteClick);
     return NULL;
 }
 
 
 void MailReadPopUpView::refrehsReward(){
     int w = this->m_contentContainer->getContentSize().width;
-    if(m_info.rewardId != ""){
+    if(m_info->rewardId != ""){
         m_totalH-=10;
         m_ListNode->addChild(this->m_rewardNode);
         if (CCCommonUtils::isIosAndroidPad()) {
-            this->m_rewardNode->setPosition(700, m_totalH);
+            this->m_rewardNode->setPosition(768, m_totalH);
         }
         else
-            this->m_rewardNode->setPosition(285,m_totalH);
+            this->m_rewardNode->setPosition(320,m_totalH);
         vector<std::string> vector1;
         vector<std::string> vector;
 
-        CCCommonUtils::splitString(m_info.rewardId, "|", vector);
+        CCCommonUtils::splitString(m_info->rewardId, "|", vector);
         int i = 0;
         CCArray *resArr = CCArray::create();
         CCArray *itemAndGeneralArr = CCArray::create();
-        bool gray = (m_info.rewardStatus!=0);
+        bool gray = (m_info->rewardStatus!=0);
         int count =vector.size();
         int ceHG = 120;
         if (CCCommonUtils::isIosAndroidPad()) {
-            ceHG = 240;
+            ceHG = 288;
         }
         
         if(count>1){
             if (CCCommonUtils::isIosAndroidPad()) {
-                m_listBG->setContentSize(CCSize(m_listBG->getContentSize().width, 528+(count-1)*ceHG));
-                m_kuangBG->setContentSize(CCSize(m_kuangBG->getContentSize().width, 384+(count-1)*ceHG));
+                m_listBG->setContentSize(CCSize(m_listBG->getContentSize().width, 288+(count-1)*ceHG));
+//                m_kuangBG->setContentSize(CCSize(m_kuangBG->getContentSize().width, 384+(count-1)*ceHG));
             }
             else {
-                m_listBG->setContentSize(CCSize(m_listBG->getContentSize().width, 220+(count-1)*ceHG));
-                m_kuangBG->setContentSize(CCSize(m_kuangBG->getContentSize().width, 160+(count-1)*ceHG));
+                m_listBG->setContentSize(CCSize(m_listBG->getContentSize().width, 120+(count-1)*ceHG));
+//                m_kuangBG->setContentSize(CCSize(m_kuangBG->getContentSize().width, 160+(count-1)*ceHG));
             }
         }
         m_totalH-=m_listBG->getContentSize().height;
-        int startY = -175+m_rewardNode->getPositionY();
+        int startY = -120+m_rewardNode->getPositionY();
         if (CCCommonUtils::isIosAndroidPad()) {
-            startY = -350+m_rewardNode->getPositionY();
+            startY = -288+m_rewardNode->getPositionY();
         }
         while(i < count){
             std::string rewardStr = vector[i];
@@ -540,31 +692,31 @@ void MailReadPopUpView::refrehsReward(){
             std::string picStr;
             auto cellNode = CCNode::create();
             if (CCCommonUtils::isIosAndroidPad()) {
-                cellNode->setScale(2);
+                cellNode->setScale(2.4);
             }
             m_ListNode->addChild(cellNode);
             auto icon0  = CCLoadSprite::createSprite("icon_kuang.png");
-            icon0->setPositionX(40+49);
-            icon0->setPositionY(0+49);
+            icon0->setPositionX(10+57);
+            icon0->setPositionY(57);
             cellNode->addChild(icon0);
             icon0->setScale(98/icon0->getContentSize().width);
             float sacle = 1.0;
             if(type == R_GOODS){
-                auto titer = ToolController::getInstance()->m_toolInfos.find(value);
-                if(titer!=ToolController::getInstance()->m_toolInfos.end()){
-                    nameStr = (*titer).second.getName();
-                }else{
+//                auto titer = ToolController::getInstance()->m_toolInfos.find(value);
+//                if(titer!=ToolController::getInstance()->m_toolInfos.end()){
+//                    nameStr = (*titer).second.getName();
+//                }else{
                     nameStr = CCCommonUtils::getNameById(CC_ITOA(value));
-                }
-                CCCommonUtils::createGoodsIcon(value, cellNode, CCSize(90, 90));
-                if(CCCommonUtils::isIosAndroidPad())
-                    cellNode->setPositionX(180);
-                else
-                    cellNode->setPosition(ccp(89, 49));
-                icon0->setPositionX(0);
-                icon0->setPositionY(0);
-                if(m_info.rewardStatus==1 && cellNode->getChildByTag(GOODS_ICON_TAG)){
-                    CCSprite *icon = dynamic_cast<CCSprite*>(cellNode->getChildByTag(GOODS_ICON_TAG));
+//                }
+                CCCommonUtils::createGoodsIcon(value, icon0, CCSize(114, 114));
+//                if(CCCommonUtils::isIosAndroidPad())
+//                    cellNode->setPositionX(180);
+//                else
+//                    cellNode->setPositionX(10+57);
+//                icon0->setPositionX(0);
+//                icon0->setPositionY(0);
+                if(m_info->rewardStatus==1 && icon0->getChildByTag(GOODS_ICON_TAG)){
+                    CCSprite *icon = dynamic_cast<CCSprite*>(icon0->getChildByTag(GOODS_ICON_TAG));
                     if(icon){
                         icon->setColor({90,85,81});
                     }
@@ -581,9 +733,9 @@ void MailReadPopUpView::refrehsReward(){
                 sacle = 94/icon->getContentSize().width;
                 cellNode->addChild(icon,1);
                 icon->setScale(sacle);
-                icon->setPositionX(40+49);
-                icon->setPositionY(0+49);
-                if(m_info.rewardStatus==1){
+                icon->setPositionX(10+57);
+                icon->setPositionY(57);
+                if(m_info->rewardStatus==1){
                     icon->setColor({90,85,81});
                 }
                 auto iter = ToolController::getInstance()->m_toolInfos.find(value);
@@ -596,16 +748,16 @@ void MailReadPopUpView::refrehsReward(){
                     iconBG->setPosition(icon->getPosition());
                 }
                 
-            }else if(type == R_HONOR || type == R_ALLIANCE_POINT){
+            }else if(type == R_HONOR || type == R_ALLIANCE_POINT || type == R_CRYSTAL){
                 nameStr = RewardController::getInstance()->getNameByType(type,0);
                 picStr = RewardController::getInstance()->getPicByType(type,0);
                 auto icon  = CCLoadSprite::createSprite(picStr.c_str());
                 sacle = 94/icon->getContentSize().width;
                 cellNode->addChild(icon);
                 icon->setScale(sacle);
-                icon->setPositionX(40+49);
-                icon->setPositionY(0+49);
-                if(m_info.rewardStatus==1){
+                icon->setPositionX(10+57);
+                icon->setPositionY(57);
+                if(m_info->rewardStatus==1){
                     icon->setColor({90,85,81});
                 }
             }else if(type == R_EQUIP){
@@ -619,10 +771,10 @@ void MailReadPopUpView::refrehsReward(){
                     cellNode->addChild(iconBg);
                     picStr = CCCommonUtils::getIcon(CC_ITOA(value));
                     auto icon = CCLoadSprite::createSprite(picStr.c_str(),true,CCLoadSpriteType_EQUIP);
-                    icon->setPosition(ccp(40+49, 0+49));
+                    icon->setPosition(ccp(10+57, 57));
                     CCCommonUtils::setSpriteMaxSize(icon, 94, true);
                     cellNode->addChild(icon);
-                    if(m_info.rewardStatus==1){
+                    if(m_info->rewardStatus==1){
                         icon->setColor({90,85,81});
                     }
                 }
@@ -639,15 +791,16 @@ void MailReadPopUpView::refrehsReward(){
                 sacle = 94/icon->getContentSize().width;
                 cellNode->addChild(icon);
                 icon->setScale(sacle);
-                icon->setPositionX(40+49);
-                icon->setPositionY(0+49);
-                if(m_info.rewardStatus==1){
+                icon->setPositionX(10+57);
+                icon->setPositionY(57);
+                if(m_info->rewardStatus==1){
                     icon->setColor({90,85,81});
                 }
                 
             }
             
             auto label = CCLabelIF::create();
+            label->setFntFile("Arial_Bold_Regular.fnt");
             label->setFontSize(22);
             label->setColor({125,98,63});
             
@@ -657,6 +810,7 @@ void MailReadPopUpView::refrehsReward(){
             
             cellNode->addChild(label);
             auto label1 = CCLabelIF::create();
+            label1->setFntFile("Arial_Bold_Regular.fnt");
             label1->setFontSize(20);
             label1->setColor({156,18,0});
             label1->setAnchorPoint(ccp(1.0, 0.5));
@@ -667,31 +821,31 @@ void MailReadPopUpView::refrehsReward(){
             cellNode->addChild(label1);
             
             
-            if(m_info.rewardStatus==1){
+            if(m_info->rewardStatus==1){
                 label->setColor({90,85,81});
                 label1->setColor({90,85,81});
                 
             }
             if (type == R_GOODS) {
                 if (CCCommonUtils::isIosAndroidPad()) {
-                    label->setPosition(65, 29);
-                    label1->setPosition(561, -35);
-                    cellNode->setPositionY(startY-i*ceHG + 69);
-                }
-                else {
-                    label->setPosition(65, 29);
-                    label1->setPosition(411, -35);
-                    cellNode->setPositionY(startY-i*ceHG + 49);
-                }
-            }else{
-                if (CCCommonUtils::isIosAndroidPad()) {
-                    label->setPosition(154, 78);
-                    label1->setPosition(650, 14);
+                    label->setPosition(120, 80);
+                    label1->setPosition(620, 20);
                     cellNode->setPositionY(startY-i*ceHG);
                 }
                 else {
-                    label->setPosition(154, 78);
-                    label1->setPosition(500, 14);
+                    label->setPosition(120, 80);
+                    label1->setPosition(620, 20);
+                    cellNode->setPositionY(startY-i*ceHG);
+                }
+            }else{
+                if (CCCommonUtils::isIosAndroidPad()) {
+                    label->setPosition(120, 80);
+                    label1->setPosition(620, 20);
+                    cellNode->setPositionY(startY-i*ceHG);
+                }
+                else {
+                    label->setPosition(120, 80);
+                    label1->setPosition(620, 20);
                     cellNode->setPositionY(startY-i*ceHG);
                 }
             }
@@ -705,20 +859,102 @@ void MailReadPopUpView::refrehsReward(){
 }
 void MailReadPopUpView::showRewardAnim(){
 
-
-
 }
+
+void MailReadPopUpView::showAllianceOrderBtn()//显示联盟指令跳转按钮
+{
+    _allianceOrderType = -1;
+    if (m_info->contents == _lang("115437") ) {
+        _allianceOrderType = 0;
+    }else if (m_info->contents == _lang("115438") ) {
+        _allianceOrderType = 1;
+    }else if (m_info->contents == _lang("115439") ) {
+        _allianceOrderType = 2;
+    }else if (m_info->contents == _lang("115440") ) {
+        _allianceOrderType = 3;
+    }else if (m_info->contents == _lang("115441") ) {
+        _allianceOrderType = 4;
+    }else if (m_info->contents == _lang("115442") ) {
+        _allianceOrderType = 5;
+    }
+    
+    string btnMsg = "";
+    if (_allianceOrderType == 0) {//去采集
+        btnMsg = _lang("115554");
+    }else if (_allianceOrderType == 1) {//打开联盟科技 联盟捐献
+        btnMsg = _lang("115495");
+    } else if (_allianceOrderType == 2) {//联盟帮助
+        btnMsg = _lang("115555");
+    } else if (_allianceOrderType == 3) {//建设联盟领地
+        btnMsg = _lang("115558");
+    } else if (_allianceOrderType == 4) {//参加联盟战争
+        btnMsg = _lang("115556");
+    } else if (_allianceOrderType == 5) {//联盟商店
+        btnMsg = _lang("115557");
+    } else {
+        return;
+    }
+    
+    auto btnPic = CCLoadSprite::createScale9Sprite("Mail_btn03.png");
+    auto m_orderBtn =CCControlButton::create(btnPic);
+    m_orderBtn->setPreferredSize(CCSizeMake(170, 64));
+    if (CCCommonUtils::isIosAndroidPad()) {
+        m_orderBtn->setScale(2.4);
+    }
+    m_orderBtn->addTargetWithActionForControlEvents(this, cccontrol_selector(MailReadPopUpView::onGoToAllianceOrder), CCControlEventTouchUpInside);
+    CCCommonUtils::setButtonTitle(m_orderBtn, btnMsg.c_str());
+    
+    int wh = m_contentContainer->getContentSize().width;
+    this->m_ListNode->addChild(m_orderBtn);
+    if (CCCommonUtils::isIosAndroidPad()) {
+        m_orderBtn->setPosition(wh/2, m_totalH-77);
+    }
+    else {
+        m_orderBtn->setPosition(wh/2, m_totalH-32);
+    }
+}
+
+void MailReadPopUpView::onGoToAllianceOrder(cocos2d::CCObject *pSender, CCControlEvent event)
+{
+    
+    AutoSafeRef temp(this);
+    
+    PopupViewController::getInstance()->removeAllPopupView();
+    //联盟指令跳转功能按钮 事件
+    if (_allianceOrderType == 0) {//去世界采集
+        
+        if (SceneController::getInstance()->currentSceneId != SCENE_ID_WORLD) {
+            SceneController::getInstance()->gotoScene(SCENE_ID_WORLD);
+        }
+        
+    } else if (_allianceOrderType == 1) {//打开联盟科技 联盟捐献
+        PopupViewController::getInstance()->addPopupInView(AllianceScienceView::create());
+    } else if (_allianceOrderType == 2) {//联盟帮助
+        PopupViewController::getInstance()->addPopupInView(AllianceHelpView::create());
+    } else if (_allianceOrderType == 3) {//建设联盟领地
+        unsigned int index = WorldController::getIndexByPoint(WorldController::getInstance()->selfPoint);
+        PopupViewController::getInstance()->addPopupInView(AllianceTerritoryView::create(index,false));
+    } else if (_allianceOrderType == 4) {//参加联盟战争
+        PopupViewController::getInstance()->addPopupInView(AllianceWarView::create());
+    } else if (_allianceOrderType == 5) {//联盟商店
+//        auto view = AllianceShopView::create(); simon
+//        view->showR4Store();
+//        PopupViewController::getInstance()->addPopupInView(view);
+    }
+    
+}
+
 void MailReadPopUpView::onDeleteClick(cocos2d::CCObject *pSender, CCControlEvent event){
     if(PopupViewController::getInstance()->getPlayingInAnim())
         return;
-    if(&m_info==NULL){
+    if(m_info==NULL){
         return;
     }
-    if(m_info.rewardStatus==0&&m_info.rewardId!=""){
+    if(m_info->rewardStatus==0&&m_info->rewardId!=""){
         CCCommonUtils::flyHint("", "", _lang("105512"));
         return;
     }
-    if(m_info.save!=0){
+    if(m_info->save!=0){
          CCCommonUtils::flyHint("","",_lang("105575"));
         return;
     }
@@ -729,13 +965,17 @@ void MailReadPopUpView::onDeleteClick(cocos2d::CCObject *pSender, CCControlEvent
 void MailReadPopUpView::onRewardClick(cocos2d::CCObject *pSender, CCControlEvent event){
     if(PopupViewController::getInstance()->getPlayingInAnim())
         return;
-    
+    if(m_info->mbLevel>0 && m_info->mbLevel >= FunBuildController::getInstance()->getMainCityLv())
+    {
+        CCCommonUtils::flyText(_lang_1("105784", CC_ITOA(m_info->mbLevel)));
+        return;
+    }
     this->m_rewardBtn->setEnabled(false);
-    MailGetRewardCommand* cmd = new MailGetRewardCommand(m_info.uid, m_info.type);
+    MailGetRewardCommand* cmd = new MailGetRewardCommand(m_info->uid, m_info->type);
     cmd->sendAndRelease();
 }
 void MailReadPopUpView::onOkDeleteMail(){
-    MailController::getInstance()->removeMail(m_info.uid, CC_ITOA(m_info.type));
+    MailController::getInstance()->removeMail(m_info->uid, CC_ITOA(m_info->type));
     //    this->closeSelf();
     PopupViewController::getInstance()->goBackPopupView();
 }
@@ -745,35 +985,40 @@ void MailReadPopUpView::onAddSaveClick(cocos2d::CCObject *pSender, CCControlEven
     
 //    showRewardAnim();
 //    return;
-    if(m_info.save ==1){
-        MailCancelSaveCommand *cmd = new MailCancelSaveCommand(m_info.uid, m_info.type);
+    if(m_info->save ==1){
+        MailCancelSaveCommand *cmd = new MailCancelSaveCommand(m_info->uid, m_info->type);
         cmd->sendAndRelease();
-        m_info.save = 0;
+        m_info->save = 0;
         CCCommonUtils::flyHint("quest_icon_1.png", "", _lang("105576"));
-        m_unSaveBtn->setVisible(true);
-        m_addSaveBtn->setVisible(false);
+        m_addSaveBtn->setHighlighted(false);
     }else{
         if(MailController::getInstance()->isMailFull(SAVEMAIL)){
             CCCommonUtils::flyText("full");
             return;
         }
-        MailSaveCommand *cmd = new MailSaveCommand(m_info.uid, m_info.type);
+        MailSaveCommand *cmd = new MailSaveCommand(m_info->uid, m_info->type);
         cmd->sendAndRelease();
-        m_info.save = 1;
+        m_info->save = 1;
         CCCommonUtils::flyHint("quest_icon_1.png", "", _lang("105575"));
-        m_unSaveBtn->setVisible(false);
-        m_addSaveBtn->setVisible(true);
+        m_addSaveBtn->setHighlighted(true);
     }
 
+}
+void MailReadPopUpView::onReturnClick(cocos2d::CCObject *pSender, CCControlEvent pCCControlEvent){
+    PopupViewController::getInstance()->goBackPopupView();
+}
+
+void MailReadPopUpView::onWriteClick(cocos2d::CCObject *pSender, CCControlEvent pCCControlEvent){
+    PopupViewController::getInstance()->addPopupInView(MailWritePopUpView::create("", ""));
 }
 void MailReadPopUpView::onBlockClick(cocos2d::CCObject *pSender, CCControlEvent event){
     if(PopupViewController::getInstance()->getPlayingInAnim())
         return;
     
-    YesNoDialog::show(_lang_1("105313",m_info.fromName.c_str()), CCCallFunc::create(this, callfunc_selector(MailReadPopUpView::blockAction)),0,false);
+    YesNoDialog::show(_lang_1("105313",m_info->fromName.c_str()), CCCallFunc::create(this, callfunc_selector(MailReadPopUpView::blockAction)),0,false);
 }
 void MailReadPopUpView::blockAction(){
-    ChatLockCommand* cmd = new ChatLockCommand(m_info.fromUid);
+    ChatLockCommand* cmd = new ChatLockCommand(m_info->fromUid);
     cmd->sendAndRelease();
     
     CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MAIL_LIST_CHANGE);
@@ -783,47 +1028,64 @@ void MailReadPopUpView::onReplyClick(cocos2d::CCObject *pSender, CCControlEvent 
     if(PopupViewController::getInstance()->getPlayingInAnim())
         return;
     
-    if(m_info.type == MAIL_USER||m_info.type==MAIL_Alliance_ALL/*||m_info.type==MAIL_ALLIANCEINVITE*/){
+    if(m_info->type == MAIL_USER||m_info->type==MAIL_Alliance_ALL/*||m_info.type==MAIL_ALLIANCEINVITE*/){
 //        this->closeSelf();
         //PopupViewController::getInstance()->addPopupInView(MailWritePopUpView::create(m_info.fromName, ""));
-        MailController::getInstance()->openMailDialogViewFirst(m_info.fromName, m_info.fromUid);
-    }else if(m_info.type==ALL_SERVICE){
-
-        
+        this->retain();
+        PopupViewController::getInstance()->removeAllPopupView();
+        MailController::getInstance()->openMailDialogViewFirst(m_info->fromName, m_info->fromUid);
+        this->release();
+    }else if(m_info->type==ALL_SERVICE){
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         GameController::getInstance()->platformCollectUserInfo(GlobalData::shared()->playerInfo.uid,GlobalData::shared()->playerInfo.name,CC_ITOA(GlobalData::shared()->playerInfo.level));
 #else
         HelpshiftCocos2dx::setUserIdentifier(GlobalData::shared()->playerInfo.uid.c_str());
         HelpshiftCocos2dx::setNameAndEmail(GlobalData::shared()->playerInfo.name.c_str(),"");
 #endif
-                string server_id = CCUserDefault::sharedUserDefault()->getStringForKey(SERVER_ID,"");
-                cocos2d::CCDictionary *config = new cocos2d::CCDictionary();
-                cocos2d::CCDictionary *meta = new CCDictionary();
-                meta->setObject(CCString::createWithFormat("http://184.173.110.102/ifadmin/admin/admincp.php?mod=user&act=userinfo&action=view&Gserver=s%s&useruid=%s",server_id.c_str(),GlobalData::shared()->playerInfo.uid.c_str()), "GM");
-                string timestr = CCCommonUtils::timeStampToYMD(m_info.createTime);
-                cocos2d::CCArray *tags = new cocos2d::CCArray();
-                tags->init();
-                tags->addObject(new CCString(timestr));
+        ValueMap meta;
+//        HelpshiftCocos2dx::addProperties(meta); simon
+
+        ValueVector tags;
+        string server_id = CCUserDefault::sharedUserDefault()->getStringForKey(SERVER_ID,"");
+        string timestr = CCCommonUtils::timeStampToYMD(m_info->createTime);
+        tags.push_back(Value(timestr));
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-                tags->addObject(new CCString("ios"));
+        tags.push_back(Value("ios"));
 #else
-                if(GlobalData::shared()->analyticID != "market_global")
-                    tags->addObject(new CCString(GlobalData::shared()->analyticID));
+        if(GlobalData::shared()->analyticID != "market_global")
+            tags.push_back(Value(GlobalData::shared()->analyticID));
 #endif
-                if (server_id != "") {
-                    tags->addObject(new CCString(server_id));
-                }
-                
-                meta->setObject(tags, HS_TAGS_KEY);
-                
-                config->setObject(meta, HS_META_DATA_KEY);
-                GlobalData::shared()->isBind = true;
+        if (server_id != "") {
+            tags.push_back(Value(server_id));
+        }
+        //添加策划反馈标签
+        string chfkStr = "策划反馈";
+        tags.push_back(Value(chfkStr));
+        if (m_info->isBanMail) {
+            ////添加被ban邮件回复的标签
+            string banStr = "ban";
+            tags.push_back(Value(banStr));
+        }
+        meta[HS_TAGS_KEY] = tags;
+        
+        ValueMap config;
+        config[HS_META_DATA_KEY] = meta;
+        GlobalData::shared()->isBind = true;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         GlobalData::shared()->isBind = false;
 #endif
-
-                HelpshiftCocos2dx::showConversation(config);
+//        HelpshiftCocos2dx::showConversation(config); simon
 //                PopupViewController::getInstance()->addPopupInView(SuggestionView::create());
+    }else if(m_info->type == MAIL_ALLIANCE_PACKAGE){
+        string tmpStr = _lang_1("101046", m_info->crGroupId.c_str());
+        if(!tmpStr.empty()){
+            CCArray* array = CCArray::create();
+            array->addObject(CCString::create(m_info->crGroupId));
+//            ChatController::getInstance()->sendCountryChat(tmpStr.c_str(), CHAT_ALLIANCE,0,"","101046",array,m_info->uid); simon
+            CCCommonUtils::flyHint("", "", _lang("101049").c_str());
+            m_replyBtn->setEnabled(false);
+            m_info->isThanks=true;
+        }
     }
 }
 
@@ -832,6 +1094,19 @@ void MailReadPopUpView::onFbLikeClick(CCObject *pSender, CCControlEvent event){
         cocos2d::extension::CCDevice::updateVersion("http://weibo.com/liewangdefenzheng");
         return ;
     }
+    std::string language = LocalController::shared()->getLanguageFileName();
+    if(language=="es"){//西语关联网址
+        cocos2d::extension::CCDevice::updateVersion("https://www.facebook.com/Clash-of-Kings-Espa%C3%B1ol-519397994874228/timeline/");
+        return;
+    }
+    else if (language=="pt"){//葡语关联网址
+        cocos2d::extension::CCDevice::updateVersion("https://m.facebook.com/Clash.Of.Kings.PT");
+        return;
+    }
+    else if (language=="de"){//德语关联网址
+        cocos2d::extension::CCDevice::updateVersion("https://www.facebook.com/Clash-of-Kings-Deutschland-1429065620745662/timeline/");
+        return;
+    }
     GlobalData::shared()->isBind = true;
     FBUtilies::fbLike();
 }
@@ -839,9 +1114,10 @@ void MailReadPopUpView::onFbLikeClick(CCObject *pSender, CCControlEvent event){
 void MailReadPopUpView::onDonateClick(CCObject *pSender, CCControlEvent event){
     if(PopupViewController::getInstance()->getPlayingInAnim())
         return;
-    
+    this->retain();
     PopupViewController::getInstance()->removeAllPopupView();
     PopupViewController::getInstance()->addPopupInView(AllianceScienceView::create());
+    this->release();
 }
 
 void MailReadPopUpView::refreshContent(CCObject* p){
@@ -849,21 +1125,29 @@ void MailReadPopUpView::refreshContent(CCObject* p){
     if (CCCommonUtils::isIosAndroidPad()) {
         txtW = 1392;
     }
-    if (m_info.type == MAIL_FRESHER || m_info.type == MAIL_DIGONG) {
-        if (CCCommonUtils::isIosAndroidPad()) {
-            m_contentContainer->setContentSize(CCSizeMake(912, m_contentContainer->getContentSize().height-30));
-            m_contentContainer->setPosition(ccp(-216, m_contentContainer->getPositionY()+192));
-            txtW = 912;
-        }
-        else {
-            m_contentContainer->setContentSize(CCSizeMake(380, m_contentContainer->getContentSize().height-30));
-            m_contentContainer->setPosition(ccp(-90, m_contentContainer->getPositionY()+80));
-            txtW = 380;
-        }
-    }
+//    if (m_info.type == MAIL_FRESHER || m_info.type == MAIL_DIGONG) {
+//        if (CCCommonUtils::isIosAndroidPad()) {
+//            m_contentContainer->setContentSize(CCSizeMake(912, m_contentContainer->getContentSize().height-30));
+//            m_contentContainer->setPosition(ccp(-216, m_contentContainer->getPositionY()+192));
+//            txtW = 912;
+//        }
+//        else {
+//            m_contentContainer->setContentSize(CCSizeMake(380, m_contentContainer->getContentSize().height-30));
+//            m_contentContainer->setPosition(ccp(-90, m_contentContainer->getPositionY()+80));
+//            txtW = 380;
+//        }
+//    }
     m_totalH = 0;
-    string tempstr = m_info.contents;
-//    tempstr = "亲爱的领主们，\n我们需要您们帮助我们与Wyne The Poo的家人取得联系，去年由癌症去世的那个马来西亚玩家！如果您知道谁是她的父母，或如何达到联系他们，请您在我们Facebook粉丝页上 <a href=\"http://dwz.cn/DbPmU/\">http://dwz.cn/DbPmU</a>和我们联系。\n我们知道，送礼是春节在马来西亚的一个重要组成部分，我们希望捐赠一万美元给她的父母作为一个农历新年礼物，像她的家人表示诚挚的慰问。让我们一起来做这件事，我们所有的人，因为我们是《龙族部落》社会。\n非常感谢！";
+    string littleStr="";
+    if(m_info->rewardId!=""&&m_info->mbLevel>0 && m_info->mbLevel >= FunBuildController::getInstance()->getMainCityLv())
+    {
+        littleStr=_lang_1("105784", CC_ITOA(m_info->mbLevel));
+        littleStr+="\r\n \r\n";
+    }
+    if (littleStr.empty())
+        littleStr = "";
+    string tempstr = littleStr+m_info->contents;
+//    tempstr = "亲爱的领主们，\n我们需要您们帮助我们与Wyne The Poo的家人取得联系，去年由癌症去世的那个马来西亚玩家！如果您知道谁是她的父母，或如何达到联系他们，请您在我们Facebook粉丝页上 <a href=\"http://dwz.cn/DbPmU/\">http://dwz.cn/DbPmU</a>和我们联系。\n我们知道，送礼是春节在马来西亚的一个重要组成部分，我们希望捐赠一万美元给她的父母作为一个农历新年礼物，像她的家人表示诚挚的慰问。让我们一起来做这件事，我们所有的人，因为我们是《列王的纷争》社会。\n非常感谢！";
 //    tempstr = tempstr + "\n";
 //    tempstr = tempstr + "亲爱的领主们，\n<a href=\"https://www.facebook.com/\">facebook</a>we are all excepted that you will like it. Thanks. <a href=\"https://www.facebook.com/Clash.Of.Kings.Game/\">https://www.facebook.com/Clash.Of.Kings.Game/</a>";
 
@@ -939,11 +1223,12 @@ void MailReadPopUpView::refreshContent(CCObject* p){
     if (CCCommonUtils::isIosAndroidPad()) {
         fontSize = 53;
     }
-    CCRichLabelTTF *richLabel= CCRichLabelTTF::create("", "Helvetica", fontSize,CCSize(txtW-30,0),kCCTextAlignmentLeft,kCCVerticalTextAlignmentTop);
+    
+    CCRichLabelTTF *richLabel= CCRichLabelTTF::create("", "Helvetica", fontSize,CCSize(txtW-30,0),kCCTextAlignmentLeft,kCCVerticalTextAlignmentCenter);
     this->m_ListNode->removeAllChildren();
     this->m_ListNode->addChild(richLabel);
     richLabel->setAnchorPoint(ccp(0, 1));
-    if(m_info.type==MAIL_ALLIANCEINVITE || m_info.type == MAIL_INVITE_TELEPORT || m_info.type == MAIL_ALLIANCE_KICKOUT || m_info.type == MAIL_REFUSE_ALL_APPLY){
+    if(m_info->type==MAIL_ALLIANCEINVITE || m_info->type == MAIL_INVITE_TELEPORT || m_info->type == MAIL_ALLIANCE_KICKOUT || m_info->type == MAIL_REFUSE_ALL_APPLY){
         richLabel->setString("");
         m_totalH = 0;
     }else{
@@ -1002,7 +1287,13 @@ void MailReadPopUpView::refreshContent(CCObject* p){
 //            m_totalH -= label->getContentSize().height * scale;
 //        }
         // richLabel
-        richLabel->setPosition(ccp(0,0));
+        int contentWidth = txtW-30;
+        if (CCCommonUtils::isIosAndroidPad()) {
+            richLabel->setPosition(ccp(768 - contentWidth / 2,0));
+        }
+        else {
+            richLabel->setPosition(ccp(320 - contentWidth / 2, 0));
+        }
         m_totalH -= richLabel->getContentSize().height;
     }
     
@@ -1011,7 +1302,7 @@ void MailReadPopUpView::refreshContent(CCObject* p){
     showInviteTeleportBtn();
     showKickOutInterface();
     showRefuseApplyInterface();
-    if(m_info.type==MAIL_ALLIANCEAPPLY){
+    if(m_info->type==MAIL_ALLIANCEAPPLY){
         richLabel->setString("");
     }
     setAllBtnPosition();
@@ -1028,31 +1319,40 @@ void MailReadPopUpView::refreshContent(CCObject* p){
     
 //    m_scroll->setContentSize(CCSize(m_contentContainer->getContentSize().width, m_totalH));
 //    m_scroll->setContentOffset(ccp(0, -m_totalH + m_contentContainer->getContentSize().height));
+    ckfRewardHandle();
+    
+    //添加联盟指令跳转按钮
+    showAllianceOrderBtn();
 }
 
 void MailReadPopUpView::ckfRewardHandle(){
-    if (m_info.ckfContents!="") {
+    if (m_info->ckfContents!="") {
         m_userHeadContainer->removeAllChildrenWithCleanup(true);
-        m_line->setVisible(false);
+        m_blendFlag = false;
+//        m_line->setVisible(false);
         m_nameText->setString("");
         m_guideNode->setVisible(false);
-        auto picBG = CCLoadSprite::createScale9Sprite("chuzheng_frame01.png");
-        picBG->setAnchorPoint(ccp(0.5, 0.5));
-        picBG->setContentSize(CCSize(620,250));
-        picBG->setPosition(ccp(247.0,-25));
-        this->m_userHeadContainer->addChild(picBG);
+//        auto picBG = CCLoadSprite::createScale9Sprite("chuzheng_frame01.png");
+//        picBG->setAnchorPoint(ccp(0.5, 0.5));
+//        picBG->setContentSize(CCSize(640,250));
+//        picBG->setPosition(ccp(0,0));
+//        this->m_userHeadContainer->addChild(picBG);
         auto battlePic = CCLoadSprite::createSprite("Mail_monster.png");
-        battlePic->setPosition(ccp(247.0,-25));
+        battlePic->setPosition(ccp(0,-60));
         this->m_userHeadContainer->addChild(battlePic);
+        this->m_userHeadBack->setVisible(false);
         if (CCCommonUtils::isIosAndroidPad()) {
-            picBG->setPosition(ccp(303, -40));
-            battlePic->setPosition(ccp(303, -40));
-            m_contentContainer->setContentSize(CCSize(m_contentContainer->getContentSize().width, m_contentContainer->getContentSize().height - 120));
-            m_contentContainer->setPositionY(m_contentContainer->getPositionY() - 120);
+//            picBG->setPosition(ccp(0, -40));
+//            battlePic->setPosition(ccp(0, -120));
+//            m_contentContainer->setContentSize(CCSize(m_contentContainer->getContentSize().width, m_contentContainer->getContentSize().height - 120));
+//            m_contentContainer->setPositionY(m_contentContainer->getPositionY() - 120);
         }
         m_userHeadContainer->setVisible(true);
         int w = m_contentContainer->getContentSize().width;
         int h = m_contentContainer->getContentSize().height - 100;
+        if (CCCommonUtils::isIosAndroidPad()) {
+            h = m_contentContainer->getContentSize().height - 240;
+        }
         m_scroll->setViewSize(CCSize(w, h));
         m_scroll->setContentSize(CCSize(m_contentContainer->getContentSize().width, -m_totalH));
         m_scroll->setContentOffset(ccp(0, h - (-m_totalH)));
@@ -1077,8 +1377,8 @@ void MailReadPopUpView::onLinkClicked(CCObject *ccObj) {
     }
 }
 void MailReadPopUpView::showInviteTeleportBtn() {
-    if (m_info.type == MAIL_INVITE_TELEPORT) {
-        m_totalH-=20;
+    if (m_info->type == MAIL_INVITE_TELEPORT) {
+//        m_totalH-=20;
         MailInviteTeleCell* cell = MailInviteTeleCell::create(m_info);
         m_ListNode->addChild(cell);
         if (CCCommonUtils::isIosAndroidPad()) {
@@ -1093,8 +1393,8 @@ void MailReadPopUpView::showInviteTeleportBtn() {
 }
 
 void MailReadPopUpView::showKickOutInterface() {
-    if (m_info.type == MAIL_ALLIANCE_KICKOUT) {
-        m_totalH -= 20;
+    if (m_info->type == MAIL_ALLIANCE_KICKOUT) {
+//        m_totalH -= 20;
         MailAllianceKickCell* cell = MailAllianceKickCell::create(m_info);
         m_ListNode->addChild(cell);
         if (CCCommonUtils::isIosAndroidPad()) {
@@ -1110,8 +1410,8 @@ void MailReadPopUpView::showKickOutInterface() {
 
 void MailReadPopUpView::showRefuseApplyInterface()
 {
-    if (m_info.type == MAIL_REFUSE_ALL_APPLY) {
-        m_totalH -= 20;
+    if (m_info->type == MAIL_REFUSE_ALL_APPLY) {
+//        m_totalH -= 20;
         MailAllianceKickCell* cell = MailAllianceKickCell::create(m_info);
         m_ListNode->addChild(cell);
         if (CCCommonUtils::isIosAndroidPad()) {
@@ -1126,8 +1426,8 @@ void MailReadPopUpView::showRefuseApplyInterface()
 }
 
 void MailReadPopUpView::showJoinAllianceBtn(){
-    if(m_info.type==MAIL_ALLIANCEINVITE || m_info.type==MAIL_ALLIANCEAPPLY){
-        m_totalH-=20;
+    if(m_info->type==MAIL_ALLIANCEINVITE || m_info->type==MAIL_ALLIANCEAPPLY){
+//        m_totalH-=20;
         MailAllianceInviteCell* cell = MailAllianceInviteCell::create(m_info);
         this->m_ListNode->addChild(cell);
         if (CCCommonUtils::isIosAndroidPad()) {
@@ -1145,7 +1445,7 @@ void MailReadPopUpView::showJoinAllianceBtn(){
 //        m_joinAllianceBtn->addTargetWithActionForControlEvents(this, cccontrol_selector(MailReadPopUpView::onJoinAllianceBtnClick), CCControlEventTouchUpInside);
 //        m_joinAllianceBtn->setPosition(ccp(m_contentContainer->getContentSize().width/2+85+12,m_totalH));
 //        CCCommonUtils::setButtonTitle(m_joinAllianceBtn, _lang("103741").c_str());
-//        auto spr1 = CCLoadSprite::createScale9Sprite("but_blue.png");
+//        auto spr1 = CCLoadSprite::createScale9Sprite("btn_yellow.png");
 //        m_refuseAllianceBtn = CCControlButton::create(spr1);
 //        m_ListNode->addChild(m_refuseAllianceBtn);
 //        m_refuseAllianceBtn->setPreferredSize(CCSize(170, 64));
@@ -1155,7 +1455,7 @@ void MailReadPopUpView::showJoinAllianceBtn(){
     }
 }
 void MailReadPopUpView::showShareBtn(){
-    if(m_info.isShare){
+    if(m_info->isShare){
         CCNode *node = CCNode::create();
         auto spr1 = CCLoadSprite::createScale9Sprite("btn_green3.png");
         CCControlButton *shareBtn = CCControlButton::create(spr1);
@@ -1220,13 +1520,17 @@ void MailReadPopUpView::onJoinAllianceBtnClick(cocos2d::CCObject *pSender, CCCon
         CCCommonUtils::flyHint("", "", _lang("103742"));
         return;
     }
-    AllianceAcceptInviteCommand* cmd = new AllianceAcceptInviteCommand(m_info.uid);
+    AllianceAcceptInviteCommand* cmd = new AllianceAcceptInviteCommand(m_info->uid);
 //    cmd->setCallback(CCCallFuncO::create(this, callfuncO_selector(InvitesAlliaceCell::joinAllianceSuccess), NULL));
     cmd->sendAndRelease();
-    m_info.deal = 1;
+    m_info->deal = 1;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     if (MailController::getInstance()->getIsNewMailListEnable()) {
-        ChatServiceCocos2dx::postMailDealStatus(m_info.uid);
+        ChatServiceCocos2dx::postMailDealStatus(m_info->uid);
+    }
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    if (ChatServiceCocos2dx::Mail_OC_Native_Enable) {
+//simon        ChatServiceCocos2dx::postMailDealStatus(m_info->uid);
     }
 #endif
     m_joinAllianceBtn->setEnabled(false);
@@ -1237,20 +1541,33 @@ void MailReadPopUpView::onRefuseAllianceBtnClick(cocos2d::CCObject *pSender, CCC
     if(PopupViewController::getInstance()->getPlayingInAnim())
         return;
     
-    RefuseInviteCommand* cmd = new RefuseInviteCommand(m_info.uid);
+    RefuseInviteCommand* cmd = new RefuseInviteCommand(m_info->uid);
  //   cmd->setCallback(CCCallFuncO::create(this, callfuncO_selector(InvitesAlliaceCell::success), NULL));
     cmd->sendAndRelease();
-    m_info.deal = 1;
+    m_info->deal = 1;
     m_refuseAllianceBtn->setEnabled(false);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     if (MailController::getInstance()->getIsNewMailListEnable()) {
-        ChatServiceCocos2dx::postMailDealStatus(m_info.uid);
+        ChatServiceCocos2dx::postMailDealStatus(m_info->uid);
+    }
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    if (ChatServiceCocos2dx::Mail_OC_Native_Enable) {
+//simon         ChatServiceCocos2dx::postMailDealStatus(m_info->uid);
     }
 #endif
     PopupViewController::getInstance()->goBackPopupView();
 }
+
+bool MailReadPopUpView::checkRewardBtnVisible()
+{
+    bool ret = true;
+    if (m_info->title.compare(_lang("101098")) == 0) {
+        ret = false;
+    }
+    return ret;
+}
 //----class MailAllianceInviteCell
-MailAllianceInviteCell* MailAllianceInviteCell::create(MailInfo &info){
+MailAllianceInviteCell* MailAllianceInviteCell::create(MailInfo* info){
     MailAllianceInviteCell *ret = new MailAllianceInviteCell(info);
     if(ret && ret->init()){
         ret->autorelease();
@@ -1281,7 +1598,7 @@ bool MailAllianceInviteCell::onAssignCCBMemberVariable(cocos2d::CCObject *pTarge
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_refuseAllianceBtn", CCControlButton*, this->m_refuseAllianceBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_joinAllianceBtn", CCControlButton*, this->m_joinAllianceBtn)
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_sendMailBtn", CCControlButton*, this->m_sendMailBtn);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_lineFlag", CCScale9Sprite*, m_lineFlag);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_lineFlag", CCScale9Sprite*, m_lineFlag);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_flagNode", CCNode*, this->m_flagNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_langText", CCLabelIF*, this->m_langText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bg", CCSprite*, m_bg);
@@ -1302,7 +1619,7 @@ SEL_CCControlHandler MailAllianceInviteCell::onResolveCCBCCControlSelector(cocos
     return NULL;
 }
 bool MailAllianceInviteCell::init(){
-    if(m_mailInfo.type==MAIL_ALLIANCEAPPLY){
+    if(m_mailInfo->type==MAIL_ALLIANCEAPPLY){
         CCLoadSprite::doResourceByCommonIndex(7, true);
         CCLoadSprite::doResourceByCommonIndex(307, true);
         setCleanFunction([](){
@@ -1310,7 +1627,7 @@ bool MailAllianceInviteCell::init(){
             CCLoadSprite::doResourceByCommonIndex(7, false);
         });
     }
-    auto bg = CCBLoadFile("MailAllianceInvite", this, this);
+    auto bg = CCBLoadFile("NEW_MailAllianceInvite", this, this);
     this->setContentSize(bg->getContentSize());
     setData();
     return true;
@@ -1318,47 +1635,61 @@ bool MailAllianceInviteCell::init(){
 
 void MailAllianceInviteCell::setData(){
 
-    if (m_mailInfo.type==MAIL_ALLIANCEINVITE) {
+    if (m_mailInfo->type==MAIL_ALLIANCEINVITE) {
+        m_allianceNumText->setFntFile("Arial_Bold_Regular.fnt");
+        m_powerText->setFntFile("Arial_Bold_Regular.fnt");
+        m_langText->setFntFile("Arial_Bold_Regular.fnt");
+        m_alliancenameText->setFntFile("Arial_Bold_Regular.fnt");
+        m_allianceLeaderText->setFntFile("Arial_Bold_Regular.fnt");
+        m_allianceDesText->setFntFile("Arial_Bold_Regular.fnt");
         m_inviteNode->setVisible(true);
         m_applyNode->setVisible(false);
-        string numstr = CC_ITOA(m_mailInfo.curMember);
+        string numstr = CC_ITOA(m_mailInfo->curMember);
         numstr.append("/");
-        numstr+=CC_ITOA(m_mailInfo.maxMember);
+        numstr+=CC_ITOA(m_mailInfo->maxMember);
         this->m_allianceNumText->setString(numstr);
-        this->m_alliancenameText->setString(m_mailInfo.alliancename);
-        this->m_lineFlag->setContentSize(CCSize(this->m_alliancenameText->getContentSize().width*this->m_alliancenameText->getOriginScaleX(), m_lineFlag->getContentSize().height));
-        this->m_lineFlag->setVisible(false);
-        this->m_allianceLeaderText->setString(m_mailInfo.learderName);
-        this->m_powerText->setString(CC_ITOA(m_mailInfo.fightpower));
-        this->m_allianceDesText->setString(m_mailInfo.contents);
-        string lang = ( strcmp(m_mailInfo.allianceLang.c_str(), "")==0?"115600":m_mailInfo.allianceLang);
+        std::string alName = "";
+        if(m_mailInfo->alliance!="")
+            alName.append("(").append(m_mailInfo->alliance).append(")");
+        alName.append(m_mailInfo->alliancename);
+        this->m_alliancenameText->setString(alName);
+//        this->m_lineFlag->setContentSize(CCSize(this->m_alliancenameText->getContentSize().width*this->m_alliancenameText->getOriginScaleX(), m_lineFlag->getContentSize().height));
+//        this->m_lineFlag->setVisible(false);
+        this->m_allianceLeaderText->setString(m_mailInfo->learderName);
+        this->m_powerText->setString(CC_ITOA(m_mailInfo->fightpower));
+        this->m_allianceDesText->setString(m_mailInfo->contents);
+        string lang = ( strcmp(m_mailInfo->allianceLang.c_str(), "")==0?"115600":m_mailInfo->allianceLang);
         this->m_langText->setString(_lang(lang).c_str());
         CCCommonUtils::setButtonTitle(m_refuseAllianceBtn, _lang("103742").c_str());
         CCCommonUtils::setButtonTitle(m_joinAllianceBtn, _lang("103741").c_str());
         CCCommonUtils::setButtonTitle(m_sendMailBtn, _lang("105048").c_str());
-        string leagueIcon = m_mailInfo.iconAlliance;
+        string leagueIcon = m_mailInfo->iconAlliance;
         if(leagueIcon==""){
             leagueIcon = "Allance_flay.png";
         }else{
             leagueIcon+=".png";
         }
         m_flagSpr = CCLoadSprite::createSprite(leagueIcon.c_str());
-        m_flagSpr->setScale(0.72);
+        m_flagSpr->setScale(1);
         m_flagNode->removeAllChildrenWithCleanup(true);
         this->m_flagNode->addChild(m_flagSpr);
-        if(m_mailInfo.deal!=0){
+        if(m_mailInfo->deal!=0){
             m_refuseAllianceBtn->setVisible(false);
             m_joinAllianceBtn->setVisible(false);
             m_sendMailBtn->setVisible(false);
         }
     }else{
+        m_powerText->setFntFile("Arial_Bold_Regular.fnt");
+        m_powerValue->setFntFile("Arial_Bold_Regular.fnt");
+        m_playerNameTxt->setFntFile("Arial_Bold_Regular.fnt");
+        m_allianceDesText->setFntFile("Arial_Bold_Regular.fnt");
         m_inviteNode->setVisible(false);
         m_applyNode->setVisible(true);
         m_powerTxt->setString(_lang("102163").c_str());
-        m_powerValue->setString(CC_ITOA(m_mailInfo.applicantPower));
-        m_playerNameTxt->setString(m_mailInfo.applicantName.c_str());
-        this->m_allianceDesText->setString(m_mailInfo.contents);
-        string tempIcon = m_mailInfo.applicantPic;
+        m_powerValue->setString(CC_ITOA(m_mailInfo->applicantPower));
+        m_playerNameTxt->setString(m_mailInfo->applicantName.c_str());
+        this->m_allianceDesText->setString(m_mailInfo->contents);
+        string tempIcon = m_mailInfo->applicantPic;
         if(tempIcon==""){
             tempIcon = "g044_middle.png";
         }else{
@@ -1372,7 +1703,7 @@ void MailAllianceInviteCell::setData(){
         m_sendMailBtn->setVisible(false);
         CCCommonUtils::setButtonTitle(m_refuseAllianceBtn, _lang("115045").c_str());
         CCCommonUtils::setButtonTitle(m_joinAllianceBtn, _lang("115044").c_str());
-        if(m_mailInfo.deal!=0 || !GlobalData::shared()->playerInfo.isInAlliance() || GlobalData::shared()->playerInfo.allianceInfo.rank<4){
+        if(m_mailInfo->deal!=0 || !GlobalData::shared()->playerInfo.isInAlliance() || GlobalData::shared()->playerInfo.allianceInfo.rank<4){
             m_refuseAllianceBtn->setVisible(false);
             m_joinAllianceBtn->setVisible(false);
         }
@@ -1380,69 +1711,102 @@ void MailAllianceInviteCell::setData(){
 
 }
 void MailAllianceInviteCell::onJoinAllianceBtnClick(cocos2d::CCObject *pSender, CCControlEvent event){
-    m_mailInfo.deal = 1;
+    m_mailInfo->deal = 1;
     m_joinAllianceBtn->setEnabled(false);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     if (MailController::getInstance()->getIsNewMailListEnable()) {
-        ChatServiceCocos2dx::postMailDealStatus(m_mailInfo.uid);
+        ChatServiceCocos2dx::postMailDealStatus(m_mailInfo->uid);
+    }
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    if (ChatServiceCocos2dx::Mail_OC_Native_Enable) {
+//simon         ChatServiceCocos2dx::postMailDealStatus(m_mailInfo->uid);
     }
 #endif
-    if(GlobalData::shared()->isCrossService){
-        YesNoDialog::show(_lang("138064").c_str(), NULL);
-        return ;
-    }
-    if(m_mailInfo.type==MAIL_ALLIANCEINVITE){
+//    if(GlobalData::shared()->serverType>=SERVER_BATTLE_FIELD){ simon
+//        YesNoDialog::show(_lang("138064").c_str(), NULL);
+//        return ;
+//    }
+//    if(CCCommonUtils::isKuaFuWangZhan()){
+//        YesNoDialog::show(_lang("170048").c_str(), NULL);
+//        return ;
+//    }
+    if(m_mailInfo->type==MAIL_ALLIANCEINVITE){
         if(GlobalData::shared()->playerInfo.isInAlliance()){
             CCCommonUtils::flyHint("", "", _lang("E100081"));
             return;
         }
-        AllianceAcceptInviteCommand* cmd = new AllianceAcceptInviteCommand(m_mailInfo.uid);
+        AllianceAcceptInviteCommand* cmd = new AllianceAcceptInviteCommand(m_mailInfo->uid);
         cmd->setCallback(CCCallFuncO::create(this, callfuncO_selector(MailAllianceInviteCell::joinSuccess), NULL));
         cmd->sendAndRelease();
         GameController::getInstance()->showWaitInterface();
     }else{
-        AcceptAllianceApplyCommand* cmd = new AcceptAllianceApplyCommand(m_mailInfo.applicantId,m_mailInfo.uid);
+        AcceptAllianceApplyCommand* cmd = new AcceptAllianceApplyCommand(m_mailInfo->applicantId,m_mailInfo->uid);
         cmd->sendAndRelease();
         PopupViewController::getInstance()->goBackPopupView();
     }
 }
 void MailAllianceInviteCell::onSendMailBtnClick(cocos2d::CCObject *pSender, CCControlEvent event){
 //    m_mailInfo.deal = 1;
-    if(GlobalData::shared()->isCrossService){
-        YesNoDialog::show(_lang("138064").c_str(), NULL);
-        return ;
-    }
+//    if(GlobalData::shared()->serverType>=SERVER_BATTLE_FIELD){ simon
+//        YesNoDialog::show(_lang("138064").c_str(), NULL);
+//        return ;
+//    }
+//    if(CCCommonUtils::isKuaFuWangZhan()){
+//        YesNoDialog::show(_lang("170048").c_str(), NULL);
+//        return ;
+//    }
     m_sendMailBtn->setEnabled(false);
-    if(m_mailInfo.type==MAIL_ALLIANCEINVITE){
-        MailController::getInstance()->openMailDialogViewFirst(m_mailInfo.fromName, m_mailInfo.fromUid);
+    if(m_mailInfo->type==MAIL_ALLIANCEINVITE){
+        this->retain();
+        PopupViewController::getInstance()->removeAllPopupView();
+        MailController::getInstance()->openMailDialogViewFirst(m_mailInfo->fromName, m_mailInfo->fromUid);
+        this->release();
     }
 }
 void MailAllianceInviteCell::joinSuccess(CCObject* p){
-    ChatController::getInstance()->sendCountryChat(_lang("115188").append("  (").append(_lang("115181")).append(")").c_str(), CHAT_ALLIANCE, 2);
+    string dialog = "115188";
+//    ChatController::getInstance()->sendCountryChat(_lang("115188").append("  (").append(_lang("115181")).append(")").c_str(), CHAT_ALLIANCE, 2, "", dialog.c_str(), NULL); simon
+    
+    AutoSafeRef temp(this);
+    
     if(GlobalData::shared()->playerInfo.isInAlliance()){
+ 
         PopupViewController::getInstance()->removeAllPopupView();
         PopupViewController::getInstance()->addPopupInView(AllianceInfoView::create(&GlobalData::shared()->playerInfo.allianceInfo));
+ 
     }
+//    if(CCCommonUtils::isFirstJoinAlliance()){  simon
+//        GameController::getInstance()->callXCApi("action=joinAlliance_2");
+//        CCLOGFUNC("firstJoin_style2");
+//    }
 }
 void MailAllianceInviteCell::onRefuseAllianceBtnClick(cocos2d::CCObject *pSender, CCControlEvent event){
-    if(m_mailInfo.type==MAIL_ALLIANCEINVITE){
-        RefuseInviteCommand* cmd = new RefuseInviteCommand(m_mailInfo.uid);
+    if(m_mailInfo->type==MAIL_ALLIANCEINVITE){
+        RefuseInviteCommand* cmd = new RefuseInviteCommand(m_mailInfo->uid);
         cmd->sendAndRelease();
-        m_mailInfo.deal = 1;
+        m_mailInfo->deal = 1;
         m_refuseAllianceBtn->setEnabled(false);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         if (MailController::getInstance()->getIsNewMailListEnable()) {
-            ChatServiceCocos2dx::postMailDealStatus(m_mailInfo.uid);
+            ChatServiceCocos2dx::postMailDealStatus(m_mailInfo->uid);
+        }
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        if (ChatServiceCocos2dx::Mail_OC_Native_Enable) {
+//simon             ChatServiceCocos2dx::postMailDealStatus(m_mailInfo->uid);
         }
 #endif
     }else{
-        RefuseAllianceApplyCommand* cmd = new RefuseAllianceApplyCommand(m_mailInfo.applicantId,m_mailInfo.uid);
+        RefuseAllianceApplyCommand* cmd = new RefuseAllianceApplyCommand(m_mailInfo->applicantId,m_mailInfo->uid);
         cmd->sendAndRelease();
-        m_mailInfo.deal = 1;
+        m_mailInfo->deal = 1;
         m_refuseAllianceBtn->setEnabled(false);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         if (MailController::getInstance()->getIsNewMailListEnable()) {
-            ChatServiceCocos2dx::postMailDealStatus(m_mailInfo.uid);
+            ChatServiceCocos2dx::postMailDealStatus(m_mailInfo->uid);
+        }
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        if (ChatServiceCocos2dx::Mail_OC_Native_Enable) {
+//simon             ChatServiceCocos2dx::postMailDealStatus(m_mailInfo->uid);
         }
 #endif
     }
@@ -1450,7 +1814,7 @@ void MailAllianceInviteCell::onRefuseAllianceBtnClick(cocos2d::CCObject *pSender
 }
 bool MailAllianceInviteCell::onTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
-    if (m_mailInfo.type == MAIL_ALLIANCEINVITE) {
+    if (m_mailInfo->type == MAIL_ALLIANCEINVITE) {
         bool alreadyInAlliance = GlobalData::shared()->playerInfo.isInAlliance();
         
         if (alreadyInAlliance)
@@ -1463,7 +1827,7 @@ bool MailAllianceInviteCell::onTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCE
             return true;
         }
         return false;
-    } else if (m_mailInfo.type == MAIL_ALLIANCEAPPLY) {
+    } else if (m_mailInfo->type == MAIL_ALLIANCEAPPLY) {
         if (isTouchInside(m_bg, pTouch)) {
             return true;
         }
@@ -1477,7 +1841,7 @@ void MailAllianceInviteCell::onTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCE
     
 }
 void MailAllianceInviteCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent){
-    if (m_mailInfo.type == MAIL_ALLIANCEINVITE) {
+    if (m_mailInfo->type == MAIL_ALLIANCEINVITE) {
         if(isTouchInside(m_flagSpr, pTouch)){
 //            bool ishasInfo = false;
 //            map<string, AllianceInfo* >::iterator it;
@@ -1499,14 +1863,14 @@ void MailAllianceInviteCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCE
 //            if(!ishasInfo){
 //                PopupViewController::getInstance()->addPopupInView(JoinAllianceView::create(11));
 //            }
-            GetAllianceListCommand* cmd = new GetAllianceListCommand(m_mailInfo.alliancename,1,1);
+            GetAllianceListCommand* cmd = new GetAllianceListCommand(m_mailInfo->alliancename,1,1);
             cmd->setSuccessCallback(CCCallFuncO::create(this, callfuncO_selector(MailAllianceInviteCell::showAllianceInfo), NULL));
             cmd->sendAndRelease();
         }
-    } else if (m_mailInfo.type == MAIL_ALLIANCEAPPLY) {
+    } else if (m_mailInfo->type == MAIL_ALLIANCEAPPLY) {
         if (isTouchInside(m_bg, pTouch)) {
-            if (m_mailInfo.applicantId != "") {
-                RoleInfoView::createInfoByUid(m_mailInfo.applicantId);
+            if (m_mailInfo->applicantId != "") {
+                RoleInfoView::createInfoByUid(m_mailInfo->applicantId);
             }
         }
     }
@@ -1522,18 +1886,18 @@ void MailAllianceInviteCell::showAllianceInfo(CCObject* obj)
         CCDictionary* dicAlliance = (CCDictionary*)arr->objectAtIndex(i);
         AllianceInfo* alliance = new AllianceInfo();
         alliance->updateAllianceInfo(dicAlliance);
-        if(alliance->uid==m_mailInfo.allianceId){
+        if(alliance->uid==m_mailInfo->allianceId){
             PopupViewController::getInstance()->addPopupInView(CheckAllianceInfoView::create(alliance));
-            CC_SAFE_RELEASE(alliance);
+            alliance->release();
             break;
         }
-        CC_SAFE_RELEASE(alliance);
+        alliance->release();
     }
 }
 //------cl
 
 //-----class MailKickOutCell
-MailAllianceKickCell* MailAllianceKickCell::create(MailInfo &info)
+MailAllianceKickCell* MailAllianceKickCell::create(MailInfo* info)
 {
     MailAllianceKickCell* ret = new MailAllianceKickCell(info);
     if (ret && ret->init()) {
@@ -1561,7 +1925,7 @@ bool MailAllianceKickCell::onAssignCCBMemberVariable(cocos2d::CCObject *pTarget,
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_alliancenameText", CCLabelIF*, this->m_alliancenameText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_allianceNumText", CCLabelIF*, this->m_allianceNumText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_powerText", CCLabelIF*, this->m_powerText);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_lineFlag", CCScale9Sprite*, m_lineFlag);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_lineFlag", CCScale9Sprite*, m_lineFlag);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_flagNode", CCNode*, this->m_flagNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_langText", CCLabelIF*, this->m_langText);
     return true;
@@ -1572,7 +1936,7 @@ SEL_CCControlHandler MailAllianceKickCell::onResolveCCBCCControlSelector(cocos2d
 }
 
 bool MailAllianceKickCell::init(){
-    if(m_mailInfo.type==MAIL_ALLIANCEAPPLY){
+    if(m_mailInfo->type==MAIL_ALLIANCEAPPLY){
         CCLoadSprite::doResourceByCommonIndex(7, true);
         CCLoadSprite::doResourceByCommonIndex(307, true);
         setCleanFunction([](){
@@ -1580,24 +1944,34 @@ bool MailAllianceKickCell::init(){
             CCLoadSprite::doResourceByCommonIndex(7, false);
         });
     }
-    auto bg = CCBLoadFile("MailAllianceKick", this, this);
+    auto bg = CCBLoadFile("NEW_MailAllianceKick", this, this);
     this->setContentSize(bg->getContentSize());
     setData();
     return true;
 }
 
 void MailAllianceKickCell::setData(){
-    string numstr = CC_ITOA(m_mailInfo.curMember);
+    m_allianceNumText->setFntFile("Arial_Bold_Regular.fnt");
+    m_powerText->setFntFile("Arial_Bold_Regular.fnt");
+    m_langText->setFntFile("Arial_Bold_Regular.fnt");
+    m_alliancenameText->setFntFile("Arial_Bold_Regular.fnt");
+    m_allianceLeaderText->setFntFile("Arial_Bold_Regular.fnt");
+    m_allianceDesText->setFntFile("Arial_Bold_Regular.fnt");
+    string numstr = CC_ITOA(m_mailInfo->curMember);
     numstr.append("/");
-    numstr+=CC_ITOA(m_mailInfo.maxMember);
+    numstr+=CC_ITOA(m_mailInfo->maxMember);
     this->m_allianceNumText->setString(numstr);
-    this->m_alliancenameText->setString(m_mailInfo.alliancename);
-    this->m_lineFlag->setContentSize(CCSize(this->m_alliancenameText->getContentSize().width*this->m_alliancenameText->getOriginScaleX(), m_lineFlag->getContentSize().height));
-    this->m_lineFlag->setVisible(false);
-    this->m_allianceLeaderText->setString(m_mailInfo.learderName);
-    this->m_powerText->setString(CC_ITOA(m_mailInfo.fightpower));
-    this->m_allianceDesText->setString(m_mailInfo.contents);
-    if (m_mailInfo.type == MAIL_REFUSE_ALL_APPLY) {
+    std::string alName = "";
+    if(m_mailInfo->alliance!="")
+        alName.append("(").append(m_mailInfo->alliance).append(")");
+    alName.append(m_mailInfo->alliancename);
+    this->m_alliancenameText->setString(alName);
+//    this->m_lineFlag->setContentSize(CCSize(this->m_alliancenameText->getContentSize().width*this->m_alliancenameText->getOriginScaleX(), m_lineFlag->getContentSize().height));
+//    this->m_lineFlag->setVisible(false);
+    this->m_allianceLeaderText->setString(m_mailInfo->learderName);
+    this->m_powerText->setString(CC_ITOA(m_mailInfo->fightpower));
+    this->m_allianceDesText->setString(m_mailInfo->contents);
+    if (m_mailInfo->type == MAIL_REFUSE_ALL_APPLY) {
         auto btnPic1 = CCLoadSprite::createScale9Sprite("Mail_btn03.png");
         auto btn =CCControlButton::create(btnPic1);
         btn->setAnchorPoint(ccp(0.5, 0));
@@ -1610,16 +1984,16 @@ void MailAllianceKickCell::setData(){
         btn->setPosition(280 , 0);
         this->addChild(btn);
     }
-    string lang = ( strcmp(m_mailInfo.allianceLang.c_str(), "")==0?"115600":m_mailInfo.allianceLang);
+    string lang = ( strcmp(m_mailInfo->allianceLang.c_str(), "")==0?"115600":m_mailInfo->allianceLang);
     this->m_langText->setString(_lang(lang).c_str());
-    string leagueIcon = m_mailInfo.iconAlliance;
+    string leagueIcon = m_mailInfo->iconAlliance;
     if(leagueIcon==""){
         leagueIcon = "Allance_flay.png";
     }else{
         leagueIcon+=".png";
     }
     m_flagSpr = CCLoadSprite::createSprite(leagueIcon.c_str());
-    m_flagSpr->setScale(0.72);
+    m_flagSpr->setScale(1);
     m_flagNode->removeAllChildrenWithCleanup(true);
     this->m_flagNode->addChild(m_flagSpr);
 }
@@ -1649,13 +2023,15 @@ void MailAllianceKickCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEve
         for(it = AllianceManager::getInstance()->allianceList.begin();it != AllianceManager::getInstance()->allianceList.end();it++)
         {
             AllianceInfo* alliance = it->second;
-            if(alliance->uid==m_mailInfo.allianceId){
+            if(alliance->uid==m_mailInfo->allianceId){
                 ishasInfo = true;
-                if (GlobalData::shared()->playerInfo.isInAlliance() && alliance->uid==GlobalData::shared()->playerInfo.allianceInfo.uid) {
-                    PopupViewController::getInstance()->addPopupInView(AllianceInfoView::create(alliance));
-                }else{
-                    PopupViewController::getInstance()->addPopupInView(CheckAllianceInfoView::create(alliance));
-                }
+//                if (GlobalData::shared()->playerInfo.isInAlliance() && alliance->uid==GlobalData::shared()->playerInfo.allianceInfo.uid) {
+//                    PopupViewController::getInstance()->addPopupInView(AllianceInfoView::create(alliance, true));
+//                }else{
+//                    AllianceInfo* pData = alliance->copySimpeAlliance();
+//                    PopupViewController::getInstance()->addPopupInView(CheckAllianceInfoView::create(pData));
+//                    pData->release();
+//                } simon
                 break;
             }
             //allianceArray->addObject(alliance);
@@ -1668,7 +2044,7 @@ void MailAllianceKickCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEve
 }
 
 //-----class MailInviteTeleCell
-MailInviteTeleCell* MailInviteTeleCell::create(MailInfo& info)
+MailInviteTeleCell* MailInviteTeleCell::create(MailInfo* info)
 {
     MailInviteTeleCell* ret = new MailInviteTeleCell(info);
     if (ret && ret->init()) {
@@ -1680,7 +2056,7 @@ MailInviteTeleCell* MailInviteTeleCell::create(MailInfo& info)
 }
 
 bool MailInviteTeleCell::init() {
-    auto bg = CCBLoadFile("MailInviteTeleport", this, this);
+    auto bg = CCBLoadFile("NEW_MailInviteTeleport", this, this);
     this->setContentSize(bg->getContentSize());
     m_waitInterFace1 = NULL;
     m_waitInterFace2 = NULL;
@@ -1689,12 +2065,13 @@ bool MailInviteTeleCell::init() {
 }
 
 void MailInviteTeleCell::setData() {
-    std::string invitername = m_mailInfo.inviterName;
-    m_desText->setString(_lang_1(m_mailInfo.message, invitername.c_str()));
-    m_btnNode->setPosition(ccp(m_btnNode->getPositionX(), -m_desText->getContentSize().height - 50));
+    m_desText->setFntFile("Arial_Bold_Regular.fnt");
+    std::string invitername = m_mailInfo->inviterName;
+    m_desText->setString(_lang_1(m_mailInfo->message, invitername.c_str()));
+//    m_btnNode->setPosition(ccp(m_btnNode->getPositionX(), -m_desText->getContentSize().height - 50));
     CCCommonUtils::setButtonTitle(m_refuseBtn, _lang("103742").c_str());
     CCCommonUtils::setButtonTitle(m_acceptBtn, _lang("115290").c_str());
-    if (m_mailInfo.inviteTeleDeal == 0) {
+    if (m_mailInfo->inviteTeleDeal == 0) {
         m_refuseBtn->setEnabled(true);
         m_acceptBtn->setEnabled(true);
     } else {
@@ -1717,14 +2094,18 @@ void MailInviteTeleCell::onExit() {
 void MailInviteTeleCell::onRefuseBtnClick(CCObject *pSender, CCControlEvent event) {
     if(PopupViewController::getInstance()->getPlayingInAnim())
         return;
-    string mailid = m_mailInfo.uid;
+    string mailid = m_mailInfo->uid;
     RefuseTeleportCommand* cmd = new RefuseTeleportCommand(mailid);
     cmd->sendAndRelease();
     CCCommonUtils::flyHint("", "", _lang("115292"));
-    m_mailInfo.inviteTeleDeal = 1;
+    m_mailInfo->inviteTeleDeal = 1;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     if (MailController::getInstance()->getIsNewMailListEnable()) {
-        ChatServiceCocos2dx::postMailDealStatus(m_mailInfo.uid);
+        ChatServiceCocos2dx::postMailDealStatus(m_mailInfo->uid);
+    }
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    if (ChatServiceCocos2dx::Mail_OC_Native_Enable) {
+//simon         ChatServiceCocos2dx::postMailDealStatus(m_mailInfo->uid);
     }
 #endif
     m_refuseBtn->setEnabled(false);
@@ -1741,10 +2122,12 @@ void MailInviteTeleCell::onAcceptBtnClick(CCObject *pSender, CCControlEvent even
 //    return;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     ChatServiceCocos2dx::stopReturnToChat();
+#elif(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+//simon    ChatServiceCocos2dx::stopReturnToChat();
 #endif
     AllianceManager::getInstance()->goToWorldType = 1;
-    AllianceManager::getInstance()->tmpMailUid = m_mailInfo.uid;
-    int pos = m_mailInfo.targetPoint;
+    AllianceManager::getInstance()->tmpMailUid = m_mailInfo->uid;
+    int pos = m_mailInfo->targetPoint;
     WorldController::getInstance()->openTargetIndex = pos;
     CCPoint pt = WorldController::getPointByIndex(pos);
     std::string isFirstPopKey = GlobalData::shared()->playerInfo.uid + "isFirstPop";
@@ -1762,6 +2145,8 @@ void MailInviteTeleCell::onAcceptBtnClick(CCObject *pSender, CCControlEvent even
 
         SceneController::getInstance()->gotoScene(SCENE_ID_WORLD, false, true, pos);
     }
+    //zym 2015.12.11
+//    PopupViewController::getInstance()->forceClearAll(true); simon
     PopupViewController::getInstance()->removeAllPopupView();
 }
 
@@ -1769,7 +2154,7 @@ void MailInviteTeleCell::afterGetNearestPoint(CCObject* obj)
 {
     CCDictionary* dic = _dict(obj);
     string uid = dic->valueForKey("mailUid")->getCString();
-    if (strcmp(uid.c_str(), m_mailInfo.uid.c_str()) != 0)
+    if (strcmp(uid.c_str(), m_mailInfo->uid.c_str()) != 0)
     {
         return;
     }
@@ -1786,22 +2171,25 @@ void MailInviteTeleCell::afterGetNearestPoint(CCObject* obj)
         pos = params->valueForKey("point")->intValue();
     }
     else {
-        pos = m_mailInfo.targetPoint;
+        pos = m_mailInfo->targetPoint;
     }
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     ChatServiceCocos2dx::stopReturnToChat();
+#elif(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+//simon    ChatServiceCocos2dx::stopReturnToChat();
 #endif
     CCPoint pt = WorldController::getPointByIndex(pos);
     WorldController::getInstance()->openTargetIndex = pos;
     AllianceManager::getInstance()->goToWorldType = 1;
-    AllianceManager::getInstance()->tmpMailUid = m_mailInfo.uid;
+    AllianceManager::getInstance()->tmpMailUid = m_mailInfo->uid;
     if(SceneController::getInstance()->currentSceneId == SCENE_ID_WORLD){
         WorldMapView::instance()->gotoTilePoint(pt);
     }else{
         SceneController::getInstance()->gotoScene(SCENE_ID_WORLD, false, true, pos);
     }
     PopupViewController::getInstance()->removeAllPopupView();
-
+    //zym 2015.12.11
+//    PopupViewController::getInstance()->forceClearAll(true); simon
 }
 
 void MailInviteTeleCell::removeWaitInterface()
@@ -1850,12 +2238,12 @@ bool ItemAndGeneralCell::init(int type, int value, int num){
     std::string nameStr;
     if(type == R_GOODS){
         head = GeneralHeadPic::create(CC_ITOA(value));
-        auto titer = ToolController::getInstance()->m_toolInfos.find(value);
-        if(titer!=ToolController::getInstance()->m_toolInfos.end()){
-            nameStr = (*titer).second.getName();
-        }else{
+//        auto titer = ToolController::getInstance()->m_toolInfos.find(value);
+//        if(titer!=ToolController::getInstance()->m_toolInfos.end()){
+//            nameStr = (*titer).second.getName();
+//        }else{
             nameStr = CCCommonUtils::getNameById(CC_ITOA(value));
-        }
+//        }
     }else if(type == R_GENERAL){
         head = GeneralHeadPic::create(CC_ITOA(value));
         nameStr = CCCommonUtils::getNameById(CC_ITOA(value));
@@ -1901,12 +2289,12 @@ void DetailRewardCell::setData(int type,int value,int num,int color,bool gay){
     std::string nameStr;
     CCSprite icon;
     if(type == R_GOODS){
-        auto titer = ToolController::getInstance()->m_toolInfos.find(value);
-        if(titer!=ToolController::getInstance()->m_toolInfos.end()){
-            nameStr = (*titer).second.getName();
-        }else{
+//        auto titer = ToolController::getInstance()->m_toolInfos.find(value);
+//        if(titer!=ToolController::getInstance()->m_toolInfos.end()){
+//            nameStr = (*titer).second.getName();
+//        }else{
             nameStr = CCCommonUtils::getNameById(CC_ITOA(value));
-        }
+//        }
     }else if(type == R_GENERAL){
         nameStr = CCCommonUtils::getNameById(CC_ITOA(value));
     }else{

@@ -19,7 +19,7 @@ class WorldBossMailView : public PopupBaseView
 
 {
 public:
-    WorldBossMailView(MailInfo& info):m_info(info){};
+    WorldBossMailView(MailInfo& info):m_info(&info){};
     virtual ~WorldBossMailView(){};
     virtual bool init();
     virtual void onExit();
@@ -29,7 +29,7 @@ public:
     void refreshView(CCObject* p = NULL);
     void refreshRewardView(CCObject* p = NULL);
 protected:
-    MailInfo& m_info;
+    CCSafeObject<MailInfo> m_info;
     vector<std::string> rewardVector;
     
     virtual bool onTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
@@ -44,28 +44,33 @@ protected:
 	void onAddSaveClick(CCObject * pSender, CCControlEvent pCCControlEvent);
 	void onDeleteClick(CCObject * pSender, CCControlEvent pCCControlEvent);
 	void onShareClick(CCObject * pSender, CCControlEvent pCCControlEvent);
-    
+    void onReturnClick(CCObject * pSender, CCControlEvent pCCControlEvent);
+    void onWriteClick(CCObject * pSender, CCControlEvent pCCControlEvent);
     void onOkDeleteMail();
     
     CCSafeObject<CCNode> m_battlePicNode;
     CCSafeObject<CCNode> m_downNode;
+    CCSafeObject<CCNode> m_bgNode;
     CCSafeObject<CCNode> m_failNode;
     CCSafeObject<CCNode> m_firstNode;
     CCSafeObject<CCNode> m_listContainer;
     CCSafeObject<CCNode> m_totalNode;
-    CCSafeObject<CCNode> m_upNode;
-    CCSafeObject<CCScale9Sprite> m_bg;
+//    CCSafeObject<CCNode> m_upNode;
+//    CCSafeObject<CCScale9Sprite> m_bg;
     CCSafeObject<CCScale9Sprite> m_buildBG;
     CCSafeObject<CCScale9Sprite> m_hintBG;
     CCSafeObject<CCLabelIF> m_attackText;
     CCSafeObject<CCLabelIF> m_hintText;
     CCSafeObject<CCLabelIF> m_mailTitle;
     CCSafeObject<CCLabelIF> m_timeText;
-    CCSafeObject<CCLabelIF> m_upTitle;
+//    CCSafeObject<CCLabelIF> m_upTitle;
     CCSafeObject<CCControlButton> m_addSaveBtn;
+    CCSafeObject<CCControlButton> m_returnBtn;
+    CCSafeObject<CCSprite> m_returnSpr;
+    CCSafeObject<CCControlButton> m_writeBtn;
     CCSafeObject<CCControlButton> m_deleteBtn;
     CCSafeObject<CCControlButton> m_shareBtn;
-    CCSafeObject<CCControlButton> m_unSaveBtn;
+//    CCSafeObject<CCControlButton> m_unSaveBtn;
     CCSafeObject<CCSprite> m_hintLine;
 
     CCSafeObject<CCLabelIF> m_monsterNameText;
@@ -73,7 +78,7 @@ protected:
     CCSafeObject<CCScale9Sprite> m_bar;
     CCSafeObject<CCLabelIF> m_monsterLifeText;
     
-    CCSafeObject<CCNode> m_mainCellNode;
+//    CCSafeObject<CCNode> m_mainCellNode;
     CCSafeObject<CCNode> m_picNode;
     CCSafeObject<CCNode> m_rwdNode1;
     CCSafeObject<CCNode> m_rwdNode2;
@@ -83,7 +88,7 @@ protected:
     CCSafeObject<CCLabelIF> m_rwdNum[3];
 //    CCSafeObject<CCNode> m_rwdPicNode2;
 //    CCSafeObject<CCNode> m_rwdPicNode3;
-    CCSafeObject<CCNode> m_upCellNode;
+//    CCSafeObject<CCNode> m_upCellNode;
     CCSafeObject<CCControlButton> m_iconBtn;
     CCSafeObject<CCControlButton> m_rwd1Btn;
     CCSafeObject<CCControlButton> m_rwd2Btn;
@@ -94,10 +99,14 @@ protected:
     CCSafeObject<CCLabelIF> m_killTxt;
     CCSafeObject<Label> m_nameTxt;
     CCSafeObject<CCLabelIF> m_rewardTxt;
-    CCSafeObject<CCLabelIF> m_upNodeText;
+//    CCSafeObject<CCLabelIF> m_upNodeText;
     CCSafeObject<CCLabelIF> m_woundCountTxt;
     CCSafeObject<CCLabelIF> m_woundTxt;
     CCSafeObject<HFHeadImgNode> m_headImgNode;
+    CCSafeObject<CCRenderTexture> m_selfModelLayer;
+    CCSafeObject<CCLabelIF> m_posTxt;
+    CCSafeObject<Node> m_posBG;
+    CCSafeObject<CCScale9Sprite> m_underlineSpr;
     void onRwd1BtnPressedClick(CCObject * pSender, CCControlEvent pCCControlEvent);
     void onRwd2BtnPressedClick(CCObject * pSender, CCControlEvent pCCControlEvent);
     void onRwd3BtnPressedClick(CCObject * pSender, CCControlEvent pCCControlEvent);

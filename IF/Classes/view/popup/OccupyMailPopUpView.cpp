@@ -18,7 +18,10 @@
 #include "YesNoDialog.h"
 #include "MailSaveCommand.h"
 #include "ChatServiceCocos2dx.h"
-
+#include "MailWritePopUpView.h"
+#include "UIComponent.h"
+//#include "SoldierIconCell.hpp"
+#include "ArmyController.h"
 OccupyMailPopUpView *OccupyMailPopUpView::create(MailInfo *info){
     OccupyMailPopUpView *ret = new OccupyMailPopUpView(info);
     if(ret && ret->init()){
@@ -31,29 +34,57 @@ OccupyMailPopUpView *OccupyMailPopUpView::create(MailInfo *info){
 
 void OccupyMailPopUpView::onEnter(){
     PopupBaseView::onEnter();
+    UIComponent::getInstance()->showPopupView(UIPopupViewType_ArcPop_TitanUpgrade,true);//simon;
+    UIComponent::getInstance()->hideReturnBtn();
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(OccupyMailPopUpView::refresh), MAIL_CONTENT_READ, NULL);
-    setTitleName(m_info->fromName.c_str());
+//    setTitleName(m_info->fromName.c_str());
+    m_mailTitle->setString(m_info->fromName.c_str());
+    setTouchEnabled(true);
+    
 }
 
 void OccupyMailPopUpView::onExit(){
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MAIL_CONTENT_READ);
+   setTouchEnabled(false);
     PopupBaseView::onExit();
 }
 
 bool OccupyMailPopUpView::init(){
     bool ret = false;
     if(PopupBaseView::init()){
-        auto bg = CCBLoadFile("OccupyMailCCB", this, this);
-        this->setContentSize(bg->getContentSize());
-//        CCLoadSprite::doResourceByCommonIndex(6, true);
-        CCLoadSprite::doResourceByCommonIndex(204, true);
-        setCleanFunction([](){
-//            CCLoadSprite::doResourceByCommonIndex(6, false);
-            CCLoadSprite::doResourceByCommonIndex(204, false);
-            
-        });
+        setIsHDPanel(true);
+        setMailUuid(m_info->uid);
+//        auto cf = CCLoadSprite::getSF("Mail_diban.png");
+        auto cf = CCLoadSprite::getSF("Mail_BG1.png");
+        if (cf==NULL) {
+            CCLoadSprite::doResourceByCommonIndex(6, true);
+            CCLoadSprite::doResourceByCommonIndex(204, true);
+            setCleanFunction([](){
+                CCLoadSprite::doResourceByCommonIndex(6, false);
+                CCLoadSprite::doResourceByCommonIndex(204, false);
+            });
+        }
+        else {
+            CCLoadSprite::doResourceByCommonIndex(204, true);
+            setCleanFunction([](){
+                CCLoadSprite::doResourceByCommonIndex(204, false);
+            });
+        }
+        auto bg = CCBLoadFile("NEW_OccupyMailCCB", this, this);
+        if (CCCommonUtils::isIosAndroidPad()) {
+            this->setContentSize(CCDirector::sharedDirector()->getWinSize());
+        }
+        else
+            this->setContentSize(bg->getContentSize());
+
         m_listNode = CCNode::create();
-        setTitleName(_lang("105513"));
+//        setTitleName(_lang("105513"));
+        this->m_titleText->setFntFile("Arial_Bold_Regular.fnt");
+        this->m_timeText->setFntFile("Arial_Bold_Regular.fnt");
+        this->m_armsName->setFntFile("Arial_Bold_Regular.fnt");
+        this->m_armsNun->setFntFile("Arial_Bold_Regular.fnt");
+        this->m_failText->setFntFile("Arial_Bold_Regular.fnt");
+        m_mailTitle->setString(_lang("105513"));
         this->m_timeText->setString(CCCommonUtils::timeStampToDate(m_info->createTime).c_str());
         m_titleText->setString(_lang("105536").c_str());
         //m_contentText ->setString(_lang("105537").c_str());
@@ -81,12 +112,57 @@ bool OccupyMailPopUpView::init(){
                 break;
             }
         }
-        m_occupyText->setString(description1);
-        int preHeight = this->m_buildBG->getContentSize().height;
-        changeBGHeight(m_buildBG);
-        int dh = m_buildBG->getContentSize().height - preHeight;
-        this->m_listContainer->setContentSize(CCSize(m_listContainer->getContentSize().width, m_listContainer->getContentSize().height + dh));
-        this->m_bg->setContentSize(CCSize(m_bg->getContentSize().width, m_bg->getContentSize().height + dh));
+//        m_occupyText->setString(description1);
+        if (CCCommonUtils::isIosAndroidPad()) {
+            int extH = getExtendHeight();
+            this->m_listContainer->setContentSize(CCSize(m_listContainer->getContentSize().width, m_listContainer->getContentSize().height + extH));
+            m_downNode->setPositionY(m_downNode->getPositionY() - extH);
+            m_bgNode->setPositionY(m_bgNode->getPositionY() - extH);
+            auto tbg = CCLoadSprite::loadResource("Mail_diban.png");
+            auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
+            auto picBg1 = CCLoadSprite::createSprite("Mail_diban.png");
+            picBg1->setAnchorPoint(ccp(0, 0));
+            picBg1->setPosition(ccp(0, 0));
+            picBg1->setScaleX(2.4);
+            tBatchNode->addChild(picBg1);
+            int maxHeight = CCDirector::sharedDirector()->getWinSize().height;
+            int curHeight = picBg1->getContentSize().height;
+            while(curHeight < maxHeight)
+            {
+                auto picBg2 = CCLoadSprite::createSprite("Mail_diban.png");
+                picBg2->setAnchorPoint(ccp(0, 0));
+                picBg2->setPosition(ccp(0, curHeight));
+                picBg2->setScaleX(2.4);
+                tBatchNode->addChild(picBg2);
+                curHeight += picBg2->getContentSize().height;
+            }
+            m_bgNode->addChild(tBatchNode);
+        }
+        else {
+            int extH = getExtendHeight();
+            this->m_listContainer->setContentSize(CCSize(m_listContainer->getContentSize().width, m_listContainer->getContentSize().height + extH));
+            m_downNode->setPositionY(m_downNode->getPositionY() - extH);
+            m_bgNode->setPositionY(m_bgNode->getPositionY() - extH);
+            auto tbg = CCLoadSprite::loadResource("Mail_diban.png");
+            auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
+            auto picBg1 = CCLoadSprite::createSprite("Mail_diban.png");
+            picBg1->setAnchorPoint(ccp(0, 0));
+            picBg1->setPosition(ccp(0, 0));
+            tBatchNode->addChild(picBg1);
+            int maxHeight = CCDirector::sharedDirector()->getWinSize().height;
+            int curHeight = picBg1->getContentSize().height;
+            while(curHeight < maxHeight)
+            {
+                auto picBg2 = CCLoadSprite::createSprite("Mail_diban.png");
+                picBg2->setAnchorPoint(ccp(0, 0));
+                picBg2->setPosition(ccp(0, curHeight));
+                tBatchNode->addChild(picBg2);
+                curHeight += picBg2->getContentSize().height;
+            }
+            m_bgNode->addChild(tBatchNode);
+        }
+
+//        this->m_bg->setContentSize(CCSize(m_bg->getContentSize().width, m_bg->getContentSize().height + dh));
         
        // m_listContainer->setVisible(false);//暂时隐掉，现在没有英雄
         
@@ -98,18 +174,29 @@ bool OccupyMailPopUpView::init(){
         m_scrollView->setDirection(kCCScrollViewDirectionVertical);
         m_scrollView->setAnchorPoint(ccp(0, 0));
         m_listContainer->addChild(m_scrollView);
+        /////////////
+        m_battlePicNode->removeAllChildrenWithCleanup(true);
         auto battlePic = CCLoadSprite::createSprite(picUrl.c_str());
         this->m_battlePicNode->addChild(battlePic);
        // m_tabView = NULL;
-        m_downNode->setPositionY(m_downNode->getPositionY() - dh);
         this->m_totalNode->removeChild(this->m_moveNode);
         m_scrollView->addChild(m_listNode);
         
         m_totalHg = 0;
-        m_totalHg -= 666;
+//        m_totalHg -= 666;
         m_listNode->addChild(m_moveNode);
-        m_moveNode->setPosition(0,m_totalHg);
+        if (CCCommonUtils::isIosAndroidPad()) {
+            m_moveNode->setPosition(768,m_totalHg);
+        }
+        else {
+            m_moveNode->setPosition(320,m_totalHg);
+        }
         m_headImgNode = HFHeadImgNode::create();
+        if (CCCommonUtils::isIosAndroidPad()) {
+            m_totalHg -= 874;
+        }
+        else
+            m_totalHg -= 364;
         if(!m_info->isReadContent){
             getData();
         }else{
@@ -126,42 +213,64 @@ bool OccupyMailPopUpView::init(){
 void OccupyMailPopUpView::onBtnPosClick(CCObject *pSender, CCControlEvent event){
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     ChatServiceCocos2dx::stopReturnToChat();
+#elif(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+//simon    ChatServiceCocos2dx::stopReturnToChat();
 #endif
     int pos = m_info->occupyPointId;
     WorldController::getInstance()->openTargetIndex = pos;
     CCPoint pt = WorldController::getPointByIndex(pos);
-    if (m_info && m_info->ckf==1) {
-        pt = WorldController::getPointByMapTypeAndIndex(pos,SERVERFIGHT_MAP);
-    }
+//    if (m_info && m_info->serverType>=SERVER_BATTLE_FIELD) {
+//        pt = WorldController::getPointByMapTypeAndIndex(pos,(MapType)m_info->serverType);
+//    } simon
     if(SceneController::getInstance()->currentSceneId == SCENE_ID_WORLD){
         WorldMapView::instance()->gotoTilePoint(pt);
     }else{
         int index = WorldController::getIndexByPoint(pt);
         SceneController::getInstance()->gotoScene(SCENE_ID_WORLD, false, true, index);
     }
+    //zym 2015.12.11
+//    PopupViewController::getInstance()->forceClearAll(true); simon
     PopupViewController::getInstance()->removeAllPopupView();
 }
-
+bool OccupyMailPopUpView::onTouchBegan(CCTouch *pTouch, CCEvent *pEvent){
+    if (isTouchInside(m_returnSpr, pTouch)) {
+        return true;
+    }
+    return false;
+}
+void OccupyMailPopUpView::onTouchMoved(CCTouch *pTouch, CCEvent *pEvent){
+    
+}
+void OccupyMailPopUpView::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent){
+    if (isTouchInside(m_returnSpr, pTouch)) {
+        PopupViewController::getInstance()->goBackPopupView();
+    }
+}
 bool OccupyMailPopUpView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode){
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_titleText", CCLabelIF*, this->m_titleText);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_mailTitle", CCLabelIF*, this->m_mailTitle);
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_contentText", CCLabelIF*, this->m_contentText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_timeText", CCLabelIF*, this->m_timeText);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_occupyText", CCLabelIF*, this->m_occupyText);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_occupyText", CCLabelIF*, this->m_occupyText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_listContainer", CCNode*, this->m_listContainer);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_failNode", CCNode*, this->m_failNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_downNode", CCNode*, this->m_downNode);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_bg", CCScale9Sprite*, this->m_bg);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bgNode", CCNode*, this->m_bgNode);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_bg", CCScale9Sprite*, this->m_bg);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_buildBG", CCScale9Sprite*, this->m_buildBG);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_deleteBtn", CCControlButton*, this->m_deleteBtn);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_unSaveBtn", CCControlButton*, this->m_unSaveBtn);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_unSaveBtn", CCControlButton*, this->m_unSaveBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_addSaveBtn", CCControlButton*, this->m_addSaveBtn);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_writeBtn", CCControlButton*, this->m_writeBtn);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_returnBtn", CCControlButton*, this->m_returnBtn);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_returnSpr", CCSprite*, this->m_returnSpr);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_paneBg", CCScale9Sprite*, this->m_paneBg)
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_palyName", Label*, this->m_palyName);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_playLv", CCLabelIF*, this->m_playLv);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_playLv", CCLabelIF*, this->m_playLv);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_failText", CCLabelIF*, this->m_failText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_picHeadNode", CCNode*, this->m_picHeadNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_playerNode", CCNode*, this->m_playerNode);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_listBG", CCScale9Sprite*, this->m_listBG);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_listBG", CCScale9Sprite*, this->m_listBG);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_kuangBG", CCScale9Sprite*, this->m_kuangBG);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_totalNode", CCNode*, this->m_totalNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_moveNode", CCNode*, this->m_moveNode);
@@ -180,6 +289,13 @@ void OccupyMailPopUpView::onDeleteClick(CCObject *pSender, CCControlEvent event)
     YesNoDialog::showYesDialog(_lang("105570").c_str(),false,CCCallFunc::create(this, callfunc_selector(OccupyMailPopUpView::onOKDeleteMail)),true);
 
 }
+void OccupyMailPopUpView::onReturnClick(cocos2d::CCObject *pSender, CCControlEvent pCCControlEvent){
+    PopupViewController::getInstance()->goBackPopupView();
+}
+
+void OccupyMailPopUpView::onWriteClick(cocos2d::CCObject *pSender, CCControlEvent pCCControlEvent){
+    PopupViewController::getInstance()->addPopupInView(MailWritePopUpView::create("", ""));
+}
 void OccupyMailPopUpView::onAddSaveClick(CCObject *pSender, CCControlEvent event){
     if(m_info->save ==1){
         MailCancelSaveCommand *cmd = new MailCancelSaveCommand(m_info->uid, m_info->type);
@@ -197,14 +313,9 @@ void OccupyMailPopUpView::onAddSaveClick(CCObject *pSender, CCControlEvent event
         CCCommonUtils::flyHint("quest_icon_1.png", "", _lang("105575"));
     }
     if(m_info->save==0){
-        //CCCommonUtils::setButtonTitle(m_addSaveBtn, "save");
-        m_unSaveBtn->setVisible(true);
-        m_addSaveBtn->setVisible(false);
+        m_addSaveBtn->setHighlighted(false);
     }else{
-        // CCCommonUtils::setButtonTitle(m_addSaveBtn, "unsave");
-        // m_saveBtnTitle->setString(_lang("105573").c_str());
-        m_unSaveBtn->setVisible(false);
-        m_addSaveBtn->setVisible(true);
+        m_addSaveBtn->setHighlighted(true);
     }
 }
 void OccupyMailPopUpView::onOKDeleteMail(){
@@ -216,6 +327,8 @@ SEL_CCControlHandler OccupyMailPopUpView::onResolveCCBCCControlSelector(cocos2d:
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onDeleteClick", OccupyMailPopUpView::onDeleteClick);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onBtnPosClick", OccupyMailPopUpView::onBtnPosClick);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onAddSaveClick", OccupyMailPopUpView::onAddSaveClick);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onReturnClick", OccupyMailPopUpView::onReturnClick);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onWriteClick", OccupyMailPopUpView::onWriteClick);
     return NULL;
 }
 
@@ -260,13 +373,9 @@ unsigned int OccupyMailPopUpView::numberOfGridsInCell(cocos2d::extension::CCMult
 
 void OccupyMailPopUpView::refresh(CCObject* p){
     if(m_info->save==0){
-        //CCCommonUtils::setButtonTitle(m_addSaveBtn, "save");
-        //        m_saveBtnTitle->setString(_lang("105574").c_str());
-        m_addSaveBtn->setVisible(false);
-        m_unSaveBtn->setVisible(true);
+        m_addSaveBtn->setHighlighted(false);
     }else{
-        m_addSaveBtn->setVisible(true);
-        m_unSaveBtn->setVisible(false);
+        m_addSaveBtn->setHighlighted(true);
     }
 //    if(m_tabView == NULL
 //        m_tabView = CCMultiColTableView::create(this, m_listContainer->getContentSize());
@@ -279,9 +388,9 @@ void OccupyMailPopUpView::refresh(CCObject* p){
 //    m_tabView->setTouchEnabled(158*m_info->occupyGeneral->count()>m_listContainer->getContentSize().height);
 //    m_tabView->reloadData();
     CCPoint pt = WorldController::getPointByIndex(m_info->occupyPointId);
-    if (m_info && m_info->ckf==1) {
-        pt = WorldController::getPointByMapTypeAndIndex(m_info->occupyPointId,SERVERFIGHT_MAP);
-    }
+//    if (m_info && m_info->serverType>=SERVER_BATTLE_FIELD) {
+//        pt = WorldController::getPointByMapTypeAndIndex(m_info->occupyPointId,(MapType)m_info->serverType);
+//    } simon
     //this->m_occupyText->setString(_lang_2("105521", CC_ITOA(int(pt.x)),CC_ITOA(int(pt.y))));
     this->m_kuangBG->setVisible(false);
     string  description1 = "";
@@ -306,13 +415,14 @@ void OccupyMailPopUpView::refresh(CCObject* p){
             break;
         }
     }
-    m_occupyText->setString(description1);
+//    m_occupyText->setString(description1);
     int startY = 0;
     if(m_info->user!=NULL){
         std::string name = m_info->user->valueForKey("name")->getCString();
         int level = m_info->user->valueForKey("lv")->intValue();
         std::string levelStr = std::string("Lv.") +CC_ITOA(level);
-        this->m_playLv->setString(levelStr.c_str());
+//        this->m_playLv->setString(levelStr.c_str());
+        name.append(" ").append("Lv.").append(CC_ITOA(level));
         this->m_palyName->setString(name.c_str());
         string pic =m_info->user->valueForKey("pic")->getCString();
         int picVer = m_info->user->valueForKey("picVer")->intValue();
@@ -323,18 +433,43 @@ void OccupyMailPopUpView::refresh(CCObject* p){
             pic +=".png";
         }
         auto head = CCLoadSprite::createSprite(pic.c_str());
-        float scale = 92/head->getContentSize().width;
+        float scale = 70/head->getContentSize().width;
         if(scale>1.0){
             scale = 1.0;
         }
         head->setScale(scale);
-        this->m_picHeadNode->addChild(head);
-        if (CCCommonUtils::isUseCustomPic(picVer))
-        {
-            m_headImgNode->initHeadImgUrl2(m_picHeadNode, CCCommonUtils::getCustomPicUrl(uid, picVer), 1.0f, 90, true);
-        }
+//        this->m_picHeadNode->addChild(head);
+//        if (CCCommonUtils::isUseCustomPic(picVer))
+//        {
+//            m_headImgNode->initHeadImgUrl2(m_picHeadNode, CCCommonUtils::getCustomPicUrl(uid, picVer), 1.0f, 70, true);
+//        }
         m_playerNode->setVisible(true);
         
+        ////////融合底图
+        auto sizeLayer = CCSize(80, 80);
+        m_selfModelLayer = CCRenderTexture::create(sizeLayer.width, sizeLayer.height);
+        m_selfModelLayer->setAnchorPoint(ccp(0.5, 0.5));
+        ccBlendFunc cbf = {GL_ZERO,GL_ONE_MINUS_SRC_ALPHA};
+        auto spr = CCLoadSprite::createSprite("Mail_headBack.png");
+        spr->setScale(1);
+        spr->setPosition(ccp(sizeLayer.width / 2, sizeLayer.height / 2));
+        auto bgCircle = CCLoadSprite::createSprite("Mail_head_backBattle.png");
+        bgCircle->setBlendFunc(cbf);
+        bgCircle->setPosition(ccp(sizeLayer.width / 2, sizeLayer.height / 2));
+        head->setPosition(ccp(sizeLayer.width / 2, sizeLayer.height / 2 - 3));
+        //    pic->removeFromParent();
+        m_selfModelLayer->begin();
+        spr->visit();
+        head->visit();
+        bgCircle->visit();
+        m_selfModelLayer->end();
+        m_playerNode->addChild(m_selfModelLayer);
+        if (CCCommonUtils::isUseCustomPic(picVer) && uid != "")
+        {
+            string backImg = "Mail_headBack.png";
+            string renderImg = "Mail_head_backBattle.png";
+//            m_headImgNode->initHeadImgUrl3(m_playerNode, CCCommonUtils::getCustomPicUrl(uid, picVer), 1.0f, 74, true, ccp(sizeLayer.width / 2, sizeLayer.height / 2 - 2), sizeLayer, backImg, renderImg);
+        }
     }else{
         m_playerNode->setVisible(false);
         startY = 100;
@@ -345,9 +480,10 @@ void OccupyMailPopUpView::refresh(CCObject* p){
         this->m_kuangBG->setVisible(false);
         this->m_armsName->setString("");
         this->m_armsNun->setString("");
-        this->m_listBG->setContentSize(CCSize(m_listBG->getContentSize().width,430));
+//        this->m_listBG->setContentSize(CCSize(m_listBG->getContentSize().width,430));
     }else{
         if(m_info->occupyGeneral->count()>0){
+            m_totalHg -= startY;
             CCDictionary *dict = dynamic_cast<CCDictionary*>(m_info->occupyGeneral->objectAtIndex(0));
             this->m_failNode->setVisible(false);
             //m_picHeadNode->setVisible(false);
@@ -367,24 +503,42 @@ void OccupyMailPopUpView::refresh(CCObject* p){
                 string id = reward->valueForKey("armyId")->getCString();
                 string armname =CCCommonUtils::getNameById(id);
                 int num = atoi(reward->valueForKey("armyNum")->getCString());
-                auto cell = DetectArmyCell::create(id, num);
-                cell->setAnchorPoint(ccp(0, 0));
                 
-                cell->setPosition(ccp(posX,  0-i*110));
+                auto cell = DetectArmyCell::create(id, num,false,true);
+                cell->setAnchorPoint(ccp(0, 0));
+                if (CCCommonUtils::isIosAndroidPad()) {
+                    cell->setPosition(ccp(posX, 0-i*264));
+                }
+                else
+                    cell->setPosition(ccp(posX,  0-i*110));
                 m_armsListNode->addChild(cell);
                 i++;
             }
-            
-            if(i>1){
-                m_kuangBG->setContentSize(CCSize(m_kuangBG->getContentSize().width, m_kuangBG->getContentSize().height+(i-1)*110));
-                m_listBG->setContentSize(CCSize(m_listBG->getContentSize().width, m_listBG->getContentSize().height+(i-1)*110));
-                m_totalHg-=(i-1)*110;
+            if (CCCommonUtils::isIosAndroidPad()) {
+                m_totalHg -= 432;
             }
+            else
+                m_totalHg -= 180;
+            if(i>1){
+                if (CCCommonUtils::isIosAndroidPad()) {
+                    m_kuangBG->setContentSize(CCSize(m_kuangBG->getContentSize().width, m_kuangBG->getContentSize().height+(i-1)*264));
+                    m_totalHg-=(i-1)*264;
+                }
+                else {
+                    m_kuangBG->setContentSize(CCSize(m_kuangBG->getContentSize().width, m_kuangBG->getContentSize().height+(i-1)*110));
+                    m_totalHg-=(i-1)*110;
+                }
+            }
+            if (CCCommonUtils::isIosAndroidPad()) {
+                m_totalHg -= 48;
+            }
+            else
+                m_totalHg -= 20;
         }else if(m_info->user==NULL){
             this->m_kuangBG->setVisible(false);
             this->m_failNode->setVisible(true);
             this->m_failText->setString(_lang("114009"));
-            m_occupyText->setString(_lang("105588"));
+//            m_occupyText->setString(_lang("105588"));
         }
     }
 }
@@ -468,6 +622,7 @@ bool OccupyLossPreviewCell::init(){
 void OccupyLossPreviewCell::refreshView(){
     this->removeAllChildren();
     auto label = CCLabelIF::create();
+    label->setFntFile("Arial_Bold_Regular.fnt");
     label->setFontSize(22);
     label->setColor(ccc3(130, 99, 56));
     label->setString(m_type.c_str());
@@ -487,6 +642,7 @@ void OccupyLossPreviewCell::refreshView(){
     }
     numstr.append(CC_CMDITOA(m_num));
     auto label1 = CCLabelIF::create();
+    label1->setFntFile("Arial_Bold_Regular.fnt");
     label1->setFontSize(22);
     label1->setColor(ccc3(127, 35, 29));
     label1->setString(numstr.c_str());
@@ -501,8 +657,8 @@ void OccupyLossPreviewCell::refreshView(){
 }
 
 //
-DetectArmyCell *DetectArmyCell::create(string armId,int num,bool isAbout){
-    DetectArmyCell *ret = new DetectArmyCell(armId,num,isAbout);
+DetectArmyCell *DetectArmyCell::create(string armId,int num,bool isAbout,bool bself){
+    DetectArmyCell *ret = new DetectArmyCell(armId,num,isAbout,bself);
     if(ret && ret->init()){
         ret->autorelease();
     }else{
@@ -511,15 +667,16 @@ DetectArmyCell *DetectArmyCell::create(string armId,int num,bool isAbout){
     return ret;
 }
 
-void DetectArmyCell::setData(string armId,int num,bool isAbout){
+void DetectArmyCell::setData(string armId,int num,bool isAbout,bool bself){
     m_armId = armId;
     m_num = num;
     m_isAbout =isAbout;
+    m_self = bself;
     refreshView();
 }
 
 bool DetectArmyCell::init(){
-    auto bg = CCBLoadFile("DetectMailNewView", this, this);// 110 height
+    auto bg = CCBLoadFile("NEW_DetectMailNewView", this, this);// 110 height
     refreshView();
     
     return true;
@@ -533,7 +690,8 @@ bool DetectArmyCell::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, cons
     return false;
 }
 void DetectArmyCell::refreshView(){
-
+    m_nameText->setFntFile("Arial_Bold_Regular.fnt");
+    m_nunText->setFntFile("Arial_Bold_Regular.fnt");
     if(m_num>=0){
         std::string numstr = "";
         if(m_isAbout){
@@ -545,9 +703,19 @@ void DetectArmyCell::refreshView(){
         this->m_nunText->setString("");
     }
     std::string icon = GlobalData::shared()->armyList[m_armId].getHeadIcon();
-    auto pic1  = CCLoadSprite::createSprite(icon.c_str());
-    m_headPicNode->addChild(pic1,0);
-    CCCommonUtils::setSpriteMaxSize(pic1, 132);
+//    auto pic1  = CCLoadSprite::createSprite(icon.c_str());
+//    m_headPicNode->addChild(pic1,0);
+//    CCCommonUtils::setSpriteMaxSize(pic1, 132);
+//    SoldierIconCell* pic1;
+//    if(!m_self){
+//        pic1 = SoldierIconCell::create(icon.c_str(), 132,m_armId,false,0);
+//    }else{
+//        int star = ArmyController::getInstance()->getStarlvById(m_armId);
+//        pic1 = SoldierIconCell::create(icon.c_str(), 132,m_armId,true,star);
+//    }
+//    if(pic1 != nullptr){
+//        m_headPicNode->addChild(pic1,0);
+//    } simon
     string path = m_armId.substr(m_armId.size()-2);
     int num  = atoi(path.c_str())+1;
     path = "Roman_";

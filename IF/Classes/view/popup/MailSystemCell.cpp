@@ -42,7 +42,6 @@ MailSystemCell* MailSystemCell::create(MailInfo *info,CCTableView *tableView){
 
 bool MailSystemCell::init(){
     m_ccbNode = CCBLoadFile("MailRenderNew", this, this);
-//    m_ccbNode->setPositionX(-m_ccbNode->getContentSize().width); // 2-1 显示不正确的问题 原因未知 暴力解决 guo.jiang
     this->setContentSize(m_ccbNode->getContentSize());
     m_readColor = ccc3(60,28,0);//ccc3(122,102,78);
     
@@ -130,7 +129,7 @@ bool MailSystemCell::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, cons
 }
 
 void MailSystemCell::showDelState(CCObject* obj){
-    if(m_mailInfo==NULL){
+    if(m_mailInfo==nullptr){
         return;
     }
     
@@ -160,13 +159,13 @@ SEL_CCControlHandler MailSystemCell::onResolveCCBCCControlSelector(cocos2d::CCOb
 }
 
 void MailSystemCell::showLoadingMoreAnim(){
-    if(m_mailInfo==NULL){
+    if(m_mailInfo==nullptr){
         m_tipLoadingText->setVisible(true);
     }
 }
 void MailSystemCell::showReadPopUp(){//查看邮件
     bool issaveRead = false;
-    if(m_mailInfo==NULL){
+    if(m_mailInfo==nullptr){
         return;
     }
     if(m_mailInfo->status==0){
@@ -236,6 +235,8 @@ void MailSystemCell::showReadPopUp(){//查看邮件
             CCObject* obj;
             CCARRAY_FOREACH(m_mailInfo->dialogs, obj){
                 MailDialogInfo* tempDialogInfo = dynamic_cast<MailDialogInfo*>(obj);
+                if( tempDialogInfo == NULL )
+                    continue;
                 ChatMailInfo* info=ChatMailInfo::create(m_mailInfo,tempDialogInfo,true);
                 mailInfoArr->addObject(info);
             }
@@ -293,6 +294,9 @@ void MailSystemCell::showReadPopUp(){//查看邮件
             CCObject* obj;
             CCARRAY_FOREACH(m_mailInfo->dialogs, obj){
                 MailDialogInfo* tempDialogInfo = dynamic_cast<MailDialogInfo*>(obj);
+                if( tempDialogInfo == NULL )
+                    continue;
+                
                 ChatMailInfo* info=ChatMailInfo::create(m_mailInfo,tempDialogInfo,true);
                 mailInfoArr->addObject(info);
             }
@@ -325,7 +329,7 @@ void MailSystemCell::showReadPopUp(){//查看邮件
 }
 
 void MailSystemCell::refreshStatus(){//刷新邮件状态
-    if (m_mailInfo==NULL)
+    if (m_mailInfo==nullptr)
     {
         return;
     }
@@ -368,7 +372,7 @@ void MailSystemCell::refreshStatus(){//刷新邮件状态
 }
 
 void MailSystemCell::refreshRewardIcon(CCObject* obj){//领奖后刷新
-    if(m_mailInfo==NULL){
+    if(m_mailInfo==nullptr){
         return;
     }
     CCString* str = dynamic_cast<CCString*>(obj);
@@ -406,7 +410,7 @@ void MailSystemCell::setDeleteStatusFlag(bool isNeedAnim ){
 void MailSystemCell::setData(MailInfo *mailInfo,CCTableView *tableView){
     this->m_mailInfo = mailInfo;
     this->m_tableView = tableView;
-    if(this->m_mailInfo==NULL){
+    if(this->m_mailInfo==nullptr){
         m_ccbNode->setVisible(false);
         m_tipLoadingText->setVisible(true);
         return ;
@@ -589,7 +593,10 @@ void MailSystemCell::addPicFlag(){
     auto spr = CCLoadSprite::createSprite(path.c_str());
     this->m_picNode->addChild(spr);
     float scale = 1.0;
-    scale =94/spr->getContentSize().width;
+    
+    if( spr->getContentSize().width != 0)
+        scale =94/spr->getContentSize().width;
+    
     if(m_mailInfo->tabType==USERMAIL){
         spr->setScale(scale*0.9);
     }else
@@ -998,6 +1005,9 @@ void MailSystemCell::addRewardIcon()
         if(count> 0){
             for (int i = 0;i<count; i++) {
                 CCDictionary *dict = dynamic_cast<CCDictionary*>(m_mailInfo->reward->objectAtIndex(i));
+                if( dict == NULL )
+                    continue;
+                
                 int type = dict->valueForKey("t")->intValue();
                 int value = dict->valueForKey("v")->intValue();
                 auto icon = CCLoadSprite::createSprite(RewardController::getInstance()->getPicByType(type, value).c_str());
@@ -1021,6 +1031,8 @@ void MailSystemCell::addRewardIcon()
         CCArray *attList=dynamic_cast<CCArray*>(m_mailInfo->saveDict->objectForKey("attList"));
         for (int i=0; i<attList->count(); i++) {
             CCDictionary *dict=dynamic_cast<CCDictionary*>(attList->objectAtIndex(i));
+            if( dict == NULL )
+                continue;
             string dName=dict->valueForKey("name")->getCString();
             if (dict->valueForKey("leader")->intValue()==1) {
                 leaderName=dName;
@@ -1116,9 +1128,9 @@ void MailSystemCell::addRewardIcon()
     }
     else if(m_mailInfo->type == MAIL_ENCAMP){
         CCPoint pt = WorldController::getPointByIndex(m_mailInfo->occupyPointId);
-        if(m_mailInfo && m_mailInfo->ckf==1){
-            pt = WorldController::getPointByMapTypeAndIndex(m_mailInfo->occupyPointId,SERVERFIGHT_MAP);
-        }
+//        if (m_mailInfo && m_mailInfo->serverType>=SERVER_BATTLE_FIELD) {
+//            pt = WorldController::getPointByMapTypeAndIndex(m_mailInfo->occupyPointId,(MapType)m_mailInfo->serverType);
+//        } simon
         isCreateContent = true;
         std::string title = "";
         string  description1 = "";
@@ -1219,7 +1231,8 @@ void MailSystemCell::addRewardIcon()
         std::string newStr = label->getString();
         int count = Utf8Utils::strlen(label->getString().c_str());
         int tmpInt = ceil(label->getContentSize().height/60);
-        count = ceil(count / tmpInt);
+        if( tmpInt != 0 )
+            count = ceil(count / tmpInt);
         newStr = CCCommonUtils::subStrByUtf8(newStr, 0, count);
         newStr.append("...");
         label->setString(newStr.c_str());
@@ -1274,10 +1287,13 @@ void MailSystemCell::calculateKillandLoss(){
         if(isAtt==true){
             if(m_mailInfo->atkArmyTotal){
                 CCDictionary* dic = _dict(m_mailInfo->atkArmyTotal);
-                kill +=dic->valueForKey("kill")->intValue();
-                dead +=dic->valueForKey("dead")->intValue();
-                hurt +=dic->valueForKey("hurt")->intValue();
-                num +=dic->valueForKey("num")->intValue();
+                if( dic )
+                {
+                    kill +=dic->valueForKey("kill")->intValue();
+                    dead +=dic->valueForKey("dead")->intValue();
+                    hurt +=dic->valueForKey("hurt")->intValue();
+                    num +=dic->valueForKey("num")->intValue();
+                }
             }
             CCArray *atkGenKilltArr = dynamic_cast<CCArray*>(m_mailInfo->atkGenKill);
             CCObject *atkGenKilltobj;
@@ -1329,7 +1345,7 @@ void MailSystemCell::calculateKillandLoss(){
 }
 bool MailSystemCell::onTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
-    if(m_mailInfo==NULL){
+    if(m_mailInfo==nullptr){
         return false;
     }
     if(m_tableView->isTouchMoved()){
@@ -1410,18 +1426,6 @@ void MailSystemCell::onTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pE
     return;
     
 }
-
-// 2-2 显示不正确的问题 原因未知 暴力解决 guo.jiang
-bool isTouchInside_hack(CCNode* pNodeCCB, CCNode* pNode, CCTouch* touch)
-{
-    if (!pNode || !pNode->getParent())
-        return false;
-    CCPoint touchLocation = pNode->getParent()->convertToNodeSpace(touch->getLocation());
-    CCRect bBox = pNode->boundingBox();
-//    bBox.origin.x += pNodeCCB->getContentSize().width;
-    return bBox.containsPoint(touchLocation);
-}
-
 void MailSystemCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent){
     m_modelLayer->setVisible(false);
     if(m_tableView!=NULL){
@@ -1441,12 +1445,12 @@ void MailSystemCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pE
         isTouchDelete = false;
         //return;
     }
-    else if (m_editNode->isVisible() && isTouchInside_hack(m_ccbNode, m_editNode, pTouch)) {
+    else if (m_editNode->isVisible() && isTouchInside(m_editNode, pTouch)) {
         SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
         isTouchDelete = false;
         deleteMailByOp();
     }
-    else if(isTouchInside_hack(m_ccbNode, m_moveNode, pTouch))
+    else if(isTouchInside(m_moveNode, pTouch))
     {
         SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
         if(predeleteSysNum==0){
@@ -1455,7 +1459,7 @@ void MailSystemCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pE
             CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MAIL_LIST_DELETERECOVER);
         }
         
-    }else if (isTouchInside_hack(m_ccbNode, m_deleteBG, pTouch)) {
+    }else if (isTouchInside(m_deleteBG, pTouch)) {
         SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
         isTouchDelete = false;
         onDeleteMail();
@@ -1549,7 +1553,7 @@ void MailSystemCell::deleteMailByOp(){
     }
 }
 void MailSystemCell::onDeleteMail(){
-    if(m_mailInfo==NULL){
+    if(m_mailInfo==nullptr){
         return;
     }
     if(m_mailInfo && m_mailInfo->rewardStatus==0&&m_mailInfo->rewardId!=""){
@@ -1564,7 +1568,7 @@ void MailSystemCell::onDeleteMail(){
     onDeleteMailCommand();
 }
 void MailSystemCell::onDeleteMailCommand(){
-    if(m_mailInfo==NULL){
+    if(m_mailInfo==nullptr){
         return;
     }
     int index = getIdx();

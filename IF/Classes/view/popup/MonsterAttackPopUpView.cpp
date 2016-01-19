@@ -63,6 +63,7 @@ bool MonsterAttackPopUpView::init(){
     bool ret = false;
     if(PopupBaseView::init()){
         m_total = 0;
+        setMailUuid(m_info->uid);
         auto bg = CCBLoadFile("MonsterAttackReportCCB", this, this);
         this->setContentSize(bg->getContentSize());
         setTitleName(_lang("105513"));

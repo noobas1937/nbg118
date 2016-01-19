@@ -22,9 +22,12 @@ class MailReadPopUpView : public PopupBaseView
 {
 public:
     static MailReadPopUpView* create(MailInfo& info);
-    
+protected:
+    virtual bool onTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void onTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void onTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
 private:
-    MailReadPopUpView(MailInfo& info) : m_info(info){};
+    MailReadPopUpView(MailInfo& info) : m_info(&info){};
     virtual void onEnter();
     virtual void onExit();
     virtual bool init();
@@ -39,6 +42,8 @@ private:
     void onDonateClick(CCObject *pSender, CCControlEvent event);
     void onRewardClick(CCObject *pSender, CCControlEvent event);
     void onAddSaveClick(CCObject * pSender, Control::EventType pCCControlEvent);
+    void onReturnClick(CCObject * pSender, CCControlEvent pCCControlEvent);
+    void onWriteClick(CCObject * pSender, CCControlEvent pCCControlEvent);
     void onJoinAllianceBtnClick(CCObject *pSender, CCControlEvent event);
     void onRefuseAllianceBtnClick(CCObject *pSender, CCControlEvent event);
     void onShareBtnClick(CCObject *pSender, CCControlEvent event);
@@ -56,21 +61,26 @@ private:
     void showShareBtn();
     void onLinkClicked(CCObject *ccObj = NULL);
     void ckfRewardHandle();
-    MailInfo& m_info;
+    
+    void showAllianceOrderBtn();
+    void onGoToAllianceOrder(cocos2d::CCObject *pSender, CCControlEvent event);
+    bool checkRewardBtnVisible();
+    
+    CCSafeObject<MailInfo> m_info;
     
     CCSafeObject<CCLabelIF> m_nameText;
     CCSafeObject<CCLabelIF> m_titleText;
     CCSafeObject<CCLabelIF> m_timeText;
     CCSafeObject<CCLabelIF> m_rewardTitleText;
-    
+    CCSafeObject<CCLabelIF> m_mailTitle;
     CCSafeObject<CCNode> m_contentContainer;
     CCSafeObject<CCNode> m_userHeadContainer;
+    CCSafeObject<CCSprite> m_userHeadBack;
     CCSafeObject<CCNode> m_downNode;
+    CCSafeObject<CCNode> m_bgNode;
     CCSafeObject<CCNode> m_totalNode;
     CCSafeObject<CCNode> m_rewardNode;
-    CCSafeObject<CCScale9Sprite> m_bg;
     CCSafeObject<CCScale9Sprite> m_buildBG;
-    CCSafeObject<CCScale9Sprite> m_kuangBG;
     CCSafeObject<CCScale9Sprite> m_listBG;
 
 //    CCSafeObject<CCNode> m_blockBtnNode;
@@ -91,13 +101,16 @@ private:
 
     
 
-    CCSafeObject<CCScale9Sprite> m_line;
+//    CCSafeObject<CCScale9Sprite> m_line;
     CCSafeObject<CCNode> m_guideNode;
     CCSafeObject<CCNode> m_rewardContainer;
     CCSafeObject<CCScrollView> m_scroll;
 
     CCSafeObject<CCControlButton> m_addSaveBtn;
-    CCSafeObject<CCControlButton> m_unSaveBtn;
+    CCSafeObject<CCControlButton> m_writeBtn;
+    CCSafeObject<CCControlButton> m_returnBtn;
+    CCSafeObject<CCSprite> m_returnSpr;
+//    CCSafeObject<CCControlButton> m_unSaveBtn;
     CCSafeObject<CCModelLayerColor>m_modelLayer;
     CCSafeObject<CCArray> m_listArr;
     CCSafeObject<CCArray> m_listAnimArr;
@@ -106,18 +119,22 @@ private:
     CCSafeObject<CCControlButton> m_joinAllianceBtn;
     CCSafeObject<CCControlButton> m_refuseAllianceBtn;
     CCSafeObject<HFHeadImgNode> m_headImgNode;
+    CCSafeObject<CCRenderTexture> m_selfModelLayer;
+    CCSafeObject<Node> m_underLineNode;
     int m_totalH;
     std::vector<std::string> m_linkUrls;
+    int _allianceOrderType;
+    bool m_blendFlag;
 };
 //联盟邀请\申请邮件
-class MailAllianceInviteCell:public Layer
+class MailAllianceInviteCell:public CCIFTouchNode
 ,public CCBMemberVariableAssigner
 ,public CCBSelectorResolver
  
 {
 public:
-    static MailAllianceInviteCell* create(MailInfo& info);
-    MailAllianceInviteCell(MailInfo& info):m_mailInfo(info){ _ignoreAnchorPointForPosition = false;setAnchorPoint(Vec2(0,0));};
+    static MailAllianceInviteCell* create(MailInfo* info);
+    MailAllianceInviteCell(MailInfo* info):m_mailInfo(info){};
     ~MailAllianceInviteCell(){};
 protected:
     virtual void onEnter();
@@ -149,7 +166,7 @@ private:
     CCSafeObject<CCControlButton> m_refuseAllianceBtn;
     CCSafeObject<CCControlButton> m_sendMailBtn;
     CCSafeObject<CCSprite> m_flagSpr;
-    CCSafeObject<CCScale9Sprite> m_lineFlag;
+//    CCSafeObject<CCScale9Sprite> m_lineFlag;
     CCSafeObject<CCSprite> m_bg;
     
     CCSafeObject<CCNode> m_inviteNode;
@@ -158,19 +175,19 @@ private:
     CCSafeObject<CCLabelIF> m_powerTxt;
     CCSafeObject<CCLabelIFTTF> m_playerNameTxt;
     CCSafeObject<CCLabelIF> m_powerValue;
-    MailInfo& m_mailInfo;
+    CCSafeObject<MailInfo> m_mailInfo;
 
 };
 
 //联盟踢人邮件
-class MailAllianceKickCell: public Layer
+class MailAllianceKickCell: public CCIFTouchNode
 , public CCBMemberVariableAssigner
 , public CCBSelectorResolver
   
 {
 public:
-    static MailAllianceKickCell* create(MailInfo& info);
-    MailAllianceKickCell(MailInfo& info): m_mailInfo(info){ _ignoreAnchorPointForPosition = false;setAnchorPoint(Vec2(0,0));};
+    static MailAllianceKickCell* create(MailInfo* info);
+    MailAllianceKickCell(MailInfo* info): m_mailInfo(info){};
     ~MailAllianceKickCell(){};
     void setData();
 protected:
@@ -196,10 +213,10 @@ private:
     CCSafeObject<CCLabelIF> m_langText;
     CCSafeObject<CCNode> m_flagNode;
     CCSafeObject<CCSprite> m_flagSpr;
-    CCSafeObject<CCScale9Sprite> m_lineFlag;
+//    CCSafeObject<CCScale9Sprite> m_lineFlag;
     CCSafeObject<CCNode> m_kickNode;
     
-    MailInfo& m_mailInfo;
+    CCSafeObject<MailInfo> m_mailInfo;
 };
 
 //邀请迁城邮件
@@ -208,8 +225,8 @@ class MailInviteTeleCell: public CCNode
 , public CCBSelectorResolver
 {
 public:
-    static MailInviteTeleCell* create(MailInfo& info);
-    MailInviteTeleCell(MailInfo& info): m_mailInfo(info){};
+    static MailInviteTeleCell* create(MailInfo* info);
+    MailInviteTeleCell(MailInfo* info): m_mailInfo(info){};
     ~MailInviteTeleCell(){};
     void setData();
 protected:
@@ -229,7 +246,7 @@ private:
     CCSafeObject<CCControlButton> m_refuseBtn;
     CCSafeObject<CCControlButton> m_acceptBtn;
     CCSafeObject<CCLabelIF> m_desText;
-    MailInfo& m_mailInfo;
+    CCSafeObject<MailInfo> m_mailInfo;
     WaitInterface* m_waitInterFace1;
     WaitInterface* m_waitInterFace2;
 };

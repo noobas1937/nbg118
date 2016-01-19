@@ -109,7 +109,7 @@ private:
     virtual void onExit();
     void handleAsyRes(CCObject* p);
     
-    CCSafeObject<GeneralInfo> m_info;
+    GeneralInfo* m_info;
     int m_kill;
 };
 
@@ -118,15 +118,18 @@ class DetailBattleCellCCB : public CCNode
 
 {
 public:
-    static DetailBattleCellCCB *create(std::string name,std::string num,std::string lost,std::string kill,std::string hurt,string icon="",string icon1="");
+    static DetailBattleCellCCB *create(std::string name,std::string num,std::string lost,std::string kill,std::string hurt,string icon="",string icon1="",string armyid = "",string playname = "",int star = 0);
 private:
-    DetailBattleCellCCB(std::string name,std::string num,std::string lost,std::string kill,std::string hurt,string icon,string icon1) : m_nameStr(name),
+    DetailBattleCellCCB(std::string name,std::string num,std::string lost,std::string kill,std::string hurt,string icon,string icon1,string armyid,string playname,int starNum) : m_nameStr(name),
     m_numStr(num),
     m_lostStr(lost),
     m_killStr(kill),
     m_hurtStr(hurt),
     m_icon(icon),
-    m_icon1(icon1)
+    m_icon1(icon1),
+    m_armyid(armyid),
+    m_playername(playname),
+    m_starNum(starNum)
     {};
     virtual bool init();
     virtual bool onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode);
@@ -138,6 +141,9 @@ private:
     string m_icon;
     string m_icon1;
     bool m_isTitle;
+    string m_armyid;
+    string m_playername;
+    int m_starNum;
     
     CCSafeObject<CCLabelIF> m_nameTxt;
     CCSafeObject<CCLabelIF> m_numTxt;

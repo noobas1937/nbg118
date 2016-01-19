@@ -46,9 +46,9 @@ protected:
     virtual void scrollViewDidZoom(CCScrollView* view){};
     
     //	virtual cocos2d::CCSize gridSizeForTable(cocos2d::extension::CCMultiColTableView *table);
-    //    virtual CCTableViewCell gridAtIndex(cocos2d::extension::CCMultiColTableView *table, unsigned int idx);
+    //    virtual CCTableViewCell gridAtIndex(cocos2d::extension::CCMultiColTableView *table, ssize_t idx);
     //    virtual ssize_t numberOfCellsInTableView(cocos2d::extension::CCMultiColTableView *table);
-    //    virtual unsigned int numberOfGridsInCell(cocos2d::extension::CCMultiColTableView *multiTable);
+    //    virtual ssize_t numberOfGridsInCell(cocos2d::extension::CCMultiColTableView *multiTable);
     virtual CCSize tableCellSizeForIndex(CCTableView *table, ssize_t idx);
     virtual CCSize cellSizeForTable(CCTableView *table);
     virtual CCTableViewCell* tableCellAtIndex(CCTableView *table, ssize_t idx);
@@ -69,6 +69,7 @@ private:
     virtual void onTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
     void onPostBtnClick(CCObject * pSender, Control::EventType pCCControlEvent);
     void onAddSaveClick(CCObject * pSender, Control::EventType pCCControlEvent);
+    void onReturnClick(CCObject * pSender, CCControlEvent pCCControlEvent);
     void readDialogContent();
     void addLoadingAni();
     void removeLoadingAni();
@@ -82,21 +83,23 @@ private:
     CCSafeObject<CCSprite> m_loadingIcon;
     CCSafeObject<CCNode> m_infoList;
     CCSafeObject<CCScale9Sprite> m_buildBG;
-    CCSafeObject<CCScale9Sprite> m_bg;
+//    CCSafeObject<CCScale9Sprite> m_bg;
     CCSafeObject<CCControlButton> m_sendBtn;
     CCSafeObject<CCNode> m_editNode;
-    CCSafeObject<CCScale9Sprite> m_editBg;
+    CCSafeObject<CCNode> m_bgNode;
+//    CCSafeObject<CCScale9Sprite> m_editBg;
     CCSafeObject<CCLabelIF> m_titleText;
     CCSafeObject<CCControlButton> m_addSaveBtn;
     CCSafeObject<CCControlButton> m_unSaveBtn;
-    
+    CCSafeObject<CCControlButton> m_returnBtn;
+    CCSafeObject<CCSprite> m_returnSpr;
     CCSafeObject<InputFieldMultiLine> m_editBox;
     CCSafeObject<CCTableView> m_tabView;
     CCSafeObject<CCArray> m_data;
     
     CCSafeObject<CCLabelIFTTF> m_contentText;
     
-    MailInfo* m_mailInfo;
+    CCSafeObject<MailInfo> m_mailInfo;
     bool m_isLoadMore;
     float m_currMinOffsetY;
     float m_currOffsetY;

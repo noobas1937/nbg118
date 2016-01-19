@@ -22,9 +22,12 @@ class WorldBossRewardMailView : public PopupBaseView
 {
 public:
     static WorldBossRewardMailView* create(MailInfo& info);
-    
+protected:
+    virtual bool onTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void onTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void onTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
 private:
-    WorldBossRewardMailView(MailInfo& info) : m_info(info){};
+    WorldBossRewardMailView(MailInfo& info) : m_info(&info){};
     virtual void onEnter();
     virtual void onExit();
     virtual bool init();
@@ -37,6 +40,8 @@ private:
     void onReplyClick(CCObject *pSender, CCControlEvent event);
     void onRewardClick(CCObject *pSender, CCControlEvent event);
     void onAddSaveClick(CCObject * pSender, Control::EventType pCCControlEvent);
+    void onReturnClick(CCObject * pSender, CCControlEvent pCCControlEvent);
+    void onWriteClick(CCObject * pSender, CCControlEvent pCCControlEvent);
     void onJoinAllianceBtnClick(CCObject *pSender, CCControlEvent event);
     void onRefuseAllianceBtnClick(CCObject *pSender, CCControlEvent event);
     void onShareBtnClick(CCObject *pSender, CCControlEvent event);
@@ -49,29 +54,34 @@ private:
     void setAllBtnPosition();
     void showShareBtn();
     void onLinkClicked(CCObject *ccObj = NULL);
-    MailInfo& m_info;
+    CCSafeObject<MailInfo> m_info;
     
 //    CCSafeObject<CCLabelIF> m_nameText;
     CCSafeObject<CCLabelIF> m_titleText;
+    CCSafeObject<CCLabelIF> m_mailTitle;
     CCSafeObject<CCLabelIF> m_timeText;
     CCSafeObject<CCLabelIF> m_rewardTitleText;
     CCSafeObject<CCNode> m_contentContainer;
     CCSafeObject<CCNode> m_downNode;
+    CCSafeObject<CCNode> m_bgNode;
     CCSafeObject<CCNode> m_totalNode;
     CCSafeObject<CCNode> m_rewardNode;
-    CCSafeObject<CCScale9Sprite> m_bg;
+//    CCSafeObject<CCScale9Sprite> m_bg;
     CCSafeObject<CCScale9Sprite> m_buildBG;
-    CCSafeObject<CCScale9Sprite> m_kuangBG;
+//    CCSafeObject<CCScale9Sprite> m_kuangBG;
     CCSafeObject<CCScale9Sprite> m_listBG;
     CCSafeObject<CCControlButton> m_deleteBtn;
     CCSafeObject<CCControlButton> m_rewardBtn;
     CCSafeObject<CCControlButton> m_replyBtn;
-    CCSafeObject<CCScale9Sprite> m_line;
-    CCSafeObject<CCNode> m_guideNode;
+//    CCSafeObject<CCScale9Sprite> m_line;
+//    CCSafeObject<CCNode> m_guideNode;
     CCSafeObject<CCNode> m_rewardContainer;
     CCSafeObject<CCScrollView> m_scroll;
     CCSafeObject<CCControlButton> m_addSaveBtn;
-    CCSafeObject<CCControlButton> m_unSaveBtn;
+    CCSafeObject<CCControlButton> m_returnBtn;
+    CCSafeObject<CCSprite> m_returnSpr;
+    CCSafeObject<CCControlButton> m_writeBtn;
+//    CCSafeObject<CCControlButton> m_unSaveBtn;
     CCSafeObject<CCModelLayerColor>m_modelLayer;
     CCSafeObject<CCArray> m_listArr;
     CCSafeObject<CCArray> m_listAnimArr;

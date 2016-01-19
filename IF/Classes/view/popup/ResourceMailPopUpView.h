@@ -30,9 +30,9 @@ protected:
     
     virtual void gridTouched(cocos2d::extension::CCMultiColTableView* table, CCTableViewCell* cell);
 	virtual cocos2d::CCSize gridSizeForTable(cocos2d::extension::CCMultiColTableView *table);
-    virtual CCTableViewCell* gridAtIndex(cocos2d::extension::CCMultiColTableView *table, unsigned int idx);
+    virtual CCTableViewCell* gridAtIndex(cocos2d::extension::CCMultiColTableView *table, ssize_t idx);
     virtual ssize_t numberOfCellsInTableView(cocos2d::extension::CCMultiColTableView *table);
-    virtual unsigned int numberOfGridsInCell(cocos2d::extension::CCMultiColTableView *multiTable);
+    virtual ssize_t numberOfGridsInCell(cocos2d::extension::CCMultiColTableView *multiTable);
     
 private:
     ResourceMailPopUpView(MailInfo * info) : m_info(info){};

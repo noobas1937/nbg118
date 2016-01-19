@@ -15,7 +15,8 @@
 #include "MailSaveCommand.h"
 #include "MailPopUpView.h"
 #include "DetectMailPopUpView.h"
-
+#include "MailWritePopUpView.h"
+#include "UIComponent.h"
 ExplorePopUpView *ExplorePopUpView::create(MailInfo *info){
     ExplorePopUpView *ret = new ExplorePopUpView(info);
     if(ret && ret->init()){
@@ -28,10 +29,15 @@ ExplorePopUpView *ExplorePopUpView::create(MailInfo *info){
 
 void ExplorePopUpView::onEnter(){
     PopupBaseView::onEnter();
-    setTitleName(m_info->fromName.c_str());
+    UIComponent::getInstance()->showPopupView(UIPopupViewType_ArcPop_TitanUpgrade,true);//simon;
+    UIComponent::getInstance()->hideReturnBtn();
+//    setTitleName(m_info->fromName.c_str());
+//    m_mailTitle->setString(m_info->fromName.c_str());
+    setTouchEnabled(true);
 }
 
 void ExplorePopUpView::onExit(){
+    setTouchEnabled(false);
     PopupBaseView::onExit();
 }
 
@@ -39,28 +45,87 @@ bool ExplorePopUpView::init(){
     if(!PopupBaseView::init()){
         return false;
     }
-    auto bg = CCBLoadFile("ExploreMailView", this, this);
-    this->setContentSize(bg->getContentSize());
-//    CCLoadSprite::doResourceByCommonIndex(6, true);
-//    setCleanFunction([](){
-//        CCLoadSprite::doResourceByCommonIndex(6, false);
-//        
-//    });
-    int preHeight = this->m_buildBG->getContentSize().height;
-    changeBGHeight(m_buildBG);
-    int dh = m_buildBG->getContentSize().height - preHeight;
-    this->m_infoContainer->setContentSize(CCSize(m_infoContainer->getContentSize().width, m_infoContainer->getContentSize().height + dh));
-    m_bg->setContentSize(CCSize(m_bg->getContentSize().width, m_bg->getContentSize().height + dh));
-    m_downNode->setPositionY(m_downNode->getPositionY() - dh);
-    m_listNode = CCNode::create();
-    this->m_infoContainer->setPositionY(this->m_infoContainer->getPositionY() - dh);
+    setIsHDPanel(true);
+    setMailUuid(m_info->uid);
+//    auto cf = CCLoadSprite::getSF("Mail_diban.png");
+    auto cf = CCLoadSprite::getSF("Mail_BG1.png");
+    if (cf==NULL) {
+        CCLoadSprite::doResourceByCommonIndex(6, true);
+        setCleanFunction([](){
+            CCLoadSprite::doResourceByCommonIndex(6, false);
+        });
+    }
+
+    auto bg = CCBLoadFile("NEW_ExploreMailView", this, this);
+
+    if (CCCommonUtils::isIosAndroidPad()) {
+        this->setContentSize(CCDirector::sharedDirector()->getWinSize());
+    }
+    else
+        this->setContentSize(bg->getContentSize());
+    
+    if (CCCommonUtils::isIosAndroidPad()) {
+        int extH = getExtendHeight();
+        this->m_infoContainer->setContentSize(CCSize(m_infoContainer->getContentSize().width, m_infoContainer->getContentSize().height + extH));
+        m_infoContainer->setPositionY(m_infoContainer->getPositionY() - extH);
+        m_downNode->setPositionY(m_downNode->getPositionY() - extH);
+        m_bgNode->setPositionY(m_bgNode->getPositionY() - extH);
+        auto tbg = CCLoadSprite::loadResource("Mail_diban.png");
+        auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
+        auto picBg1 = CCLoadSprite::createSprite("Mail_diban.png");
+        picBg1->setAnchorPoint(ccp(0, 0));
+        picBg1->setPosition(ccp(0, 0));
+        picBg1->setScaleX(2.4);
+        tBatchNode->addChild(picBg1);
+        int maxHeight = CCDirector::sharedDirector()->getWinSize().height;
+        int curHeight = picBg1->getContentSize().height;
+        while(curHeight < maxHeight)
+        {
+            auto picBg2 = CCLoadSprite::createSprite("Mail_diban.png");
+            picBg2->setAnchorPoint(ccp(0, 0));
+            picBg2->setPosition(ccp(0, curHeight));
+            picBg2->setScaleX(2.4);
+            tBatchNode->addChild(picBg2);
+            curHeight += picBg2->getContentSize().height;
+        }
+        m_bgNode->addChild(tBatchNode);
+    }
+    else {
+        int extH = getExtendHeight();
+        this->m_infoContainer->setContentSize(CCSize(m_infoContainer->getContentSize().width, m_infoContainer->getContentSize().height + extH));
+        m_infoContainer->setPositionY(m_infoContainer->getPositionY() - extH);
+        m_downNode->setPositionY(m_downNode->getPositionY() - extH);
+        m_bgNode->setPositionY(m_bgNode->getPositionY() - extH);
+        auto tbg = CCLoadSprite::loadResource("Mail_diban.png");
+        auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
+        auto picBg1 = CCLoadSprite::createSprite("Mail_diban.png");
+        picBg1->setAnchorPoint(ccp(0, 0));
+        picBg1->setPosition(ccp(0, 0));
+        tBatchNode->addChild(picBg1);
+        int maxHeight = CCDirector::sharedDirector()->getWinSize().height;
+        int curHeight = picBg1->getContentSize().height;
+        while(curHeight < maxHeight)
+        {
+            auto picBg2 = CCLoadSprite::createSprite("Mail_diban.png");
+            picBg2->setAnchorPoint(ccp(0, 0));
+            picBg2->setPosition(ccp(0, curHeight));
+            tBatchNode->addChild(picBg2);
+            curHeight += picBg2->getContentSize().height;
+        }
+        m_bgNode->addChild(tBatchNode);
+    }
+
     m_scrollView = CCScrollView::create(m_infoContainer->getContentSize());
     m_scrollView->setDirection(kCCScrollViewDirectionVertical);
     m_scrollView->setAnchorPoint(ccp(0, 0));
     m_scrollView->setTouchPriority(Touch_Popup);
     m_infoContainer->addChild(m_scrollView);
 
-    m_titleText->setString(_lang("108675"));
+    this->m_titleText->setFntFile("Arial_Bold_Regular.fnt");
+    this->m_timeText->setFntFile("Arial_Bold_Regular.fnt");
+    this->m_contentText->setFntFile("Arial_Bold_Regular.fnt");
+    m_listNode = CCNode::create();
+    m_mailTitle->setString(_lang("108675"));
     m_totalText->setString(_lang("108675"));
     this->m_timeText->setString(CCCommonUtils::timeStampToDate(m_info->createTime).c_str());
     this->m_totalNode->removeChild(this->m_firstNode);
@@ -77,8 +142,17 @@ bool ExplorePopUpView::init(){
     m_contentText->setString(_lang("108655"));
 //    m_deleteBtnTitle->setString(_lang("108523").c_str());
     m_totalH = 0;
-    m_totalH-=428;
-    m_upNode->setPositionY(m_totalH);
+    if (CCCommonUtils::isIosAndroidPad()) {
+        m_upNode->setScale(2.4);
+        m_totalH-=1027;
+        m_upNode->setPositionY(m_totalH);
+    }
+    else {
+        m_totalH-=428;
+        m_upNode->setPositionY(m_totalH);
+    }
+    
+    m_battlePicNode->removeAllChildrenWithCleanup(true);
     auto battlePic = CCLoadSprite::createSprite("Mail_yijitanxian.png");
     this->m_battlePicNode->addChild(battlePic);
     if(!m_info->isReadContent){
@@ -97,17 +171,21 @@ bool ExplorePopUpView::init(){
 SEL_CCControlHandler ExplorePopUpView::onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName){
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onDeleteClick", ExplorePopUpView::onDeleteClick);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onAddSaveClick", ExplorePopUpView::onAddSaveClick);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onReturnClick", ExplorePopUpView::onReturnClick);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onWriteClick", ExplorePopUpView::onWriteClick);
     return NULL;
 }
 
 bool ExplorePopUpView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode){
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_titleText", CCLabelIF*, this->m_titleText);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_mailTitle", CCLabelIF*, this->m_mailTitle);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_contentText", CCLabelIF*, this->m_contentText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_timeText", CCLabelIF*, this->m_timeText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_totalText", CCLabelIF*, this->m_totalText);
 
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_deleteBtnTitle", CCLabelIF*, this->m_deleteBtnTitle);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_downNode", CCNode*, this->m_downNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_bgNode", CCNode*, this->m_bgNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_totalNode", CCNode*, this->m_totalNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_firstNode", CCNode*, this->m_firstNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_secondNode", CCNode*, this->m_secondNode);
@@ -115,18 +193,34 @@ bool ExplorePopUpView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, co
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_battlePicNode", CCNode*, this->m_battlePicNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_infoContainer", CCNode*, this->m_infoContainer);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_buildBG", CCScale9Sprite*, this->m_buildBG);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_bg", CCScale9Sprite*, this->m_bg);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_bg", CCScale9Sprite*, this->m_bg);
   //  CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_getBG", CCScale9Sprite*, this->m_getBG);
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_saveBtnTitle", CCLabelIF*, this->m_saveBtnTitle);
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_savespr", CCSprite*, this->m_savespr);
 //    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_unsavespr", CCSprite*, this->m_unsavespr);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_addSaveBtn", CCControlButton*, this->m_addSaveBtn);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_unSaveBtn", CCControlButton*, this->m_unSaveBtn);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_returnBtn", CCControlButton*, this->m_returnBtn);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_returnSpr", CCSprite*, this->m_returnSpr);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_writeBtn", CCControlButton*, this->m_writeBtn);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_unSaveBtn", CCControlButton*, this->m_unSaveBtn);
 
 
     return false;
 }
-
+bool ExplorePopUpView::onTouchBegan(CCTouch *pTouch, CCEvent *pEvent){
+    if (isTouchInside(m_returnSpr, pTouch)) {
+        return true;
+    }
+    return false;
+}
+void ExplorePopUpView::onTouchMoved(CCTouch *pTouch, CCEvent *pEvent){
+    
+}
+void ExplorePopUpView::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent){
+    if (isTouchInside(m_returnSpr, pTouch)) {
+        PopupViewController::getInstance()->goBackPopupView();
+    }
+}
 void ExplorePopUpView::getData(){
     MailController::getInstance()->readMailFromServer(m_info->uid, CC_ITOA(m_info->type));
 }
@@ -135,11 +229,9 @@ void ExplorePopUpView::refreshView(){
     if(m_info->save==0){
         //CCCommonUtils::setButtonTitle(m_addSaveBtn, "save");
 //        m_saveBtnTitle->setString(_lang("105574").c_str());
-        m_addSaveBtn->setVisible(false);
-        m_unSaveBtn->setVisible(true);
+        m_addSaveBtn->setHighlighted(false);
     }else{
-        m_addSaveBtn->setVisible(true);
-        m_unSaveBtn->setVisible(false);
+        m_addSaveBtn->setHighlighted(true);
     }
     std::string timeStr = CCCommonUtils::timeLeftToCountDown(m_info->mazeTime);
     std::string ptStr = _lang("108655");
@@ -189,12 +281,17 @@ void ExplorePopUpView::onAddSaveClick(cocos2d::CCObject *pSender, CCControlEvent
         CCCommonUtils::flyHint("quest_icon_1.png", "", _lang("105575"));
     }
     if(m_info->save==0){
-        m_addSaveBtn->setVisible(false);
-        m_unSaveBtn->setVisible(true);
+        m_addSaveBtn->setHighlighted(false);
     }else{
-        m_addSaveBtn->setVisible(true);
-        m_unSaveBtn->setVisible(false);
+        m_addSaveBtn->setHighlighted(true);
     }
+}
+void ExplorePopUpView::onReturnClick(cocos2d::CCObject *pSender, CCControlEvent pCCControlEvent){
+    PopupViewController::getInstance()->goBackPopupView();
+}
+
+void ExplorePopUpView::onWriteClick(cocos2d::CCObject *pSender, CCControlEvent pCCControlEvent){
+    PopupViewController::getInstance()->addPopupInView(MailWritePopUpView::create("", ""));
 }
 CCSafeObject<CCNode> m_infoContainer;
 CCSafeObject<CCScrollView> m_scrollView;
@@ -235,8 +332,14 @@ void ExplorePopUpView::addGet(){
         int rowNum = m_info->mazeReward->count();
         DetectBgCell* bgCell = DetectBgCell::create(_lang("105562").c_str());
         if(rowNum>2){
-            int bgHeight = (rowNum-2)*40+bgCell->getBgCellHeight();
-            bgCell->setBgHeight(bgHeight);
+            if (CCCommonUtils::isIosAndroidPad()) {
+                int bgHeight = (rowNum-2)*96+bgCell->getBgCellHeight();
+                bgCell->setBgHeight(bgHeight);
+            }
+            else {
+                int bgHeight = (rowNum-2)*40+bgCell->getBgCellHeight();
+                bgCell->setBgHeight(bgHeight);
+            }
         }
         m_totalH-=40;
         m_totalH -= bgCell->getBgCellHeight();
@@ -252,11 +355,22 @@ void ExplorePopUpView::addGet(){
             auto cell = ExploreRewardPreviewCell::create(type, value);
             cell->setAnchorPoint(ccp(0, 0));
 
-            cell->setPosition(ccp(posX,  10+i*40));
-            bgCell->m_bg->addChild(cell);
-            i++;
-            if(rowNum==1){
-                cell->setPosition(ccp(posX,  10+20));
+            if (CCCommonUtils::isIosAndroidPad()) {
+                cell->setScale(2.4);
+                cell->setPosition(ccp(posX * 2.4,  24+i*96));
+                bgCell->m_bg->addChild(cell);
+                i++;
+                if(rowNum==1){
+                    cell->setPosition(ccp(posX * 2.4,  24+48));
+                }
+            }
+            else {
+                cell->setPosition(ccp(posX,  10+i*40));
+                bgCell->m_bg->addChild(cell);
+                i++;
+                if(rowNum==1){
+                    cell->setPosition(ccp(posX,  10+20));
+                }
             }
         }
         if(rowNum>2){
@@ -299,9 +413,14 @@ void ExplorePopUpView::addLost(){
         int rowNum = m_info->mazeSodiler->count();
         DetectBgCell* bgCell = DetectBgCell::create(_lang("105544").c_str());
         if(rowNum>2){
-            int bgHeight = (rowNum-2)*50+bgCell->getBgCellHeight();
-            bgCell->setBgHeight(bgHeight);
-        }
+            if (CCCommonUtils::isIosAndroidPad()) {
+                int bgHeight = (rowNum-2)*120+bgCell->getBgCellHeight();
+                bgCell->setBgHeight(bgHeight);
+            }
+            else {
+                int bgHeight = (rowNum-2)*50+bgCell->getBgCellHeight();
+                bgCell->setBgHeight(bgHeight);
+            }        }
         m_totalH-=40;
         m_totalH -= bgCell->getBgCellHeight();
         bgCell->setPosition(0, m_totalH);
@@ -318,18 +437,22 @@ void ExplorePopUpView::addLost(){
             auto cell = ExploreLossPreviewCell::create(armyId, num);
             cell->setAnchorPoint(ccp(0, 0));
             
-            cell->setPosition(ccp(posX,  30+i*50));
-            bgCell->m_bg->addChild(cell);
-            i++;
-//                        auto cell1 = ExploreLossPreviewCell::create(armyId, num);
-//                        cell1->setAnchorPoint(ccp(0, 0));
-//            //            //int posX = 20;
-//                        cell1->setPosition(ccp(posX,  30+i*50));
-//                        bgCell->m_bg->addChild(cell1);
-//                        i++;
-            //            i++;
-            if(rowNum==1){
-                cell->setPosition(ccp(posX,  30+25));
+            if (CCCommonUtils::isIosAndroidPad()) {
+                cell->setScale(2.4);
+                cell->setPosition(ccp(posX * 2.4,  72+i*120));
+                bgCell->m_bg->addChild(cell);
+                i++;
+                if(rowNum==1){
+                    cell->setPosition(ccp(posX * 2.4,  72+60));
+                }
+            }
+            else {
+                cell->setPosition(ccp(posX,  30+i*50));
+                bgCell->m_bg->addChild(cell);
+                i++;
+                if(rowNum==1){
+                    cell->setPosition(ccp(posX,  30+25));
+                }
             }
         }
         if(rowNum>2){
@@ -371,10 +494,11 @@ void ExploreRewardPreviewCell::refreshView(){
     this->addChild(icon);
     icon->setAnchorPoint(ccp(0.5, 0.5));
     icon->setPosition(ccp(0, 30));
-    CCCommonUtils::setSpriteMaxSize(icon, 50);
+    CCCommonUtils::setSpriteMaxSize(icon, 40);
     
     std::string namestr = RewardController::getInstance()->getNameByType(m_type);
     auto label = CCLabelIF::create();
+    label->setFntFile("Arial_Bold_Regular.fnt");
     label->setFontSize(22);
     label->setColor(ccc3(130, 99, 56));
     label->setString(namestr.c_str());
@@ -386,11 +510,12 @@ void ExploreRewardPreviewCell::refreshView(){
     std::string numstr = "";
     numstr.append(CC_CMDITOA(m_num));
     auto label1 = CCLabelIF::create();
+    label1->setFntFile("Arial_Bold_Regular.fnt");
     label1->setFontSize(22);
     label1->setColor(ccc3(127, 35, 29));
     label1->setString(numstr.c_str());
     label1->setAnchorPoint(ccp(1.0, 0.5));
-    label1->setPosition(435, icon->getPositionY());
+    label1->setPosition(485, icon->getPositionY());
     this->addChild(label1);
 }
 

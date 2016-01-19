@@ -45,6 +45,11 @@ enum CCLoadSpriteType{
     CCLoadSpriteType_MAP,
     CCLoadSpriteType_MONSTERLAYERBUST,
     CCLoadSpriteType_MONSTERLAYERLITTLE,
+    CCLoadSpriteType_HEAD_ICON,
+    CCLoadSpriteType_HEAD_ICON_BUST,
+    CCLoadSpriteType_HEAD_ICON_MIDDLE,
+    CCLoadSpriteType_ACTIVITY_RES,
+    CCLoadSpriteType_SCIENCE,
 };
 class CCLoadSprite {
 public:

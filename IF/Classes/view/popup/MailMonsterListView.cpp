@@ -39,8 +39,12 @@
 #include "WorldMapView.h"
 #include "DynamicResourceController.h"
 #include "ChatServiceCocos2dx.h"
-
+#include "MailWritePopUpView.h"
+#include "UIComponent.h"
 MailMonsterListView* MailMonsterListView::create(MailMonsterCellInfo* info ){
+    if( !info )
+        return NULL;
+    
     MailMonsterListView* ret = new MailMonsterListView(info);
     if(ret && ret->init()){
         ret->autorelease();
@@ -66,30 +70,87 @@ bool MailMonsterListView::init()
         return false;
     }
     setIsHDPanel(true);
-    CCLoadSprite::doResourceByCommonIndex(206, true);
-//    CCLoadSprite::doResourceByCommonIndex(6, true);
-    setCleanFunction([](){
-        CCLoadSprite::doResourceByCommonIndex(206, false);
-        CCLoadSprite::releaseDynamicResourceByType(CCLoadSpriteType_MONSTERLAYERLITTLE);
-        CCLoadSprite::releaseDynamicResourceByType(CCLoadSpriteType_GOODS);
-//        CCLoadSprite::doResourceByCommonIndex(6, false);
-        
-    });
-    auto tmpCCB = CCBLoadFile("MailResourceCCB",this,this);
-    this->setContentSize(tmpCCB->getContentSize());
+    setMailUuid(m_mailInfo->uid);
+//    auto cf = CCLoadSprite::getSF("Mail_diban.png");
+    auto cf = CCLoadSprite::getSF("Mail_BG1.png");
+    if (cf==NULL) {
+        CCLoadSprite::doResourceByCommonIndex(206, true);
+        CCLoadSprite::doResourceByCommonIndex(6, true);
+        setCleanFunction([](){
+            CCLoadSprite::doResourceByCommonIndex(206, false);
+            CCLoadSprite::releaseDynamicResourceByType(CCLoadSpriteType_MONSTERLAYERLITTLE);
+            CCLoadSprite::releaseDynamicResourceByType(CCLoadSpriteType_GOODS);
+            CCLoadSprite::doResourceByCommonIndex(6, false);
+        });
+    }
+    else {
+        CCLoadSprite::doResourceByCommonIndex(206, true);
+        setCleanFunction([](){
+            CCLoadSprite::doResourceByCommonIndex(206, false);
+            CCLoadSprite::releaseDynamicResourceByType(CCLoadSpriteType_MONSTERLAYERLITTLE);
+            CCLoadSprite::releaseDynamicResourceByType(CCLoadSpriteType_GOODS);
+        });
+    }
+    
+    auto tmpCCB = CCBLoadFile("NEW_MailResourceCCB",this,this);
+    if (CCCommonUtils::isIosAndroidPad()) {
+        this->setContentSize(CCDirector::sharedDirector()->getWinSize());
+    }
+    else
+        this->setContentSize(tmpCCB->getContentSize());
     
     setTitleName(_lang("105513"));
+    m_titleText->setString(_lang("105513"));
     m_titleText->setString(_lang("103715").c_str());
-    int preHeight = this->m_buildBG->getContentSize().height;
-    changeBGHeight(m_buildBG);
-    int dh = m_buildBG->getContentSize().height - preHeight;
-    if (CCCommonUtils::isIosAndroidPad())
-    {
-        dh = CCDirector::sharedDirector()->getWinSize().height - 2048;
+    if (CCCommonUtils::isIosAndroidPad()) {
+        int extH = getExtendHeight();
+        this->m_infoList->setContentSize(CCSize(m_infoList->getContentSize().width, m_infoList->getContentSize().height + extH));
+        m_downNode->setPositionY(m_downNode->getPositionY() - extH);
+        m_bgNode->setPositionY(m_bgNode->getPositionY() - extH);
+        auto tbg = CCLoadSprite::loadResource("Mail_diban.png");
+        auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
+        auto picBg1 = CCLoadSprite::createSprite("Mail_diban.png");
+        picBg1->setAnchorPoint(ccp(0, 0));
+        picBg1->setPosition(ccp(0, 0));
+        picBg1->setScaleX(2.4);
+        tBatchNode->addChild(picBg1);
+        int maxHeight = CCDirector::sharedDirector()->getWinSize().height;
+        int curHeight = picBg1->getContentSize().height;
+        while(curHeight < maxHeight)
+        {
+            auto picBg2 = CCLoadSprite::createSprite("Mail_diban.png");
+            picBg2->setAnchorPoint(ccp(0, 0));
+            picBg2->setPosition(ccp(0, curHeight));
+            picBg2->setScaleX(2.4);
+            tBatchNode->addChild(picBg2);
+            curHeight += picBg2->getContentSize().height;
+        }
+        m_bgNode->addChild(tBatchNode);
     }
-    this->m_infoList->setContentSize(CCSize(m_infoList->getContentSize().width, m_infoList->getContentSize().height + dh));
-    m_bg->setContentSize(CCSize(m_bg->getContentSize().width, m_bg->getContentSize().height + dh));
-    m_downNode->setPositionY(m_downNode->getPositionY() - dh);
+    else {
+        int extH = getExtendHeight();
+        this->m_infoList->setContentSize(CCSize(m_infoList->getContentSize().width, m_infoList->getContentSize().height + extH));
+        m_downNode->setPositionY(m_downNode->getPositionY() - extH);
+        m_bgNode->setPositionY(m_bgNode->getPositionY() - extH);
+        auto tbg = CCLoadSprite::loadResource("Mail_diban.png");
+        auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
+        auto picBg1 = CCLoadSprite::createSprite("Mail_diban.png");
+        picBg1->setAnchorPoint(ccp(0, 0));
+        picBg1->setPosition(ccp(0, 0));
+        tBatchNode->addChild(picBg1);
+        int maxHeight = CCDirector::sharedDirector()->getWinSize().height;
+        int curHeight = picBg1->getContentSize().height;
+        while(curHeight < maxHeight)
+        {
+            auto picBg2 = CCLoadSprite::createSprite("Mail_diban.png");
+            picBg2->setAnchorPoint(ccp(0, 0));
+            picBg2->setPosition(ccp(0, curHeight));
+            tBatchNode->addChild(picBg2);
+            curHeight += picBg2->getContentSize().height;
+        }
+        m_bgNode->addChild(tBatchNode);
+    }
+    m_battlePicNode->removeAllChildren();
     auto battlePic = CCLoadSprite::createSprite("Mail_monster.png");
     this->m_battlePicNode->addChild(battlePic);
     
@@ -104,12 +165,13 @@ bool MailMonsterListView::init()
     return true;
 }
 void MailMonsterListView::refresh(CCObject* obj){
+    if( !m_mailInfo )
+        return;
+    
     if(m_mailInfo->save ==0){
-        m_unSaveBtn->setVisible(true);
-        m_addSaveBtn->setVisible(false);
+        m_addSaveBtn->setHighlighted(false);
     }else{
-        m_unSaveBtn->setVisible(false);
-        m_addSaveBtn->setVisible(true);
+        m_addSaveBtn->setHighlighted(true);
     }
     setData();
     bool ishasChild = false;
@@ -144,13 +206,19 @@ void MailMonsterListView::readDialogContent(){
 void MailMonsterListView::onEnter()
 {
     CCNode::onEnter();
+    UIComponent::getInstance()->showPopupView(UIPopupViewType_ArcPop_TitanUpgrade,true);//simon;
+    UIComponent::getInstance()->hideReturnBtn();
     setTitleName(_lang("105513"));
+//    m_titleText->setString(_lang("105513"));
     //    setTitleName(m_mailInfo->fromName);
     
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(MailMonsterListView::refresh), MAIL_MONSTER_LIST_CHANGE, NULL);
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(MailMonsterListView::refresh), MAIL_LIST_DELETE, NULL);
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(MailMonsterListView::refreshAddList), MAIL_LIST_ADD, NULL);
     setTouchEnabled(true);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    ChatServiceCocos2dx::setChannelPopupOpen("monster");
+#endif
     //CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, -2, false);
 }
 
@@ -162,12 +230,17 @@ void MailMonsterListView::onExit()
     
     setTouchEnabled(false);
     readDialogContent();
-    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    ChatServiceCocos2dx::setChannelPopupOpen("");
+#endif
     PopupBaseView::onExit();
 }
 
 bool MailMonsterListView::onTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
+    if (isTouchInside(m_returnSpr, pTouch)) {
+        return true;
+    }
     m_tabView->setBounceable(true);
     if(m_isLoadMore&&isTouchInside( m_infoList,pTouch))
         return true;
@@ -204,6 +277,9 @@ void MailMonsterListView::onTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEven
 }
 void MailMonsterListView::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 {
+    if (isTouchInside(m_returnSpr, pTouch)) {
+        PopupViewController::getInstance()->goBackPopupView();
+    }
     if(m_isLoadMore&&m_tabView){
         m_currMinOffsetY = m_tabView->minContainerOffset().y;
         m_currOffsetY = m_tabView->getContentOffset().y;
@@ -218,7 +294,20 @@ void MailMonsterListView::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 void MailMonsterListView::sendReloadMoreMail(float _time){
     int realcount = m_mailInfo->monster->count();
     addLoadingAni();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    if (MailController::getInstance()->getIsNewMailListEnable()) {
+        ChatServiceCocos2dx::loadMoreMailFromAndroid("monster");
+    }
+    else
+    {
+         MailController::getInstance()->reloadMailMore(7,realcount,20);
+    }
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+//simon    ChatServiceCocos2dx::("monster");
+#else
     MailController::getInstance()->reloadMailMore(7,realcount,20);
+#endif
+   
 }
 void MailMonsterListView::removeLoadingAni(){
     if(m_loadingIcon){
@@ -244,8 +333,9 @@ void MailMonsterListView::addLoadingAni(){
 }
 
 void MailMonsterListView::refreshAddList(cocos2d::CCObject *obj){
-    
+    CCLog("%d",m_mailInfo->monster->count());
     setData();
+    CCLog("%d",m_mailInfo->monster->count());
     removeLoadingAni();
     int add = dynamic_cast<CCInteger*>(obj)->getValue();
     int MinOffsetY = m_tabView->minContainerOffset().y;
@@ -284,6 +374,8 @@ SEL_CCControlHandler MailMonsterListView::onResolveCCBCCControlSelector(cocos2d:
     
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onAddSaveClick", MailMonsterListView::onAddSaveClick);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onDeleteClick", MailMonsterListView::onDeleteClick);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onReturnClick", MailMonsterListView::onReturnClick);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onWriteClick", MailMonsterListView::onWriteClick);
     return NULL;
 }
 
@@ -291,15 +383,21 @@ bool MailMonsterListView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget,
 {
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titleText", CCLabelIF*, this->m_titleText);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_mailTitle", CCLabelIF*, this->m_mailTitle);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_timeText", CCLabelIF*, this->m_timeText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_infoList", CCNode*, this->m_infoList);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_downNode", CCNode*, this->m_downNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bgNode", CCNode*, this->m_bgNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_buildBG", CCScale9Sprite*, this->m_buildBG);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bg", CCScale9Sprite*, this->m_bg);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bg", CCScale9Sprite*, this->m_bg);
     
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_unSaveBtn", CCControlButton*, this->m_unSaveBtn);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_unSaveBtn", CCControlButton*, this->m_unSaveBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_addSaveBtn", CCControlButton*, this->m_addSaveBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_battlePicNode", CCNode*, m_battlePicNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_deleteBtn", CCControlButton*, this->m_deleteBtn);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_writeBtn", CCControlButton*, this->m_writeBtn);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_returnBtn", CCControlButton*, this->m_returnBtn);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_returnSpr", CCSprite*, this->m_returnSpr);
     return false;
 }
 void MailMonsterListView::onDeleteClick(cocos2d::CCObject *pSender, CCControlEvent event){
@@ -313,6 +411,11 @@ void MailMonsterListView::onDeleteClick(cocos2d::CCObject *pSender, CCControlEve
         return;
     }
     MailMonsterCellInfo* tempInfo = dynamic_cast<MailMonsterCellInfo*>(it->second);
+    if( tempInfo == NULL )
+    {
+        GlobalData::shared()->mailList.erase(it);
+        return;
+    }
     MailDialogDeleteCommand* command = new MailDialogDeleteCommand("",MAIL_ATTACKMONSTER);
     command->sendAndRelease();
     m_isLoadMore = false;
@@ -322,8 +425,9 @@ void MailMonsterListView::onDeleteClick(cocos2d::CCObject *pSender, CCControlEve
     tempInfo->unread = 0;
     
     CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MAIL_LIST_CHANGE);
+     tempInfo->release();
     PopupViewController::getInstance()->goBackPopupView();
-    CC_SAFE_RELEASE(tempInfo);
+   
     
 }
 void MailMonsterListView::onAddSaveClick(cocos2d::CCObject *pSender, CCControlEvent event){
@@ -334,22 +438,28 @@ void MailMonsterListView::onAddSaveClick(cocos2d::CCObject *pSender, CCControlEv
         cmd->sendAndRelease();
         m_mailInfo->save = 0;
         CCCommonUtils::flyHint("quest_icon_1.png", "", _lang("105576"));
-        m_unSaveBtn->setVisible(true);
-        m_addSaveBtn->setVisible(false);
+        m_addSaveBtn->setHighlighted(false);
     }else{
         
         MailDialogSaveCommand *cmd = new MailDialogSaveCommand("", 1,MAIL_ATTACKMONSTER);
         cmd->sendAndRelease();
         m_mailInfo->save = 1;
         CCCommonUtils::flyHint("quest_icon_1.png", "", _lang("105575"));
-        m_unSaveBtn->setVisible(false);
-        m_addSaveBtn->setVisible(true);
+        m_addSaveBtn->setHighlighted(true);
     }
     
 }
+void MailMonsterListView::onReturnClick(cocos2d::CCObject *pSender, CCControlEvent pCCControlEvent){
+    PopupViewController::getInstance()->goBackPopupView();
+}
 
+void MailMonsterListView::onWriteClick(cocos2d::CCObject *pSender, CCControlEvent pCCControlEvent){
+    PopupViewController::getInstance()->addPopupInView(MailWritePopUpView::create("", ""));
+}
 void MailMonsterListView::setData(){
     m_data->removeAllObjects();
+    if(m_mailInfo->monster == NULL)
+        return;
     if(m_mailInfo->monster->count()<m_mailInfo->totalNum){
         m_isLoadMore = true;
     }else{
@@ -384,49 +494,49 @@ CCSize MailMonsterListView::tableCellSizeForIndex(CCTableView *table, ssize_t id
     int height = 540;
     if (CCCommonUtils::isIosAndroidPad())
     {
-        height = 1080;
+        height = 1296;
     }
     if(m_isLoadMore&&idx==m_data->count()-1){
         if (CCCommonUtils::isIosAndroidPad()) {
-            return CCSize(1456, 100);
+            return CCSize(1464, 120);
         }
-        return CCSize(604,50);
+        return CCSize(614,50);
     }
     MailMonsterInfo* info = dynamic_cast<MailMonsterInfo*>(m_data->objectAtIndex(idx));
     if(info->monsterResult==1){
         CCArray *arr = info->normalReward;
         int count = arr->count();
         int rowNum =(count-1)/4+1;
-        height = 540+(rowNum-1)*160;
+        height = 590+(rowNum-1)*160;
         if (CCCommonUtils::isIosAndroidPad()) {
-            height = 1080 + (rowNum - 1) * 320;
+            height = 1416 + (rowNum - 1) * 384;
         }
     }else if(info->monsterResult==2 || info->monsterResult==4){
         height = 355;
         if (CCCommonUtils::isIosAndroidPad()) {
-            height = 710;
+            height = 852;
         }
     }else{
         CCArray *arr = info->normalReward;
         int count = arr->count();
         int rowNum =(count-1)/4+1;
-        height = 450+(rowNum-1)*160;
+        height = 500+(rowNum-1)*160;
         if (CCCommonUtils::isIosAndroidPad()) {
-            height = 1000 + (rowNum - 1) * 320;
+            height = 1200 + (rowNum - 1) * 384;
         }
     }
-    height+=30;
+    height+=10;
     if (CCCommonUtils::isIosAndroidPad()) {
-        height += 30;
-        return CCSize(1456, height);
+        height += 24;
+        return CCSize(1464, height);
     }
-    return CCSize(604,height);
+    return CCSize(614,height);
 }
 
 cocos2d::CCSize MailMonsterListView::cellSizeForTable(CCTableView *table)
 {
     if (CCCommonUtils::isIosAndroidPad()) {
-        return CCSize(1456, 1960);
+        return CCSize(1392, 2352);
     }
     return CCSize(580, 980);
 }
@@ -545,7 +655,7 @@ MailMonsterFirstKillCell* MailMonsterFirstKillCell::create(MailMonsterInfo* dial
 bool MailMonsterFirstKillCell::init()
 {
     bool ret = true;
-    m_ccbNode = CCBLoadFile("MailMonster1Cell",this,this);
+    m_ccbNode = CCBLoadFile("NEW_MailMonster1Cell",this,this);
     this->setContentSize(CCSizeMake(640, 130));
     if (CCCommonUtils::isIosAndroidPad())
     {
@@ -561,6 +671,11 @@ void MailMonsterFirstKillCell::setData(MailMonsterInfo* dialogInfo,MailMonsterCe
     m_mailInfo = mailInfo;
     m_idx = index;
     m_titleText->setString(_lang("103758"));
+    m_timeText->setFntFile("Arial_Bold_Regular.fnt");
+    m_nameText->setFntFile("Arial_Bold_Regular.fnt");
+    m_posTxt->setFntFile("Arial_Bold_Regular.fnt");
+    m_rewardTitleText->setFntFile("Arial_Bold_Regular.fnt");
+    m_firstkillTipText->setFntFile("Arial_Bold_Regular.fnt");
     m_timeText->setString(CCCommonUtils::timeStampToDate(m_dialogInfo->createTime).c_str());
     std::string name = CCCommonUtils::getNameById(m_dialogInfo->monsterId);
     string level = CCCommonUtils::getPropById(m_dialogInfo->monsterId,"level");
@@ -662,8 +777,9 @@ void MailMonsterFirstKillCell::setData(MailMonsterInfo* dialogInfo,MailMonsterCe
         }
         std::string namestr = RewardController::getInstance()->getNameByType(type, value);
         auto label = CCLabelIF::create();
+        label->setFntFile("Arial_Bold_Regular.fnt");
         label->setFontSize(21);
-        label->setColor(ccc3(133, 83, 4));
+        label->setColor(ccc3(0, 0, 0));
         label->setString(namestr.c_str());
         label->setAnchorPoint(ccp(0.5, 0.5));
         label->setPosition(startX+hang, -73.6-row*160);
@@ -677,6 +793,7 @@ void MailMonsterFirstKillCell::setData(MailMonsterInfo* dialogInfo,MailMonsterCe
         }
         
         auto label1 = CCLabelIF::create();
+        label1->setFntFile("Arial_Bold_Regular.fnt");
         label1->setFontSize(21);
         label1->setColor(ccc3(0, 134, 0));
         label1->setString(numstr.c_str());
@@ -774,6 +891,8 @@ void MailMonsterFirstKillCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::C
     }
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     ChatServiceCocos2dx::stopReturnToChat();
+#elif(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+//simon    ChatServiceCocos2dx::stopReturnToChat();
 #endif
     int pos = m_dialogInfo->pointId;
     WorldController::getInstance()->openTargetIndex = pos;
@@ -784,6 +903,8 @@ void MailMonsterFirstKillCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::C
         int index = WorldController::getIndexByPoint(pt);
         SceneController::getInstance()->gotoScene(SCENE_ID_WORLD, false, true, index);
     }
+    //zym 2015.12.11
+//    PopupViewController::getInstance()->forceClearAll(true); simon
     PopupViewController::getInstance()->removeAllPopupView();
 }
 
@@ -804,7 +925,7 @@ MailMonsterFailCell* MailMonsterFailCell::create(MailMonsterInfo* dialogInfo,Mai
 bool MailMonsterFailCell::init(bool miss)
 {
     bool ret = true;
-    m_ccbNode = CCBLoadFile("MailMonsterCell",this,this);
+    m_ccbNode = CCBLoadFile("NEW_MailMonsterCell",this,this);
     this->setContentSize(CCSizeMake(640, 130));
     if (CCCommonUtils::isIosAndroidPad()) {
         this->setContentSize(m_ccbNode->getContentSize());
@@ -826,6 +947,19 @@ void MailMonsterFailCell::setData(MailMonsterInfo* dialogInfo,MailMonsterCellInf
     m_dialogInfo=dialogInfo;
     m_mailInfo = mailInfo;
     m_idx = index;
+    m_timeText->setFntFile("Arial_Bold_Regular.fnt");
+    m_nameText->setFntFile("Arial_Bold_Regular.fnt");
+    m_posTxt->setFntFile("Arial_Bold_Regular.fnt");
+    m_tipText->setFntFile("Arial_Bold_Regular.fnt");
+    m_missText->setFntFile("Arial_Bold_Regular.fnt");
+    m_numTitleText->setFntFile("Arial_Bold_Regular.fnt");
+    m_numText->setFntFile("Arial_Bold_Regular.fnt");
+    m_powerText->setFntFile("Arial_Bold_Regular.fnt");
+    m_powerTitleText->setFntFile("Arial_Bold_Regular.fnt");
+    m_woundedText->setFntFile("Arial_Bold_Regular.fnt");
+    m_woundedTitleText->setFntFile("Arial_Bold_Regular.fnt");
+    m_killText->setFntFile("Arial_Bold_Regular.fnt");
+    m_killTitleText->setFntFile("Arial_Bold_Regular.fnt");
     m_timeText->setString(CCCommonUtils::timeStampToDate(m_dialogInfo->createTime).c_str());
     std::string name = CCCommonUtils::getNameById(m_dialogInfo->monsterId);
     string level = CCCommonUtils::getPropById(m_dialogInfo->monsterId,"level");
@@ -940,6 +1074,8 @@ void MailMonsterFailCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEven
     }
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     ChatServiceCocos2dx::stopReturnToChat();
+#elif(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+//simon    ChatServiceCocos2dx::stopReturnToChat();
 #endif
     int pos = m_dialogInfo->pointId;
     WorldController::getInstance()->openTargetIndex = pos;
@@ -950,6 +1086,8 @@ void MailMonsterFailCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEven
         int index = WorldController::getIndexByPoint(pt);
         SceneController::getInstance()->gotoScene(SCENE_ID_WORLD, false, true, index);
     }
+    //zym 2015.12.11
+//    PopupViewController::getInstance()->forceClearAll(true); simon
     PopupViewController::getInstance()->removeAllPopupView();
 }
 
@@ -971,7 +1109,7 @@ MailMonsterVictoryCell* MailMonsterVictoryCell::create(MailMonsterInfo* dialogIn
 bool MailMonsterVictoryCell::init()
 {
     bool ret = true;
-    m_ccbNode = CCBLoadFile("MailMonster2Cell",this,this);
+    m_ccbNode = CCBLoadFile("NEW_MailMonster2Cell",this,this);
     this->setContentSize(CCSizeMake(640, 130));
     if (CCCommonUtils::isIosAndroidPad())
     {
@@ -988,6 +1126,17 @@ void MailMonsterVictoryCell::setData(MailMonsterInfo* dialogInfo,MailMonsterCell
     m_idx = index;
     
     m_titleText->setString(_lang("105117"));
+    m_timeText->setFntFile("Arial_Bold_Regular.fnt");
+    m_nameText->setFntFile("Arial_Bold_Regular.fnt");
+    m_posTxt->setFntFile("Arial_Bold_Regular.fnt");
+    m_numText->setFntFile("Arial_Bold_Regular.fnt");
+    m_killTitleText->setFntFile("Arial_Bold_Regular.fnt");
+    m_killText->setFntFile("Arial_Bold_Regular.fnt");
+    m_numTitleText->setFntFile("Arial_Bold_Regular.fnt");
+    m_powerText->setFntFile("Arial_Bold_Regular.fnt");
+    m_powerTitleText->setFntFile("Arial_Bold_Regular.fnt");
+    m_woundedText->setFntFile("Arial_Bold_Regular.fnt");
+    m_woundedTitleText->setFntFile("Arial_Bold_Regular.fnt");
     m_timeText->setString(CCCommonUtils::timeStampToDate(m_dialogInfo->createTime).c_str());
     std::string name = CCCommonUtils::getNameById(m_dialogInfo->monsterId);
     string level = CCCommonUtils::getPropById(m_dialogInfo->monsterId,"level");
@@ -1113,8 +1262,9 @@ void MailMonsterVictoryCell::setData(MailMonsterInfo* dialogInfo,MailMonsterCell
         }
         std::string namestr = RewardController::getInstance()->getNameByType(type, value);
         auto label = CCLabelIF::create();
+        label->setFntFile("Arial_Bold_Regular.fnt");
         label->setFontSize(21);
-        label->setColor(ccc3(133, 83, 4));
+        label->setColor(ccc3(0, 0, 0));
         label->setString(namestr.c_str());
         label->setAnchorPoint(ccp(0.5, 0.5));
         label->setPosition(startX+hang, -73.6-row*160);
@@ -1132,6 +1282,7 @@ void MailMonsterVictoryCell::setData(MailMonsterInfo* dialogInfo,MailMonsterCell
         }
         
         auto label1 = CCLabelIF::create();
+        label1->setFntFile("Arial_Bold_Regular.fnt");
         label1->setFontSize(21);
         label1->setColor(ccc3(0, 134, 0));
         label1->setString(numstr.c_str());
@@ -1229,6 +1380,8 @@ void MailMonsterVictoryCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCE
     }
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     ChatServiceCocos2dx::stopReturnToChat();
+#elif(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+//simon    ChatServiceCocos2dx::stopReturnToChat();
 #endif
     int pos = m_dialogInfo->pointId;
     WorldController::getInstance()->openTargetIndex = pos;
@@ -1239,6 +1392,8 @@ void MailMonsterVictoryCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCE
         int index = WorldController::getIndexByPoint(pt);
         SceneController::getInstance()->gotoScene(SCENE_ID_WORLD, false, true, index);
     }
+    //zym 2015.12.11
+//simon    PopupViewController::getInstance()->forceClearAll(true);
     PopupViewController::getInstance()->removeAllPopupView();
 }
 

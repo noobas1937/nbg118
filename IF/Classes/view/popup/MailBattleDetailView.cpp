@@ -8,6 +8,8 @@
 
 #include "MailBattleDetailView.h"
 #include "DetectMailPopUpView.h"
+//#include "SoldierIconCell.hpp" simon
+#include "ArmyController.h"
 
 MailBattleDetailView* MailBattleDetailView::create(MailInfo *info){
     MailBattleDetailView* ret = new MailBattleDetailView(info);
@@ -206,7 +208,7 @@ CCSize MailBattleDetailView::cellSizeForTable(CCTableView *table)
 
 
 CCTableViewCell* MailBattleDetailView::tableCellAtIndex(CCTableView *table, ssize_t idx){
-    //CCTableViewCell AchievementNewPopUpView::gridAtIndex(cocos2d::extension::CCMultiColTableView *table, unsigned int idx){
+    //CCTableViewCell AchievementNewPopUpView::gridAtIndex(cocos2d::extension::CCMultiColTableView *table, ssize_t idx){
     if(idx >= m_data->count()){
         return NULL;
     }
@@ -386,9 +388,15 @@ void MailPlayerCell::setData(CCDictionary *info, bool attack,bool isTitle){
     CCARRAY_FOREACH(defTowerKillArr, defTowerKillObject){
         CCDictionary *armyDic = _dict(defTowerKillObject);
         int level = armyDic->valueForKey("level")->intValue();
-        std::string armName = _lang("102016")+"Lv"+CC_CMDITOA(level);
+        int star = armyDic->valueForKey("star")->intValue();
+        std::string armName = "";
+        if(star >= 1){
+            armName = _lang("102016")+ _lang("160001")+CC_CMDITOA(star);
+        }else{
+            armName = _lang("102016")+"Lv"+CC_CMDITOA(level);
+        }
         int kill = armyDic->valueForKey("kill")->intValue();
-        DetailBattleCellCCB* cell = DetailBattleCellCCB::create(armName,"~","~",CC_CMDITOA(kill),"~","battle_tower.png");
+        DetailBattleCellCCB* cell = DetailBattleCellCCB::create(armName,"~","~",CC_CMDITOA(kill),"~","battle_tower.png","","","");
         m_listNode->addChild(cell);
         cell->setPosition(ccp(curX, curY));
         curY += itemH;
@@ -406,7 +414,7 @@ void MailPlayerCell::setData(CCDictionary *info, bool attack,bool isTitle){
         int dead =armyDic->valueForKey("dead")->intValue();
         int kill = armyDic->valueForKey("kill")->intValue();
         
-        DetailBattleCellCCB* cell = DetailBattleCellCCB::create(armName,CC_CMDITOA(total),CC_CMDITOA(dead),CC_CMDITOA(kill),"~",icon);
+        DetailBattleCellCCB* cell = DetailBattleCellCCB::create(armName,CC_CMDITOA(total),CC_CMDITOA(dead),CC_CMDITOA(kill),"~",icon,"",armyId,"");
         m_listNode->addChild(cell);
         cell->setPosition(ccp(curX, curY));
         curY += itemH;
@@ -447,7 +455,7 @@ void MailPlayerCell::setData(CCDictionary *info, bool attack,bool isTitle){
         int dead =armyDic->valueForKey("dead")->intValue();
         int kill = armyDic->valueForKey("kill")->intValue();
         int hurt = armyDic->valueForKey("hurt")->intValue();
-        
+        int starNum = armyDic->valueForKey("star")->intValue();
         std::string icon = GlobalData::shared()->armyList[armyId].getHeadIcon();
 
         string path = armyId.substr(armyId.size()-2);
@@ -455,7 +463,7 @@ void MailPlayerCell::setData(CCDictionary *info, bool attack,bool isTitle){
         path = "Roman_";
         path.append(CC_ITOA(num));
         path.append(".png");
-        DetailBattleCellCCB* cell = DetailBattleCellCCB::create(armName,CC_CMDITOA(total),CC_CMDITOA(dead),CC_CMDITOA(kill),CC_CMDITOA(hurt),icon,path);
+        DetailBattleCellCCB* cell = DetailBattleCellCCB::create(armName,CC_CMDITOA(total),CC_CMDITOA(dead),CC_CMDITOA(kill),CC_CMDITOA(hurt),icon,path,armyId,playname,starNum);
         m_listNode->addChild(cell);
         cell->setPosition(ccp(curX, curY));
         curY += itemH;
@@ -468,7 +476,7 @@ void MailPlayerCell::setData(CCDictionary *info, bool attack,bool isTitle){
         CCARRAY_FOREACH(atkGenKilltArr, atkGenKilltobj){
            total+=dynamic_cast<CCString*>(atkGenKilltobj)->intValue();
         }
-        DetailBattleCellCCB* cell = DetailBattleCellCCB::create(_lang("3000004"),"~","~",CC_CMDITOA(total),"~","");
+        DetailBattleCellCCB* cell = DetailBattleCellCCB::create(_lang("3000004"),"~","~",CC_CMDITOA(total),"~","","","","");
         m_listNode->addChild(cell);
         cell->setPosition(ccp(curX, curY));
         curY += itemH;
@@ -564,8 +572,8 @@ void GeneralItemCell::handleAsyRes(CCObject* p){
 }
 
 //----
-DetailBattleCellCCB *DetailBattleCellCCB::create(std::string name,std::string num,std::string lost,std::string kill,std::string hurt,string icon,string icon1){
-    DetailBattleCellCCB *ret = new DetailBattleCellCCB(name,num,lost,kill,hurt,icon,icon1);
+DetailBattleCellCCB *DetailBattleCellCCB::create(std::string name,std::string num,std::string lost,std::string kill,std::string hurt,string icon,string icon1,string armyid,string playname,int starNum){
+    DetailBattleCellCCB *ret = new DetailBattleCellCCB(name,num,lost,kill,hurt,icon,icon1,armyid,playname,starNum);
     if(ret && ret->init()){
         ret->autorelease();
     }else{
@@ -605,16 +613,31 @@ bool DetailBattleCellCCB::init(){
         m_levelSprNode->setVisible(false);
     }
     if(m_icon!=""){
-        auto spr = CCLoadSprite::createSprite(m_icon.c_str());
-        m_picHead->addChild(spr);
-        m_picHead->setVisible(true);
-       CCCommonUtils::setSpriteMaxSize(spr, 90);
+        if(m_armyid == ""){
+            auto spr = CCLoadSprite::createSprite(m_icon.c_str());
+            m_picHead->addChild(spr);
+            m_picHead->setVisible(true);
+            CCCommonUtils::setSpriteMaxSize(spr, 90);
+        }
+        else{
+//            SoldierIconCell* spr;
+//            if (GlobalData::shared()->playerInfo.name == m_playername) {
+//                int mystar = ArmyController::getInstance()->getStarlvById(m_armyid);
+//                spr = SoldierIconCell::create(m_icon, 90,m_armyid,true,mystar);
+//            }else{
+//                spr = SoldierIconCell::create(m_icon, 90,m_armyid,false,m_starNum);
+//            }
+//            if(spr != nullptr){
+//                m_picHead->addChild(spr);
+//                m_picHead->setVisible(true);
+//            } simon
+        }
     }
-//    m_nameTxt->setFntFile(getNBFont(NB_FONT_Bold));
-//    m_numTxt->setFntFile(getNBFont(NB_FONT_Bold));
-//    m_lostTxt->setFntFile(getNBFont(NB_FONT_Bold));
-//    m_killTxt->setFntFile(getNBFont(NB_FONT_Bold));
-//    m_hurtTxt->setFntFile(getNBFont(NB_FONT_Bold));
+//    m_nameTxt->setFntFile("Arial_Bold_Regular.fnt");
+//    m_numTxt->setFntFile("Arial_Bold_Regular.fnt");
+//    m_lostTxt->setFntFile("Arial_Bold_Regular.fnt");
+//    m_killTxt->setFntFile("Arial_Bold_Regular.fnt");
+//    m_hurtTxt->setFntFile("Arial_Bold_Regular.fnt");
     return true;
 }
 

@@ -20,11 +20,14 @@ class OccupyMailPopUpView : public PopupBaseView
 ,public CCBMemberVariableAssigner
 , public cocos2d::extension::CCMultiColTableViewDataSource
 , public cocos2d::extension::CCMultiColTableViewDelegate
-
 {
 public:
     static OccupyMailPopUpView *create(MailInfo *info);
-    
+protected:
+    virtual bool onTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void onTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void onTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
+
 protected:
     // scrollview delegate
     virtual void scrollViewDidScroll(CCScrollView* view){};
@@ -49,18 +52,21 @@ private:
     void onDeleteClick(CCObject *pSender, CCControlEvent event);
     void onBtnPosClick(CCObject *pSender, CCControlEvent event);
     void onAddSaveClick(CCObject *pSender, CCControlEvent event);
+    void onReturnClick(CCObject * pSender, CCControlEvent pCCControlEvent);
+    void onWriteClick(CCObject * pSender, CCControlEvent pCCControlEvent);
     void refresh(CCObject* p);
     void getData();
     void onOKDeleteMail();
     
     CCSafeObject<CCLabelIF> m_titleText;
+    CCSafeObject<CCLabelIF> m_mailTitle;
     CCSafeObject<CCLabelIF> m_contentText;
     CCSafeObject<CCLabelIF> m_timeText;
-    CCSafeObject<CCLabelIF> m_occupyText;
+//    CCSafeObject<CCLabelIF> m_occupyText;
     CCSafeObject<CCLabelIF> m_deleteBtnTitle;
     CCSafeObject<CCLabelIF> m_failText;
     CCSafeObject<Label> m_palyName;
-    CCSafeObject<CCLabelIF> m_playLv;
+//    CCSafeObject<CCLabelIF> m_playLv;
     CCSafeObject<CCLabelIF> m_armsName;
     CCSafeObject<CCLabelIF> m_armsNun;
     CCSafeObject<CCNode> m_playerNode;
@@ -68,16 +74,20 @@ private:
     CCSafeObject<CCNode> m_picHeadNode;
     CCSafeObject<CCNode> m_listContainer;
     CCSafeObject<CCNode> m_downNode;
+    CCSafeObject<CCNode> m_bgNode;
     CCSafeObject<CCNode> m_armsListNode;
     CCSafeObject<CCNode> m_moveNode;
     CCSafeObject<CCNode> m_totalNode;
     CCSafeObject<CCScale9Sprite> m_kuangBG;
-    CCSafeObject<CCScale9Sprite> m_listBG;
+//    CCSafeObject<CCScale9Sprite> m_listBG;
     CCSafeObject<CCScale9Sprite> m_buildBG;
-    CCSafeObject<CCScale9Sprite> m_bg;
+//    CCSafeObject<CCScale9Sprite> m_bg;
     CCSafeObject<CCControlButton> m_deleteBtn;
     CCSafeObject<CCControlButton> m_addSaveBtn;
-    CCSafeObject<CCControlButton> m_unSaveBtn;
+    CCSafeObject<CCControlButton> m_returnBtn;
+    CCSafeObject<CCSprite> m_returnSpr;
+    CCSafeObject<CCControlButton> m_writeBtn;
+//    CCSafeObject<CCControlButton> m_unSaveBtn;
     //CCSafeObject<CCMultiColTableView> m_tabView;
     CCSafeObject<CCScrollView> m_scrollView;
     CCSafeObject<MailInfo> m_info;
@@ -85,6 +95,7 @@ private:
     CCSafeObject<CCNode> m_battlePicNode;
     CCSafeObject<CCNode> m_listNode;
     CCSafeObject<HFHeadImgNode> m_headImgNode;
+    CCSafeObject<CCRenderTexture> m_selfModelLayer;
     int m_totalHg;
     
 };
@@ -133,17 +144,18 @@ class DetectArmyCell : public CCTableViewCell
 ,public CCBMemberVariableAssigner
 {
 public:
-    static DetectArmyCell *create(string armId,int num,bool isAbout = false);
+    static DetectArmyCell *create(string armId,int num,bool isAbout = false,bool bself = false);
     virtual bool init();
-    void setData(string armId,int num,bool isAbout = false);
+    void setData(string armId,int num,bool isAbout = false,bool bself = false);
     virtual bool onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode);
     
 private:
-    DetectArmyCell(string armId,int num,bool isAbout = false) : m_armId(armId), m_num(num),m_isAbout(isAbout){};
+    DetectArmyCell(string armId,int num,bool isAbout = false,bool bself = true) : m_armId(armId), m_num(num),m_isAbout(isAbout),m_self(bself){};
     void refreshView();
     string m_armId;
     int m_num;
     bool m_isAbout;
+    bool m_self;
     CCSafeObject<CCLabelIF> m_nameText;
     CCSafeObject<CCLabelIF> m_nunText;
     CCSafeObject<CCNode> m_headPicNode;
