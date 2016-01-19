@@ -864,12 +864,12 @@ void LoadingScene::onGetServerList(CCHttpClient* client, CCHttpResponse* respons
 
 #if COCOS2D_DEBUG != 0
     //测试用切换服务器
-//        ip = "10.1.6.72";
-//    zone = "COK1";
-//         CCUserDefault::sharedUserDefault()->setStringForKey(ACCOUNT_IP, ip);
-//         CCUserDefault::sharedUserDefault()->setStringForKey(ACCOUNT_ZONE, zone);
-//         CCUserDefault::sharedUserDefault()->setIntegerForKey(ACCOUNT_PORT,atoi(port.c_str()));
-//         CCUserDefault::sharedUserDefault()->setStringForKey(GAME_UID, "");
+//    ip = "s2.dc.elexapp.com";
+//    zone = "COK2";
+//    CCUserDefault::sharedUserDefault()->setStringForKey(ACCOUNT_IP, ip);
+//    CCUserDefault::sharedUserDefault()->setStringForKey(ACCOUNT_ZONE, zone);
+//    CCUserDefault::sharedUserDefault()->setIntegerForKey(ACCOUNT_PORT,atoi(port.c_str()));
+//    CCUserDefault::sharedUserDefault()->setStringForKey(GAME_UID, "");
 #endif
     CCUserDefault::sharedUserDefault()->flush();
     
