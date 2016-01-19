@@ -62,6 +62,14 @@
 #include "UIComponent.h"
 #include "ResourceMailPopUpView.h"
 #include "CCCommonUtils.h"
+#include "GetMsgBySeqIdCommand.h"
+#include "GCMRewardController.h"
+#include "ActivityController.h"
+//#include "MailHeiqishiCellInfo.hpp" simon
+//#include "MailHeiqishiListView.hpp"
+#include "SceneController.h"
+#include "WorldMapView.h"
+//#include "FriendsController.h"
 
 static const char* roman[30] = {"I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","XIII","XIV","XV","XVI","XVII","XVIII","XIX","XX",
     "XXI","XXII","XXIII","XXIV","XXV","XXVI","XXVII","XXVIII","XXIX","XXX"
@@ -69,7 +77,7 @@ static const char* roman[30] = {"I","II","III","IV","V","VI","VII","VIII","IX","
 
 static MailController* _instance;
 
-MailController::MailController():m_isTransInit(false),m_isShowWarning(false),mTransMailDialog(NULL),m_chatRoomName(""),m_inviteMemberName(""),m_inviteMemberUid(""),m_isSearchUser(false),m_curNotifyMailDataIndex(0),m_newMailUnreadNum(0){
+MailController::MailController():m_isTransInit(false),m_isShowWarning(false),mTransMailDialog(NULL),m_chatRoomName(""),m_inviteMemberName(""),m_inviteMemberUid(""),m_isSearchUser(false),m_curNotifyMailDataIndex(0),m_newMailUnreadNum(0),m_curChatRoom(""){
     CanRemoveMail = false;
     m_mailInfoSendDic=CCDictionary::create();
     m_mailInfoSendDic->retain();
@@ -83,9 +91,15 @@ MailController::MailController():m_isTransInit(false),m_isShowWarning(false),mTr
     m_tempChatRoomMsgDic->retain();
     m_mailDataDic=CCDictionary::create();
     m_mailDataDic->retain();
+    m_mailDataDicIOS = CCDictionary::create();
+    m_mailDataDicIOS->retain();
     m_isChatRoomEnable=false;
     m_isNewMailListEnable=false;
     m_isNewMailUIEnable = false;
+    m_mutiFlyRewardArray = CCArray::create();
+    m_mutiFlyRewardArray->retain();
+    m_mutiFlyToolRewardArray = CCArray::create();
+    m_mutiFlyToolRewardArray->retain();
 }
 
 MailController::~MailController() {
@@ -95,6 +109,9 @@ MailController::~MailController() {
     CC_SAFE_RELEASE_NULL(m_chatRoomIdArray);
     CC_SAFE_RELEASE_NULL(m_tempChatRoomMsgDic);
     CC_SAFE_RELEASE_NULL(m_mailDataDic);
+    CC_SAFE_RELEASE_NULL(m_mailDataDicIOS);
+    CC_SAFE_RELEASE_NULL(m_mutiFlyToolRewardArray);
+    CC_SAFE_RELEASE_NULL(m_mutiFlyRewardArray);
 }
 
 MailController* MailController::getInstance(){
@@ -118,9 +135,9 @@ void MailController::addMails(cocos2d::CCArray *arr,bool isreadContent){
     for(int i = 0; i < length; i++){
         info = _dict(arr->objectAtIndex(i));
         addMailToList(info,isreadContent);
-        CC_SAFE_RELEASE(info);
+        info->release();
     }
-    CC_SAFE_RELEASE(arr);
+    arr->release();
     CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MAIL_LIST_CHANGE);
     CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MAIL_SAVE_LIST_CHANGE);
     CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MAIL_PERSON_CHAT_CHANGE);
@@ -139,6 +156,10 @@ void MailController::addMailFromAndroidToList(cocos2d::CCDictionary *dic,bool is
         MailMonsterCellInfo* mailMonster= MailMonsterCellInfo::create();
         mailMonster->parse(dic);
         mail = mailMonster;
+    }else if(type==MAIL_BATTLE_REPORT && dic->objectForKey("knight")){
+//        MailHeiqishiCellInfo* mailHeiqishi = MailHeiqishiCellInfo::create();
+//        mailHeiqishi->parse(dic);
+//        mail = mailHeiqishi;
     }else{
          mail = MailInfo::create();
         if(type == MAIL_BATTLE_REPORT){
@@ -149,7 +170,6 @@ void MailController::addMailFromAndroidToList(cocos2d::CCDictionary *dic,bool is
             }
         }
         mail->parse(dic);
-        
     }
     
     if (type == MAIL_SYSUPDATE) {
@@ -157,7 +177,8 @@ void MailController::addMailFromAndroidToList(cocos2d::CCDictionary *dic,bool is
     }
     mail->retain();
     mail->isReadContent =isreadContent;
-    CCLOGFUNCF("UID %s",dic->valueForKey("uid")->getCString());
+    string mailUid =dic->valueForKey("uid")->getCString();
+    CCLOGFUNCF("UID %s",mailUid.c_str());
     GlobalData::shared()->mailList[dic->valueForKey("uid")->getCString()] = mail;
     if(isreadContent){
         CCLOGFUNCF("type : %d",mail->type);
@@ -167,11 +188,22 @@ void MailController::addMailFromAndroidToList(cocos2d::CCDictionary *dic,bool is
         {
             CCLOGFUNC("params!=NULL");
             if(mail->type == MAIL_BATTLE_REPORT){
+                /**
+                 *  部队属性解析
+                 *
+                 *  @param "dfWarEffect" 防守方部队属性解析
+                 *
+                 */
                 CCArray* dfWarEffectArr=dynamic_cast<CCArray*>(params->objectForKey("dfWarEffect"));
                 CCArray* warEffArr=parseWarEffect(dfWarEffectArr);
                 CCLOGFUNCF("dfWarEffectArr size :%d",warEffArr->count());
                 params->setObject(warEffArr, "dfWarEffect");
-                
+                /**
+                 *  部队属性解析
+                 *
+                 *  @param "dfWarEffect" 攻击方部队属性解析
+                 *
+                 */
                 CCArray* atkWarEffectArr=dynamic_cast<CCArray*>(params->objectForKey("atkWarEffect"));
                 CCArray* atkEffArr=parseWarEffect(atkWarEffectArr);
                 CCLOGFUNCF("atkWarEffectArr size :%d",atkEffArr->count());
@@ -192,7 +224,7 @@ void MailController::addMailFromAndroidToList(cocos2d::CCDictionary *dic,bool is
                 refreshDiGongContnet(id, params);
             }else if(mail->type == WORLD_NEW_EXPLORE){
                 CCDictionary* trapDic=CCDictionary::create();
-                CCString* trap=dynamic_cast<CCString*>(dic->objectForKey("trap"));
+                CCString* trap=dynamic_cast<CCString*>(params->objectForKey("trap"));
                 if (trap) {
                     string trapStr=trap->getCString();
                     if (trapStr!="") {
@@ -208,10 +240,14 @@ void MailController::addMailFromAndroidToList(cocos2d::CCDictionary *dic,bool is
                         for (int i = 0; i < num; i++) {
                             if (vector1[i]!="") {
                                 vector<std::string> vector2;
-                                CCCommonUtils::splitString(vector1[i], "|", vector2);
+                                CCCommonUtils::splitString(vector1[i], ":", vector2);
                                 if (vector2.size() == 2) {
                                     if (vector2[0]!="") {
-                                        trapDic->setObject(CCString::create(vector2[1]), vector2[0]);
+                                        string key = vector2[0];
+                                        int length = key.length();
+                                        if(length>=2)
+                                            key = CCCommonUtils::subStrByUtf8(key, 1, length-2);
+                                        trapDic->setObject(CCString::create(vector2[1]), key);
                                     }
                                 }
                             }
@@ -247,6 +283,13 @@ void MailController::addMailFromAndroidToList(cocos2d::CCDictionary *dic,bool is
             refreshMailContent(id, dic->valueForKey("contents")->getCString());
         }
     }
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    if(type==MAIL_RESOURCE || type==MAIL_ATTACKMONSTER || (type==MAIL_BATTLE_REPORT && dic->objectForKey("knight")) && !ChatServiceCocos2dx::isChatShowing){
+        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MAIL_LIST_ADD, CCInteger::create(20));
+    }
+    ChatServiceCocos2dx::postAddedMailListMail(mailUid);
+#endif
+    
 }
 
 
@@ -276,8 +319,12 @@ CCArray* MailController::parseWarEffect(CCArray* effectArr)
                         CCDictionary* dic=CCDictionary::create();
                         string key = vector1[0];
                         int length = key.length();
-                        if(length>=2)
+                        
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
+                        if(length>=2){
                             key = CCCommonUtils::subStrByUtf8(key, 1, length-2);
+                        }
+#endif
 //                        CCLOGFUNCF("vector1[1]:%s  key:%s",vector1[1].c_str(),key.c_str());
                         
                         dic->setObject(CCString::create(vector1[1]), key);
@@ -318,25 +365,35 @@ void MailController::parseAbility(CCDictionary* dic)
                     vector<std::string> vector1;
                     CCCommonUtils::splitString(ability, ",", vector1);
                     int num = vector1.size();
-                    //                            CCLOGFUNCF("ability2 num:%d",num);
-                    for (int k= 0; k< num; k++) {
-                        if (vector1[k]!="") {
-                            //                                    CCLOGFUNCF("vector1[k]:%s",vector1[k].c_str());
-                            vector<std::string> vector2;
-                            CCCommonUtils::splitString(vector1[k], ":", vector2);
-                            if (vector2.size() == 2) {
-                                if (vector2[0]!="") {
-                                    CCDictionary* dic=CCDictionary::create();
-                                    string key = vector2[0];
-                                    int length = key.length();
-                                    if(length>=2)
-                                        key = CCCommonUtils::subStrByUtf8(key, 1, length-2);
-                                    //                                            CCLOGFUNCF("vector2[1]:%s  key:%s",vector2[1].c_str(),key.c_str());
-                                    dic->setObject(CCString::create(vector2[1]), key);
-                                    ablityArray->addObject(dic);
+                    CCLOGFUNCF("ability2 num:%d",num);
+                    if(num>0)
+                    {
+                        CCDictionary* dic=CCDictionary::create();
+                        for (int k= 0; k< num; k++) {
+                            if (vector1[k]!="") {
+                                CCLOGFUNCF("vector1[k]:%s",vector1[k].c_str());
+                                vector<std::string> vector2;
+                                CCCommonUtils::splitString(vector1[k], ":", vector2);
+                                if (vector2.size() == 2) {
+                                    if (vector2[0]!="") {
+                                        string key = vector2[0];
+                                        int length = key.length();
+                                        if(length>=2)
+                                            key = CCCommonUtils::subStrByUtf8(key, 1, length-2);
+                                        string value = vector2[1];
+                                        if(key=="id")
+                                        {
+                                            int length2 = value.length();
+                                            if(length2>=2)
+                                                value = CCCommonUtils::subStrByUtf8(value, 1, length2-2);
+                                        }
+                                        CCLOGFUNCF("value:%s  key:%s",value.c_str(),key.c_str());
+                                        dic->setObject(CCString::create(value), key);
+                                    }
                                 }
                             }
                         }
+                        ablityArray->addObject(dic);
                     }
                 }
             }
@@ -380,10 +437,10 @@ void MailController::addMailToList(cocos2d::CCDictionary *dic,bool isreadContent
     
     mail->retain();
     mail->isReadContent =isreadContent;
-    CCLOGFUNCF("UID %s",dic->valueForKey("uid")->getCString());
+//    CCLOGFUNCF("UID %s",dic->valueForKey("uid")->getCString());
     GlobalData::shared()->mailList[dic->valueForKey("uid")->getCString()] = mail;
     if(isreadContent){
-        CCLOGFUNCF("type : %d",type);
+//        CCLOGFUNCF("type : %d",type);
         string id = mail->uid;
         CCDictionary* params = _dict(dic->objectForKey("detail"));
         if(mail->type == MAIL_BATTLE_REPORT){
@@ -460,7 +517,6 @@ MailResourceCellInfo* MailController::createResourceCellInfo(CCDictionary* dic){
     MailResourceCellInfo* mail = MailResourceCellInfo::create();
     mail->parse(dic);
     return mail;
-
 }
 void MailController::pushMailResourceFirst(CCDictionary *dic){
     MailResourceCellInfo* mail = MailResourceCellInfo::create();
@@ -552,8 +608,16 @@ void MailController::pushMailMonsterFirst(CCDictionary *dic){
 
 void MailController::handleMailMessage(MailInfo *mailInfo, MailDialogInfo *mailDialogInfo,bool isNew,int msgType/*=CHANNEL_TYPE_USER*/)
 {
+    if( mailInfo == NULL )
+        return;
+    
     CCLOGFUNC("");
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     CCArray* mailInfoArr=CCArray::create();
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    //非自动释放池对象
+    CCArray* mailInfoArr=CCArray::create();
+#endif
     ChatMailInfo* info=ChatMailInfo::create(mailInfo,mailDialogInfo,isNew,msgType);
     mailInfoArr->addObject(info);
     bool isModMsg = info->post == 200?true:false;
@@ -568,18 +632,31 @@ void MailController::handleMailMessage(MailInfo *mailInfo, MailDialogInfo *mailD
         notifyMailMsgToAndroid(mailInfoArr,mailInfo->fromUid,mailInfo->fromName,isModMsg);
     }
 #elif(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    
     if (mailInfo->type==CHAT_ROOM) {
         CCLOGFUNC("mailInfo->type==CHAT_ROOM");
-        notifyMailMsgToIOS(mailInfoArr , CHANNEL_TYPE_CHATROOM , mailInfo->crGroupId);
+        notifyMailMsgToIOS(mailInfoArr,CHANNEL_TYPE_CHATROOM,mailInfo->fromUid);
     }
     else
     {
-        notifyMailMsgToIOS(mailInfoArr , CHANNEL_TYPE_USER , mailInfo->fromUid);
+        notifyMailMsgToIOS(mailInfoArr,CHANNEL_TYPE_USER,mailInfo->fromUid);
     }
-    
+
+//    if(isModMsg)
+//    {
+//        notifyMailMsgToIOS(mailInfoArr , mailInfo->type , mailInfo->fromUid);
+//    }else if (mailInfo->type==CHAT_ROOM) {
+//        CCLOGFUNC("mailInfo->type==CHAT_ROOM");
+//        notifyMailMsgToIOS(mailInfoArr , CHANNEL_TYPE_CHATROOM , mailInfo->crGroupId);
+//    }
+//    else
+//    {
+//        notifyMailMsgToIOS(mailInfoArr , CHANNEL_TYPE_USER , mailInfo->fromUid);
+//    }
+//    
 #endif
 }
-
+//联盟发送邮件
 void MailController::handleMailMessageForOpen(MailInfo* m_mailInfo)
 {
 #if(CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
@@ -646,9 +723,9 @@ void MailController::handleMailMessageForOpen(MailInfo* m_mailInfo)
         if(!ChatServiceCocos2dx::isChatShowing){
             ChatServiceCocos2dx::showChatActivityFrom2dx();
         }
-#endif
-#if(CC_TARGET_PLATFORM==CC_PLATFORM_IOS)    
-    CCLOG("showReadPopUp USERMAIL");
+#elif (CC_TARGET_PLATFORM==CC_PLATFORM_IOS)
+    
+    CCLOG("发送邮件入口");
 
     //邮件入口
     CCArray* mailInfoArr=CCArray::create();
@@ -662,9 +739,9 @@ void MailController::handleMailMessageForOpen(MailInfo* m_mailInfo)
     
     if(mailInfoArr->count()>0)
     {
-        CCLOG("mailInfoArr->count():%d",mailInfoArr->count());
-        ChatServiceCocos2dx::removeMail2fromUid(m_mailInfo->fromUid.c_str());
-        ChatServiceCocos2dx::handleChatPush(mailInfoArr, CHANNEL_TYPE_USER ,m_mailInfo->fromUid.c_str());
+//        CCLOG("mailInfoArr->count():%d",mailInfoArr->count());
+//        ChatServiceCocos2dx::removeMail2fromUid(m_mailInfo->fromUid.c_str());
+//        ChatServiceCocos2dx::handleChatPush(mailInfoArr, CHANNEL_TYPE_USER ,m_mailInfo->fromUid.c_str());
     }
     
     //邮件入口cell
@@ -672,14 +749,15 @@ void MailController::handleMailMessageForOpen(MailInfo* m_mailInfo)
     CCLog("%s",m_mailInfo->fromUid.c_str());
     CCLog("%s",m_mailInfo->uid.c_str());
     CCLog("%s",m_mailInfo->fromName.c_str());
-    
+//    ChatServiceCocos2dx::updateUserInfoWithUidString(m_mailInfo->uid.c_str()); simon
     ChatServiceCocos2dx::setMailInfo(m_mailInfo->fromUid.c_str(),m_mailInfo->uid.c_str(),m_mailInfo->fromName.c_str(),m_mailInfo->type);
     ChatServiceCocos2dx::m_isInMailDialog=true;
     MailController::getInstance()->setOldOpenMailInfo(m_mailInfo);
 //    ChatServiceCocos2dx::initMailData(mailInfoArr);
     ChatServiceCocos2dx::m_channelType = CHANNEL_TYPE_USER;
-    ChatServiceCocos2dx::showChatIOSFrom2dx();
     ChatServiceCocos2dx::m_curMailFromUid=m_mailInfo->fromUid;
+    ChatServiceCocos2dx::showChatIOSFrom2dx();
+    
     
 #endif
 
@@ -834,7 +912,7 @@ void MailController::removeMail(std::string uids){
                 if(mail->save == 1){
                     mail->save = 2;
                 }else{
-                    CC_SAFE_RELEASE(mail);
+                    mail->release();
                     GlobalData::shared()->mailList.erase(uid);
                 }
             }
@@ -924,21 +1002,21 @@ void MailController::removeResourceMail(std::string mailUid,int index){
         MailResourceHelpCellInfo* tempInfo = dynamic_cast<MailResourceHelpCellInfo*>(it->second);
         MailDialogDeleteCommand* command = new MailDialogDeleteCommand("",MAIL_RESOURCE_HELP);
         command->sendAndRelease();
-        CC_SAFE_RELEASE(tempInfo);
+        tempInfo->release();
         GlobalData::shared()->mailCountObj.sysT -=1;
         GlobalData::shared()->mailCountObj.sysR -=tempInfo->unread;
     }else if(it->second->type==MAIL_RESOURCE){
         MailResourceCellInfo* tempInfo = dynamic_cast<MailResourceCellInfo*>(it->second);
         MailDialogDeleteCommand* command = new MailDialogDeleteCommand("",MAIL_RESOURCE);
         command->sendAndRelease();
-        CC_SAFE_RELEASE(tempInfo);
+        tempInfo->release();
         GlobalData::shared()->mailCountObj.sysT -=1;
         GlobalData::shared()->mailCountObj.sysR -=tempInfo->unread;
     }else if(it->second->type==MAIL_ATTACKMONSTER){
         MailMonsterCellInfo* tempInfo = dynamic_cast<MailMonsterCellInfo*>(it->second);
         MailDialogDeleteCommand* command = new MailDialogDeleteCommand("",MAIL_ATTACKMONSTER);
         command->sendAndRelease();
-        CC_SAFE_RELEASE(tempInfo);
+        tempInfo->release();
         GlobalData::shared()->mailCountObj.sysT -=1;
         GlobalData::shared()->mailCountObj.sysR -=tempInfo->unread;
     }
@@ -971,12 +1049,8 @@ void MailController::removeSlectChatRoom(string groupId)
     }
     GlobalData::shared()->mailCountObj.perT -=1;
     GlobalData::shared()->mailCountObj.perR -=it->second->unreadDialogNum;
-    if (dynamic_cast<MailInfo*>(it->second) != nullptr)
-    {
-        dynamic_cast<MailInfo*>(it->second)->release();
-        it->second = nullptr;
-    }
     GlobalData::shared()->mailList.erase(it);
+    dynamic_cast<MailInfo*>(it->second)->release();
     CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MAIL_LIST_CHANGE);
 #if(CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
     ChatServiceCocos2dx::deleteChatRoom(groupId);
@@ -993,7 +1067,7 @@ void MailController::removeDialogMail(std::string fromUid, std::string mailUid,i
     MailInfo* info = it->second;
     MailDialogDeleteCommand* command = new MailDialogDeleteCommand(info->fromUid, -1, info->uid);
     command->sendAndRelease();
-    CC_SAFE_RELEASE(info);
+    info->release();
     if(info->tabType == MAILTAB5){
         GlobalData::shared()->mailCountObj.modT -=1;
         GlobalData::shared()->mailCountObj.modR -=it->second->unreadDialogNum;
@@ -1188,8 +1262,13 @@ void MailController::removeMail(std::string uids, std::string type,int index){
                 CCLOGFUNCF("deleteMail uid:%s",mail->uid.c_str());
                 ChatServiceCocos2dx::deleteMail(mail->uid ,CHANNEL_TYPE_OFFICIAL,mail->type);
             }
+#elif(CC_TARGET_PLATFORM==CC_PLATFORM_IOS)
+            if (mail->tabType > 0){
+//                 ChatServiceCocos2dx::deleteOneMailWithMailID(mail->uid,mail ->type); simon
+            }
+           
 #endif
-            CC_SAFE_RELEASE(mail);
+            mail->release();
             i++;
         }
          map<string, MailInfo*>::iterator it1;
@@ -1262,9 +1341,22 @@ void MailController::notyfyReadMail(std::string uid, int type){
     cmd->sendAndRelease();
 }
 
+void MailController::notifyReadMutiMail(std::string uids)
+{
+    //MailReadStatusBatchCommand* cmd = new MailReadStatusBatchCommand(uids);  simon
+
+//    MailReadStatusCommand* cmd = new MailReadStatusCommand(uids，-1,true);
+//    cmd->sendAndRelease();
+}
+
 void MailController::notyfyReadChatMail(std::string fromUser,bool isMod){
     MailDialogReadCommand* cmd = new MailDialogReadCommand(fromUser, -1, "",isMod);
     cmd->sendAndRelease();
+}
+
+void MailController::notyfyReadDialogMail(int type,bool isMod,std::string types){
+//    MailDialogReadCommand* cmd = new MailDialogReadCommand("", type, "",isMod,types); simon
+//    cmd->sendAndRelease();
 }
 
 int MailController::getMailTabTypeByInfo(MailInfo *mail){
@@ -1311,6 +1403,38 @@ CCArray* MailController::getSortMailByTime(CCArray *data){
 
     return data;
 }
+
+CCArray* MailController::getSortMailByTimeToIOS(CCArray *data){
+    
+    int total = data->count();
+    int i = 0;
+    int j = total - 1;
+    
+    while(j > 0){
+        i = 0;
+        while(i < j){
+            auto &mail1 = GlobalData::shared()->mailList[dynamic_cast<CCString*>(data->objectAtIndex(i))->getCString()];
+            auto &mail2 = GlobalData::shared()->mailList[dynamic_cast<CCString*>(data->objectAtIndex(i + 1))->getCString()];
+            
+            bool sweepFlag = false;
+            if(mail1->createTime < mail2->createTime
+               && mail1->tabType != MAILTAB5
+               && mail1->tabType != MAILTAB3
+               && mail1->tabType != MAILTAB4){
+                sweepFlag = true;
+            }
+            if(sweepFlag){
+                data->swap(i, i + 1);
+            }
+            i++;
+        }
+        j--;
+    }
+    
+    
+    return data;
+}
+
 void MailController::refreshMailContent(std::string uid, CCDictionary *dict){
     auto it = GlobalData::shared()->mailList.find(uid);
     if(it != GlobalData::shared()->mailList.end()){
@@ -1326,7 +1450,7 @@ void MailController::refreshMailContent(std::string uid, CCDictionary *dict){
                         ret->addObject(info);
                     }
                     CCLOGFUNC("addGeneral 2");
-                    CC_SAFE_RELEASE(info);
+                    info->release();
                 }
             }
              CCLOGFUNC("addGeneral 3");
@@ -1334,6 +1458,9 @@ void MailController::refreshMailContent(std::string uid, CCDictionary *dict){
             return ret;
         };
         CCLOGFUNCF("refreshMailContent TYPE:%d",it->second->type);
+        if(dict->objectForKey("serverType")){
+            it->second->serverType = dict->valueForKey("serverType")->intValue();
+        }
         if(dict->objectForKey("isResourceShieldState")){
             it->second->isResourceShieldState = dict->valueForKey("isResourceShieldState")->boolValue();
         }else{
@@ -1399,9 +1526,17 @@ void MailController::refreshMailContent(std::string uid, CCDictionary *dict){
             it->second->attUser = dynamic_cast<CCDictionary*>(dict->objectForKey("atkUser"));
             it->second->attUser->retain();
         }
+        if(dict->objectForKey("remainResource")){
+            it->second->defRemainRes = dynamic_cast<CCDictionary*>(dict->objectForKey("remainResource"));
+            it->second->defRemainRes->retain();
+        }
         if(dict->objectForKey("warPoint")){
             int pos = dict->valueForKey("warPoint")->intValue();
-            it->second->warPoint = WorldController::getPointByIndex(pos);
+//            if (it->second->serverType>=SERVER_BATTLE_FIELD) { simon
+//                it->second->warPoint = WorldController::getPointByMapTypeAndIndex(pos,(MapType)it->second->serverType);
+//            }else{
+//                it->second->warPoint = WorldController::getPointByIndex(pos);
+//            }
         }
         if(dict->objectForKey("defUser")){
             it->second->defUser = dynamic_cast<CCDictionary*>(dict->objectForKey("defUser"));
@@ -1528,15 +1663,28 @@ void MailController::refreshMailContent(std::string uid, std::string content){
                         std::string name = vector2[0];//名字
                         std::string type = vector2[1];//类型
                         std::string xy = vector2[2];//坐标
+                        it->second->detecterName = name;//前台存侦查者名字
                         if(type=="1"){
                             content = _lang_1("137429", name.c_str());//{0}侦查了您的城堡
                         }else if (type=="2"){
                             content = _lang_1("137431", name.c_str());//{0}侦查了您的部队
                         }else if (type=="3"){
                             content = _lang_1("137430", name.c_str());//{0}侦查了您的资源田
-                        }else{
+                        }
+                        else if (type=="12"){
+                            content = _lang_2("140183", name.c_str(), _lang("110081").c_str());
+                            it->second->title=_lang_1("140181", _lang("110081").c_str());
+                        }
+                        else if (type=="10"){
+                            content = _lang_2("140183", name.c_str(), _lang("110172").c_str());
+                            it->second->title=_lang_1("140181", _lang("110172").c_str());
+                        }
+                        else{
                             content = _lang_1("105524", name.c_str());//被{0}侦查
                         }
+                        it->second->pointType=atoi(type.c_str());
+
+
 
                         break;
                     }
@@ -1551,6 +1699,7 @@ void MailController::refreshMailContent(std::string uid, std::string content){
             if(vector.size()>=2){
                 content = _lang_2("105551", vector[0].c_str(), vector[1].c_str());
             }
+            
         }else if(it->second->type == MAIL_DONATE){
             it->second->fromName = _lang("105305");
             vector<string> mVStr;
@@ -1577,6 +1726,32 @@ void MailController::refreshMailContent(std::string uid, std::string content){
                     }
                 }
                 content = _lang_1("137450", leaderName.c_str());
+            }
+        }else if(it->second->type==MAIL_ALLIANCE_PACKAGE){
+            vector<string> mVStr;
+            CCCommonUtils::splitString(content, "|", mVStr);
+            it->second->itemIdFlag=1;
+            if(mVStr.size()>1){
+                content = mVStr.at(0);
+                it->second->crGroupId = _lang(mVStr.at(1)) ; //联盟邮件的礼包名字
+            }
+        }
+        else if(it->second->type==MAIL_ALLIANCE_RANKCHANGE){        //联盟等级变化邮件
+            vector<string> mVStr;
+            CCCommonUtils::splitString(content, "|", mVStr);
+            if(mVStr.size()>0){
+                if(mVStr.size() == 2)
+                {
+//                    CCLOGFUNCF("title:%s mVStr.at(0):%s  mVStr.at(1):%s",it->second->title.c_str(),mVStr.at(0).c_str(),mVStr.at(1).c_str());
+                    content = _lang_1(mVStr.at(0),mVStr.at(1).c_str());
+                }
+                else if(mVStr.size() == 4)
+                {
+//                    CCLOGFUNCF("mVStr.at(0):%s  mVStr.at(1):%s   mVStr.at(2):%s   mVStr.at(3):%s",mVStr.at(0).c_str(),mVStr.at(1).c_str(),mVStr.at(2).c_str(),mVStr.at(3).c_str());
+                    content = _lang_3(mVStr.at(0),mVStr.at(1).c_str(),mVStr.at(2).c_str(),mVStr.at(3).c_str());
+                }
+                it->second->contents = content;
+                return;
             }
         }
 
@@ -1630,11 +1805,11 @@ void MailController::refreshMailContent(std::string uid, std::string content){
                         }
                     }
                     std::string nameStr0 = content;
-                    CCLog(nameStr0.c_str());
+                    CCLOG(nameStr0.c_str());
                     std::string nameStr = CCCommonUtils::getPropById(vector3[1], "name");
                     std::string nameStr2 = _lang(nameStr.c_str());
-                    CCLog(nameStr2.c_str());
-                    CCLog(_lang_2(vector3[0].c_str(),nameStr2.c_str(),addStr.c_str()));
+                    CCLOG(nameStr2.c_str());
+                    CCLOG(_lang_2(vector3[0].c_str(),nameStr2.c_str(),addStr.c_str()));
                     it->second->contents = _lang_2(vector3[0].c_str(),nameStr2.c_str(),addStr.c_str());
                     return;
                 }
@@ -1661,9 +1836,61 @@ void MailController::refreshMailContent(std::string uid, std::string content){
                 it->second->contents = _lang_4(vector2[0].c_str(), tempV1.c_str(), tempV2.c_str(), tempV3.c_str(), tempV4.c_str());
                 return ;
             }
+            if(num>0 && vector2[0]=="140117" ){//跨服发奖邮件处理
+                it->second->ckfContents =content;
+                string tempV1 = "";
+                string tempV2 = "";
+                string tempV3 = "";
+                string tempV4 = "";
+                if (num>1) {
+                    tempV1 = "[color=ffA22200]" + vector2[1]  + "[/color]";
+                }
+                if (num>2) {
+//                    int rank = atoi(vector2[2].c_str());    simon
+//                    string duanwei = ActivityController::getInstance()->getTitileByRank(rank);
+//                    tempV2 = "[color=ff865200]" + string(CC_ITOA(rank))  + "[/color]";
+//                    tempV3 = "[color=ff0D6B1A]" + duanwei  + "[/color]";
+                }
+                if (num>3) {
+                    tempV4 = "[color=ffA22200]" + vector2[3]  + "[/color]";
+                }
+                it->second->contents = _lang_4(vector2[0].c_str(), tempV1.c_str(), tempV2.c_str(), tempV3.c_str(),tempV4.c_str());
+                return ;
+            }
+            if(num>0 && vector2[0]=="106203" ){//出争部队踢人邮件处理
+                string tempV1 = "";
+                string tempV2 = "";
+                string tempV3 = "";
+                string tempV4 = "";
+                if (num>1) {
+                    tempV1 = vector2[1];
+                }
+                if (num>2) {
+                    int type = atoi(vector2[2].c_str());
+                    if (type==Throne) {
+                        tempV2 = _lang("110172");
+                    }else if (type==Trebuchet){
+                        tempV2 = _lang("110081");
+                    }else{
+//                        tempV2 = CCCommonUtils::getDragonBuildingNameByType(type);  simon
+                    }
+                }
+                if(num>3){
+                    tempV3 = vector2[3];
+                }
+                if(num>4){
+                    tempV4 = vector2[4];
+                }
+                it->second->contents = _lang_4(vector2[0].c_str(), tempV1.c_str(), tempV2.c_str(), tempV3.c_str(), tempV4.c_str());
+                return ;
+            }
             switch (num) {
-                case 1:
+                case 1:{
+                    if (content.compare("160249") == 0) {
+                        it->second->isBanMail = true;
+                    }
                     it->second->contents = _lang(content);
+                }
                     break;
                 case 2:{
                     std::string key = vector2[0];
@@ -1745,6 +1972,10 @@ void MailController::refreshMailContent(std::string uid, std::string content){
                 default:
                     break;
             }
+            if(num>7 && vector2[0] == "115494")
+            {
+                it->second->contents = LocalController::shared()->TextINIManager()->getObjectByKey(vector2[0].c_str(), "6",vector2[1].c_str(),vector2[2].c_str(),vector2[3].c_str(),vector2[num-3].c_str(),vector2[num-2].c_str(),vector2[num-1].c_str()).c_str();
+            }
         }
     }
 }
@@ -1780,6 +2011,8 @@ void MailController::refreshMailDialogContent(std::string uid, CCDictionary *dic
     if(it != GlobalData::shared()->mailList.end()){
         CCArray *arr = dynamic_cast<CCArray*>(dict->objectForKey("chats"));
         CCObject* obj;
+        if( arr == NULL )
+            return;
         
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         CCArray* mailInfoArr=CCArray::create();
@@ -1787,14 +2020,21 @@ void MailController::refreshMailDialogContent(std::string uid, CCDictionary *dic
         
         CCARRAY_FOREACH(arr, obj){
             CCDictionary* dictDialog = dynamic_cast<CCDictionary*>(obj);
+            if( dictDialog == NULL )
+                continue;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
             if(ChatServiceCocos2dx::isChatShowing && ChatServiceCocos2dx::enableNativeMail)
             {
                 MailDialogInfo* dialogInfo = MailDialogInfo::create();
                 dialogInfo->parse(dictDialog);
-                dynamic_cast<MailInfo*>(it->second)->dialogs->insertObject(dialogInfo, 0);
-                ChatMailInfo* info=ChatMailInfo::create(dynamic_cast<MailInfo*>(it->second),dialogInfo,false);
-                mailInfoArr->addObject(info);
+                MailInfo* pMail = dynamic_cast<MailInfo*>(it->second);
+                if( pMail && pMail->dialogs)
+                {
+                    pMail->dialogs->insertObject(dialogInfo, 0);
+                    
+                    ChatMailInfo* info=ChatMailInfo::create(pMail,dialogInfo,false);
+                    mailInfoArr->addObject(info);
+                }
             }
             else
             {
@@ -1810,7 +2050,8 @@ void MailController::refreshMailDialogContent(std::string uid, CCDictionary *dic
             {
                 addOneDialogToMail(it->second,dictDialog);
             }
-            
+#else
+      addOneDialogToMail(it->second,dictDialog);
 #endif
             
         }
@@ -1855,6 +2096,9 @@ void MailController::notifyMailMsgToIOS(cocos2d::CCArray *mailInfoArr, int chann
 }
 
 void MailController::addOneDialogToMail(MailInfo* mailInfo,CCDictionary *dict,bool isNotify){
+    if( mailInfo == NULL )
+        return;
+    
     MailDialogInfo* dialogInfo = MailDialogInfo::create();
     dialogInfo->parse(dict);
     mailInfo->dialogs->insertObject(dialogInfo, 0);
@@ -1885,8 +2129,11 @@ void MailController::addOneDialogToMail(CCDictionary *dict,std::string mailUid){
         {
             MailDialogInfo* dialogInfo = MailDialogInfo::create();
             dialogInfo->parse(dict);
-            dynamic_cast<MailInfo*>(it->second)->dialogs->insertObject(dialogInfo, 0);
-            handleMailMessage(dynamic_cast<MailInfo*>(it->second),dialogInfo,false);
+            MailInfo* pMail = dynamic_cast<MailInfo*>(it->second);
+            if( pMail && pMail->dialogs )
+               pMail->dialogs->insertObject(dialogInfo, 0);
+            
+            handleMailMessage(pMail,dialogInfo,false);
             
             if(!ChatServiceCocos2dx::isChatShowing)
             {
@@ -1904,8 +2151,11 @@ void MailController::addOneDialogToMail(CCDictionary *dict,std::string mailUid){
             
             MailDialogInfo* dialogInfo = MailDialogInfo::create();
             dialogInfo->parse(dict);
-            dynamic_cast<MailInfo*>(it->second)->dialogs->insertObject(dialogInfo, 0);
-            handleMailMessage(dynamic_cast<MailInfo*>(it->second),dialogInfo,false);
+            
+            MailInfo* pMail = dynamic_cast<MailInfo*>(it->second);
+            if( pMail && pMail->dialogs )
+               pMail->dialogs->insertObject(dialogInfo, 0);
+            handleMailMessage(pMail, dialogInfo,false);
             
             if(!ChatServiceCocos2dx::isChatShowing_fun())
             {
@@ -1927,6 +2177,16 @@ void MailController::addOneResourceToMail(CCDictionary *dict,MailResourceCellInf
     dialogInfo->parse(dict);
     mailInfo->collect->addObject(dialogInfo);
 }
+
+//void MailController::addOneHeiqishiToMail(CCDictionary *dict, MailHeiqishiCellInfo *mailInfo) {  simon
+//    if(mailInfo==NULL){
+//        return;
+//    }
+//    MailHeiqishiInfo* dialogInfo = MailHeiqishiInfo::create();
+//    dialogInfo->parse(dict);
+//    mailInfo->knight->addObject(dialogInfo);
+//}
+
 void MailController::addOneMonsterToMail(CCDictionary *dict,MailMonsterCellInfo* mailInfo){
     if(mailInfo==NULL){
         return;
@@ -1936,44 +2196,65 @@ void MailController::addOneMonsterToMail(CCDictionary *dict,MailMonsterCellInfo*
     mailInfo->monster->addObject(dialogInfo);
 }
 void MailController::addOneResourceToMail(CCDictionary *dict,std::string mailUid){
+    if( dict == NULL )
+        return;
+    
     auto it = GlobalData::shared()->mailList.find(mailUid);
     if(it != GlobalData::shared()->mailList.end()){
         CCArray* arr = dynamic_cast<CCArray*>(dict->objectForKey("collect"));
+       
+        if( !arr )
+            return;
+        
         CCDictionary* tempDic = _dict(arr->objectAtIndex(0));
         MailResourceInfo* dialogInfo = MailResourceInfo::create();
         dialogInfo->parse(tempDic);
         MailResourceCellInfo* tempInfo = dynamic_cast<MailResourceCellInfo*>(it->second);
-        tempInfo->collect->insertObject(dialogInfo, 0);
-        tempInfo->createTime = dialogInfo->createTime;
-        CCDictionary *dict = dynamic_cast<CCDictionary*>(dialogInfo->reward->objectAtIndex(0));
-        tempInfo->resourceType = dict->valueForKey("t")->intValue();
-        tempInfo->resourceValue = dict->valueForKey("v")->intValue();
+        if( tempInfo && dialogInfo->reward&&dialogInfo->reward->count()>0)
+        {
+            
+            CCDictionary *pdictTmp = dynamic_cast<CCDictionary*>(dialogInfo->reward->objectAtIndex(0));
+            if ( pdictTmp == NULL )
+                return;
+            
+            tempInfo->collect->insertObject(dialogInfo, 0);
+            tempInfo->createTime = dialogInfo->createTime;
+            
+            tempInfo->resourceType = pdictTmp->valueForKey("t")->intValue();
+            tempInfo->resourceValue = pdictTmp->valueForKey("v")->intValue();
+            
+            tempInfo->unread+=1;
+            tempInfo->totalNum+=1;
+            GlobalData::shared()->mailCountObj.sysR+=1;
 
-        tempInfo->unread+=1;
-        tempInfo->totalNum+=1;
-        GlobalData::shared()->mailCountObj.sysR+=1;
-
-        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MAIL_LIST_CHANGE);
-        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MAIL_RESOURCE_LIST_CHANGE);
+            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MAIL_LIST_CHANGE);
+            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MAIL_RESOURCE_LIST_CHANGE);
+        }
     }
 }
 void MailController::addOneResourceHelpToMail(CCDictionary *dict,std::string mailUid){
     auto it = GlobalData::shared()->mailList.find(mailUid);
     if(it != GlobalData::shared()->mailList.end()){
         CCArray* arr = dynamic_cast<CCArray*>(dict->objectForKey("collect"));
-        CCDictionary* tempDic = _dict(arr->objectAtIndex(0));
-        MailResourceHelpInfo* dialogInfo = MailResourceHelpInfo::create();
-        dialogInfo->parse(tempDic);
-        MailResourceHelpCellInfo* tempInfo = dynamic_cast<MailResourceHelpCellInfo*>(it->second);
-        tempInfo->collect->insertObject(dialogInfo, 0);
-        tempInfo->createTime = dialogInfo->createTime;
-        
-        tempInfo->unread+=1;
-        tempInfo->totalNum+=1;
-        GlobalData::shared()->mailCountObj.sysR+=1;
-        
-        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MAIL_LIST_CHANGE);
-        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MAIL_RESOURCE_LIST_CHANGE);
+        if(arr!=nullptr && arr->count()>0)
+        {
+            CCDictionary* tempDic = _dict(arr->objectAtIndex(0));
+            MailResourceHelpInfo* dialogInfo = MailResourceHelpInfo::create();
+            dialogInfo->parse(tempDic);
+            MailResourceHelpCellInfo* tempInfo = dynamic_cast<MailResourceHelpCellInfo*>(it->second);
+            if( tempInfo && tempInfo->collect )
+            {
+                tempInfo->collect->insertObject(dialogInfo, 0);
+                tempInfo->createTime = dialogInfo->createTime;
+                
+                tempInfo->unread+=1;
+                tempInfo->totalNum+=1;
+                GlobalData::shared()->mailCountObj.sysR+=1;
+                
+                CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MAIL_LIST_CHANGE);
+                CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MAIL_RESOURCE_LIST_CHANGE);
+            }
+        }
     }
 }
 void MailController::addOneResourceHelpToMail(CCDictionary *dict,MailResourceHelpCellInfo* mailInfo){
@@ -1988,10 +2269,17 @@ void MailController::addOneMonsterToMail(CCDictionary *dict,std::string mailUid)
     auto it = GlobalData::shared()->mailList.find(mailUid);
     if(it != GlobalData::shared()->mailList.end()){
         CCArray* arr = dynamic_cast<CCArray*>(dict->objectForKey("monster"));
+        if( !arr || arr->count()<=0)
+            return;
+       
         CCDictionary* tempDic = _dict(arr->objectAtIndex(0));
         MailMonsterInfo* dialogInfo = MailMonsterInfo::create();
         dialogInfo->parse(tempDic);
         MailMonsterCellInfo* tempInfo = dynamic_cast<MailMonsterCellInfo*>(it->second);
+        
+        if( tempInfo==NULL  || tempInfo->monster== NULL )
+            return;
+        
         tempInfo->monster->insertObject(dialogInfo, 0);
         tempInfo->createTime = dialogInfo->createTime;
         tempInfo->exp =dialogInfo->exp;
@@ -2012,7 +2300,9 @@ void MailController::addOneDialogToMailEnd(CCDictionary *dict,std::string mailUi
     
     CCLOGFUNC("addOneDialogToMailEnd 2");
     auto it = GlobalData::shared()->mailList.find(mailUid);
-    if(it != GlobalData::shared()->mailList.end()){
+#warning HCG_CONNECT
+#warning 修复新邮件不增加未读数BUG。注:(不知道什么原因 新邮件从后天push过来后被存入了C++端缓存。mailID一致，type一直，我们只能用showContent + mailId来判断是否读取过邮件。需要后续调查)
+    if(it != GlobalData::shared()->mailList.end() && it->second->createTime != dict->valueForKey("createTime")->doubleValue() / 1000){
             CCLOGFUNC("addOneDialogToMailEnd 2");
 //        addOneDialogToMail(it->second,dict);
         MailDialogInfo* dialogInfo = MailDialogInfo::create();
@@ -2137,6 +2427,9 @@ void MailController::refreshOcupyContnet(std::string uid, CCDictionary *dict){
         it->second->occupyPointId = pointId;
         if (dict->objectForKey("ckf")) {
             it->second->ckf = dict->valueForKey("ckf")->intValue();
+        }
+        if(dict->objectForKey("serverType")){
+             it->second->serverType = dict->valueForKey("serverType")->intValue();
         }
         CCDictionary *dic = dynamic_cast<CCDictionary*>(dict->objectForKey("user"));
         it->second->user = dic;
@@ -2502,7 +2795,7 @@ void MailController::refreshGeneralTrainConten(std::string uid, CCDictionary *di
         CCDictionary *generalDict = _dict(dict->objectForKey("genneral"));
         GeneralInfo *info = new GeneralInfo(generalDict);
         generalArr->addObject(info);
-        CC_SAFE_RELEASE(info);
+        info->release();
         it->second->trainGeneralExp = expArr;
         it->second->trainGenerals = generalArr;
     }
@@ -2825,6 +3118,7 @@ void MailController::endRewardAllOpMails(){
             MailInfo* mail = it->second;
             if(mail){
                 mail->rewardStatus = 1;
+                mail->status = 1;
 //                CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MIAL_GET_REWARD_REFRESH, CCString::create((*iter)));
             }
         }
@@ -2838,6 +3132,7 @@ void MailController::endRewardAllOpMails(){
             MailInfo* mail = it->second;
             if(mail && mail->tabType == type && !mail->rewardId.empty()){
                 mail->rewardStatus = 1;
+                 mail->status = 1;
 //                CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MIAL_GET_REWARD_REFRESH, CCString::create((*iter)));
             }
             ++it;
@@ -2906,7 +3201,7 @@ int MailController::updateMailCount(std::string mailUid){
             GlobalData::shared()->mailCountObj.upR-=1;
         }
         GlobalData::shared()->mailList.erase(it);
-        CC_SAFE_RELEASE(mail);
+        mail->release();
     }
     return 0;
 }
@@ -2955,7 +3250,7 @@ int MailController::updateMailCountByType(int type){
         }
         MailInfo* mail = it->second;
         GlobalData::shared()->mailList.erase(it);
-        CC_SAFE_RELEASE(mail);
+        mail->release();
         ++iter;
     }
     if(hasReward==true)
@@ -3010,7 +3305,7 @@ void MailController::backInitTranslateMails(cocos2d::CCArray *arr, std::string r
             auto dic = _dict(arr->objectAtIndex(i));
             if(dic->objectForKey("translationMsg") && dic->objectForKey("originalLang")){
                 std::string aa =dic->valueForKey("translationMsg")->getCString() + std::string("_____,") + dic->valueForKey("originalLang")->getCString();
-                CCLog(aa.c_str());
+                CCLOG(aa.c_str());
                 mTmp[dic->valueForKey("uid")->getCString()] = dic;
             }
         }
@@ -3455,6 +3750,9 @@ MailDialogInfo*  MailController::parseChatRoomDic(CCDictionary* dict,bool isNewM
 
 CCDictionary* MailController::parseChatRoomJsonMsg(Json* jsonParent,Json* jsonBody)
 {
+    if( jsonParent== NULL ||  jsonBody == NULL )
+        return NULL;
+    
     CCDictionary* dic=CCDictionary::create();
     CCDictionary* body=CCDictionary::create();
     int type=Json_getInt(jsonBody, "type", -1);
@@ -3465,7 +3763,7 @@ CCDictionary* MailController::parseChatRoomJsonMsg(Json* jsonParent,Json* jsonBo
     else
     {
         Json* jsonMsg=Json_getItem(jsonBody, "msg");
-        if (jsonMsg->type == Json_Array) {
+        if (jsonMsg&&jsonMsg->type == Json_Array) {
             CCArray* msgArray=CCArray::create();
             Json* child=jsonMsg->child;
             while(child!=NULL)
@@ -3485,7 +3783,7 @@ CCDictionary* MailController::parseChatRoomJsonMsg(Json* jsonParent,Json* jsonBo
     dic->setObject(body, "body");
     Json* obj=Json_getItem(jsonParent, "time");
     string time="";
-    if(obj->type==Json_String)
+    if(obj&&obj->type==Json_String)
         time=obj->valueString;
     CCLOGFUNCF("time %s",time.c_str());
     dic->setObject(CCString::create(time), "time");
@@ -3667,7 +3965,7 @@ void MailController::localTranslate(){
     request->setResponseCallback(this, httpresponse_selector(MailController::onMailLocalTranslate));
     request->setTag("mail_translate_request");
     CCHttpClient::getInstance()->send(request);
-    CC_SAFE_RELEASE(request);
+    request->release();
 }
 void MailController::onMailLocalTranslate(CCHttpClient *client, CCHttpResponse *response){
     if(!mTransMailDialog)
@@ -3700,7 +3998,7 @@ void MailController::onMailLocalTranslate(CCHttpClient *client, CCHttpResponse *
     mTransMailDialog->translationMsg = finalStr;
     mTransMailDialog->isShowOrginal=false;
     CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MAIL_PERSON_CHAT_CHANGE);
-    
+    CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(CHAT_ROOM_MSG_CHANGE,CCString::create("translate"));
     if(mTransQueue.size()>0){
         mTransMailDialog = mTransQueue.at(0);
         mTransQueue.erase(mTransQueue.begin());
@@ -3717,7 +4015,212 @@ void MailController::searchPlayer(string name)
     cmd->sendAndRelease();
 }
 
-void MailController::showMailPopupFromAnroid(MailInfo* m_mailInfo)
+void MailController::getFriendMailByUids(std::vector<std::string> friendUidVec)
+{
+    string fromUidStr = "";
+    for(int i=0;i<friendUidVec.size();i++)
+    {
+        if(friendUidVec[i]!="")
+        {
+            if(fromUidStr!="")
+                fromUidStr.append("_");
+            fromUidStr.append(friendUidVec[i]);
+        }
+    }
+    CCLOGFUNCF("fromUidStr:%s",fromUidStr.c_str());
+    if(fromUidStr!="")
+    {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+        string friendMails = ChatServiceCocos2dx::getFriendLatestMails(fromUidStr);
+        parseUserMailInfo(friendMails);
+#elif(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+//        map<string,string> mapdata = ChatServiceCocos2dx::lastMsgWithFriendList(friendUidVec); simon
+//        map<string,string> ::iterator iter = mapdata.begin();
+//        for (;iter != mapdata.end(); iter++) {
+//            FriendsController::getInstance()->lastMailMap[(*iter).first] = (*iter).second;   simon
+//        }
+        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification("FriendsLastMailInfoUpdeta");
+#endif
+    }
+}
+
+void MailController::parseUserMailInfo(string json)
+{
+        CCLOGFUNCF("json:%s",json.c_str());
+    Json* jsonObj = Json_create(json.c_str());
+    if (jsonObj&&jsonObj->type == Json_Array) {
+        CCArray* detectArray=CCArray::create();
+        Json* child=jsonObj->child;
+        while(child!=NULL)
+        {
+            string uid = Json_getString(child, "uid", "");
+            string latestMail = Json_getString(child, "latestMail", "");
+//            FriendsController::getInstance()->lastMailMap[uid] = latestMail; simon
+            CCLOGFUNCF("uid:%s,latestMail:%s",uid.c_str(),latestMail.c_str());
+            child=child->next;
+        }
+    }
+    CCSafeNotificationCenter::sharedNotificationCenter()->postNotification("FriendsLastMailInfoUpdeta");
+}
+void MailController::initAllMail_ios(map<string,pair<string,int>> mailDectMap){
+//    GlobalData::shared()->m_detectMailMap.clear();  simon
+//    GlobalData::shared()->m_detectMailMap.insert(mailDectMap.begin(), mailDectMap.end());
+}
+void MailController::DeleteDectMail_ios(map<string,pair<string,int>> mailDectMap){
+    auto tempIt = mailDectMap.begin();
+    while (tempIt != mailDectMap.end()) {
+        string name =(*tempIt).first;
+        string uid = (*tempIt).second.first;
+        int createTime = (*tempIt).second.second;
+//        if (GlobalData::shared()->m_detectMailMap.find(name) != GlobalData::shared()->m_detectMailMap.end()) { simon
+//            GlobalData::shared()->m_detectMailMap.erase(name);
+//            WorldController::getInstance()->changeScoutStateByName(name, 0);
+//        }
+        CCLOG("whilelog=====name: %s,uid:  %s,createtime  %d",name.c_str(),uid.c_str(),createTime);
+        tempIt++;
+    }
+}
+void MailController::updateDectMail_ios(map<string,pair<string,int>> mailDectMap){
+    auto tempIt = mailDectMap.begin();
+    while (tempIt != mailDectMap.end()) {
+        string name =(*tempIt).first;
+        string uid = (*tempIt).second.first;
+        int createTime = (*tempIt).second.second;
+//        if (GlobalData::shared()->m_detectMailMap.find(name) != GlobalData::shared()->m_detectMailMap.end()) { simon
+//            GlobalData::shared()->m_detectMailMap.erase(name); 
+//        }
+//        GlobalData::shared()->m_detectMailMap.insert(make_pair(name, make_pair(uid, createTime)));
+//        WorldController::getInstance()->changeScoutStateByName(name, 1);
+        CCLOG("whilelog=====name: %s,uid:  %s,createtime  %d",name.c_str(),uid.c_str(),createTime);
+        tempIt++;
+    }
+}
+void MailController::parseDetectInfo(string json)
+{
+//    GlobalData::shared()->m_detectMailMap.clear();   simon
+////    CCLOGFUNCF("json:%s",json.c_str());
+//    Json* jsonObj = Json_create(json.c_str());
+//    if (jsonObj&&jsonObj->type == Json_Array) {
+//        CCArray* detectArray=CCArray::create();
+//        Json* child=jsonObj->child;
+//        while(child!=NULL)
+//        {
+//            string name = Json_getString(child, "name", "");
+//            string mailUid = Json_getString(child, "mailUid", "");
+//            int createTime = Json_getInt(child, "createTime", 0);
+//            CCLOG("logwdz=====name:%s,mailUid:%s,createTime:%d",name.c_str(),mailUid.c_str(),createTime);
+//            GlobalData::shared()->m_detectMailMap.insert(make_pair(name, make_pair(mailUid, createTime)));
+//            child=child->next;
+//        }
+//    }
+}
+
+void MailController::postDeletedDetectMailInfo(string json)
+{
+    CCLOGFUNCF("json:%s",json.c_str());
+    
+    //TO-DO
+    Json* jsonObj = Json_create(json.c_str());
+    if (jsonObj->type == Json_Array) {
+        Json* child=jsonObj->child;
+        while(child!=NULL)
+        {
+//            string name = Json_getString(child, "name", "");          simon
+//            string mailUid = Json_getString(child, "mailUid", "");
+//            int createTime = Json_getInt(child, "createTime", 0);
+//            auto tempIt = GlobalData::shared()->m_detectMailMap.find(name);
+//            if (tempIt!= GlobalData::shared()->m_detectMailMap.end()) {
+//                GlobalData::shared()->m_detectMailMap.erase(tempIt);
+//            }
+//            WorldController::getInstance()->changeScoutStateByName(name, 0);
+//            child=child->next;
+        }
+    }
+    
+    
+//    auto tempIt = GlobalData::shared()->m_detectMailMap.begin();
+//    while (tempIt != GlobalData::shared()->m_detectMailMap.end()) {
+//        string name =(*tempIt).first;
+//        string uid = (*tempIt).second.first;
+//        int createTime = (*tempIt).second.second;
+//        CCLOG("whilelog=====scoutTime: %s,nowTime:  %s,modelCanshowTime  %d",name.c_str(),uid.c_str(),createTime);
+//        tempIt++;
+//    }
+}
+
+void MailController::postChangedDetectMailInfo(string json)
+{
+    CCLOGFUNCF("json:%s",json.c_str());
+    //TO-DO
+    Json* jsonObj = Json_create(json.c_str());
+    if (jsonObj&&jsonObj->type == Json_Array) {
+        Json* child=jsonObj->child;
+        while(child!=NULL)
+        {
+            string name = Json_getString(child, "name", "");
+            string mailUid = Json_getString(child, "mailUid", "");
+            int createTime = Json_getInt(child, "createTime", 0);
+
+//            auto tempIt = GlobalData::shared()->m_detectMailMap.find(name);  simon
+//            if (tempIt!= GlobalData::shared()->m_detectMailMap.end()) {
+//                GlobalData::shared()->m_detectMailMap.erase(tempIt);
+//            }
+//            GlobalData::shared()->m_detectMailMap.insert(make_pair(name, make_pair(mailUid, createTime)));
+//            WorldController::getInstance()->changeScoutStateByName(name, 1);
+//            child=child->next;
+        }
+    }
+    
+//    auto tempIt = GlobalData::shared()->m_detectMailMap.begin();
+//    while (tempIt != GlobalData::shared()->m_detectMailMap.end()) {
+//        string name =(*tempIt).first;
+//        string uid = (*tempIt).second.first;
+//        int createTime = (*tempIt).second.second;
+//        CCLOG("whilelog=====scoutTime: %s,nowTime:  %s,modelCanshowTime  %d",name.c_str(),uid.c_str(),createTime);
+//        tempIt++;
+//    }
+}
+void MailController::onPostDetectInfo(std::string json){
+//    Json* jsonObj = Json_create(json.c_str());
+//    if (jsonObj->type == Json_Array) {
+//        Json* child=jsonObj->child;
+//        while(child!=NULL)
+//        {
+//            string name = Json_getString(child, "name", "");
+//            string mailUid = Json_getString(child, "mailUid", "");
+//            int createTime = Json_getInt(child, "createTime", 0);
+//            if (SceneController::getInstance()->currentSceneId == SCENE_ID_WORLD) {
+//                if (WorldMapView::instance()) {
+//                    CCLOGFUNC("logmail=====");
+//                    if(WorldController::getInstance()->m_playerInfo.find(name) != WorldController::getInstance()->m_playerInfo.end()){
+//                        CCLOGFUNC("logmail=====");
+//                        int cityIndex =  WorldController::getInstance()->m_playerInfo.find(name)->second.cityIndex;
+//                        CCLOG("logmail=====index:%d",cityIndex);
+//                        if (WorldController::getInstance()->m_cityInfo.find(cityIndex) != WorldController::getInstance()->m_cityInfo.end()) {
+//                            CCLOGFUNC("logmail=====createcity");
+//                            WorldController::getInstance()->m_cityInfo[cityIndex].beDetected_Time = createTime;
+//                            WorldController::getInstance()->m_cityInfo[cityIndex].beDetected_mailUid = mailUid;
+////                             WorldMapView::instance()->createCity(WorldController::getInstance()->m_cityInfo[cityIndex]);
+//                        }
+//                    }
+//                }
+//            }
+//            child=child->next;
+//        }
+//    }
+}
+void MailController::getDetectMailByMailUid(string mailUid)
+{
+    CCLOGFUNCF("mailUid:%s",mailUid.c_str());
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    if(getIsNewMailListEnable())
+    {
+        ChatServiceCocos2dx::getDetectMailByMailUid(mailUid);
+    }
+#endif
+}
+
+void MailController::showMailPopupFromAnroid(MailInfo* m_mailInfo,bool isDetectMailFromAndroid)
 {
     bool issaveRead = false;
     if(m_mailInfo==NULL){
@@ -3729,7 +4232,17 @@ void MailController::showMailPopupFromAnroid(MailInfo* m_mailInfo)
     UIComponent::getInstance()->loadMailResource();
     PopupBaseView* popUpView = NULL;
     if(m_mailInfo->type == MAIL_BATTLE_REPORT){
-        popUpView = BattleReportMailPopUpView::create(m_mailInfo);
+//        MailHeiqishiCellInfo* knightMail = dynamic_cast<MailHeiqishiCellInfo*>(m_mailInfo); simon
+//        if(knightMail!=NULL && knightMail->knight!=NULL)
+//        {
+//            CCLOGFUNC("m_mailInfo->battleType == 6  1");
+//            popUpView = MailHeiqishiListView::create(knightMail);
+//        }
+//        else
+//        {
+//            CCLOGFUNC("m_mailInfo->battleType == 6  2");
+//            popUpView = BattleReportMailPopUpView::create(m_mailInfo);
+//        }
     }
     else if(m_mailInfo->type == MAIL_RESOURCE){
         popUpView = MailResourcePopUpView::create(dynamic_cast<MailResourceCellInfo*>(m_mailInfo));
@@ -3757,7 +4270,8 @@ void MailController::showMailPopupFromAnroid(MailInfo* m_mailInfo)
     }else if(m_mailInfo->type==MAIL_SYSUPDATE){
         popUpView = MailAnnouncePopUp::create(m_mailInfo);
     }else if(m_mailInfo->type == MAIL_ATTACKMONSTER){
-        popUpView = MailMonsterListView::create(dynamic_cast<MailMonsterCellInfo*>(m_mailInfo));
+        if( dynamic_cast<MailMonsterCellInfo*>(m_mailInfo) )
+            popUpView = MailMonsterListView::create(dynamic_cast<MailMonsterCellInfo*>(m_mailInfo));
     }else if(m_mailInfo->type == MAIL_GIFT){
         popUpView = MailGiftReadPopUpView::create(*m_mailInfo);
     }else if(m_mailInfo->type == MAIL_WORLD_BOSS){
@@ -3777,8 +4291,99 @@ void MailController::showMailPopupFromAnroid(MailInfo* m_mailInfo)
     {
         popUpView->setHDPanelFlag(true);
         popUpView->setIsSystemMail(true);
-        PopupViewController::getInstance()->addPopupInView(popUpView,true,false,true);
+//        popUpView->setIsDetectMailFromAndroid(isDetectMailFromAndroid); simon
+        if(isDetectMailFromAndroid)
+        {
+            PopupViewController::getInstance()->addPopupInViewWithAnim(popUpView);
+            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_POPUP_VIEW_IN);
+        }
+        else
+            PopupViewController::getInstance()->addPopupInView(popUpView,true,false,true);
     }
+}
+
+
+PopupBaseView* MailController::gettingShowPopUpViewWithiOS(MailInfo* m_mailInfo)
+{
+    bool issaveRead = false;
+    if(m_mailInfo==NULL){
+        return NULL;
+    }
+    CCLOGFUNCF("type:%d  tabType:%d title:%s",m_mailInfo->type,m_mailInfo->tabType,m_mailInfo->title.c_str());
+    
+    m_mailInfo->status = READ;
+    UIComponent::getInstance()->loadMailResource();
+    PopupBaseView* popUpView = NULL;
+    if(m_mailInfo->type == MAIL_BATTLE_REPORT){
+//        MailHeiqishiCellInfo* knightMail = dynamic_cast<MailHeiqishiCellInfo*>(m_mailInfo);  simon
+//        if(knightMail!=NULL && knightMail->knight!=NULL)
+//        {
+//            CCLOGFUNC("m_mailInfo->battleType == 6  1");
+//            popUpView = MailHeiqishiListView::create(knightMail);
+//        }
+//        else
+//        {
+//            CCLOGFUNC("m_mailInfo->battleType == 6  2");
+//            popUpView = BattleReportMailPopUpView::create(m_mailInfo);
+//        }
+    }
+    else if(m_mailInfo->type == MAIL_RESOURCE){
+        popUpView = MailResourcePopUpView::create(dynamic_cast<MailResourceCellInfo*>(m_mailInfo));
+    }else if(m_mailInfo->type == MAIL_RESOURCE_HELP){
+        popUpView = MailResourceHelpView::create(dynamic_cast<MailResourceHelpCellInfo*>(m_mailInfo));
+    }
+    else if(m_mailInfo->type == MAIL_DETECT_REPORT){
+        if(m_mailInfo->pointType == MAIL_DETECT_REPORT_PROTECT){
+            popUpView = MailReadPopUpView::create(*m_mailInfo);
+        }else{
+            popUpView = DetectMailPopUpView::create(m_mailInfo);
+        }
+    }else if(m_mailInfo->type==MAIL_DETECT){
+        if(m_mailInfo->itemIdFlag == 1){ //反侦察
+            popUpView = MailReadPopUpView::create(*m_mailInfo);
+        }else{
+            popUpView = DetectMailPopUpView::create(m_mailInfo);
+        }
+    }
+    else if(m_mailInfo->type == MAIL_ENCAMP){
+        popUpView = OccupyMailPopUpView::create(m_mailInfo);
+    }
+    else if(m_mailInfo->type == WORLD_NEW_EXPLORE){
+        popUpView = ExplorePopUpView::create(m_mailInfo);
+    }else if(m_mailInfo->type==MAIL_SYSUPDATE){
+        popUpView = MailAnnouncePopUp::create(m_mailInfo);
+    }else if(m_mailInfo->type == MAIL_ATTACKMONSTER){
+        if( dynamic_cast<MailMonsterCellInfo*>(m_mailInfo) )
+            popUpView = MailMonsterListView::create(dynamic_cast<MailMonsterCellInfo*>(m_mailInfo));
+    }else if(m_mailInfo->type == MAIL_GIFT){
+        popUpView = MailGiftReadPopUpView::create(*m_mailInfo);
+    }else if(m_mailInfo->type == MAIL_WORLD_BOSS){
+        if(m_mailInfo->isWorldBossKillRewardMail){
+            CCLOGFUNC("isWorldBossKillRewardMail");
+            popUpView =WorldBossRewardMailView::create(*m_mailInfo);
+        }
+        else
+        {
+            popUpView =WorldBossMailView::create(*m_mailInfo);
+        }
+    }else{
+        popUpView = MailReadPopUpView::create(*m_mailInfo);
+    }
+    
+    if(popUpView)
+    {
+        return popUpView;
+        //        popUpView->setHDPanelFlag(true);
+        //        popUpView->setIsSystemMail(true);
+        //        PopupViewController::getInstance()->addPopupInView(popUpView,true,false,true);
+    }else {
+        return  NULL;
+    }
+}
+
+void MailController::showMailPopupFromIOS(MailInfo *mailInfo)
+{
+    MailController::getInstance()->showMailPopupFromAnroid(mailInfo);
 }
 
 void MailController::deleteMailFromAndroid(int tabType,int type,std::string mailUid,std::string fromUid){
@@ -3796,6 +4401,30 @@ void MailController::deleteMailFromAndroid(int tabType,int type,std::string mail
     auto it = GlobalData::shared()->mailList.find(mailUid);
     if (GlobalData::shared()->mailList.end() != it) {
         GlobalData::shared()->mailList.erase(it);
+    }
+}
+
+void MailController::getMailRewardBySelectFromAndroid(std::string mailUidStr,std::string types)
+{
+    vector<std::string> vector;
+    CCCommonUtils::splitString(mailUidStr, ",", vector);
+    int i = 0;
+    
+    CCLOGFUNCF("mailUidStr %s  types:%s",mailUidStr.c_str(),types.c_str());
+    MailBatchRewardCommand *cmd = new MailBatchRewardCommand(mailUidStr,types);
+    cmd->sendAndRelease();
+    
+    while(i < vector.size()){
+        std::string uid = vector[i];
+        auto it=GlobalData::shared()->mailList.find(uid);
+        if (  it!=GlobalData::shared()->mailList.end()) {
+            MailInfo* mail = it->second;
+            if(mail){
+                mail->rewardStatus = 1;
+                mail->status = 1;
+            }
+        }
+        i++;
     }
 }
 
@@ -3830,9 +4459,18 @@ string MailController::getPointByOccupyIdx(int index)
 {
 //     CCLOGFUNCF("index : %d",index);
     string cord="";
-    CCPoint point=WorldController::getInstance()->getPointByIndex((int)index);
+    CCPoint point=WorldController::getInstance()->getPointByIndex(index);
     cord.append(CC_ITOA(point.x)).append("_").append(CC_ITOA(point.y));
     return cord;
+}
+
+string MailController::getPointByMapTypeAndIndex(int index,int serverType)
+{
+    string cord="";
+    CCPoint point=WorldController::getInstance()->getPointByMapTypeAndIndex(index,(MapType)serverType);
+    cord.append(CC_ITOA(point.x)).append("_").append(CC_ITOA(point.y));
+    return cord;
+    
 }
 
 void MailController::openMailReadPop(string mailId)
@@ -3913,7 +4551,9 @@ void MailController::openMailReadPop(string mailId)
             }else if(m_mailInfo->type==MAIL_SYSUPDATE){
                 PopupViewController::getInstance()->addPopupInViewWithAnim(MailAnnouncePopUp::create(m_mailInfo));
             }else if(m_mailInfo->type == MAIL_ATTACKMONSTER){
-                PopupViewController::getInstance()->addPopupInViewWithAnim(MailMonsterListView::create(dynamic_cast<MailMonsterCellInfo*>(m_mailInfo)));
+                
+                if(dynamic_cast<MailMonsterCellInfo*>(m_mailInfo))
+                    PopupViewController::getInstance()->addPopupInViewWithAnim(MailMonsterListView::create(dynamic_cast<MailMonsterCellInfo*>(m_mailInfo)));
             }else if(m_mailInfo->type == MAIL_GIFT){
                 PopupViewController::getInstance()->addPopupInViewWithAnim(MailGiftReadPopUpView::create(*m_mailInfo));
             }else if(m_mailInfo->type == MAIL_WORLD_BOSS){
@@ -4401,4 +5041,320 @@ string MailController::calculateKillandLoss(MailInfo* m_mailInfo)
     
     string ret = "";
     return ret+CC_ITOA(kill)+"_"+CC_ITOA(dead);
+}
+
+//c++ chat room
+void MailController::addChatRoomSelfMsg(std::string msg, std::string groupId, std::string sendLocalTime){
+    if(chatRoomSelfMsgList.find(groupId)!=chatRoomSelfMsgList.end()){
+        ChatRoomSelfMsg cmsg = {msg,sendLocalTime};
+        chatRoomSelfMsgList[groupId].push_back(cmsg);
+    }else{
+        vector<ChatRoomSelfMsg> selfMsgVector;
+        ChatRoomSelfMsg cmsg = {msg,sendLocalTime};
+        selfMsgVector.push_back(cmsg);
+        chatRoomSelfMsgList[groupId]=selfMsgVector;
+    }
+}
+void MailController::removeChatRoomSelfMsg(std::string msg, std::string groupId, std::string sendLocalTime){
+    if(chatRoomSelfMsgList.find(groupId)!=chatRoomSelfMsgList.end()){
+        auto iter = chatRoomSelfMsgList[groupId].begin();
+        while(iter!=chatRoomSelfMsgList[groupId].end()){
+            if((*iter).createTime == sendLocalTime){
+                chatRoomSelfMsgList[groupId].erase(iter);
+                break;
+            }
+        }
+    }
+}
+void MailController::quitChatRoom(){
+    if(!m_curChatRoom.empty()){
+        YesNoDialog::show(_lang("105350").c_str(),CCCallFunc::create(this, callfunc_selector(MailController::confirmToQuitChatRoom)));
+    }
+}
+void MailController::confirmToQuitChatRoom(){
+    if(!m_curChatRoom.empty()){
+        quitChatRoom(m_curChatRoom);
+        m_curChatRoom="";
+    }
+}
+void MailController::getChatRoomRecord(int seqid,string roomid){
+    if(seqid<=1)
+        return;
+    
+    int startID = MAX(seqid - 20,1);
+    int endID = MAX(seqid-1, 1);
+
+    GetMsgBySeqIdCommand* cmd = new GetMsgBySeqIdCommand(startID,endID,CHANNEL_TYPE_CHATROOM,roomid);
+    cmd->sendAndRelease();
+}
+void MailController::flyMutiMailReward()
+{
+    if(m_mutiFlyToolRewardArray && m_mutiFlyToolRewardArray->count()>0)
+    {
+        CCLOGFUNC("m_mutiFlyToolRewardArray");
+        GCMRewardController::getInstance()->flyToolReward(m_mutiFlyToolRewardArray);
+        m_mutiFlyToolRewardArray ->removeAllObjects();
+    }
+    if(m_mutiFlyRewardArray && m_mutiFlyRewardArray->count()>0)
+    {
+        CCLOGFUNC("m_mutiFlyRewardArray");
+        CCDictionary* rewardParams = dynamic_cast<CCDictionary*>(m_mutiFlyRewardArray->objectAtIndex(0));
+        if (rewardParams) {
+            CCArray* arr = GCMRewardController::getInstance()->retReward(rewardParams);
+            GCMRewardController::getInstance()->flyReward(arr);
+        }
+        m_mutiFlyRewardArray->removeAllObjects();
+    }
+}
+
+string MailController::getNeighbourMailUuid(string uuid, int type)
+{
+//    bool next = (PopupViewController::ChangePopType::cNEXT == type);
+//    auto& list = GlobalData::shared()->mailList;
+//    auto it = list.find(uuid);
+//    if(it == list.end())
+//    {
+//        return "";
+//    }
+//    auto& mInfo = it->second;
+//    time_t neighbourCreateTime = 0;
+//    if (next) {
+//        neighbourCreateTime = GlobalData::shared()->getTimeStamp() + 10;
+//    }
+//    string ret("");
+//    for (auto it1 = list.begin(); it1 != list.end(); ++it1)
+//    {
+//        if (it1->second->tabType == mInfo->tabType || it1->second->type == mInfo->type)
+//        {
+//            if (it1->first != uuid) {
+//                if (!next) {
+//                    if (it1->second->createTime < mInfo->createTime && it1->second->createTime > neighbourCreateTime && it1->second->status == mInfo->status)
+//                    {
+//                        neighbourCreateTime = it1->second->createTime;
+//                        ret = it1->first;
+//                    }
+//                } else {
+//                    if (it1->second->createTime > mInfo->createTime && it1->second->createTime < neighbourCreateTime && it1->second->status == mInfo->status) {
+//                        neighbourCreateTime = it1->second->createTime;
+//                        ret = it1->first;
+//                    }
+//                }
+//            }
+//        }
+//    }
+//    if (!ret.empty()) {
+//        return ret;
+//    }
+//    if (next && mInfo->status == UNREAD) {
+//        return "";
+//    }
+//    if (!next && mInfo->status == READ) {
+//        return "";
+//    }
+//    neighbourCreateTime = 0;
+//    if (next) {
+//        neighbourCreateTime = GlobalData::shared()->getTimeStamp();
+//    }
+//    for (auto it1 = list.begin(); it1 != list.end(); ++it1) {
+//        if (it1->second->tabType == mInfo->tabType && it1->second->type == mInfo->type)
+//        {
+//            if (it1->first != uuid) {
+//                if (next) {
+//                    if (it1->second->createTime > mInfo->createTime && it1->second->createTime < neighbourCreateTime && it1->second->status != mInfo->status) {
+//                        neighbourCreateTime = it1->second->createTime;
+//                        ret = it1->first;
+//                    }
+//                } else {
+//                    if (it1->second->createTime < mInfo->createTime && it1->second->createTime > neighbourCreateTime && it1->second->status != mInfo->status)
+//                    {
+//                        neighbourCreateTime = it1->second->createTime;
+//                        ret = it1->first;
+//                    }
+//                }
+//            }
+//        }
+//    }
+//    return ret;    simon
+    return "";
+}
+
+PopupBaseView* MailController::createMailView(string uuid)
+{
+    if (uuid.empty())
+    {
+        return nullptr;
+    }
+    auto& list = GlobalData::shared()->mailList;
+    auto it = list.find(uuid);
+    if (it == list.end())
+    {
+        return nullptr;
+    }
+    MailInfo* info = it->second;
+    if (!info) {
+        return nullptr;
+    }
+    PopupBaseView* ret = nullptr;
+    MailInfo* m_mailInfo = info;
+    
+    
+    if (m_mailInfo->tabType == 1)
+    {
+        if (m_mailInfo->type == MAIL_BATTLE_REPORT)
+        {
+            ret = BattleReportMailPopUpView::create(m_mailInfo);
+        } else if (m_mailInfo->type == MAIL_RESOURCE) {
+            ret = MailResourcePopUpView::create((MailResourceCellInfo*)m_mailInfo);
+        } else if (m_mailInfo->type == MAIL_RESOURCE_HELP)
+        {
+            ret = MailResourceHelpView::create(dynamic_cast<MailResourceHelpCellInfo*>(m_mailInfo));
+        }
+        else if (m_mailInfo->type == MAIL_DETECT_REPORT)
+        {
+            if (m_mailInfo->pointType == MAIL_DETECT_REPORT_PROTECT)
+            {
+                ret = MailReadPopUpView::create(*m_mailInfo);
+            } else {
+                ret = DetectMailPopUpView::create(m_mailInfo);
+            }
+        }
+        else if (m_mailInfo->type == MAIL_DETECT)
+        {
+            if (m_mailInfo->itemIdFlag == 1) {//反侦察
+                ret = MailReadPopUpView::create(*m_mailInfo);
+            } else {
+                ret = DetectMailPopUpView::create(m_mailInfo);
+            }
+        }
+        else if (m_mailInfo->type == MAIL_ENCAMP)
+        {
+            ret = OccupyMailPopUpView::create(m_mailInfo);
+        }
+        else if (m_mailInfo->type == WORLD_NEW_EXPLORE)
+        {
+            ret = ExplorePopUpView::create(m_mailInfo);
+        }
+        else if (m_mailInfo->type == MAIL_SYSUPDATE)
+        {
+            ret = MailAnnouncePopUp::create(m_mailInfo);
+        }
+        else if (m_mailInfo->type == MAIL_ATTACKMONSTER)
+        {
+            if (dynamic_cast<MailMonsterCellInfo*>(m_mailInfo))
+            {
+                ret = MailMonsterListView::create(dynamic_cast<MailMonsterCellInfo*>(m_mailInfo));
+            } else {
+                ret = nullptr;
+            }
+        }
+        else if (m_mailInfo->type == MAIL_GIFT)
+        {
+            ret = MailGiftReadPopUpView::create(*m_mailInfo);
+        }
+        else if (m_mailInfo->type == MAIL_WORLD_BOSS)
+        {
+            ret = WorldBossRewardMailView::create(*m_mailInfo);
+        }
+        else {
+            ret = MailReadPopUpView::create(*m_mailInfo);
+        }
+    }
+    else
+    {
+        if (m_mailInfo->type == MAIL_BATTLE_REPORT) {
+            ret = BattleReportMailPopUpView::create(m_mailInfo);
+        }
+        else if (m_mailInfo->type == MAIL_WORLD_BOSS)
+        {
+            ret = WorldBossMailView::create(*m_mailInfo);
+        }
+        else if (m_mailInfo->type == MAIL_RESOURCE)
+        {
+            ret = ResourceMailPopUpView::create(m_mailInfo);
+        }
+        else if (m_mailInfo->type == MAIL_DETECT_REPORT)
+        {
+            if (m_mailInfo->pointType == MAIL_DETECT_REPORT_PROTECT) {
+                ret = MailReadPopUpView::create(*m_mailInfo);
+            }else{
+                ret = DetectMailPopUpView::create(m_mailInfo);
+            }
+        } else if (m_mailInfo->type == MAIL_DETECT) {
+            if (m_mailInfo->itemIdFlag == 1) {
+                ret = MailReadPopUpView::create(*m_mailInfo);
+            } else {
+                ret = DetectMailPopUpView::create(m_mailInfo);
+            }
+        }
+        else if (m_mailInfo->type == MAIL_ENCAMP)
+        {
+            ret = OccupyMailPopUpView::create(m_mailInfo);
+        }
+        else if (m_mailInfo->type == WORLD_NEW_EXPLORE)
+        {
+            ret = ExplorePopUpView::create(m_mailInfo);
+        }
+        else if (m_mailInfo->type == MAIL_SYSUPDATE)
+        {
+            ret = MailAnnouncePopUp::create(m_mailInfo);
+        }
+        else if (m_mailInfo->type == MAIL_ATTACKMONSTER)
+        {
+            ret = MonsterAttackPopUpView::create(m_mailInfo);
+        }
+        else if (m_mailInfo->type == MAIL_MOD_SEND || m_mailInfo->type == MAIL_MOD_PERSONAL)
+        {
+            ret = nullptr;
+//            int type = MAIL_MOD_PERSONAL;
+//            if(GlobalData::shared()->playerInfo.gmFlag == 2 || GlobalData::shared()->playerInfo.gmFlag == 5){
+//                type = MAIL_MOD_SEND;
+//            }
+//            MailController::getInstance()->openMailDialogViewFirst(m_mailInfo->fromName, m_mailInfo->fromUid, "",type);
+        }
+        else
+        {
+            ret = MailReadPopUpView::create(*m_mailInfo);
+        }
+    }
+    
+    if (ret) {
+        bool isNewRead = false;
+        if(m_mailInfo->status==UNREAD){
+            isNewRead = true;
+            m_mailInfo->status = READ;
+            if (m_mailInfo->tabType != 1) {
+                MailController::getInstance()->notyfyReadMail(m_mailInfo->uid, m_mailInfo->type);
+                if(m_mailInfo->tabType==MAILTAB4){
+                    GlobalData::shared()->mailCountObj.fightR -=1;
+                }else if(m_mailInfo->tabType==MAILTAB5){
+                    GlobalData::shared()->mailCountObj.modR -=1;
+                }else if(m_mailInfo->tabType==MAILTAB3){
+                    GlobalData::shared()->mailCountObj.studioR -=1;
+                }else if(m_mailInfo->type== MAIL_FRESHER||m_mailInfo->type==MAIL_SYSNOTICE||m_mailInfo->type==MAIL_SYSUPDATE){
+                    GlobalData::shared()->mailCountObj.saveR -=1;
+                }else if(m_mailInfo->tabType==USERMAIL){
+                    GlobalData::shared()->mailCountObj.perR -=1;
+                }else{
+                    GlobalData::shared()->mailCountObj.sysR -=1;
+                }
+            }
+            else {
+                if(m_mailInfo->type== MAIL_FRESHER||m_mailInfo->type==MAIL_SYSNOTICE||m_mailInfo->type==MAIL_SYSUPDATE
+                   ||m_mailInfo->tabType==USERMAIL||m_mailInfo->type==MAIL_RESOURCE||m_mailInfo->type==MAIL_ATTACKMONSTER
+                   ||m_mailInfo->type==MAIL_RESOURCE_HELP|| m_mailInfo->type==MAIL_MOD_PERSONAL|| m_mailInfo->type==MAIL_MOD_SEND
+                   ){
+                }else{
+                    GlobalData::shared()->mailCountObj.sysR -=1;
+                    MailController::getInstance()->notyfyReadMail(m_mailInfo->uid, m_mailInfo->type);
+                }
+            }
+            if(m_mailInfo->type==MAIL_SYSUPDATE){
+                GlobalData::shared()->mailCountObj.upR-=1;
+            }
+        }
+        if (isNewRead) {
+            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MAIL_LIST_CHANGE);
+        }
+    }
+    return ret;
 }

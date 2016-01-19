@@ -25,15 +25,19 @@ MailInfo* MailInfo::create(){
 }
 
 void MailInfo::parse(cocos2d::CCDictionary *dic){
+    isThanks=false;
     saveDict=NULL;
     isShare=false;
     contents = "";
+    detecterName = "";
     ckfContents = "";
     pic = "";
     allianceLang = "";
     msReport = 0;
     picVer = 0;
     ckf = 0;
+    serverType = 0;
+    mbLevel = 0;
     isWorldBossKillRewardMail = false;
     if(dic->objectForKey("pic")){
         pic = dic->valueForKey("pic")->getCString();
@@ -69,8 +73,20 @@ void MailInfo::parse(cocos2d::CCDictionary *dic){
         uid="";
     createTime =  dic->valueForKey("createTime")->doubleValue() / 1000;
     CCLOGFUNCF("createTime: %ld",createTime);
+    if(dic->objectForKey("mbLevel"))
+    {
+        mbLevel=dic->valueForKey("mbLevel")->intValue();
+    }
     rewardId = dic->valueForKey("rewardId")->getCString();
-    status = dic->valueForKey("status")->intValue();
+    int status1 = dic->valueForKey("status")->intValue();
+    if(status1>0){
+        if(status1==2){
+            isThanks=true;
+        }
+        status = READ;
+    }else{
+        status = UNREAD;
+    }
     fromName = dic->valueForKey("oldName")->getCString();
     nowName = dic->valueForKey("fromName")->getCString();
     modLanguage = dic->valueForKey("modLanguage")->getCString();
@@ -111,6 +127,9 @@ void MailInfo::parse(cocos2d::CCDictionary *dic){
     userScore = dic->valueForKey("userScore")->intValue();
     monsterLevel = dic->valueForKey("monsterLevel")->intValue();
     like = dic->valueForKey("like")->intValue();
+    if(dic->objectForKey("serverType")){
+        serverType = dic->valueForKey("serverType")->intValue();
+    }
     if(dic->objectForKey("contents")){
         showContent = dic->valueForKey("contents")->getCString();
     }
@@ -215,6 +234,9 @@ void MailInfo::parse(cocos2d::CCDictionary *dic){
             if(tempDic!=NULL){
                 int pos = tempDic->valueForKey("warPoint")->intValue();
                 CCPoint pt = WorldController::getPointByIndex(pos);
+//                if (serverType>=SERVER_BATTLE_FIELD) { simon
+//                    pt = WorldController::getPointByMapTypeAndIndex(pos,(MapType)serverType);
+//                }
                 //fromName = _lang_2("105518",CC_ITOA(pt.x),CC_ITOA(pt.y));
                 std::string npcId = "";
                 if( tempDic->objectForKey("npcId"))
@@ -343,14 +365,14 @@ void MailInfo::parse(cocos2d::CCDictionary *dic){
         //todo
         fromName = dic->valueForKey("fromName")->getCString();
     }
-    if (type == MAIL_INVITE_TELEPORT) {
+    else if (type == MAIL_INVITE_TELEPORT) {
         fromName = dic->valueForKey("fromName")->getCString();
         if (pic == "" || pic == "0") {
             pic = "g044";
         }
         title = _lang(title);
     }
-    if (type == MAIL_ALLIANCE_KICKOUT || type == MAIL_REFUSE_ALL_APPLY) {
+    else if (type == MAIL_ALLIANCE_KICKOUT || type == MAIL_REFUSE_ALL_APPLY) {
         fromName = dic->valueForKey("fromName")->getCString();
         if (pic == "" || pic == "0") {
             pic = "g044";
@@ -358,7 +380,6 @@ void MailInfo::parse(cocos2d::CCDictionary *dic){
         title = dic->valueForKey("title")->getCString();
         title = _lang(title);
     }
-    
     
     preSaveContent="";
     attUser = NULL;
@@ -396,9 +417,13 @@ void MailInfo::parse(cocos2d::CCDictionary *dic){
     isFromChat = false;
     ckfWarInfo = NULL;
     isShowDefEndTxt = false;
+    defRemainRes = NULL;
 }
 
 void MailInfo::parseBattleMail(CCDictionary* dict){
+    if( !dict )
+        return;
+    
     checkMail = true;
     auto addGeneral = [](CCArray *arr) {
         CCArray *ret = CCArray::create();
@@ -406,11 +431,14 @@ void MailInfo::parseBattleMail(CCDictionary* dict){
         CCARRAY_FOREACH(arr, obj){
             GeneralInfo *info = new GeneralInfo(dynamic_cast<CCDictionary*>(obj));
             ret->addObject(info);
-            CC_SAFE_RELEASE(info);
+            info->release();
         }
         ret->retain();
         return ret;
     };
+    if(dict->objectForKey("serverType")){
+        serverType = dict->valueForKey("serverType")->intValue();
+    }
     if(dict->objectForKey("isResourceShieldState")){
         isResourceShieldState = dict->valueForKey("isResourceShieldState")->boolValue();
     }else{
@@ -480,8 +508,15 @@ void MailInfo::parseBattleMail(CCDictionary* dict){
         attUser->retain();
     }
     if(dict->objectForKey("warPoint")){
-        int pos = dict->valueForKey("warPoint")->intValue();
-        warPoint = WorldController::getPointByIndex(pos);
+//        int pos = dict->valueForKey("warPoint")->intValue(); simon
+//        if (serverType>=SERVER_BATTLE_FIELD) {
+//            warPoint = WorldController::getPointByMapTypeAndIndex(pos,(MapType)serverType);
+//        }else{
+//            warPoint = WorldController::getPointByIndex(pos);
+//        }
+    }
+    if(dict->objectForKey("warServerId")){
+        warServerId = dict->valueForKey("warServerId")->intValue();
     }
     if(dict->objectForKey("defUser")){
         defUser = dynamic_cast<CCDictionary*>(dict->objectForKey("defUser"));
@@ -556,116 +591,127 @@ void MailInfo::parseBattleMail(CCDictionary* dict){
     if(dict->objectForKey("ckf")){
         ckf = dict->valueForKey("ckf")->intValue();
     }
+    if(dict->objectForKey("remainResource")){
+        defRemainRes = dynamic_cast<CCDictionary*>(dict->objectForKey("remainResource"));
+        defRemainRes->retain();
+    }else{
+        defRemainRes = CCDictionary::create();
+        defRemainRes->retain();
+    }
 }
 
 MailInfo::~MailInfo(){
 
     if(detectReport){
         detectReport->removeAllObjects();
-        CC_SAFE_RELEASE(detectReport);
+        detectReport->release();
         detectReport = NULL;
     }
     if(attUser){
-        CC_SAFE_RELEASE(attUser);
+        attUser->release();
         attUser = NULL;
     }
     if(defUser){
-        CC_SAFE_RELEASE(defUser);
+        defUser->release();
         defUser = NULL;
     }
     if(defAlliance){
-        CC_SAFE_RELEASE(defAlliance);
+        defAlliance->release();
         defAlliance = NULL;
     }
     if(atkAlliance){
-        CC_SAFE_RELEASE(atkAlliance);
+        atkAlliance->release();
         atkAlliance = NULL;
     }
     if(atkHelpReport){
-        CC_SAFE_RELEASE(atkHelpReport);
+        atkHelpReport->release();
         atkHelpReport = NULL;
     }
     if(defHelpReport){
-        CC_SAFE_RELEASE(defHelpReport);
+        defHelpReport->release();
         defHelpReport = NULL;
     }
     if(atkHelper){
-        CC_SAFE_RELEASE(atkHelper);
+        atkHelper->release();
         atkHelper = NULL;
     }
     if(defHelper){
-        CC_SAFE_RELEASE(defHelper);
+        defHelper->release();
         defHelper = NULL;
     }
     if(atkArmyTotal){
-        CC_SAFE_RELEASE(atkArmyTotal);
+        atkArmyTotal->release();
         atkArmyTotal = NULL;
     }
     if(defArmyTotal){
-        CC_SAFE_RELEASE(defArmyTotal);
+        defArmyTotal->release();
         defArmyTotal = NULL;
     }
     if(trainGenerals){
         trainGenerals->removeAllObjects();
-        CC_SAFE_RELEASE(trainGenerals);
+        trainGenerals->release();
         trainGenerals = NULL;
     }
     if(trainGeneralExp){
         trainGeneralExp->removeAllObjects();
-        CC_SAFE_RELEASE(trainGeneralExp);
+        trainGeneralExp->release();
         trainGeneralExp = NULL;
     }
     if(attReport){
         attReport->removeAllObjects();
-        CC_SAFE_RELEASE(attReport);
+        attReport->release();
     }
     if(defReport){
         defReport->removeAllObjects();
-        CC_SAFE_RELEASE(defReport);
+        defReport->release();
         defReport = NULL;
     }
     if(atkGen){
         atkGen->removeAllObjects();
-        CC_SAFE_RELEASE(atkGen);
+        atkGen->release();
         atkGen = NULL;
     }
     if(defGen){
         defGen->removeAllObjects();
-        CC_SAFE_RELEASE(defGen);
+        defGen->release();
         defGen = NULL;
     }
     if(reward){
         reward->removeAllObjects();
-        CC_SAFE_RELEASE(reward);
+        reward->release();
         reward = NULL;
     }
     if(occupyGeneral){
         occupyGeneral->removeAllObjects();
-        CC_SAFE_RELEASE(occupyGeneral);
+        occupyGeneral->release();
         occupyGeneral = NULL;
     }
     if(mazeReward){
         mazeReward->removeAllObjects();
-        CC_SAFE_RELEASE(mazeReward);
+        mazeReward->release();
         mazeReward = NULL;
     }
     if(mazeSodiler){
-        CC_SAFE_RELEASE(mazeSodiler);
+        mazeSodiler->release();
         mazeSodiler = NULL;
     }
     if(monsters){
         monsters->removeAllObjects();
-        CC_SAFE_RELEASE(monsters);
+        monsters->release();
         monsters = NULL;
     }
     if(dialogs){
         dialogs->removeAllObjects();
-        CC_SAFE_RELEASE(dialogs);
+        dialogs->release();
         dialogs = NULL;
     }
     if(ckfWarInfo){
-        CC_SAFE_RELEASE(ckfWarInfo);
+        ckfWarInfo->release();
         ckfWarInfo = NULL;
+    }
+    if(defRemainRes){
+        defRemainRes->release();
+        defRemainRes = NULL;
     }
 //    if(crMemberUidArray)
 //    {

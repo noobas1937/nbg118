@@ -2947,7 +2947,7 @@ extern "C" {
         
         J2CSTRING(jsonStr, json);
         CCLOGFUNCF("jsonStr : %s", jsonStr.c_str());
-//        MailController::getInstance()->parseDetectInfo(jsonStr);
+        MailController::getInstance()->parseDetectInfo(jsonStr);
     }
     
     JNIEXPORT void JNICALL Java_com_elex_chatservice_host_GameHost_postDeletedDetectMailInfo (JNIEnv *env,
@@ -2958,7 +2958,7 @@ extern "C" {
         
         J2CSTRING(jsonStr, json);
         CCLOGFUNCF("jsonStr : %s", jsonStr.c_str());
-//        MailController::getInstance()->postDeletedDetectMailInfo(jsonStr);
+        MailController::getInstance()->postDeletedDetectMailInfo(jsonStr);
     }
     
     JNIEXPORT void JNICALL Java_com_elex_chatservice_host_GameHost_postChangedDetectMailInfo (JNIEnv *env,
@@ -2969,7 +2969,7 @@ extern "C" {
         
         J2CSTRING(jsonStr, json);
         CCLOGFUNCF("jsonStr : %s", jsonStr.c_str());
-//        MailController::getInstance()->postChangedDetectMailInfo(jsonStr);
+        MailController::getInstance()->postChangedDetectMailInfo(jsonStr);
     }
     
 	
@@ -3069,10 +3069,10 @@ extern "C" {
         
         CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(JNIScheduleObject::postRetrunGame), JNIScheduleObject::getInstance(), 0.0f, 0, 1.0f, false);
         
-//        if ((MailController::getInstance()->m_mutiFlyToolRewardArray!=NULL && MailController::getInstance()->m_mutiFlyToolRewardArray->count()>0) ||
-//            (MailController::getInstance()->m_mutiFlyRewardArray!=NULL && MailController::getInstance()->m_mutiFlyRewardArray->count()>0)) {
-//            CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(JNIScheduleObject::flyMutiMailReward), JNIScheduleObject::getInstance(), 0.0f, 0, 1.0f, false);
-//        }
+        if ((MailController::getInstance()->m_mutiFlyToolRewardArray!=NULL && MailController::getInstance()->m_mutiFlyToolRewardArray->count()>0) ||
+            (MailController::getInstance()->m_mutiFlyRewardArray!=NULL && MailController::getInstance()->m_mutiFlyRewardArray->count()>0)) {
+            CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(JNIScheduleObject::flyMutiMailReward), JNIScheduleObject::getInstance(), 0.0f, 0, 1.0f, false);
+        }
         ChatServiceCocos2dx::notifyReturn2dxGame();
 	}
 	
@@ -3239,7 +3239,7 @@ extern "C" {
         if (mailUidStr=="" && typeStr=="") {
             return;
         }
-//        MailController::getInstance()->getMailRewardBySelectFromAndroid(mailUidStr,typeStr);
+        MailController::getInstance()->getMailRewardBySelectFromAndroid(mailUidStr,typeStr);
     }
     
     JNIEXPORT void JNICALL Java_com_elex_chatservice_host_GameHost_testMailCommand(JNIEnv* env, jobject object)
@@ -3261,7 +3261,7 @@ extern "C" {
         CCLOGFUNC("");
         J2CSTRING(mailUidsStr, mailUids);
         CCLOGFUNCF("mailUidsStr:%s",mailUidsStr.c_str());
-//        MailController::getInstance()->notifyReadMutiMail(mailUidsStr);
+        MailController::getInstance()->notifyReadMutiMail(mailUidsStr);
     }
     
     JNIEXPORT void JNICALL Java_com_elex_chatservice_host_GameHost_readChatMail(JNIEnv* env, jobject object,jstring fromUser,jboolean isMod)
@@ -3277,7 +3277,7 @@ extern "C" {
         CCLOGFUNC("");
          J2CSTRING(typesStr, types);
         CCLOGFUNCF("type:%d  typesStr:%s",type,typesStr.c_str());
-//        MailController::getInstance()->notyfyReadDialogMail((int)type, (bool)isMod,typesStr);
+        MailController::getInstance()->notyfyReadDialogMail((int)type, (bool)isMod,typesStr);
     }
     
     JNIEXPORT void JNICALL Java_com_elex_chatservice_host_GameHost_getUpdateMail(JNIEnv* env, jobject object,jstring lastModifyTime)
@@ -3339,7 +3339,7 @@ extern "C" {
                                                                     jint serverType){
         CCLOGFUNCF("getPointByMapTypeAndIndex occupyPointId:%d  serverType:%d",occupyPointId,serverType);
         string pointStr = "hh";
-//        MailController::getInstance()->getPointByMapTypeAndIndex((int)occupyPointId,(jint)serverType);
+        MailController::getInstance()->getPointByMapTypeAndIndex((int)occupyPointId,(jint)serverType);
         return env->NewStringUTF(pointStr.c_str());
     }
     
@@ -3471,7 +3471,7 @@ extern "C" {
                                                                                        jstring json){
         J2CSTRING(jsonStr, json);
         CCLOGFUNCF("jsonStr: %s",jsonStr.c_str());
-//        MailController::getInstance()->parseUserMailInfo(jsonStr);
+        MailController::getInstance()->parseUserMailInfo(jsonStr);
     }
     
     JNIEXPORT void JNICALL Java_com_elex_chatservice_host_GameHost_postChatLatestInfo(JNIEnv *env,
@@ -3594,7 +3594,7 @@ JNIScheduleObject* JNIScheduleObject::getInstance()
 
 void JNIScheduleObject::showLatestMessage(float time){
     CCLOG("JNIScheduleObject::showLatestMessage");
-//    ChatController::getInstance()->getLatestMessage();
+//    ChatController::getInstance()->getLatestMessage();  simon
 //    if (ChatServiceCocos2dx::m_channelType==CHANNEL_TYPE_COUNTRY) {
 //        UIComponent::getInstance()->showCountryIcon(true);
 //        ChatController::getInstance()->showLatestMessage(0);
@@ -3618,7 +3618,7 @@ void JNIScheduleObject::postRetrunGame(float time){
 
 void JNIScheduleObject::flyMutiMailReward(float time){
     CCLOG("JNIScheduleObject::flyMutiMailReward");
-//    MailController::getInstance()->flyMutiMailReward();
+    MailController::getInstance()->flyMutiMailReward();
     CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(JNIScheduleObject::flyMutiMailReward), this);
 }
 

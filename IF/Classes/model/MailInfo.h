@@ -26,6 +26,7 @@ public:
     void parse(CCDictionary* dic);
     void parseBattleMail(CCDictionary* dic);
     void parseDetectRepMail(CCDictionary* dic);
+    MailInfo():attUser(NULL),defUser(NULL),defArmyTotal(NULL),atkArmyTotal(NULL),atkHelpReport(NULL),defHelpReport(NULL),atkAlliance(NULL),defAlliance(NULL),atkHelper(NULL),defHelper(NULL),atkGen(NULL),defGen(NULL),atkWarEffect(NULL),dfWarEffect(NULL),reward(NULL),defRemainRes(NULL),attReport(NULL),defReport(NULL),defFortLost(NULL),trainGenerals(NULL),trainGeneralExp(NULL),detectReport(NULL),occupyGeneral(NULL),defTowerKill(NULL),atkGenKill(NULL),defGenKill(NULL),monsters(NULL),mazeReward(NULL),mazeSodiler(NULL),user(NULL),dialogs(NULL),ckfWarInfo(NULL),crMemberUidArray(NULL),saveDict(NULL),isBanMail(false),serverType(0),targetPoint(0),failTimes(0),userScore(0),userKill(0),msReport(0),winPercent(0),killRound(0),monsterLevel(0),like(0){};
     ~MailInfo();
     std::string contents;
     std::string uid;
@@ -52,6 +53,7 @@ public:
     std::string showContent;
     int reply;
     int goToDonate;
+    int mbLevel;
     int pointType; //MAIL_DETECT_REPORT_PROTECT - 10000 (前台自用,侦查邮件使用反侦察道具), 10 王座 , 12 投石机 , .. 其他 ( 类型: 4(战斗) 8(侦查报告) 9(扎营)添加该字段)
     
     //联盟内容
@@ -84,8 +86,10 @@ public:
     CCArray *atkWarEffect;
     CCArray *dfWarEffect;
     CCArray *reward;
+    CCDictionary *defRemainRes;////////防守方所余资源量，新版邮件功能
     std::string winner;
     CCPoint warPoint;
+    int warServerId;
     CCArray *attReport;
     CCArray *defReport;
     int resLevel;
@@ -99,6 +103,7 @@ public:
     
     //侦查
     CCDictionary *detectReport;
+    std::string detecterName;//侦查者联盟简称及名子 前台解析获取到
     //驻扎
     CCArray *occupyGeneral;
     int occupyPointId;
@@ -171,14 +176,19 @@ public:
     std::string ckfContents;
     int ckf;//跨服邮件 转换坐标什么的，要用这转getPointByMapTypeAndIndex
     bool isWorldBossKillRewardMail;
+    int serverType;//跨服邮件 转换坐标什么的，要用这转getPointByMapTypeAndIndex
     
     //聊天室使用
-    std::string crGroupId;          //聊天室群组ID
+    std::string crGroupId;          //聊天室群组ID    ps:联盟礼包的邮件里，用来保存礼包名字
     CCArray* crMemberUidArray;      //群组成员Uid Array
     CCDictionary *saveDict;
     
     //宝藏
     bool isTreasureMap;
+    //联盟礼包邮件的感谢
+    bool isThanks;
+    
+    bool isBanMail;
 };
 
 #endif

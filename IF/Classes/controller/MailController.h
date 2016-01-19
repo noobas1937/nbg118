@@ -13,9 +13,11 @@
 #include "MailResourceCellInfo.h"
 #include "MailMonsterCellInfo.h"
 #include "MailResourceHelpCellInfo.h"
+//#include "MailHeiqishiCellInfo.hpp" simon
 #include "MailDialogInfo.h"
 #include "MailInfo.h"
 #include <spine/Json.h>
+#include "PopupBaseView.h"
 
 #define MAIL_LIST_CHANGE "mailListChange"
 #define MAIL_SAVE_LIST_CHANGE "mailsaveListChange"
@@ -37,6 +39,7 @@
 #define MAIL_READ_MAIL_SUCCESS "mail_read_mail_success"
 #define MAIL_SEND_GIFT_SUCCESS "mail_send_gift_success"
 #define CHAT_ROOM_NAME_REFRESH "mail.room.name.refresh"
+#define CHAT_ROOM_MSG_CHANGE "mail.room.msg.change"
 enum MailType {
     MAIL_SELF_SEND, //0
     MAIL_USER,      //1
@@ -74,6 +77,8 @@ enum MailType {
     CHAT_ROOM,   //31
     MAIL_ACTIVITY,//32
     MAIL_REFUSE_ALL_APPLY, //33 拒绝申请加入联盟
+    MAIL_ALLIANCE_PACKAGE, //34 联盟礼包
+    MAIL_ALLIANCE_RANKCHANGE    //35联盟等级变化邮件
     };
 
 enum ChannelMsgType{
@@ -84,6 +89,10 @@ enum ChannelMsgType{
     CHANNEL_TYPE_OFFICIAL,
     
 };
+struct ChatRoomSelfMsg{
+    string msg;
+    string createTime;
+};
 
 class MailController : public CCObject{
 public:
@@ -93,16 +102,23 @@ public:
     void updateMailList();
     void handleMailMessage(MailInfo* mailInfo,MailDialogInfo* mailDialogInfo,bool isNewMsg=false,int msgType=CHANNEL_TYPE_USER);  //处理android邮件的消息
     void handleMailMessageForOpen(MailInfo* maiInfo);
-    void showMailPopupFromAnroid(MailInfo* mailInfo);
+    void showMailPopupFromAnroid(MailInfo* mailInfo,bool isDetectMailFromAndroid = false);
+    PopupBaseView*  gettingShowPopUpViewWithiOS(MailInfo* m_mailInfo);
+    void showMailPopupFromIOS(MailInfo* mailInfo);
     void notifyMailMsgToAndroid(CCArray* mailInfoArr,string fromUid,string customName="",bool isModMsg = false);
     void notifyMailMsgToIOS(CCArray* mailInfoArr,int channelType,string fromUid);
     //count 表示当前已对话多少封邮件 偏移量写死 20条
     void requestMoreMail(string fromUid,string uid,int count);
     
-    
+    CCArray* m_mutiFlyToolRewardArray;     //新邮件列表下，保存的领取多个邮件奖励的Tool奖励列表，需要等到原生界面关闭才能显示
+    CCArray* m_mutiFlyRewardArray;            //新邮件列表下，保存的领取多个邮件奖励的奖励列表，需要等到原生界面关闭才能显示
     CCDictionary* m_mailInfoSendDic;        //用于通过JNI向android传送邮件消息，key对应消息序号，value对应消息体，消息体可能有多条消息也可能是一条消息
     CCDictionary* m_allianceMemberInfoDic;        //用于通过JNI向android传送的联盟成员，key对应成员信息序号，value对应成员信息
     CCDictionary* m_mailDataDic;        //用于通过JNI向android传送邮件数据包括所有类型邮件，key对应消息序号，value对应邮件MailInfo对象数组，对象数组可能有多个对象也可能是一个对象
+    /**
+     *  存入 mailinfo 方便与IOS端读取数据
+     */
+    CCDictionary* m_mailDataDicIOS;
     
     void addMails(CCArray* arr,bool isreadContent=false);
     void addMail(CCDictionary* dic,bool isreadContent=false,bool postNotification = true);
@@ -143,18 +159,33 @@ public:
     
     void addOneMonsterToMail(CCDictionary *dict,std::string mailUid);
     void addOneMonsterToMail(CCDictionary *dict,MailMonsterCellInfo* mailInfo);
+    
+//    void addOneHeiqishiToMail(CCDictionary *dict,MailHeiqishiCellInfo* mailInfo);  simon
 
     bool isMailFull(int type);
     void readMailContent(int type);
     void reloadMailMore(int type,int num,int offset);
     void notyfyReadMail(std::string uid, int type);
     void notyfyReadChatMail(std::string fromUser,bool isMod);
+    void notyfyReadDialogMail(int type,bool isMod,std::string types = "");
+    void notifyReadMutiMail(std::string uids);
     CCArray* getSortMailByTime(CCArray* data);
+    CCArray* getSortMailByTimeToIOS(CCArray* data);
     int getMailTabTypeByInfo(MailInfo* mail);
     void removeMailDialog(std::string mailUid,std::string dialogUid,std::string type);
     void removeOneMailResource(std::string mailUid,std::string dialogUid,std::string type);
     void openMailDialogViewFirst(std::string fromName,std::string fromUid, string modLanguage="", int type = MAIL_SELF_SEND);
     void pushMailDialogFirst(CCDictionary* dic);
+    void parseDetectInfo(std::string json);
+    void onPostDetectInfo(std::string json);
+    void postDeletedDetectMailInfo(std::string json);
+    void postChangedDetectMailInfo(std::string json);
+    void getDetectMailByMailUid(string mailUid);
+    void initAllMail_ios(map<string,pair<string,int>> mailDectMap);
+    void DeleteDectMail_ios(map<string,pair<string,int>> mailDectMap);
+    void updateDectMail_ios(map<string,pair<string,int>> mailDectMap);
+    void parseUserMailInfo(string json);
+    void getFriendMailByUids(std::vector<std::string> friendUidVec);
     
     void pushMailResourceFirst(CCDictionary *dict);
     void pushMailMonsterFirst(CCDictionary *dict);
@@ -222,11 +253,23 @@ public:
     void removeFromUidFromOpMails(std::string fromUid);
     void deleteMailFromAndroid(int tabType,int type,std::string mailUid,std::string fromUid);
     void deleteMailBySelectFromAndroid(std::string mailUidStr,std::string types);
+    void getMailRewardBySelectFromAndroid(std::string mailUidStr,std::string types);
     void getUpdateMail(std::string modifyTime);
     string getPointByOccupyIdx(int index);
+    string getPointByMapTypeAndIndex(int index,int serverType);
     void parseBattleContentAbility(CCArray* genArr);
     CCArray* parseWarEffect(CCArray* effectArr);
     void parseAbility(CCDictionary* dic);
+    void addChatRoomSelfMsg(std::string msg,std::string groupId,std::string sendLocalTime);
+    void removeChatRoomSelfMsg(std::string msg, std::string groupId, std::string sendLocalTime);
+    std::map<string,vector<ChatRoomSelfMsg>> chatRoomSelfMsgList;
+    CC_SYNTHESIZE(string, m_curChatRoom, CurChatRoom);
+    void quitChatRoom();
+    void confirmToQuitChatRoom();
+    void getChatRoomRecord(int seqid,string roomid);
+    void flyMutiMailReward();
+    string getNeighbourMailUuid(string uuid, int type);
+    PopupBaseView* createMailView(string uuid);
 private:
     CC_SYNTHESIZE(int, m_newMailUnreadNum, NewMailUnreadNum);
     CC_SYNTHESIZE(bool, m_isSearchUser, IsSearchUser);
