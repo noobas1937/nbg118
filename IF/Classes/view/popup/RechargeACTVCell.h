@@ -73,6 +73,7 @@ protected:
     CCSafeObject<CCLabelIF> m_timeLabel;
     CCSafeObject<CCNode> m_contentNode;
     CCSafeObject<CCNode> m_ani;
+    CCSafeObject<CCNode> m_timeNode;
 private:
     GoldExchangeItem *m_dataItem;
     int m_type;

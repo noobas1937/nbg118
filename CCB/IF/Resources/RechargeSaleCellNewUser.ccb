@@ -156,8 +156,6 @@
 										<real>0.0</real>
 									</dict>
 								</array>
-								<key>selected</key>
-								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>
@@ -174,6 +172,14 @@
 								<integer>0</integer>
 								<key>properties</key>
 								<array>
+									<dict>
+										<key>name</key>
+										<string>visible</string>
+										<key>type</key>
+										<string>Check</string>
+										<key>value</key>
+										<false/>
+									</dict>
 									<dict>
 										<key>name</key>
 										<string>anchorPoint</string>
@@ -282,6 +288,8 @@
 										<real>0.0</real>
 									</dict>
 								</array>
+								<key>selected</key>
+								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>
@@ -445,7 +453,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>89</real>
+									<real>95</real>
 									<real>40</real>
 									<integer>0</integer>
 								</array>
@@ -457,7 +465,7 @@
 								<string>Point</string>
 								<key>value</key>
 								<array>
-									<real>0.10000000149011612</real>
+									<real>0.0</real>
 									<real>0.5</real>
 								</array>
 							</dict>
@@ -625,7 +633,7 @@
 								<string>FloatScale</string>
 								<key>value</key>
 								<array>
-									<real>30</real>
+									<real>26</real>
 									<integer>0</integer>
 								</array>
 							</dict>

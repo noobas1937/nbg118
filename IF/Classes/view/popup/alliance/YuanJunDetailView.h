@@ -43,11 +43,15 @@ private:
     virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(cocos2d::CCObject * pTarget, const char * pSelectorName){return NULL;}
 	virtual SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName);
 	virtual bool onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode);
+    void onClickResult(CCObject * pSender, CCControlEvent pCCControlEvent);
     void saveSuccess();
     void cellClick(CCObject* param);
     void getServerData(CCObject* data);
     void removeOneCell(CCObject* param);
     
+    CCSafeObject<CCControlButton> m_btnResult;
+    CCSafeObject<CCNode> m_bottomNode;
+
     CCSafeObject<CCLabelIF> m_numTxt;
     CCSafeObject<CCLabelIF> m_tip;
     CCSafeObject<CCScale9Sprite> m_viewBg;

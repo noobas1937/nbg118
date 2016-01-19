@@ -461,20 +461,23 @@ bool GoldExchangeSaleCell::init(int itemId, int num,string popUpImage,int type)
     {
         ccbFile = "RechargeSaleCellNewUser";
     }
+    //ccbFile = "RechargeSaleCellNewUser";
     CCBLoadFile(ccbFile.c_str(),this,this);
     //CCBLoadFile("RechargeSaleCellNewUser",this,this);
     //CCBLoadFile("RechargeSaleCellCityBuild",this,this);
     string name ="";
     string picStr = "";
+    int size55 = 69;
+    int size52 = 66;
     if(type == 0){
         if (itemId < 10) {// 资源
             picStr = CCCommonUtils::getResourceIconByType(itemId);
             name = CCCommonUtils::getResourceNameByType(itemId);
             auto iconBg = CCLoadSprite::createSprite(CCCommonUtils::getToolBgByColor(2).c_str());
-            CCCommonUtils::setSpriteMaxSize(iconBg, 55,true);
+            CCCommonUtils::setSpriteMaxSize(iconBg, size55,true);
             m_iconNode->addChild(iconBg);
             auto icon = CCLoadSprite::createSprite(picStr.c_str(),true,CCLoadSpriteType_DEFAULT);
-            CCCommonUtils::setSpriteMaxSize(icon, 52, true);
+            CCCommonUtils::setSpriteMaxSize(icon, size52, true);
             m_iconNode->addChild(icon);
             m_nameLabel->setString(name);
             std::string numText = "x";
@@ -482,7 +485,7 @@ bool GoldExchangeSaleCell::init(int itemId, int num,string popUpImage,int type)
             m_numLabel->setString(numText);
         }
         else {//道具
-            CCCommonUtils::createGoodsIcon(itemId, m_iconNode, CCSize(55, 55),NULL,m_nameLabel);
+            CCCommonUtils::createGoodsIcon(itemId, m_iconNode, CCSize(size55, size55),NULL,m_nameLabel);
             std::string numText = "x";
             numText = numText + CC_ITOA(num); //ljf
             m_numLabel->setString(numText);
@@ -503,11 +506,11 @@ bool GoldExchangeSaleCell::init(int itemId, int num,string popUpImage,int type)
         m_numLabel->setString(numText);
         string bgPath = CCCommonUtils::getToolBgByColor(eInfo.color);
         auto iconBg = CCLoadSprite::createSprite(bgPath.c_str());
-        CCCommonUtils::setSpriteMaxSize(iconBg, 55, true);
+        CCCommonUtils::setSpriteMaxSize(iconBg, size55, true);
         m_iconNode->addChild(iconBg);
         picStr = CCCommonUtils::getIcon(CC_ITOA(itemId));
         auto icon = CCLoadSprite::createSprite(picStr.c_str(),true,CCLoadSpriteType_EQUIP);
-        CCCommonUtils::setSpriteMaxSize(icon, 52, true);
+        CCCommonUtils::setSpriteMaxSize(icon, size52, true);
         m_iconNode->addChild(icon);
     }
     

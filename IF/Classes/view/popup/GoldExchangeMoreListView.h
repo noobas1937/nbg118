@@ -50,6 +50,9 @@ private:
     CCSafeObject<CCSprite> m_soleOutSpr;
     CCSafeObject<CCSprite> m_soleOutSpr1;
     CCSafeObject<CCSprite> m_arrowSpr;
+    //begin a by ljf
+    CCSafeObject<CCSprite> m_adSpr;
+    //end a by ljf
     CCSafeObject<CCNode> m_animNode;
     CCSafeObject<CCSprite> m_nbClosebtn;
     

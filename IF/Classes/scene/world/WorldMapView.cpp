@@ -5684,7 +5684,7 @@ void WorldMapView::addUnderNode(unsigned int index) {
             auto under = CCLoadSprite::createSprite(getSpriteName(info).c_str());
             under->setAnchorPoint(ccp(0, 0));
             under->setTag(index);
-            under->setPosition(ccp(pos.x-_halfTileSize.width,pos.y-_halfTileSize.height)); // left-bottom corner
+            under->setPosition(ccp(pos.x - under->getContentSize().width / 2 /* - _halfTileSize.width / 2*/,pos.y-_halfTileSize.height)); // left-bottom corner
             m_cityItem[index].push_back(under);
             m_cityBatchNode->addChild(under, index);
             
