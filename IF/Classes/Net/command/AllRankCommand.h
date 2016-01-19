@@ -12,6 +12,7 @@
 #include "CommandBase.h"
 
 #define ALLIANCE_RANK "alliance.rank"
+#define ALLIANCE_HELP_RANK "reinforce.record.get"
 #define ALLIANCE_KILL_RANK "kill.al.rank"
 #define PLAYER_RANK  "server.rank"
 #define PLAYER_KILL_RANK  "kill.rank"
@@ -86,4 +87,12 @@ protected:
 private:
     std::string m_uid;
 };
+class HelpReportCmd: public CommandBase {
+public:
+    HelpReportCmd() : CommandBase(ALLIANCE_HELP_RANK){
+    };
+protected:
+    virtual bool handleRecieve(cocos2d::CCDictionary *dict);
+};
+
 #endif /* defined(__IF__AllRankCommand__) */
