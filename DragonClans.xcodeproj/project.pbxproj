@@ -37,8 +37,6 @@
 		0CC29A3D1AFC4E48006B3BAF /* DailyActiveController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0CC29A3B1AFC4E48006B3BAF /* DailyActiveController.cpp */; };
 		0CC29A421AFC4E60006B3BAF /* DailyActiveBoxInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0CC29A3E1AFC4E60006B3BAF /* DailyActiveBoxInfo.cpp */; };
 		0CC29A431AFC4E60006B3BAF /* DailyActiveItemInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0CC29A401AFC4E60006B3BAF /* DailyActiveItemInfo.cpp */; };
-		0CC29A491AFC4E83006B3BAF /* DailyActiveBoxInfoView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0CC29A451AFC4E83006B3BAF /* DailyActiveBoxInfoView.cpp */; };
-		0CC29A4A1AFC4E83006B3BAF /* DailyActiveView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0CC29A471AFC4E83006B3BAF /* DailyActiveView.cpp */; };
 		0CC29A4D1AFC5393006B3BAF /* DailyActivePush.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0CC29A4B1AFC5393006B3BAF /* DailyActivePush.cpp */; };
 		0CC29A501AFCBBF1006B3BAF /* IFDailyActiveNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0CC29A4E1AFCBBF1006B3BAF /* IFDailyActiveNode.cpp */; };
 		0CD306A71A7FAB7600C1DB80 /* LotteryActCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0CD306A51A7FAB7600C1DB80 /* LotteryActCommand.cpp */; };
@@ -64,7 +62,6 @@
 		1D5F4E9F1B4E85D3003048DB /* ActPopTimesCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1D5F4E9D1B4E85D3003048DB /* ActPopTimesCommand.cpp */; };
 		1D5FA00A1B018D89004D2E51 /* LuaCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1D5FA0081B018D89004D2E51 /* LuaCommand.cpp */; };
 		1D63CBD31B4E13B100BD8CFB /* ActivityPopupView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1D63CBD11B4E13B100BD8CFB /* ActivityPopupView.cpp */; };
-		1D686BED1B57B7BC00080402 /* TrainingView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1D686BEB1B57B7BC00080402 /* TrainingView.cpp */; };
 		1D72B7321AA19E4D004EE9F0 /* InviteTeleportCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1D72B7301AA19E4D004EE9F0 /* InviteTeleportCommand.cpp */; };
 		1D79175A1B5F279D0016D6E4 /* TrialCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1D7917581B5F279D0016D6E4 /* TrialCommand.cpp */; };
 		1D827BB21A0A44F700C9C466 /* FiveStarTaskView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1D827BB01A0A44F700C9C466 /* FiveStarTaskView.cpp */; };
@@ -300,7 +297,6 @@
 		5720024D1A84690F005865FA /* MoveBuildView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5720024B1A84690F005865FA /* MoveBuildView.cpp */; };
 		57208CBD1AF9F79200150AA2 /* ToolCreateView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57208CBB1AF9F79200150AA2 /* ToolCreateView.cpp */; };
 		5720DE191828D32600038960 /* FunBuildAllCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5720DE181828D32600038960 /* FunBuildAllCommand.cpp */; };
-		5721136A1B4A4FE800811A4F /* NewPlayerQianDaoView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 572113681B4A4FE800811A4F /* NewPlayerQianDaoView.cpp */; };
 		57233E7D1820D0CC00C04BFD /* ChatCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57233E7C1820D0CC00C04BFD /* ChatCell.cpp */; };
 		572440321B2183AA000DAF5F /* DragonBuildListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 572440301B2183AA000DAF5F /* DragonBuildListView.cpp */; };
 		572440351B2183EB000DAF5F /* DragonBuildView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 572440331B2183EB000DAF5F /* DragonBuildView.cpp */; };
@@ -1033,6 +1029,14 @@
 		B891A8131C2A493E00CA642D /* NBWorldUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B891A8111C2A493E00CA642D /* NBWorldUtils.cpp */; };
 		B892CE211C48D8F0005A910E /* NBAllianceHelpReportView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B892CE1F1C48D8F0005A910E /* NBAllianceHelpReportView.cpp */; };
 		B892CE281C48DB64005A910E /* IFAllianceHelpReportInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B892CE261C48DB64005A910E /* IFAllianceHelpReportInfo.cpp */; };
+		B8BB9CE21C4E0388000ADFD9 /* DailyActiveBoxInfoView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8BB9CD21C4E0388000ADFD9 /* DailyActiveBoxInfoView.cpp */; };
+		B8BB9CE31C4E0388000ADFD9 /* DailyActiveView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8BB9CD41C4E0388000ADFD9 /* DailyActiveView.cpp */; };
+		B8BB9CE41C4E0388000ADFD9 /* NewPlayerQianDaoView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8BB9CD61C4E0388000ADFD9 /* NewPlayerQianDaoView.cpp */; };
+		B8BB9CE51C4E0388000ADFD9 /* SingleScoreActiveView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8BB9CD81C4E0388000ADFD9 /* SingleScoreActiveView.cpp */; };
+		B8BB9CE61C4E0388000ADFD9 /* SingleScoreHistoryRankView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8BB9CDA1C4E0388000ADFD9 /* SingleScoreHistoryRankView.cpp */; };
+		B8BB9CE71C4E0388000ADFD9 /* SingleScoreRankView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8BB9CDC1C4E0388000ADFD9 /* SingleScoreRankView.cpp */; };
+		B8BB9CE81C4E0388000ADFD9 /* SingleScoreWaiteView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8BB9CDE1C4E0388000ADFD9 /* SingleScoreWaiteView.cpp */; };
+		B8BB9CEC1C4E2CF1000ADFD9 /* TrainingView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8BB9CEA1C4E2CF1000ADFD9 /* TrainingView.cpp */; };
 		B8ECF0851BF58908002160E5 /* NBDLCController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8ECF0831BF58908002160E5 /* NBDLCController.cpp */; };
 		B8F554041BD093CB00AD16E3 /* NBWorldNPC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8F554021BD093CB00AD16E3 /* NBWorldNPC.cpp */; };
 		BA19245118C87ED7009C1CEA /* CCLabelIFBMFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA19244D18C87ED7009C1CEA /* CCLabelIFBMFont.cpp */; };
@@ -1402,10 +1406,6 @@
 		0CC29A3F1AFC4E60006B3BAF /* DailyActiveBoxInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DailyActiveBoxInfo.h; sourceTree = "<group>"; };
 		0CC29A401AFC4E60006B3BAF /* DailyActiveItemInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DailyActiveItemInfo.cpp; sourceTree = "<group>"; };
 		0CC29A411AFC4E60006B3BAF /* DailyActiveItemInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DailyActiveItemInfo.h; sourceTree = "<group>"; };
-		0CC29A451AFC4E83006B3BAF /* DailyActiveBoxInfoView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DailyActiveBoxInfoView.cpp; sourceTree = "<group>"; };
-		0CC29A461AFC4E83006B3BAF /* DailyActiveBoxInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DailyActiveBoxInfoView.h; sourceTree = "<group>"; };
-		0CC29A471AFC4E83006B3BAF /* DailyActiveView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DailyActiveView.cpp; sourceTree = "<group>"; };
-		0CC29A481AFC4E83006B3BAF /* DailyActiveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DailyActiveView.h; sourceTree = "<group>"; };
 		0CC29A4B1AFC5393006B3BAF /* DailyActivePush.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DailyActivePush.cpp; sourceTree = "<group>"; };
 		0CC29A4C1AFC5393006B3BAF /* DailyActivePush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DailyActivePush.h; sourceTree = "<group>"; };
 		0CC29A4E1AFCBBF1006B3BAF /* IFDailyActiveNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IFDailyActiveNode.cpp; sourceTree = "<group>"; };
@@ -1453,8 +1453,6 @@
 		1D5FA0091B018D89004D2E51 /* LuaCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaCommand.h; sourceTree = "<group>"; };
 		1D63CBD11B4E13B100BD8CFB /* ActivityPopupView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActivityPopupView.cpp; sourceTree = "<group>"; };
 		1D63CBD21B4E13B100BD8CFB /* ActivityPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityPopupView.h; sourceTree = "<group>"; };
-		1D686BEB1B57B7BC00080402 /* TrainingView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TrainingView.cpp; path = DailyActive/TrainingView.cpp; sourceTree = "<group>"; };
-		1D686BEC1B57B7BC00080402 /* TrainingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TrainingView.h; path = DailyActive/TrainingView.h; sourceTree = "<group>"; };
 		1D72B7301AA19E4D004EE9F0 /* InviteTeleportCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InviteTeleportCommand.cpp; sourceTree = "<group>"; };
 		1D72B7311AA19E4D004EE9F0 /* InviteTeleportCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteTeleportCommand.h; sourceTree = "<group>"; };
 		1D7917581B5F279D0016D6E4 /* TrialCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TrialCommand.cpp; sourceTree = "<group>"; };
@@ -1814,8 +1812,6 @@
 		57208CBC1AF9F79200150AA2 /* ToolCreateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToolCreateView.h; sourceTree = "<group>"; };
 		5720DE171828D31900038960 /* FunBuildAllCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FunBuildAllCommand.h; sourceTree = "<group>"; };
 		5720DE181828D32600038960 /* FunBuildAllCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = FunBuildAllCommand.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
-		572113681B4A4FE800811A4F /* NewPlayerQianDaoView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NewPlayerQianDaoView.cpp; sourceTree = "<group>"; };
-		572113691B4A4FE800811A4F /* NewPlayerQianDaoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPlayerQianDaoView.h; sourceTree = "<group>"; };
 		57233E7B1820D0C100C04BFD /* ChatCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatCell.h; sourceTree = "<group>"; };
 		57233E7C1820D0CC00C04BFD /* ChatCell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChatCell.cpp; sourceTree = "<group>"; };
 		572440301B2183AA000DAF5F /* DragonBuildListView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DragonBuildListView.cpp; path = dragonView/DragonBuildListView.cpp; sourceTree = "<group>"; };
@@ -3234,6 +3230,22 @@
 		B892CE201C48D8F0005A910E /* NBAllianceHelpReportView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NBAllianceHelpReportView.hpp; sourceTree = "<group>"; };
 		B892CE261C48DB64005A910E /* IFAllianceHelpReportInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IFAllianceHelpReportInfo.cpp; sourceTree = "<group>"; };
 		B892CE271C48DB64005A910E /* IFAllianceHelpReportInfo.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IFAllianceHelpReportInfo.hpp; sourceTree = "<group>"; };
+		B8BB9CD21C4E0388000ADFD9 /* DailyActiveBoxInfoView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DailyActiveBoxInfoView.cpp; sourceTree = "<group>"; };
+		B8BB9CD31C4E0388000ADFD9 /* DailyActiveBoxInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DailyActiveBoxInfoView.h; sourceTree = "<group>"; };
+		B8BB9CD41C4E0388000ADFD9 /* DailyActiveView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DailyActiveView.cpp; sourceTree = "<group>"; };
+		B8BB9CD51C4E0388000ADFD9 /* DailyActiveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DailyActiveView.h; sourceTree = "<group>"; };
+		B8BB9CD61C4E0388000ADFD9 /* NewPlayerQianDaoView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NewPlayerQianDaoView.cpp; sourceTree = "<group>"; };
+		B8BB9CD71C4E0388000ADFD9 /* NewPlayerQianDaoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPlayerQianDaoView.h; sourceTree = "<group>"; };
+		B8BB9CD81C4E0388000ADFD9 /* SingleScoreActiveView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SingleScoreActiveView.cpp; sourceTree = "<group>"; };
+		B8BB9CD91C4E0388000ADFD9 /* SingleScoreActiveView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SingleScoreActiveView.hpp; sourceTree = "<group>"; };
+		B8BB9CDA1C4E0388000ADFD9 /* SingleScoreHistoryRankView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SingleScoreHistoryRankView.cpp; sourceTree = "<group>"; };
+		B8BB9CDB1C4E0388000ADFD9 /* SingleScoreHistoryRankView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SingleScoreHistoryRankView.hpp; sourceTree = "<group>"; };
+		B8BB9CDC1C4E0388000ADFD9 /* SingleScoreRankView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SingleScoreRankView.cpp; sourceTree = "<group>"; };
+		B8BB9CDD1C4E0388000ADFD9 /* SingleScoreRankView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SingleScoreRankView.hpp; sourceTree = "<group>"; };
+		B8BB9CDE1C4E0388000ADFD9 /* SingleScoreWaiteView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SingleScoreWaiteView.cpp; sourceTree = "<group>"; };
+		B8BB9CDF1C4E0388000ADFD9 /* SingleScoreWaiteView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SingleScoreWaiteView.hpp; sourceTree = "<group>"; };
+		B8BB9CEA1C4E2CF1000ADFD9 /* TrainingView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TrainingView.cpp; sourceTree = "<group>"; };
+		B8BB9CEB1C4E2CF1000ADFD9 /* TrainingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrainingView.h; sourceTree = "<group>"; };
 		B8ECF0831BF58908002160E5 /* NBDLCController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBDLCController.cpp; sourceTree = "<group>"; };
 		B8ECF0841BF58908002160E5 /* NBDLCController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NBDLCController.hpp; sourceTree = "<group>"; };
 		B8F554021BD093CB00AD16E3 /* NBWorldNPC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBWorldNPC.cpp; sourceTree = "<group>"; };
@@ -3863,12 +3875,22 @@
 		0CC29A441AFC4E83006B3BAF /* DailyActive */ = {
 			isa = PBXGroup;
 			children = (
-				572113681B4A4FE800811A4F /* NewPlayerQianDaoView.cpp */,
-				572113691B4A4FE800811A4F /* NewPlayerQianDaoView.h */,
-				0CC29A451AFC4E83006B3BAF /* DailyActiveBoxInfoView.cpp */,
-				0CC29A461AFC4E83006B3BAF /* DailyActiveBoxInfoView.h */,
-				0CC29A471AFC4E83006B3BAF /* DailyActiveView.cpp */,
-				0CC29A481AFC4E83006B3BAF /* DailyActiveView.h */,
+				B8BB9CEA1C4E2CF1000ADFD9 /* TrainingView.cpp */,
+				B8BB9CEB1C4E2CF1000ADFD9 /* TrainingView.h */,
+				B8BB9CD21C4E0388000ADFD9 /* DailyActiveBoxInfoView.cpp */,
+				B8BB9CD31C4E0388000ADFD9 /* DailyActiveBoxInfoView.h */,
+				B8BB9CD41C4E0388000ADFD9 /* DailyActiveView.cpp */,
+				B8BB9CD51C4E0388000ADFD9 /* DailyActiveView.h */,
+				B8BB9CD61C4E0388000ADFD9 /* NewPlayerQianDaoView.cpp */,
+				B8BB9CD71C4E0388000ADFD9 /* NewPlayerQianDaoView.h */,
+				B8BB9CD81C4E0388000ADFD9 /* SingleScoreActiveView.cpp */,
+				B8BB9CD91C4E0388000ADFD9 /* SingleScoreActiveView.hpp */,
+				B8BB9CDA1C4E0388000ADFD9 /* SingleScoreHistoryRankView.cpp */,
+				B8BB9CDB1C4E0388000ADFD9 /* SingleScoreHistoryRankView.hpp */,
+				B8BB9CDC1C4E0388000ADFD9 /* SingleScoreRankView.cpp */,
+				B8BB9CDD1C4E0388000ADFD9 /* SingleScoreRankView.hpp */,
+				B8BB9CDE1C4E0388000ADFD9 /* SingleScoreWaiteView.cpp */,
+				B8BB9CDF1C4E0388000ADFD9 /* SingleScoreWaiteView.hpp */,
 			);
 			path = DailyActive;
 			sourceTree = "<group>";
@@ -6364,7 +6386,6 @@
 				E6772EA9187D58CD000CE370 /* MailConfig.cpp */,
 				E6772EAA187D58CD000CE370 /* MailConfig.h */,
 				B1105CC0196C172E0021286E /* MailCountObj.cpp */,
-				7C0DAF63196C06CC007BA056 /* MailCountObj.h */,
 				7CC37B7E19CBDA850050B22C /* MailDialogInfo.cpp */,
 				7CC37B7F19CBDA850050B22C /* MailDialogInfo.h */,
 				E6FC9AF9181E01DA00BAFCFF /* MailInfo.cpp */,
@@ -7092,8 +7113,6 @@
 				9441E48E1ADBDBD50077035B /* TipsWithPicView.h */,
 				9708FD5D1BAA861D00C6B3C3 /* TitanUpgradeView.cpp */,
 				9708FD5E1BAA861D00C6B3C3 /* TitanUpgradeView.h */,
-				1D686BEB1B57B7BC00080402 /* TrainingView.cpp */,
-				1D686BEC1B57B7BC00080402 /* TrainingView.h */,
 				964C8B6E1B4F967F00EA37FA /* TreasureMapView.cpp */,
 				964C8B6F1B4F967F00EA37FA /* TreasureMapView.h */,
 				5711C9651999B5E400B2143C /* TroopsView.cpp */,
@@ -7733,6 +7752,7 @@
 				96B197AA1B73338A00440649 /* CKFStreakListCommand.cpp in Sources */,
 				5725C4CF17F539C00066BAA6 /* ChatView.cpp in Sources */,
 				A8B7A6981B2997E000441850 /* GetChatRoomMemberCommand.cpp in Sources */,
+				B8BB9CE51C4E0388000ADFD9 /* SingleScoreActiveView.cpp in Sources */,
 				E5931BBF19A4D57200781137 /* ChatIsInAllanceCommand.cpp in Sources */,
 				6CA8C9201B4573BE0061F829 /* AFURLRequestSerialization.m in Sources */,
 				57F2077C19826C2900BDE262 /* WallBuild.cpp in Sources */,
@@ -7759,6 +7779,7 @@
 				59DEBDF61B058B40007FC5CB /* UIDevice+ADJAdditions.m in Sources */,
 				9688FACB1AADA0DF009AE069 /* VolatileTexture_richlabel.cpp in Sources */,
 				0C02A4821ADFD26B003C5112 /* HFHttpClient.cpp in Sources */,
+				B8BB9CE41C4E0388000ADFD9 /* NewPlayerQianDaoView.cpp in Sources */,
 				6CD31BE91B65D6300051C395 /* FMResultSet.m in Sources */,
 				FD0E652818447FA500101958 /* MBProgressHUD.m in Sources */,
 				6C896B551B3CEFB800908D3F /* TopButtonView.m in Sources */,
@@ -7820,6 +7841,7 @@
 				BA19245118C87ED7009C1CEA /* CCLabelIFBMFont.cpp in Sources */,
 				BA70EF5D18DAB2D800106D6A /* VipConstants.cpp in Sources */,
 				96E3B7781A42760E00C1E616 /* TimerController.cpp in Sources */,
+				B8BB9CEC1C4E2CF1000ADFD9 /* TrainingView.cpp in Sources */,
 				57D733FC18B4784D00B884D1 /* BuildQueueView.cpp in Sources */,
 				0C940E151A8AE58200739AC0 /* TestFeedBackCommand.cpp in Sources */,
 				272AB6791B15C7BC0052E896 /* ChatContentView.m in Sources */,
@@ -7848,7 +7870,6 @@
 				0698D0AD1B841E6C00354E03 /* IFShakeCmd.cpp in Sources */,
 				272AB6721B15C7BC0052E896 /* MailInfoIOS.mm in Sources */,
 				96E2C90E1A67CC5900883B0E /* AllianceCommentShieldList.cpp in Sources */,
-				5721136A1B4A4FE800811A4F /* NewPlayerQianDaoView.cpp in Sources */,
 				59DEBDF21B058B40007FC5CB /* ADJActivityPackage.m in Sources */,
 				FDC9E79518BDED7800F0962F /* ResourceTile.cpp in Sources */,
 				E63B935E198749E10018E35F /* WildMonsterPopUp.cpp in Sources */,
@@ -7878,11 +7899,13 @@
 				6CD847C61B2EED7600C8AF0D /* NSObject+HelpModel.m in Sources */,
 				9716CF2A1BD4A1BC00BC3D38 /* NBSlider.cpp in Sources */,
 				96169CDD1B42738000CA4AEF /* VipActiveView.cpp in Sources */,
+				B8BB9CE71C4E0388000ADFD9 /* SingleScoreRankView.cpp in Sources */,
 				BA2F458F18F7853900FF58DF /* GetAllianceCommentsCommand.cpp in Sources */,
 				BA19245218C87ED7009C1CEA /* CCLabelIFTTF.cpp in Sources */,
 				96DAEE5B1987A2A2005AB050 /* BuildingAddOutPutCommand.cpp in Sources */,
 				7C296E38198F8873001EC2BF /* HelpshiftCocos2dx.cpp in Sources */,
 				964D6B251A1C757000B0FB73 /* FBMineCallHelpCommand.cpp in Sources */,
+				B8BB9CE61C4E0388000ADFD9 /* SingleScoreHistoryRankView.cpp in Sources */,
 				967B1D5D1AB94A9200D1E983 /* MailGiftView.cpp in Sources */,
 				F45EFC651B6B820E00B0C19F /* MatetialAni.cpp in Sources */,
 				57E4777B1989F505003FBABB /* FlyCell.cpp in Sources */,
@@ -7966,7 +7989,6 @@
 				3676B3191BB393AC00120B78 /* CCGallery.cpp in Sources */,
 				57F0BB49199B72910042A6BC /* CityDefenseView.cpp in Sources */,
 				FD6F41C817CE2F89008FDB9C /* CCLoadSprite.cpp in Sources */,
-				1D686BED1B57B7BC00080402 /* TrainingView.cpp in Sources */,
 				6CD847C11B2EE5C500C8AF0D /* SectionHeadView.m in Sources */,
 				FD9C966F17CEDD13005F493D /* SceneContainer.cpp in Sources */,
 				BAB239AE18EEB97800B223C9 /* GetAllianceMembersCommand.cpp in Sources */,
@@ -8022,6 +8044,7 @@
 				27AD60511B5D014A00B6AD40 /* MJRefreshAutoStateFooter.m in Sources */,
 				88A3E4C918BEED2400788B54 /* fireandcomman.cpp in Sources */,
 				963F8B781B8C79D9002204A0 /* DragonBattleWarListView.cpp in Sources */,
+				B8BB9CE21C4E0388000ADFD9 /* DailyActiveBoxInfoView.cpp in Sources */,
 				57EAD1941991F8AD007B8946 /* Animal.cpp in Sources */,
 				5725C4C317F5396E0066BAA6 /* ChatPush.cpp in Sources */,
 				57E871EB186A7EEC00BD6EFD /* GCMRewardInfo.cpp in Sources */,
@@ -8110,6 +8133,7 @@
 				6CD847AE1B2EA29C00C8AF0D /* ZYTChatSystemCell.m in Sources */,
 				067119721B4F66B0004C7B35 /* IFMapMaskLayer.cpp in Sources */,
 				96E68B4119F4A8CC0068A09C /* HFUrlImage.cpp in Sources */,
+				B8BB9CE81C4E0388000ADFD9 /* SingleScoreWaiteView.cpp in Sources */,
 				7C112BB419C04F2D00FEB63F /* GoldExchangeMoreListView.cpp in Sources */,
 				27AD60541B5D014A00B6AD40 /* MJRefreshBackStateFooter.m in Sources */,
 				E6FC9B15181E02D000BAFCFF /* MailWritePopUpView.cpp in Sources */,
@@ -8308,7 +8332,6 @@
 				E641EC5F18C7411E007D2B01 /* ArmyController.cpp in Sources */,
 				A85152191AFB6A3A00D35CC6 /* ChatRoomMsgPush.cpp in Sources */,
 				7CDA498E19C83F18002609FF /* AllRankListPopUpView.cpp in Sources */,
-				0CC29A491AFC4E83006B3BAF /* DailyActiveBoxInfoView.cpp in Sources */,
 				96E055F81A5A214200FF4405 /* PushKingdomBanner.cpp in Sources */,
 				E6497D9918C96A8100A8B502 /* BuildingHospitalPopUpView.cpp in Sources */,
 				E6497D9C18C96A8B00A8B502 /* TreatCommand.cpp in Sources */,
@@ -8365,6 +8388,7 @@
 				7C25FD391A25EB34000B24A8 /* MailResourceHelpInfo.cpp in Sources */,
 				272AB6731B15C7BC0052E896 /* MsgMessage.mm in Sources */,
 				96D57B9F18DFD07200384045 /* JoinAllianceView.cpp in Sources */,
+				B8BB9CE31C4E0388000ADFD9 /* DailyActiveView.cpp in Sources */,
 				60F1EA8C1AE0F9BF00E88C58 /* KingdomMailView.cpp in Sources */,
 				96E3C2411A37F0F90085423E /* CheckKingdomView.cpp in Sources */,
 				B81B73DF1C02DCA50092774E /* NBGCCBReader.cpp in Sources */,
@@ -8500,7 +8524,6 @@
 				96EAE2AC1915D45E0068E3FE /* CCEditText.cpp in Sources */,
 				96EA320C19D02E97000F4800 /* AllianceWarHeadCell.cpp in Sources */,
 				96BF594A191B60C4002D7186 /* GeneralBodySprite.cpp in Sources */,
-				0CC29A4A1AFC4E83006B3BAF /* DailyActiveView.cpp in Sources */,
 				0CC29A501AFCBBF1006B3BAF /* IFDailyActiveNode.cpp in Sources */,
 				96CA33E319234BFD00E56EF1 /* ScrollTableView.cpp in Sources */,
 				96CA33E819244EDB00E56EF1 /* ArcScrollView.cpp in Sources */,

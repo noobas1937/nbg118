@@ -95,15 +95,65 @@ ActivityController::ActivityController(){
     m_bigStrenMul = 0;
     m_monsterDiv.clear();
     baozangHelpArr = CCArray::create();
+    SingleScoreRank = -1;
+    AllianceScoreRank = -1;
+    KingAlScoreRank = -1;
+    KingPlScoreRank = -1;
+    m_allConUsers = NULL;
+    m_kingAlConUsers = NULL;
+    
+    CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(ActivityController::onEnterFrame), this, 1.0,kCCRepeatForever, 0.0f, false);
 }
 ActivityController::~ActivityController(){
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, PORT_DATA_INIT);
+    
+    CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(ActivityController::onEnterFrame), this);
 }
 ActivityController *ActivityController::getInstance(){
     if(_instance == NULL){
         _instance = new ActivityController();
     }
     return _instance;
+}
+
+void ActivityController::purgeData()
+{
+    if( _instance )
+    {
+        CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(_instance, PORT_DATA_INIT);
+        
+        CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(ActivityController::onEnterFrame), _instance);
+    }
+    CC_SAFE_RELEASE_NULL(_instance);
+    _instance=NULL;
+}
+
+void ActivityController::onEnterFrame(float dt)
+{
+//    static map<string, int> lastRequestTime;
+//    Ref* ref = nullptr;
+//    ActivityEventObj* obj = nullptr;
+//    CCARRAY_FOREACH(activityArr, ref)
+//    {
+//        if (!ref) {
+//            continue;
+//        }
+//        obj = dynamic_cast<ActivityEventObj*>(ref);
+//        if (!obj) {
+//            continue;
+//        }
+//        if (obj->type == 6 && obj->exchange == "1") {
+//            if (isAct1DataInit(obj->id)) {
+//                if (isAct1DataShouldRefresh(obj->id)) {
+//                    int now = GlobalData::shared()->getTimeStamp();
+//                    if (now > (lastRequestTime[obj->id] + 30)) {
+//                        startAct6Refresh(obj->id);
+//                        lastRequestTime[obj->id] = now;
+//                    }
+//                }
+//            }
+//        }
+//    }
 }
 
 void ActivityController::createRwdViewByActId(string actId)
@@ -1617,8 +1667,10 @@ int ActivityController::getKilledMonsterCnt()
     CCDICT_FOREACH(group, ele)
     {
         CCDictionary *dict = dynamic_cast<CCDictionary*>(ele->getObject());
-        int id = dict->valueForKey("id")->intValue();
-        allids.push_back(id);
+        if(dict) {
+            int id = dict->valueForKey("id")->intValue();
+            allids.push_back(id);
+        }
     }
     int cnt = 0;
     int myId = atoi(m_monster.c_str());
@@ -1635,6 +1687,321 @@ int ActivityController::getAllMonsterCnt()
 {
     CCDictionary* group = LocalController::shared()->DBXMLManager()->getGroupByKey("trial");
     return group->count();
+}
+
+void ActivityController::getSingleScoreData(string activityId)
+{
+    ActivitySingleScoreGetCommand* cmd = new ActivitySingleScoreGetCommand(activityId);
+    cmd->sendAndRelease();
+}
+void ActivityController::retSingleScoreData(CCDictionary* dict)
+{
+    if (dict)
+    {
+        int type = dict->valueForKey("type")->intValue();
+        if (type == 1) {
+            m_singleScoreRwdMap.clear();
+        }else if (type == 2) {
+            m_allScoreRwdMap.clear();
+        }else if (type == 3) {
+            m_kingScoreRwdMap.clear();
+        }
+        
+        if (dict->objectForKey("ranking")) {
+            if (type == 1) {
+                SingleScoreRank = dict->valueForKey("ranking")->intValue();
+            }else if (type == 2) {
+                AllianceScoreRank = dict->valueForKey("ranking")->intValue();
+            }else if (type == 3) {
+                KingPlScoreRank = dict->valueForKey("ranking")->intValue();
+                if (dict->objectForKey("rankingAlliance")) {
+                    KingAlScoreRank = dict->valueForKey("rankingAlliance")->intValue();
+                }
+            }
+        }
+        CCArray* eventList = dynamic_cast<CCArray*>(dict->objectForKey("eventList"));
+        time_t startTime = 0;
+        time_t endTime = 0;
+        if (eventList) {
+            for (int i=0; i<eventList->count(); i++)
+            {
+                CCDictionary* eventData = dynamic_cast<CCDictionary*>(eventList->objectAtIndex(i));
+                ActivityInfo *info = ActivityInfo::create();
+                info->parse(eventData);
+                int dtime = info->endTime - GlobalData::shared()->getWorldTime();
+                if (dtime < 0) {
+                    continue;
+                }else
+                {
+                    if (startTime==0 || startTime>info->startTime) {
+                        startTime = info->startTime;
+                    }
+                    if (endTime==0 || endTime<info->endTime) {
+                        endTime = info->endTime;
+                    }
+                }
+                info->retain();
+                
+                if (type == 1) {
+                    m_singleScoreRwdMap[info->activityId] = info;
+                }else if (type == 2) {
+                    m_allScoreRwdMap[info->activityId] = info;
+                }else if (type == 3) {
+                    m_kingScoreRwdMap[info->activityId] = info;
+                }
+            }
+        }
+        
+        CCArray* countryVs = dynamic_cast<CCArray*>(dict->objectForKey("vsCountry"));
+        if (countryVs){
+            m_vsCountry = countryVs;
+        }
+        
+        if (activityArr) {
+            int num = activityArr->count();
+            for (int i=0; i<num; i++) {
+                auto info = dynamic_cast<ActivityEventObj*>(activityArr->objectAtIndex(i));
+                if (info && info->type==10 && type==1) {
+                    if (startTime != 0) {
+                        info->startTime = startTime;
+                    }
+                    if (endTime != 0) {
+                        info->endTime = endTime;
+                    }
+                    break;
+                }else if (info && info->type==12 && type==2) {
+                    if (startTime != 0) {
+                        info->startTime = startTime;
+                    }
+                    if (endTime != 0) {
+                        info->endTime = endTime;
+                    }
+                    break;
+                }else if (info && info->type==14 && type==3) {
+                    if (startTime != 0) {
+                        info->startTime = startTime;
+                    }
+                    if (endTime != 0) {
+                        info->endTime = endTime;
+                    }
+                    break;
+                }
+            }
+        }
+    }
+    CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_FRESH_SINGLE_SCORE_VIEW);
+}
+
+void ActivityController::getRank(string activityId)
+{
+    GetScoreRankCommand* cmd = new GetScoreRankCommand(activityId);
+    cmd->sendAndRelease();
+}
+void ActivityController::retRank(CCDictionary* dict)
+{
+    if (dict)
+    {
+        int type = dict->valueForKey("type")->intValue();
+        if (dict->objectForKey("ranking")) {
+            if (type == 1) {
+                SingleScoreRank = dict->valueForKey("ranking")->intValue();
+            }else if (type == 2) {
+                AllianceScoreRank = dict->valueForKey("ranking")->intValue();
+            }else if (type == 3) {
+                KingPlScoreRank = dict->valueForKey("ranking")->intValue();
+                if (dict->objectForKey("rankingAlliance")) {
+                    KingAlScoreRank = dict->valueForKey("rankingAlliance")->intValue();
+                }
+            }
+        }
+    }
+}
+
+void ActivityController::pushSingleScoreValue(CCDictionary* dict)
+{
+    if( dict->objectForKey("score") ) {
+        //{"id":"9001003","actId":"649510bfccc34ebb930513c4564dd73e","score":67400,"type":1}
+        int score = dict->valueForKey("score")->intValue();
+        string actId = dict->valueForKey("actId")->getCString();
+        int type = dict->valueForKey("type")->intValue();
+        if (type == 1) {
+            if (m_singleScoreRwdMap.find(actId) != m_singleScoreRwdMap.end()) {
+                m_singleScoreRwdMap[actId]->currentScore = score;
+            }
+        }
+        else if (type == 2) {
+            if (m_allScoreRwdMap.find(actId) != m_allScoreRwdMap.end()) {
+                m_allScoreRwdMap[actId]->currentScore = score;
+            }
+        }
+        else if (type == 3 || type == 4) {
+            if (m_kingScoreRwdMap.find(actId) != m_kingScoreRwdMap.end()) {
+                m_kingScoreRwdMap[actId]->currentScore = score;
+            }
+        }
+    }
+}
+
+void ActivityController::CleanAllianceScoreData()
+{
+    m_allScoreRwdMap.clear();
+    m_allRankRwdMap.clear();
+    m_allRankKeys.clear();
+    AllianceScoreRank = -1;
+    m_historyAllRankMap.clear();
+    m_historyAllTimeVec.clear();
+    m_allConUsers = NULL;
+    
+    m_kingAlRankRwdMap.clear();
+    m_kingAlRankKeys.clear();
+    KingAlScoreRank = -1;
+    m_historyKingAlRankMap.clear();
+    m_historyKingAlTimeVec.clear();
+    m_kingAlConUsers = NULL;
+    m_vsCountry = NULL;
+    map<string, ActivityInfo*>::iterator it = m_kingScoreRwdMap.begin();
+    for (; it != m_kingScoreRwdMap.end(); it++) {
+        if (it->second->type == 4) {
+            m_kingScoreRwdMap.erase(it);
+            break;
+        }
+    }
+}
+
+void ActivityController::getCurRankRwd(string activityId, int type)
+{
+    GetSingleScoreRankCommand* cmd = new GetSingleScoreRankCommand(activityId, type);
+    cmd->sendAndRelease();
+}
+void ActivityController::retCurRankRwd(CCDictionary* dict, int type)
+{
+    string rewardIds = dict->valueForKey("rewardArr")->getCString();
+    string levelRanks = dict->valueForKey("levelArr")->getCString();
+    
+    vector<string> tmpRwdVec;
+    CCCommonUtils::splitString(rewardIds, "|", tmpRwdVec);
+    vector<string> tmpRankVec;
+    CCCommonUtils::splitString(levelRanks, "|", tmpRankVec);
+    
+    int tmpLv = 0;
+    CCArray* eventList = dynamic_cast<CCArray*>(dict->objectForKey("reward"));
+    if (eventList && eventList->count() == tmpRwdVec.size() && tmpRwdVec.size()==tmpRankVec.size())
+    {
+        for (int i=0; i<eventList->count(); i++)
+        {
+            CCArray* rewardArr = dynamic_cast<CCArray*>(eventList->objectAtIndex(i));
+            
+            string key = tmpRankVec[i];
+            tmpLv += 1;
+            int tmpMaxRank = atoi(tmpRankVec[i].c_str());
+            if (tmpLv != tmpMaxRank) {
+                key = "";
+                key = key + CC_ITOA(tmpLv) + "-" + CC_ITOA(tmpMaxRank);
+                
+                tmpLv = tmpMaxRank;
+            }
+            
+            string rewardId = tmpRwdVec[i];
+            if (rewardArr) {
+                if (type == 0) {
+                    m_CurRankKeys.push_back(key);
+                    m_CurRankRwdMap[ key ] = rewardId;
+                }
+                else if (type == 1) {
+                    m_allRankKeys.push_back(key);
+                    m_allRankRwdMap[ key ] = rewardId;
+                }
+                else if (type == 2) {
+                    m_kingPlRankKeys.push_back(key);
+                    m_kingPlRankRwdMap[ key ] = rewardId;
+                }
+                else if (type == 3) {
+                    m_kingAlRankKeys.push_back(key);
+                    m_kingAlRankRwdMap[ key ] = rewardId;
+                }
+                addRwdToMap(rewardId, rewardArr);
+            }
+        }
+    }
+    CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_FRESH_SINGLE_SCORE_RANK_VIEW);
+}
+void ActivityController::addRwdToMap(string rewardId, CCArray* rwdArr)
+{
+    auto newArr = CCArray::createWithArray(rwdArr);
+    m_RankRwdMap[rewardId] = newArr;
+}
+
+void ActivityController::getHistroyRank(int type)
+{
+    GetSingleHistoryRankCommand* cmd = new GetSingleHistoryRankCommand(type);
+    cmd->sendAndRelease();
+}
+void ActivityController::retHistroyRank(CCDictionary* dict, int type)
+{
+    int tmpLv = 0;
+    CCArray* eventList = dynamic_cast<CCArray*>(dict->objectForKey("history"));
+    if (eventList)
+    {
+        for (int i=0; i<eventList->count(); i++)
+        {
+            CCDictionary* tmpHistoryDict = dynamic_cast<CCDictionary*>(eventList->objectAtIndex(i));
+            
+            string eventId = tmpHistoryDict->valueForKey("eventId")->getCString();
+            auto tmpT = tmpHistoryDict->valueForKey("endTime")->doubleValue()/1000;
+            int time = tmpT;//GlobalData::shared()->changeTime(tmpT);
+            
+            CCArray* userList = dynamic_cast<CCArray*>(tmpHistoryDict->objectForKey("userList"));
+            if (userList && userList->count()>0) {
+                if (type == 1) {
+                    m_historyTimeVec.push_back(time);
+                    m_historyRankMap[ time ] = userList;
+                }
+                else if (type == 2) {
+                    m_historyAllTimeVec.push_back(time);
+                    m_historyAllRankMap[ time ] = userList;
+                }
+                else if (type == 3) {
+                    m_historyKingPlTimeVec.push_back(time);
+                    m_historyKingPlRankMap[ time ] = userList;
+                }
+                else if (type == 4) {
+                    m_historyKingAlTimeVec.push_back(time);
+                    m_historyKingAlRankMap[ time ] = userList;
+                }
+            }
+            CCArray* kingdomList = dynamic_cast<CCArray*>(tmpHistoryDict->objectForKey("kingdomList"));
+            if (kingdomList && kingdomList->count()>0) {
+                if (type == 3 || type == 4) {
+                    if (m_historyKingRankMap.find(time) == m_historyKingRankMap.end()) {
+                        m_historyKingAlTimeVec.push_back(time);
+                        m_historyKingRankMap[ time ] = kingdomList;
+                    }
+                }
+            }
+        }
+    }
+    CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_SCORE_RANK_HISTORY_VIEW);
+}
+
+void ActivityController::getAllianceConRank(string activityId, int conType)
+{
+    m_ConType = conType;
+    GetAllianceConRankCommand* cmd = new GetAllianceConRankCommand(activityId);
+    cmd->sendAndRelease();
+}
+void ActivityController::retAllianceConRank(CCDictionary* dict)
+{
+    CCArray* userList = dynamic_cast<CCArray*>(dict->objectForKey("rankList"));
+    if (userList)
+    {
+        if (m_ConType==0) {
+            m_allConUsers = userList;
+        }else if (m_ConType==1) {
+            m_kingAlConUsers = userList;
+        }
+        m_ConType = -1;
+    }
+    CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_SCORE_RANK_HISTORY_VIEW);
 }
 
 //ChristmasActController

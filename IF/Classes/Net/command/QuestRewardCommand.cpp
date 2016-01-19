@@ -29,8 +29,11 @@ bool QuestRewardCommand::handleRecieve(cocos2d::CCDictionary *dict)
         if (type=="3") {
             GCMRewardController::getInstance()->retReward2(arr,true);
         }else{
+            QuestController::getInstance()->m_stageNum ++;
             std::string str = RewardController::getInstance()->retReward(arr);
-            CCCommonUtils::flyHint("quest_icon_1.png", _lang("107519"), str, 3, 0, m_isMain);
+            if (m_showTip) {
+                CCCommonUtils::flyHint("quest_icon_1.png", _lang("107519"), str, 3, 0, m_isMain);
+            }
         }
 
         //QuestController::getInstance()->removeQuest(m_id);
@@ -66,4 +69,26 @@ bool FSTaskCommand::handleRecieve(cocos2d::CCDictionary *dict)
     }
     
     return true;
+}
+
+bool QuestStageRDCommand::handleRecieve(cocos2d::CCDictionary *dict)
+{
+    if (dict->valueForKey("cmd")->compare(QUEST_STAGE_RD_COMMAND) == 0)
+    {
+        CCDictionary *params1=_dict(dict->objectForKey("params"));
+        QuestController::getInstance()->endGetStateRd(params1);
+        return true;
+    }
+    return false;
+}
+
+bool GetRdCommand::handleRecieve(cocos2d::CCDictionary *dict)
+{
+    if (dict->valueForKey("cmd")->compare(GET_RD_INFO_COMMAND) == 0)
+    {
+        CCDictionary *params1=_dict(dict->objectForKey("params"));
+        QuestController::getInstance()->endGetRewardById(params1);
+        return true;
+    }
+    return false;
 }

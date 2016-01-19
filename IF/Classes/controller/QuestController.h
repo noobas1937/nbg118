@@ -12,6 +12,9 @@
 #define QUEST_NUM_CHANGE "questNumChange"
 #define QUEST_STATE_UPDATE "questStateUpdate"
 #define User_LV_REWARD_DELAY "levelUp.reward.delay"
+#define QUEST_STAGE_UPDATE "quest.stage.update"
+#define GETRT_REWARD_INFO "get.rt.reward.info"
+#define QUEST_GETRWD_ANIMATION "quest_getrwd_animation"
 
 enum QuestType1{
     QUEST_NORMAL = 1,
@@ -108,6 +111,35 @@ public:
     map<std::string, QuestInfo*> currentCKFList;//当前显示跨服目标
     bool m_init;
     bool m_returnFromWorld;
+    //阶段奖励 数据
+    int m_stageRdId;//当前阶段奖励的id
+    int m_stageNum;//当前阶段数值
+    map<int, CCSafeObject<CCArray>> m_stageRDMap;//当前阶段奖励的内容
+    
+    //获取奖励信息
+    void startGetRewardById(int itemId);
+    void endGetRewardById(CCDictionary* dict);
+    //领取阶段奖励
+    void startGetStageRd();
+    void endGetStateRd(CCDictionary* dict);
+    
+    bool m_monsterFlag;//当前正在推荐的是怪物任务
+    
+    //特殊任务
+    map<std::string, QuestInfo*> speAchList;
+    CCSafeObject<Array> speAchArray;
+    //城内任务
+    map<std::string, QuestInfo*> castleAchList;
+    CCSafeObject<Array> castleAchArray;
+    //城外任务
+    map<std::string, QuestInfo*> worldAchList;
+    CCSafeObject<Array> worldAchArray;
+    //野怪任务
+    map<std::string, QuestInfo*> monsterAchList;
+    CCSafeObject<Array> monsterAchArray;
+    //杂项任务
+    map<std::string, QuestInfo*> otherAchList;
+    CCSafeObject<Array> otherAchArray;
 private:
     void insertToArr(CCArray *arr, std::string itemId, bool isComplete);
     void generateRecommedQuest(CCDictionary *dict);
@@ -121,5 +153,7 @@ private:
     map<std::string, QuestInfo*> researchQuestList;
     //按para1取配置
     map<int, CCDictionary*> config;
+    
+    int tmpRewardId;
 };
 #endif /* defined(__IF__QuestController__) */

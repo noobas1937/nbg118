@@ -30,7 +30,7 @@
 #define MSG_NEW_TIME_RWD_END "msg.new.time.rwd.end"
 #define MSG_REPAY_INFO_INIT "repay.info.init"
 #define MSG_NEW_PLAYER_RD "msg.new.player.rd"
-
+#define MSG_NEW_PLAYER_RD_SHOW "msg.new.player.rd.show"
 #define MSG_GET_ACT6_DATA_SUCCESS "msg.get.act6.data.success"
 #define MSG_GET_ACT6_DATA_FAIL "msg.get.act6.data.fail"
 
@@ -47,6 +47,25 @@
 #define MSG_TRIAL_START_SUC "msg.trial.start.suc"
 #define MSG_TRIAL_FINISH_SUC "msg.trial.finish.suc"
 #define MSG_TRIAL_BUY_SUC "msg.trial.buy.suc"
+#define MSG_TRIAL_RWD_SUC "msg.trial.rwd.suc"
+
+#define SHOULD_FORCE_REBEGIN "should_force_rebegin"
+#define MSG_TRIAL_REFRESH "msg.trial.refresh"
+
+#define FRESH_RECHARGE_REWARD_END "FRESH_RECHARGE_REWARD_END"
+
+#define FRESH_RECHARGE_ICON_TOUCHED "FRESH_RECHARGE_ICON_TOUCHED"
+
+#define FRESH_RECHARGE_ICON_TOUCH_BEGAN "FRESH_RECHARGE_ICON_TOUCH_BEGAN"
+#define FRESH_RECHARGE_ICON_TOUCH_CANCELED "FRESH_RECHARGE_ICON_TOUCH_CANCELED"
+#define FRESH_RECHARGE_ICON_TOUCH_MOVED "FRESH_RECHARGE_ICON_TOUCH_MOVED"
+#define FRESH_RECHARGE_ICON_TOUCH_END "FRESH_RECHARGE_ICON_TOUCH_END"
+
+#define MSG_FRESH_RECHARGE_TOTAL_CHANGED "MSG_FRESH_RECHARGE_TOTAL_CHANGED"
+
+#define MSG_FRESH_SINGLE_SCORE_VIEW "MSG_FRESH_SINGLE_SCORE_VIEW"
+#define MSG_FRESH_SINGLE_SCORE_RANK_VIEW "MSG_FRESH_SINGLE_SCORE_RANK_VIEW"
+#define MSG_SCORE_RANK_HISTORY_VIEW "MSG_SCORE_RANK_HISTORY_VIEW"
 
 enum ActivityType{
     ACTIVITY_SOLO = 1,
@@ -88,13 +107,14 @@ const int prepareTime = 30 * 60;
 class ActivityController : public CCObject{
 public:
     static ActivityController *getInstance();
+    static void purgeData();
     ActivityController();
     virtual ~ActivityController();
     void addActivity(CCArray *arr);
     void addActivity(CCDictionary *dict);
     void removeActivity(ActivityInfo *info);
     void removeActivity(int type);
-    
+    void onEnterFrame(float dt);
     bool hasActivity(int type);
     
     bool isActivityTimeOver(ActivityInfo *info);
@@ -234,6 +254,59 @@ public:
     vector<int> m_monsterDiv; //怪物的级别划分
     time_t m_trialRefTime;//数据刷新时间
     //--------试炼场活动--------end-------
+    // -------单人积分活动
+    map<string, ActivityInfo*> m_singleScoreRwdMap;
+    map<string, CCSafeObject<CCArray>> m_RankRwdMap;
+    map<string, string> m_CurRankRwdMap;
+    vector<string> m_CurRankKeys;
+    void getSingleScoreData(string activityId);
+    void retSingleScoreData(CCDictionary* dict);
+    void pushSingleScoreValue(CCDictionary* dict);
+    
+    void getCurRankRwd(string activityId, int type=0);
+    void retCurRankRwd(CCDictionary* dict, int type=0);
+    void addRwdToMap(string rewardId, CCArray* rwdArr);
+    int SingleScoreRank;
+    
+    void getRank(string activityId);
+    void retRank(CCDictionary* dict);
+    
+    void getHistroyRank(int type);
+    void retHistroyRank(CCDictionary* dict, int type);
+    map<int, CCSafeObject<CCArray>> m_historyRankMap;
+    vector<int> m_historyTimeVec;
+    // --------- end 单人积分活动
+    // -------联盟积分活动
+    map<string, ActivityInfo*> m_allScoreRwdMap;
+    map<string, string> m_allRankRwdMap;
+    vector<string> m_allRankKeys;
+    int AllianceScoreRank;
+    map<int, CCSafeObject<CCArray>> m_historyAllRankMap;
+    vector<int> m_historyAllTimeVec;
+    
+    void getAllianceConRank(string activityId, int conType=0);
+    void retAllianceConRank(CCDictionary* dict);
+    CCSafeObject<CCArray> m_allConUsers;
+    void CleanAllianceScoreData();
+    // --------- end 联盟积分活动
+    // -------王国积分活动
+    map<string, ActivityInfo*> m_kingScoreRwdMap;
+    map<string, string> m_kingAlRankRwdMap;//王国 联盟排行奖励
+    vector<string> m_kingAlRankKeys;
+    map<string, string> m_kingPlRankRwdMap;//王国 个人排行奖励
+    vector<string> m_kingPlRankKeys;
+    int KingAlScoreRank;//王国 联盟活动排名
+    int KingPlScoreRank;//王国 单人活动排名
+    map<int, CCSafeObject<CCArray>> m_historyKingPlRankMap; //王国 单人 历史排行
+    map<int, CCSafeObject<CCArray>> m_historyKingRankMap; //王国 历史排行
+    vector<int> m_historyKingPlTimeVec;
+    
+    map<int, CCSafeObject<CCArray>> m_historyKingAlRankMap; //王国 联盟 历史排行
+    vector<int> m_historyKingAlTimeVec;
+    CCSafeObject<CCArray> m_kingAlConUsers;
+    CCSafeObject<CCArray> m_vsCountry;
+    int m_ConType;
+    // --------- end 王国积分活动
 private:
     void sortSpeActivityArr();
     

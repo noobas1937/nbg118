@@ -16,24 +16,20 @@ public:
     CREATE_FUNC(ActivityInfo);
     void parse(CCDictionary *dict);
     ~ActivityInfo();
-    int currentLevel;
+    
+    int currentScore;
     time_t startTime;
     time_t endTime;
-    std::string activityId;
+    string activityId;
+    string eventId;
     int type;
-    std::string lv;
-    std::string score;
-    std::string action;
-    std::string prize;
-    std::string rewardFlag;
-    std::string board;
-    std::string name;
+    int sumScore;
+    string getScoreMeth;
     
-    map<int, int> actionMap;
-    CCSafeObject<CCArray> scoreArr;
-    CCSafeObject<CCArray> prizeArr;
-    CCSafeObject<CCArray> boardArr;
-    int currentScore;
+    map<int, CCSafeObject<CCArray>> m_scoreRwdMap;
+    map<int, int> m_rwdPriceMap;
+    vector<int> m_tagVec;
+    CCArray* getScroeRweMapByKey(int key);
 private:
     virtual bool init(){return true;};
 };

@@ -295,11 +295,12 @@ void NBAllianceHelpReportCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::C
     if(fabs(pTouch->getLocation().y - m_startPoint.y)>20||fabs(pTouch->getLocation().x - m_startPoint.x)>20){
         return;
     }
-    if (isTouchInside(this, pTouch)) {
-        auto info = AllianceManager::getInstance()->m_helpReportListVec.at(m_index);
-        
-        PlayerInfoBtnPopUpView* pop =PlayerInfoBtnPopUpView::create();
-        // pop->initHelpBtns(info);
-        PopupViewController::getInstance()->addPopupView(pop, false);
-    }
+    // TODO:
+//    if (isTouchInside(this, pTouch)) {
+//        auto info = AllianceManager::getInstance()->m_helpReportListVec.at(m_index);
+//        
+//        PlayerInfoBtnPopUpView* pop =PlayerInfoBtnPopUpView::create();
+//        // pop->initHelpBtns(info);
+//        PopupViewController::getInstance()->addPopupView(pop, false);
+//    }
 }

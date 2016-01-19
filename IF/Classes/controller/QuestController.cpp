@@ -911,3 +911,65 @@ int QuestController::getCompleteQuestNum(){
     }
     return num;
 }
+
+void QuestController::startGetRewardById(int itemId)
+{
+    if (tmpRewardId != 0) {
+        return;
+    }
+    tmpRewardId = itemId;
+    GetRdCommand* cmd = new GetRdCommand(itemId);
+    cmd->sendAndRelease();
+}
+
+void QuestController::endGetRewardById(CCDictionary* dict)
+{
+    if(dict->objectForKey("errorCode"))
+    {
+        string error = dict->valueForKey("errorCode")->getCString();
+        CCCommonUtils::flyHint("", "", _lang(error));
+        return;
+    }
+    else
+    {
+        if (dict->objectForKey("reward") && tmpRewardId!=0) {
+            m_stageRDMap[ tmpRewardId ] = dynamic_cast<CCArray*>(dict->objectForKey("reward"));
+            tmpRewardId = 0;
+        }
+        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GETRT_REWARD_INFO);
+    }
+}
+
+void QuestController::startGetStageRd()
+{
+    QuestStageRDCommand* cmd = new QuestStageRDCommand();
+    cmd->sendAndRelease();
+}
+
+void QuestController::endGetStateRd(CCDictionary* dict)
+{
+    if(dict->objectForKey("errorCode"))
+    {
+        string error = dict->valueForKey("errorCode")->getCString();
+        CCCommonUtils::flyHint("", "", _lang(error));
+        return;
+    }
+    else
+    {
+        m_stageRdId = dict->valueForKey("taskCompleteId")->intValue();
+        string rewardId = CCCommonUtils::getPropById(CC_ITOA(m_stageRdId), "reward");
+        m_stageRDMap[ atoi(rewardId.c_str()) ] = dynamic_cast<CCArray*>(dict->objectForKey("nextRdInfo"));
+        
+        CCArray* reward = dynamic_cast<CCArray*>(dict->objectForKey("reward"));
+        
+        // TODO: guojiang
+//        GCMRewardController::getInstance()->retReward2(reward, true);
+        
+        //        putSFSArray("reward")
+        //        putUtfString("taskCompleteId")
+        //        putSFSArray("nextRdInfo")
+        //        putBool("finished")
+        
+        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(QUEST_STAGE_UPDATE);
+    }
+}
