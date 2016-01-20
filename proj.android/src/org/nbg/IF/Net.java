@@ -40,7 +40,7 @@ import com.smartfoxserver.v2.exceptions.SFSException;
 
 public class Net implements IEventListener {
 	private static String mIp = "s1.dc.elexapp.com"; // S1_ACCOUNT_IP
-	private static String mZone = "COK1";
+	private static String mZone = "COK2";
 	private static int mPort = 80;
 	private static int mPort2 = 8088;// 备用登陆端口
 
