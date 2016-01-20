@@ -6410,7 +6410,7 @@ void UIComponent::CheckGuideUIShow()
         return;
     }
     
-    if (GlobalData::shared()->playerInfo.level<=2 && QuestController::getInstance()->currentAchList.find("2100101") != QuestController::getInstance()->currentAchList.end()) {
+    if (GlobalData::shared()->playerInfo.level<=2 && QuestController::getInstance()->currentAchList.find("2200101") != QuestController::getInstance()->currentAchList.end()) {//fusheng 领取完建造步兵营任务奖励
         m_UIQuestNode->setVisible(false);
         m_buildNode->setVisible(false);
     }else {
