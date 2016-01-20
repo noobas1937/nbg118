@@ -52,8 +52,7 @@
         <ItemSpec id="3320100" next="3320200" plot="3320110" arrow="0" area="plot_continue" enforce="1" mark="1"/>
         <ItemSpec id="3320200" next="3320300" arrow="2" area="UI_achievement" enforce="1"/>
         <ItemSpec id="3320300" next="3320400" arrow="1" area="AC_reward" enforce="1"/>
-        <ItemSpec id="3320400" next="3320500" lag="2"/>
-        <ItemSpec id="3320500" arrow="1" area="AC_back" enforce="1"/>
+        <ItemSpec id="3320400" lag="2"/>
         <ItemSpec id="3330100" next="3330200" plot="3330110" arrow="0" area="plot_continue" enforce="1" mark="1"/>
         <ItemSpec id="3330200" next="3330300" arrow="2" area="UI_goods" enforce="1"/>
         <ItemSpec id="3330300" next="3330400" arrow="1" area="GD_first" enforce="1"/>
@@ -67,12 +66,12 @@
         <ItemSpec id="3350600" next="3350700" arrow="1" area="SC3_730000_research" enforce="1"/>
         <ItemSpec id="3350700" next="3350800" arrow="1" area="SC2_out" enforce="1"/>
         <ItemSpec id="3350800" plot="3350810" arrow="0" area="plot_continue" enforce="1" mark="1"/>
-        <ItemSpec id="3370100" next="3370200" plot="3370110" arrow="0" enforce="1" mark="1"/>
+        <ItemSpec id="3370100" next="3370200" plot="3370110" arrow="0" area="plot_continue" enforce="1" mark="1"/>
         <ItemSpec id="3370200" next="3370300" arrow="1" area="UI_head" enforce="1"/>
         <ItemSpec id="3370300" next="3370400" arrow="2" area="General_set" enforce="1"/>
         <ItemSpec id="3370400" next="3370500" arrow="1" area="Set_bangding" enforce="1"/>
         <ItemSpec id="3370500" next="3370600" arrow="2" area="SetAccount_bangding" enforce="1"/>
-        <ItemSpec id="3370600" plot="3370610" enforce="1"/>
+        <ItemSpec id="3370600" plot="3370610" arrow="0" area="plot_continue" enforce="1"/>
         <ItemSpec id="3380100" next="3380200" plot="3380110" arrow="0" area="plot_continue" enforce="1"/>
         <ItemSpec id="3380200" next="3380300" explanation="510030" arrow="5" area="ALINFO_1" enforce="1"/>
         <ItemSpec id="3380300" next="3380400" explanation="510031" arrow="5" area="ALINFO_2" enforce="1"/>

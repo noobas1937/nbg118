@@ -248,6 +248,8 @@ bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType , bool isIn
     this->addChild(m_touchDelegateView);
     
     m_drawRoadNode = CCLineBatchedLayer::create();
+    if(GuideController::share()->getCurGuideID() == "3311100")//fusheng 新手引导 第一步 不显示线路
+        m_drawRoadNode->setVisible(false);
     m_layers[WM_ROAD]->addChild(m_drawRoadNode, roadIndex++);
     
     m_touchTroopNode = CCNode::create();
@@ -442,6 +444,8 @@ bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType , bool isIn
     if (canShowShakeGuide()) {
         scheduleOnce(schedule_selector(WorldMapView::onShowShakeGuide), 3.0);
     }
+    
+    
     return true;
 }
 
@@ -1887,6 +1891,9 @@ void WorldMapView::gotoTilePoint(const cocos2d::CCPoint &point,bool forceUpdate,
     float y = halfWinSize.height - viewPoint.y*scaleY;
     m_map->isSendCmd = false;
     m_map->setPosition(ccp(x, y));
+    
+//    m_map->runAction(ScaleTo::create(100, 2));
+    
     UIComponent::getInstance()->m_xCoordText->setString(CC_ITOA((int)point.x));
     UIComponent::getInstance()->m_yCoordText->setString(CC_ITOA((int)point.y));
     UIComponent::getInstance()->m_zCoordText->setString(CC_ITOA(GlobalData::shared()->playerInfo.currentServerId));
@@ -1922,8 +1929,7 @@ void WorldMapView::gotoTilePoint(const cocos2d::CCPoint &point,bool forceUpdate,
         {
             m_map->updateDynamicMap();
         }
-        
-        
+//        m_map->runAction(ScaleTo::create(3, 2));
         
         
 //        update_water_shader();

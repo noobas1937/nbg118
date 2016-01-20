@@ -1171,13 +1171,13 @@ void UIComponent::checkCityFire(float t){
 
 //播放上下动画三次
 void UIComponent::playQusetTiAnim(){
-    float x = -398.8;
-    float y = 75.4;
-    if (CCCommonUtils::isIosAndroidPad())
-    {
-        x = -772.8;
-        y = 119.3;
-    }
+    float x = 64;
+    float y = 64;
+//    if (CCCommonUtils::isIosAndroidPad())
+//    {
+//        x = -772.8;
+//        y = 119.3;
+//    }
     CCEaseExponentialIn* easeInAction = CCEaseExponentialIn::create(dynamic_cast<CCActionInterval*>(CCMoveTo::create(0.2, ccp(x, y+10))));
     CCFiniteTimeAction* easeInActionRevers =  CCMoveTo::create(0.2, ccp(x, y));
     
@@ -1199,10 +1199,10 @@ void UIComponent::playQusetTiAnim(){
 
 }
 void UIComponent::playQusetTiAnimFinish(){
-    this->m_questTipNode->setPosition(-398.8, 75.4);
+    this->m_questTipNode->setPosition(64 , 64);
     if (CCCommonUtils::isIosAndroidPad())
     {
-        this->m_questTipNode->setPosition(-772.8, 119.3);
+//        this->m_questTipNode->setPosition(-772.8, 119.3);
     }
     playQusetTiAnim();
 

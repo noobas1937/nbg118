@@ -161,6 +161,11 @@ void NewPlotView::refreshWord(){
             {
                 spr->setPositionY(spr->getPositionY()-44);
             }
+            if(figure == "guide_Warrior.png" )//fusheng 暂时是为了勇士
+            {
+                spr->setPositionY(spr->getPositionY()+62);
+                spr->setPositionX(spr->getPositionX()-50);
+            }
             m_iconNode->addChild(spr);
         }
         
