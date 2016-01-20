@@ -154,6 +154,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../IF/Classes/model/GlobalData.cpp \
 ../../IF/Classes/model/GoldExchangeItem.cpp \
 ../../IF/Classes/model/GuideInfo.cpp \
+../../IF/Classes/model/IFAllianceHelpReportInfo.cpp \
 ../../IF/Classes/model/LoginRewardInfo.cpp \
 ../../IF/Classes/model/LordInfo.cpp \
 ../../IF/Classes/model/MailConfig.cpp \
@@ -655,6 +656,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../IF/Classes/view/popup/alliance/IFAllianceShakeLayer.cpp \
 ../../IF/Classes/view/popup/alliance/JoinAllianceView.cpp \
 ../../IF/Classes/view/popup/alliance/JoinRecAllianceTipView.cpp \
+../../IF/Classes/view/popup/alliance/NBAllianceHelpReportView.cpp \
 ../../IF/Classes/view/popup/alliance/PlayerRankListView.cpp \
 ../../IF/Classes/view/popup/alliance/TerritoryBannerChoseView.cpp \
 ../../IF/Classes/view/popup/alliance/TerritoryFunctionView.cpp \

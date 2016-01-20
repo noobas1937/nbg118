@@ -2610,8 +2610,8 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string>Common/Common_2.plist</string>
-									<string>icon_resource_belt.png</string>
+									<string>Common/Common_1.plist</string>
+									<string>nb_btn0_bg_minimap.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -2788,7 +2788,7 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>50</real>
+							<real>60</real>
 							<real>230</real>
 							<integer>0</integer>
 						</array>
@@ -2826,6 +2826,8 @@
 						<false/>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>

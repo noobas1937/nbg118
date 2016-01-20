@@ -198,8 +198,12 @@ private:
     CCSafeObject<CCNode> m_animNode;
     CCSafeObject<CCNode> m_showMoneyNode;
     CCSafeObject<CCControlButton> m_btnGivePackage;
+    CCSafeObject<CCSprite> m_liebiaoBg;
     GoldExchangeItem *m_dataItem;
     
+    //begin a by ljf
+    Vec2 m_showMoreNodeOrignPos;
+    //end a by ljf
     CCPoint m_touchLocation;
 };
 #endif /* defined(__IF__GoldExchangeAdvertisingView__) */

@@ -601,5 +601,6 @@ void BuildListView::selectionChanged(CCGallery *gallery, CCGalleryItem *pGItem)
 
 void BuildListView::selectionDecided(CCGallery *gallery, CCGalleryItem *pGItem)
 {
-    
+    int idx = pGItem->getIdx();
+    gallery->setTargetIndexItem(idx,true);
 }

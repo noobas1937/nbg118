@@ -1563,7 +1563,8 @@ void ProductionSoldiersView::selectionChanged(CCGallery *gallery, CCGalleryItem 
 
 void ProductionSoldiersView::selectionDecided(CCGallery *gallery, CCGalleryItem *pGItem)
 {
-    
+    int idx = pGItem->getIdx();
+    gallery->setTargetIndexItem(idx,true);
 }
 
 void ProductionSoldiersView::showChangePrt()

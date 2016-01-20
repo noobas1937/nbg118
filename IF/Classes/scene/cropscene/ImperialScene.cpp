@@ -96,6 +96,10 @@ bool ImperialScene::init()
     m_soldierArray = CCArray::create();
     //begin a by ljf
     //m_walkerArray = CCArray::create();
+    //m_enemyArray = CCArray::create();
+    //m_enemyArray->retain();
+    m_isPauseEnemy = false;
+    m_enemyNum = 10;
     //end a by ljf
     ParticleController::initParticle();
     m_singleTouchState = false;
@@ -1112,6 +1116,7 @@ bool ImperialScene::onVikingsShipLockTouched(CCTouch* pTouch)
                 //return;
             }
 
+            
             return true;
         }
     }
@@ -1481,9 +1486,41 @@ void ImperialScene::createWalker(float t)
     }
 }
 
+void ImperialScene::pauseEnemy()
+{
+    m_isPauseEnemy = true;
+    int i = 0;
+    for( ; i < m_enemyArray.size(); i++ )
+    {
+        auto node = m_enemyArray.at(i);
+        
+        node->PauseEnemy();
+    }
+
+    this->unschedule(schedule_selector(ImperialScene::createEnemy));
+    
+}
+
+void ImperialScene::resumeEnemy()
+{
+    m_isPauseEnemy = false;
+    int i = 0;
+    for( ; i < m_enemyArray.size(); i++ )
+    {
+        auto node = m_enemyArray.at(i);
+        
+        node->ResumeEnemy();
+    }
+
+    this->schedule(schedule_selector(ImperialScene::createEnemy), 10.0, CC_REPEAT_FOREVER, 0.0f);
+}
+
 void ImperialScene::createEnemy(float t)
 {
-    for (int i = 1; i <= 2; i++)
+    if(m_isPauseEnemy)
+        return;
+    m_enemyArray.clear();
+    for (int i = 1; i <= m_enemyNum; i++)
     {
         OutsideEnemy* soldier = OutsideEnemy::create(m_walkerBatchNode, m_jianBatchNode, ENEMY_TYPE_WILDMAN);
         //soldier->getShadow()->setScale(0.5);
@@ -1493,6 +1530,7 @@ void ImperialScene::createEnemy(float t)
         m_walkerLayer->addChild(soldier);
         
         soldier->start();
+        m_enemyArray.pushBack(soldier);
         //soldier->setSprScale(1);
     }
 }
@@ -2474,6 +2512,8 @@ void ImperialScene::onExit()
     //m_walkerArray->removeAllObjects();
     m_walkerLayer->removeFromParent();
     mVikingShipDict->removeAllObjects();
+    m_enemyArray.clear();
+    //m_enemyArray->release();
     //end a by ljf
     if(GlobalData::shared()->isUiInti){
         UIComponent::getInstance()->updateBuildState(false);

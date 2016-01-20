@@ -46,6 +46,12 @@ GoldExchangeAdvertisingView* GoldExchangeAdvertisingView::create(){
 
 bool GoldExchangeAdvertisingView::init()
 {
+    //begin a by ljf
+    CCLoadSprite::doResourceByCommonIndex(800, true);
+    setCleanFunction([](){
+        CCLoadSprite::doResourceByCommonIndex(800, false);
+    });
+    //end a by ljf
 
 //    CCLoadSprite::doResourceByCommonIndex(100, true);
     m_data = CCArray::create();
@@ -852,8 +858,12 @@ bool GoldExchangeAdvertisingCommCell::init()
     
     m_getLabel->setVisible(false);
     m_newPriceLabel->setPositionX(m_costBtn->getPositionX());
-    
+    //begin a by ljf
+    m_showMoreNodeOrignPos.x = m_showMoneyNode->getPositionX();
+    m_showMoreNodeOrignPos.y = m_showMoneyNode->getPositionY();
+    //end a by ljf
     refreshData();
+    
     return true;
 }
 void GoldExchangeAdvertisingCommCell::refreshData(){
@@ -884,6 +894,24 @@ void GoldExchangeAdvertisingCommCell::refreshData(){
     string dollar = PayController::getInstance()->getDollarText(m_dataItem->dollar,m_dataItem->product_id);
     this->m_newPriceLabel->setString(dollar.c_str());
     m_btnGivePackage->setVisible(m_dataItem->send_mail);
+    
+    //begin ljf
+    string spriteName = "nb_libaoBG.png";
+    Vec2 addPos(0, 0);
+    if(m_dataItem->popup_image == "Build")
+    {
+        addPos.x = 150;
+        spriteName = "abox_citybuild_ad.png";
+    }
+    if(m_dataItem->popup_image == "Newbie_Hot")
+    {
+        addPos.x = 150;
+        spriteName = "abox_newuser_ad.png";
+    }
+    m_showMoneyNode->setPosition(m_showMoreNodeOrignPos + addPos);
+    CCSpriteFrame* newSp = CCLoadSprite::getSF(spriteName.c_str());
+    m_liebiaoBg->setDisplayFrame(newSp);
+    //end ljf
     onEnterFrame(0.0);
     
 }
@@ -936,6 +964,8 @@ bool GoldExchangeAdvertisingCommCell::onAssignCCBMemberVariable(cocos2d::CCObjec
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_costBtn", CCControlButton*, this->m_costBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_showMoneyNode", CCNode*, this->m_showMoneyNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_btnGivePackage", CCControlButton*, this->m_btnGivePackage);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_liebiaoBg", CCSprite*, this->m_liebiaoBg);
+    
     return false;
 }
 void GoldExchangeAdvertisingCommCell::onClickCostBtn(CCObject * pSender, Control::EventType pCCControlEvent){
