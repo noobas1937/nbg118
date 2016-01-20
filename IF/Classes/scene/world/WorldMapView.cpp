@@ -5725,6 +5725,17 @@ void WorldMapView::addUnderNode(unsigned int index) {
             break;
         case MonsterTile:{
             string picName = getSpriteName(info);
+            
+            // TODO:
+            if (picName == "0013.png")
+            {
+                picName = "MonsterTile_0013-0016.png";
+            }
+            else if (picName == "0014.png" || picName == "0015.png" || picName == "0016.png")
+            {
+                break;
+            }
+            
             auto under = CCLoadSprite::createSprite(picName.c_str());
             under->setAnchorPoint(ccp(0, 0));
             under->setTag(index);
