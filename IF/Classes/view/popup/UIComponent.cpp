@@ -1977,7 +1977,7 @@ void UIComponent::onSceneChanged(CCObject* params){
        
         string gFake = CCUserDefault::sharedUserDefault()->getStringForKey("Guide_Fake","");
 
-        if(GlobalData::shared()->playerInfo.level == 1 && GlobalData::shared()->playerInfo.exp == 0 && (gFake=="" || gFake=="start_1") && FunBuildController::getInstance()->getFunbuildById(FUN_BUILD_MAIN_CITY_ID).level == 1 && gid == ""){
+        if(GlobalData::shared()->playerInfo.level == 1 && GlobalData::shared()->playerInfo.exp == 0 && (gFake=="" || gFake=="start_1") && FunBuildController::getInstance()->getFunbuildById(FUN_BUILD_MAIN_CITY_ID).level == 1 && gid == "" && USE_NEW_GUIDE){
             this->setVisible(false);
         }
         else
@@ -4163,8 +4163,20 @@ void UIComponent::onWorldBtnClick(cocos2d::CCObject *pSender, Control::EventType
         return;
     }
     
-    if (QuestController::getInstance()->currentAchList.find("2201001") != QuestController::getInstance()->currentAchList.end()) {
-        QuestInfo* qusetTmp = QuestController::getInstance()->currentAchList["2201001"];
+    string keyQuestID = "2201001";
+    
+    if (USE_NEW_GUIDE) {
+        keyQuestID = "2200101";
+    }
+    else
+    {
+        
+        keyQuestID = "2102501";//建筑两个农田
+    }
+    
+    
+    if (QuestController::getInstance()->currentAchList.find(keyQuestID) != QuestController::getInstance()->currentAchList.end()) {
+        QuestInfo* qusetTmp = QuestController::getInstance()->currentAchList[keyQuestID];
         if(qusetTmp->state == ACCEPT) {
             CCCommonUtils::flyHint("", "", _lang("3000021"), 3, 200);
             return;
@@ -5483,8 +5495,19 @@ CCNode* UIComponent::getNodeByIndex(string _key){
     
     if(_key == "UI_world_go"){
         
-        if (QuestController::getInstance()->currentAchList.find("2201001") != QuestController::getInstance()->currentAchList.end()) {
-            QuestInfo* qusetTmp = QuestController::getInstance()->currentAchList["2201001"];
+        string keyQuestID = "2200101";
+        
+        if (USE_NEW_GUIDE) {
+            keyQuestID = "2200101";//fusheng 行军小屋
+        }
+        else
+        {
+            
+            keyQuestID = "2102501";//建筑两个农田
+        }
+        
+        if (QuestController::getInstance()->currentAchList.find(keyQuestID) != QuestController::getInstance()->currentAchList.end()) {
+            QuestInfo* qusetTmp = QuestController::getInstance()->currentAchList[keyQuestID];
             if(qusetTmp->state == ACCEPT) {
                 
                 return NULL;
@@ -6409,8 +6432,18 @@ void UIComponent::CheckGuideUIShow()
     if (!m_UIQuestNodeStat) {
         return;
     }
+    string keyQuestID = "2200101";
     
-    if (GlobalData::shared()->playerInfo.level<=2 && QuestController::getInstance()->currentAchList.find("2200101") != QuestController::getInstance()->currentAchList.end()) {//fusheng 领取完建造步兵营任务奖励
+    if (USE_NEW_GUIDE) {
+        keyQuestID = "2200101";
+    }
+    else
+    {
+
+        keyQuestID = "2100101";//建筑1个农田
+    }
+    
+    if (GlobalData::shared()->playerInfo.level<=2 && QuestController::getInstance()->currentAchList.find(keyQuestID) != QuestController::getInstance()->currentAchList.end()) {//fusheng 领取完建造步兵营任务奖励
         m_UIQuestNode->setVisible(false);
         m_buildNode->setVisible(false);
     }else {

@@ -205,7 +205,7 @@ void SceneController::doSceneInit(int sceneId, bool shouldSave, bool shouldClean
                 layer = WorldMapView::create(viewPoint, mapType , true);
                 
                 string gid = GuideController::share()->getCurrentId();
-                if(gid == "3311100")
+                if(gid == "3311100" && USE_NEW_GUIDE)
                     WorldController::getInstance()->addGuideData();//fusheng test
                 
             }

@@ -35,6 +35,8 @@
 
 #define GUIDE_MERCHANTE_ST "3140100"
 
+#define USE_NEW_GUIDE false
+
 enum OpenType{
     BUILDING_OPEN = 1,
     NORMAL_OPEN,
