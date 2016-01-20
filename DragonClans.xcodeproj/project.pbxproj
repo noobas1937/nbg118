@@ -7174,11 +7174,6 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0700;
-				TargetAttributes = {
-					DB9F58F217CD9A520037F7E5 = {
-						DevelopmentTeam = N6JW9AVXL5;
-					};
-				};
 			};
 			buildConfigurationList = DB9F58EE17CD9A520037F7E5 /* Build configuration list for PBXProject "DragonClans" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -8736,15 +8731,11 @@
 					"-lz",
 					"-lsqlite3",
 					"-ObjC",
-					"-pagezero_size",
-					10000,
-					"-image_base",
-					100000000,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.elex-tech.DragonClans";
 				PRODUCT_NAME = DragonClans;
-				PROVISIONING_PROFILE = "";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				PROVISIONING_PROFILE = "d7b55ddb-5a47-4bd7-b396-417ed555219d";
+				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "\"IF/libs/Chipmunk/include/chipmunk\"";
 				VALIDATE_PRODUCT = NO;
 				WARNING_CFLAGS = (
@@ -8770,8 +8761,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: ELEX Technology Holdings Co., Ltd. (N6JW9AVXL5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ELEX Technology Holdings Co., Ltd. (N6JW9AVXL5)";
 				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -8818,15 +8809,11 @@
 					"-lz",
 					"-lsqlite3",
 					"-ObjC",
-					"-pagezero_size",
-					10000,
-					"-image_base",
-					100000000,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.elex-tech.DragonClans";
 				PRODUCT_NAME = DragonClans;
-				PROVISIONING_PROFILE = "";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				PROVISIONING_PROFILE = "d7b55ddb-5a47-4bd7-b396-417ed555219d";
+				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "\"IF/libs/Chipmunk/include/chipmunk\"";
 				VALIDATE_PRODUCT = NO;
 				WRAPPER_EXTENSION = app;
