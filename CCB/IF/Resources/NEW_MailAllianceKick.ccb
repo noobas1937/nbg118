@@ -306,9 +306,9 @@
 														<string>ScaleLock</string>
 														<key>value</key>
 														<array>
-															<real>0.41999998688697815</real>
-															<real>0.41999998688697815</real>
-															<true/>
+															<real>1</real>
+															<real>1</real>
+															<false/>
 															<integer>0</integer>
 														</array>
 													</dict>
@@ -335,7 +335,7 @@
 														<string>FloatScale</string>
 														<key>value</key>
 														<array>
-															<real>58</real>
+															<real>24</real>
 															<integer>0</integer>
 														</array>
 													</dict>
@@ -567,9 +567,9 @@
 														<string>ScaleLock</string>
 														<key>value</key>
 														<array>
-															<real>0.41999998688697815</real>
-															<real>0.41999998688697815</real>
-															<true/>
+															<real>1</real>
+															<real>1</real>
+															<false/>
 															<integer>0</integer>
 														</array>
 													</dict>
@@ -596,7 +596,7 @@
 														<string>FloatScale</string>
 														<key>value</key>
 														<array>
-															<real>58</real>
+															<real>24</real>
 															<integer>0</integer>
 														</array>
 													</dict>
@@ -828,9 +828,9 @@
 														<string>ScaleLock</string>
 														<key>value</key>
 														<array>
-															<real>0.41999998688697815</real>
-															<real>0.41999998688697815</real>
-															<true/>
+															<real>1</real>
+															<real>1</real>
+															<false/>
 															<integer>0</integer>
 														</array>
 													</dict>
@@ -857,7 +857,7 @@
 														<string>FloatScale</string>
 														<key>value</key>
 														<array>
-															<real>58</real>
+															<real>24</real>
 															<integer>0</integer>
 														</array>
 													</dict>
@@ -1208,9 +1208,9 @@
 												<string>ScaleLock</string>
 												<key>value</key>
 												<array>
-													<real>0.41999998688697815</real>
-													<real>0.41999998688697815</real>
-													<true/>
+													<real>1</real>
+													<real>1</real>
+													<false/>
 													<integer>0</integer>
 												</array>
 											</dict>
@@ -1237,7 +1237,7 @@
 												<string>FloatScale</string>
 												<key>value</key>
 												<array>
-													<real>58</real>
+													<real>24</real>
 													<integer>0</integer>
 												</array>
 											</dict>
@@ -1336,9 +1336,9 @@
 												<string>ScaleLock</string>
 												<key>value</key>
 												<array>
-													<real>0.41999998688697815</real>
-													<real>0.41999998688697815</real>
-													<true/>
+													<real>1</real>
+													<real>1</real>
+													<false/>
 													<integer>0</integer>
 												</array>
 											</dict>
@@ -1365,7 +1365,7 @@
 												<string>FloatScale</string>
 												<key>value</key>
 												<array>
-													<real>58</real>
+													<real>24</real>
 													<integer>0</integer>
 												</array>
 											</dict>
@@ -1662,9 +1662,9 @@
 												<string>ScaleLock</string>
 												<key>value</key>
 												<array>
-													<real>0.41999998688697815</real>
-													<real>0.41999998688697815</real>
-													<true/>
+													<real>1</real>
+													<real>1</real>
+													<false/>
 													<integer>0</integer>
 												</array>
 											</dict>
@@ -1691,7 +1691,7 @@
 												<string>FloatScale</string>
 												<key>value</key>
 												<array>
-													<real>53</real>
+													<real>22</real>
 													<integer>0</integer>
 												</array>
 											</dict>
@@ -1714,8 +1714,8 @@
 												<string>Size</string>
 												<key>value</key>
 												<array>
-													<real>1416</real>
-													<real>192</real>
+													<real>590</real>
+													<real>80</real>
 													<integer>0</integer>
 												</array>
 											</dict>
@@ -1744,8 +1744,6 @@
 												<string>This summer, the hottest movie must belong to the Jurassic Park. The series of Jurassic Park is very popular around the dfccccccccccccccdgsfsdfsdfsdfsdfsfsfsdfsd</string>
 											</dict>
 										</array>
-										<key>selected</key>
-										<true/>
 									</dict>
 								</array>
 								<key>customClass</key>
@@ -1879,9 +1877,9 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>50</real>
-							<real>81.833335876464844</real>
-							<integer>4</integer>
+							<real>320</real>
+							<real>491</real>
+							<integer>0</integer>
 						</array>
 					</dict>
 					<dict>
@@ -1902,9 +1900,9 @@
 						<string>ScaleLock</string>
 						<key>value</key>
 						<array>
-							<real>2.4000000953674316</real>
-							<real>2.4000000953674316</real>
-							<true/>
+							<real>1</real>
+							<real>1</real>
+							<false/>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -1936,8 +1934,8 @@
 				<string>Size</string>
 				<key>value</key>
 				<array>
-					<real>1536</real>
-					<real>1440</real>
+					<real>640</real>
+					<real>600</real>
 					<integer>0</integer>
 				</array>
 			</dict>
@@ -1994,6 +1992,8 @@
 				<true/>
 			</dict>
 		</array>
+		<key>selected</key>
+		<true/>
 	</dict>
 	<key>notes</key>
 	<array/>
@@ -2005,13 +2005,13 @@
 			<key>ext</key>
 			<string>iphone</string>
 			<key>height</key>
-			<integer>2048</integer>
+			<integer>852</integer>
 			<key>name</key>
 			<string>iPhone Landscape</string>
 			<key>scale</key>
 			<real>1</real>
 			<key>width</key>
-			<integer>1536</integer>
+			<integer>640</integer>
 		</dict>
 	</array>
 	<key>sequences</key>

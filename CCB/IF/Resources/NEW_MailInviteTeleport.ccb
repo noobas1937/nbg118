@@ -208,8 +208,8 @@
 								<string>ScaleLock</string>
 								<key>value</key>
 								<array>
-									<real>0.41999998688697815</real>
-									<real>0.41999998688697815</real>
+									<real>1</real>
+									<real>1</real>
 									<false/>
 									<integer>0</integer>
 								</array>
@@ -237,7 +237,7 @@
 								<string>FloatScale</string>
 								<key>value</key>
 								<array>
-									<real>53</real>
+									<real>22</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -260,8 +260,8 @@
 								<string>Size</string>
 								<key>value</key>
 								<array>
-									<real>1416</real>
-									<real>720</real>
+									<real>590</real>
+									<real>300</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -291,8 +291,6 @@
 once the plane was on the ground soft music began to flow from the ceiling speakers: a sweet orchestral cover version of the beatles' " norwegian wood". the melody never failed to send a shudder through me, but this time it hit me harder than ever.</string>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -813,9 +811,9 @@ once the plane was on the ground soft music began to flow from the ceiling speak
 						<string>ScaleLock</string>
 						<key>value</key>
 						<array>
-							<real>2.4000000953674316</real>
-							<real>2.4000000953674316</real>
-							<true/>
+							<real>1</real>
+							<real>1</real>
+							<false/>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -847,8 +845,8 @@ once the plane was on the ground soft music began to flow from the ceiling speak
 				<string>Size</string>
 				<key>value</key>
 				<array>
-					<real>1536</real>
-					<real>1080</real>
+					<real>640</real>
+					<real>450</real>
 					<integer>0</integer>
 				</array>
 			</dict>
@@ -905,6 +903,8 @@ once the plane was on the ground soft music began to flow from the ceiling speak
 				<true/>
 			</dict>
 		</array>
+		<key>selected</key>
+		<true/>
 	</dict>
 	<key>notes</key>
 	<array/>
@@ -916,13 +916,13 @@ once the plane was on the ground soft music began to flow from the ceiling speak
 			<key>ext</key>
 			<string>iphone</string>
 			<key>height</key>
-			<integer>2048</integer>
+			<integer>852</integer>
 			<key>name</key>
 			<string>iPhone Landscape</string>
 			<key>scale</key>
 			<real>1</real>
 			<key>width</key>
-			<integer>1536</integer>
+			<integer>640</integer>
 		</dict>
 	</array>
 	<key>sequences</key>
