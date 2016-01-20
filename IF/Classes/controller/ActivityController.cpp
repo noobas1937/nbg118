@@ -897,7 +897,9 @@ void ActivityController::openActivityView(){
         }
         
     }else if(endTime>0){
-        PopupViewController::getInstance()->addPopupView(ActivityBeginView::create());
+        auto popup = ActivityBeginView::create();
+        PopupViewController::getInstance()->addPopupView(popup);
+        popup->setPositionY(popup->getPositionY() + popup->height_offset / 2);
     }else{
         PopupViewController::getInstance()->addPopupView(ActivityHistoryView::create());
     }

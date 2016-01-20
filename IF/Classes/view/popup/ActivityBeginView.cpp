@@ -20,8 +20,8 @@
 #include "ActivityEventCommand.h"
 #include "GameController.h"
 
-static const cocos2d::ccColor3B COLOR_TYPE_NORMAL = {128,78,35};
-static const cocos2d::ccColor3B COLOR_TYPE_SELECTED = {250,180,111};
+static const cocos2d::ccColor3B COLOR_TYPE_NORMAL = {179, 183, 238};
+static const cocos2d::ccColor3B COLOR_TYPE_SELECTED = {255, 255, 255};
 
 ActivityBeginView *ActivityBeginView::create(){
     ActivityBeginView *ret = new ActivityBeginView();
@@ -77,65 +77,30 @@ void ActivityBeginView::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent){
     m_btnRecord->setHighlighted(false);
     m_btnRankReward->setHighlighted(false);
     
-    if(isTouchInside(m_tab1, pTouch)){
-        m_scrollView->getContainer()->stopAllActions();
-        m_scrollView->unscheduleAllSelectors();
-        m_scrollView->setContentSize(CCSize(m_funList->getContentSize().width,m_totalH));
-        m_scrollView->setContentOffset(ccp(0, m_funList->getContentSize().height - m_totalH));
-        m_sorceTxt->setColor(COLOR_TYPE_SELECTED);
-        m_sorceNum->setColor(COLOR_TYPE_SELECTED);
-        m_rankTxt->setColor(COLOR_TYPE_NORMAL);
-        m_rankNum->setColor(COLOR_TYPE_NORMAL);
-        m_totalRankTxt->setColor(COLOR_TYPE_NORMAL);
-        m_totalRankNum->setColor(COLOR_TYPE_NORMAL);
-    }else if (isTouchInside(m_tab2, pTouch)) {
-        m_scrollView->getContainer()->stopAllActions();
-        m_scrollView->unscheduleAllSelectors();
-        m_scrollView->setContentOffset(ccp(0,m_funList->getContentSize().height -m_tab2H));
-        m_sorceTxt->setColor(COLOR_TYPE_NORMAL);
-        m_sorceNum->setColor(COLOR_TYPE_NORMAL);
-        m_rankTxt->setColor(COLOR_TYPE_SELECTED);
-        m_rankNum->setColor(COLOR_TYPE_SELECTED);
-        m_totalRankTxt->setColor(COLOR_TYPE_NORMAL);
-        m_totalRankNum->setColor(COLOR_TYPE_NORMAL);
-    }else if (isTouchInside(m_tab3, pTouch)) {
-        m_sorceTxt->setColor(COLOR_TYPE_NORMAL);
-        m_sorceNum->setColor(COLOR_TYPE_NORMAL);
-        m_rankTxt->setColor(COLOR_TYPE_NORMAL);
-        m_rankNum->setColor(COLOR_TYPE_NORMAL);
-        m_totalRankTxt->setColor(COLOR_TYPE_SELECTED);
-        m_totalRankNum->setColor(COLOR_TYPE_SELECTED);
-        m_scrollView->getContainer()->stopAllActions();
-        m_scrollView->unscheduleAllSelectors();
-        m_scrollView->setContentOffset(ccp(0,m_funList->getContentSize().height - m_tab3H));
-    }else if (!isTouchInside(m_clickNode, pTouch) && !m_moveFlag) {
-        PopupViewController::getInstance()->removePopupView(this);
-    }else{
-        CCPoint pos = pTouch->getLocation();
-        if(fabsf(pos.y - m_touchPos.y)>30){
-            return ;
-        }
-        if(isTouchInside(m_btnHistory, pTouch)){
-            onClickHistory(NULL,Control::EventType::TOUCH_DOWN);
-        }else if (isTouchInside(m_btnReward, pTouch) && m_btnReward->isVisible()){
-            onClickReward(NULL,Control::EventType::TOUCH_DOWN);
-        }else if (isTouchInside(m_btnRecord, pTouch)){
-            onClickRecord(NULL,Control::EventType::TOUCH_DOWN);
-        }
-        else if (isTouchInside(m_btnRankReward, pTouch)){
-            onClickRankReward(NULL,Control::EventType::TOUCH_DOWN);
-        }
-        else if (isTouchInside(m_infoBtn, pTouch)){
-            onInfoBtnClick(NULL,Control::EventType::TOUCH_DOWN);
-        }
-        else if (isTouchInside(m_infoBtn2, pTouch)){
-            onInfoBtn2Click(NULL,Control::EventType::TOUCH_DOWN);
-        }
-        else if (isTouchInside(m_infoBtn3, pTouch) && m_infoBtn3->isVisible()){
-            onInfoBtn3Click(NULL,Control::EventType::TOUCH_DOWN);
-        }else if (isTouchInside(m_sorceTargetBtn, pTouch)){
-            PopupViewController::getInstance()->addPopupView(TipsView::create(_lang("105844"),kCCTextAlignmentLeft));
-        }
+    CCPoint pos = pTouch->getLocation();
+    if(fabsf(pos.y - m_touchPos.y)>30){
+        return ;
+    }
+    if(isTouchInside(m_btnHistory, pTouch)){
+        onClickHistory(NULL,Control::EventType::TOUCH_DOWN);
+    }else if (isTouchInside(m_btnReward, pTouch) && m_btnReward->isVisible()){
+        onClickReward(NULL,Control::EventType::TOUCH_DOWN);
+    }else if (isTouchInside(m_btnRecord, pTouch)){
+        onClickRecord(NULL,Control::EventType::TOUCH_DOWN);
+    }
+    else if (isTouchInside(m_btnRankReward, pTouch)){
+        onClickRankReward(NULL,Control::EventType::TOUCH_DOWN);
+    }
+    else if (isTouchInside(m_infoBtn, pTouch)){
+        onInfoBtnClick(NULL,Control::EventType::TOUCH_DOWN);
+    }
+    else if (isTouchInside(m_infoBtn2, pTouch)){
+        onInfoBtn2Click(NULL,Control::EventType::TOUCH_DOWN);
+    }
+    else if (isTouchInside(m_infoBtn3, pTouch) && m_infoBtn3->isVisible()){
+        onInfoBtn3Click(NULL,Control::EventType::TOUCH_DOWN);
+    }else if (isTouchInside(m_sorceTargetBtn, pTouch)){
+        PopupViewController::getInstance()->addPopupView(TipsView::create(_lang("105844"),kCCTextAlignmentLeft));
     }
 }
 
@@ -154,6 +119,61 @@ void ActivityBeginView::onTouchMoved(CCTouch *pTouch, CCEvent *pEvent){
     //CCLOG("x=%f  y=%f",pos.x,pos.y);
 }
 
+void ActivityBeginView::onTab1(CCObject *pSender)
+{
+    m_btnHistory->setHighlighted(false);
+    m_btnReward->setHighlighted(false);
+    m_btnRecord->setHighlighted(false);
+    m_btnRankReward->setHighlighted(false);
+    
+    m_scrollView->getContainer()->stopAllActions();
+    m_scrollView->unscheduleAllSelectors();
+    m_scrollView->setContentSize(CCSize(m_funList->getContentSize().width,m_totalH));
+    m_scrollView->setContentOffset(ccp(0, m_funList->getContentSize().height + height_offset - m_totalH));
+    m_sorceTxt->setColor(COLOR_TYPE_SELECTED);
+    m_sorceNum->setColor(COLOR_TYPE_SELECTED);
+    m_rankTxt->setColor(COLOR_TYPE_NORMAL);
+    m_rankNum->setColor(COLOR_TYPE_NORMAL);
+    m_totalRankTxt->setColor(COLOR_TYPE_NORMAL);
+    m_totalRankNum->setColor(COLOR_TYPE_NORMAL);
+}
+
+void ActivityBeginView::onTab2(CCObject *pSender)
+{
+    m_btnHistory->setHighlighted(false);
+    m_btnReward->setHighlighted(false);
+    m_btnRecord->setHighlighted(false);
+    m_btnRankReward->setHighlighted(false);
+    
+    m_scrollView->getContainer()->stopAllActions();
+    m_scrollView->unscheduleAllSelectors();
+    m_scrollView->setContentOffset(ccp(0,m_funList->getContentSize().height + height_offset -m_tab2H));
+    m_sorceTxt->setColor(COLOR_TYPE_NORMAL);
+    m_sorceNum->setColor(COLOR_TYPE_NORMAL);
+    m_rankTxt->setColor(COLOR_TYPE_SELECTED);
+    m_rankNum->setColor(COLOR_TYPE_SELECTED);
+    m_totalRankTxt->setColor(COLOR_TYPE_NORMAL);
+    m_totalRankNum->setColor(COLOR_TYPE_NORMAL);
+}
+
+void ActivityBeginView::onTab3(CCObject *pSender)
+{
+    m_btnHistory->setHighlighted(false);
+    m_btnReward->setHighlighted(false);
+    m_btnRecord->setHighlighted(false);
+    m_btnRankReward->setHighlighted(false);
+    
+    m_sorceTxt->setColor(COLOR_TYPE_NORMAL);
+    m_sorceNum->setColor(COLOR_TYPE_NORMAL);
+    m_rankTxt->setColor(COLOR_TYPE_NORMAL);
+    m_rankNum->setColor(COLOR_TYPE_NORMAL);
+    m_totalRankTxt->setColor(COLOR_TYPE_SELECTED);
+    m_totalRankNum->setColor(COLOR_TYPE_SELECTED);
+    m_scrollView->getContainer()->stopAllActions();
+    m_scrollView->unscheduleAllSelectors();
+    m_scrollView->setContentOffset(ccp(0,m_funList->getContentSize().height + height_offset - m_tab3H));
+}
+
 bool ActivityBeginView::init(){
     bool ret = false;
     if(PopupBaseView::init()){
@@ -162,7 +182,7 @@ bool ActivityBeginView::init(){
 //            CCLoadSprite::doResourceByCommonIndex(8, false);
 //        });
         setIsHDPanel(true);
-        this->setModelLayerOpacity(160);
+        // this->setModelLayerOpacity(160);
         auto node = CCBLoadFile("ActivityBeginView", this, this);
         if (CCCommonUtils::isIosAndroidPad()) {
             this->setContentSize(CCDirector::sharedDirector()->getWinSize());
@@ -170,7 +190,17 @@ bool ActivityBeginView::init(){
         else
             this->setContentSize(node->getContentSize());
         
-        m_scrollView = CCScrollView::create(m_funList->getContentSize());
+        int prev = m_viewBg->getContentSize().height;
+        this->changeBGHeight(m_viewBg);
+        int add = m_viewBg->getContentSize().height - prev;
+        if (CCCommonUtils::isIosAndroidPad()) {
+            add = CCDirector::sharedDirector()->getWinSize().height - 2048;
+        }
+//        m_infoList->setContentSize(CCSize(m_infoList->getContentSize().width,m_infoList->getContentSize().height + add));
+//        m_infoList->setPositionY(m_infoList->getPositionY() - add);
+        height_offset = add;
+        
+        m_scrollView = CCScrollView::create({m_funList->getContentSize().width, m_funList->getContentSize().height + height_offset});
         m_scrollView->setDirection(kCCScrollViewDirectionVertical);
         m_scrollView->setTouchPriority(Touch_Default);
         m_funList->addChild(m_scrollView);
@@ -245,7 +275,8 @@ bool ActivityBeginView::init(){
         m_scrollView->addChild(m_rankNode);
         
         m_scrollView->setContentSize(CCSize(m_funList->getContentSize().width,totalH));
-        m_scrollView->setContentOffset(ccp(0, m_funList->getContentSize().height - totalH));
+        m_scrollView->setContentOffset(ccp(0, m_funList->getContentSize().height + height_offset - totalH));
+        m_scrollView->setPosition((m_funList->getContentSize().width - 532) / 2, -height_offset);
         m_totalH = totalH;
         
         m_loadingIcon = NULL;
@@ -403,7 +434,7 @@ void ActivityBeginView::getServerData(CCObject* param){
                         if(score>=oneScore){
                             m_trTxt1->setString(_lang("115216"));
                             m_trTxt1->setPositionY(8);
-                            m_targetTxtBg1->setVisible(false);
+                            //m_targetTxtBg1->setVisible(false);
                         }else{
                             m_tRewardTxt1->setString(name);
                             if (CCCommonUtils::isIosAndroidPad()) {
@@ -450,7 +481,7 @@ void ActivityBeginView::getServerData(CCObject* param){
                         if(score>=twoScore){
                             m_trTxt2->setString(_lang("115216"));
                             m_trTxt2->setPositionY(8);
-                            m_targetTxtBg2->setVisible(false);
+                            //m_targetTxtBg2->setVisible(false);
                         }else{
                             m_tRewardTxt2->setString(name);
                             if (CCCommonUtils::isIosAndroidPad()) {
@@ -497,7 +528,7 @@ void ActivityBeginView::getServerData(CCObject* param){
                         if(score>=threeScore){
                             m_trTxt3->setString(_lang("115216"));
                             m_trTxt3->setPositionY(8);
-                            m_targetTxtBg3->setVisible(false);
+                            //m_targetTxtBg3->setVisible(false);
                         }else{
                             m_tRewardTxt3->setString(name);
                             if (CCCommonUtils::isIosAndroidPad()) {
@@ -620,7 +651,7 @@ void ActivityBeginView::showRewards(int hBG){
     m_scrollView->addChild(m_rankNode);
     
     m_scrollView->setContentSize(CCSize(m_funList->getContentSize().width,totalH));
-    m_scrollView->setContentOffset(ccp(0, m_funList->getContentSize().height - totalH));
+    m_scrollView->setContentOffset(ccp(0, m_funList->getContentSize().height + height_offset - totalH));
     m_totalH = totalH;
     m_bottomFix->setPositionY(m_scBG->getPositionY()-totalH + 30);
     m_scBG->setContentSize(CCSize(532,totalH-15));
@@ -692,7 +723,14 @@ void ActivityBeginView::onCloseClick(CCObject *pSender, CCControlEvent event){
     PopupViewController::getInstance()->removePopupView(this);
 }
 
+void ActivityBeginView::onCloseClick(CCObject *pSender){
+    PopupViewController::getInstance()->removePopupView(this);
+}
+
 bool ActivityBeginView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode){
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_viewBg", CCNode*, this->m_viewBg);
+    
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_titleTxt", CCLabelIF*, this->m_titleTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_sorceTxt", CCLabelIF*, this->m_sorceTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_rankTxt", CCLabelIF*, this->m_rankTxt);
@@ -716,9 +754,9 @@ bool ActivityBeginView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, c
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_targetIcon3", CCNode*, this->m_targetIcon3);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_targetIcon2", CCNode*, this->m_targetIcon2);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_targetIcon1", CCNode*, this->m_targetIcon1);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_targetTxtBg3", CCNode*, this->m_targetTxtBg3);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_targetTxtBg2", CCNode*, this->m_targetTxtBg2);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_targetTxtBg1", CCNode*, this->m_targetTxtBg1);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"//m_targetTxtBg3", CCNode*, this->//m_targetTxtBg3);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"//m_targetTxtBg2", CCNode*, this->//m_targetTxtBg2);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"//m_targetTxtBg1", CCNode*, this->//m_targetTxtBg1);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_trNum3", CCLabelIF*, this->m_trNum3);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_trNum2", CCLabelIF*, this->m_trNum2);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_trNum1", CCLabelIF*, this->m_trNum1);
@@ -769,6 +807,15 @@ SEL_CCControlHandler ActivityBeginView::onResolveCCBCCControlSelector(cocos2d::C
 //    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onInfoBtn2Click", ActivityBeginView::onInfoBtn2Click);
 //    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onInfoBtn3Click", ActivityBeginView::onInfoBtn3Click);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onCloseClick", ActivityBeginView::onCloseClick);
+    return NULL;
+}
+
+cocos2d::SEL_MenuHandler ActivityBeginView::onResolveCCBCCMenuItemSelector(cocos2d::CCObject * pTarget, const char * pSelectorName)
+{
+    CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onCloseClick", ActivityBeginView::onCloseClick);
+    CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onTab1", ActivityBeginView::onTab1);
+    CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onTab2", ActivityBeginView::onTab2);
+    CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onTab3", ActivityBeginView::onTab3);
     return NULL;
 }
 

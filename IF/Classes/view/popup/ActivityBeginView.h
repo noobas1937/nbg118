@@ -24,12 +24,16 @@ public:
     static ActivityBeginView *create();
     ActivityBeginView(){};
     ~ActivityBeginView(){};
+    
+    // TODO:
+    int height_offset;
+    
 private:
     virtual void onEnter();
     virtual void onExit();
     virtual bool init();
     virtual bool onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode);
-    virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(cocos2d::CCObject * pTarget, const char * pSelectorName){return NULL;}
+    virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(cocos2d::CCObject * pTarget, const char * pSelectorName);
 	virtual SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName);
     virtual bool onTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
     virtual void onTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
@@ -43,6 +47,10 @@ private:
     void onInfoBtn3Click(CCObject *pSender, CCControlEvent event);
     void onClickHistory(CCObject *pSender, CCControlEvent event);
     void onCloseClick(CCObject *pSender, CCControlEvent event);
+    void onCloseClick(CCObject *pSender);
+    void onTab1(CCObject *pSender);
+    void onTab2(CCObject *pSender);
+    void onTab3(CCObject *pSender);
     
     void updateTime(float _time);
     void getServerData(CCObject* param);
@@ -50,6 +58,8 @@ private:
     void addLoadingAni();
     void removeLoadingAni(CCObject* obj);
     void showRewards(int hBG);
+    
+    CCSafeObject<CCNode> m_viewBg;
     
     CCSafeObject<CCSprite> m_loadingIcon;
     
@@ -79,9 +89,9 @@ private:
     CCSafeObject<CCLabelIF> m_trNum3;
     CCSafeObject<CCLabelIF> m_trNum2;
     CCSafeObject<CCLabelIF> m_trNum1;
-    CCSafeObject<CCNode> m_targetTxtBg3;
-    CCSafeObject<CCNode> m_targetTxtBg2;
-    CCSafeObject<CCNode> m_targetTxtBg1;
+//    CCSafeObject<CCNode> m_targetTxtBg3;
+//    CCSafeObject<CCNode> m_targetTxtBg2;
+//    CCSafeObject<CCNode> m_targetTxtBg1;
     
     CCSafeObject<CCNode> m_earnNode;
     CCSafeObject<CCNode> m_eNode;

@@ -4837,7 +4837,7 @@ void ImperialScene::initBigTile()
     int od = m_flagNode->getZOrder();
     m_flagBuild->setNamePos(m_flagNode->getPositionX(), m_flagNode->getPositionY(), m_signLayer, m_arrbatchNode, m_tilebatchNode, od);
     // tao.yu 第一版不开放活动
-    if(false) {
+    if(true) {
         m_hdBuild = SpeBuild::create(SPE_BUILD_HD);
         m_hdNode->addChild(m_hdBuild);
         int hod = m_hdNode->getZOrder();

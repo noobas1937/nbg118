@@ -4,10 +4,179 @@
     <dict>
         <key>frames</key>
         <dict>
+            <key>ActivityListCell_bg.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{4,4},{299,63}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{299,63}}</string>
+                <key>sourceSize</key>
+                <string>{299,63}</string>
+            </dict>
+            <key>ActivityRewardView_titlebg.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{309,4},{465,90}}</string>
+                <key>offset</key>
+                <string>{0,1}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{465,90}}</string>
+                <key>sourceSize</key>
+                <string>{465,92}</string>
+            </dict>
+            <key>Ativity_iconLogo_1.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{780,4},{206,161}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{206,161}}</string>
+                <key>sourceSize</key>
+                <string>{206,161}</string>
+            </dict>
+            <key>Ativity_iconLogo_10.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{780,4},{206,161}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{206,161}}</string>
+                <key>sourceSize</key>
+                <string>{206,161}</string>
+            </dict>
+            <key>Ativity_iconLogo_11.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{780,4},{206,161}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{206,161}}</string>
+                <key>sourceSize</key>
+                <string>{206,161}</string>
+            </dict>
+            <key>Ativity_iconLogo_12.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{780,4},{206,161}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{206,161}}</string>
+                <key>sourceSize</key>
+                <string>{206,161}</string>
+            </dict>
+            <key>Ativity_iconLogo_14.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{780,4},{206,161}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{206,161}}</string>
+                <key>sourceSize</key>
+                <string>{206,161}</string>
+            </dict>
+            <key>Ativity_iconLogo_2.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{780,4},{206,161}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{206,161}}</string>
+                <key>sourceSize</key>
+                <string>{206,161}</string>
+            </dict>
+            <key>Ativity_iconLogo_3.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{780,4},{206,161}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{206,161}}</string>
+                <key>sourceSize</key>
+                <string>{206,161}</string>
+            </dict>
+            <key>Ativity_iconLogo_4.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{780,4},{206,161}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{206,161}}</string>
+                <key>sourceSize</key>
+                <string>{206,161}</string>
+            </dict>
+            <key>Ativity_iconLogo_7.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{780,4},{206,161}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{206,161}}</string>
+                <key>sourceSize</key>
+                <string>{206,161}</string>
+            </dict>
+            <key>Ativity_iconLogo_8.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{780,4},{206,161}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{206,161}}</string>
+                <key>sourceSize</key>
+                <string>{206,161}</string>
+            </dict>
+            <key>Ativity_iconLogo_9.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{780,4},{206,161}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{206,161}}</string>
+                <key>sourceSize</key>
+                <string>{206,161}</string>
+            </dict>
             <key>act_common_bg.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,4},{608,172}}</string>
+                <string>{{4,171},{608,172}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -20,7 +189,7 @@
             <key>act_icon_logo_1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{618,4},{160,146}}</string>
+                <string>{{618,171},{160,146}}</string>
                 <key>offset</key>
                 <string>{0,7}</string>
                 <key>rotated</key>
@@ -33,7 +202,7 @@
             <key>activity1_12.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,182},{260,68}}</string>
+                <string>{{4,349},{260,68}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -43,10 +212,49 @@
                 <key>sourceSize</key>
                 <string>{260,68}</string>
             </dict>
+            <key>activity_BG0.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{270,349},{311,366}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{311,366}}</string>
+                <key>sourceSize</key>
+                <string>{311,366}</string>
+            </dict>
+            <key>activity_l003.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{587,349},{34,37}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{34,37}}</string>
+                <key>sourceSize</key>
+                <string>{34,37}</string>
+            </dict>
+            <key>activity_label_bg.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{4,721},{638,62}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{638,62}}</string>
+                <key>sourceSize</key>
+                <string>{638,62}</string>
+            </dict>
             <key>frame_light.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{270,182},{298,84}}</string>
+                <string>{{648,721},{298,84}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -59,7 +267,7 @@
             <key>frame_line.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{574,182},{126,126}}</string>
+                <string>{{4,811},{126,126}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -72,7 +280,7 @@
             <key>monthcard_bg.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,314},{611,160}}</string>
+                <string>{{136,811},{611,160}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -85,7 +293,7 @@
             <key>monthcard_scroll.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,480},{637,454}}</string>
+                <string>{{4,977},{637,454}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -98,7 +306,7 @@
             <key>orange_bar.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,940},{400,80}}</string>
+                <string>{{4,1437},{400,80}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -116,9 +324,9 @@
             <key>realTextureFileName</key>
             <string>Common_500.pvr.ccz</string>
             <key>size</key>
-            <string>{1024,1024}</string>
+            <string>{1024,2048}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:5982d863c4ea0d2133c3780722b0dfe0:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:--REMOVED----------------------------</string>
             <key>textureFileName</key>
             <string>Common_500.pvr.ccz</string>
         </dict>
