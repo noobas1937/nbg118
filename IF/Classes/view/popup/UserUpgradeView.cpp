@@ -500,10 +500,10 @@ void UserUpgradeView::onRewardBtnClick(CCObject * pSender, Control::EventType pC
     cmd->sendAndRelease();
     this->closeSelf();
     
-    if (level==3) {//引导使用新手礼包
+    if (level==3 && USE_NEW_GUIDE) {//引导使用新手礼包
         GuideController::share()->setGuide("3330100");
     }
-    else if (level==5 && !GlobalData::shared()->isXiaoMiPlatForm() ) {//引导绑定
+    else if (level==5 && !GlobalData::shared()->isXiaoMiPlatForm() && USE_NEW_GUIDE) {//引导绑定
         GuideController::share()->setGuide("3370100");
     }
     

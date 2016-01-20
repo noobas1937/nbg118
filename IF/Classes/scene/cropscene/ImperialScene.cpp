@@ -1939,7 +1939,7 @@ void ImperialScene::onEnter()
     string gid = GuideController::share()->getCurrentId();
     
     string gFake = CCUserDefault::sharedUserDefault()->getStringForKey("Guide_Fake","");
-    if (GlobalData::shared()->playerInfo.level==1 && GlobalData::shared()->playerInfo.exp==0 && (gFake==""||gFake=="start_1") && gid == "") {
+    if (GlobalData::shared()->playerInfo.level==1 && GlobalData::shared()->playerInfo.exp==0 && (gFake==""||gFake=="start_1") && gid == "" && USE_NEW_GUIDE) {
         this->setVisible(false);
         UIComponent::getInstance()->setVisible(false);
         

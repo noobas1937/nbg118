@@ -985,7 +985,7 @@ void YesNoDialog::keypressedBtnOk(CCObject * pSender, Control::EventType pCCCont
         PopupViewController::getInstance()->removeAllPopupView();
         PopupViewController::getInstance()->addPopupInView(AllianceInfoView::create(&GlobalData::shared()->playerInfo.allianceInfo));
         
-        if(GlobalData::shared()->playerInfo.isfirstJoin )//fusheng 第一次加入联盟
+        if(GlobalData::shared()->playerInfo.isfirstJoin && USE_NEW_GUIDE)//fusheng 第一次加入联盟
         {
             GuideController::share()->setGuide("3380100");//fusheng 联盟功能引导
             

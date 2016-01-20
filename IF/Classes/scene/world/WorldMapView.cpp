@@ -248,7 +248,7 @@ bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType , bool isIn
     this->addChild(m_touchDelegateView);
     
     m_drawRoadNode = CCLineBatchedLayer::create();
-    if(GuideController::share()->getCurGuideID() == "3311100")//fusheng 新手引导 第一步 不显示线路
+    if(GuideController::share()->getCurGuideID() == "3311100" && USE_NEW_GUIDE)//fusheng 新手引导 第一步 不显示线路
         m_drawRoadNode->setVisible(false);
     m_layers[WM_ROAD]->addChild(m_drawRoadNode, roadIndex++);
     
@@ -1218,7 +1218,20 @@ void WorldMapView::asyncCityInfoParse(cocos2d::CCObject *obj) {
 //                if (GuideController::share()->getCurrentId() == "3031200"
 //                   || GuideController::share()->getCurrentId() == "3031300"
 //                   || GuideController::share()->getCurrentId() == "3031400") {
-                if (GuideController::share()->getCurrentId() == "3410300" || GuideController::share()->getCurrentId() == "3410400"){//fusheng world里的教程
+                string keyQuestID1 = "3410300";
+                string keyQuestID2 = "3410400";
+                
+                if (USE_NEW_GUIDE) {
+                     keyQuestID1 = "3410300";
+                     keyQuestID2 = "3410400";
+                }
+                else
+                {
+                    keyQuestID1 = "3074200";
+                    keyQuestID2 = "3074300";
+                }
+                
+                if (GuideController::share()->getCurrentId() == keyQuestID1 || GuideController::share()->getCurrentId() == keyQuestID2){//fusheng world里的教程
                     CCPoint addPt = WorldController::getPointByIndex(index);
                     if (WorldController::getInstance()->getCityInfos()[index].cityType == ResourceTile
                        && WorldController::getInstance()->getCityInfos()[index].resource.type == Food
@@ -1909,7 +1922,7 @@ void WorldMapView::gotoTilePoint(const cocos2d::CCPoint &point,bool forceUpdate,
     if (forceUpdate && !m_map->isSendCmd) {
 #pragma mark 新手引导期间  不请求服务器数据
         //fusheng 新手引导期间  不请求服务器数据
-        if(GuideController::share()->getCurGuideID() == "3311100")//fusheng 新手引导 第一步
+        if(GuideController::share()->getCurGuideID() == "3311100" && USE_NEW_GUIDE)//fusheng 新手引导 第一步
         {
             auto dict = CCDictionary::create();
             

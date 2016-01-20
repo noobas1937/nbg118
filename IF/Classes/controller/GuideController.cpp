@@ -164,8 +164,15 @@ bool GuideController::start(){
         std::string guideId = "";
         string gFake = CCUserDefault::sharedUserDefault()->getStringForKey("Guide_Fake","");
         if(GlobalData::shared()->playerInfo.level == 1 && GlobalData::shared()->playerInfo.exp == 0 && (gFake=="" || gFake=="start_1") && FunBuildController::getInstance()->getFunbuildById(FUN_BUILD_MAIN_CITY_ID).level == 1){
-//            guideId = "3070100";//第一个引导
-            guideId = "3311100";
+            if (USE_NEW_GUIDE) {
+                //            guideId = "3311100";
+            }
+            else
+            {
+                guideId = "3070100";//第一个引导
+            }
+            
+
         }else{
             std::string stepKey = GlobalData::shared()->playerInfo.uid + GUIDE_STEP;
             guideId = CCUserDefault::sharedUserDefault()->getStringForKey(stepKey.c_str());

@@ -95,7 +95,7 @@ void GuideView::removeGuideView(CCObject* p){
 
 void GuideView::gotoEnd(cocos2d::CCObject *pTarget, CCControlEvent touchEvent){
     GuideController::share()->IsSkip = true;
-    GuideController::share()->setGuide("3070700");
+//    GuideController::share()->setGuide("3070700");//fusheng edit 1.21
 //    CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_BATTLE_END);
 //    GuideController::share()->setGuide("3010100");
 }
@@ -362,7 +362,7 @@ bool GuideView::onTouchBegan(CCTouch *pTouch, CCEvent *pEvent){
     CCPoint pt = ccp(lx, ly);
     if(m_rect.containsPoint(pt)){
         string gid = GuideController::share()->getCurrentId();
-        if(gid == "3380200" || gid == "3380300"  || gid == "3380400" )//fusheng 联盟点击到这里时 next
+        if((gid == "3380200" || gid == "3380300"  || gid == "3380400") && USE_NEW_GUIDE)//fusheng 联盟点击到这里时 next
         {
 //            GuideController::share()->next();
             
@@ -370,7 +370,16 @@ bool GuideView::onTouchBegan(CCTouch *pTouch, CCEvent *pEvent){
             return true;
         }
         
-        if(gid == "3410400")//fusheng 移动到采集点的过程中
+        string questID_CJ = "";
+        
+        if (USE_NEW_GUIDE) {
+            questID_CJ = "3410400";
+        }
+        else
+        {
+            questID_CJ = "3074300";
+        }
+        if(gid == questID_CJ)//fusheng 移动到采集点的过程中
         {
             if(SceneController::getInstance()->currentSceneId == SCENE_ID_WORLD){
                 auto layer = dynamic_cast<WorldMapView*>(SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE));
