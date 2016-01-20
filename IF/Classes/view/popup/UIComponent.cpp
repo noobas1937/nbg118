@@ -1973,7 +1973,18 @@ void UIComponent::onSceneChanged(CCObject* params){
     
     if (!this->isVisible()) {
         
-        this->setVisible(true);
+        string gid = GuideController::share()->getCurrentId();
+       
+        string gFake = CCUserDefault::sharedUserDefault()->getStringForKey("Guide_Fake","");
+
+        if(GlobalData::shared()->playerInfo.level == 1 && GlobalData::shared()->playerInfo.exp == 0 && (gFake=="" || gFake=="start_1") && FunBuildController::getInstance()->getFunbuildById(FUN_BUILD_MAIN_CITY_ID).level == 1 && gid == ""){
+            this->setVisible(false);
+        }
+        else
+        {
+            this->setVisible(true);
+        }
+        
         
     }
     
@@ -4152,8 +4163,8 @@ void UIComponent::onWorldBtnClick(cocos2d::CCObject *pSender, Control::EventType
         return;
     }
     
-    if (QuestController::getInstance()->currentAchList.find("2102501") != QuestController::getInstance()->currentAchList.end()) {
-        QuestInfo* qusetTmp = QuestController::getInstance()->currentAchList["2102501"];
+    if (QuestController::getInstance()->currentAchList.find("2201001") != QuestController::getInstance()->currentAchList.end()) {
+        QuestInfo* qusetTmp = QuestController::getInstance()->currentAchList["2201001"];
         if(qusetTmp->state == ACCEPT) {
             CCCommonUtils::flyHint("", "", _lang("3000021"), 3, 200);
             return;
@@ -5472,8 +5483,8 @@ CCNode* UIComponent::getNodeByIndex(string _key){
     
     if(_key == "UI_world_go"){
         
-        if (QuestController::getInstance()->currentAchList.find("2102501") != QuestController::getInstance()->currentAchList.end()) {
-            QuestInfo* qusetTmp = QuestController::getInstance()->currentAchList["2102501"];
+        if (QuestController::getInstance()->currentAchList.find("2201001") != QuestController::getInstance()->currentAchList.end()) {
+            QuestInfo* qusetTmp = QuestController::getInstance()->currentAchList["2201001"];
             if(qusetTmp->state == ACCEPT) {
                 
                 return NULL;

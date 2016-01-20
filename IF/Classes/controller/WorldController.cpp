@@ -811,13 +811,33 @@ void WorldController::update(float dt) {
                 TimeUpMarchProcesser::getInstance()->addTimeUpMarch(uid);
                 CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_QUEUE_REMOVE);
             }
+            
+            
+            string gid = GuideController::share()->getCurrentId();
+            
+            if (gid == "3311100") {
+                
+                auto world = WorldMapView::instance();
+                
+                if (world) {
+                    
+                    world->leaveWorld();
+                    
+                }
+
+
+            }
+            
         }else{
             TimeUpMarchProcesser::getInstance()->check(marchInfo);
             ++it;
         }
     }
     autoAddStamine();
-    TimeUpMarchProcesser::getInstance()->refresh();
+#pragma mark 新手引导期间  不请求服务器数据
+    //fusheng 新手引导期间  不请求服务器数据
+    if(GuideController::share()->getCurGuideID()!="3311100")//fusheng 新手引导  第二步
+        TimeUpMarchProcesser::getInstance()->refresh();
     
     auto activityIt = WorldController::getInstance()->m_worldActivity.find(FIGHT_OF_KING);
     if(activityIt != WorldController::getInstance()->m_worldActivity.end()){

@@ -359,6 +359,14 @@ bool GuideView::onTouchBegan(CCTouch *pTouch, CCEvent *pEvent){
     }
     CCPoint pt = ccp(lx, ly);
     if(m_rect.containsPoint(pt)){
+        string gid = GuideController::share()->getCurrentId();
+        if(gid == "3380200" || gid == "3380300"  || gid == "3380400" )//fusheng 联盟点击到这里时 next
+        {
+//            GuideController::share()->next();
+            
+            GuideController::share()->scheduleOnce(schedule_selector(GuideController::next), 0.01);
+            return true;
+        }
         return false;
     }
     return true;

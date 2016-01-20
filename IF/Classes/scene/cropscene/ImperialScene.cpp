@@ -298,7 +298,7 @@ bool ImperialScene::init()
         if (GlobalData::shared()->playerInfo.level==1 && GlobalData::shared()->playerInfo.exp==0 && (gFake=="" || gFake=="start_1")) {
 //            onMoveToPos(1780, 800, TYPE_POS_MID, 0, 0.8, true);
             if (true || CCCommonUtils::isTestPlatformAndServer("guide_skip_2")) {
-                onMoveToPos(480, 1560, TYPE_POS_MID, 0, 1.2, true);
+                onMoveToPos(4216, 472, TYPE_POS_MID, 0, 0.55, true);
             }else {
                 onMoveToPos(1780, 800, TYPE_POS_MID, 0, 0.8, true);
             }
@@ -531,6 +531,10 @@ void ImperialScene::buildingCallBack(CCObject* params)
         string gFake = CCUserDefault::sharedUserDefault()->getStringForKey("Guide_Fake","");
         if (GlobalData::shared()->playerInfo.level==1 && GlobalData::shared()->playerInfo.exp==0 && (gFake=="" || gFake=="start_1")) {
 //            onPlayBattle();
+            //fusheng test
+//            SceneController::getInstance()->gotoScene(SCENE_ID_WORLD);
+//            this->setVisible(false);
+            
             newPlayerST = true;
             m_curBuildPosx = 1780;
             m_curBuildPosy = 800;
@@ -605,7 +609,17 @@ void ImperialScene::buildingCallBack(CCObject* params)
     m_touchLayer->addChild(m_jianBatchNode, 1999);
     
     this->schedule(schedule_selector(ImperialScene::createWalker), 0.25, 1, 0.0f);
-    this->schedule(schedule_selector(ImperialScene::createEnemy), 30.0, CC_REPEAT_FOREVER, 0.0f);
+    
+//    string gid = GuideController::share()->getCurrentId();
+//    if (gid != "3311100") {
+//        this->schedule(schedule_selector(ImperialScene::createEnemy), 30.0, CC_REPEAT_FOREVER, 0.0f);
+//    }
+//    else
+//    {
+//        this->schedule(schedule_selector(ImperialScene::createEnemy), 0.01f, 15, 0.0f);
+//    }
+    
+    
     //this->schedule(schedule_selector(ImperialScene::shootArrow), 5.0, CC_REPEAT_FOREVER, 5.0f);
     //end a by ljf
     m_talkACTCell = TalkNoticeCell::create(0);
@@ -660,6 +674,12 @@ void ImperialScene::buildingCallBack(CCObject* params)
          FunBuildController::getInstance()->willMoveToBuildItemID = 0;
         
     }
+    
+//    gid = GuideController::share()->getCurrentId();
+    //fusheng 在第一次运行到这里时 currentID 为""
+    CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE
+                                                                           
+                                                                           , CCString::createWithFormat("cartoon1"));
 
     
     GameController::getInstance()->enableQueryHistoryPurchase();
@@ -1741,6 +1761,18 @@ void ImperialScene::wallCallBack(CCObject* params)
 
     WallBuild* pWall = WallBuild::create();
     pWall->setNamePos(m_wallNode->getPositionX(), m_wallNode->getPositionY(), this, &m_wallBatchs,100);
+    
+    
+    
+//    string gid = GuideController::share()->getCurrentId();
+//    if (gid == "3311300") { //fusheng 隐藏城墙
+//        for (int i =0 ; i<=4; i++) {
+//            m_wallBatchs[i]->setVisible(false);
+//        }
+//        
+//    }
+    
+    
     m_wallNode->addChild(pWall);
 }
 
@@ -1824,6 +1856,7 @@ void ImperialScene::onEnter()
 {
     CCLayer::onEnter();
     
+    
     CCLoadSprite::doLoadResourceAsync(IMPERIAL_PATH, CCCallFuncO::create(this, callfuncO_selector(ImperialScene::buildingCallBack), NULL), 2+10*GlobalData::shared()->contryResType);
 
     CCLoadSprite::doLoadResourceAsync(IMPERIAL_PATH, CCCallFuncO::create(this, callfuncO_selector(ImperialScene::wallCallBack), NULL), 8+10*GlobalData::shared()->contryResType);
@@ -1859,10 +1892,19 @@ void ImperialScene::onEnter()
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::titanChangeStatus), MSG_TITAN_STATUS_CHANGE, NULL);//fusheng 泰坦状态改变
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::handleTitanUpgrade), MSG_TITAN_UPGRADE_COMPLETE, NULL);
     
+    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::handleTitanUpgrade), "cartoon2", NULL);
+    
+
+    
 //    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::titanUpgradeComplete), MSG_TITAN_UPGRADE_COMPLETE, NULL);//fusheng 泰坦升级粒子效果
     
+    string gid = GuideController::share()->getCurrentId();
+    
     string gFake = CCUserDefault::sharedUserDefault()->getStringForKey("Guide_Fake","");
-    if (GlobalData::shared()->playerInfo.level==1 && GlobalData::shared()->playerInfo.exp==0 && (gFake==""||gFake=="start_1")) {
+    if (GlobalData::shared()->playerInfo.level==1 && GlobalData::shared()->playerInfo.exp==0 && (gFake==""||gFake=="start_1") && gid == "") {
+        this->setVisible(false);
+        UIComponent::getInstance()->setVisible(false);
+        
     }else{
         SoundController::sharedSound()->playBGMusic(Music_M_city_1);//fusheng for 黄迪
 //        CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("sounds/background/m_city.mp3");
@@ -2471,6 +2513,7 @@ void ImperialScene::onExit()
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_TITAN_STATUS_CHANGE);
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_TITAN_UPGRADE_COMPLETE);
     
+    CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, "cartoon2");
     
     if (m_praticle) {
         m_praticle->stopAllActions();
@@ -4177,6 +4220,12 @@ CCNode* ImperialScene::getBuildNameById(int itemId, string _key)
         if (ret==NULL) {
             ret = m_buildBtnsView->getGuideNode(_key);
         }
+        return ret;
+    }
+    else if (_key == "tool")
+    {
+        CCNode* ret=NULL;
+        ret = m_buildBtnsView->getGuideNode(_key);
         return ret;
     }
     else if (_key=="troop" || _key=="collect") {

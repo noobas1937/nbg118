@@ -1,54 +1,95 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <tns:database xmlns:tns="http://www.iw.com/sns/platform/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <Group id="guide">
-        <ItemSpec id="3070100" next="3070200" plot="3070110" arrow="0" area="plot_continue" enforce="1"/>
-        <ItemSpec id="3070200" next="3070300" plot="3070210" arrow="0" area="plot_continue" enforce="1"/>
-        <ItemSpec id="3070300" next="3070400" plot="3070310" arrow="0" area="plot_continue" enforce="1" mark="1"/>
-        <ItemSpec id="3070400" next="3070500" arrow="2" area="UI_titan" enforce="1"/>
-        <ItemSpec id="3070500" next="3070700" arrow="5" area="Titan_Feed" enforce="1"/>
-        <ItemSpec id="3070700" next="3070800" arrow="2" area="Titan_End" enforce="1"/>
-        <ItemSpec id="3070800" next="3047900" arrow="2" area="Titan_Speed" enforce="1"/>
-        <ItemSpec id="3047900" next="3070900" arrow="0" lag="6" enforce="1"/>
-        <ItemSpec id="3070900" next="3071000" plot="3070910" arrow="0" area="plot_continue" enforce="1"/>
-        <ItemSpec id="3071000" next="3071100" arrow="1" area="Titan_Close" enforce="1" mark="1"/>
-        <ItemSpec id="3071100" next="3071200" plot="3071110" arrow="0" area="plot_continue" enforce="1" mark="1"/>
-        <ItemSpec id="3071200" next="3071300" arrow="2" area="MC_17" enforce="1"/>
-        <ItemSpec id="3071300" next="3071400" arrow="5" area="LI_413000"/>
-        <ItemSpec id="3071400" next="3071500" arrow="2" area="LI_build" enforce="1"/>
-        <ItemSpec id="3071500" next="3071600" arrow="2" area="BC_413000_build" enforce="1" mark="1"/>
-        <ItemSpec id="3071600" next="3071700" lag="4" mark="1"/>
-        <ItemSpec id="3071700" next="3071800" plot="3071710" arrow="0" area="plot_continue" enforce="1" mark="1"/>
-        <ItemSpec id="3071800" next="3071900" arrow="2" area="MC_27" enforce="1"/>
-        <ItemSpec id="3071900" next="3072000" arrow="2" area="LI_415000" enforce="1"/>
-        <ItemSpec id="3072000" next="3072100" arrow="2" area="LI_build" enforce="1"/>
-        <ItemSpec id="3072100" next="3072200" arrow="2" area="BC_415000_build" enforce="1"/>
-        <ItemSpec id="3072200" next="3072300" lag="4" mark="1"/>
-        <ItemSpec id="3072300" next="3072400" plot="3072310" arrow="0" area="plot_continue" enforce="1" mark="1"/>
-        <ItemSpec id="3072400" next="3072500" arrow="2" area="MC_10" enforce="1"/>
-        <ItemSpec id="3072500" next="3072600" arrow="2" area="LI_424000" enforce="1"/>
-        <ItemSpec id="3072600" next="3072700" arrow="2" area="LI_build" enforce="1"/>
-        <ItemSpec id="3072700" next="3075000" arrow="2" area="BC_424000_build" enforce="1"/>
-        <ItemSpec id="3075000" next="3072800" lag="4" mark="1"/>
-        <ItemSpec id="3072800" next="3072900" plot="3072810" arrow="0" area="plot_continue" enforce="1" mark="1"/>
-        <ItemSpec id="3072900" next="3073000" arrow="3" area="MC_424000" enforce="1"/>
-        <ItemSpec id="3073000" next="3073100" arrow="1" area="BU_424000_soldier" enforce="1"/>
-        <ItemSpec id="3073100" next="3073200" arrow="2" area="SO_train" enforce="1"/>
-        <ItemSpec id="3073200" next="3073300" lag="1" mark="1"/>
-        <ItemSpec id="3073300" next="3073400" plot="3073310" arrow="0" area="plot_continue" enforce="1" mark="1"/>
-        <ItemSpec id="3073400" next="3073500" arrow="2" area="UI_achievement" enforce="1"/>
-        <ItemSpec id="3073500" next="3073600" arrow="1" area="AC_reward" enforce="1"/>
-        <ItemSpec id="3073600" next="3073700" lag="2"/>
-        <ItemSpec id="3073700" next="3073800" arrow="1" area="AC_back" enforce="1" mark="1"/>
-        <ItemSpec id="3073800" next="3073900" plot="3073810" arrow="0" area="plot_continue" enforce="1" mark="1"/>
-        <ItemSpec id="3073900" arrow="2" area="UI_target" enforce="1" mark="1"/>
-        <ItemSpec id="3074000" next="3074100" plot="3074010" arrow="0" area="plot_continue" enforce="1" mark="1"/>
-        <ItemSpec id="3074100" next="3074200" arrow="2" area="UI_world_go" enforce="1"/>
-        <ItemSpec id="3074200" next="3074300" plot="3074210" arrow="0" area="plot_continue" enforce="1"/>
-        <ItemSpec id="3074300" next="3074400" explanation="3030401" arrow="1" area="WL_wood" enforce="1"/>
-        <ItemSpec id="3074400" next="3074500" arrow="1" area="WR_attack" enforce="1"/>
-        <ItemSpec id="3074500" next="3074600" arrow="2" area="ED_attack" enforce="1" mark="1"/>
-        <ItemSpec id="3074600" next="3074700" lag="4" enforce="1"/>
-        <ItemSpec id="3074700" next="3074800" plot="3074710" arrow="0" area="plot_continue" enforce="1" mark="1"/>
-        <ItemSpec id="3074800" arrow="2" area="UI_world_back" enforce="1"/>
+        <ItemSpec id="3311100" next="3311200" cartoon="cartoon1" enforce="1" mark="1"/>
+        <ItemSpec id="3311200" next="3311300" plot="3311310" arrow="0" area="plot_continue" enforce="1" mark="1"/>
+        <ItemSpec id="3311300" next="3312500" plot="3311410" arrow="0" area="plot_continue" enforce="1" mark="1"/>
+        <ItemSpec id="3312500" next="3312600" plot="3312510" arrow="0" area="plot_continue" enforce="1" mark="1"/>
+        <ItemSpec id="3312600" next="3312700" arrow="2" area="MC_14" enforce="1"/>
+        <ItemSpec id="3312700" next="3312800" arrow="2" area="LI_423000" enforce="1"/>
+        <ItemSpec id="3312800" next="3312900" arrow="5" area="LI_build" enforce="1"/>
+        <ItemSpec id="3312900" next="3313000" arrow="5" area="BC_423000_build" enforce="1"/>
+        <ItemSpec id="3313000" next="3313100" lag="4" mark="1"/>
+        <ItemSpec id="3313100" next="3313200" plot="3313110" arrow="0" area="plot_continue" enforce="1" mark="1"/>
+        <ItemSpec id="3313200" next="3313300" arrow="3" area="MC_423000" enforce="1"/>
+        <ItemSpec id="3313300" next="3313400" arrow="1" area="BU_423000_soldier" enforce="1"/>
+        <ItemSpec id="3313400" next="3313500" arrow="2" area="SO_train" enforce="1"/>
+        <ItemSpec id="3313500" next="3313600" lag="1" mark="1"/>
+        <ItemSpec id="3313600" next="3313700" plot="3313610" arrow="0" area="plot_continue" enforce="1" mark="1"/>
+        <ItemSpec id="3313700" next="3313800" plot="3313710" arrow="0" area="plot_continue" enforce="1" mark="1"/>
+        <ItemSpec id="3313800" next="3313900" arrow="2" area="UI_titan" enforce="1"/>
+        <ItemSpec id="3313900" next="3314000" arrow="5" area="Titan_Feed" enforce="1"/>
+        <ItemSpec id="3314000" next="3314100" arrow="2" area="Titan_End" enforce="1"/>
+        <ItemSpec id="3314100" next="3314200" arrow="2" area="Titan_Speed" enforce="1"/>
+        <ItemSpec id="3314200" next="3314300" lag="6"/>
+        <ItemSpec id="3314300" next="3314400" plot="3314310" arrow="0" area="plot_continue" enforce="1"/>
+        <ItemSpec id="3314400" next="3314500" arrow="1" area="Titan_Close" enforce="1"/>
+        <ItemSpec id="3314500" next="3314600" plot="3314510" arrow="0" area="plot_continue" enforce="1" mark="1"/>
+        <ItemSpec id="3314600" next="3314700" arrow="2" area="MC_16" enforce="1"/>
+        <ItemSpec id="3314700" next="3314800" arrow="2" area="LI_424000" enforce="1"/>
+        <ItemSpec id="3314800" next="3314900" arrow="5" area="LI_build" enforce="1"/>
+        <ItemSpec id="3314900" next="3315000" arrow="5" area="BC_424000_build" enforce="1"/>
+        <ItemSpec id="3315000" next="3315100" lag="4" mark="1"/>
+        <ItemSpec id="3315100" next="3315200" plot="3315110" arrow="0" area="plot_continue" enforce="1" mark="1"/>
+        <ItemSpec id="3315200" next="3315300" arrow="3" area="MC_424000" enforce="1"/>
+        <ItemSpec id="3315300" next="3315400" arrow="1" area="BU_424000_soldier" enforce="1"/>
+        <ItemSpec id="3315400" next="3315500" arrow="2" area="SO_train" enforce="1"/>
+        <ItemSpec id="3315500" next="3315600" lag="1" mark="1"/>
+        <ItemSpec id="3315600" next="3315700" plot="3315610" arrow="0" area="plot_continue" enforce="1"/>
+        <ItemSpec id="3315700" next="3315800" arrow="2" area="MC_27" enforce="1"/>
+        <ItemSpec id="3315800" next="3315900" arrow="2" area="LI_415000" enforce="1"/>
+        <ItemSpec id="3315900" next="3316000" arrow="5" area="LI_build" enforce="1"/>
+        <ItemSpec id="3316000" next="3316100" arrow="5" area="BC_415000_build" enforce="1"/>
+        <ItemSpec id="3316100" next="3316200" lag="4" mark="1"/>
+        <ItemSpec id="3316200" next="3316300" plot="3316210" arrow="0" area="plot_continue" enforce="1" mark="1"/>
+        <ItemSpec id="3316300" next="3316400" arrow="2" area="MC_17" enforce="1"/>
+        <ItemSpec id="3316400" next="3316500" arrow="2" area="LI_413000" enforce="1"/>
+        <ItemSpec id="3316500" next="3316600" arrow="5" area="LI_build" enforce="1"/>
+        <ItemSpec id="3316600" next="3316700" arrow="5" area="BC_413000_build" enforce="1"/>
+        <ItemSpec id="3316700" next="3316800" lag="4"/>
+        <ItemSpec id="3316800" next="3316900" plot="3316810" arrow="0" area="plot_continue" enforce="1" mark="1"/>
+        <ItemSpec id="3316900" arrow="2" area="UI_target" enforce="1"/>
+        <ItemSpec id="3320100" next="3320200" plot="3320110" arrow="0" area="plot_continue" enforce="1" mark="1"/>
+        <ItemSpec id="3320200" next="3320300" arrow="2" area="UI_achievement" enforce="1"/>
+        <ItemSpec id="3320300" next="3320400" arrow="1" area="AC_reward" enforce="1"/>
+        <ItemSpec id="3320400" next="3320500" lag="2"/>
+        <ItemSpec id="3320500" arrow="1" area="AC_back" enforce="1"/>
+        <ItemSpec id="3330100" next="3330200" plot="3330110" arrow="0" area="plot_continue" enforce="1" mark="1"/>
+        <ItemSpec id="3330200" next="3330300" arrow="2" area="UI_goods" enforce="1"/>
+        <ItemSpec id="3330300" next="3330400" arrow="1" area="GD_first" enforce="1"/>
+        <ItemSpec id="3330400" next="3330500" arrow="1" area="GD_use" enforce="1"/>
+        <ItemSpec id="3330500" plot="3330510" arrow="0" area="plot_continue"/>
+        <ItemSpec id="3350100" open="1" para1="403001" next="3350200" plot="3350110" arrow="0" area="plot_continue" enforce="1" mark="1"/>
+        <ItemSpec id="3350200" next="3350300" arrow="4" area="MC_403000" enforce="1"/>
+        <ItemSpec id="3350300" next="3350400" arrow="1" area="BU_403000_science" enforce="1"/>
+        <ItemSpec id="3350400" next="3350500" arrow="3" area="SC1_229993" enforce="1"/>
+        <ItemSpec id="3350500" next="3350600" arrow="4" area="SC2_730000" enforce="1"/>
+        <ItemSpec id="3350600" next="3350700" arrow="1" area="SC3_730000_research" enforce="1"/>
+        <ItemSpec id="3350700" next="3350800" arrow="1" area="SC2_out" enforce="1"/>
+        <ItemSpec id="3350800" plot="3350810" arrow="0" area="plot_continue" enforce="1" mark="1"/>
+        <ItemSpec id="3370100" next="3370200" plot="3370110" arrow="0" enforce="1" mark="1"/>
+        <ItemSpec id="3370200" next="3370300" arrow="1" area="UI_head" enforce="1"/>
+        <ItemSpec id="3370300" next="3370400" arrow="2" area="General_set" enforce="1"/>
+        <ItemSpec id="3370400" next="3370500" arrow="1" area="Set_bangding" enforce="1"/>
+        <ItemSpec id="3370500" next="3370600" arrow="2" area="SetAccount_bangding" enforce="1"/>
+        <ItemSpec id="3370600" plot="3370610" enforce="1"/>
+        <ItemSpec id="3380100" next="3380200" plot="3380110" arrow="0" area="plot_continue" enforce="1"/>
+        <ItemSpec id="3380200" next="3380300" explanation="510030" arrow="5" area="ALINFO_1" enforce="1"/>
+        <ItemSpec id="3380300" next="3380400" explanation="510031" arrow="5" area="ALINFO_2" enforce="1"/>
+        <ItemSpec id="3380400" next="3380500" explanation="510032" arrow="5" area="ALINFO_3" enforce="1"/>
+        <ItemSpec id="3380500" plot="3380510" arrow="0" area="plot_continue" enforce="1"/>
+        <ItemSpec id="3390100" next="3390200" plot="3390110" arrow="0" area="plot_continue" enforce="1"/>
+        <ItemSpec id="3390200" next="3390300" arrow="5" area="MC_419000" enforce="1"/>
+        <ItemSpec id="3390300" next="3390400" arrow="5" area="BU_419000_tool" enforce="1"/>
+        <ItemSpec id="3390400" plot="3390410" arrow="0" area="plot_continue" enforce="1" mark="1"/>
+        <ItemSpec id="3410100" open="1" para1="410001" next="3410200" plot="3410710" arrow="0" area="plot_continue" enforce="1" mark="1"/>
+        <ItemSpec id="3410200" next="3410300" arrow="2" area="UI_world_go" enforce="1"/>
+        <ItemSpec id="3410300" next="3410400" plot="3074210" arrow="0" area="plot_continue" enforce="1"/>
+        <ItemSpec id="3410400" next="3410500" explanation="3030401" arrow="1" area="WL_wood" enforce="1"/>
+        <ItemSpec id="3410500" next="3410600" arrow="1" area="WR_attack" enforce="1"/>
+        <ItemSpec id="3410600" next="3410700" arrow="2" area="ED_attack" enforce="1" mark="1"/>
+        <ItemSpec id="3410700" next="3410800" lag="4" enforce="1"/>
+        <ItemSpec id="3410800" next="3410900" plot="3074710" arrow="0" area="plot_continue" enforce="1" mark="1"/>
+        <ItemSpec id="3410900" arrow="2" area="UI_world_back" enforce="1"/>
     </Group>
 </tns:database>
