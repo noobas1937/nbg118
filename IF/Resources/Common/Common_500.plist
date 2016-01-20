@@ -212,23 +212,10 @@
                 <key>sourceSize</key>
                 <string>{260,68}</string>
             </dict>
-            <key>activity_BG0.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{270,349},{311,366}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{311,366}}</string>
-                <key>sourceSize</key>
-                <string>{311,366}</string>
-            </dict>
             <key>activity_l003.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{587,349},{34,37}}</string>
+                <string>{{270,349},{34,37}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -241,7 +228,7 @@
             <key>activity_label_bg.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,721},{638,62}}</string>
+                <string>{{310,349},{638,62}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -254,7 +241,7 @@
             <key>frame_light.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{648,721},{298,84}}</string>
+                <string>{{4,423},{298,84}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -267,7 +254,7 @@
             <key>frame_line.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,811},{126,126}}</string>
+                <string>{{308,423},{126,126}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -280,7 +267,7 @@
             <key>monthcard_bg.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{136,811},{611,160}}</string>
+                <string>{{4,555},{611,160}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -293,7 +280,7 @@
             <key>monthcard_scroll.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,977},{637,454}}</string>
+                <string>{{4,721},{637,454}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -306,7 +293,7 @@
             <key>orange_bar.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,1437},{400,80}}</string>
+                <string>{{4,1181},{400,80}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>

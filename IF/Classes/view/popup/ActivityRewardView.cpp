@@ -72,12 +72,20 @@ void ActivityRewardView::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent){
     }
 }
 
+void ActivityRewardView::onCloseClick(CCObject *pSender)
+{
+    m_needclose = false;
+    PopupViewController::getInstance()->removePopupView(this);
+}
+
 bool ActivityRewardView::init(){
     bool ret = false;
     if(PopupBaseView::init()){
         setIsHDPanel(true);
         auto node = CCBLoadFile("ActivityRewardView", this, this);
         this->setContentSize(node->getContentSize());
+        
+        this->setModelLayerOpacity(0);
 
         m_tabView = CCTableView::create(this, m_infoList->getContentSize());
         m_tabView->setDirection(kCCScrollViewDirectionVertical);
@@ -101,6 +109,12 @@ bool ActivityRewardView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, 
 
 SEL_CCControlHandler ActivityRewardView::onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName){
     
+    return NULL;
+}
+
+cocos2d::SEL_MenuHandler ActivityRewardView::onResolveCCBCCMenuItemSelector(cocos2d::CCObject * pTarget, const char * pSelectorName)
+{
+    CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onCloseClick", ActivityRewardView::onCloseClick);
     return NULL;
 }
 

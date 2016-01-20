@@ -431,9 +431,9 @@
 						<key>customClass</key>
 						<string>CCLabelIF</string>
 						<key>displayName</key>
-						<string>CCLabelTTF</string>
+						<string>m_lordTxt</string>
 						<key>memberVarAssignmentName</key>
-						<string>m_titleTxt</string>
+						<string>m_lordTxt</string>
 						<key>memberVarAssignmentType</key>
 						<integer>2</integer>
 						<key>properties</key>
@@ -550,6 +550,8 @@
 								<string>Sample Text</string>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -559,9 +561,9 @@
 						<key>customClass</key>
 						<string>CCLabelIF</string>
 						<key>displayName</key>
-						<string>CCLabelTTF</string>
+						<string>m_titleTxt</string>
 						<key>memberVarAssignmentName</key>
-						<string>m_lordTxt</string>
+						<string>m_titleTxt</string>
 						<key>memberVarAssignmentType</key>
 						<integer>2</integer>
 						<key>properties</key>
