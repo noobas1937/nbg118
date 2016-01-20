@@ -13,6 +13,8 @@
 #include "CCLoadSprite.h"
 #include "GuidePlotView.h"
 #include "ParticleController.h"
+#include "SceneController.h"
+#include "WorldMapView.h"
 
 bool GuideView::init(){
     ignoreAnchorPointForPosition(false);
@@ -366,6 +368,27 @@ bool GuideView::onTouchBegan(CCTouch *pTouch, CCEvent *pEvent){
             
             GuideController::share()->scheduleOnce(schedule_selector(GuideController::next), 0.01);
             return true;
+        }
+        
+        if(gid == "3410400")//fusheng 移动到采集点的过程中
+        {
+            if(SceneController::getInstance()->currentSceneId == SCENE_ID_WORLD){
+                auto layer = dynamic_cast<WorldMapView*>(SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE));
+                if(layer){
+                    bool enableTouch = layer->isTouchEnabled();
+                    if(!enableTouch)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                
+                }
+            }
+
+            
         }
         return false;
     }

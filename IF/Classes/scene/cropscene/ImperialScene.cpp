@@ -2801,8 +2801,12 @@ void ImperialScene::onMoveToBuild(int itemId, bool st)
     if(itemId < BUILD_COUNT - 1){
         node = m_nodeBuildings[itemId];
         build = dynamic_cast<FunBuild*>(node->getChildren().at(0));
-        int buildPosX = m_nodeBuildings[itemId]->getPositionX() + build->mainWidth / 2 ;
-        int buildPosY = m_nodeBuildings[itemId]->getPositionY() + build->mainHeight / 2;
+//        int buildPosX = m_nodeBuildings[itemId]->getPositionX() + build->mainWidth / 2 ;
+//        int buildPosY = m_nodeBuildings[itemId]->getPositionY() + build->mainHeight / 2;
+        int buildPosX = m_nodeBuildings[itemId]->getPositionX()   ;
+        int buildPosY = m_nodeBuildings[itemId]->getPositionY() ;
+//        onMoveToBuildAndOpen(itemId, TYPE_POS_CLICK, 1.0, true);//fusheng edit
+        
         m_viewPort->updatePosition(ccp(winSize.width / 2 - buildPosX * f - anchor.x, winSize.height / 2 - buildPosY * f - anchor.y), true);
     }
     m_touchLayer->setScale(s);
