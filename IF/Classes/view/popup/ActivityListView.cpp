@@ -277,9 +277,9 @@ bool ActivityListLuaCell::init()
     m_cellNode->setVisible(true);
     m_nameLabel->setString(m_obj->name.c_str());
     m_infoTTF->setString(_lang(m_obj->desc_info).c_str());
-    m_nameLabel->setColor({255,220,166});
-    m_infoTTF->setColor({255,232,205});
-    m_timeLabel1->setColor({255,232,205});
+//    m_nameLabel->setColor({255,220,166});
+//    m_infoTTF->setColor({255,232,205});
+//    m_timeLabel1->setColor({255,232,205});
     if (LuaController::getInstance()->checkActLuaValid(m_obj))
     {
         CCNode* node = LuaController::getInstance()->createActivityListCellSprite(m_obj);
@@ -424,16 +424,16 @@ bool ActivityListCell::init(ActivityEventObj* actObj,CCNode* clickArea)
     if (CCLabelIF::canBeSupportedWithBmpFont(language)) {
         CCLabelIF::enableBmFont(false);
     }
-    m_desText1->setColor({0,234,255});
-    m_rewardName->setColor({0,234,255});
-    m_nameLabel->setColor({255,220,166});
-    
-    m_infoTTF->setColor({255,232,205});
-    m_timeLabel1->setColor({255,232,205});
-    m_lblItem1->setColor({255,232,205});
-    m_lblItem2->setColor({255,232,205});
-    m_moreLabel->setColor({255,232,205});
-    m_timeLabel2->setColor({255,232,205});
+//    m_desText1->setColor({0,234,255});
+//    m_rewardName->setColor({0,234,255});
+//    m_nameLabel->setColor({255,220,166});
+//    
+//    m_infoTTF->setColor({255,232,205});
+//    m_timeLabel1->setColor({255,232,205});
+//    m_lblItem1->setColor({255,232,205});
+//    m_lblItem2->setColor({255,232,205});
+//    m_moreLabel->setColor({255,232,205});
+//    m_timeLabel2->setColor({255,232,205});
     
     m_clickArea = clickArea;
     setData(actObj);
@@ -453,6 +453,7 @@ void ActivityListCell::setData(ActivityEventObj* actObj)
     m_aIcon->removeAllChildrenWithCleanup(true);
     string logoStr = CCString::createWithFormat("Ativity_iconLogo_%d.png",m_actObj->type)->getCString();
     CCSprite* logo = logo = CCLoadSprite::createSprite(logoStr.c_str());
+    logo->setAnchorPoint({0.5, 0.0});
     m_aIcon->addChild(logo);
     m_cardNode->setVisible(false);
     m_cellNode->setVisible(false);
@@ -631,7 +632,11 @@ void ActivityListCell::onGeneralClick()
             switch (atoi(m_actObj->id.c_str()))
             {
                 case 57000:
-                    PopupViewController::getInstance()->addPopupView(ActivityBeginView::create());
+                {
+                    auto popup = ActivityBeginView::create();
+                    PopupViewController::getInstance()->addPopupView(popup);
+                    popup->setPositionY(popup->getPositionY() + popup->height_offset / 2);
+                }
                     break;
                     
                 default:
