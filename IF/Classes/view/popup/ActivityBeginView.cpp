@@ -20,8 +20,14 @@
 #include "ActivityEventCommand.h"
 #include "GameController.h"
 
-static const cocos2d::ccColor3B COLOR_TYPE_NORMAL = {179, 183, 238};
+static const cocos2d::ccColor3B COLOR_TYPE_NORMAL = {0x17, 0x48, 0x1B};
 static const cocos2d::ccColor3B COLOR_TYPE_SELECTED = {255, 255, 255};
+
+#define SCROLL_W (m_funList->getContentSize().width)
+#define CELL_X (m_funList->getContentSize().width / 2)
+#define TARGET_NODE_Y (totalH - 205)
+#define EARN_NODE_Y (totalH-390-100)
+#define RANK_NODE_Y (totalH-630-400+50)
 
 ActivityBeginView *ActivityBeginView::create(){
     ActivityBeginView *ret = new ActivityBeginView();
@@ -128,8 +134,8 @@ void ActivityBeginView::onTab1(CCObject *pSender)
     
     m_scrollView->getContainer()->stopAllActions();
     m_scrollView->unscheduleAllSelectors();
-    m_scrollView->setContentSize(CCSize(m_funList->getContentSize().width,m_totalH));
-    m_scrollView->setContentOffset(ccp(0, m_funList->getContentSize().height + height_offset - m_totalH));
+    m_scrollView->setContentSize({SCROLL_W, (float)m_totalH});
+    m_scrollView->setContentOffset(ccp(0, m_funList->getContentSize().height - m_totalH));
     m_sorceTxt->setColor(COLOR_TYPE_SELECTED);
     m_sorceNum->setColor(COLOR_TYPE_SELECTED);
     m_rankTxt->setColor(COLOR_TYPE_NORMAL);
@@ -147,7 +153,7 @@ void ActivityBeginView::onTab2(CCObject *pSender)
     
     m_scrollView->getContainer()->stopAllActions();
     m_scrollView->unscheduleAllSelectors();
-    m_scrollView->setContentOffset(ccp(0,m_funList->getContentSize().height + height_offset -m_tab2H));
+    m_scrollView->setContentOffset(ccp(0,m_funList->getContentSize().height -m_tab2H));
     m_sorceTxt->setColor(COLOR_TYPE_NORMAL);
     m_sorceNum->setColor(COLOR_TYPE_NORMAL);
     m_rankTxt->setColor(COLOR_TYPE_SELECTED);
@@ -171,12 +177,13 @@ void ActivityBeginView::onTab3(CCObject *pSender)
     m_totalRankNum->setColor(COLOR_TYPE_SELECTED);
     m_scrollView->getContainer()->stopAllActions();
     m_scrollView->unscheduleAllSelectors();
-    m_scrollView->setContentOffset(ccp(0,m_funList->getContentSize().height + height_offset - m_tab3H));
+    m_scrollView->setContentOffset(ccp(0,m_funList->getContentSize().height - m_tab3H));
 }
 
 bool ActivityBeginView::init(){
     bool ret = false;
     if(PopupBaseView::init()){
+        m_rewards = nullptr;
 //        CCLoadSprite::doResourceByCommonIndex(8, true);
 //        setCleanFunction([](){
 //            CCLoadSprite::doResourceByCommonIndex(8, false);
@@ -199,8 +206,9 @@ bool ActivityBeginView::init(){
 //        m_infoList->setContentSize(CCSize(m_infoList->getContentSize().width,m_infoList->getContentSize().height + add));
 //        m_infoList->setPositionY(m_infoList->getPositionY() - add);
         height_offset = add;
+        m_funList->setContentSize(CCSize(m_funList->getContentSize().width, m_funList->getContentSize().height + add));
         
-        m_scrollView = CCScrollView::create({m_funList->getContentSize().width, m_funList->getContentSize().height + height_offset});
+        m_scrollView = CCScrollView::create({m_funList->getContentSize().width, m_funList->getContentSize().height});
         m_scrollView->setDirection(kCCScrollViewDirectionVertical);
         m_scrollView->setTouchPriority(Touch_Default);
         m_funList->addChild(m_scrollView);
@@ -259,25 +267,26 @@ bool ActivityBeginView::init(){
         m_moveFlag = false;
         
         int totalH = 1590.0;
+        m_totalH = totalH;
+        
         m_targetNode->removeFromParent();
         m_targetNode->setAnchorPoint(ccp(0, 0));
-        m_targetNode->setPosition(ccp(265, totalH-195));//390
+        m_targetNode->setPosition(ccp(CELL_X, TARGET_NODE_Y));//390
         m_scrollView->addChild(m_targetNode);
         
         m_earnNode->removeFromParent();
         m_earnNode->setAnchorPoint(ccp(0, 0));
-        m_earnNode->setPosition(ccp(265, totalH-390-70 - 60));//240
+        m_earnNode->setPosition(ccp(CELL_X, EARN_NODE_Y));//240
         m_scrollView->addChild(m_earnNode);
         
         m_rankNode->removeFromParent();
         m_rankNode->setAnchorPoint(ccp(0, 0));
-        m_rankNode->setPosition(ccp(265, totalH-630-400+50 - 60));//590
+        m_rankNode->setPosition(ccp(CELL_X, totalH-630-400+50));//590
         m_scrollView->addChild(m_rankNode);
         
-        m_scrollView->setContentSize(CCSize(m_funList->getContentSize().width,totalH));
-        m_scrollView->setContentOffset(ccp(0, m_funList->getContentSize().height + height_offset - totalH));
-        m_scrollView->setPosition((m_funList->getContentSize().width - 532) / 2, -height_offset);
-        m_totalH = totalH;
+        m_scrollView->setContentSize({SCROLL_W, (float)m_totalH});
+        m_scrollView->setContentOffset(ccp(0, m_funList->getContentSize().height - totalH));
+        m_scrollView->setPosition(0, -height_offset);
         
         m_loadingIcon = NULL;
         ActivityController::getInstance()->activityRecord(2);
@@ -353,6 +362,16 @@ void ActivityBeginView::getServerData(CCObject* param){
         nameStr += " ";
         nameStr += _lang(dic->valueForKey("name")->getCString());
         m_titleTxt->setString(nameStr);
+        
+        for (int i = 0; i < ActivityController::getInstance()->activityArr->count(); ++i)
+        {
+            ActivityEventObj* obj = (ActivityEventObj*)ActivityController::getInstance()->activityArr->objectAtIndex(i);
+            if (obj->name == _lang("105842"))
+            {
+                m_desc->setString(obj->desc);
+            }
+        }
+        
         if (CCCommonUtils::isIosAndroidPad()) {
             float fw = m_titleTxt->getContentSize().width;
             float s = m_titleTxt->getScaleX();
@@ -362,6 +381,8 @@ void ActivityBeginView::getServerData(CCObject* param){
         }
         else
             m_titleTxt->setMaxScaleXByWidth(230);
+        
+        m_progress1->setContentSize({static_cast<float>(532.0 * current / ActivityController::getInstance()->eventInfo.maxPhase), 11});
         
         std::string str  = "";
         if(score==0){
@@ -404,6 +425,9 @@ void ActivityBeginView::getServerData(CCObject* param){
         m_totalRankNum->setString(str);
         
         CCArray* array = dynamic_cast<CCArray*>(dic->objectForKey("reward"));
+        CC_SAFE_RELEASE_NULL(m_rewards);
+        m_rewards = array;
+        CC_SAFE_RETAIN(m_rewards);
         std::string icon = "";
         std::string name = "";
         if(array && array->count()==3){
@@ -575,7 +599,7 @@ void ActivityBeginView::getServerData(CCObject* param){
         m_eNode->removeAllChildrenWithCleanup(true);
         for (int i=0; i<num; i++) {
             ActivityEarnPointCell* cell = ActivityEarnPointCell::create(m_eventIds[i]);
-            cell->setPosition(ccp(-258, -i*55-45));
+            cell->setPosition(ccp(-590/2, -i*55 - 20));
             m_eNode->addChild(cell);
         }
         
@@ -595,7 +619,8 @@ void ActivityBeginView::showRewards(int hBG){
     if(m_rankReward && m_rankReward->count()>0){
         auto oneDic = _dict(m_rankReward->objectAtIndex(0));
         rankArr = dynamic_cast<CCArray*>(oneDic->objectForKey("reward"));
-        ActivityRankReward* rankOne = ActivityRankReward::create(rankArr,tempStr);
+        ActivityRankReward* rankOne = ActivityRankReward::create(rankArr,tempStr,false,-1,ARR_CELL_1);
+        rankOne->setPositionX(-92/2);
         m_rewardListNode->addChild(rankOne);
         offY = -rankOne->getTotalH();
     }
@@ -609,8 +634,8 @@ void ActivityBeginView::showRewards(int hBG){
     if(m_totalRankReward && m_totalRankReward->count()>0){
         auto oneDic = _dict(m_totalRankReward->objectAtIndex(0));
         rankArr = dynamic_cast<CCArray*>(oneDic->objectForKey("reward"));
-        ActivityRankReward* rankTwo = ActivityRankReward::create(rankArr,tempStr);
-        rankTwo->setPosition(ccp(0, offY));
+        ActivityRankReward* rankTwo = ActivityRankReward::create(rankArr,tempStr,false,-1,ARR_CELL_1);
+        rankTwo->setPosition(ccp(-92/2, offY));
         m_rewardListNode->addChild(rankTwo);
         offY -= rankTwo->getTotalH();
         m_totalRankTip->setString("");
@@ -637,21 +662,21 @@ void ActivityBeginView::showRewards(int hBG){
     
     m_targetNode->removeFromParent();
     m_targetNode->setAnchorPoint(ccp(0, 0));
-    m_targetNode->setPosition(ccp(265, totalH-195));//390
+    m_targetNode->setPosition(ccp(CELL_X, TARGET_NODE_Y));//390
     m_scrollView->addChild(m_targetNode);
     
     m_earnNode->removeFromParent();
     m_earnNode->setAnchorPoint(ccp(0, 0));
-    m_earnNode->setPosition(ccp(265, totalH-390-70 - 60));//240
+    m_earnNode->setPosition(ccp(CELL_X, EARN_NODE_Y));//240
     m_scrollView->addChild(m_earnNode);
     
     m_rankNode->removeFromParent();
     m_rankNode->setAnchorPoint(ccp(0, 0));
-    m_rankNode->setPosition(ccp(265, totalH-630-hBG+50 - 60));//590
+    m_rankNode->setPosition(ccp(CELL_X, totalH-630-hBG+50));//590
     m_scrollView->addChild(m_rankNode);
     
-    m_scrollView->setContentSize(CCSize(m_funList->getContentSize().width,totalH));
-    m_scrollView->setContentOffset(ccp(0, m_funList->getContentSize().height + height_offset - totalH));
+    m_scrollView->setContentSize({SCROLL_W, (float)m_totalH});
+    m_scrollView->setContentOffset(ccp(0, m_funList->getContentSize().height - totalH));
     m_totalH = totalH;
     m_bottomFix->setPositionY(m_scBG->getPositionY()-totalH + 30);
     m_scBG->setContentSize(CCSize(532,totalH-15));
@@ -660,12 +685,12 @@ void ActivityBeginView::showRewards(int hBG){
     CCPoint pos = m_infoBtn2->getPosition();
     CCPoint worldPos = m_infoBtn2->getParent()->convertToWorldSpace(pos);
     CCPoint tabPos = m_scrollView->getContainer()->convertToNodeSpace(worldPos);
-    m_tab2H  = tabPos.y + 24;
+    m_tab2H  = tabPos.y + m_infoBtn2->getContentSize().height;
     
     pos = m_infoBtn3->getPosition();
     worldPos = m_infoBtn3->getParent()->convertToWorldSpace(pos);
     tabPos = m_scrollView->getContainer()->convertToNodeSpace(worldPos);
-    m_tab3H  = tabPos.y + 23;
+    m_tab3H  = tabPos.y + m_infoBtn3->getContentSize().height;
     
 }
 
@@ -739,6 +764,7 @@ bool ActivityBeginView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, c
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_rankNum", CCLabelIF*, this->m_rankNum);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_totalRankTxt", CCLabelIF*, this->m_totalRankTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_totalRankNum", CCLabelIF*, this->m_totalRankNum);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_desc", CCLabelIF*, this->m_desc);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_targetNode", CCNode*, this->m_targetNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_clipperNode", CCNode*, this->m_clipperNode);
@@ -786,6 +812,7 @@ bool ActivityBeginView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, c
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_infoBtn3", CCControlButton*, this->m_infoBtn3);
 
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_scBG", CCScale9Sprite*, this->m_scBG);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_progress1", CCLayerGradient*, this->m_progress1);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_totalRankTip", CCLabelIF*, this->m_totalRankTip);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_rewardListNode", CCNode*, this->m_rewardListNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_tab1", CCNode*, this->m_tab1);
@@ -796,6 +823,11 @@ bool ActivityBeginView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, c
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_sorceTargetBtn", CCControlButton*, this->m_sorceTargetBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_titleNode2", CCNode*, this->m_titleNode2);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_titleNode3", CCNode*, this->m_titleNode3);
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_step1", CCSprite*, this->m_step1);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_step2", CCSprite*, this->m_step2);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_step3", CCSprite*, this->m_step3);
+    
     return false;
 }
 
@@ -807,6 +839,10 @@ SEL_CCControlHandler ActivityBeginView::onResolveCCBCCControlSelector(cocos2d::C
 //    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onInfoBtn2Click", ActivityBeginView::onInfoBtn2Click);
 //    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onInfoBtn3Click", ActivityBeginView::onInfoBtn3Click);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onCloseClick", ActivityBeginView::onCloseClick);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onStep1", ActivityBeginView::onStep1);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onStep2", ActivityBeginView::onStep2);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onStep3", ActivityBeginView::onStep3);
+    
     return NULL;
 }
 
@@ -816,7 +852,42 @@ cocos2d::SEL_MenuHandler ActivityBeginView::onResolveCCBCCMenuItemSelector(cocos
     CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onTab1", ActivityBeginView::onTab1);
     CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onTab2", ActivityBeginView::onTab2);
     CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onTab3", ActivityBeginView::onTab3);
+    
+//    CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onStep1", ActivityBeginView::onTab1);
+//    CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onStep2", ActivityBeginView::onTab1);
+//    CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onStep3", ActivityBeginView::onTab1);
+    
     return NULL;
+}
+
+void ActivityBeginView::onStep1(CCObject *pSender, CCControlEvent event)
+{
+    if (!m_rewards || m_rewards->count() < 1) return;
+    
+    auto one = _dict(m_rewards->objectAtIndex(0));
+    if (!one) return;
+    
+    PopupViewController::getInstance()->addPopupView(ActivityRewardView::create(m_rewards));
+}
+
+void ActivityBeginView::onStep2(CCObject *pSender, CCControlEvent event)
+{
+    if (!m_rewards || m_rewards->count() < 2) return;
+    
+    auto one = _dict(m_rewards->objectAtIndex(1));
+    if (!one) return;
+    
+    PopupViewController::getInstance()->addPopupView(ActivityRewardView::create(m_rewards));
+}
+
+void ActivityBeginView::onStep3(CCObject *pSender, CCControlEvent event)
+{
+    if (!m_rewards || m_rewards->count() < 3) return;
+    
+    auto one = _dict(m_rewards->objectAtIndex(2));
+    if (!one) return;
+    
+    PopupViewController::getInstance()->addPopupView(ActivityRewardView::create(m_rewards));
 }
 
 ActivityEarnPointCell *ActivityEarnPointCell::create(std::string id){

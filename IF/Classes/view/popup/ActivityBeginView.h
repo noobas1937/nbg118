@@ -23,7 +23,7 @@ class ActivityBeginView : public PopupBaseView
 public:
     static ActivityBeginView *create();
     ActivityBeginView(){};
-    ~ActivityBeginView(){};
+    ~ActivityBeginView(){ CC_SAFE_RELEASE_NULL(m_rewards); };
     
     // TODO:
     int height_offset;
@@ -52,6 +52,10 @@ private:
     void onTab2(CCObject *pSender);
     void onTab3(CCObject *pSender);
     
+    void onStep1(CCObject *pSender, CCControlEvent event);
+    void onStep2(CCObject *pSender, CCControlEvent event);
+    void onStep3(CCObject *pSender, CCControlEvent event);
+    
     void updateTime(float _time);
     void getServerData(CCObject* param);
     void updateEventData(CCObject* param);
@@ -63,6 +67,10 @@ private:
     
     CCSafeObject<CCSprite> m_loadingIcon;
     
+    CCSafeObject<CCSprite> m_step1;
+    CCSafeObject<CCSprite> m_step2;
+    CCSafeObject<CCSprite> m_step3;
+    
     CCSafeObject<CCLabelIF> m_titleTxt;
     CCSafeObject<CCLabelIF> m_sorceTxt;
     CCSafeObject<CCLabelIF> m_rankTxt;
@@ -71,6 +79,7 @@ private:
     CCSafeObject<CCLabelIF> m_rankNum;
     CCSafeObject<CCLabelIF> m_totalRankTxt;
     CCSafeObject<CCLabelIF> m_totalRankNum;
+    CCSafeObject<CCLabelIF> m_desc;
     
     CCSafeObject<CCNode> m_targetNode;
     CCSafeObject<CCNode> m_clipperNode;
@@ -117,6 +126,7 @@ private:
     CCSafeObject<CCNode> m_bottomL1;
     CCSafeObject<CCNode> m_bottomL2;
     CCSafeObject<CCScale9Sprite> m_scBG;
+    CCSafeObject<CCLayerGradient> m_progress1;
     CCSafeObject<CCLabelIF> m_totalRankTip;
     CCSafeObject<CCNode> m_rewardListNode;
     CCSafeObject<CCNode> m_tab1;
@@ -135,6 +145,7 @@ private:
     CCSafeObject<CCProgressTimer> m_proTimer;
     CCArray* m_rankReward;
     CCArray* m_totalRankReward;
+    CCArray* m_rewards;
     double m_haveTime;
     bool m_moveFlag;
     CCPoint m_touchPos;

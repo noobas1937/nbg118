@@ -49,8 +49,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>-104</real>
-									<real>3.0000076293945312</real>
+									<real>114</real>
+									<real>7.62939453125e-06</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -73,7 +73,7 @@
 								<key>value</key>
 								<array>
 									<real>1</real>
-									<real>0.80000001192092896</real>
+									<real>1</real>
 									<false/>
 									<integer>0</integer>
 								</array>
@@ -132,8 +132,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>183</real>
-									<real>3.0000076293945312</real>
+									<real>394</real>
+									<real>7.62939453125e-06</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -156,7 +156,7 @@
 								<key>value</key>
 								<array>
 									<real>-1</real>
-									<real>0.80000001192092896</real>
+									<real>1</real>
 									<false/>
 									<integer>0</integer>
 								</array>
@@ -215,8 +215,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>-245</real>
-									<real>1.8333332538604736</real>
+									<real>65</real>
+									<real>0.0</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -267,7 +267,7 @@
 								<string>FloatScale</string>
 								<key>value</key>
 								<array>
-									<real>20</real>
+									<real>22</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -278,9 +278,9 @@
 								<string>Color3</string>
 								<key>value</key>
 								<array>
-									<integer>179</integer>
-									<integer>183</integer>
-									<integer>238</integer>
+									<integer>254</integer>
+									<integer>255</integer>
+									<integer>255</integer>
 								</array>
 							</dict>
 							<dict>
@@ -290,8 +290,8 @@
 								<string>Size</string>
 								<key>value</key>
 								<array>
-									<real>365</real>
-									<real>0.0</real>
+									<real>270</real>
+									<real>60</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -317,12 +317,59 @@
 								<key>type</key>
 								<string>Text</string>
 								<key>value</key>
-								<string>Sample TextSample TextSample Tex22d
-Sample TextSample TextSample Tex22d</string>
+								<string>Paece sheild
+Paece sheild</string>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
+					</dict>
+					<dict>
+						<key>baseClass</key>
+						<string>CCNode</string>
+						<key>children</key>
+						<array/>
+						<key>customClass</key>
+						<string></string>
+						<key>displayName</key>
+						<string>CCNode</string>
+						<key>memberVarAssignmentName</key>
+						<string>m_iconNode</string>
+						<key>memberVarAssignmentType</key>
+						<integer>2</integer>
+						<key>properties</key>
+						<array>
+							<dict>
+								<key>name</key>
+								<string>anchorPoint</string>
+								<key>type</key>
+								<string>Point</string>
+								<key>value</key>
+								<array>
+									<real>0.0</real>
+									<real>0.0</real>
+								</array>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>scale</string>
+								<key>type</key>
+								<string>ScaleLock</string>
+								<key>value</key>
+								<array>
+									<real>1</real>
+									<real>1</real>
+									<false/>
+									<integer>0</integer>
+								</array>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>ignoreAnchorPointForPosition</string>
+								<key>type</key>
+								<string>Check</string>
+								<key>value</key>
+								<false/>
+							</dict>
+						</array>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -334,7 +381,7 @@ Sample TextSample TextSample Tex22d</string>
 						<key>displayName</key>
 						<string>CCLabelTTF</string>
 						<key>memberVarAssignmentName</key>
-						<string>m_pointTxt</string>
+						<string>m_numTxt</string>
 						<key>memberVarAssignmentType</key>
 						<integer>2</integer>
 						<key>properties</key>
@@ -346,8 +393,8 @@ Sample TextSample TextSample Tex22d</string>
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>223</real>
-									<real>1</real>
+									<real>385</real>
+									<real>0.0</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -358,7 +405,7 @@ Sample TextSample TextSample Tex22d</string>
 								<string>Point</string>
 								<key>value</key>
 								<array>
-									<real>0.5</real>
+									<real>0.0</real>
 									<real>0.5</real>
 								</array>
 							</dict>
@@ -398,7 +445,7 @@ Sample TextSample TextSample Tex22d</string>
 								<string>FloatScale</string>
 								<key>value</key>
 								<array>
-									<real>20</real>
+									<real>22</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -409,9 +456,9 @@ Sample TextSample TextSample Tex22d</string>
 								<string>Color3</string>
 								<key>value</key>
 								<array>
-									<integer>254</integer>
 									<integer>255</integer>
-									<integer>255</integer>
+									<integer>222</integer>
+									<integer>102</integer>
 								</array>
 							</dict>
 							<dict>
@@ -448,90 +495,7 @@ Sample TextSample TextSample Tex22d</string>
 								<key>type</key>
 								<string>Text</string>
 								<key>value</key>
-								<string>100</string>
-							</dict>
-						</array>
-					</dict>
-					<dict>
-						<key>baseClass</key>
-						<string>CCSprite</string>
-						<key>children</key>
-						<array/>
-						<key>customClass</key>
-						<string></string>
-						<key>displayName</key>
-						<string>CCSprite</string>
-						<key>memberVarAssignmentName</key>
-						<string></string>
-						<key>memberVarAssignmentType</key>
-						<integer>0</integer>
-						<key>properties</key>
-						<array>
-							<dict>
-								<key>name</key>
-								<string>position</string>
-								<key>type</key>
-								<string>Position</string>
-								<key>value</key>
-								<array>
-									<real>301</real>
-									<real>2</real>
-									<integer>0</integer>
-								</array>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>anchorPoint</string>
-								<key>type</key>
-								<string>Point</string>
-								<key>value</key>
-								<array>
-									<real>0.5</real>
-									<real>0.5</real>
-								</array>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>scale</string>
-								<key>type</key>
-								<string>ScaleLock</string>
-								<key>value</key>
-								<array>
-									<real>0.64999997615814209</real>
-									<real>0.64999997615814209</real>
-									<true/>
-									<integer>0</integer>
-								</array>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>ignoreAnchorPointForPosition</string>
-								<key>type</key>
-								<string>Check</string>
-								<key>value</key>
-								<false/>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>displayFrame</string>
-								<key>type</key>
-								<string>SpriteFrame</string>
-								<key>value</key>
-								<array>
-									<string>Common/Common_2.plist</string>
-									<string>Icon_Activities.png</string>
-								</array>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>blendFunc</string>
-								<key>type</key>
-								<string>Blendmode</string>
-								<key>value</key>
-								<array>
-									<integer>770</integer>
-									<integer>771</integer>
-								</array>
+								<string>x100,000,000</string>
 							</dict>
 						</array>
 					</dict>
@@ -553,8 +517,8 @@ Sample TextSample TextSample Tex22d</string>
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>254</real>
-							<real>23</real>
+							<real>38</real>
+							<real>36.483123779296875</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -610,9 +574,9 @@ Sample TextSample TextSample Tex22d</string>
 				<string>Size</string>
 				<key>value</key>
 				<array>
-					<real>640</real>
-					<real>852</real>
-					<integer>0</integer>
+					<real>100</real>
+					<real>100</real>
+					<integer>1</integer>
 				</array>
 			</dict>
 			<dict>
@@ -659,13 +623,13 @@ Sample TextSample TextSample Tex22d</string>
 			<key>ext</key>
 			<string>ipad iphonehd</string>
 			<key>height</key>
-			<integer>852</integer>
+			<integer>1024</integer>
 			<key>name</key>
 			<string>iPad Portrait</string>
 			<key>scale</key>
 			<real>2</real>
 			<key>width</key>
-			<integer>640</integer>
+			<integer>768</integer>
 		</dict>
 	</array>
 	<key>sequences</key>
