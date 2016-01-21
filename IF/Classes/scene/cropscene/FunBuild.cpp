@@ -1708,6 +1708,14 @@ void FunBuild::onClickThis(float _time)
                     dw = -30;
                     dh = 50;
                 }
+                
+                //begin a by ljf,解决点击船坞的图标被船挡住的问题
+                if (m_info->type == FUN_BUILD_TRAINFIELD)
+                {
+                    dw = -50;
+                    dh = 50;
+                }
+                //end a by ljf
                 if (!m_info->is_Dirc && layer) {
                     layer->onShowBtnsView(parentX+dw, parentY+dh, m_buildingKey);
                     playShadow();
