@@ -89,9 +89,9 @@ void WorldMapView::unsetInstance() {
     }
 }
 
-WorldMapView* WorldMapView::create(CCPoint& tilePoint, MapType mapType) {
+WorldMapView* WorldMapView::create(CCPoint& tilePoint, MapType mapType, bool isInGuide) {
     auto ret = new WorldMapView();
-    if (ret && ret->init(tilePoint, mapType)) {
+    if (ret && ret->init(tilePoint, mapType , isInGuide)) {
         ret->autorelease();
     } else {
         CC_SAFE_DELETE(ret);
@@ -99,13 +99,15 @@ WorldMapView* WorldMapView::create(CCPoint& tilePoint, MapType mapType) {
     return ret;
 }
 
-bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType) {
+bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType , bool isInGuide) {
     if (!CCLayer::init()) {
         return false;
     }
     
     m_water_wave1 = nullptr;
     m_water_wave2 = nullptr;
+    
+    m_isInGuide = isInGuide;
     
     cocos2d::CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Battle/Battle_soldier.plist");
     CCLoadSprite::doResourceByCommonIndex(205, true);
@@ -246,6 +248,8 @@ bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType) {
     this->addChild(m_touchDelegateView);
     
     m_drawRoadNode = CCLineBatchedLayer::create();
+    if(GuideController::share()->getCurGuideID() == "3311100" && USE_NEW_GUIDE)//fusheng 新手引导 第一步 不显示线路
+        m_drawRoadNode->setVisible(false);
     m_layers[WM_ROAD]->addChild(m_drawRoadNode, roadIndex++);
     
     m_touchTroopNode = CCNode::create();
@@ -412,7 +416,11 @@ bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType) {
     m_flagBatch = CCNode::create();
     m_layers[WM_CITY]->addChild(m_flagBatch, 16);
     ParticleController::initParticle();
-    WorldController::getInstance()->initFavoriteInfo();
+#pragma mark 新手引导期间  不请求服务器数据
+    //fusheng 新手引导期间  不请求服务器数据
+    if(GuideController::share()->getCurGuideID()!="3311100")//fusheng 新手引导 第一步 
+        WorldController::getInstance()->initFavoriteInfo();
+#pragma mark 从服务区获取数据
     gotoTilePoint(gotoPoint,true);
     setTouchEnabled(true);
     m_touchDelegateView->notMove = false;
@@ -436,6 +444,8 @@ bool WorldMapView::init(cocos2d::CCPoint &viewPoint, MapType mapType) {
     if (canShowShakeGuide()) {
         scheduleOnce(schedule_selector(WorldMapView::onShowShakeGuide), 3.0);
     }
+    
+    
     return true;
 }
 
@@ -769,7 +779,7 @@ void WorldMapView::openTilePanel(unsigned int index) {
             break;
         case MonsterTile:{//探索
             // guojiang
-            CCCommonUtils::flyHint("", "", _lang("E100008"));//fusheng 这个界面 美术没做
+            CCCommonUtils::flyHint("", "", _lang("E100008"));
             return;
             
             // todo
@@ -1072,7 +1082,13 @@ void WorldMapView::asyncCityInfoParse(cocos2d::CCObject *obj) {
     if (!WorldMapView::instance()) return;
     
     WorldController::getInstance()->isRefreshQueue = false;
+    
+
+    
     auto params = dynamic_cast<CCDictionary*>(obj);
+
+    
+   
     
     if (params) {
         int tileServerId = params->valueForKey("serverId")->intValue();
@@ -1202,7 +1218,20 @@ void WorldMapView::asyncCityInfoParse(cocos2d::CCObject *obj) {
 //                if (GuideController::share()->getCurrentId() == "3031200"
 //                   || GuideController::share()->getCurrentId() == "3031300"
 //                   || GuideController::share()->getCurrentId() == "3031400") {
-                if (GuideController::share()->getCurrentId() == "3074100" || GuideController::share()->getCurrentId() == "3074200"){//fusheng world里的教程
+                string keyQuestID1 = "3410300";
+                string keyQuestID2 = "3410400";
+                
+                if (USE_NEW_GUIDE) {
+                     keyQuestID1 = "3410300";
+                     keyQuestID2 = "3410400";
+                }
+                else
+                {
+                    keyQuestID1 = "3074200";
+                    keyQuestID2 = "3074300";
+                }
+                
+                if (GuideController::share()->getCurrentId() == keyQuestID1 || GuideController::share()->getCurrentId() == keyQuestID2){//fusheng world里的教程
                     CCPoint addPt = WorldController::getPointByIndex(index);
                     if (WorldController::getInstance()->getCityInfos()[index].cityType == ResourceTile
                        && WorldController::getInstance()->getCityInfos()[index].resource.type == Food
@@ -1875,6 +1904,9 @@ void WorldMapView::gotoTilePoint(const cocos2d::CCPoint &point,bool forceUpdate,
     float y = halfWinSize.height - viewPoint.y*scaleY;
     m_map->isSendCmd = false;
     m_map->setPosition(ccp(x, y));
+    
+//    m_map->runAction(ScaleTo::create(100, 2));
+    
     UIComponent::getInstance()->m_xCoordText->setString(CC_ITOA((int)point.x));
     UIComponent::getInstance()->m_yCoordText->setString(CC_ITOA((int)point.y));
     UIComponent::getInstance()->m_zCoordText->setString(CC_ITOA(GlobalData::shared()->playerInfo.currentServerId));
@@ -1886,8 +1918,33 @@ void WorldMapView::gotoTilePoint(const cocos2d::CCPoint &point,bool forceUpdate,
     {
         forceUpdate = false;
     }
+    //fusheng test
     if (forceUpdate && !m_map->isSendCmd) {
-        m_map->updateDynamicMap();
+#pragma mark 新手引导期间  不请求服务器数据
+        //fusheng 新手引导期间  不请求服务器数据
+        if(GuideController::share()->getCurGuideID() == "3311100" && USE_NEW_GUIDE)//fusheng 新手引导 第一步
+        {
+            auto dict = CCDictionary::create();
+            
+            dict->setObject(CCString::createWithFormat("%d",WorldController::getInstance()->selfPoint.x) ,"x");
+            dict->setObject(CCString::createWithFormat("%d",WorldController::getInstance()->selfPoint.y) ,"y");
+            dict->setObject(CCString::createWithFormat("%d",GlobalData::shared()->playerInfo.selfServerId),"serverId");
+            dict->setObject(CCString::create("1"),"t");
+            
+            int index = WorldController::getInstance()->getIndexByPoint(WorldController::getInstance()->selfPoint);
+            
+            dict->setObject(CCString::createWithFormat("[{\"v\":0,\"t\":24,\"pt_resource\":0,\"pt\":1453107428,\"o\":\"\",\"l\":2,\"rt\":0,\"st\":0,\"ft\":0,\"i\":%d}]",index),"points");
+            
+            dict->retain();
+            CCThreadManager::getInstance()->runInNewThread(this, callfuncO_selector(WorldMapView::asyncCityInfoParse),dict);
+        }
+        else
+        {
+            m_map->updateDynamicMap();
+        }
+//        m_map->runAction(ScaleTo::create(3, 2));
+        
+        
 //        update_water_shader();
     }
     m_map->isSendCmd = false;
@@ -4766,6 +4823,9 @@ void WorldMapView::createCity(WorldCityInfo &info) {
         case tile_wareHouse:{
             isCityBuilding = true;
         }
+        case tile_island:{//fusheng 添加小岛
+            isCityBuilding = true;
+        }
             break;
         default:
             return;
@@ -5985,7 +6045,35 @@ void WorldMapView::addUnderNode(unsigned int index) {
             }
         }
             break;
+#pragma mark 空白小岛
+        case tile_island:
+        {
+             auto pos = m_map->getViewPointByTilePoint(WorldController::getPointByIndex(index),info.tileServerId);
             
+            
+            Node* under = Node::create();
+            under->setAnchorPoint(ccp(0, 0));
+            under->setPosition(ccp(pos.x, pos.y + _halfTileSize.height)); // left-bottom corner
+            m_cityItem[index].push_back(under);
+            m_batchNode->addChild(under, index);
+            
+            auto island = NBWorldMapMainCity::getMainCityIslandImage(0, pos.x, pos.y);
+            if (island)
+            {
+                island->setPosition(-_halfTileSize.width * 1.5, -_halfTileSize.height * 1.5);
+                under->addChild(island);
+            }
+            
+//            auto tower = CCLoadSprite::createSprite("super_mine_sawmill.png");
+//            tower->setPosition(ccp(-25, 52)); // left-bottom corner
+//            under->addChild(tower);
+            
+            m_layers[WM_GUI]->setVisible(false);
+            
+            UIComponent::getInstance()->setVisible(false);
+            
+        }
+            break;
         default:
             break;
     }

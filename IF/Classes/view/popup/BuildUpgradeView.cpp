@@ -752,8 +752,17 @@ void BuildUpgradeView::onLastUp()
         {
             m_isReturn = false;
             PopupViewController::getInstance()->removeAllPopupView();
-            auto layer = dynamic_cast<ImperialScene*>(SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE));
-            layer->showBuildBtns(m_buildId);
+            
+            if (m_buildId == FUN_BUILD_WALL_ID && m_info.level == 2)//fusheng 大门升3级 不直接弹出按钮
+            {
+                
+            }
+            else
+            {
+                auto layer = dynamic_cast<ImperialScene*>(SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE));
+                layer->showBuildBtns(m_buildId);
+            }
+            
         }
     }
     else {

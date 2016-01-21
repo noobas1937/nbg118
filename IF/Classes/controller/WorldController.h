@@ -188,6 +188,7 @@ enum WorldCityType {
     ,tile_wareHouse//21
     ,tile_wareHouseRange
     ,tile_banner//联盟国旗
+    ,tile_island//fusheng 空白小岛 24
 };
 enum AAeraDir{
     Dir_None = -1,

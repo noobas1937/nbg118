@@ -302,7 +302,7 @@ bool ImperialScene::init()
         if (GlobalData::shared()->playerInfo.level==1 && GlobalData::shared()->playerInfo.exp==0 && (gFake=="" || gFake=="start_1")) {
 //            onMoveToPos(1780, 800, TYPE_POS_MID, 0, 0.8, true);
             if (true || CCCommonUtils::isTestPlatformAndServer("guide_skip_2")) {
-                onMoveToPos(480, 1560, TYPE_POS_MID, 0, 1.2, true);
+                onMoveToPos(4216, 472, TYPE_POS_MID, 0, 0.55, true);
             }else {
                 onMoveToPos(1780, 800, TYPE_POS_MID, 0, 0.8, true);
             }
@@ -535,6 +535,10 @@ void ImperialScene::buildingCallBack(CCObject* params)
         string gFake = CCUserDefault::sharedUserDefault()->getStringForKey("Guide_Fake","");
         if (GlobalData::shared()->playerInfo.level==1 && GlobalData::shared()->playerInfo.exp==0 && (gFake=="" || gFake=="start_1")) {
 //            onPlayBattle();
+            //fusheng test
+//            SceneController::getInstance()->gotoScene(SCENE_ID_WORLD);
+//            this->setVisible(false);
+            
             newPlayerST = true;
             m_curBuildPosx = 1780;
             m_curBuildPosy = 800;
@@ -562,7 +566,7 @@ void ImperialScene::buildingCallBack(CCObject* params)
         
         m_curBuildPosx = 1400;//fusheng 修改位置
         m_curBuildPosy = 2106;//fusheng 修改位置
-        scale = 0.7;//fusheng 修改放缩
+        scale = 0.55;//fusheng 修改放缩
         onMoveToPos(m_curBuildPosx, m_curBuildPosy, TYPE_POS_MID, dt, scale, true);
         if (newPlayerST) {
 //            onPlayBattle();
@@ -581,7 +585,7 @@ void ImperialScene::buildingCallBack(CCObject* params)
             {
                 scale = HD_SCALE;
             }
-            scale = 0.7;//fusheng 修改放缩
+            scale = 0.55;//fusheng 修改放缩
             canMoveToRequest = false;
             onMoveToPos(m_curBuildPosx, m_curBuildPosy, TYPE_POS_MID, 0, scale, true);//fusheng 这里是进入城里的屏幕的位置
         }
@@ -609,7 +613,17 @@ void ImperialScene::buildingCallBack(CCObject* params)
     m_touchLayer->addChild(m_jianBatchNode, 1999);
     
     this->schedule(schedule_selector(ImperialScene::createWalker), 0.25, 1, 0.0f);
-    this->schedule(schedule_selector(ImperialScene::createEnemy), 30.0, CC_REPEAT_FOREVER, 0.0f);
+    
+//    string gid = GuideController::share()->getCurrentId();
+//    if (gid != "3311100") {
+//        this->schedule(schedule_selector(ImperialScene::createEnemy), 30.0, CC_REPEAT_FOREVER, 0.0f);
+//    }
+//    else
+//    {
+//        this->schedule(schedule_selector(ImperialScene::createEnemy), 0.01f, 15, 0.0f);
+//    }
+    
+    
     //this->schedule(schedule_selector(ImperialScene::shootArrow), 5.0, CC_REPEAT_FOREVER, 5.0f);
     //end a by ljf
     m_talkACTCell = TalkNoticeCell::create(0);
@@ -664,6 +678,12 @@ void ImperialScene::buildingCallBack(CCObject* params)
          FunBuildController::getInstance()->willMoveToBuildItemID = 0;
         
     }
+    
+//    gid = GuideController::share()->getCurrentId();
+    //fusheng 在第一次运行到这里时 currentID 为""
+    CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE
+                                                                           
+                                                                           , CCString::createWithFormat("cartoon1"));
 
     
     GameController::getInstance()->enableQueryHistoryPurchase();
@@ -1779,6 +1799,18 @@ void ImperialScene::wallCallBack(CCObject* params)
 
     WallBuild* pWall = WallBuild::create();
     pWall->setNamePos(m_wallNode->getPositionX(), m_wallNode->getPositionY(), this, &m_wallBatchs,100);
+    
+    
+    
+//    string gid = GuideController::share()->getCurrentId();
+//    if (gid == "3311300") { //fusheng 隐藏城墙
+//        for (int i =0 ; i<=4; i++) {
+//            m_wallBatchs[i]->setVisible(false);
+//        }
+//        
+//    }
+    
+    
     m_wallNode->addChild(pWall);
 }
 
@@ -1862,6 +1894,7 @@ void ImperialScene::onEnter()
 {
     CCLayer::onEnter();
     
+    
     CCLoadSprite::doLoadResourceAsync(IMPERIAL_PATH, CCCallFuncO::create(this, callfuncO_selector(ImperialScene::buildingCallBack), NULL), 2+10*GlobalData::shared()->contryResType);
 
     CCLoadSprite::doLoadResourceAsync(IMPERIAL_PATH, CCCallFuncO::create(this, callfuncO_selector(ImperialScene::wallCallBack), NULL), 8+10*GlobalData::shared()->contryResType);
@@ -1897,10 +1930,19 @@ void ImperialScene::onEnter()
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::titanChangeStatus), MSG_TITAN_STATUS_CHANGE, NULL);//fusheng 泰坦状态改变
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::handleTitanUpgrade), MSG_TITAN_UPGRADE_COMPLETE, NULL);
     
+    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::handleTitanUpgrade), "cartoon2", NULL);
+    
+
+    
 //    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::titanUpgradeComplete), MSG_TITAN_UPGRADE_COMPLETE, NULL);//fusheng 泰坦升级粒子效果
     
+    string gid = GuideController::share()->getCurrentId();
+    
     string gFake = CCUserDefault::sharedUserDefault()->getStringForKey("Guide_Fake","");
-    if (GlobalData::shared()->playerInfo.level==1 && GlobalData::shared()->playerInfo.exp==0 && (gFake==""||gFake=="start_1")) {
+    if (GlobalData::shared()->playerInfo.level==1 && GlobalData::shared()->playerInfo.exp==0 && (gFake==""||gFake=="start_1") && gid == "" && USE_NEW_GUIDE) {
+        this->setVisible(false);
+        UIComponent::getInstance()->setVisible(false);
+        
     }else{
         SoundController::sharedSound()->playBGMusic(Music_M_city_1);//fusheng for 黄迪
 //        CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("sounds/background/m_city.mp3");
@@ -2511,6 +2553,7 @@ void ImperialScene::onExit()
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_TITAN_STATUS_CHANGE);
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_TITAN_UPGRADE_COMPLETE);
     
+    CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, "cartoon2");
     
     if (m_praticle) {
         m_praticle->stopAllActions();
@@ -2723,7 +2766,7 @@ void ImperialScene::onMoveToBuild(int itemId, bool st)
     }else{
         endS = 1.0f;
         if(st && itemId != FUN_BUILD_BARRACK1 && itemId != FUN_BUILD_BARRACK2) {
-            endS = 1.3f;
+            endS = 1; //fusheng 移动地块统一1 大小
         }
         if (st && (itemId == FUN_BUILD_BARRACK1 || itemId == FUN_BUILD_BARRACK2)) {
             TargetPlatform target = CCApplication::sharedApplication()->getTargetPlatform();
@@ -2758,8 +2801,12 @@ void ImperialScene::onMoveToBuild(int itemId, bool st)
     if(itemId < BUILD_COUNT - 1){
         node = m_nodeBuildings[itemId];
         build = dynamic_cast<FunBuild*>(node->getChildren().at(0));
-        int buildPosX = m_nodeBuildings[itemId]->getPositionX() + build->mainWidth / 2 ;
-        int buildPosY = m_nodeBuildings[itemId]->getPositionY() + build->mainHeight / 2;
+//        int buildPosX = m_nodeBuildings[itemId]->getPositionX() + build->mainWidth / 2 ;
+//        int buildPosY = m_nodeBuildings[itemId]->getPositionY() + build->mainHeight / 2;
+        int buildPosX = m_nodeBuildings[itemId]->getPositionX()   ;
+        int buildPosY = m_nodeBuildings[itemId]->getPositionY() ;
+//        onMoveToBuildAndOpen(itemId, TYPE_POS_CLICK, 1.0, true);//fusheng edit
+        
         m_viewPort->updatePosition(ccp(winSize.width / 2 - buildPosX * f - anchor.x, winSize.height / 2 - buildPosY * f - anchor.y), true);
     }
     m_touchLayer->setScale(s);
@@ -2886,7 +2933,7 @@ void ImperialScene::hideFlyArrow(float _time){
 
 void ImperialScene::onMoveToBuildAndOpen(int itemId, int type, float dt, bool bound)
 {
-    float endS = 1.3;
+    float endS = 1;//fusheng 移动地块 设置为1
     if (CCCommonUtils::isIosAndroidPad())
     {
         endS = 2.4;
@@ -4217,6 +4264,12 @@ CCNode* ImperialScene::getBuildNameById(int itemId, string _key)
         if (ret==NULL) {
             ret = m_buildBtnsView->getGuideNode(_key);
         }
+        return ret;
+    }
+    else if (_key == "tool")
+    {
+        CCNode* ret=NULL;
+        ret = m_buildBtnsView->getGuideNode(_key);
         return ret;
     }
     else if (_key=="troop" || _key=="collect") {

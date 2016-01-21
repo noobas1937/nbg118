@@ -1171,13 +1171,13 @@ void UIComponent::checkCityFire(float t){
 
 //播放上下动画三次
 void UIComponent::playQusetTiAnim(){
-    float x = -398.8;
-    float y = 75.4;
-    if (CCCommonUtils::isIosAndroidPad())
-    {
-        x = -772.8;
-        y = 119.3;
-    }
+    float x = 64;
+    float y = 64;
+//    if (CCCommonUtils::isIosAndroidPad())
+//    {
+//        x = -772.8;
+//        y = 119.3;
+//    }
     CCEaseExponentialIn* easeInAction = CCEaseExponentialIn::create(dynamic_cast<CCActionInterval*>(CCMoveTo::create(0.2, ccp(x, y+10))));
     CCFiniteTimeAction* easeInActionRevers =  CCMoveTo::create(0.2, ccp(x, y));
     
@@ -1199,10 +1199,10 @@ void UIComponent::playQusetTiAnim(){
 
 }
 void UIComponent::playQusetTiAnimFinish(){
-    this->m_questTipNode->setPosition(-398.8, 75.4);
+    this->m_questTipNode->setPosition(64 , 64);
     if (CCCommonUtils::isIosAndroidPad())
     {
-        this->m_questTipNode->setPosition(-772.8, 119.3);
+//        this->m_questTipNode->setPosition(-772.8, 119.3);
     }
     playQusetTiAnim();
 
@@ -1973,7 +1973,18 @@ void UIComponent::onSceneChanged(CCObject* params){
     
     if (!this->isVisible()) {
         
-        this->setVisible(true);
+        string gid = GuideController::share()->getCurrentId();
+       
+        string gFake = CCUserDefault::sharedUserDefault()->getStringForKey("Guide_Fake","");
+
+        if(GlobalData::shared()->playerInfo.level == 1 && GlobalData::shared()->playerInfo.exp == 0 && (gFake=="" || gFake=="start_1") && FunBuildController::getInstance()->getFunbuildById(FUN_BUILD_MAIN_CITY_ID).level == 1 && gid == "" && USE_NEW_GUIDE){
+            this->setVisible(false);
+        }
+        else
+        {
+            this->setVisible(true);
+        }
+        
         
     }
     
@@ -4152,8 +4163,20 @@ void UIComponent::onWorldBtnClick(cocos2d::CCObject *pSender, Control::EventType
         return;
     }
     
-    if (QuestController::getInstance()->currentAchList.find("2102501") != QuestController::getInstance()->currentAchList.end()) {
-        QuestInfo* qusetTmp = QuestController::getInstance()->currentAchList["2102501"];
+    string keyQuestID = "2201001";
+    
+    if (USE_NEW_GUIDE) {
+        keyQuestID = "2200101";
+    }
+    else
+    {
+        
+        keyQuestID = "2102501";//建筑两个农田
+    }
+    
+    
+    if (QuestController::getInstance()->currentAchList.find(keyQuestID) != QuestController::getInstance()->currentAchList.end()) {
+        QuestInfo* qusetTmp = QuestController::getInstance()->currentAchList[keyQuestID];
         if(qusetTmp->state == ACCEPT) {
             CCCommonUtils::flyHint("", "", _lang("3000021"), 3, 200);
             return;
@@ -5472,8 +5495,19 @@ CCNode* UIComponent::getNodeByIndex(string _key){
     
     if(_key == "UI_world_go"){
         
-        if (QuestController::getInstance()->currentAchList.find("2102501") != QuestController::getInstance()->currentAchList.end()) {
-            QuestInfo* qusetTmp = QuestController::getInstance()->currentAchList["2102501"];
+        string keyQuestID = "2200101";
+        
+        if (USE_NEW_GUIDE) {
+            keyQuestID = "2200101";//fusheng 行军小屋
+        }
+        else
+        {
+            
+            keyQuestID = "2102501";//建筑两个农田
+        }
+        
+        if (QuestController::getInstance()->currentAchList.find(keyQuestID) != QuestController::getInstance()->currentAchList.end()) {
+            QuestInfo* qusetTmp = QuestController::getInstance()->currentAchList[keyQuestID];
             if(qusetTmp->state == ACCEPT) {
                 
                 return NULL;
@@ -6322,9 +6356,9 @@ void UIComponent::playQuestRect()
             m_questTipNpcNode->setVisible(true);
             m_questTipNpcNode->stopAllActions();
 //            fusheng begin
-            m_questTipNpcNode->setPosition(ccp(30, 127));
-            CCActionInterval * moveTo1 = CCMoveTo::create(0.5, ccp(30, 118));
-            CCActionInterval * moveTo2 = CCMoveTo::create(0.5, ccp(30, 127));
+            m_questTipNpcNode->setPosition(ccp(165, 127));
+            CCActionInterval * moveTo1 = CCMoveTo::create(0.5, ccp(165, 118));
+            CCActionInterval * moveTo2 = CCMoveTo::create(0.5, ccp(165, 127));
 //            fusheng end
             CCActionInterval * repeat = CCRepeat::create(CCSequence::create(moveTo1, moveTo2, NULL), 7);
             m_questTipNpcNode->runAction(repeat);
@@ -6398,8 +6432,18 @@ void UIComponent::CheckGuideUIShow()
     if (!m_UIQuestNodeStat) {
         return;
     }
+    string keyQuestID = "2200101";
     
-    if (GlobalData::shared()->playerInfo.level<=2 && QuestController::getInstance()->currentAchList.find("2100101") != QuestController::getInstance()->currentAchList.end()) {
+    if (USE_NEW_GUIDE) {
+        keyQuestID = "2200101";
+    }
+    else
+    {
+
+        keyQuestID = "2100101";//建筑1个农田
+    }
+    
+    if (GlobalData::shared()->playerInfo.level<=2 && QuestController::getInstance()->currentAchList.find(keyQuestID) != QuestController::getInstance()->currentAchList.end()) {//fusheng 领取完建造步兵营任务奖励
         m_UIQuestNode->setVisible(false);
         m_buildNode->setVisible(false);
     }else {

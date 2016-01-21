@@ -470,6 +470,10 @@ void PropSpeedupView::sliderCallBack(Ref *pSender, NBSlider::EventType type){
     m_lblTimeTip->setString(tip.c_str());
     
 }
+CCNode* PropSpeedupView::getGuideNode()
+{
+    return m_useBtn;
+}
 void PropSpeedupView::editBoxReturn(CCEditBox *editBox){
     string numStr = m_editBox->getText();
     if(!numStr.empty()){

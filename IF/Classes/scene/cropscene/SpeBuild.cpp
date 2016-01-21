@@ -174,14 +174,13 @@ bool SpeBuild::initSpeBuild(int itemId)
         
         CCBLoadFile(ccbName.c_str(),m_mainNode,this);
         
-        auto pt = m_touchNode->getPosition();
-        mainWidth = (m_touchNode->getContentSize().width*m_touchNode->getScaleX()/2+pt.x)*2;
-        mainHeight = (m_touchNode->getContentSize().height*m_touchNode->getScaleY()/2+pt.y)*2;
-        
+        // 不知道这个sb在干嘛
+//        auto pt = m_touchNode->getPosition();
+//        mainWidth = (m_touchNode->getContentSize().width*m_touchNode->getScaleX()/2+pt.x)*2;
+//        mainHeight = (m_touchNode->getContentSize().height*m_touchNode->getScaleY()/2+pt.y)*2;
+        // 不知道end
         m_effectSpr = CCSprite::create();
     }
-    
-    this->setContentSize(CCSizeMake(mainWidth, mainHeight));
     this->setAnchorPoint(ccp(0,0));
     
     m_signNode = CCNode::create();
@@ -190,8 +189,25 @@ bool SpeBuild::initSpeBuild(int itemId)
     m_textTouchNode = CCNode::create();
     m_spTextNode = CCNode::create();
     
+//    auto layer11 = LayerColor::create(ccc4(255, 0, 0, 255));
+//    layer11->setContentSize(Size(mainWidth, mainHeight));
+//    m_upEffectNode->addChild(layer11);
+    
     if(itemId == SPE_BUILD_HD) {
         if (1) {
+            if (CCFileUtils::sharedFileUtils()->isFileExist("Spine/Imperial/pichd_2.json") &&
+                CCFileUtils::sharedFileUtils()->isFileExist("Imperial/Imperial_30.atlas"))
+            {
+                auto animationObj = new IFSkeletonAnimation("Spine/Imperial/pichd_2.json","Imperial/Imperial_30.atlas");
+                if (animationObj) {
+                    if (!m_spineNode) {
+                        return false;
+                    }
+                    m_spineNode->addChild(animationObj,3);
+                    spTrackEntry* entry = animationObj->setAnimation(0, "animation", true);
+                }
+            }
+            
             int zOrder = m_upEffectNode->getZOrder();
             auto m_HTPHead = CCLoadSprite::createScale9Sprite("feedback_head.png");
             m_HTPHead->setInsetBottom(10);
@@ -200,17 +216,17 @@ bool SpeBuild::initSpeBuild(int itemId)
             m_HTPHead->setInsetRight(10);
             m_HTPHead->setAnchorPoint(ccp(0.5, 0.5));
             m_HTPHead->setContentSize(CCSize(250,170));
-            m_HTPHead->setPosition(m_upEffectNode->getPosition()+ccp(43, 100));
+            m_HTPHead->setPosition(ccp(20, 210));
             m_textNode->addChild(m_HTPHead);
             m_HTPHead->setZOrder(zOrder*1000+1);
             
             auto m_HTPHead1 = CCLoadSprite::createSprite("feedback_head1.png");
-            m_HTPHead1->setPosition(m_HTPHead->getPosition()+ccp(44.0, -85.0));
+            m_HTPHead1->setPosition(ccp(30, 123));
             m_HTPHead1->setZOrder(zOrder*1000+2);
-             m_textNode->addChild(m_HTPHead1);
+            m_textNode->addChild(m_HTPHead1);
             
             auto biaoTiBg = CCLoadSprite::createSprite("biaotikuangHD.png");
-            biaoTiBg->setPosition(ccp(m_spTextNode->getPosition().x - 30,m_spTextNode->getPosition().y+65));
+            biaoTiBg->setPosition(ccp(30,100));
             m_spTextNode->addChild(biaoTiBg);
             
             m_timeEventlabel = CCLabelIFTTF::create();
@@ -220,17 +236,8 @@ bool SpeBuild::initSpeBuild(int itemId)
             m_timeEventlabel->setFontSize(20);
             m_timeEventlabel->setString(_lang("133000").c_str());
             m_spTextNode->addChild(m_timeEventlabel);
-            //m_timeEventlabel->setPosition(ccp(m_upEffectNode->getPosition().x+15,m_upEffectNode->getPosition().y+115));
-            m_timeEventlabel->setPosition(ccp(m_upEffectNode->getPosition().x - 30,m_upEffectNode->getPosition().y+67));
-            
-//            m_timelabel = CCLabelIF::create("",18);
-//            m_timelabel->setFntFile(getNBFont(NB_FONT_Bold_Border));
-//            m_timelabel->setColor({255,198,0});
-//            m_timelabel->setAnchorPoint(ccp(0.5,0.5));
-//            m_upEffectNode->addChild(m_timelabel);
-            //m_timelabel->setPosition(ccp(m_upEffectNode->getPosition().x+10,m_upEffectNode->getPosition().y+135));
-//            m_timelabel->setPosition(ccp(m_upEffectNode->getPosition().x-30,m_upEffectNode->getPosition().y+108));
-            
+            m_timeEventlabel->setPosition(ccp(30,100));
+
             m_HTPlabel = CCLabelIF::create();
             m_HTPlabel->setString("");//todo:放到语言文件中
             m_HTPlabel->setDimensions(CCSize(210,180));
@@ -238,15 +245,9 @@ bool SpeBuild::initSpeBuild(int itemId)
             m_HTPlabel->setAnchorPoint(ccp(0,0.5));
             m_textNode->addChild(m_HTPlabel);
             m_HTPlabel->setZOrder(zOrder*1000+5);
-            m_HTPlabel->setPosition(ccp(m_upEffectNode->getPosition().x-59,m_upEffectNode->getPosition().y+100));//115
-            std::string defLan = LocalController::shared()->getLanguageFileName();
-            if(defLan=="ar"){
-                m_HTPlabel->setPosition(ccp(m_upEffectNode->getPosition().x-62,m_upEffectNode->getPosition().y+80));//115
-            }
+//            m_HTPlabel->setPosition(ccp(m_upEffectNode->getPosition().x-59,m_upEffectNode->getPosition().y+100));//115
+            m_HTPlabel->setPosition(ccp(-70,230));//115
             m_timeStr = "";
-            m_countTime = 0;
-//            double endTime = ActivityController::getInstance()->eventInfo.endTime - GlobalData::shared()->getWorldTime();
-//            m_textNode->setVisible(endTime>0);
             CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(SpeBuild::onShowTextAni), this);
             CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(SpeBuild::onShowTextAni), this, 1,kCCRepeatForever, 0.0f, false);
             m_textNode->setVisible(false);
@@ -267,14 +268,6 @@ bool SpeBuild::initSpeBuild(int itemId)
         m_textNode->addChild(m_timeEventlabel, 1, 2);
         m_timeEventlabel->setPosition(ccp(0, -80));
         m_textNode->setVisible(false);
-        
-//        CCControlButton* btn = CCControlButton::create(CCLoadSprite::createScale9Sprite("but_03.png"));
-//        btn->setPreferredSize(CCSize(90, 95));
-//        btn->setAnchorPoint(ccp(0.5, 0));
-//        btn->setPosition(0, 0);
-//        btn->addTargetWithActionForControlEvents(this, cccontrol_selector(SpeBuild::onClickRecBtn), CCControlEventTouchUpInside);
-//        m_upEffectNode->addChild(btn);
-//        m_upEffectNode->setPosition(ccp(0, 80));
         
         CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(SpeBuild::checkLeftTime), this);
         checkLeftTime(0);
@@ -466,40 +459,7 @@ void SpeBuild::checkMine(float _time){
 
 void SpeBuild::onShowTextAni(float _time){
     if(!m_textNode) return ;
-//    double tempTime = ActivityController::getInstance()->eventInfo.readyTime - GlobalData::shared()->getWorldTime();
-//    double readyTime = ActivityController::getInstance()->eventInfo.beginTime - GlobalData::shared()->getWorldTime();
-//    double endTime = ActivityController::getInstance()->eventInfo.endTime - GlobalData::shared()->getWorldTime();
-//    string id = ActivityController::getInstance()->eventInfo.id;
-//    int eventId = ActivityController::getInstance()->eventInfo.curPhase;
-//    string timeStr = "";
-//    if(tempTime>0){
-//        if(eventId==0){
-//            m_timeStr = _lang("105800");
-//            m_timeStr += "\n";
-//            m_timeStr += _lang_1("105804", CC_SECTOA(tempTime));
-//            timeStr = _lang_1("105804", CC_SECTOA(tempTime));
-//        }else{
-//            m_timeStr = _lang_1("105802",CC_ITOA(eventId));
-//            m_timeStr += "\n";
-//            m_timeStr += _lang_1("105804", CC_SECTOA(tempTime));
-//            timeStr = _lang_1("105804", CC_SECTOA(tempTime));
-//        }
-//    }else if(readyTime>0){
-//        m_timeStr = _lang_1("105803",CC_ITOA(eventId));
-//        m_timeStr += "\n";
-//        m_timeStr += _lang_1("105804", CC_SECTOA(readyTime));
-//        timeStr = _lang_1("105804", CC_SECTOA(readyTime));
-//    }else if(endTime>=0){
-//        m_timeStr = _lang_1("105803",CC_ITOA(eventId));
-//        m_timeStr += "\n";
-//        m_timeStr += _lang_1("105805", CC_SECTOA(endTime));
-//        timeStr = _lang_1("105805", CC_SECTOA(endTime));
-//    }else{
-//        m_timeStr = _lang("105801");
-//        timeStr = "";
-//    }
-//    m_timelabel->setString(timeStr);
-//    m_HTPlabel->setString(m_timeStr.c_str());
+    //-------
     if(m_countTime==5 && m_textNode->isVisible())
     {
         m_countTime = 0;
@@ -708,8 +668,8 @@ void SpeBuild::onClickRecBtn(cocos2d::CCObject *pTarget, CCControlEvent touchEve
     }
     else if (m_buildingKey == SPE_BUILD_NEWED) {
         
-        if (QuestController::getInstance()->currentAchList.find("2102501") != QuestController::getInstance()->currentAchList.end()) {
-            QuestInfo* qusetTmp = QuestController::getInstance()->currentAchList["2102501"];
+        if (QuestController::getInstance()->currentAchList.find("2201001") != QuestController::getInstance()->currentAchList.end()) {
+            QuestInfo* qusetTmp = QuestController::getInstance()->currentAchList["2201001"];
             if(qusetTmp->state == ACCEPT) {
                 CCCommonUtils::flyHint("", "", _lang("106046"), 3, 200);
                 return;
@@ -738,10 +698,10 @@ void SpeBuild::setNamePos(int x, int y, CCLayer* sginLayer, CCSpriteBatchNode* p
     m_blentBatchNode = blentbatch;
     
     m_signNode->setPosition(ccp(x,y));
-    m_upEffectNode->setPosition(ccp(x+mainWidth/2,y+mainHeight/2));
-    m_textNode->setPosition(ccp(x+mainWidth/2,y+mainHeight/2));
-//    m_spTextNode->setPosition(m_upEffectNode->getPosition());
-     m_spTextNode->setPosition(m_upEffectNode->getPosition()-Vec2(100,0));
+    m_upEffectNode->setPosition(ccp(x,y));
+    m_textNode->setPosition(ccp(x,y));
+    m_spTextNode->setPosition(ccp(x,y));
+//     m_spTextNode->setPosition(m_upEffectNode->getPosition()-Vec2(100,0));
     sginLayer->addChild(m_signNode);
     sginLayer->addChild(m_upEffectNode);
     sginLayer->addChild(m_spTextNode,10000000);
@@ -839,7 +799,7 @@ void SpeBuild::addSpeBuildState()
         pic->setAnchorPoint(ccp(0.5, 0.5));
         m_upEffectNode->addChild(pic);
         auto pos = m_upEffectNode->getPosition();
-        m_upEffectNode->setPosition(ccp(parentX + mainWidth / 2,parentY + mainHeight / 2 + 10));
+        m_upEffectNode->setPosition(ccp(parentX + m_touchNode->getContentSize().width * 0.5 ,parentY - 10));
         m_upEffectNode->setScale(1);
         playShakeState();
     }
@@ -860,7 +820,7 @@ void SpeBuild::addSpeBuildState()
         pic->setPosition(ccp(0, 65));
         m_upEffectNode->addChild(pic);
         auto pos = m_upEffectNode->getPosition();
-        m_upEffectNode->setPosition(ccp(parentX + mainWidth / 2,parentY + mainHeight / 2 + 10));
+        m_upEffectNode->setPosition(ccp(parentX,parentY + 10));
         m_upEffectNode->setScale(1);
         playShakeState();
     }
@@ -1200,8 +1160,7 @@ void SpeBuild::onClickThis(float _time)
             auto layer = dynamic_cast<ImperialScene*>(SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE));
             if (layer) {
 #pragma mark buttonPos
-//                layer->onShowSpeBtnsView(parentX+mainWidth/2, parentY+120, m_buildingKey);
-                layer->onShowSpeBtnsView(parentX+mainWidth/2, parentY+30, m_buildingKey);
+                layer->onShowSpeBtnsView(parentX, parentY+30, m_buildingKey);
             }
         }
     }
@@ -1242,7 +1201,7 @@ void SpeBuild::onClickThis(float _time)
         }else {
             auto layer = dynamic_cast<ImperialScene*>(SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE));
             if (layer) {
-                layer->onShowSpeBtnsView(parentX+mainWidth/2, parentY+50, m_buildingKey);
+                layer->onShowSpeBtnsView(parentX, parentY+50, m_buildingKey);
             }
         }
     }
@@ -1286,10 +1245,6 @@ void SpeBuild::onClickThis(float _time)
     else if (m_buildingKey == SPE_BUILD_XIONGDI) {
         SoundController::sharedSound()->playEffects(Music_Sfx_city_building);
         PopupViewController::getInstance()->addPopupInView(InviteForGiftView::create());
-//        auto layer = dynamic_cast<ImperialScene*>(SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE));
-//        if (layer) {
-//            layer->onShowSpeBtnsView(parentX+mainWidth/2, parentY+50, m_buildingKey);
-//        }
     }
     else if (m_buildingKey == SPE_BUILD_NEWED) {
         SoundController::sharedSound()->playEffects(Music_Sfx_city_building);
@@ -1357,7 +1312,7 @@ void SpeBuild::drowEffectSpr(int zOrder, int tmpOrd)
     
     if (m_buildingKey == SPE_BUILD_HD) {
         auto tmp_ptArray = CCPointArray::create(20);
-        tmp_ptArray->addControlPoint(ccp(parentX+120, parentY+170));
+        tmp_ptArray->addControlPoint(ccp(parentX+20, parentY));
         for (int j=0; j<tmp_ptArray->count(); j++) {
             auto particle1 = ParticleController::createParticle("Collection_Loop_3");
             particle1->setPosition(tmp_ptArray->getControlPointAtIndex(j));
@@ -1425,6 +1380,8 @@ bool SpeBuild::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_signNode", CCNode*, this->m_signCCBNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_spr", CCSprite*, this->m_spr);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_guideNode", CCNode*, this->m_guideNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_spineNode", CCNode*, this->m_spineNode);
+    
     return false;
 }
 
@@ -1640,7 +1597,7 @@ void SpeBuild::addShipPop(CCObject *ccObj){
         return;
     }
     CCSprite* sp = CCLoadSprite::createSprite(iconName.c_str());
-    sp->setPosition(ccp(0, 200));
+    sp->setPosition(ccp(5, 280));
     sp->setScale(scale);
     auto m_HTPHead = CCLoadSprite::createScale9Sprite("feedback_head.png");
     m_HTPHead->setInsetBottom(10);
@@ -1649,11 +1606,11 @@ void SpeBuild::addShipPop(CCObject *ccObj){
     m_HTPHead->setInsetRight(10);
     m_HTPHead->setAnchorPoint(ccp(0.5, 0.5));
     m_HTPHead->setContentSize(CCSize(100,100));
-    m_HTPHead->setPosition(ccp(0, 200));
+    m_HTPHead->setPosition(ccp(5, 280));
     m_textNode->addChild(m_HTPHead);
     m_HTPHead->setZOrder(1);
     auto m_HTPHead1 = CCLoadSprite::createSprite("feedback_head1.png");
-    m_HTPHead1->setPosition(m_HTPHead->getPosition()+ccp(20.0, -58.0));
+    m_HTPHead1->setPosition(m_HTPHead->getPosition()+ccp(0, -55.0));
     m_HTPHead1->setZOrder(2);
     m_textNode->addChild(m_HTPHead1);
     m_countTime = 30;

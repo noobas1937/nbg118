@@ -43,6 +43,19 @@
                 <key>sourceSize</key>
                 <string>{47,49}</string>
             </dict>
+            <key>guide_Warrior.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{193,451},{300,249}}</string>
+                <key>offset</key>
+                <string>{4,-9}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{29,18},{300,249}}</string>
+                <key>sourceSize</key>
+                <string>{350,267}</string>
+            </dict>
             <key>guide_archer.png</key>
             <dict>
                 <key>frame</key>
@@ -98,7 +111,7 @@
             <key>nb_gm_tc1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{606,4},{300,136}}</string>
+                <string>{{280,305},{300,136}}</string>
                 <key>offset</key>
                 <string>{0,-5}</string>
                 <key>rotated</key>
@@ -124,11 +137,11 @@
             <key>nb_gm_tc3.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{193,451},{300,146}}</string>
+                <string>{{641,4},{300,146}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{300,146}}</string>
                 <key>sourceSize</key>
@@ -137,7 +150,7 @@
             <key>nb_gm_tc4.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{280,146},{295,146}}</string>
+                <string>{{448,4},{295,146}}</string>
                 <key>offset</key>
                 <string>{-3,0}</string>
                 <key>rotated</key>
@@ -150,7 +163,7 @@
             <key>nb_xsyd_bg_1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{345,447},{193,191}}</string>
+                <string>{{444,757},{193,191}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -209,7 +222,7 @@
             <key>size</key>
             <string>{1024,1024}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:--REMOVED----------------------------</string>
+            <string>$TexturePacker:SmartUpdate:cf116124c6acd2e3190fef249a7660df:1/1$</string>
             <key>textureFileName</key>
             <string>General_100.pvr.ccz</string>
         </dict>

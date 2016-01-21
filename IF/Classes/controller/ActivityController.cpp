@@ -2620,8 +2620,8 @@ void PortActController::addPush()
 
 bool PortActController::canPopNewRDView()
 {
-    if (QuestController::getInstance()->currentAchList.find("2102501") != QuestController::getInstance()->currentAchList.end()) {
-        QuestInfo* qusetTmp = QuestController::getInstance()->currentAchList["2102501"];
+    if (QuestController::getInstance()->currentAchList.find("2201001") != QuestController::getInstance()->currentAchList.end()) {
+        QuestInfo* qusetTmp = QuestController::getInstance()->currentAchList["2201001"];
         if(qusetTmp->state == ACCEPT) {
             return false;
         }

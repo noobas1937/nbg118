@@ -14602,8 +14602,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>-53.543998718261719</real>
-											<real>-46.543998718261719</real>
+											<real>-3.5439987182617188</real>
+											<real>6.4560012817382812</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -14626,8 +14626,8 @@
 										<string>Point</string>
 										<key>value</key>
 										<array>
-											<real>0.0</real>
-											<real>0.0</real>
+											<real>0.5</real>
+											<real>0.5</real>
 										</array>
 									</dict>
 									<dict>
@@ -14652,6 +14652,8 @@
 										<false/>
 									</dict>
 								</array>
+								<key>selected</key>
+								<true/>
 							</dict>
 							<dict>
 								<key>animatedProperties</key>
