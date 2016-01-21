@@ -566,7 +566,7 @@ void ImperialScene::buildingCallBack(CCObject* params)
         
         m_curBuildPosx = 1400;//fusheng 修改位置
         m_curBuildPosy = 2106;//fusheng 修改位置
-        scale = 0.7;//fusheng 修改放缩
+        scale = 0.55;//fusheng 修改放缩
         onMoveToPos(m_curBuildPosx, m_curBuildPosy, TYPE_POS_MID, dt, scale, true);
         if (newPlayerST) {
 //            onPlayBattle();
@@ -2766,7 +2766,7 @@ void ImperialScene::onMoveToBuild(int itemId, bool st)
     }else{
         endS = 1.0f;
         if(st && itemId != FUN_BUILD_BARRACK1 && itemId != FUN_BUILD_BARRACK2) {
-            endS = 1.3f;
+            endS = 1; //fusheng 移动地块统一1 大小
         }
         if (st && (itemId == FUN_BUILD_BARRACK1 || itemId == FUN_BUILD_BARRACK2)) {
             TargetPlatform target = CCApplication::sharedApplication()->getTargetPlatform();

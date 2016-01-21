@@ -165,7 +165,7 @@ bool GuideController::start(){
         string gFake = CCUserDefault::sharedUserDefault()->getStringForKey("Guide_Fake","");
         if(GlobalData::shared()->playerInfo.level == 1 && GlobalData::shared()->playerInfo.exp == 0 && (gFake=="" || gFake=="start_1") && FunBuildController::getInstance()->getFunbuildById(FUN_BUILD_MAIN_CITY_ID).level == 1){
             if (USE_NEW_GUIDE) {
-                //            guideId = "3311100";
+                 guideId = "3311100";
             }
             else
             {
@@ -273,7 +273,7 @@ void GuideController::doGuide(){
         auto layer = dynamic_cast<ImperialScene*>(SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE));
         if (layer)
         {
-            layer->onMoveToPos(1114, 2511, TYPE_POS_MID, 0, 0.55, true);
+            layer->onMoveToPos(1114, 2511, TYPE_POS_MID, 1, 0.55, true);
         
         }
         
@@ -671,12 +671,12 @@ void GuideController::addGuideView(bool movingFlag){
         {
             if (!CCCommonUtils::isIosAndroidPad())//fusheng edit  地块的偏移量
             {
-                dx -= 40;
-                dy -= 30;
+//                dx -= 40;
+//                dy -= 30;
             }
             
-            w += 20;
-            h += 20;
+//            w += 20;
+//            h += 20;
         }
         else
         {
