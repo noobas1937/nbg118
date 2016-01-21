@@ -1713,7 +1713,7 @@ void FunBuild::onClickThis(float _time)
                 if (m_info->type == FUN_BUILD_TRAINFIELD)
                 {
                     dw = -50;
-                    dh = 50;
+                    dh = 30;
                 }
                 //end a by ljf
                 if (!m_info->is_Dirc && layer) {

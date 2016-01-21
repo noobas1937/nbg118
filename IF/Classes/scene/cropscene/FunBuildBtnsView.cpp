@@ -296,9 +296,9 @@ bool FunBuildBtnsView::onShowInfo()
     if (m_info->state == FUN_BUILD_NORMAL) {
         if (m_qid == QID_MAX) {
             m_toolNode->setPositionY(-100);
-            m_nameNode->setPositionY(300);
+            m_nameNode->setPosition(0,300);
             if (buildType == FUN_BUILD_WOOD || buildType == FUN_BUILD_STONE || buildType == FUN_BUILD_IRON || buildType == FUN_BUILD_FOOD || buildType == FUN_BUILD_BARRACK || buildType == FUN_BUILD_HOSPITAL){
-                m_nameNode->setPositionY(150);
+                m_nameNode->setPositionY(180);
             }
             m_spdNode->setVisible(false);
             m_icon1Node->removeAllChildren();
@@ -328,6 +328,10 @@ bool FunBuildBtnsView::onShowInfo()
                         m_btn5Node->setPosition(ccp(-200, 60));
                     }
                 }
+            }
+            if(buildType == FUN_BUILD_TRAINFIELD){
+                auto oldPos = m_nameNode->getPosition();
+                m_nameNode->setPosition(oldPos.x+30, oldPos.y - 110);
             }
         }
         else {//建筑正在造兵 或者 正在研究
