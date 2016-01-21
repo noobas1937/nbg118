@@ -2673,7 +2673,7 @@ void FunBuildController::makeGuideBuildData(int itemId, int pos, int level)
     pDict->setObject(CCString::create("1"), "qid");
     pDict->setObject(CCString::create("0"), "type");
     pDict->setObject(CCString::create(CC_ITOA(GlobalData::shared()->getTimeStamp()*1000)), "startTime");
-    pDict->setObject(CCString::create(CC_ITOA((GlobalData::shared()->getTimeStamp()+2)*1000)), "updateTime");
+    pDict->setObject(CCString::create(CC_ITOA((GlobalData::shared()->getTimeStamp()+100)*1000)), "updateTime");//fusheng test 调整100秒
     pDict->setObject(CCString::create("0"), "endTime");
     
     m_guideBuildMap.erase(GuideBuildKey);

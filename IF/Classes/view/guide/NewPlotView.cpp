@@ -157,7 +157,7 @@ void NewPlotView::refreshWord(){
             figure += ".png";
             auto spr = CCLoadSprite::createSprite(figure.c_str());
             spr->setAnchorPoint(ccp(0, 0));
-            if(seat == "2")
+            if(figure == "guide_woman.png" )
             {
                 spr->setPositionY(spr->getPositionY()-44);
             }

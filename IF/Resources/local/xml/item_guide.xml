@@ -19,9 +19,8 @@
         <ItemSpec id="3313700" next="3313800" plot="3313710" arrow="0" area="plot_continue" enforce="1" mark="1"/>
         <ItemSpec id="3313800" next="3313900" arrow="2" area="UI_titan" enforce="1"/>
         <ItemSpec id="3313900" next="3314000" arrow="5" area="Titan_Feed" enforce="1"/>
-        <ItemSpec id="3314000" next="3314100" arrow="2" area="Titan_End" enforce="1"/>
-        <ItemSpec id="3314100" next="3314200" arrow="2" area="Titan_Speed" enforce="1"/>
-        <ItemSpec id="3314200" next="3314300" lag="6"/>
+        <ItemSpec id="3314000" next="3314200" arrow="2" area="Titan_End" enforce="1"/>
+        <ItemSpec id="3314200" next="3314300" lag="9"/>
         <ItemSpec id="3314300" next="3314400" plot="3314310" arrow="0" area="plot_continue" enforce="1"/>
         <ItemSpec id="3314400" next="3314500" arrow="1" area="Titan_Close" enforce="1"/>
         <ItemSpec id="3314500" next="3314600" plot="3314510" arrow="0" area="plot_continue" enforce="1" mark="1"/>
@@ -90,5 +89,9 @@
         <ItemSpec id="3410700" next="3410800" lag="4" enforce="1"/>
         <ItemSpec id="3410800" next="3410900" plot="3410810" arrow="0" area="plot_continue" enforce="1" mark="1"/>
         <ItemSpec id="3410900" arrow="2" area="UI_world_back" enforce="1"/>
+        <ItemSpec id="3431000" open="1" para1="400004" plot="3431010" arrow="0" area="plot_continue" enforce="1"/>
+        <ItemSpec id="3432000" open="1" para1="400005" plot="3432010" arrow="0" area="plot_continue" enforce="1"/>
+        <ItemSpec id="3433000" open="1" para1="400006" plot="3433010" arrow="0" area="plot_continue" enforce="1"/>
+        <ItemSpec id="3434000" open="1" para1="400007" plot="3434010" arrow="0" area="plot_continue" enforce="1"/>
     </Group>
 </tns:database>
