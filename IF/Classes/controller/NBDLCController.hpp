@@ -14,7 +14,7 @@
 #include <string>
 
 #if COCOS2D_DEBUG > 0
-//#define USING_DLC
+#define USING_DLC
 #endif
 
 USING_NS_CC;
