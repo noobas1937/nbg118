@@ -133,6 +133,7 @@ public class IF extends Cocos2dxActivity implements IAnalyticTracker ,IJniCallHe
 	private SNSHelper m_snsHelper;
 
     public Payment m_payment;
+    public boolean appRunning = false;
     
 	protected AppEventsLogger appEventsLogger;
 	public AppEventsLogger getAppEventsLogger(){
@@ -610,6 +611,7 @@ public class IF extends Cocos2dxActivity implements IAnalyticTracker ,IJniCallHe
 	@Override
 	public void onResume() {
 		super.onResume();
+		appRunning = true;
 		Adjust.onResume(this);
 		//AppEventsLogger.activateApp(this);
 		try {
@@ -636,6 +638,7 @@ public class IF extends Cocos2dxActivity implements IAnalyticTracker ,IJniCallHe
 	@Override
 	protected void onPause() {
 		super.onPause();
+		appRunning = false;
 		Adjust.onPause();
 		if(facebookEnabled)
 			AppEventsLogger.deactivateApp(this);

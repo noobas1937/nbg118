@@ -69,7 +69,7 @@
 //#include "MailHeiqishiListView.hpp"
 #include "SceneController.h"
 #include "WorldMapView.h"
-//#include "FriendsController.h"
+#include "FriendsController.h"
 
 static const char* roman[30] = {"I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","XIII","XIV","XV","XVI","XVII","XVIII","XIX","XX",
     "XXI","XXII","XXIII","XXIV","XXV","XXVI","XXVII","XXVIII","XXIX","XXX"
@@ -1805,11 +1805,11 @@ void MailController::refreshMailContent(std::string uid, std::string content){
                         }
                     }
                     std::string nameStr0 = content;
-                    CCLOG(nameStr0.c_str());
+//                    CCLOG(nameStr0.c_str());
                     std::string nameStr = CCCommonUtils::getPropById(vector3[1], "name");
                     std::string nameStr2 = _lang(nameStr.c_str());
-                    CCLOG(nameStr2.c_str());
-                    CCLOG(_lang_2(vector3[0].c_str(),nameStr2.c_str(),addStr.c_str()));
+//                    CCLOG(nameStr2.c_str());
+//                    CCLOG(_lang_2(vector3[0].c_str(),nameStr2.c_str(),addStr.c_str()));
                     it->second->contents = _lang_2(vector3[0].c_str(),nameStr2.c_str(),addStr.c_str());
                     return;
                 }
@@ -3305,7 +3305,7 @@ void MailController::backInitTranslateMails(cocos2d::CCArray *arr, std::string r
             auto dic = _dict(arr->objectAtIndex(i));
             if(dic->objectForKey("translationMsg") && dic->objectForKey("originalLang")){
                 std::string aa =dic->valueForKey("translationMsg")->getCString() + std::string("_____,") + dic->valueForKey("originalLang")->getCString();
-                CCLOG(aa.c_str());
+//                CCLOG(aa.c_str());
                 mTmp[dic->valueForKey("uid")->getCString()] = dic;
             }
         }
@@ -4034,12 +4034,12 @@ void MailController::getFriendMailByUids(std::vector<std::string> friendUidVec)
         string friendMails = ChatServiceCocos2dx::getFriendLatestMails(fromUidStr);
         parseUserMailInfo(friendMails);
 #elif(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-//        map<string,string> mapdata = ChatServiceCocos2dx::lastMsgWithFriendList(friendUidVec); simon
+//        map<string,string> mapdata = ChatServiceCocos2dx::lastMsgWithFriendList(friendUidVec);
 //        map<string,string> ::iterator iter = mapdata.begin();
 //        for (;iter != mapdata.end(); iter++) {
-//            FriendsController::getInstance()->lastMailMap[(*iter).first] = (*iter).second;   simon
-//        }
-        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification("FriendsLastMailInfoUpdeta");
+//            FriendsController::getInstance()->lastMailMap[(*iter).first] = (*iter).second;
+//        } simon
+//        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification("FriendsLastMailInfoUpdeta");
 #endif
     }
 }
@@ -4055,7 +4055,7 @@ void MailController::parseUserMailInfo(string json)
         {
             string uid = Json_getString(child, "uid", "");
             string latestMail = Json_getString(child, "latestMail", "");
-//            FriendsController::getInstance()->lastMailMap[uid] = latestMail; simon
+            FriendsController::getInstance()->lastMailMap[uid] = latestMail;
             CCLOGFUNCF("uid:%s,latestMail:%s",uid.c_str(),latestMail.c_str());
             child=child->next;
         }

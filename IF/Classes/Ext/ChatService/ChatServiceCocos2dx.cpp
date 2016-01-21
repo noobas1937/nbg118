@@ -25,8 +25,8 @@
 #include "LocalController.h"
 #include "RewardController.h"
 #include "LuaController.h"
-//#include "FriendsView.h"
-//#include "NetController.h"
+#include "FriendsView.h"
+#include "NetController.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include <jni.h>
@@ -3763,7 +3763,7 @@ void JNIScheduleObject::handleResume(float time){
     }
     else if(actionAfterResume == "showFriend"){
         CCLOG("JNIScheduleObject showFriend");
-//        PopupViewController::getInstance()->addPopupInView(FriendsView::create());  simon
+        PopupViewController::getInstance()->addPopupInView(FriendsView::create());
     }
     else if(actionAfterResume == "viewRedPackage"){
         CCLOG("JNIScheduleObject viewRedPackage");

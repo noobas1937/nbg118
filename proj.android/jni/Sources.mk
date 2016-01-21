@@ -14,6 +14,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../IF/Classes/controller/DynamicResourceController.cpp \
 ../../IF/Classes/controller/EnemyInfoController.cpp \
 ../../IF/Classes/controller/EquipmentController.cpp \
+../../IF/Classes/controller/FriendsController.cpp \
 ../../IF/Classes/controller/FunBuildController.cpp \
 ../../IF/Classes/controller/GameController.cpp \
 ../../IF/Classes/controller/GCMRewardController.cpp \
@@ -312,6 +313,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../IF/Classes/Net/command/FeedRewardCommand.cpp \
 ../../IF/Classes/Net/command/fireandcomman.cpp \
 ../../IF/Classes/Net/command/FortCommand.cpp \
+../../IF/Classes/Net/command/FriendsCommand.cpp \
 ../../IF/Classes/Net/command/FunBuildAllCommand.cpp \
 ../../IF/Classes/Net/command/FunBuildCommand.cpp \
 ../../IF/Classes/Net/command/GCMRewardCommand.cpp \
@@ -323,6 +325,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../IF/Classes/Net/command/GetChatRoomMemberCommand.cpp \
 ../../IF/Classes/Net/command/GetChatRoomMsgCommand.cpp \
 ../../IF/Classes/Net/command/GetFightOfKingRecord.cpp \
+../../IF/Classes/Net/command/GetFriendListCommand.cpp \
 ../../IF/Classes/Net/command/GetInviteeCommand.cpp \
 ../../IF/Classes/Net/command/GetMsgBySeqIdCommand.cpp \
 ../../IF/Classes/Net/command/GetMultiUserInfoCommand.cpp \
@@ -745,6 +748,8 @@ LOCAL_SRC_FILES := main.cpp \
 ../../IF/Classes/view/popup/FlyRollingText.cpp \
 ../../IF/Classes/view/popup/FlySystemUpdateHint.cpp \
 ../../IF/Classes/view/popup/FreeListView.cpp \
+../../IF/Classes/view/popup/FriendSearch.cpp \
+../../IF/Classes/view/popup/FriendsView.cpp \
 ../../IF/Classes/view/popup/FunBuildView.cpp \
 ../../IF/Classes/view/popup/GeneralBodySprite.cpp \
 ../../IF/Classes/view/popup/GeneralHeadPic.cpp \

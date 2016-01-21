@@ -37,7 +37,7 @@ import org.nbg.IF.R;
 import org.nbg.IF.IF;
 import org.nbg.stac.empire.common.manager.NotificationReceiver;
 import org.nbg.util.GameContext;
-
+import com.elex.chatservice.controller.ChatServiceController;
 import com.facebook.appevents.AppEventsConstants;
 import com.facebook.appevents.AppEventsLogger;
 
@@ -538,38 +538,44 @@ public class LocalNotificationManager {
 
 	public static boolean isAppInForeground(Context context) 
 	{
-	    ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-		if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){    
-		    List<RunningTaskInfo> tasks = am.getRunningTasks(1);
-		    if (!tasks.isEmpty()) {
-		        ComponentName topActivity = tasks.get(0).topActivity;
-		        if (topActivity.getPackageName().equals(context.getPackageName())) {
-		            return true;
-		        }
-		    }
-		}else{
-			final int PROCESS_STATE_TOP = 2;
-			List<RunningAppProcessInfo> appList = am.getRunningAppProcesses();
-			try {
-				Field field = RunningAppProcessInfo.class.getDeclaredField("processState");
-			    for (RunningAppProcessInfo app : appList) {
-			        if (app.importance == RunningAppProcessInfo.IMPORTANCE_FOREGROUND &&
-			            app.importanceReasonCode == 0 ) {
-						try {
-							Integer state = field.getInt( app );
-				            if (state != null && state == PROCESS_STATE_TOP && app.processName.equals(context.getPackageName())) {
-				            	return true;
-				            }
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-			        }
-			    }
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		if(GameContext.getGameInstance() != null){
+			if(!GameContext.getGameInstance().appRunning)
+				return ChatServiceController.isAppInForeGround();
+			else
+				return true;
 		}
-	    return false;
+		return false;
+//	    ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+//		if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){    
+//		    List<RunningTaskInfo> tasks = am.getRunningTasks(1);
+//		    if (!tasks.isEmpty()) {
+//		        ComponentName topActivity = tasks.get(0).topActivity;
+//		        if (topActivity.getPackageName().equals(context.getPackageName())) {
+//		            return true;
+//		        }
+//		    }
+//		}else{
+//			final int PROCESS_STATE_TOP = 2;
+//			List<RunningAppProcessInfo> appList = am.getRunningAppProcesses();
+//			try {
+//				Field field = RunningAppProcessInfo.class.getDeclaredField("processState");
+//			    for (RunningAppProcessInfo app : appList) {
+//			        if (app.importance == RunningAppProcessInfo.IMPORTANCE_FOREGROUND &&
+//			            app.importanceReasonCode == 0 ) {
+//						try {
+//							Integer state = field.getInt( app );
+//				            if (state != null && state == PROCESS_STATE_TOP && app.processName.equals(context.getPackageName())) {
+//				            	return true;
+//				            }
+//						} catch (Exception e) {
+//							e.printStackTrace();
+//						}
+//			        }
+//			    }
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
 	}
 	
 	

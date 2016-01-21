@@ -29,6 +29,9 @@
 #define MSG_RECORD 0
 #define MSG_RECEIVE 1
 
+#define GET_MUTIUSER_TYPE_ALLIANCE  0
+#define GET_MUTIUSER_TYPE_FRIEND    1
+
 class ChatController:public CCObject {
 public:
     static ChatController* getInstance();

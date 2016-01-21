@@ -4,14 +4,27 @@
     <dict>
         <key>frames</key>
         <dict>
+            <key>btn_green_gold_new.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{4,4},{152,68}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{152,68}}</string>
+                <key>sourceSize</key>
+                <string>{152,68}</string>
+            </dict>
             <key>egg_0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,132},{116,110}}</string>
+                <string>{{132,160},{116,110}}</string>
                 <key>offset</key>
                 <string>{-2,1}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{4,8},{116,110}}</string>
                 <key>sourceSize</key>
@@ -20,11 +33,11 @@
             <key>egg_1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,4},{106,122}}</string>
+                <string>{{4,78},{106,122}}</string>
                 <key>offset</key>
                 <string>{-6,-2}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{5,5},{106,122}}</string>
                 <key>sourceSize</key>
@@ -33,7 +46,7 @@
             <key>egglh_0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{120,204},{84,24}}</string>
+                <string>{{162,4},{84,24}}</string>
                 <key>offset</key>
                 <string>{-52,-13}</string>
                 <key>rotated</key>
@@ -46,7 +59,7 @@
             <key>egglh_1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{198,106},{92,50}}</string>
+                <string>{{162,58},{92,50}}</string>
                 <key>offset</key>
                 <string>{-48,-28}</string>
                 <key>rotated</key>
@@ -59,7 +72,7 @@
             <key>egglh_2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{204,4},{36,48}}</string>
+                <string>{{4,238},{36,48}}</string>
                 <key>offset</key>
                 <string>{-25,33}</string>
                 <key>rotated</key>
@@ -72,7 +85,7 @@
             <key>egglh_3.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{204,46},{30,44}}</string>
+                <string>{{58,238},{30,44}}</string>
                 <key>offset</key>
                 <string>{-17,27}</string>
                 <key>rotated</key>
@@ -85,7 +98,7 @@
             <key>egglh_4.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{116,106},{76,18}}</string>
+                <string>{{162,34},{76,18}}</string>
                 <key>offset</key>
                 <string>{49,8}</string>
                 <key>rotated</key>
@@ -98,7 +111,7 @@
             <key>egglh_5.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{164,4},{96,34}}</string>
+                <string>{{218,58},{96,34}}</string>
                 <key>offset</key>
                 <string>{52,1}</string>
                 <key>rotated</key>
@@ -111,11 +124,11 @@
             <key>egglh_6.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{116,4},{96,42}}</string>
+                <string>{{4,190},{96,42}}</string>
                 <key>offset</key>
                 <string>{47,-11}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{99,90},{96,42}}</string>
                 <key>sourceSize</key>
@@ -129,7 +142,7 @@
             <key>realTextureFileName</key>
             <string>Common_513.pvr.ccz</string>
             <key>size</key>
-            <string>{256,256}</string>
+            <string>{256,512}</string>
             <key>smartupdate</key>
             <string>$TexturePacker:SmartUpdate:--REMOVED----------------------------</string>
             <key>textureFileName</key>
