@@ -585,7 +585,7 @@ void ImperialScene::buildingCallBack(CCObject* params)
             {
                 scale = HD_SCALE;
             }
-            scale = 0.7;//fusheng 修改放缩
+            scale = 0.55;//fusheng 修改放缩
             canMoveToRequest = false;
             onMoveToPos(m_curBuildPosx, m_curBuildPosy, TYPE_POS_MID, 0, scale, true);//fusheng 这里是进入城里的屏幕的位置
         }
@@ -2933,7 +2933,7 @@ void ImperialScene::hideFlyArrow(float _time){
 
 void ImperialScene::onMoveToBuildAndOpen(int itemId, int type, float dt, bool bound)
 {
-    float endS = 1.3;
+    float endS = 1;//fusheng 移动地块 设置为1
     if (CCCommonUtils::isIosAndroidPad())
     {
         endS = 2.4;
