@@ -87,7 +87,7 @@ protected:
     CCSafeObject<CCSprite> m_spr;
     
     CCSafeObject<CCNode> m_touchNode;
-    
+    CCSafeObject<CCNode> m_spineNode;
     CCSafeObject<CCNode> m_mainNode;
     
     CCSafeObject<CCSprite> m_bg;
