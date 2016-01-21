@@ -23,7 +23,13 @@ class ActivityBeginView : public PopupBaseView
 public:
     static ActivityBeginView *create();
     ActivityBeginView(){};
-    ~ActivityBeginView(){ CC_SAFE_RELEASE_NULL(m_rewards); };
+    ~ActivityBeginView()
+    {
+        CC_SAFE_RELEASE_NULL(m_rewards);
+        CC_SAFE_RELEASE_NULL(m_reward1);
+        CC_SAFE_RELEASE_NULL(m_reward2);
+        CC_SAFE_RELEASE_NULL(m_reward3);
+    };
     
     // TODO:
     int height_offset;
@@ -146,6 +152,10 @@ private:
     CCArray* m_rankReward;
     CCArray* m_totalRankReward;
     CCArray* m_rewards;
+    CCArray* m_reward1;
+    CCArray* m_reward2;
+    CCArray* m_reward3;
+    
     double m_haveTime;
     bool m_moveFlag;
     CCPoint m_touchPos;

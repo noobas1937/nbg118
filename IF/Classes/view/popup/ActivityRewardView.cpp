@@ -41,6 +41,9 @@ void ActivityRewardView::onEnter(){
         case 5:
             m_titleTxt->setString(_lang("138005"));
             break;
+        case 6:
+            m_titleTxt->setString(_lang("105843"));
+            break;
         default:
             m_titleTxt->setString(_lang("105822"));
             break;
@@ -158,6 +161,9 @@ CCTableViewCell* ActivityRewardView::tableCellAtIndex(CCTableView *table, ssize_
         }else{
             tempStr = _lang_1("105828",CC_ITOA(min));
         }
+    } else if (m_type == 6)
+    {
+     tempStr = "";
     }
     if(idx < m_data->count()){
         if(cell){

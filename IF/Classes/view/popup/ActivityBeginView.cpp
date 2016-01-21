@@ -184,6 +184,11 @@ bool ActivityBeginView::init(){
     bool ret = false;
     if(PopupBaseView::init()){
         m_rewards = nullptr;
+        
+        m_reward1 = nullptr;
+        m_reward2 = nullptr;
+        m_reward3 = nullptr;
+        
 //        CCLoadSprite::doResourceByCommonIndex(8, true);
 //        setCleanFunction([](){
 //            CCLoadSprite::doResourceByCommonIndex(8, false);
@@ -382,8 +387,6 @@ void ActivityBeginView::getServerData(CCObject* param){
         else
             m_titleTxt->setMaxScaleXByWidth(230);
         
-        m_progress1->setContentSize({static_cast<float>(532.0 * current / ActivityController::getInstance()->eventInfo.maxPhase), 11});
-        
         std::string str  = "";
         if(score==0){
             str.append("~");
@@ -423,6 +426,8 @@ void ActivityBeginView::getServerData(CCObject* param){
             str = "~";
         }
         m_totalRankNum->setString(str);
+        
+        m_progress1->setContentSize({totalRank > 0 ? static_cast<float>(532.0 * score / totalRank) : 0, 11});
         
         CCArray* array = dynamic_cast<CCArray*>(dic->objectForKey("reward"));
         CC_SAFE_RELEASE_NULL(m_rewards);
@@ -867,7 +872,11 @@ void ActivityBeginView::onStep1(CCObject *pSender, CCControlEvent event)
     auto one = _dict(m_rewards->objectAtIndex(0));
     if (!one) return;
     
-    PopupViewController::getInstance()->addPopupView(ActivityRewardView::create(m_rewards));
+    CC_SAFE_RELEASE_NULL(m_reward1);
+    m_reward1 = CCArray::create(one, NULL);
+    CC_SAFE_RETAIN(m_reward1);
+    
+    PopupViewController::getInstance()->addPopupView(ActivityRewardView::create(m_reward1, 6));
 }
 
 void ActivityBeginView::onStep2(CCObject *pSender, CCControlEvent event)
@@ -877,7 +886,11 @@ void ActivityBeginView::onStep2(CCObject *pSender, CCControlEvent event)
     auto one = _dict(m_rewards->objectAtIndex(1));
     if (!one) return;
     
-    PopupViewController::getInstance()->addPopupView(ActivityRewardView::create(m_rewards));
+    CC_SAFE_RELEASE_NULL(m_reward2);
+    m_reward2 = CCArray::create(one, NULL);
+    CC_SAFE_RETAIN(m_reward2);
+    
+    PopupViewController::getInstance()->addPopupView(ActivityRewardView::create(m_reward2, 6));
 }
 
 void ActivityBeginView::onStep3(CCObject *pSender, CCControlEvent event)
@@ -887,7 +900,11 @@ void ActivityBeginView::onStep3(CCObject *pSender, CCControlEvent event)
     auto one = _dict(m_rewards->objectAtIndex(2));
     if (!one) return;
     
-    PopupViewController::getInstance()->addPopupView(ActivityRewardView::create(m_rewards));
+    CC_SAFE_RELEASE_NULL(m_reward3);
+    m_reward3 = CCArray::create(one, NULL);
+    CC_SAFE_RETAIN(m_reward3);
+    
+    PopupViewController::getInstance()->addPopupView(ActivityRewardView::create(m_reward3, 6));
 }
 
 ActivityEarnPointCell *ActivityEarnPointCell::create(std::string id){
