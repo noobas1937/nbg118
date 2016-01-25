@@ -163,6 +163,9 @@
 #include "GeneralTitanPopupView.h"//fusheng
 #include "TitanController.h"
 
+
+#define SPINE_HUNGER 989898
+
 //UIComponentOldTitle
 UIComponentOldTitle* UIComponentOldTitle::create(OldTitleType type)
 {
@@ -842,6 +845,11 @@ bool UIComponent::init(CCSize size)
 
     }
     
+    if(m_nbXHD)
+    {
+        m_nbXHD->setVisible(false);
+    }
+    
     return bRet;
 }
 
@@ -1035,20 +1043,6 @@ void UIComponent::onEnter()
     
     updateDragonStatus(nullptr);
     
-    if(m_nbXHD)
-    {
-        m_nbXHD->stopAllActions();
-        
-        m_nbXHD->setOpacity(0);
-        
-        float cycleTime = 3;
-        
-        m_nbXHD->runAction(RepeatForever::create(Sequence::create(FadeIn::create(cycleTime/3),DelayTime::create(cycleTime/3), FadeOut::create(cycleTime/3),nullptr)));
-        
-        m_nbXHD->setVisible(false);
-    }
-    
-    
 #if(CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
     ChatServiceCocos2dx::postUIShow();
 #endif
@@ -1056,6 +1050,22 @@ void UIComponent::onEnter()
 
 void UIComponent::showCanFeedRedPoint(bool isShow)
 {
+    auto animationObj = (IFSkeletonAnimation*)m_nbXHD->getChildByTag(SPINE_HUNGER);
+    if(m_nbXHD && !animationObj)
+    {
+        if (CCFileUtils::sharedFileUtils()->isFileExist("Spine/Imperial/hunger.json") &&
+            CCFileUtils::sharedFileUtils()->isFileExist("Imperial/Imperial_30.atlas"))
+        {
+            auto animationObj = new IFSkeletonAnimation("Spine/Imperial/hunger.json","Imperial/Imperial_30.atlas");
+            if (animationObj) {
+                m_nbXHD->addChild(animationObj);
+                animationObj->setTag(SPINE_HUNGER);
+                animationObj->setVisibleStop(false);
+                spTrackEntry* entry = animationObj->setAnimation(0, "animation", true);
+//                animationObj->setTimeScale(entry->endTime/8.0f);
+            }
+        }
+    }
     if(m_nbXHD)
         m_nbXHD->setVisible(isShow);
 }
@@ -2748,7 +2758,7 @@ bool UIComponent::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const c
     
 //    CCLOG("ccbi control name %s",pMemberVariableName);
     
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nbXHD", CCSprite*, this->m_nbXHD);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nbXHD", CCNode*, this->m_nbXHD);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_dragonIcon", CCSprite*, this->m_dragonIcon);
     

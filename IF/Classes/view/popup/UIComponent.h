@@ -396,7 +396,7 @@ public:
     
     void showCanFeedRedPoint(bool isShow);
     
-    CCSafeObject<CCSprite> m_nbXHD;
+    CCSafeObject<CCNode> m_nbXHD;
     
     
     CCSafeObject<CCLabelIF> m_xCoordLabel;
