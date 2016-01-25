@@ -100,6 +100,11 @@ public:
     void initCKFTask(CCArray* showTask);
     void updateCKFTask(CCArray* tasks);
     
+    //fusheng begin
+    //点击领奖的接口
+    void clickToGetRecommendRwd();
+    //fusheng end
+    
     bool isGettingReward;
     
     map<int, int> achMap;

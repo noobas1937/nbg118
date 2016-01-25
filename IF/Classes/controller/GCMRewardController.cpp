@@ -14,6 +14,10 @@
 #include "ToolController.h"
 #include "EquipmentController.h"
 
+#include "RewardController.h"
+#include "FlyCell.h"
+#include "UIComponent.h"
+
 static GCMRewardController *_instance = NULL;
 
 GCMRewardController::GCMRewardController()
@@ -426,6 +430,353 @@ CCArray* GCMRewardController::retReward2(CCArray* arr, bool flyAni/*=false*/)
     return ret;
 }
 
+//fusheng begin
+void GCMRewardController::retReward3(Array *arr, float time, bool move, Point fromPt)
+{
+    if(arr == NULL || arr->count() == 0){
+        return ;
+    }
+    
+    CCObject *obj;
+    CCARRAY_FOREACH(arr, obj){
+        auto dict = dynamic_cast<CCDictionary*>(obj);
+        int type = dict->valueForKey("type")->intValue();
+        switch (type) {
+            case R_WOOD:{
+                int addValue = dict->valueForKey("value")->intValue();
+                if(dict->objectForKey("total")){
+                    GlobalData::shared()->resourceInfo.lWood = dict->valueForKey("total")->intValue();
+                }
+                break;
+            }
+            case R_STONE:{
+                int addValue = dict->valueForKey("value")->intValue();
+                if(dict->objectForKey("total")){
+                    GlobalData::shared()->resourceInfo.lStone = dict->valueForKey("total")->intValue();
+                }
+                break;
+            }
+            case R_IRON:{
+                int addValue = dict->valueForKey("value")->intValue();
+                if(dict->objectForKey("total")){
+                    GlobalData::shared()->resourceInfo.lIron = dict->valueForKey("total")->intValue();
+                }
+                break;
+            }
+            case R_FOOD:{
+                int addValue = dict->valueForKey("value")->intValue();
+                if(dict->objectForKey("total")){
+                    GlobalData::shared()->resourceInfo.lFood = dict->valueForKey("total")->intValue();
+                }
+                break;
+            }
+            case R_SILVER:{
+                int addValue = dict->valueForKey("value")->intValue();
+                if(dict->objectForKey("total")){
+                    GlobalData::shared()->resourceInfo.lMoney = dict->valueForKey("total")->intValue();
+                }
+                break;
+            }
+            case R_GOLD:{
+                int addValue = dict->valueForKey("value")->intValue();
+                if(dict->objectForKey("total")){
+                    GlobalData::shared()->playerInfo.gold = dict->valueForKey("total")->intValue();
+                }
+                break;
+            }
+            case R_CHIP:{
+                int addValue = dict->valueForKey("value")->intValue();
+                if(dict->objectForKey("total")){
+                    GlobalData::shared()->resourceInfo.lChip = dict->valueForKey("total")->intValue();
+                }
+                break;
+            }
+            case R_DIAMOND:{
+                int addValue = dict->valueForKey("value")->intValue();
+                if(dict->objectForKey("total")){
+                    GlobalData::shared()->resourceInfo.lDiamond = dict->valueForKey("total")->intValue();
+                }
+                break;
+            }
+            case R_DRAGONFOOD:{
+                int addValue = dict->valueForKey("value")->intValue();
+                if(dict->objectForKey("total")){
+                    GlobalData::shared()->resourceInfo.lDragonFood = dict->valueForKey("total")->intValue();
+                }
+                break;
+            }
+            case R_DRAGONGOLD:{
+                int addValue = dict->valueForKey("value")->intValue();
+                if(dict->objectForKey("total")){
+                    GlobalData::shared()->resourceInfo.lDragonGold = dict->valueForKey("total")->intValue();
+                }
+                break;
+            }
+            case R_GENERAL:{
+                auto arr = dynamic_cast<CCArray*>(dict->objectForKey("general"));
+                CCDictionary *item = NULL;
+                for (int i=0; i<arr->count(); i++) {
+                    item = _dict(arr->objectAtIndex(i));
+                    GeneralManager::getInstance()->addGeneral(item);
+                }
+                break;
+            }
+            case R_GOODS:{
+                CCDictionary *goodsDict = _dict(dict->objectForKey("value"));
+                int itemId = goodsDict->valueForKey("itemId")->intValue();
+                int num = goodsDict->valueForKey("count")->intValue();
+                int rewardAdd = 0;
+                if(goodsDict->objectForKey("rewardAdd")){
+                    rewardAdd = goodsDict->valueForKey("rewardAdd")->intValue();
+                }else{
+                    auto &info = ToolController::getInstance()->getToolInfoById(itemId);
+                    int currentNum = info.getCNT();
+                    rewardAdd = num - currentNum;
+                    goodsDict->setObject(CCString::create(CC_ITOA(rewardAdd)) , "rewardAdd");
+                }
+                string uuid = goodsDict->valueForKey("uuid")->getCString();
+                ToolController::getInstance()->addTool(itemId, num, uuid);
+                goodsDict->setObject(CCString::createWithFormat("%d",rewardAdd), "count");
+                break;
+            }
+            case R_EQUIP:{
+                CCDictionary *equipDict = _dict(dict->objectForKey("value"));
+                auto equipArr = CCArray::create();
+                equipArr->addObject(equipDict);
+                EquipmentController::getInstance()->addEquip(equipArr);
+                break;
+            }
+            case R_EXP:{
+                int addValue = dict->valueForKey("value")->intValue();
+                if(dict->objectForKey("total")){
+                    GlobalData::shared()->playerInfo.exp = dict->valueForKey("total")->intValue();
+                }
+                break;
+            }
+            case R_WIN_POINT:{
+                int addValue = dict->valueForKey("value")->intValue();
+                if(dict->objectForKey("total")){
+                    GlobalData::shared()->playerInfo.winPoint = dict->valueForKey("total")->intValue();
+                }
+                break;
+            }
+            default:
+                break;
+        }
+    }
+    flyRewardFromPointToPoint(arr,time,move,fromPt);
+    CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_CITY_RESOURCES_UPDATE);
+}
+
+void GCMRewardController::flyRewardFromPointToPoint(Array *arr, float time, bool move, Point fromPt)
+{
+    int i = 0;
+    int countPerRow = arr->count();//每排数量
+    if (countPerRow>4) {
+        countPerRow = 4;
+    }
+    float gap = CCDirector::sharedDirector()->getWinSize().width;
+    if (countPerRow > 0) {
+        gap = CCDirector::sharedDirector()->getWinSize().width / countPerRow;//每个的宽度
+    }
+    while(i < countPerRow){
+        CCDictionary* dic = _dict(arr->objectAtIndex(i));
+        if (dic==NULL) {
+            continue;
+        }
+        float w = 100;
+        int outPut = 0;
+        int type = dic->valueForKey("type")->intValue();
+        auto node = CCNode::create();
+        auto node1 = CCNode::create();
+        auto node2 = CCNode::create();
+        if (type == R_GOODS) {
+            CCDictionary *goodsDict = _dict(dic->objectForKey("value"));
+            int itemId = goodsDict->valueForKey("itemId")->intValue();
+            int num = goodsDict->valueForKey("count")->intValue();
+            int rewardAdd = 0;
+            if(goodsDict->objectForKey("rewardAdd")){
+                rewardAdd = goodsDict->valueForKey("rewardAdd")->intValue();
+            }else{
+                auto &info = ToolController::getInstance()->getToolInfoById(itemId);
+                int currentNum = info.getCNT();
+                rewardAdd = num - currentNum;
+                goodsDict->setObject(CCString::create(CC_ITOA(rewardAdd)) , "rewardAdd");
+            }
+            
+            int value = rewardAdd;
+            auto bg = CCLoadSprite::createSprite("icon_BG.png");
+            //            bg->setScale(1.2);
+            auto sprite = CCLoadSprite::createSprite(CCCommonUtils::getIcon(CC_ITOA(itemId)).c_str(),true,CCLoadSpriteType_GOODS);
+            sprite->setAnchorPoint(ccp(0.5, 0));
+            CCCommonUtils::setSpriteMaxSize(sprite, w);
+            node1->addChild(bg);
+            node2->addChild(sprite);
+            
+            std::string valueStr = "";
+            valueStr.append("+ ").append(CC_ITOA_K((long)value));
+            CCLabelBMFont* numIF = CCLabelBMFont::create(valueStr, "pve_fnt_boss.fnt");
+            numIF->setAnchorPoint(ccp(0.5, 1));
+            numIF->setPositionY(-5);
+            numIF->setScale(0.6);
+            node2->addChild(numIF);
+            node->addChild(node1);
+            node->addChild(node2);
+        }
+        else {
+            int value = dic->valueForKey("value")->intValue();
+            int temp = value;
+            if (type != R_GENERAL) {
+                temp = -1;
+            }
+            
+            auto bg = CCLoadSprite::createSprite("icon_BG.png");
+            //            bg->setScale(1.2);
+            auto sprite = CCLoadSprite::createSprite(RewardController::getInstance()->getPicByType(type, temp).c_str());
+            sprite->setScaleX(w / sprite->getContentSize().width);
+            sprite->setScaleY(w / sprite->getContentSize().height);
+            outPut = value;
+            node1->addChild(bg);
+            node2->addChild(sprite);
+            
+            std::string valueStr = "";
+            valueStr.append(" + ").append(CC_ITOA_K((long)value));
+            CCLabelBMFont* numIF = CCLabelBMFont::create(valueStr, "pve_fnt_boss.fnt");
+            numIF->setAnchorPoint(ccp(0.5, 1));
+            numIF->setPositionY(-5);
+            numIF->setScale(0.6);
+            node2->addChild(numIF);
+            node->addChild(node1);
+            node->addChild(node2);
+        }
+        
+        node->setPosition(0, 0);
+        float startY = 0;//startX/Y为出现在屏幕上的初始位置
+        float startX = CCDirector::sharedDirector()->getWinSize().width / 2;
+        float endY = 0;//endX/Y为动画最后结束的位置
+        float endX = 0;
+        gap = 140;//每个奖励的间隔
+        if (CCCommonUtils::isIosAndroidPad()) {
+            gap = w * 2.4;
+        }
+        switch (countPerRow) {//奖励最多显示4个
+            case 2:
+                startX += (-0.5 + i) * gap;
+                break;
+            case 3:
+                startX += (-1 + i) * gap;
+                break;
+            case 4:
+                startX += (-1.5 + i) * gap;
+                break;
+            default:
+                break;
+        }
+        auto topLayer = SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_POPUP);
+        node1->setPosition(startX, 350);
+        node2->setPosition(startX, 350);
+        if (CCCommonUtils::isIosAndroidPad()) {
+            node1->setPosition(startX, 700);
+            node2->setPosition(startX, 700);
+        }
+        startY = node2->getPositionY();
+        topLayer->addChild(node);
+        if (type == R_EXP) {//经验飞到头像
+            endX = 45;
+            endY = CCDirector::sharedDirector()->getWinSize().height - 45;
+            if (CCCommonUtils::isAdriodPad()) {
+                endX = 90;
+                endY = CCDirector::sharedDirector()->getWinSize().height - 90;
+            }
+        }
+        else if (type == R_GOLD) {//金币飞到右上角
+            endX = CCDirector::sharedDirector()->getWinSize().width - 45;
+            endY = CCDirector::sharedDirector()->getWinSize().height - 45;
+            if (CCCommonUtils::isAdriodPad()) {
+                endX = CCDirector::sharedDirector()->getWinSize().width - 90;
+                endY = CCDirector::sharedDirector()->getWinSize().height - 90;
+            }
+        }
+        else {
+            endX = 325;
+            endY = 35;
+            if (CCCommonUtils::isIosAndroidPad()) {
+                endX = 800;
+                endY = 80;
+            }
+        }
+        
+        if (CCCommonUtils::isIosAndroidPad())
+        {
+            node1->setScale(2.0);
+            node2->setScale(2.0);
+        }
+        
+        node1->setScale(0);
+        node2->setScale(0);
+        if (move) {
+            node1->setPosition(fromPt);//当move为true时，需要从fromPt飞到startPt
+            node2->setPosition(fromPt);
+        }
+        CCActionInterval * scaleto = CCScaleTo ::create(0.3, 1);//从0变大到1
+        if (CCCommonUtils::isIosAndroidPad())
+        {
+            scaleto = CCScaleTo::create(0.3, 2.0);
+        }
+        CCActionInterval * moveto = CCMoveTo ::create(0.3, ccp(startX, startY));
+        CCActionInterval * delay = CCDelayTime::create(time);
+        CCActionInterval * scaleto2 = CCScaleTo::create(0.5, 0);
+        CCActionInterval * scaleto3 = CCScaleTo::create(0.0, 0);
+        CCActionInterval * moveto2 = CCMoveTo ::create(0.5, ccp(endX, endY));
+        CCFiniteTimeAction * spawn =CCSpawn::create(scaleto2,moveto2,NULL);
+        CCFiniteTimeAction * spawn1 = NULL;
+        CCActionInterval * fadeIn = CCScaleTo::create(0.0, 1);
+        if (CCCommonUtils::isIosAndroidPad()) {
+            fadeIn = CCScaleTo::create(0.0, 2);
+        }
+        CCActionInterval * fadeOut = CCScaleTo::create(0.0, 0);
+        if (move) {
+            spawn1 = Spawn::create(moveto,scaleto, NULL);
+        }else {
+            spawn1 = Spawn::create(scaleto, NULL);
+        }
+        if (type == Food || type == Wood || type == Iron || type == Stone) {
+            CCDictionary* dic = CCDictionary::create();
+            dic->setObject(String::create(CC_ITOA(startX)), "x");
+            dic->setObject(String::create(CC_ITOA(startY)), "y");
+            dic->setObject(String::create(CC_ITOA(type)), "type");
+            if (move) {
+                node1->runAction(CCSequence::create(spawn1->clone(), DelayTime::create(time), fadeOut, NULL));
+                node2->runAction(CCSequence::create(spawn1,delay,scaleto3,CCCallFuncO::create(this, callfuncO_selector(GCMRewardController::aniComplete),node),CCCallFuncO::create(this, callfuncO_selector(GCMRewardController::flyResAni),dic),NULL));
+            }
+            else {
+                node1->runAction(CCSequence::create(fadeIn, DelayTime::create(0.2+time), fadeOut, NULL));
+                node2->runAction(CCSequence::create(spawn1,delay,scaleto3,CCCallFuncO::create(this, callfuncO_selector(GCMRewardController::aniComplete),node),CCCallFuncO::create(this, callfuncO_selector(GCMRewardController::flyResAni),dic),NULL));
+            }
+        }
+        else {
+            if (move) {
+                node1->runAction(CCSequence::create(spawn1->clone(), DelayTime::create(time), fadeOut, NULL));
+                node2->runAction(CCSequence::create(spawn1,delay,spawn,CCCallFuncO::create(this, callfuncO_selector(GCMRewardController::aniComplete),node),NULL));
+            }
+            else {
+                node1->runAction(CCSequence::create(fadeIn, DelayTime::create(0.2+time), fadeOut, NULL));
+                node2->runAction(CCSequence::create(spawn1,delay,spawn,CCCallFuncO::create(this, callfuncO_selector(GCMRewardController::aniComplete),node),NULL));
+            }
+        }
+        i++;
+    }
+}
+
+//fusheng end
+
+
+
+
+
+
+
+
 CCArray* GCMRewardController::getFlyArr(cocos2d::CCArray *arr)
 {
     if(arr == NULL || arr->count() == 0){
@@ -725,4 +1076,88 @@ std::string GCMRewardController::getPicByType(std::string type, int value){
         picName = "icon_liansheng.png";
     }
     return picName;
+}
+
+void GCMRewardController::flyResAni(CCObject *obj)
+{
+    auto dic = _dict(obj);
+    if(dic){
+        string picStr = "Food";
+        int resType = dic->valueForKey("type")->intValue();
+        float ptX = dic->valueForKey("x")->floatValue();
+        float ptY = dic->valueForKey("y")->floatValue();
+        Point endPt = ccp(0, 0);
+//        if (resType == Food) {
+//            picStr = "Food";
+//            endPt = ccp(200, -60);
+//            if (CCCommonUtils::isIosAndroidPad()) {
+//                endPt = ccpMult(endPt, 2.4);
+//            }
+//        }
+//        else if (resType == Wood) {
+//            picStr = "Wood";
+//            endPt = ccp(90, -40);
+//            if (CCCommonUtils::isIosAndroidPad()) {
+//                endPt = ccpMult(endPt, 2.4);
+//            }
+//        }
+//        else if (resType == Iron) {
+//            picStr = "Iron";
+//            endPt = ccp(320, -40);
+//            if (CCCommonUtils::isIosAndroidPad()) {
+//                endPt = ccpMult(endPt, 2.4);
+//            }
+//        }
+//        else if (resType == Stone) {
+//            picStr = "Stone";
+//            resType = Stone;
+//            endPt = ccp(430, -40);
+//            if (CCCommonUtils::isIosAndroidPad()) {
+//                endPt = ccpMult(endPt, 2.4);
+//            }
+//        }
+//        
+        
+        if (resType == Food) {
+
+            endPt = UIComponent::getInstance()->m_foodIcon->convertToWorldSpace(Point::ZERO);
+            picStr = "Food";
+            resType = Food;
+        }else if (resType == Wood) {
+       
+            endPt = UIComponent::getInstance()->m_woodIcon->convertToWorldSpace(Point::ZERO);
+            picStr = "Wood";
+            resType = Wood;
+        }
+        else if (resType == Iron) {
+  
+            endPt = UIComponent::getInstance()->m_ironIcon->convertToWorldSpace(Point::ZERO);
+            picStr = "Iron";
+            resType = Iron;
+        }
+        else if (resType == Stone) {
+
+            endPt = UIComponent::getInstance()->m_stoneIcon->convertToWorldSpace(Point::ZERO);
+            picStr = "Stone";
+            resType = Stone;
+        }
+
+        
+        
+//        ptY = ptY-CCDirector::sharedDirector()->getWinSize().height;
+        Point startPt = ccp(ptX, ptY);
+        
+        startPt = UIComponent::getInstance()->convertToWorldSpace(startPt);
+        
+        
+        srand((unsigned)time(0));
+        int tmp = 10;
+        int idx = 0;
+        while (tmp>0) {
+            auto flyCell = FlyCell::create(startPt,endPt,resType, picStr, 5, UIComponent::getInstance()->m_collectBatch, idx*0.2);
+            UIComponent::getInstance()->m_collectNode->addChild(flyCell);
+            tmp--;
+            idx++;
+        }
+    }
 }
