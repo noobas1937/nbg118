@@ -73,11 +73,11 @@ void LoadingScene::addLoadingBG(Point& addPt)
         this->addChild(loadingBG);
         
 //        // tao.yu 进度条上的弓箭
-//        Vec2 arrowPos = loadingBG->convertToWorldSpace(Vec2(470,190));
-//        auto loadingArrow = CCLoadSprite::createSprite("loading_arrow.png");
-//        loadingArrow->setAnchorPoint(ccp(0.5,0.5));
-//        loadingArrow->setPosition(arrowPos);
-//        this->addChild(loadingArrow,99999);
+        Vec2 arrowPos = loadingBG->convertToWorldSpace(Vec2(470,190));
+        auto loadingArrow = CCLoadSprite::createSprite("loading_arrow.png");
+        loadingArrow->setAnchorPoint(ccp(0.5,0.5));
+        loadingArrow->setPosition(arrowPos);
+        this->addChild(loadingArrow,99999);
         
         // tao.yu 圣诞节礼物
 //        Vec2 gift1Pos = loadingBG->convertToWorldSpace(Vec2(470,210));
