@@ -1220,7 +1220,7 @@ void UIComponent::onQuestStateUpdate(CCObject* p){
         return;
     }
 #endif
-    if (CCCommonUtils::isTestPlatformAndServer("UI_QuestRwd") || true) {
+    if (CCCommonUtils::isTestPlatformAndServer("UI_QuestRwd")) {
         questStatRefreshNewOn();
     }
     else
@@ -1413,7 +1413,7 @@ void UIComponent::questStatRefresh()
         
         arr->addObject(CCString::create(nameStr));
         
-        auto rollText = RollingText::create(arr, 390);
+        auto rollText = RollingText::create(arr, 390 ,ccc3(66,64,43));
         
         m_questNameNode->addChild(rollText);
         
@@ -1542,7 +1542,8 @@ void UIComponent::showQuestTextNewOn(float t)
         auto arr = CCArray::create();
         std::string nameStr = info->name;
         arr->addObject(CCString::create(nameStr));
-        auto rollText = RollingText::create(arr, 390);
+        auto rollText = RollingText::create(arr, 390 ,ccc3(66,64,43));
+        
         m_questNameNode->addChild(rollText);
         checkShowQuestPrc();
         if (m_recommandQuest->state!=COMPLETE) {
@@ -1555,12 +1556,19 @@ void UIComponent::showQuestTextNewOn(float t)
             rwdLabel->setFontSize(20);
             rwdLabel->setString(_lang("107516"));
             rwdLabel->setAnchorPoint(ccp(0, 0.5));
-            rwdLabel->setPositionY(rollText->getPositionY() - 15);
-            rollText->setPositionY(rollText->getPositionY() + 10 );
+//            rwdLabel->setPositionY(rollText->getPositionY() - 15);
+//            rollText->setPositionY(rollText->getPositionY() + 10 );
+            
+            rwdLabel->setPositionY(rollText->getPositionY());
+            
+            rwdLabel->setPositionX(rollText->getPositionX() + 390/2 + 20);
+            
+            rwdLabel->enableOutline({0,0,0,255},1);
+            
             m_questNameNode->addChild(rwdLabel);
             auto rwdSprite = CCLoadSprite::createSprite("ActivityBox_1.png");
             rwdSprite->setScale(0.7);
-            rwdSprite->setAnchorPoint(ccp(0.5, 0.5));
+            rwdSprite->setAnchorPoint(ccp(0, 0.5));
             rwdSprite->setPosition(0, 0);
             m_canRwdNode->addChild(rwdSprite);
             auto moveBy1 = MoveBy::create(0.5, ccp(0, 5));
@@ -4652,7 +4660,7 @@ void UIComponent::onClickTarget()
         
         return;
     
-    if (CCCommonUtils::isTestPlatformAndServer("UI_QuestRwd") || true) {
+    if (CCCommonUtils::isTestPlatformAndServer("UI_QuestRwd")) {
         if (m_recommandQuest->state==COMPLETE) {
             if (recommandRwdClick == false) {
                 recommandRwdClick = true;

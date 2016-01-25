@@ -232,8 +232,6 @@
 								</array>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -658,12 +656,20 @@
 								<array>
 									<dict>
 										<key>name</key>
+										<string>visible</string>
+										<key>type</key>
+										<string>Check</string>
+										<key>value</key>
+										<false/>
+									</dict>
+									<dict>
+										<key>name</key>
 										<string>position</string>
 										<key>type</key>
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>-8</real>
+											<real>-178</real>
 											<real>0.0</real>
 											<integer>0</integer>
 										</array>
@@ -768,6 +774,8 @@
 										<string>Quest</string>
 									</dict>
 								</array>
+								<key>selected</key>
+								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>

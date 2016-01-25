@@ -605,7 +605,7 @@ void GCMRewardController::flyRewardFromPointToPoint(Array *arr, float time, bool
             }
             
             int value = rewardAdd;
-            auto bg = CCLoadSprite::createSprite("icon_BG.png");
+            auto bg = CCLoadSprite::createSprite("Items_icon_kuang.png");
             //            bg->setScale(1.2);
             auto sprite = CCLoadSprite::createSprite(CCCommonUtils::getIcon(CC_ITOA(itemId)).c_str(),true,CCLoadSpriteType_GOODS);
             sprite->setAnchorPoint(ccp(0.5, 0));
@@ -630,7 +630,7 @@ void GCMRewardController::flyRewardFromPointToPoint(Array *arr, float time, bool
                 temp = -1;
             }
             
-            auto bg = CCLoadSprite::createSprite("icon_BG.png");
+            auto bg = CCLoadSprite::createSprite("Items_icon_kuang.png");
             //            bg->setScale(1.2);
             auto sprite = CCLoadSprite::createSprite(RewardController::getInstance()->getPicByType(type, temp).c_str());
             sprite->setScaleX(w / sprite->getContentSize().width);
