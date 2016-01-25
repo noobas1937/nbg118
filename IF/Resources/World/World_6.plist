@@ -111,26 +111,26 @@
             <key>minimap_arrow1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{528,1270},{150,126}}</string>
+                <string>{{824,1234},{144,116}}</string>
                 <key>offset</key>
-                <string>{0,0}</string>
+                <string>{-1,1}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{150,126}}</string>
+                <string>{{2,4},{144,116}}</string>
                 <key>sourceSize</key>
                 <string>{150,126}</string>
             </dict>
             <key>minimap_arrow2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{824,1234},{150,126}}</string>
+                <string>{{528,1270},{142,110}}</string>
                 <key>offset</key>
-                <string>{0,0}</string>
+                <string>{4,-4}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{150,126}}</string>
+                <string>{{8,12},{142,110}}</string>
                 <key>sourceSize</key>
                 <string>{150,126}</string>
             </dict>
@@ -248,7 +248,7 @@
             <key>size</key>
             <string>{1024,2048}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:--REMOVED----------------------------</string>
+            <string>$TexturePacker:SmartUpdate:b8d25f03dd1df005ace518c034a4c1c1:1/1$</string>
             <key>textureFileName</key>
             <string>World_6.pvr.ccz</string>
         </dict>
