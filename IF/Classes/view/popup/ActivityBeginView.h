@@ -22,13 +22,17 @@ class ActivityBeginView : public PopupBaseView
 {
 public:
     static ActivityBeginView *create();
-    ActivityBeginView(){};
+    ActivityBeginView()
+    {
+        m_rankRewardForUI = nullptr;
+    };
     ~ActivityBeginView()
     {
         CC_SAFE_RELEASE_NULL(m_rewards);
         CC_SAFE_RELEASE_NULL(m_reward1);
         CC_SAFE_RELEASE_NULL(m_reward2);
         CC_SAFE_RELEASE_NULL(m_reward3);
+        CC_SAFE_RELEASE_NULL(m_rankRewardForUI);
     };
     
     // TODO:
@@ -150,6 +154,7 @@ private:
     CCSafeObject<CCClipNode> m_clipper;
     CCSafeObject<CCProgressTimer> m_proTimer;
     CCArray* m_rankReward;
+    CCArray* m_rankRewardForUI;
     CCArray* m_totalRankReward;
     CCArray* m_rewards;
     CCArray* m_reward1;
