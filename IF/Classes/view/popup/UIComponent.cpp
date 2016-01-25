@@ -580,6 +580,7 @@ bool UIComponent::init(CCSize size)
     }
 
     CanShowQuestPrc = false;
+    recommandRwdClick = false;
     
     this->setContentSize(CCSizeMake(size.width, size.height));
     
@@ -1220,11 +1221,180 @@ void UIComponent::playQusetTiAnimFinish(){
 
 void UIComponent::onQuestStateUpdate(CCObject* p){
     
+    
+    
+    //fusheng bgin
 #if(CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
     if(GlobalData::shared()->android_native_chat == 1 && ChatServiceCocos2dx::isChatShowing){
         return;
     }
 #endif
+    if (CCCommonUtils::isTestPlatformAndServer("UI_QuestRwd")) {
+        questStatRefreshNewOn();
+    }
+    else
+        questStatRefresh();
+    //fusheng end
+    
+    
+    //fusheng edit 1.21
+    
+//#if(CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
+//    if(GlobalData::shared()->android_native_chat == 1 && ChatServiceCocos2dx::isChatShowing){
+//        return;
+//    }
+//#endif
+//    
+//    int completeNum = QuestController::getInstance()->getCompleteQuestNum();
+//    
+//    QuestInfo *info = QuestController::getInstance()->getRecommendQuest(false);
+//    
+//    bool isrefersh = false;
+//    
+//    if(m_recommandQuest!=NULL&&m_recommandQuest!=info){
+//        
+//        isrefersh = true;
+//        
+//    }
+//    
+//    m_recommandQuest = info;
+//    
+//    m_questNameNode->removeAllChildren();
+//    
+//    int dx =150;
+//    
+//    m_questGoldNode->removeAllChildren();
+//    if(info){
+//        
+//        auto arr = CCArray::create();
+//        
+//        std::string nameStr = info->name;
+//        
+//        arr->addObject(CCString::create(nameStr));
+//        
+//        auto rollText = RollingText::create(arr, 390, ccc3(66,64,43));
+//        
+//        m_questNameNode->addChild(rollText);
+//        
+//        checkShowQuestPrc();
+//        
+//        bool isGold = false;
+//        for (int i=0; i<info->reward->count(); i++) {
+//            auto dic = dynamic_cast<CCDictionary*>(info->reward->objectAtIndex(i));
+//            int type = dic->valueForKey("type")->intValue();
+//            if (type == R_GOLD) {
+//                isGold = true;
+//                break;
+//            }
+//        }
+//        isGold = false ; // fusheng 不显示金币动画
+//        if (isGold) {
+//            auto goldAni = AllianceAni::create();
+//            goldAni->m_alliance->setVisible(false);
+//            m_questGoldNode->addChild(goldAni);
+//        }
+//        
+////        if (!m_questContextBG1->isVisible()) {
+////            playQuestRect();
+////        }
+//        
+//    }else{
+//        
+//        
+//        
+//    }
+//    m_questTipNode->stopAllActions();
+//    if(completeNum == 0){
+//        
+//        this->m_questTipBG->setVisible(false);
+//        
+//        this->m_questTipNum->setString("");
+//        
+//    }else{
+//        playQusetTiAnim();
+//        this->m_questTipBG->setVisible(true);
+//        
+//        this->m_questTipNum->setString(CC_ITOA(completeNum));
+//        
+//    }
+//    
+//    
+//    
+//    if(isrefersh){
+//        
+//        m_questAnimNode->removeAllChildren();
+//        
+//        ParticleController::initParticle();
+//        
+//        
+//        
+//        auto newBatch = ParticleController::createParticleBatch();
+//        
+//        auto praticle1 = ParticleController::createParticle("Capacity_1");
+//        
+//        newBatch->addChild(praticle1);
+//        
+//        auto praticle2 = ParticleController::createParticle("Capacity_2");
+//        
+//        newBatch->addChild(praticle2);
+//        
+//        auto praticle3= ParticleController::createParticle("Capacity_3");
+//        
+//        newBatch->addChild(praticle3);
+//        
+//        auto praticle4 = ParticleController::createParticle("Capacity_4");
+//        
+//        newBatch->addChild(praticle4);
+//        
+//        auto praticle5 = ParticleController::createParticle("Capacity_5");
+//        
+//        newBatch->addChild(praticle5);
+//        
+//        auto praticle6 = ParticleController::createParticle("Capacity_6");
+//        
+//        newBatch->addChild(praticle6);
+//        
+//        m_questAnimNode->addChild(newBatch);
+//        
+//        praticle1->setPosition(ccp(dx, 0));
+//        
+//        praticle1->setAnchorPoint(ccp(0, 0));
+//        
+//        praticle2->setPosition(ccp(dx, 0));
+//        
+//        praticle2->setAnchorPoint(ccp(0, 0));
+//        
+//        praticle3->setPosition(ccp(dx, 0));
+//        
+//        praticle3->setAnchorPoint(ccp(0, 0));
+//        
+//        praticle4->setPosition(ccp(dx, 0));
+//        
+//        praticle4->setAnchorPoint(ccp(0, 0));
+//        
+//        praticle5->setPosition(ccp(dx, 0));
+//        
+//        praticle5->setAnchorPoint(ccp(0, 0));
+//        
+//        praticle6->setPosition(ccp(dx, 0));
+//        
+//        praticle6->setAnchorPoint(ccp(0, 0));
+//        
+//        //questBGAction
+//        
+//        questBGHideAction();
+//        
+//    }
+    
+    
+    //fusheng edit 1.21 end
+    
+}
+
+
+//fusheng begin
+void UIComponent::questStatRefresh()
+{
     int completeNum = QuestController::getInstance()->getCompleteQuestNum();
     
     QuestInfo *info = QuestController::getInstance()->getRecommendQuest(false);
@@ -1252,7 +1422,7 @@ void UIComponent::onQuestStateUpdate(CCObject* p){
         
         arr->addObject(CCString::create(nameStr));
         
-        auto rollText = RollingText::create(arr, 390, ccc3(66,64,43));
+        auto rollText = RollingText::create(arr, 390 ,ccc3(66,64,43));
         
         m_questNameNode->addChild(rollText);
         
@@ -1274,9 +1444,9 @@ void UIComponent::onQuestStateUpdate(CCObject* p){
             m_questGoldNode->addChild(goldAni);
         }
         
-//        if (!m_questContextBG1->isVisible()) {
-//            playQuestRect();
-//        }
+        if (!m_questContextBG1->isVisible()) {
+            playQuestRect();
+        }
         
     }else{
         
@@ -1298,75 +1468,242 @@ void UIComponent::onQuestStateUpdate(CCObject* p){
         
     }
     
-    
-    
     if(isrefersh){
-        
         m_questAnimNode->removeAllChildren();
-        
         ParticleController::initParticle();
-        
-        
-        
         auto newBatch = ParticleController::createParticleBatch();
-        
         auto praticle1 = ParticleController::createParticle("Capacity_1");
-        
+        praticle1->setAutoRemoveOnFinish(true);
         newBatch->addChild(praticle1);
-        
         auto praticle2 = ParticleController::createParticle("Capacity_2");
-        
+        praticle2->setAutoRemoveOnFinish(true);
         newBatch->addChild(praticle2);
-        
         auto praticle3= ParticleController::createParticle("Capacity_3");
-        
+        praticle3->setAutoRemoveOnFinish(true);
         newBatch->addChild(praticle3);
-        
         auto praticle4 = ParticleController::createParticle("Capacity_4");
-        
+        praticle4->setAutoRemoveOnFinish(true);
         newBatch->addChild(praticle4);
-        
         auto praticle5 = ParticleController::createParticle("Capacity_5");
-        
+        praticle5->setAutoRemoveOnFinish(true);
         newBatch->addChild(praticle5);
-        
         auto praticle6 = ParticleController::createParticle("Capacity_6");
-        
+        praticle6->setAutoRemoveOnFinish(true);
         newBatch->addChild(praticle6);
-        
         m_questAnimNode->addChild(newBatch);
-        
         praticle1->setPosition(ccp(dx, 0));
-        
         praticle1->setAnchorPoint(ccp(0, 0));
-        
         praticle2->setPosition(ccp(dx, 0));
-        
         praticle2->setAnchorPoint(ccp(0, 0));
-        
         praticle3->setPosition(ccp(dx, 0));
-        
         praticle3->setAnchorPoint(ccp(0, 0));
-        
         praticle4->setPosition(ccp(dx, 0));
-        
         praticle4->setAnchorPoint(ccp(0, 0));
-        
         praticle5->setPosition(ccp(dx, 0));
-        
         praticle5->setAnchorPoint(ccp(0, 0));
-        
         praticle6->setPosition(ccp(dx, 0));
-        
         praticle6->setAnchorPoint(ccp(0, 0));
-        
         //questBGAction
-        
         questBGHideAction();
-        
     }
-    
 }
+
+void UIComponent::questStatRefreshNewOn()
+{
+    QuestInfo *info = QuestController::getInstance()->getRecommendQuest(true);
+    
+    bool isrefershNew = false;
+    bool isrefershComplete = false;
+    
+    if (m_recommandQuest!=NULL) {
+        if(m_recommandQuest!=info && info->state!=COMPLETE){
+            isrefershNew = true;
+        }
+        else if (m_recommandQuest!=info && info->state==COMPLETE){
+            isrefershComplete = true;
+        }
+        else if (m_recommandQuest==info&&m_recommandQuest->state==COMPLETE){
+            isrefershComplete = true;
+        }
+    }
+    if(isrefershNew){
+        refreshQuestNew();
+        showQuestTextNewOn(0);
+    }
+    else if (isrefershComplete){
+        refreshQuestComplete();
+        this->scheduleOnce(schedule_selector(UIComponent::showQuestTextNewOn), 0.4);
+    }
+    else
+        showQuestTextNewOn(0);
+}
+
+void UIComponent::showQuestTextNewOn(float t)
+{
+    int completeNum = QuestController::getInstance()->getCompleteQuestNum();
+    QuestInfo *info = QuestController::getInstance()->getRecommendQuest(true);
+    m_recommandQuest = info;
+    m_questNameNode->removeAllChildren();
+    m_questGoldNode->removeAllChildren();
+    m_canRwdNode->stopAllActions();
+    m_canRwdNode->removeAllChildren();
+    if(info){
+        auto arr = CCArray::create();
+        std::string nameStr = info->name;
+        arr->addObject(CCString::create(nameStr));
+        auto rollText = RollingText::create(arr, 390 ,ccc3(66,64,43));
+        
+        m_questNameNode->addChild(rollText);
+        checkShowQuestPrc();
+        if (m_recommandQuest->state!=COMPLETE) {
+            this->m_questTitle->setString(_lang("107527"));
+            
+            this->m_quest_statues_icon->setSpriteFrame("UI_quest.png");
+            
+        }
+        else {
+            this->m_questTitle->setString("");
+            auto rwdLabel = Label::create();
+            rwdLabel->setColor(ccWHITE);
+            rwdLabel->setFontSize(20);
+            string str = _lang("107516");
+            
+            if (str != "") {
+                str = "(" + str + ")";
+            }
+            rwdLabel->setString(str);
+            rwdLabel->setAnchorPoint(ccp(1, 0.5));
+//            rwdLabel->setPositionY(rollText->getPositionY() - 15);
+//            rollText->setPositionY(rollText->getPositionY() + 10 );
+            
+            rwdLabel->setPositionY(rollText->getPositionY());
+            
+            rwdLabel->setPositionX(350);
+            
+            rwdLabel->enableOutline({0,0,0,255},1);
+            
+            m_questNameNode->addChild(rwdLabel);
+            
+            m_quest_statues_icon->setSpriteFrame("icon_quest_status_complete.png");
+//            auto rwdSprite = CCLoadSprite::createSprite("ActivityBox_1.png");
+//            rwdSprite->setScale(0.7);
+//            rwdSprite->setAnchorPoint(ccp(0, 0.5));
+//            rwdSprite->setPosition(0, 0);
+//            m_canRwdNode->addChild(rwdSprite);
+//            auto moveBy1 = MoveBy::create(0.5, ccp(0, 5));
+//            auto moveBy2 = MoveBy::create(0.5, ccp(0, -5));
+//            auto moveBy3 = MoveBy::create(0.5, ccp(0, 2));
+//            auto moveBy4 = MoveBy::create(0.5, ccp(0, -2));
+//            rwdSprite->runAction(RepeatForever::create(Sequence::create(moveBy1,moveBy2,moveBy3,moveBy4,DelayTime::create(2.0), NULL)));
+        }
+        bool isGold = false;
+        for (int i=0; i<info->reward->count(); i++) {
+            auto dic = dynamic_cast<CCDictionary*>(info->reward->objectAtIndex(i));
+            int type = dic->valueForKey("type")->intValue();
+            if (type == R_GOLD) {
+                isGold = true;
+                break;
+            }
+        }
+        isGold = false ; // fusheng 不显示金币动画
+        if (isGold) {
+            auto goldAni = AllianceAni::create();
+            goldAni->m_alliance->setVisible(false);
+            m_questGoldNode->addChild(goldAni);
+        }
+        if (!m_questContextBG1->isVisible() && !m_questContextBG2->isVisible()) {
+            playQuestRect();
+        }
+        
+    }else{
+    }
+    m_questTipNode->stopAllActions();
+    if(completeNum == 0){
+        this->m_questTipBG->setVisible(false);
+        this->m_questTipNum->setString("");
+    }else{
+        playQusetTiAnim();
+        this->m_questTipBG->setVisible(true);
+        this->m_questTipNum->setString(CC_ITOA(completeNum));
+    }
+}
+
+void UIComponent::refreshQuestNew()
+{
+    int dx =150;
+    m_questAnimNode->removeAllChildren();
+    ParticleController::initParticle();
+    
+    auto newBatch = ParticleController::createParticleBatch();
+    
+    auto praticle1 = ParticleController::createParticle("Capacity_1");
+    praticle1->setAutoRemoveOnFinish(true);
+    newBatch->addChild(praticle1);
+    
+    auto praticle2 = ParticleController::createParticle("Capacity_2");
+    praticle2->setAutoRemoveOnFinish(true);
+    newBatch->addChild(praticle2);
+    
+    auto praticle3= ParticleController::createParticle("Capacity_3");
+    praticle3->setAutoRemoveOnFinish(true);
+    newBatch->addChild(praticle3);
+    
+    auto praticle4 = ParticleController::createParticle("Capacity_4");
+    praticle4->setAutoRemoveOnFinish(true);
+    newBatch->addChild(praticle4);
+    
+    auto praticle5 = ParticleController::createParticle("Capacity_5");
+    praticle5->setAutoRemoveOnFinish(true);
+    newBatch->addChild(praticle5);
+    
+    auto praticle6 = ParticleController::createParticle("Capacity_6");
+    praticle6->setAutoRemoveOnFinish(true);
+    newBatch->addChild(praticle6);
+    
+    m_questAnimNode->addChild(newBatch);
+    praticle1->setPosition(ccp(dx, 0));
+    praticle1->setAnchorPoint(ccp(0, 0));
+    praticle2->setPosition(ccp(dx, 0));
+    praticle2->setAnchorPoint(ccp(0, 0));
+    praticle3->setPosition(ccp(dx, 0));
+    praticle3->setAnchorPoint(ccp(0, 0));
+    praticle4->setPosition(ccp(dx, 0));
+    praticle4->setAnchorPoint(ccp(0, 0));
+    praticle5->setPosition(ccp(dx, 0));
+    praticle5->setAnchorPoint(ccp(0, 0));
+    praticle6->setPosition(ccp(dx, 0));
+    praticle6->setAnchorPoint(ccp(0, 0));
+    //questBGAction
+    questBGHideAction();
+    this->m_questTitle->setString(_lang("107527"));
+}
+
+
+void UIComponent::refreshQuestComplete()
+{
+    CCMoveTo* questMove = CCMoveTo::create(0.0f, ccp(m_questPt.x, m_questPt.y));
+    
+    this->m_UIQuestNode->runAction(CCSequence::create(questMove,CCCallFunc::create(this, callfunc_selector(UIComponent::questIconAction)),NULL));
+    this->m_questTitle->setString("");
+    m_canRwdNode->stopAllActions();
+    m_canRwdNode->removeAllChildren();
+//    auto rwdSprite = CCLoadSprite::createSprite("ActivityBox_1.png");
+//    rwdSprite->setScale(0.7);
+//    rwdSprite->setAnchorPoint(ccp(0.5, 0.5));
+//    rwdSprite->setPosition(0, 0);
+//    m_canRwdNode->addChild(rwdSprite);
+//    auto moveBy1 = MoveBy::create(0.5, ccp(0, 5));
+//    auto moveBy2 = MoveBy::create(0.5, ccp(0, -5));
+//    auto moveBy3 = MoveBy::create(0.5, ccp(0, 2));
+//    auto moveBy4 = MoveBy::create(0.5, ccp(0, -2));
+//    rwdSprite->runAction(RepeatForever::create(Sequence::create(moveBy1,moveBy2,moveBy3,moveBy4,DelayTime::create(2.0), NULL)));
+    
+    m_quest_statues_icon->setSpriteFrame("icon_quest_status_complete.png");
+}
+
+
+
+//fusheng end
 
 
 
@@ -1575,6 +1912,7 @@ void UIComponent::showQuestText()
     
     m_questNameNode->setVisible(true);
     playQuestRect();
+    recommandRwdClick = false;
 }
 
 
@@ -2755,7 +3093,15 @@ void UIComponent::updateDragonStatus(CCObject *params)
 
 bool UIComponent::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode)
 {
+    //fusheng begin
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_questContextBG1", Sprite*, m_questContextBG1);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_questContextBG2", Sprite*, m_questContextBG2);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_canRwdNode", Node*, m_canRwdNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_questTitle", CCLabelIF*, this->m_questTitle);
     
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_quest_statues_icon", Sprite*, m_quest_statues_icon);;
+    //fusheng end
 //    CCLOG("ccbi control name %s",pMemberVariableName);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_playerBG_guide", CCNode*, this->m_playerBG_guide);
     
@@ -4338,8 +4684,22 @@ void UIComponent::onClickTarget()
         
         return;
     
-    QuestController::getInstance()->goToQuestTarget(m_recommandQuest);
-    hideQuestRect();
+    if (CCCommonUtils::isTestPlatformAndServer("UI_QuestRwd")) {
+        if (m_recommandQuest->state==COMPLETE) {
+            if (recommandRwdClick == false) {
+                recommandRwdClick = true;
+                QuestController::getInstance()->clickToGetRecommendRwd();
+            }
+        }
+        else {
+            QuestController::getInstance()->goToQuestTarget(m_recommandQuest);
+            hideQuestRect();
+        }
+    }
+    else {
+        QuestController::getInstance()->goToQuestTarget(m_recommandQuest);
+        hideQuestRect();
+    }
 }
 
 

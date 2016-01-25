@@ -417,6 +417,12 @@ public:
     CCSafeObject<CCNode> main_ui_top;
     CCSafeObject<CCNode> m_leftNode;
     
+    
+    CCSafeObject<CCSprite> m_questContextBG1;
+    CCSafeObject<CCSprite> m_questContextBG2;
+    CCSafeObject<Node> m_canRwdNode;
+    CCSafeObject<CCLabelIF> m_questTitle;
+
     Vec2 originPosTop;
     Vec2 originPosLeft;
     Vec2 originPosRight;
@@ -514,6 +520,20 @@ public:
     void update(float dt);
     
     float moveBackTime;
+    
+    //fusheng begin
+    void questStatRefresh();
+    
+    void questStatRefreshNewOn();
+    
+    void showQuestTextNewOn(float t);
+    
+    
+    void refreshQuestNew();
+    
+    void refreshQuestComplete();
+    
+    //fusheng end
 public:
     void onPopupReturnClick(CCObject * pSender, CCControlEvent pCCControlEvent);
     void onCancelDelMailClick(CCObject * pSender, CCControlEvent pCCControlEvent);
@@ -911,6 +931,11 @@ private:
     //begin a by ljf
     ActivityBox * mActivityBox;
     //end a by ljf
+    
+    //fusheng begin
+    bool recommandRwdClick;
+    CCSafeObject<CCSprite>  m_quest_statues_icon;
+    //fusheng end
 };
 
 #endif /* defined(__IF__UIComponent__) */

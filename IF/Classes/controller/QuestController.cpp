@@ -25,6 +25,8 @@
 #include "FiveStarTaskView.h"
 #include "GeneralTitanPopupView.h"
 
+#include "GCMRewardController.h"
+
 static QuestController* _instance;
 
 QuestController *QuestController::getInstance(){
@@ -472,6 +474,9 @@ void QuestController::getReward(std::string itemId, bool isMain){
     }
 }
 
+
+
+
 void QuestController::resetGettingRewardFlag(float t){
     CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(QuestController::resetGettingRewardFlag), this);
     isGettingReward = false;
@@ -809,6 +814,15 @@ void QuestController::generateRecommedQuest(CCDictionary *dict){
         }
     }
 }
+//fusheng begin
+//点击领奖的接口
+void QuestController::clickToGetRecommendRwd()
+{
+    QuestInfo* recommend = getRecommendQuest(true);
+    GCMRewardController::getInstance()->retReward3(recommend->reward,0.5);
+    getReward(recommend->itemId, true);
+}
+//fusheng end
 
 QuestInfo* QuestController::getRecommendQuest(bool includeComplete){
     CCArray* m_data = CCArray::create();
