@@ -206,6 +206,10 @@ bool GoldExchangeMoreListView::onAssignCCBMemberVariable(cocos2d::CCObject * pTa
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_soleOutSpr", CCSprite*, this->m_soleOutSpr);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_soleOutSpr1", CCSprite*, this->m_soleOutSpr1);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_arrowSpr", CCSprite*, this->m_arrowSpr);
+    
+    //begin a by ljf
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_adSpr", CCSprite*, this->m_adSpr);
+    //end a by ljf
     return false;
 }
 

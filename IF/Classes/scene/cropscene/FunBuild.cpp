@@ -656,8 +656,17 @@ void FunBuild::setNamePos(int x, int y, CCLayer* sginLayer, CCLayer* popLayer, C
                                                 m_sprArray->addObject(tmpSpr);
                                             }
                                         }else{
-                                            m_batchNode->addChild(tmpSpr, zOrder*1000+tmpOrd);
-                                            m_sprArray->addObject(tmpSpr);
+                                            if(tmpSpr->getContentSize().width == 0 && tmpSpr->getContentSize().height == 0)
+                                            {
+                                                CCLog("what fuck ");
+                                            }
+                                            else
+                                            {
+                                                m_batchNode->addChild(tmpSpr, zOrder*1000+tmpOrd);
+                                                m_sprArray->addObject(tmpSpr);
+                                            }
+                                            
+                                            
                                         }
                                     }
 //                                    tmpSpr->setZOrder(zOrder*1000+tmpOrd);
@@ -1699,6 +1708,14 @@ void FunBuild::onClickThis(float _time)
                     dw = -30;
                     dh = 50;
                 }
+                
+                //begin a by ljf,解决点击船坞的图标被船挡住的问题
+                if (m_info->type == FUN_BUILD_TRAINFIELD)
+                {
+                    dw = -50;
+                    dh = 30;
+                }
+                //end a by ljf
                 if (!m_info->is_Dirc && layer) {
                     layer->onShowBtnsView(parentX+dw, parentY+dh, m_buildingKey);
                     playShadow();

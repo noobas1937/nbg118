@@ -99,8 +99,6 @@
 								<false/>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -700,8 +698,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>180</real>
-											<real>223</real>
+											<real>172.22222900390625</real>
+											<real>206.66667175292969</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -742,7 +740,7 @@
 										<key>type</key>
 										<string>Degrees</string>
 										<key>value</key>
-										<real>30</real>
+										<real>22.222223281860352</real>
 									</dict>
 									<dict>
 										<key>name</key>
@@ -771,7 +769,7 @@
 										<key>type</key>
 										<string>Byte</string>
 										<key>value</key>
-										<integer>0</integer>
+										<integer>255</integer>
 									</dict>
 									<dict>
 										<key>name</key>
@@ -1008,8 +1006,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>180</real>
-											<real>223</real>
+											<real>150</real>
+											<real>160</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -1036,8 +1034,8 @@
 										<string>ScaleLock</string>
 										<key>value</key>
 										<array>
-											<real>0.80000001192092896</real>
-											<real>0.80000001192092896</real>
+											<real>0.0</real>
+											<real>0.0</real>
 											<false/>
 											<integer>0</integer>
 										</array>
@@ -1050,7 +1048,7 @@
 										<key>type</key>
 										<string>Degrees</string>
 										<key>value</key>
-										<real>-10</real>
+										<real>0.0</real>
 									</dict>
 									<dict>
 										<key>name</key>
@@ -1301,8 +1299,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>180</real>
-											<real>223</real>
+											<real>150</real>
+											<real>160</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -1329,8 +1327,8 @@
 										<string>ScaleLock</string>
 										<key>value</key>
 										<array>
-											<real>0.80000001192092896</real>
-											<real>0.80000001192092896</real>
+											<real>0.0</real>
+											<real>0.0</real>
 											<false/>
 											<integer>0</integer>
 										</array>
@@ -1343,7 +1341,7 @@
 										<key>type</key>
 										<string>Degrees</string>
 										<key>value</key>
-										<real>30</real>
+										<real>0.0</real>
 									</dict>
 									<dict>
 										<key>name</key>
@@ -1372,7 +1370,7 @@
 										<key>type</key>
 										<string>Byte</string>
 										<key>value</key>
-										<integer>0</integer>
+										<integer>255</integer>
 									</dict>
 									<dict>
 										<key>name</key>
@@ -1455,6 +1453,18 @@
 				<integer>0</integer>
 				<key>properties</key>
 				<array>
+					<dict>
+						<key>name</key>
+						<string>position</string>
+						<key>type</key>
+						<string>Position</string>
+						<key>value</key>
+						<array>
+							<real>0.0</real>
+							<real>-10</real>
+							<integer>0</integer>
+						</array>
+					</dict>
 					<dict>
 						<key>name</key>
 						<string>anchorPoint</string>
@@ -1594,7 +1604,7 @@
 			<key>offset</key>
 			<real>0.0</real>
 			<key>position</key>
-			<real>6.7666668891906738</real>
+			<real>1.3333333730697632</real>
 			<key>resolution</key>
 			<real>30</real>
 			<key>scale</key>

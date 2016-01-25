@@ -44,6 +44,7 @@
 //begin a by ljf
 #define IMPERIAL_SCENE_TOUCH_LAYER_TAG 89217
 #include "VikingShip.h"
+#include "Enemy.h"
 //end a by ljf
 
 // traps max number
@@ -63,6 +64,10 @@ public:
     CC_SYNTHESIZE(CCLayer*, buildingLayer, BuildingLayer);
     CC_SYNTHESIZE(CCLayer*, fixLayer, FixLayer);
     CC_SYNTHESIZE(CCSpriteBatchNode*, mbatchNode, BatchNode);
+    //begin ljf
+    void setEnemyNum(int enemyNum) {m_enemyNum = enemyNum;}
+    int getEnemyNum() {return m_enemyNum; }
+    //end ljf
     
     virtual void onEnter();
     virtual void onExit();
@@ -92,6 +97,9 @@ public:
     void updateVikingsShipLock(int seq, bool isShow);
     CCNode * getVikingsShipCCBPosNodeBySeq(int seq);
     CCNode * getVikingsShipCCBTouchNodeBySeq(int seq);
+    
+    void pauseEnemy();
+    void resumeEnemy();
     //end a by ljf
     
     
@@ -388,6 +396,8 @@ private:
     CCSafeObject<CCArray> m_soldierArray;
     //begin a by ljf
     //CCSafeObject<CCArray> m_walkerArray;
+    //CCSafeObject<CCArray> m_enemyArray;
+    Vector<OutsideEnemy * > m_enemyArray;
     //end a by ljf
     
     vector<CCParticleBatchNode*> m_parVec;
@@ -462,6 +472,8 @@ private:
     CCSafeObject<CCNode> m_vikingTouchNode5;
     CCSafeObject<CCDictionary> mVikingShipDict;
     CCSafeObject<CCNode> m_waterNode;
+    bool m_isPauseEnemy;
+    int m_enemyNum;
     //end a by ljf
     // tao.yu titan move path
     CCSafeObject<CCNode> m_tpath_1;

@@ -1616,8 +1616,6 @@
 														</array>
 													</dict>
 												</array>
-												<key>selected</key>
-												<true/>
 											</dict>
 										</array>
 										<key>customClass</key>
@@ -2039,7 +2037,7 @@
 									</dict>
 									<dict>
 										<key>baseClass</key>
-										<string>CCSprite</string>
+										<string>CCNode</string>
 										<key>children</key>
 										<array/>
 										<key>customClass</key>
@@ -2059,8 +2057,8 @@
 												<string>Position</string>
 												<key>value</key>
 												<array>
-													<real>48.882350921630859</real>
-													<real>46.941177368164062</real>
+													<real>5.8823528289794922</real>
+													<real>22.352939605712891</real>
 													<integer>0</integer>
 												</array>
 											</dict>
@@ -2071,8 +2069,8 @@
 												<string>Point</string>
 												<key>value</key>
 												<array>
-													<real>0.5</real>
-													<real>0.5</real>
+													<real>0.0</real>
+													<real>0.0</real>
 												</array>
 											</dict>
 											<dict>
@@ -2084,7 +2082,7 @@
 												<array>
 													<real>1</real>
 													<real>1</real>
-													<true/>
+													<false/>
 													<integer>0</integer>
 												</array>
 											</dict>
@@ -2096,29 +2094,9 @@
 												<key>value</key>
 												<false/>
 											</dict>
-											<dict>
-												<key>name</key>
-												<string>displayFrame</string>
-												<key>type</key>
-												<string>SpriteFrame</string>
-												<key>value</key>
-												<array>
-													<string>Common/Common_1.plist</string>
-													<string>info_green.png</string>
-												</array>
-											</dict>
-											<dict>
-												<key>name</key>
-												<string>blendFunc</string>
-												<key>type</key>
-												<string>Blendmode</string>
-												<key>value</key>
-												<array>
-													<integer>770</integer>
-													<integer>771</integer>
-												</array>
-											</dict>
 										</array>
+										<key>selected</key>
+										<true/>
 									</dict>
 								</array>
 								<key>customClass</key>
@@ -3179,9 +3157,9 @@
 												<string>Position</string>
 												<key>value</key>
 												<array>
-													<real>80</real>
-													<real>80</real>
-													<integer>4</integer>
+													<real>64</real>
+													<real>64</real>
+													<integer>0</integer>
 												</array>
 											</dict>
 											<dict>

@@ -29,13 +29,13 @@
 				<array>
 					<dict>
 						<key>baseClass</key>
-						<string>CCScale9Sprite</string>
+						<string>CCSprite</string>
 						<key>children</key>
 						<array/>
 						<key>customClass</key>
 						<string></string>
 						<key>displayName</key>
-						<string>CCScale9Sprite</string>
+						<string>CCSprite</string>
 						<key>memberVarAssignmentName</key>
 						<string></string>
 						<key>memberVarAssignmentType</key>
@@ -49,9 +49,20 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>-253.51417541503906</real>
-									<real>-24.106258392333984</real>
+									<real>-104</real>
+									<real>3.0000076293945312</real>
 									<integer>0</integer>
+								</array>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>anchorPoint</string>
+								<key>type</key>
+								<string>Point</string>
+								<key>value</key>
+								<array>
+									<real>0.5</real>
+									<real>0.5</real>
 								</array>
 							</dict>
 							<dict>
@@ -62,7 +73,7 @@
 								<key>value</key>
 								<array>
 									<real>1</real>
-									<real>1</real>
+									<real>0.80000001192092896</real>
 									<false/>
 									<integer>0</integer>
 								</array>
@@ -77,78 +88,108 @@
 							</dict>
 							<dict>
 								<key>name</key>
-								<string>spriteFrame</string>
+								<string>displayFrame</string>
 								<key>type</key>
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string>Common/Common_8.plist</string>
-									<string>Activity_bg7.png</string>
+									<string>Common/Common_500.plist</string>
+									<string>ActivityListCell_bg.png</string>
 								</array>
 							</dict>
 							<dict>
 								<key>name</key>
-								<string>preferedSize</string>
+								<string>blendFunc</string>
 								<key>type</key>
-								<string>Size</string>
+								<string>Blendmode</string>
 								<key>value</key>
 								<array>
-									<real>510</real>
-									<real>50</real>
+									<integer>770</integer>
+									<integer>771</integer>
+								</array>
+							</dict>
+						</array>
+					</dict>
+					<dict>
+						<key>baseClass</key>
+						<string>CCSprite</string>
+						<key>children</key>
+						<array/>
+						<key>customClass</key>
+						<string></string>
+						<key>displayName</key>
+						<string>CCSprite</string>
+						<key>memberVarAssignmentName</key>
+						<string></string>
+						<key>memberVarAssignmentType</key>
+						<integer>0</integer>
+						<key>properties</key>
+						<array>
+							<dict>
+								<key>name</key>
+								<string>position</string>
+								<key>type</key>
+								<string>Position</string>
+								<key>value</key>
+								<array>
+									<real>183</real>
+									<real>3.0000076293945312</real>
 									<integer>0</integer>
 								</array>
 							</dict>
 							<dict>
 								<key>name</key>
-								<string>opacity</string>
+								<string>anchorPoint</string>
 								<key>type</key>
-								<string>Byte</string>
-								<key>value</key>
-								<integer>255</integer>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>color</string>
-								<key>type</key>
-								<string>Color3</string>
+								<string>Point</string>
 								<key>value</key>
 								<array>
-									<integer>255</integer>
-									<integer>255</integer>
-									<integer>255</integer>
+									<real>0.5</real>
+									<real>0.5</real>
 								</array>
 							</dict>
 							<dict>
 								<key>name</key>
-								<string>insetLeft</string>
+								<string>scale</string>
 								<key>type</key>
-								<string>Float</string>
+								<string>ScaleLock</string>
 								<key>value</key>
-								<real>0.0</real>
+								<array>
+									<real>-1</real>
+									<real>0.80000001192092896</real>
+									<false/>
+									<integer>0</integer>
+								</array>
 							</dict>
 							<dict>
 								<key>name</key>
-								<string>insetTop</string>
+								<string>ignoreAnchorPointForPosition</string>
 								<key>type</key>
-								<string>Float</string>
+								<string>Check</string>
 								<key>value</key>
-								<real>0.0</real>
+								<false/>
 							</dict>
 							<dict>
 								<key>name</key>
-								<string>insetRight</string>
+								<string>displayFrame</string>
 								<key>type</key>
-								<string>Float</string>
+								<string>SpriteFrame</string>
 								<key>value</key>
-								<real>0.0</real>
+								<array>
+									<string>Common/Common_500.plist</string>
+									<string>ActivityListCell_bg.png</string>
+								</array>
 							</dict>
 							<dict>
 								<key>name</key>
-								<string>insetBottom</string>
+								<string>blendFunc</string>
 								<key>type</key>
-								<string>Float</string>
+								<string>Blendmode</string>
 								<key>value</key>
-								<real>0.0</real>
+								<array>
+									<integer>770</integer>
+									<integer>771</integer>
+								</array>
 							</dict>
 						</array>
 					</dict>
@@ -237,9 +278,9 @@
 								<string>Color3</string>
 								<key>value</key>
 								<array>
-									<integer>87</integer>
-									<integer>50</integer>
-									<integer>28</integer>
+									<integer>179</integer>
+									<integer>183</integer>
+									<integer>238</integer>
 								</array>
 							</dict>
 							<dict>
@@ -305,7 +346,7 @@ Sample TextSample TextSample Tex22d</string>
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>136</real>
+									<real>223</real>
 									<real>1</real>
 									<integer>0</integer>
 								</array>
@@ -368,9 +409,9 @@ Sample TextSample TextSample Tex22d</string>
 								<string>Color3</string>
 								<key>value</key>
 								<array>
-									<integer>87</integer>
-									<integer>50</integer>
-									<integer>28</integer>
+									<integer>254</integer>
+									<integer>255</integer>
+									<integer>255</integer>
 								</array>
 							</dict>
 							<dict>
@@ -433,7 +474,7 @@ Sample TextSample TextSample Tex22d</string>
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>214</real>
+									<real>301</real>
 									<real>2</real>
 									<integer>0</integer>
 								</array>

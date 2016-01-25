@@ -547,7 +547,20 @@ void StoreMallView::slideEnded(CCGallery *gallery, CCGalleryItem *pGItem)
 void StoreMallView::selectionChanged(CCGallery *gallery, CCGalleryItem *pGItem)
 {
     int idx = pGItem->getIdx();
-    switch (idx) {
+    onChangeItem(idx);
+    
+}
+
+void StoreMallView::selectionDecided(CCGallery *gallery, CCGalleryItem *pGItem)
+{
+    int idx = pGItem->getIdx();
+    gallery->setTargetIndexItem(idx,true);
+//    onChangeItem(idx);
+}
+
+void StoreMallView::onChangeItem(int index)
+{
+    switch (index) {
         case 0:
             onClickHotBtn();
             break;
@@ -566,14 +579,7 @@ void StoreMallView::selectionChanged(CCGallery *gallery, CCGalleryItem *pGItem)
         default:
             break;
     }
-    
 }
-
-void StoreMallView::selectionDecided(CCGallery *gallery, CCGalleryItem *pGItem)
-{
-    
-}
-
 
 // ====================
 #pragma mark StoreMallCell

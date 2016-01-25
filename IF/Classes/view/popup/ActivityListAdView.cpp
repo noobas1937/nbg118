@@ -170,12 +170,12 @@ void ActivityListAdView::initPageNode(int offSetX)
     for (int i=0; i<count; i++) {
         auto spr = CCLoadSprite::createSprite("Recharge_fanye.png");
         m_pageNode->addChild(spr);
-        spr->setPositionX(m_startX+width*i);
+        spr->setPosition(m_startX+width*i, -15);
         if (dataIndex == i)
         {
             CCSprite* sp = CCLoadSprite::createSprite("Recharge_fanye2.png");
             m_pageNode->addChild(sp);
-            sp->setPositionX(m_startX+width*i);
+            sp->setPosition(m_startX+width*i, -15);
         }
     }
 }
@@ -414,20 +414,20 @@ bool ActivityAdLuaCell::init()
         auto nameTTF = CCLabelIF::create(m_obj->name.c_str());
         auto infoTTF = CCLabelIF::create(_lang(m_obj->desc_info).c_str());
         auto bgImg = CCLoadSprite::createSprite("activity_ad_beiyong.png");
-        nameTTF->setPosition(ccp(16,245));
-        nameTTF->setAnchorPoint(ccp(0, 1));
-        nameTTF->setFontSize(36);
-        nameTTF->setColor({255,219,117});
-        nameTTF->setHorizontalAlignment(kCCTextAlignmentLeft);
-        nameTTF->setVerticalAlignment(kCCVerticalTextAlignmentTop);
-        nameTTF->setDimensions(CCSize(0, 0));
-        
-        infoTTF->setPosition(ccp(16,201));
-        infoTTF->setAnchorPoint(ccp(0, 1));
-        infoTTF->setColor({0, 249, 0});
-        infoTTF->setHorizontalAlignment(kCCTextAlignmentLeft);
-        infoTTF->setVerticalAlignment(kCCVerticalTextAlignmentTop);
-        infoTTF->setDimensions(CCSize(300, 0));
+//        nameTTF->setPosition(ccp(16,245));
+//        nameTTF->setAnchorPoint(ccp(0, 1));
+//        nameTTF->setFontSize(36);
+//        nameTTF->setColor({255,219,117});
+//        nameTTF->setHorizontalAlignment(kCCTextAlignmentLeft);
+//        nameTTF->setVerticalAlignment(kCCVerticalTextAlignmentTop);
+//        nameTTF->setDimensions(CCSize(0, 0));
+//        
+//        infoTTF->setPosition(ccp(16,201));
+//        infoTTF->setAnchorPoint(ccp(0, 1));
+//        infoTTF->setColor({0, 249, 0});
+//        infoTTF->setHorizontalAlignment(kCCTextAlignmentLeft);
+//        infoTTF->setVerticalAlignment(kCCVerticalTextAlignmentTop);
+//        infoTTF->setDimensions(CCSize(300, 0));
         
         
         bgImg->setAnchorPoint(ccp(0, 0));
@@ -529,65 +529,66 @@ void ActivityListAdCell::setData(ActivityEventObj *obj)
     string img = m_actObj->Advertise_pic + ".png";
     m_nameTTF->setString(m_actObj->name);
     m_infoTTF->setString(_lang(m_actObj->desc_info));
-    m_nameTTF->setHorizontalAlignment(kCCTextAlignmentCenter);
-    m_infoTTF->setHorizontalAlignment(kCCTextAlignmentCenter);
-    m_nameTTF->setFontSize(36);
-    m_infoTTF->setDimensions(CCSize(560.0,90));
-    if (CCCommonUtils::isIosAndroidPad()) {
-        m_infoTTF->setFontSize(m_infoTTF->getFontSize() * hd_sc);
-        m_infoTTF->setDimensions(CCSize(560 * hd_sc, 90 * hd_sc));
-        m_infoTTF->setScale(m_infoTTF->getScale() / hd_sc);
-        m_nameTTF->setScale(m_nameTTF->getScale() / hd_sc);
-        m_nameTTF->setFontSize(m_nameTTF->getFontSize() * hd_sc);
-        m_timeLabel1->setScale(m_timeLabel1->getScale() / hd_sc);
-        m_timeLabel1->setFontSize(m_timeLabel1->getFontSize() * hd_sc);
-    }
+    m_infoTTF->setVisible(false);
+//    m_nameTTF->setHorizontalAlignment(kCCTextAlignmentCenter);
+//    m_infoTTF->setHorizontalAlignment(kCCTextAlignmentCenter);
+//    m_nameTTF->setFontSize(36);
+//    m_infoTTF->setDimensions(CCSize(560.0,90));
+//    if (CCCommonUtils::isIosAndroidPad()) {
+//        m_infoTTF->setFontSize(m_infoTTF->getFontSize() * hd_sc);
+//        m_infoTTF->setDimensions(CCSize(560 * hd_sc, 90 * hd_sc));
+//        m_infoTTF->setScale(m_infoTTF->getScale() / hd_sc);
+//        m_nameTTF->setScale(m_nameTTF->getScale() / hd_sc);
+//        m_nameTTF->setFontSize(m_nameTTF->getFontSize() * hd_sc);
+//        m_timeLabel1->setScale(m_timeLabel1->getScale() / hd_sc);
+//        m_timeLabel1->setFontSize(m_timeLabel1->getFontSize() * hd_sc);
+//    }
     auto bgImg = CCLoadSprite::createSprite(img.c_str());
     bgImg->setAnchorPoint(ccp(0, 0));
-    if(m_actObj->type==3 || m_actObj->type==4){
-        int bgx = bgImg->getContentSize().width*0.1;
-        int bgy = bgImg->getContentSize().height*0.1;
-        bgImg->setPosition(ccp(-bgx, 0));
-        bgImg->setScaleX(1.2);
-        bgImg->setScaleY(1.2);
-        
-        m_nameTTF->setPosition(ccp(40.0,259));
-        m_nameTTF->setAnchorPoint(ccp(0, 0.5));
-        m_infoTTF->setPosition(ccp(40.0,217));
-        m_infoTTF->setAnchorPoint(ccp(0, 0.5));
-        m_timeLabel1->setPosition(ccp(40.0,111));
-        m_timeLabel1->setAnchorPoint(ccp(0, 0.5));
-        m_nameTTF->setColor({255,219,117});
-        m_infoTTF->setColor({0,249,0});
-        m_timeLabel1->setColor({0,249,0});
-        m_nameTTF->setHorizontalAlignment(kCCTextAlignmentLeft);
-        m_infoTTF->setHorizontalAlignment(kCCTextAlignmentLeft);
-    }else if(m_actObj->type==7){
-        m_infoTTF->setDimensions(CCSize(340.0,100));
-        m_nameTTF->setPosition(ccp(205,252.2));
-        m_nameTTF->setAnchorPoint(ccp(0.5, 0.5));
-        m_infoTTF->setPosition(ccp(205,180.9));
-        m_infoTTF->setAnchorPoint(ccp(0.5, 0.5));
-        m_timeLabel1->setPosition(ccp(205,109));
-        m_timeLabel1->setAnchorPoint(ccp(0.5, 0.5));
-        m_nameTTF->setColor({255,219,117});
-        m_infoTTF->setColor({0,249,0});
-        m_timeLabel1->setColor({0,249,0});
-        m_nameTTF->setHorizontalAlignment(kCCTextAlignmentCenter);
-        m_infoTTF->setHorizontalAlignment(kCCTextAlignmentCenter);
-    }else{
-        m_nameTTF->setPosition(ccp(324.0,280.2));
-        m_nameTTF->setAnchorPoint(ccp(0.5, 0.5));
-        m_infoTTF->setPosition(ccp(324.0,244.9));
-        m_infoTTF->setAnchorPoint(ccp(0.5, 0.5));
-        m_timeLabel1->setPosition(ccp(324.0,83.1));
-        m_timeLabel1->setAnchorPoint(ccp(0.5, 0.5));
-        m_nameTTF->setColor({0,0,0});
-        m_infoTTF->setColor({0,0,0});
-        m_timeLabel1->setColor({0,249,0});
-        m_nameTTF->setHorizontalAlignment(kCCTextAlignmentCenter);
-        m_infoTTF->setHorizontalAlignment(kCCTextAlignmentCenter);
-    }
+//    if(m_actObj->type==3 || m_actObj->type==4){
+//        int bgx = bgImg->getContentSize().width*0.1;
+//        int bgy = bgImg->getContentSize().height*0.1;
+//        bgImg->setPosition(ccp(-bgx, 0));
+//        bgImg->setScaleX(1.2);
+//        bgImg->setScaleY(1.2);
+//        
+////        m_nameTTF->setPosition(ccp(40.0,259));
+////        m_nameTTF->setAnchorPoint(ccp(0, 0.5));
+////        m_infoTTF->setPosition(ccp(40.0,217));
+////        m_infoTTF->setAnchorPoint(ccp(0, 0.5));
+////        m_timeLabel1->setPosition(ccp(40.0,111));
+////        m_timeLabel1->setAnchorPoint(ccp(0, 0.5));
+////        m_nameTTF->setColor({255,219,117});
+////        m_infoTTF->setColor({0,249,0});
+////        m_timeLabel1->setColor({0,249,0});
+//        m_nameTTF->setHorizontalAlignment(kCCTextAlignmentLeft);
+//        m_infoTTF->setHorizontalAlignment(kCCTextAlignmentLeft);
+//    }else if(m_actObj->type==7){
+//        m_infoTTF->setDimensions(CCSize(340.0,100));
+////        m_nameTTF->setPosition(ccp(205,252.2));
+////        m_nameTTF->setAnchorPoint(ccp(0.5, 0.5));
+////        m_infoTTF->setPosition(ccp(205,180.9));
+////        m_infoTTF->setAnchorPoint(ccp(0.5, 0.5));
+////        m_timeLabel1->setPosition(ccp(205,109));
+////        m_timeLabel1->setAnchorPoint(ccp(0.5, 0.5));
+////        m_nameTTF->setColor({255,219,117});
+////        m_infoTTF->setColor({0,249,0});
+////        m_timeLabel1->setColor({0,249,0});
+////        m_nameTTF->setHorizontalAlignment(kCCTextAlignmentCenter);
+////        m_infoTTF->setHorizontalAlignment(kCCTextAlignmentCenter);
+//    }else{
+////        m_nameTTF->setPosition(ccp(324.0,280.2));
+////        m_nameTTF->setAnchorPoint(ccp(0.5, 0.5));
+////        m_infoTTF->setPosition(ccp(324.0,244.9));
+////        m_infoTTF->setAnchorPoint(ccp(0.5, 0.5));
+////        m_timeLabel1->setPosition(ccp(324.0,83.1));
+////        m_timeLabel1->setAnchorPoint(ccp(0.5, 0.5));
+////        m_nameTTF->setColor({0,0,0});
+////        m_infoTTF->setColor({0,0,0});
+////        m_timeLabel1->setColor({0,249,0});
+////        m_nameTTF->setHorizontalAlignment(kCCTextAlignmentCenter);
+////        m_infoTTF->setHorizontalAlignment(kCCTextAlignmentCenter);
+//    }
     m_clipNode->removeAllChildren();
     m_clipNode->addChild(bgImg);
 }
@@ -674,7 +675,11 @@ void ActivityListAdCell::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent
                     switch (atoi(m_actObj->id.c_str()))
                     {
                         case 57000:
-                            PopupViewController::getInstance()->addPopupView(ActivityBeginView::create());
+                        {
+                            auto popup = ActivityBeginView::create();
+                            PopupViewController::getInstance()->addPopupView(popup);
+                            popup->setPositionY(popup->getPositionY() + popup->height_offset / 2);
+                        }
                             break;
                             
                         default:

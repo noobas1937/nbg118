@@ -202,7 +202,12 @@ void SceneController::doSceneInit(int sceneId, bool shouldSave, bool shouldClean
                 if (subSceneId != -1) {
                     viewPoint = WorldController::getPointByIndex(subSceneId, WorldController::getInstance()->getMapXByType(mapType), WorldController::getInstance()->getMapYByType(mapType));
                 }
-                layer = WorldMapView::create(viewPoint, mapType);
+                layer = WorldMapView::create(viewPoint, mapType , true);
+                
+                string gid = GuideController::share()->getCurrentId();
+                if(gid == "3311100" && USE_NEW_GUIDE)
+                    WorldController::getInstance()->addGuideData();//fusheng test
+                
             }
             case SCENE_ID_CROP:
             case SCENE_ID_WOOD:
@@ -226,6 +231,8 @@ void SceneController::doSceneInit(int sceneId, bool shouldSave, bool shouldClean
     //end a by ljf
     CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_SCENE_CHANGE_FINISH);
     CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_SCENE_CHANGED);
+    
+   
 }
 
 void SceneController::gotoScene(int sceneId,bool shouldSave,bool shouldCleanUp,int subSceneId,MapType mapType) {
@@ -287,6 +294,7 @@ void SceneController::gotoScene(int sceneId,bool shouldSave,bool shouldCleanUp,i
         default:
             return;
     }
+//    useTrasition = false; //fusheng test
     auto transtion = SceneTransition::createTransition(sceneId, shouldSave, shouldCleanUp, useTrasition,subSceneId, mapType);
     if(transtion){
         transtion->start();

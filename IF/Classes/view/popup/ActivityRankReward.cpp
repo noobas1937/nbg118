@@ -9,8 +9,8 @@
 #include "ActivityRankReward.h"
 #include "RewardController.h"
 
-ActivityRankReward *ActivityRankReward::create(CCArray* datas,std::string title,bool flag,int type){
-    ActivityRankReward *ret = new ActivityRankReward(datas,title,flag,type);
+ActivityRankReward *ActivityRankReward::create(CCArray* datas,std::string title,bool flag,int type, string cell_ccb){
+    ActivityRankReward *ret = new ActivityRankReward(datas,title,flag,type,cell_ccb);
     if(ret && ret->init()){
         ret->autorelease();
     }else{
@@ -65,14 +65,14 @@ void ActivityRankReward::setData(CCArray* datas,std::string title,bool flag,int 
     if (m_type==0 || m_type==1 || m_type==2||m_type==3 ||m_type==4 || m_type==5) {
         for(int i=0;i<num;i++){
             auto dic = _dict(m_datas->objectAtIndex(i));
-            ActivityRankRewardCell* cell = ActivityRankRewardCell::create(dic);
+            ActivityRankRewardCell* cell = ActivityRankRewardCell::create(dic,m_cell_ccb);
             cell->setPosition(ccp(0, -i*85 + m_datas->count()*85 - 65 -20));
             m_container->addChild(cell);
         }
     }else{
         for(int i=0;i<num;i++){
             auto dic = _dict(m_datas->objectAtIndex(i));
-            ActivityRankRewardCell* cell = ActivityRankRewardCell::create(dic);
+            ActivityRankRewardCell* cell = ActivityRankRewardCell::create(dic,m_cell_ccb);
             if(flag){
                 cell->setPosition(ccp(0, i*85));
             }else{
@@ -87,8 +87,8 @@ int ActivityRankReward::getTotalH(){
     return m_datas->count()*85+20;
 }
 
-ActivityRankRewardCell *ActivityRankRewardCell::create(CCDictionary* info){
-    ActivityRankRewardCell *ret = new ActivityRankRewardCell(info);
+ActivityRankRewardCell *ActivityRankRewardCell::create(CCDictionary* info, string cell_ccb){
+    ActivityRankRewardCell *ret = new ActivityRankRewardCell(info, cell_ccb);
     if(ret && ret->init()){
         ret->autorelease();
     }else{
@@ -106,7 +106,7 @@ void ActivityRankRewardCell::onExit(){
 }
 
 bool ActivityRankRewardCell::init(){
-    auto bg = CCBLoadFile("ActivityRewardCell", this, this);
+    auto bg = CCBLoadFile(m_cell_ccb.c_str(), this, this);
     this->setContentSize(bg->getContentSize());
     
     if (CCCommonUtils::isIosAndroidPad())

@@ -181,7 +181,34 @@ void BuildListView::updateInfo(int pos)
     
 //    m_ArcGallery->setTargetIndexItem(0);
     refreshGalleryCells();
+   
     refeash(0);
+    
+    
+        int gBuildId = GuideController::share()->getWillBuildItemId();
+        if (gBuildId>0) {
+            int idx = -1;
+            for(int i=0; i<m_buildIds.size(); i++) {
+                if (m_buildIds[i] == gBuildId) {
+                    idx = i;
+                    break;
+                }
+            }
+            //            if (idx>0) {
+            if (idx>=0) { //fusheng
+                int curIdx = m_buildIds.size()-1;
+                bool up = false;
+                if (idx > curIdx) {
+                    up = true;
+                }
+                int moveCnt = abs(curIdx-idx);
+                // tao.yu TODO 新的滑动控件需要测试引导
+                m_ArcGallery->setTargetIndexItem(idx,true);
+                //                refeash(idx);
+                
+            }
+    
+        }
 }
 
 void BuildListView::refreshGalleryCells()
@@ -235,6 +262,13 @@ void BuildListView::refreshGalleryCells()
 //        if (willBuild>0 && willBuild==m_buildIds[i]) {
 //            showPos = i;
 //        }
+
+
+        
+        
+        
+        
+        
         int sIndex = 204;
         CCLoadSprite::doResourceByCommonIndex(sIndex, true);
         setCleanFunction([sIndex](){
@@ -567,5 +601,6 @@ void BuildListView::selectionChanged(CCGallery *gallery, CCGalleryItem *pGItem)
 
 void BuildListView::selectionDecided(CCGallery *gallery, CCGalleryItem *pGItem)
 {
-    
+    int idx = pGItem->getIdx();
+    gallery->setTargetIndexItem(idx,true);
 }

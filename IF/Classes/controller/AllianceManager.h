@@ -12,7 +12,7 @@
 #include "CommonInclude.h"
 #include "AllianceGiftInfo.h"
 #include "AllianceEventInfo.h"
-
+#include "IFAllianceHelpReportInfo.hpp"
 #define  ALLIANCE_NOTICE_KEY             "notice_0123456789"
 #define MSG_INVITE_TELEPORT_SEND_SUCCESS "msg.invite.teleport.send.success"
 #define MSG_GET_NEAREST_POINT_END        "msg.get.nearest.point.end"
@@ -80,6 +80,7 @@ public:
     map<string,CCDictionary*> warTeamList;
     
     vector<AllianceInfo*> recallianceArray;
+    vector<IFAllianceHelpReportInfo*> m_helpReportListVec;
     map<string, string> recAllianceUrlMap;
     map<string, string> recAllianceNameMap;
     
@@ -101,6 +102,8 @@ public:
     void showRecAlliance();
     void startGetAllianceUrl(string uuid);
     void endGetAllianceUrl(CCDictionary* dic);
+//    void starGetNewAlliance();
+//    void endGetNewAlliance(CCDictionary* dic);
     
     //-------邀请迁城的方法
     void startInviteTeleport(string targetUid, string allianceId, int cityIndex = -1);
@@ -141,5 +144,9 @@ public:
     
     //推荐联盟的标记
     int recAllianceIdx;
+    int recAllianceType;
+    CC_SYNTHESIZE(bool, m_isOpenInMainUI, isOpenInMainUI);
+    CC_SYNTHESIZE(int, m_joinType, joinType);
+    CC_SYNTHESIZE(string, m_recommendAid, recommendAid);
 };
 #endif /* defined(__IF__AllianceManager__) */

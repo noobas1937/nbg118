@@ -58,6 +58,10 @@ void AllianceManager::init(){
     this->tmpMailUid = "";
     this->notUpDate = 0;
     this->tmpCityIndex = 0;
+    this->m_isOpenInMainUI = false;
+    this->m_joinType = 0;
+    this->recAllianceType = 0;
+    m_recommendAid = "";
     auto group = LocalController::shared()->DBXMLManager()->getGroupByKey("rank");
     CCDictElement *ele;
     CCDICT_FOREACH(group, ele){
@@ -389,6 +393,52 @@ bool sortItem(AllianceInfo* itemId1,AllianceInfo* itemId2){
     return false;
 }
 
+//void AllianceManager::starGetNewAlliance()
+//{
+//    if (!CCCommonUtils::isTestPlatformAndServer("guide_4")) {
+//        return;
+//    }
+//    if (GlobalData::shared()->playerInfo.isInAlliance()) {
+//        return;
+//    }
+//    if (FunBuildController::getInstance()->getMainCityLv() < 3) {
+//        return;
+//    }
+//    if (recallianceArray.size()>0 || recAllianceType!=0) {
+//        return;
+//    }
+//    
+//    GetAllianceNewRecCommand* cmd = new GetAllianceNewRecCommand();
+//    cmd->sendAndRelease();
+//}
+//
+//void AllianceManager::endGetNewAlliance(CCDictionary* dic)
+//{
+//    if (dic->objectForKey("searchResult")) {//推荐加入联盟
+//        CCDictionary* result = _dict(dic->objectForKey("searchResult"));
+//        CCArray* arr =  (CCArray*)result->objectForKey("list");
+//        int m_total_receive = result->valueForKey("total")->intValue();
+//        
+//        recallianceArray.clear();
+//        if(arr == NULL){
+//            return;
+//        }
+//        int num = arr->count();
+//        for (int i=0; i<num; i++) {
+//            CCDictionary* dicAlliance = (CCDictionary*)arr->objectAtIndex(i);
+//            AllianceInfo* alliance = new AllianceInfo();
+//            alliance->updateAllianceInfo(dicAlliance);
+//            recallianceArray.push_back(alliance);
+//        }
+//        if(m_total_receive != 0){
+//            sort(recallianceArray.begin(), recallianceArray.end(), sortItem);
+//        }
+//    }
+//    else {//推荐创建联盟
+//        recAllianceType = 1;
+//    }
+//}
+
 void AllianceManager::starGetRecAlliance()
 {
     if (!CCCommonUtils::isTestPlatformAndServer("guide_4")) {
@@ -418,6 +468,9 @@ void AllianceManager::endGetRecAlliance(CCObject* data)
     int m_total_receive = params->valueForKey("total")->intValue();
     
     recallianceArray.clear();
+    if(arr == NULL){
+        return;
+    }
     int num = arr->count();
     for (int i=0; i<num; i++) {
         CCDictionary* dicAlliance = (CCDictionary*)arr->objectAtIndex(i);
@@ -447,6 +500,7 @@ void AllianceManager::showRecAlliance()
     if (SceneController::getInstance()->currentSceneId!=SCENE_ID_MAIN) {
         return;
     }
+//    if (recallianceArray.size()==0 && recAllianceType!=1) {
     if (recallianceArray.size()==0) {
         starGetRecAlliance();
         return;
@@ -458,6 +512,10 @@ void AllianceManager::showRecAlliance()
 }
 
 void AllianceManager::joinAllianceSuccess(CCObject* obj){
+//    if(CCCommonUtils::isFirstJoinAlliance()){
+//        GameController::getInstance()->callXCApi("action=joinAlliance_4");
+//        CCLOGFUNC("firstJoin_style4");
+//    }
     if(GlobalData::shared()->playerInfo.isInAlliance()){
         CCCommonUtils::setIsHDViewPort(true);
         PopupViewController::getInstance()->addPopupInView(AllianceInfoView::create(&GlobalData::shared()->playerInfo.allianceInfo));

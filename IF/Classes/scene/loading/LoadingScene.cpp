@@ -73,11 +73,11 @@ void LoadingScene::addLoadingBG(Point& addPt)
         this->addChild(loadingBG);
         
 //        // tao.yu 进度条上的弓箭
-//        Vec2 arrowPos = loadingBG->convertToWorldSpace(Vec2(470,190));
-//        auto loadingArrow = CCLoadSprite::createSprite("loading_arrow.png");
-//        loadingArrow->setAnchorPoint(ccp(0.5,0.5));
-//        loadingArrow->setPosition(arrowPos);
-//        this->addChild(loadingArrow,99999);
+        Vec2 arrowPos = loadingBG->convertToWorldSpace(Vec2(470,190));
+        auto loadingArrow = CCLoadSprite::createSprite("loading_arrow.png");
+        loadingArrow->setAnchorPoint(ccp(0.5,0.5));
+        loadingArrow->setPosition(arrowPos);
+        this->addChild(loadingArrow,99999);
         
         // tao.yu 圣诞节礼物
 //        Vec2 gift1Pos = loadingBG->convertToWorldSpace(Vec2(470,210));
@@ -864,12 +864,12 @@ void LoadingScene::onGetServerList(CCHttpClient* client, CCHttpResponse* respons
 
 #if COCOS2D_DEBUG != 0
     //测试用切换服务器
-//        ip = "10.1.6.72";
-//    zone = "COK1";
-//         CCUserDefault::sharedUserDefault()->setStringForKey(ACCOUNT_IP, ip);
-//         CCUserDefault::sharedUserDefault()->setStringForKey(ACCOUNT_ZONE, zone);
-//         CCUserDefault::sharedUserDefault()->setIntegerForKey(ACCOUNT_PORT,atoi(port.c_str()));
-//         CCUserDefault::sharedUserDefault()->setStringForKey(GAME_UID, "");
+//    ip = "s2.dc.elexapp.com";
+//    zone = "COK2";
+//    CCUserDefault::sharedUserDefault()->setStringForKey(ACCOUNT_IP, ip);
+//    CCUserDefault::sharedUserDefault()->setStringForKey(ACCOUNT_ZONE, zone);
+//    CCUserDefault::sharedUserDefault()->setIntegerForKey(ACCOUNT_PORT,atoi(port.c_str()));
+//    CCUserDefault::sharedUserDefault()->setStringForKey(GAME_UID, "");
 #endif
     CCUserDefault::sharedUserDefault()->flush();
     

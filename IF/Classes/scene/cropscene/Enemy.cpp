@@ -8,17 +8,22 @@
 
 #include "Enemy.h"
 #include "GongJian2.h"
+#include "NBSprite3D.h"
 
 CCPoint OutsideEnemy::PathBegin = Vec2(4477, 390);
 CCPoint OutsideEnemy::PathEnd = Vec2(4117, 576);
-CCPoint OutsideEnemy::PathBegin1 = Vec2(4542, 533);
-CCPoint OutsideEnemy::PathEnd1 = Vec2(4208, 610);
-CCPoint OutsideEnemy::PathBegin2 = Vec2(4387, 322);
-CCPoint OutsideEnemy::PathEnd2 = Vec2(4027, 512);
+//CCPoint OutsideEnemy::PathBegin1 = Vec2(4542, 533);
+CCPoint OutsideEnemy::PathBegin1 = Vec2(4178, 236);
+CCPoint OutsideEnemy::PathEnd1 = Vec2(4027, 512);
+
+//CCPoint OutsideEnemy::PathBegin2 = Vec2(4387, 322);
+CCPoint OutsideEnemy::PathBegin2 = Vec2(4357, 316);
+CCPoint OutsideEnemy::PathEnd2 = Vec2(4208, 610);
 CCPoint OutsideEnemy::ArrowBegin1 = Vec2(4120, 940);
 CCPoint OutsideEnemy::ArrowBegin2 = Vec2(3734, 750);
 
-OutsideEnemy::OutsideEnemy(CCNode * pBatchNode, CCNode * pArrowBatchNode,  int enemyType):mBatchNode(pBatchNode),mArrowBatchNode(pArrowBatchNode),mIcon(""), mMoveSpeed(70), mIconSpr(nullptr),mActionStatus(ENEMY_ACTION_STATUS_IDLE),mspd(50), mEnemyType(enemyType), mShadowSpr(nullptr)
+OutsideEnemy::OutsideEnemy(CCNode * pBatchNode, CCNode * pArrowBatchNode,  int enemyType, bool isInGuide):mBatchNode(pBatchNode),mArrowBatchNode(pArrowBatchNode),mIcon(""),
+mMoveSpeed(70), mIconSpr(nullptr),mActionStatus(ENEMY_ACTION_STATUS_IDLE),mspd(50), mEnemyType(enemyType), mShadowSpr(nullptr),mIsInGuide(isInGuide)
 {
 }
 
@@ -39,9 +44,9 @@ void OutsideEnemy::onExit()
     unscheduleUpdate();
 }
 
-OutsideEnemy * OutsideEnemy::create(CCNode * pBatchNode, CCNode * pArrowBatchNode,  int enemyType)
+OutsideEnemy * OutsideEnemy::create(CCNode * pBatchNode, CCNode * pArrowBatchNode,  int enemyType, bool isInGuide)
 {
-    OutsideEnemy* ret = new OutsideEnemy(pBatchNode, pArrowBatchNode,   enemyType);
+    OutsideEnemy* ret = new OutsideEnemy(pBatchNode, pArrowBatchNode,   enemyType, isInGuide);
     if(ret && ret->init()){
         ret->autorelease();
     }else{
@@ -82,7 +87,14 @@ void OutsideEnemy::move()
     
     CCPoint fromPos = OutsideEnemy::PathBegin2;
     CCPoint toPos = OutsideEnemy::PathEnd2;
-    int randomIndex = rand() % 3;
+    int posNum = 10;
+    float dxFrom = (OutsideEnemy::PathBegin1.x - OutsideEnemy::PathBegin2.x) / posNum;
+    float dyFrom = (OutsideEnemy::PathBegin1.y - OutsideEnemy::PathBegin2.y) / posNum;
+    float dxTo = (OutsideEnemy::PathEnd1.x - OutsideEnemy::PathEnd2.x) / posNum;
+    float dyTo = (OutsideEnemy::PathEnd1.y - OutsideEnemy::PathEnd2.y) / posNum;
+    int xRandomIndex = (rand() % posNum);
+    int YRandomIndex = (rand() % posNum);
+    /*
     if(randomIndex == 0)
     {
         fromPos = OutsideEnemy::PathBegin;
@@ -93,7 +105,11 @@ void OutsideEnemy::move()
         fromPos = OutsideEnemy::PathBegin1;
         toPos = OutsideEnemy::PathEnd1;
     }
-    
+    */
+    fromPos.x = fromPos.x + dxFrom * xRandomIndex;
+    fromPos.y = fromPos.y + dyFrom * YRandomIndex;
+    toPos.x = toPos.x + dxTo * xRandomIndex;
+    toPos.y = toPos.y + dyTo * YRandomIndex;
     CCPoint gap = ccpSub(fromPos, toPos);
     mFromPos = fromPos;
     mToPos = toPos;
@@ -261,4 +277,47 @@ void OutsideEnemy::shootArrow()
 void OutsideEnemy::start()
 {
     move();
+}
+
+void OutsideEnemy::boatCome()
+{
+    /*
+    char modelPath[256];
+    sprintf(modelPath, "%s%d%s", "3d/ship/ship_", 1, "_skin.c3b");
+    char texturePath[256];
+    sprintf(texturePath, "%s%d%s", "3d/ship/ship_", 1, ".jpg");
+    
+      NBSprite3D * m_vikings3D = NBSprite3D::create(modelPath);
+    m_vikings3D->setTexture(texturePath);
+    m_vikings3D->setScale(1.1);
+    
+    
+    auto vikingsRootNode = CCNode::create();
+    vikingsRootNode->setRotation3D(Vec3(38, 39, -24));
+    auto rotateNode = CCNode::create();
+    rotateNode->addChild(m_vikings3D);
+    rotateNode->setRotation3D(Vec3(0, -80, 0));
+    vikingsRootNode->addChild(rotateNode);
+    
+    
+    vikingsRootNode->setPosition(m_touchLayer->convertToNodeSpace(pPosCCBNode->convertToWorldSpace(Point(0, 0))));
+    
+    Node * m_vikingsParticleNode = Node::create();
+    vikingsRootNode->addChild(m_vikingsParticleNode);
+    */
+}
+
+void OutsideEnemy::boatGo()
+{
+    
+}
+
+void OutsideEnemy::ResumeEnemy()
+{
+    mIconSpr->resume();
+}
+
+void OutsideEnemy::PauseEnemy()
+{
+    mIconSpr->pause();
 }

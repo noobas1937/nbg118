@@ -156,7 +156,7 @@ public:
     static void setInstance(WorldMapView* view);
     static void unsetInstance();
     
-    static WorldMapView* create(CCPoint& tilePoint, MapType mapType);
+    static WorldMapView* create(CCPoint& tilePoint, MapType mapType,bool isInGuide = false);
     virtual void visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags);
     
     CCNode *getNodeByType(std::string typeStr);
@@ -185,7 +185,7 @@ public:
         pthread_mutex_init(&m_addCityLock, NULL);
     }
     void onShowShakeGuide(float time);
-    virtual bool init(CCPoint& tilePoint, MapType mapType);
+    virtual bool init(CCPoint& tilePoint, MapType mapType , bool isInGuide);
     virtual bool onTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
     virtual void onTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
     virtual void onTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
@@ -440,6 +440,8 @@ private:
         CCPoint pt;
         int index;
     };
+    
+    bool m_isInGuide;//fusheng 是否是新手引导中
     
     vector<FlagParInfo> m_flagParDatas;
     
