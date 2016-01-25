@@ -1056,11 +1056,11 @@ void UIComponent::showCanFeedRedPoint(bool isShow)
         if (CCFileUtils::sharedFileUtils()->isFileExist("Spine/Imperial/hunger.json") &&
             CCFileUtils::sharedFileUtils()->isFileExist("Imperial/Imperial_30.atlas"))
         {
-            auto animationObj = new IFSkeletonAnimation("Spine/Imperial/hunger.json","Imperial/Imperial_30.atlas");
+            auto animationObj = new SkeletonAnimation("Spine/Imperial/hunger.json","Imperial/Imperial_30.atlas");
             if (animationObj) {
+                animationObj->retain();
                 m_nbXHD->addChild(animationObj);
                 animationObj->setTag(SPINE_HUNGER);
-                animationObj->setVisibleStop(false);
                 spTrackEntry* entry = animationObj->setAnimation(0, "animation", true);
 //                animationObj->setTimeScale(entry->endTime/8.0f);
             }
