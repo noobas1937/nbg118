@@ -44,6 +44,9 @@ void ActivityRewardView::onEnter(){
         case 6:
             m_titleTxt->setString(_lang("105843"));
             break;
+        case 7:
+            m_titleTxt->setString(_lang("105821"));
+            break;
         default:
             m_titleTxt->setString(_lang("105822"));
             break;
@@ -149,7 +152,7 @@ CCTableViewCell* ActivityRewardView::tableCellAtIndex(CCTableView *table, ssize_
     auto oneDic = _dict(m_data->objectAtIndex(idx));
     CCArray* arr = dynamic_cast<CCArray*>(oneDic->objectForKey("reward"));
     std::string tempStr = _lang_1("105828",CC_ITOA((long)(idx+1)));
-    if (m_type==5) {
+    if (m_type==5 || m_type==7) {
         //todo
         int min = oneDic->valueForKey("min")->intValue();
         int max = oneDic->valueForKey("max")->intValue();
