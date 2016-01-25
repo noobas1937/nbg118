@@ -1178,7 +1178,7 @@ bool FunBuildController::startUpFunBuild(int itemId, int gold, bool isForce, int
         getDataFromServer();
     }
     
-    if (curFunBuildId == FUN_BUILD_WALL_ID && info.level == 2)//fusheng 大门升3级
+    if (curFunBuildId == FUN_BUILD_WALL_ID && info.level == 2 && !GlobalData::shared()->playerInfo.isInAlliance())//fusheng 大门升3级 并且 不在联盟里
     {
         int toolID = ToolController::getInstance()->getSPDItem(ItemSpdMenu_City);
         
@@ -1187,8 +1187,6 @@ bool FunBuildController::startUpFunBuild(int itemId, int gold, bool isForce, int
         if(toolInfo.getCNT()>0 && USE_NEW_GUIDE)//判断一下是否有加速道具
         {
             GuideController::share()->setGuide("3390100");
-            
-            
         }
 
         

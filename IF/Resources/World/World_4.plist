@@ -3228,10 +3228,23 @@
                 <key>sourceSize</key>
                 <string>{223,209}</string>
             </dict>
+            <key>lv22.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{667,1412},{247,227}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{247,227}}</string>
+                <key>sourceSize</key>
+                <string>{247,227}</string>
+            </dict>
             <key>tile_place_holder.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{667,1412},{256,128}}</string>
+                <string>{{920,1412},{256,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -3251,7 +3264,7 @@
             <key>size</key>
             <string>{2048,2048}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:6ee47f612677ba77ee6c7c205c56ddf5:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:4dd5d52de7e8cd2b44a18f7bbd4f290d:1/1$</string>
             <key>textureFileName</key>
             <string>World_4.pvr.ccz</string>
         </dict>

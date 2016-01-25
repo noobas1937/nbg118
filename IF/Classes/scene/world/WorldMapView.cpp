@@ -477,7 +477,7 @@ CCNode *WorldMapView::getNodeByType(std::string typeStr){
     if(typeStr == "wood" || typeStr == "relic" || typeStr == "food"){
         if(GuideController::share()->arr->count() != 1){
             int count = GuideController::share()->arr->count();
-            return NULL;
+//            return NULL;//fusheng 会出现1个以上的情况
         }
         
         unsigned int index = 0;

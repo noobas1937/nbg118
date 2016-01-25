@@ -399,6 +399,8 @@ void ImperialScene::buildingCallBack(CCObject* params)
     if(!GlobalData::shared()->isInitFlag){
         return;
     }
+    
+    CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(QUEST_STATE_UPDATE, nullptr);//fusheng
     GuideController::share()->openSciencePanel();
     auto resSp = CCLoadSprite::loadResource("pic400000_2.png");//dsg_house_1
     resSp->getTexture()->setAntiAliasTexParameters();
@@ -1512,7 +1514,7 @@ void ImperialScene::resumeEnemy()
         node->ResumeEnemy();
     }
 
-    this->schedule(schedule_selector(ImperialScene::createEnemy), 10.0, CC_REPEAT_FOREVER, 0.0f);
+    this->schedule(schedule_selector(ImperialScene::createEnemy), 30.0f, CC_REPEAT_FOREVER, 0.0f);
 }
 
 void ImperialScene::createEnemy(float t)
