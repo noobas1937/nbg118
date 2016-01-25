@@ -24,6 +24,102 @@
 		<array>
 			<dict>
 				<key>baseClass</key>
+				<string>CCSprite</string>
+				<key>children</key>
+				<array/>
+				<key>customClass</key>
+				<string></string>
+				<key>displayName</key>
+				<string>CCSprite</string>
+				<key>memberVarAssignmentName</key>
+				<string></string>
+				<key>memberVarAssignmentType</key>
+				<integer>0</integer>
+				<key>properties</key>
+				<array>
+					<dict>
+						<key>name</key>
+						<string>position</string>
+						<key>type</key>
+						<string>Position</string>
+						<key>value</key>
+						<array>
+							<real>320</real>
+							<real>851</real>
+							<integer>0</integer>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>anchorPoint</string>
+						<key>type</key>
+						<string>Point</string>
+						<key>value</key>
+						<array>
+							<real>0.5</real>
+							<real>1</real>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>scale</string>
+						<key>type</key>
+						<string>ScaleLock</string>
+						<key>value</key>
+						<array>
+							<real>1</real>
+							<real>1</real>
+							<false/>
+							<integer>0</integer>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>ignoreAnchorPointForPosition</string>
+						<key>type</key>
+						<string>Check</string>
+						<key>value</key>
+						<false/>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>displayFrame</string>
+						<key>type</key>
+						<string>SpriteFrame</string>
+						<key>value</key>
+						<array>
+							<string>Common/Common_1.plist</string>
+							<string>UI_Gray_biaotilan.png</string>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>flip</string>
+						<key>type</key>
+						<string>Flip</string>
+						<key>value</key>
+						<array>
+							<true/>
+							<false/>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>blendFunc</string>
+						<key>type</key>
+						<string>Blendmode</string>
+						<key>value</key>
+						<array>
+							<integer>770</integer>
+							<integer>771</integer>
+						</array>
+					</dict>
+				</array>
+				<key>selected</key>
+				<true/>
+			</dict>
+			<dict>
+				<key>baseClass</key>
 				<string>CCScale9Sprite</string>
 				<key>children</key>
 				<array/>
@@ -66,7 +162,7 @@
 						<key>value</key>
 						<array>
 							<string>Common/Common_1.plist</string>
-							<string>UI_Popup_BG.png</string>
+							<string>UI_paper_3.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -211,8 +307,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>0.0</real>
-									<real>373</real>
+									<real>1</real>
+									<real>386</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -444,8 +540,6 @@
 								<string>You city scouted</string>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -2439,8 +2533,8 @@
 								<string>Point</string>
 								<key>value</key>
 								<array>
-									<real>0.5</real>
-									<real>0.5</real>
+									<real>0.55149579048156738</real>
+									<real>0.34865662455558777</real>
 								</array>
 							</dict>
 							<dict>
@@ -2515,8 +2609,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>0.0</real>
-											<real>376</real>
+											<real>-1</real>
+											<real>377</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -2527,8 +2621,8 @@
 										<string>Point</string>
 										<key>value</key>
 										<array>
-											<real>0.5</real>
-											<real>0.5</real>
+											<real>0.48846435546875</real>
+											<real>0.3958740234375</real>
 										</array>
 									</dict>
 									<dict>

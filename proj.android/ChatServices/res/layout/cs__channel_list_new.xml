@@ -46,7 +46,7 @@
         android:layout_height="45dp"
         android:layout_alignParentBottom="true"
         android:layout_centerVertical="true"
-        android:background="@drawable/mail_list_edit_buttonbar_bg"
+        android:background="@color/channel_bottom_color"
         android:paddingTop="5dp" >
 
         <LinearLayout

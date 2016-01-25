@@ -51,12 +51,12 @@
                 android:layout_marginBottom="-4dp"
                 android:layout_marginRight="-3dp"
                 android:layout_marginTop="-4dp"
-                android:background="@drawable/icon_add_mumber2" />
+                android:background="@drawable/icon_add_mumber2" /> 
 
-            <Button
+           <Button
                 android:id="@+id/cs__actionbar_editButton"
-                android:layout_width="68dp"
-                android:layout_height="38dp"
+                android:layout_width="60dp"
+                android:layout_height="53dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginBottom="-4dp"
@@ -64,21 +64,21 @@
                 android:layout_marginTop="-4dp"
                 android:background="@drawable/mail_btn_edit" />
 
-            <Button
+             <Button
                 android:id="@+id/cs__actionbar_returnButton"
                 android:layout_width="68dp"
-                android:layout_height="38dp"
+                android:layout_height="53dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginBottom="-4dp"
                 android:layout_marginRight="-3dp"
                 android:layout_marginTop="-4dp"
-                android:background="@drawable/mail_btn_fanhui" />
+                android:background="@drawable/mail_btn_fanhui" /> 
 
-            <Button
+             <Button
                 android:id="@+id/cs__actionbar_writeButton"
-                android:layout_width="83dp"
-                android:layout_height="33dp"
+                android:layout_width="68dp"
+                android:layout_height="53dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginBottom="-4dp"
@@ -86,7 +86,7 @@
                 android:layout_marginTop="-4dp"
                 android:background="@drawable/mail_btn_write_mail" />
 
-            <Button
+             <Button
                 android:id="@+id/cs__actionbar_showFriendButton"
                 android:layout_width="83dp"
                 android:layout_height="33dp"
@@ -95,7 +95,7 @@
                 android:layout_marginBottom="-4dp"
                 android:layout_marginRight="0dp"
                 android:layout_marginTop="-4dp"
-                android:background="@drawable/btn_show_friend_new2" />
+                android:background="@drawable/btn_show_friend_new2" /> 
         </RelativeLayout>
 
         <RelativeLayout

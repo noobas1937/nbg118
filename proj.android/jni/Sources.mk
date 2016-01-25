@@ -400,6 +400,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../IF/Classes/Net/command/TrainSoldiertimeCommand.cpp \
 ../../IF/Classes/Net/command/TrainSoldierWithCommand.cpp \
 ../../IF/Classes/Net/command/TranslateCommand.cpp \
+../../IF/Classes/Net/command/TranslateOptimizeCommand.cpp \
 ../../IF/Classes/Net/command/TreatCommand.cpp \
 ../../IF/Classes/Net/command/TrialCommand.cpp \
 ../../IF/Classes/Net/command/TroopsCommand.cpp \

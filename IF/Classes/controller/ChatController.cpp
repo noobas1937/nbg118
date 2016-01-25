@@ -35,8 +35,24 @@
 #include "GetChatRoomMemberCommand.h"
 #include "NetController.h"
 #include "ChatTestCommand.h"
-#include "EquipmentBagView.h"
+//#include "EquipInfoView.hpp" simon
 #include "ReportCustomHeadPicCommand.h"
+//#include "GetNewSystemMailMsg_iOS_Command.h"
+//#include "ReportPlayChatCommand.h"
+#include "TranslateOptimizeCommand.h"
+#include "FriendsController.h"
+#include "GetFriendListCommand.h"
+#include "AllianceWarDetailView.h"
+#include "LotteryAct2ShowView.h"
+//#include "AllianceDailyPublishView.h"
+#include "ChangeNickNameView.h"
+//#include "HongBaoGetView.h"
+#include "ToolCommand.h"
+#include "KingdomOfficersCommand.h"
+#include "FunBuildController.h"
+//#include "AllianceDailyController.h"
+#include "EquipmentBagView.h"
+
 
 static ChatController *_instance = NULL;
 
@@ -55,12 +71,12 @@ ChatController* ChatController::getInstance() {
 }
 
 void ChatController::purgeData() {
-    delete _instance;
+    CC_SAFE_RELEASE_NULL( _instance );
     _instance = NULL;
 }
 
 //发送聊天信息
-bool ChatController::sendCountryChat(const char* msg, int type, int post,std::string sendLocalTime/*=""*/)
+bool ChatController::sendCountryChat(const char* msg,int type, int post,std::string sendLocalTime/*=""*/,const char* dialog/*""*/,CCArray* msgArr/*NULL*/,std::string thxuuid)
 {
     string tmp = "";
     tmp = tmp + msg;
@@ -83,6 +99,16 @@ bool ChatController::sendCountryChat(const char* msg, int type, int post,std::st
     
     CCLOG("sendCountryChat type :%d",type);
     
+//    if (type == CHAT_COUNTRY) {
+//        CountryChatCommand * cmd = new CountryChatCommand(CHAT_STATE_COUNTRY_COMMAND,msg,post,sendLocalTime,dialog,msgArr);
+//        cmd->sendAndRelease();
+//    }
+//    else if (type == CHAT_ALLIANCE){
+//        CountryChatCommand * cmd = new CountryChatCommand(CHAT_STATE_ALLIANCE_COMMAND,msg,post,sendLocalTime,dialog,msgArr,thxuuid);
+//        cmd->sendAndRelease();
+//    } simon
+    
+    
     if (type == CHAT_COUNTRY) {
         CountryChatCommand * cmd = new CountryChatCommand(CHAT_STATE_COUNTRY_COMMAND,msg,post,sendLocalTime);
         cmd->sendAndRelease();
@@ -91,6 +117,7 @@ bool ChatController::sendCountryChat(const char* msg, int type, int post,std::st
         CountryChatCommand * cmd = new CountryChatCommand(CHAT_STATE_ALLIANCE_COMMAND,msg,post,sendLocalTime);
         cmd->sendAndRelease();
     }
+
     return true;
 }
 
@@ -118,9 +145,14 @@ bool ChatController::sendSelfChat(const char* msg, const char* uid, const char* 
 void ChatController::receiveChat(CCDictionary* dict)
 {
     auto info = ChatInfo(dict);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    if ((info.type == CHAT_COUNTRY || info.type == CHAT_ALLIANCE) && ChatServiceCocos2dx::useWebSocketServer && ChatServiceCocos2dx::isRecieveFromWebSocket)
+        return;
+#endif
+    
     if (info.type == CHAT_COUNTRY) {
         m_chatCountryPool.push_back(info);
-        if(info.sequenceId>ChatController::getInstance()->m_latestCountryMsg.sequenceId)
+        if(info.sequenceId>ChatController::getInstance()->m_latestCountryMsg.sequenceId || info.time>ChatController::getInstance()->m_latestCountryMsg.time)
             ChatController::getInstance()->m_latestCountryMsg=info;
         if(info.post == CHAT_TYPE_NOTICE){
             LuaController::getInstance()->addChatNotice(dict);
@@ -136,13 +168,13 @@ void ChatController::receiveChat(CCDictionary* dict)
     }
     else if (info.type == CHAT_ALLIANCE) {
         m_chatAlliancePool.push_back(info);
-        if(info.sequenceId>ChatController::getInstance()->m_latestAllianceMsg.sequenceId)
+        if(info.sequenceId>ChatController::getInstance()->m_latestAllianceMsg.sequenceId || info.time>ChatController::getInstance()->m_latestAllianceMsg.time)
             ChatController::getInstance()->m_latestAllianceMsg=info;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         
         CCLOG("receiveChat");
         ChatMailInfo* chatInfo=ChatMailInfo::create(info,true);
-        CCArray* chatInfoArr=CCArray::create();
+        CCArray* chatInfoArr= CCArray::create();
         chatInfoArr->addObject(chatInfo);
         ChatServiceCocos2dx::handleChatPush(chatInfoArr,CHANNEL_TYPE_ALLIANCE,"1");
 #endif
@@ -173,15 +205,12 @@ void ChatController::receiveChat(CCDictionary* dict)
             UIComponent::getInstance()->updateChatInfo(info.type);
         }
 #else
-        if(ChatServiceCocos2dx::enableNativeChat){
-            if(!ChatServiceCocos2dx::isChatShowing_fun())
-                UIComponent::getInstance()->updateChatInfoIOS(info.type);
-        }
-        else
-        {
+        /**
+         *  原生开关打开的情况下。由IOS接收消息端发送信息到COCOS显示
+         */
+        if(!ChatServiceCocos2dx::enableNativeChat){
             UIComponent::getInstance()->updateChatInfo(info.type);
         }
-        //IOS需要添加自己的方法
 #endif
     }
 }
@@ -194,6 +223,52 @@ void ChatController::notifyChatMsgToAndroid(CCArray* chatInfoArr)
     ChatServiceCocos2dx::m_curSendChatIndex++;
 #endif
 }
+
+void ChatController::getKingOfServer()
+{
+    CCLOGFUNC("");
+    if(GlobalData::shared()->playerInfo.selfServerId<0)
+        return;
+    KingdomOfficersCommand* cmd = new KingdomOfficersCommand();
+    cmd->putParam("serverId", CCInteger::create(GlobalData::shared()->playerInfo.selfServerId));
+    cmd->setSuccessCallback(CCCallFuncO::create(this, callfuncO_selector(ChatController::getOfficersData), NULL));
+    cmd->sendAndRelease();
+}
+
+void ChatController::getOfficersData(CCObject* data){
+    CCLOGFUNC("");
+    NetResult* result = dynamic_cast<NetResult*>(data);
+    auto dic = _dict(result->getData());
+    string kingUid = "";
+    if(dic){
+        CCArray* officers = dynamic_cast<CCArray*>(dic->objectForKey("officers"));
+        if(officers)
+        {
+            for (int i=0; i<officers->count(); i++) {
+                auto officerInfo = _dict(officers->objectAtIndex(i));
+                if(officerInfo && officerInfo->objectForKey("positionId"))
+                {
+                    int posId = officerInfo->valueForKey("positionId")->intValue();
+                    if(posId == 216000)
+                    {
+                        CCLOGFUNC("posId == 216000");
+                        if (officerInfo->objectForKey("uid")) {
+                            kingUid = officerInfo->valueForKey("uid")->getCString();
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    CCLOGFUNCF("KING UID:%s",kingUid.c_str());
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    ChatServiceCocos2dx::postKingUid(kingUid);
+#else
+//    ChatServiceCocos2dx::postKingUid(kingUid); simon
+#endif
+}
+
 
 void ChatController::notifyChatMsgToIOS(cocos2d::CCArray *chatInfoArr, int channelType, string id)
 {
@@ -257,8 +332,68 @@ void ChatController::viewEquipment(string equipId)
 {
     CCLOGFUNCF("equipId:%s",equipId.c_str());
     int id = atoi(equipId.c_str());
-    PopupViewController::getInstance()->addPopupInView(EquipInfoView::createWithEquipId(id));
+    PopupViewController::getInstance()->addPopupView(EquipInfoView::createWithEquipId(id));
 }
+
+//查看集结信息
+void ChatController::viewRallyInfo(string teamUid)
+{
+    CCLOGFUNCF("teamUid:%s",teamUid.c_str());
+//    AllianceWarDetailView::createWarDetailViewByTeamUuid(teamUid); simon
+}
+
+//查看转盘分享信息
+void ChatController::viewLotteryInfo(string lotteryInfo)
+{
+    CCLOGFUNCF("lotteryInfo:%s",lotteryInfo.c_str());
+//    PopupViewController::getInstance()->addPopupView(LotteryAct2ShowView::createWithInfo(lotteryInfo)); simon
+}
+
+//查看红包
+void ChatController::viewRedPackage(string redPackageUid,string server,bool isViewOnly)
+{
+    CCLOGFUNCF("redPackageUid:%s   server:%s  isViewOnly:%d",redPackageUid.c_str(),server.c_str(),isViewOnly);
+//    PopupViewController::getInstance()->addPopupInView(HongBaoGetView::create(redPackageUid,server,isViewOnly)); simon
+}
+
+//获取已领取的红包uid
+void ChatController::getHandledRedPackages()
+{
+//    RedPacketUidsGetCommand* cmd = new RedPacketUidsGetCommand(); simon
+//    cmd->sendAndRelease();
+}
+
+//获取当前红包状态
+void ChatController::getRedPackageStatus(string redPackageUid,string serverId)
+{
+//    GetRedPacketStatusCommand* cmd = new GetRedPacketStatusCommand(redPackageUid,serverId); simon
+//    cmd->sendAndRelease();
+}
+
+void ChatController::viewLotteryInfoFromIOS(string lotteryInfo)
+{
+//    PopupViewController::getInstance()->addPopupView(LotteryAct2ShowView::createWithInfoFromIOS(lotteryInfo)); simon
+}
+//查看联盟任务分享信息
+void ChatController::viewAllianceTaskInfo()
+{
+    CCLOGFUNC("");
+//    if(AllianceDailyController::getInstance()->isSwitchOpen()){
+//        if (FunBuildController::getInstance()->getMainCityLv() >= 10) {
+//            PopupViewController::getInstance()->addPopupInView(AllianceDailyPublishView::create());
+//        }else{
+//            CCCommonUtils::flyHint("", "", _lang_1("134068", CC_ITOA(10)));
+//        }
+//    } simon
+}
+
+//领主改名
+void ChatController::changeNickName()
+{
+    CCLOGFUNC("");
+//    PopupViewController::getInstance()->addPopupView(ChangeNickNameView::create("200021")); simon
+}
+
 
 //查看玩家侦察战报
 void ChatController::viewDetectReport(string uid,string detectReportUid)
@@ -276,9 +411,9 @@ void ChatController::viewDetectReport(string uid,string detectReportUid)
 
 void ChatController::viewDetectReportSuccess(CCObject* pObj)
 {
-    CCLOG("viewDetectReportSuccess");
-    CCLOG("m_detectReportPlayerUid :%s\n",m_detectReportPlayerUid.c_str());
-    CCLOG("m_detectReportId :%s\n",m_detectReportId.c_str());
+   // CCLOG("viewDetectReportSuccess");
+    //CCLOG("m_detectReportPlayerUid :%s\n",m_detectReportPlayerUid.c_str());
+   // CCLOG("m_detectReportId :%s\n",m_detectReportId.c_str());
     NetResult* result = dynamic_cast<NetResult*>(pObj);
     if(result==NULL) return;
     auto dictInfo = _dict(result->getData());
@@ -288,6 +423,8 @@ void ChatController::viewDetectReportSuccess(CCObject* pObj)
     }
     if(arr && arr->count()>0){
         auto dic = _dict(arr->objectAtIndex(0));
+        if( !dic )
+            return;
         MailInfo* m_mailInfo = MailInfo::create();
         if (m_detectReportId!="" && m_detectReportPlayerUid!="") {
             m_mailInfo->uid = m_detectReportId;
@@ -306,7 +443,11 @@ void ChatController::viewDetectReportSuccess(CCObject* pObj)
         m_mailInfo->createTime = dic->valueForKey("createTime")->doubleValue() / 1000;
         m_mailInfo->retain();
         
-        PopupViewController::getInstance()->addPopupInView(DetectMailPopUpView::create(m_mailInfo));
+        auto view = DetectMailPopUpView::create(m_mailInfo);
+        if (view) {
+            view->setMailUuid("");
+        }
+        PopupViewController::getInstance()->addPopupInView(view);
     }else{
         CCCommonUtils::flyHint("", "", _lang("115299"));
     }
@@ -325,14 +466,24 @@ void ChatController::inviteJoinAlliance(string uid,string name)
     cmd->sendAndRelease();
 }
 
+void ChatController::reportPlayerChatContent(string uid,string content)
+{
+    CCLOGFUNCF("uid:%s   content:%s",uid.c_str(),content.c_str());
+//    ReportPlayChatCommand* cmd = new ReportPlayChatCommand(uid,content);
+//    cmd->sendAndRelease(); simon
+}
+
 void ChatController::inviteFunc(CCObject* obj){
     if(m_invitePlayerName=="")
         return ;
     string name = m_invitePlayerName;
     string msg = _lang_1("115182", name.c_str());
     msg.append("  (").append(_lang("115181")).append(")");
+    string dialog = "115182";
+    CCArray* msgArr = CCArray::create();
+    msgArr->addObject(CCString::create(name));
     CCLOG("invite %s",msg.c_str());
-    ChatController::getInstance()->sendCountryChat(msg.c_str(), CHAT_ALLIANCE, 2);
+    ChatController::getInstance()->sendCountryChat(msg.c_str(), CHAT_ALLIANCE, 2, "", dialog.c_str(), msgArr);
     m_invitePlayerName="";
 }
 
@@ -354,17 +505,24 @@ void ChatController::viewBattleReportSuccess(CCObject* pObj)
     }
     if(arr && arr->count()>0){
         auto dic = _dict(arr->objectAtIndex(0));
-        MailInfo* m_mailInfo = MailInfo::create();
-        if (m_battleReportId!="" && m_battleReportPlayerUid!="") {
-            m_mailInfo->uid = m_battleReportId;
-            m_mailInfo->shareUid = m_battleReportPlayerUid;
+        if( dic )
+        {
+            MailInfo* m_mailInfo = MailInfo::create();
+            if (m_battleReportId!="" && m_battleReportPlayerUid!="") {
+                m_mailInfo->uid = m_battleReportId;
+                m_mailInfo->shareUid = m_battleReportPlayerUid;
+            }
+        
+            m_mailInfo->type = MAIL_BATTLE_REPORT;
+            m_mailInfo->isReadContent = true;
+        
+            m_mailInfo->parseBattleMail(dic);
+            auto view = BattleReportMailPopUpView::create(m_mailInfo);
+            if (view) {
+                view->setMailUuid("");
+            }
+            PopupViewController::getInstance()->addPopupInView(view);
         }
-        
-        m_mailInfo->type = MAIL_BATTLE_REPORT;
-        m_mailInfo->isReadContent = true;
-        
-        m_mailInfo->parseBattleMail(dic);
-        PopupViewController::getInstance()->addPopupInView(BattleReportMailPopUpView::create(m_mailInfo));
     }else{
         CCCommonUtils::flyHint("", "", _lang("115282"));
     }
@@ -372,6 +530,18 @@ void ChatController::viewBattleReportSuccess(CCObject* pObj)
     m_battleReportId="";
     m_battleReportPlayerUid="";
 
+}
+
+void ChatController::getRedPackageTime()
+{
+    string timeStr = CCCommonUtils::getPropById("209639","para");
+    CCLOGFUNCF("timeStr:%s",timeStr.c_str());
+    int time = atoi(timeStr.c_str());
+#if (CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
+    ChatServiceCocos2dx::postRedPackageDuringTime(time);
+#elif (CC_TARGET_PLATFORM==CC_PLATFORM_IOS)
+//    ChatServiceCocos2dx::postRedPackageDuringTime(time); simon
+#endif
 }
 
 
@@ -394,7 +564,7 @@ void ChatController::getUserInfoCallback(CCObject *pObj)
         }
     }
     PopupViewController::getInstance()->addPopupInView(RoleInfoView::create(info,1));
-    CC_SAFE_RELEASE(info);
+    info->release();
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 //    ChatServiceCocos2dx::hideChatInputView();
@@ -483,7 +653,7 @@ void ChatController::getMultiUserInfo(vector<std::string> *uids)
         cmd->sendAndRelease();
     }else{
         CCLOG("isProcessing 会导致超时");
-        CC_SAFE_RELEASE(cmd);
+        cmd->release();
     }
 }
 
@@ -559,6 +729,9 @@ void ChatController::getMultiUserInfoCallback(CCDictionary* dict)
         }
         if(item->objectForKey("crossFightSrcServerId")){
             userInfoDic->setObject(CCInteger::create(item->valueForKey("crossFightSrcServerId")->intValue()), "crossFightSrcServerId");
+        }
+        if(item->objectForKey("lang")){
+            userInfoDic->setObject(CCString::create(item->valueForKey("lang")->getCString()), "lang");
         }
         if(uid!="")
         {
@@ -662,22 +835,65 @@ void ChatController::banPlayer(string uid,int banTimeIndex)
     }
 }
 
+//禁言玩家喇叭消息
+void ChatController::banPlayerNotice(string uid,int banTimeIndex)
+{
+//    int banTime=getBanTime(banTimeIndex);
+//    CCLOGFUNCF("banTime : %d",banTime);
+//    if(banTime==0)
+//        banTime=3600;
+//    if(uid!="") {
+//        ChatNoticeBanCommand* cmd = new ChatNoticeBanCommand(uid,banTime);
+//        cmd->sendAndRelease();
+//    } simon
+}
+
+//解除玩家喇叭禁言
+void ChatController::unBanPlayerNotice(string uid)
+{
+//    if(uid!="")
+//    {
+//        ChatNoticeUnBanCommand* cmd = new ChatNoticeUnBanCommand(uid);
+//        cmd->sendAndRelease();
+//    } simon
+}
+
+void ChatController::setBanTimeSet(std::string banTimeSet)
+{
+    m_banTimeSet = banTimeSet;
+}
+
 int ChatController::getBanTime(int index)
 {
     int bannedTime = 0;
+    std::vector<std::string> banTimeVec;
+    int banTime1 = 1;
+    int banTime2 = 2;
+    int banTime3 = 3;
+    int banTime4 = 4;
+    CCCommonUtils::splitString(m_banTimeSet, "|", banTimeVec);
+    CCLOGFUNCF("banTimeVec.size() :%d",banTimeVec.size());
+    if(banTimeVec.size() == 4)
+    {
+        banTime1 = atoi(banTimeVec.at(0).c_str());
+        banTime2 = atoi(banTimeVec.at(1).c_str());
+        banTime3 = atoi(banTimeVec.at(2).c_str());
+        banTime4 = atoi(banTimeVec.at(3).c_str());
+    }
+    
     switch (index)
     {
         case 0:
-            bannedTime = 3600;
+            bannedTime = 3600*banTime1;
             break;
         case 1:
-            bannedTime = 3600*2;
+            bannedTime = 3600*banTime2;
             break;
         case 2:
-            bannedTime = 3600*3;
+            bannedTime = 3600*banTime3;
             break;
         case 3:
-            bannedTime = 3600*4;
+            bannedTime = 3600*banTime4;
             break;
         default:
             break;
@@ -837,6 +1053,73 @@ bool ChatController::sendRequestChat(int type)
     return true;
 }
 
+ChatInfo ChatController::parseLatestChatInfo(Json* jsonObject)
+{
+    ChatInfo chatInfo;
+    if(jsonObject)
+    {
+        string name = Json_getString(jsonObject, "name", "");
+        string asn = Json_getString(jsonObject, "asn", "");
+        string msg = Json_getString(jsonObject, "msg", "");
+        int vip = Json_getInt(jsonObject, "vip", 0);
+        int isVersionValid = Json_getInt(jsonObject, "isVersionValid", 0);
+        int sequenceId = Json_getInt(jsonObject, "sequenceId", 0);
+        int createTime = Json_getInt(jsonObject, "createTime", 0);
+        int post = Json_getInt(jsonObject, "post", 0);
+        CCLOGFUNCF("name:%s  asn:%s  msg:%s  vip:%d  isVersionValid:%d   sequeueId:%d   createTime:%d post:%d",name.c_str(),asn.c_str(),msg.c_str(),vip,isVersionValid,sequenceId,createTime,post);
+        
+        chatInfo.name = name;
+        chatInfo.asn = asn;
+        chatInfo.vip = vip;
+        chatInfo.sequenceId = sequenceId;
+        chatInfo.time = createTime;
+        chatInfo.msg = msg;
+//        chatInfo.version = isVersionValid == 0? "0" : "" ; simonpostKingUid
+        chatInfo.post = post;
+    }
+    return chatInfo;
+}
+
+void ChatController::getLatestMessage()
+{
+#if(CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
+    if(ChatServiceCocos2dx::enableNativeChat){
+        string latestChatJson = ChatServiceCocos2dx::getChatLatestMessage();
+        parseLatestChatInfoStr(latestChatJson);
+    }
+#endif
+}
+
+void ChatController::parseLatestChatInfoStr(string jsonStr)
+{
+    if(jsonStr == "")
+        return;
+    CCLOGFUNCF("jsonStr:%s",jsonStr.c_str());
+    Json* jsonObj = Json_create(jsonStr.c_str());
+    if (jsonObj) {
+        Json* latestCountryChatInfo = Json_getItem(jsonObj, "latestCountryChatInfo");
+        Json* latestAllianceChatInfo = Json_getItem(jsonObj, "latestAllianceChatInfo");
+        if(latestCountryChatInfo)
+        {
+            m_latestCountryMsg = parseLatestChatInfo(latestCountryChatInfo);
+        }
+        if(latestAllianceChatInfo)
+        {
+            m_latestAllianceMsg = parseLatestChatInfo(latestAllianceChatInfo);
+        }
+        
+        if (ChatServiceCocos2dx::m_channelType==CHANNEL_TYPE_COUNTRY) {
+            UIComponent::getInstance()->showCountryIcon(true);
+            showLatestMessage(0);
+        }
+        else if (ChatServiceCocos2dx::m_channelType==CHANNEL_TYPE_ALLIANCE)
+        {
+            UIComponent::getInstance()->showCountryIcon(false);
+            showLatestMessage(2);
+        }
+    }
+}
+
 void ChatController::showLatestMessage(int chatType)
 {
     CCLOG("showLatestMessage %d",chatType);
@@ -962,6 +1245,12 @@ void ChatController::retRequestChat(CCDictionary* dict)
         
         for (int i=0; i<arr->count(); i++) {
             item = _dict(arr->objectAtIndex(i));
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#else
+            int post = item->valueForKey("post")->intValue();
+            if(post == CHAT_TYPE_EQUIP_SHARE)
+                continue;
+#endif
             m_chatAlliancePool.insert(m_chatAlliancePool.begin(), ChatInfo(item));
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
             ChatMailInfo* chatInfo=ChatMailInfo::create(ChatInfo(item),false);
@@ -1050,7 +1339,7 @@ void ChatController::localTranslate(){
     request->setResponseCallback(this, httpresponse_selector(ChatController::onLocalTranslate));
     request->setTag("chat_translate_request");
     CCHttpClient::getInstance()->send(request);
-    CC_SAFE_RELEASE(request);
+    request->release();
 }
 void ChatController::onLocalTranslate(CCHttpClient *client, CCHttpResponse *response){
     if(!mTransChat)
@@ -1365,10 +1654,16 @@ void ChatController::getNewMsg(string comandStr)
 
 void ChatController::getNewMailMsg(string comandStr)
 {
-    GetNewMailMsgCommand* getNewCmd = new GetNewMailMsgCommand(comandStr);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    GetNewMailMsgCommand* getNewCmd = new GetNewMailMsgCommand(0,comandStr);
+#elif  (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+     GetNewMailMsgCommand* getNewCmd = new GetNewMailMsgCommand(comandStr);
+#endif
+    
     getNewCmd->sendAndRelease();
 }
 
+ 
 void ChatController::setDisableTranslateLang()
 {
     const char* langType[21] = {"en","zh-Hans","zh-Hant","es","fr","pt","de","ru","ko","it","da","el","fi","ja","nl","pl","sv","th","tr","vi","ms"};
@@ -1394,5 +1689,51 @@ void ChatController::setDisableTranslateLang()
     CCLOGFUNCF("disableLang %s:",disableLang.c_str());
 #if (CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
     ChatServiceCocos2dx::setDisableLang(disableLang);
+#elif(CC_TARGET_PLATFORM==CC_PLATFORM_IOS)
+//    ChatServiceCocos2dx::setDisableLang(disableLang); simon
+#endif
+}
+
+void ChatController::translateOptimize(std::string method,std::string originalLang,std::string userLang,std::string msg,std::string translationMsg)
+{
+    CCLOGFUNCF("method:%s  originalLang:%s  userLang:%s  msg:%s  translationMsg:%s",method.c_str(),originalLang.c_str(),userLang.c_str(),msg.c_str(),translationMsg.c_str());
+    TranslateOptimizeCommand* cmd = new TranslateOptimizeCommand(method,originalLang,userLang,msg,translationMsg);
+    cmd->sendAndRelease();
+}
+
+void ChatController::getFriendMember()
+{
+    CCLOGFUNC("");
+    if(FriendsController::getInstance()->m_bOpen){
+        GetFriendListCommand * command = new GetFriendListCommand();
+        command->sendAndRelease();
+    }
+}
+
+void ChatController::postShieldUids(Array* uidArray)
+{
+    CCLOGFUNC("");
+    string uids = "";
+    if(uidArray!=nullptr)
+    {
+        CCLOGFUNC("1");
+        for(int i =0;i<uidArray->count();i++)
+        {
+            CCLOGFUNC("2");
+            ShieldInfo* shieldInfo = dynamic_cast<ShieldInfo*>(uidArray->objectAtIndex(i));
+            if (shieldInfo) {
+                string uidStr = shieldInfo->uid;
+                CCLOGFUNCF("uidStr:%s",uidStr.c_str());
+                if (uidStr!="") {
+                    if (uids!="") {
+                        uids.append("_");
+                    }
+                    uids.append(uidStr);
+                }
+            }
+        }
+    }
+#if (CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
+    ChatServiceCocos2dx::postShieldUids(uids);
 #endif
 }

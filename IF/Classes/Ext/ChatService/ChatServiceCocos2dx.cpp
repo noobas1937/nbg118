@@ -2884,7 +2884,7 @@ extern "C" {
         CCLOG("Java_com_elex_chatservice_host_GameHost_unBanPlayerNotice");
         J2CSTRING(uidStr, uid);
         CCLOG("uidStr : %s", uidStr.c_str());
-//        ChatController::getInstance()->unBanPlayerNotice(uidStr);
+        ChatController::getInstance()->unBanPlayerNotice(uidStr);
     }
     
     //禁言玩家喇叭消息
@@ -2897,7 +2897,7 @@ extern "C" {
         J2CSTRING(uidStr, uid);
         CCLOG("uidStr : %s", uidStr.c_str());
         CCLOG("banTimeIndex : %d", (int)banTimeIndex);
-//        ChatController::getInstance()->banPlayerNotice(uidStr,(int)banTimeIndex);
+        ChatController::getInstance()->banPlayerNotice(uidStr,(int)banTimeIndex);
     }
     
     JNIEXPORT void JNICALL Java_com_elex_chatservice_host_GameHost_joinAnnounceInvitation(JNIEnv *env,
@@ -3449,7 +3449,7 @@ extern "C" {
         J2CSTRING(uidStr, uid);
         J2CSTRING(msgStr, msg);
         CCLOGFUNCF("uidStr: %s  msgStr:%s",uidStr.c_str(),msgStr.c_str());
-//        ChatController::getInstance()->reportPlayerChatContent(uidStr,msgStr);
+        ChatController::getInstance()->reportPlayerChatContent(uidStr,msgStr);
     }
     
     JNIEXPORT void JNICALL Java_com_elex_chatservice_host_GameHost_getRedPackageStatus(JNIEnv *env,
@@ -3462,7 +3462,7 @@ extern "C" {
         if(redPackInfoArr.size() == 2)
         {
             CCLOGFUNCF("redPackageUidStr: %s  serverId:%s",redPackInfoArr.at(0).c_str(),redPackInfoArr.at(1).c_str());
-//            ChatController::getInstance()->getRedPackageStatus(redPackInfoArr.at(0),redPackInfoArr.at(1));
+            ChatController::getInstance()->getRedPackageStatus(redPackInfoArr.at(0),redPackInfoArr.at(1));
         }
     }
     
@@ -3479,13 +3479,13 @@ extern "C" {
                                                                                         jstring json){
         J2CSTRING(jsonStr, json);
         CCLOGFUNCF("jsonStr: %s",jsonStr.c_str());
-//        ChatController::getInstance()->parseLatestChatInfoStr(jsonStr);
+        ChatController::getInstance()->parseLatestChatInfoStr(jsonStr);
     }
     
     JNIEXPORT void JNICALL Java_com_elex_chatservice_host_GameHost_changeNickName(JNIEnv *env,
                                                                          jobject object){
         CCLOGFUNCF("");
-//        ChatController::getInstance()->changeNickName();
+        ChatController::getInstance()->changeNickName();
     }
     
     JNIEXPORT void JNICALL Java_com_elex_chatservice_host_GameHost_translateOptimize(JNIEnv *env,
@@ -3507,7 +3507,7 @@ extern "C" {
         CCLOGFUNCF("msgStr : %s",msgStr.c_str());
         CCLOGFUNCF("translationMsgStr : %s",translationMsgStr.c_str());
         
-//        ChatController::getInstance()->translateOptimize(methodStr, originalLangStr,userLangStr,msgStr,translationMsgStr);
+        ChatController::getInstance()->translateOptimize(methodStr, originalLangStr,userLangStr,msgStr,translationMsgStr);
     }
     
     JNIEXPORT void JNICALL Java_com_elex_chatservice_host_GameHost_completeInitDatabase(){
@@ -3594,7 +3594,7 @@ JNIScheduleObject* JNIScheduleObject::getInstance()
 
 void JNIScheduleObject::showLatestMessage(float time){
     CCLOG("JNIScheduleObject::showLatestMessage");
-//    ChatController::getInstance()->getLatestMessage();  simon
+    ChatController::getInstance()->getLatestMessage();
 //    if (ChatServiceCocos2dx::m_channelType==CHANNEL_TYPE_COUNTRY) {
 //        UIComponent::getInstance()->showCountryIcon(true);
 //        ChatController::getInstance()->showLatestMessage(0);
@@ -3747,19 +3747,19 @@ void JNIScheduleObject::handleResume(float time){
     }
     else if(actionAfterResume == "viewRallyInfo"){
         CCLOG("JNIScheduleObject viewRallyInfo");
-//        ChatController::getInstance()->viewRallyInfo(attachmentId);
+        ChatController::getInstance()->viewRallyInfo(attachmentId);
     }
     else if(actionAfterResume == "viewLotteryShare"){
         CCLOG("JNIScheduleObject viewLotteryShare");
-//        ChatController::getInstance()->viewLotteryInfo(attachmentId);
+        ChatController::getInstance()->viewLotteryInfo(attachmentId);
     }
     else if(actionAfterResume == "viewAllianceTaskShare"){
         CCLOG("JNIScheduleObject viewAllianceTaskShare");
-//        ChatController::getInstance()->viewAllianceTaskInfo();
+        ChatController::getInstance()->viewAllianceTaskInfo();
     }
     else if(actionAfterResume == "changeNickName"){
         CCLOG("JNIScheduleObject changeNickName");
-//      ChatController::getInstance()->changeNickName();
+      ChatController::getInstance()->changeNickName();
     }
     else if(actionAfterResume == "showFriend"){
         CCLOG("JNIScheduleObject showFriend");
@@ -3771,7 +3771,7 @@ void JNIScheduleObject::handleResume(float time){
         CCCommonUtils::splitString(attachmentId, "_", redPackInfoArr);
         if(redPackInfoArr.size() == 2)
         {
-//            ChatController::getInstance()->viewRedPackage(redPackInfoArr.at(0),redPackInfoArr.at(1),true);
+            ChatController::getInstance()->viewRedPackage(redPackInfoArr.at(0),redPackInfoArr.at(1),true);
         }
     }
     else if(actionAfterResume == "pickRedPackage"){
@@ -3780,7 +3780,7 @@ void JNIScheduleObject::handleResume(float time){
         CCCommonUtils::splitString(attachmentId, "_", redPackInfoArr);
         if(redPackInfoArr.size() == 2)
         {
-//            ChatController::getInstance()->viewRedPackage(redPackInfoArr.at(0),redPackInfoArr.at(1));
+            ChatController::getInstance()->viewRedPackage(redPackInfoArr.at(0),redPackInfoArr.at(1));
         }
     }
     else{

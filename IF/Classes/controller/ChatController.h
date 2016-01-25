@@ -35,7 +35,7 @@
 class ChatController:public CCObject {
 public:
     static ChatController* getInstance();
-    ChatController():uid(""),chat_interval(1),chat_time(600),canCountryRequest(true),canAllianceRequest(true),m_tmpType(0),m_tmpSaveMsg(""),newChaterAllianceId(""),idx(0),m_banTime(0),isFirstRequestCountry(true),mIsNoticeOpen(false),mNoticeShowTime(2),mNoticeCharMax(140),m_noticeBanTime(0),mTransChat(NULL){
+    ChatController():uid(""),chat_interval(1),chat_time(600),canCountryRequest(true),canAllianceRequest(true),m_tmpType(0),m_tmpSaveMsg(""),newChaterAllianceId(""),idx(0),m_banTime(0),isFirstRequestCountry(true),mIsNoticeOpen(false),mNoticeShowTime(2),mNoticeCharMax(140),m_noticeBanTime(0),mTransChat(NULL),translateOptimizationUrl(""),m_banTimeSet("1|2|3|4"){
         m_chatInfoSendDic=CCDictionary::create();
         m_chatInfoSendDic->retain();
         m_userInfoDic=CCDictionary::create();
@@ -46,6 +46,7 @@ public:
     ~ChatController();
     static void purgeData();
     
+    string translateOptimizationUrl;
     string uid;
     int chat_interval;
     int chat_time;
@@ -70,7 +71,7 @@ public:
     CCDictionary* m_userInfoDic;                //用于通过JNI向android传送的所有玩家信息，key对应玩家信息体序号，value对应玩家信息
     
     //发送 接收 消息
-    bool sendCountryChat(const char* msg, int type,int post=0,std::string sendLocalTime="");
+    bool sendCountryChat(const char* msg, int type,int post=0,std::string sendLocalTime="",const char* dialog ="",CCArray* msgArr = NULL,std::string thxuuid="");
     bool sendSelfChat(const char* msg, const char* uid=NULL, const char* name=NULL);
     void receiveChat(CCDictionary* dict);
     
@@ -100,10 +101,14 @@ public:
     int getBanTime(int index);
     //解除禁言玩家
     void unBanPlayer(string uid);
+    //禁言玩家喇叭消息
+    void banPlayerNotice(string uid,int banTimeIndex);
+    //解除禁言喇叭消息玩家
+    void unBanPlayerNotice(string uid);
     //加入联盟
     void joinAlliance(string uid);
     void joinAllianceBtnClick();
-    
+    void reportPlayerChatContent(string uid,string content);
     //查看玩家战报
     void viewBattleReport(string uid,string reportUid);
     //查看玩家侦察战报
@@ -112,6 +117,26 @@ public:
     void showLatestMessage(int chatType);
     //查看装备
     void viewEquipment(string equipId);
+    //查看集结信息
+    void viewRallyInfo(string teamUid);
+    //查看转盘
+    void viewLotteryInfo(string lotteryInfo);
+    //查看转盘入口IOS
+    void viewLotteryInfoFromIOS(string lotteryInfo);
+    //查看联盟任务
+    void viewAllianceTaskInfo();
+    //查看红包
+    void viewRedPackage(string redPackageUid,string server,bool isViewOnly = false);
+    //获取已领取的红包uid
+    void getHandledRedPackages();
+    //获取当前红包状态
+    void getRedPackageStatus(string redPackageUid,string serverId);
+    void changeNickName();
+    void getLatestMessage();
+    ChatInfo parseLatestChatInfo(Json* jsonObject);
+    void parseLatestChatInfoStr(string jsonStr);
+    
+    void postShieldUids(Array* uidArray);
     
     void joinAnnounceInvitation(string allianceId);
     void receiveNoMessage();
@@ -138,8 +163,16 @@ public:
     void notifyMsgToIOS(CCArray* chatMailInfo,int sessionType,string id);
     void getNewMsg(std::string comandStr);
     void getNewMailMsg(std::string comandStr);
+    
+   
     void setDisableTranslateLang();
     void reportCustomHeadPic(std::string uid);
+    void translateOptimize(std::string method,std::string originalLang = "",std::string userLang = "",std::string msg = "",std::string translationMsg = "");
+    void getFriendMember();
+    void getRedPackageTime();
+    void getKingOfServer();
+    void setBanTimeSet(std::string banTimeSet);
+    
 private:
     //喇叭
     CC_SYNTHESIZE(bool, mIsNoticeOpen, IsNoticeOpen);
@@ -150,6 +183,7 @@ private:
     
     CC_SYNTHESIZE(int, m_banTime, BanTime);
     
+    void getOfficersData(CCObject* data);
     void notifyChatMsgToAndroid(CCArray* chatInfoArr);
     void notifyChatMsgToIOS(CCArray* chatInfoArr ,int channelType , string id);
     void setTranslationSucc(CCObject* pObj);
@@ -166,6 +200,7 @@ private:
     string m_detectReportId="";     //侦察战报ID
     string m_detectReportPlayerUid="";  //侦察战报消息玩家的UID
     string m_invitePlayerName="";   //邀请玩家的名字
+    string m_banTimeSet;       //禁言时间
     
     ChatInfo *mTransChat;
     vector<ChatInfo*> mTransQueue;
