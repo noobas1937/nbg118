@@ -2757,6 +2757,7 @@ bool UIComponent::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const c
 {
     
 //    CCLOG("ccbi control name %s",pMemberVariableName);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_playerBG_guide", CCNode*, this->m_playerBG_guide);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nbXHD", CCNode*, this->m_nbXHD);
     
@@ -5569,7 +5570,7 @@ CCNode* UIComponent::getNodeByIndex(string _key){
         
     }else if(_key == "UI_head"){
         
-        return m_playerBG;
+        return m_playerBG_guide;
         
     }else if(_key == "UI_titan"){
         

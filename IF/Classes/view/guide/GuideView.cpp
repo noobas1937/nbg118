@@ -263,7 +263,7 @@ void GuideView::addCover(CCRect& rect, int type){
     
     string tmpStart = "ShowFire_";
     int maxP = m_rect.size.width/3;
-    for (int i=1; i<=5; i++) {
+    for (int i=1; i<=2; i++) {
         auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(), CCPointZero,maxP);
         particle->setPosVar(ccp(m_rect.size.width/2, 0));
 //        particle->setTotalParticles(m_rect.size.width/3);
@@ -278,7 +278,7 @@ void GuideView::addCover(CCRect& rect, int type){
     
     tmpStart = "ShowFireUp_";
     maxP = m_rect.size.height/3;
-    for (int i=1; i<=5; i++) {
+    for (int i=1; i<=2; i++) {
         auto particle = ParticleController::createParticle(CCString::createWithFormat("%s%d",tmpStart.c_str(),i)->getCString(),CCPointZero,maxP);
         particle->setPosVar(ccp(0, m_rect.size.height/2));
         particle->setPosition(ccp(m_rect.origin.x, m_rect.origin.y+m_rect.size.height/2));

@@ -1512,7 +1512,7 @@ void ImperialScene::resumeEnemy()
         node->ResumeEnemy();
     }
 
-    this->schedule(schedule_selector(ImperialScene::createEnemy), 10.0, CC_REPEAT_FOREVER, 0.0f);
+    this->schedule(schedule_selector(ImperialScene::createEnemy), 30.0f, CC_REPEAT_FOREVER, 0.0f);
 }
 
 void ImperialScene::createEnemy(float t)

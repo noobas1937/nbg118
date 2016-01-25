@@ -462,6 +462,7 @@ public:
     CCSafeObject<CCLabelIF> m_bagTipNum;
     
     CCSafeObject<CCNode> m_googlePlayNode;
+    CCSafeObject<CCNode> m_playerBG_guide;
     
     UIComponentOldTitle* m_titleOldTitle;
     
