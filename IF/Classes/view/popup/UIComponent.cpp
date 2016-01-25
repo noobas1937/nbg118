@@ -1059,7 +1059,7 @@ void UIComponent::showCanFeedRedPoint(bool isShow)
         {
             auto animationObj = new IFSkeletonAnimation("Spine/Imperial/hunger.json","Imperial/Imperial_30.atlas");
             if (animationObj) {
-                m_nbXHD->addChild(animationObj);
+//                m_nbXHD->addChild(animationObj);
                 animationObj->setTag(SPINE_HUNGER);
                 animationObj->setVisibleStop(false);
                 spTrackEntry* entry = animationObj->setAnimation(0, "animation", true);
