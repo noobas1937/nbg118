@@ -1310,7 +1310,8 @@ void SpeBuild::drowEffectSpr(int zOrder, int tmpOrd)
         }
     }
     
-    if (m_buildingKey == SPE_BUILD_HD) {
+    // tao.yu 暂时关掉粒子效果
+    if (false && m_buildingKey == SPE_BUILD_HD) {
         auto tmp_ptArray = CCPointArray::create(20);
         tmp_ptArray->addControlPoint(ccp(parentX+20, parentY));
         for (int j=0; j<tmp_ptArray->count(); j++) {
