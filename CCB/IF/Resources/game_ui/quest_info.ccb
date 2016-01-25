@@ -576,9 +576,9 @@
 								<key>customClass</key>
 								<string></string>
 								<key>displayName</key>
-								<string>CCSprite</string>
+								<string>m_quest_statues_icon</string>
 								<key>memberVarAssignmentName</key>
-								<string></string>
+								<string>m_quest_statues_icon</string>
 								<key>memberVarAssignmentType</key>
 								<integer>2</integer>
 								<key>properties</key>
@@ -774,8 +774,6 @@
 										<string>Quest</string>
 									</dict>
 								</array>
-								<key>selected</key>
-								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>
@@ -917,7 +915,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>104</real>
+									<real>88</real>
 									<real>110</real>
 									<integer>0</integer>
 								</array>
@@ -1180,6 +1178,8 @@
 								<false/>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>

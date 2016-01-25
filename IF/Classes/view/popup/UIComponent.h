@@ -934,6 +934,7 @@ private:
     
     //fusheng begin
     bool recommandRwdClick;
+    CCSafeObject<CCSprite>  m_quest_statues_icon;
     //fusheng end
 };
 

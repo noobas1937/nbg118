@@ -399,6 +399,8 @@ void ImperialScene::buildingCallBack(CCObject* params)
     if(!GlobalData::shared()->isInitFlag){
         return;
     }
+    
+    CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(QUEST_STATE_UPDATE, nullptr);//fusheng
     GuideController::share()->openSciencePanel();
     auto resSp = CCLoadSprite::loadResource("pic400000_2.png");//dsg_house_1
     resSp->getTexture()->setAntiAliasTexParameters();

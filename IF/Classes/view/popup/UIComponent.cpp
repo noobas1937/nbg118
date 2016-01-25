@@ -1548,34 +1548,44 @@ void UIComponent::showQuestTextNewOn(float t)
         checkShowQuestPrc();
         if (m_recommandQuest->state!=COMPLETE) {
             this->m_questTitle->setString(_lang("107527"));
+            
+            this->m_quest_statues_icon->setSpriteFrame("UI_quest.png");
+            
         }
         else {
             this->m_questTitle->setString("");
             auto rwdLabel = Label::create();
-            rwdLabel->setColor(ccGREEN);
+            rwdLabel->setColor(ccWHITE);
             rwdLabel->setFontSize(20);
-            rwdLabel->setString(_lang("107516"));
-            rwdLabel->setAnchorPoint(ccp(0, 0.5));
+            string str = _lang("107516");
+            
+            if (str != "") {
+                str = "(" + str + ")";
+            }
+            rwdLabel->setString(str);
+            rwdLabel->setAnchorPoint(ccp(1, 0.5));
 //            rwdLabel->setPositionY(rollText->getPositionY() - 15);
 //            rollText->setPositionY(rollText->getPositionY() + 10 );
             
             rwdLabel->setPositionY(rollText->getPositionY());
             
-            rwdLabel->setPositionX(rollText->getPositionX() + 390/2 + 20);
+            rwdLabel->setPositionX(350);
             
             rwdLabel->enableOutline({0,0,0,255},1);
             
             m_questNameNode->addChild(rwdLabel);
-            auto rwdSprite = CCLoadSprite::createSprite("ActivityBox_1.png");
-            rwdSprite->setScale(0.7);
-            rwdSprite->setAnchorPoint(ccp(0, 0.5));
-            rwdSprite->setPosition(0, 0);
-            m_canRwdNode->addChild(rwdSprite);
-            auto moveBy1 = MoveBy::create(0.5, ccp(0, 5));
-            auto moveBy2 = MoveBy::create(0.5, ccp(0, -5));
-            auto moveBy3 = MoveBy::create(0.5, ccp(0, 2));
-            auto moveBy4 = MoveBy::create(0.5, ccp(0, -2));
-            rwdSprite->runAction(RepeatForever::create(Sequence::create(moveBy1,moveBy2,moveBy3,moveBy4,DelayTime::create(2.0), NULL)));
+            
+            m_quest_statues_icon->setSpriteFrame("icon_quest_status_complete.png");
+//            auto rwdSprite = CCLoadSprite::createSprite("ActivityBox_1.png");
+//            rwdSprite->setScale(0.7);
+//            rwdSprite->setAnchorPoint(ccp(0, 0.5));
+//            rwdSprite->setPosition(0, 0);
+//            m_canRwdNode->addChild(rwdSprite);
+//            auto moveBy1 = MoveBy::create(0.5, ccp(0, 5));
+//            auto moveBy2 = MoveBy::create(0.5, ccp(0, -5));
+//            auto moveBy3 = MoveBy::create(0.5, ccp(0, 2));
+//            auto moveBy4 = MoveBy::create(0.5, ccp(0, -2));
+//            rwdSprite->runAction(RepeatForever::create(Sequence::create(moveBy1,moveBy2,moveBy3,moveBy4,DelayTime::create(2.0), NULL)));
         }
         bool isGold = false;
         for (int i=0; i<info->reward->count(); i++) {
@@ -1668,16 +1678,18 @@ void UIComponent::refreshQuestComplete()
     this->m_questTitle->setString("");
     m_canRwdNode->stopAllActions();
     m_canRwdNode->removeAllChildren();
-    auto rwdSprite = CCLoadSprite::createSprite("ActivityBox_1.png");
-    rwdSprite->setScale(0.7);
-    rwdSprite->setAnchorPoint(ccp(0.5, 0.5));
-    rwdSprite->setPosition(0, 0);
-    m_canRwdNode->addChild(rwdSprite);
-    auto moveBy1 = MoveBy::create(0.5, ccp(0, 5));
-    auto moveBy2 = MoveBy::create(0.5, ccp(0, -5));
-    auto moveBy3 = MoveBy::create(0.5, ccp(0, 2));
-    auto moveBy4 = MoveBy::create(0.5, ccp(0, -2));
-    rwdSprite->runAction(RepeatForever::create(Sequence::create(moveBy1,moveBy2,moveBy3,moveBy4,DelayTime::create(2.0), NULL)));
+//    auto rwdSprite = CCLoadSprite::createSprite("ActivityBox_1.png");
+//    rwdSprite->setScale(0.7);
+//    rwdSprite->setAnchorPoint(ccp(0.5, 0.5));
+//    rwdSprite->setPosition(0, 0);
+//    m_canRwdNode->addChild(rwdSprite);
+//    auto moveBy1 = MoveBy::create(0.5, ccp(0, 5));
+//    auto moveBy2 = MoveBy::create(0.5, ccp(0, -5));
+//    auto moveBy3 = MoveBy::create(0.5, ccp(0, 2));
+//    auto moveBy4 = MoveBy::create(0.5, ccp(0, -2));
+//    rwdSprite->runAction(RepeatForever::create(Sequence::create(moveBy1,moveBy2,moveBy3,moveBy4,DelayTime::create(2.0), NULL)));
+    
+    m_quest_statues_icon->setSpriteFrame("icon_quest_status_complete.png");
 }
 
 
@@ -3077,6 +3089,9 @@ bool UIComponent::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const c
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_questContextBG2", Sprite*, m_questContextBG2);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_canRwdNode", Node*, m_canRwdNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_questTitle", CCLabelIF*, this->m_questTitle);
+    
+    
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_quest_statues_icon", Sprite*, m_quest_statues_icon);;
     //fusheng end
 //    CCLOG("ccbi control name %s",pMemberVariableName);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_playerBG_guide", CCNode*, this->m_playerBG_guide);
