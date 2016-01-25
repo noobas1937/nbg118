@@ -3202,10 +3202,36 @@
                 <key>sourceSize</key>
                 <string>{198,159}</string>
             </dict>
+            <key>lv11.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{208,1412},{224,205}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{224,205}}</string>
+                <key>sourceSize</key>
+                <string>{224,205}</string>
+            </dict>
+            <key>lv15.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{438,1412},{223,209}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{223,209}}</string>
+                <key>sourceSize</key>
+                <string>{223,209}</string>
+            </dict>
             <key>tile_place_holder.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{208,1412},{256,128}}</string>
+                <string>{{667,1412},{256,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -3225,7 +3251,7 @@
             <key>size</key>
             <string>{2048,2048}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:--REMOVED----------------------------</string>
+            <string>$TexturePacker:SmartUpdate:6ee47f612677ba77ee6c7c205c56ddf5:1/1$</string>
             <key>textureFileName</key>
             <string>World_4.pvr.ccz</string>
         </dict>
