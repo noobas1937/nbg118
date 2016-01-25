@@ -78,7 +78,13 @@ Node * NBWorldMapMainCity::getMainCity(int island_index, int level, int nSpecial
     string picStr = "tile_place_holder.png";
     if (island_index == 0)
     {
-        if (level >= 15)
+        if (level >= 22)
+        {
+            picStr = "lv22.png";
+            house_pos.x = 180 - 210;
+            house_pos.y = 120 - 32;
+        }
+        else if (level >= 15)
         {
             picStr = "lv15.png";
             house_pos.x = 180 - 210;
@@ -92,7 +98,7 @@ Node * NBWorldMapMainCity::getMainCity(int island_index, int level, int nSpecial
         }
         else
         {
-            picStr = "lv1.png";
+            picStr = "lv22.png";
             // 美术给出的坐标为 x：-180，y：-120
             house_pos.x = 180 - 180;
             house_pos.y = 120 - 32;
