@@ -98,7 +98,7 @@ Node * NBWorldMapMainCity::getMainCity(int island_index, int level, int nSpecial
         }
         else
         {
-            picStr = "lv22.png";
+            picStr = "lv1.png";
             // 美术给出的坐标为 x：-180，y：-120
             house_pos.x = 180 - 180;
             house_pos.y = 120 - 32;
