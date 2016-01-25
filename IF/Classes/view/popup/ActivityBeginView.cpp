@@ -680,7 +680,7 @@ void ActivityBeginView::showRewards(int hBG){
     m_rankNode->setPosition(ccp(CELL_X, totalH-630-hBG+50));//590
     m_scrollView->addChild(m_rankNode);
     
-    m_scrollView->setContentSize({SCROLL_W, (float)m_totalH});
+    m_scrollView->setContentSize({SCROLL_W, (float)totalH});
     m_scrollView->setContentOffset(ccp(0, m_funList->getContentSize().height - totalH));
     m_totalH = totalH;
     m_bottomFix->setPositionY(m_scBG->getPositionY()-totalH + 30);
