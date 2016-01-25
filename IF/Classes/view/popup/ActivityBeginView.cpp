@@ -722,8 +722,8 @@ void ActivityBeginView::onClickReward(CCObject *pSender, CCControlEvent event){
     for (int i = 0; i <= 9 && i < m_totalRankReward->count(); i++)
     {
         auto oneDic = _dict(m_totalRankReward->objectAtIndex(i));
-        oneDic->setObject(__String::create(std::to_string(i + 1)), "min");
-        oneDic->setObject(__String::create(std::to_string(i + 1)), "max");
+        oneDic->setObject(__String::create(CC_ITOA(i + 1)), "min");
+        oneDic->setObject(__String::create(CC_ITOA(i + 1)), "max");
         m_totalRankRewardForUI->addObject(m_totalRankReward->objectAtIndex(i));
     }
     // [11, 19]
@@ -740,8 +740,8 @@ void ActivityBeginView::onClickReward(CCObject *pSender, CCControlEvent event){
         if ((i + 1) % 10 == 0)
         {
             auto oneDic = _dict(m_totalRankReward->objectAtIndex(i));
-            oneDic->setObject(__String::create(std::to_string(i + 1)), "min");
-            oneDic->setObject(__String::create(std::to_string(i + 1 + 9)), "max");
+            oneDic->setObject(__String::create(CC_ITOA(i + 1)), "min");
+            oneDic->setObject(__String::create(CC_ITOA(i + 1 + 9)), "max");
             m_totalRankRewardForUI->addObject(oneDic);
         }
     }
@@ -758,8 +758,8 @@ void ActivityBeginView::onClickRankReward(CCObject *pSender, CCControlEvent even
     for (int i = 0; i <= 9 && i < m_rankReward->count(); i++)
     {
         auto oneDic = _dict(m_rankReward->objectAtIndex(i));
-        oneDic->setObject(__String::create(std::to_string(i + 1)), "min");
-        oneDic->setObject(__String::create(std::to_string(i + 1)), "max");
+        oneDic->setObject(__String::create(CC_ITOA(i + 1)), "min");
+        oneDic->setObject(__String::create(CC_ITOA(i + 1)), "max");
         m_rankRewardForUI->addObject(m_rankReward->objectAtIndex(i));
     }
     // [11, 19]
@@ -776,8 +776,8 @@ void ActivityBeginView::onClickRankReward(CCObject *pSender, CCControlEvent even
         if ((i + 1) % 10 == 0)
         {
             auto oneDic = _dict(m_rankReward->objectAtIndex(i));
-            oneDic->setObject(__String::create(std::to_string(i + 1)), "min");
-            oneDic->setObject(__String::create(std::to_string(i + 1 + 9)), "max");
+            oneDic->setObject(__String::create(CC_ITOA(i + 1)), "min");
+            oneDic->setObject(__String::create(CC_ITOA(i + 1 + 9)), "max");
             m_rankRewardForUI->addObject(oneDic);
         }
     }
