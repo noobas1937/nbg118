@@ -523,7 +523,8 @@ void GCMRewardController::retReward3(Array *arr, float time, bool move, Point fr
             }
             case R_GOODS:{
                 CCDictionary *goodsDict = _dict(dict->objectForKey("value"));
-                int itemId = goodsDict->valueForKey("itemId")->intValue();
+//                int itemId = goodsDict->valueForKey("itemId")->intValue();
+                int itemId = goodsDict->valueForKey("id")->intValue();
                 int num = goodsDict->valueForKey("count")->intValue();
                 int rewardAdd = 0;
                 if(goodsDict->objectForKey("rewardAdd")){
@@ -592,7 +593,7 @@ void GCMRewardController::flyRewardFromPointToPoint(Array *arr, float time, bool
         auto node2 = CCNode::create();
         if (type == R_GOODS) {
             CCDictionary *goodsDict = _dict(dic->objectForKey("value"));
-            int itemId = goodsDict->valueForKey("itemId")->intValue();
+            int itemId = goodsDict->valueForKey("id")->intValue();
             int num = goodsDict->valueForKey("count")->intValue();
             int rewardAdd = 0;
             if(goodsDict->objectForKey("rewardAdd")){
@@ -608,7 +609,7 @@ void GCMRewardController::flyRewardFromPointToPoint(Array *arr, float time, bool
             auto bg = CCLoadSprite::createSprite("Items_icon_kuang.png");
             //            bg->setScale(1.2);
             auto sprite = CCLoadSprite::createSprite(CCCommonUtils::getIcon(CC_ITOA(itemId)).c_str(),true,CCLoadSpriteType_GOODS);
-            sprite->setAnchorPoint(ccp(0.5, 0));
+            sprite->setAnchorPoint(ccp(0.5, 0.5));
             CCCommonUtils::setSpriteMaxSize(sprite, w);
             node1->addChild(bg);
             node2->addChild(sprite);
