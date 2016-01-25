@@ -4522,7 +4522,7 @@ void UIComponent::onWorldBtnClick(cocos2d::CCObject *pSender, Control::EventType
     string keyQuestID = "2201001";
     
     if (USE_NEW_GUIDE) {
-        keyQuestID = "2200101";
+        keyQuestID = "2201001";
     }
     else
     {
@@ -4530,14 +4530,16 @@ void UIComponent::onWorldBtnClick(cocos2d::CCObject *pSender, Control::EventType
         keyQuestID = "2102501";//建筑两个农田
     }
     
-    
-    if (QuestController::getInstance()->currentAchList.find(keyQuestID) != QuestController::getInstance()->currentAchList.end()) {
-        QuestInfo* qusetTmp = QuestController::getInstance()->currentAchList[keyQuestID];
-        if(qusetTmp->state == ACCEPT) {
-            CCCommonUtils::flyHint("", "", _lang("3000021"), 3, 200);
-            return;
+  
+        if (QuestController::getInstance()->currentAchList.find(keyQuestID) != QuestController::getInstance()->currentAchList.end()) {
+            QuestInfo* qusetTmp = QuestController::getInstance()->currentAchList[keyQuestID];
+            if(qusetTmp->state == ACCEPT) {
+                CCCommonUtils::flyHint("", "", _lang("3000021"), 3, 200);
+                return;
+            }
         }
-    }
+    
+    
     
     
 //    SoundController::sharedSound()->playEffects(Music_ui_world);
