@@ -525,7 +525,7 @@ void GCMRewardController::retReward3(Array *arr, float time, bool move, Point fr
                 CCDictionary *goodsDict = _dict(dict->objectForKey("value"));
 //                int itemId = goodsDict->valueForKey("itemId")->intValue();
                 int itemId = goodsDict->valueForKey("id")->intValue();
-                int num = goodsDict->valueForKey("count")->intValue();
+                int num = goodsDict->valueForKey("num")->intValue();
                 int rewardAdd = 0;
                 if(goodsDict->objectForKey("rewardAdd")){
                     rewardAdd = goodsDict->valueForKey("rewardAdd")->intValue();
@@ -594,7 +594,7 @@ void GCMRewardController::flyRewardFromPointToPoint(Array *arr, float time, bool
         if (type == R_GOODS) {
             CCDictionary *goodsDict = _dict(dic->objectForKey("value"));
             int itemId = goodsDict->valueForKey("id")->intValue();
-            int num = goodsDict->valueForKey("count")->intValue();
+            int num = goodsDict->valueForKey("num")->intValue();
             int rewardAdd = 0;
             if(goodsDict->objectForKey("rewardAdd")){
                 rewardAdd = goodsDict->valueForKey("rewardAdd")->intValue();
