@@ -4042,7 +4042,7 @@ int ImperialScene::findCanBuildTile(int pos)
                 }
                 
                 if (true) {
-                    for (int i=52; i<=54; i++) {
+                    for (int i = 52; i<=53; i++) {
                         FunBuild* build = dynamic_cast<FunBuild*>(m_nodeBuildings[i]->getChildByTag(i));
                         if (build && build->m_buildingKey == i) {
                             auto& tileInfo = FunBuildController::getInstance()->m_tileMap[i];
