@@ -156,16 +156,18 @@ void NewPlotView::refreshWord(){
             }
             figure += ".png";
             auto spr = CCLoadSprite::createSprite(figure.c_str());
-            spr->setAnchorPoint(ccp(0, 0));
+            spr->setAnchorPoint({0.5,0});
             if(figure == "guide_woman.png" )
             {
-                spr->setPositionY(spr->getPositionY()-44);
+                spr->setPositionY(spr->getPositionY()+65);
+                spr->setPositionX(spr->getPositionX()+135);
             }
             if(figure == "guide_Warrior.png" )//fusheng 暂时是为了勇士
             {
                 spr->setPositionY(spr->getPositionY()+62);
-                spr->setPositionX(spr->getPositionX()-50);
+                spr->setPositionX(spr->getPositionX()+130);
             }
+
             m_iconNode->addChild(spr);
         }
         

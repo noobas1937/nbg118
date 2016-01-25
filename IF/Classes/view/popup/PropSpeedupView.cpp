@@ -120,6 +120,10 @@ bool PropSpeedupView::init(int type,int bid, int qid){
         m_lastClickIndex = m_clickIndex;
         m_useBtn->setTouchPriority(0);
         bRet=true;
+        
+        
+        
+        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("BU_419000_tool"));
     }
     return bRet;
 }

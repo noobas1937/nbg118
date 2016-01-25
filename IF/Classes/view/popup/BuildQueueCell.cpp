@@ -277,6 +277,14 @@ void BuildQueueCell::onEnterFrame(float _time)
                     m_proTimer->setPercentage(100-pro);
                     
                     if (!m_isFree && m_curTime<=GlobalData::shared()->freeSpdT) {
+                        
+                        //"fuck_use_acc_tool"
+                        if (qInfo.itemId == 419000) {
+                            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("fuck_use_acc_tool"));//fusheng 使用加速道具
+                        }
+                        
+                        
+                        
                         m_isFree = true;
 //                        m_infoNode->setVisible(true);
                         m_hammerNode->removeAllChildren();

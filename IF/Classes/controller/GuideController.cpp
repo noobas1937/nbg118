@@ -412,6 +412,10 @@ void GuideController::checkUserAction(CCObject *obj){
             m_currentId = "3073900";//造兵，不秒兵，等待时间完成时 调用
             next();
         }
+        else if(str == "fuck_use_acc_tool" && (m_currentId=="3390100" || m_currentId=="3390300" || m_currentId=="3390400"))//fusheng 使用道具加速 跳转到3390500
+        {
+            setGuide("3390500");
+        }
     }
 }
 
@@ -484,9 +488,9 @@ void GuideController::onEnterFrame(float dt){
         CC_SAFE_RELEASE(m_node);
         m_node = NULL;
         m_gView = NULL;
-        if(m_currentId == "3390300" || m_currentId == "3390200")//fusheng 加速道具引导中 时间到达5分钟内时 直接跳到最后一句话
+        if(m_currentId == "3390100" || m_currentId == "3390300" || m_currentId == "3390400" ||m_currentId == "3390500")//fusheng 加速道具引导中 不做什么东西
         {
-            setGuide("3390400");
+
         }
         else
             next();

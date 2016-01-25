@@ -76,10 +76,10 @@
         <ItemSpec id="3380300" next="3380400" explanation="510031" arrow="5" area="ALINFO_2" enforce="1"/>
         <ItemSpec id="3380400" next="3380500" explanation="510032" arrow="5" area="ALINFO_3" enforce="1"/>
         <ItemSpec id="3380500" plot="3380510" arrow="0" area="plot_continue" enforce="1"/>
-        <ItemSpec id="3390100" next="3390200" plot="3390110" arrow="0" area="plot_continue" enforce="1"/>
-        <ItemSpec id="3390200" next="3390300" arrow="5" area="MC_419000" enforce="1"/>
+        <ItemSpec id="3390100" next="3390300" plot="3390110" arrow="0" area="plot_continue" enforce="1"/>
         <ItemSpec id="3390300" next="3390400" arrow="5" area="BU_419000_tool" enforce="1"/>
-        <ItemSpec id="3390400" plot="3390410" arrow="0" area="plot_continue" enforce="1" mark="1"/>
+        <ItemSpec id="3390400" next="3390500" plot="3390410" arrow="0" area="plot_continue" enforce="1"/>
+        <ItemSpec id="3390500" lag="1"/>
         <ItemSpec id="3410100" open="1" para1="410001" next="3410200" plot="3410710" arrow="0" area="plot_continue" enforce="1" mark="1"/>
         <ItemSpec id="3410200" next="3410300" arrow="2" area="UI_world_go" enforce="1"/>
         <ItemSpec id="3410300" next="3410400" plot="3074210" arrow="0" area="plot_continue" enforce="1"/>
