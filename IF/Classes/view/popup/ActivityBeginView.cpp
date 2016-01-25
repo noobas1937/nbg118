@@ -714,7 +714,39 @@ void ActivityBeginView::updateTime(float _time){
 }
 
 void ActivityBeginView::onClickReward(CCObject *pSender, CCControlEvent event){
-    PopupViewController::getInstance()->addPopupView(ActivityRewardView::create(m_totalRankReward,1));
+    CC_SAFE_RELEASE_NULL(m_totalRankRewardForUI);
+    m_totalRankRewardForUI = CCArray::create();
+    CC_SAFE_RETAIN(m_totalRankRewardForUI);
+    
+    // [1, 10]
+    for (int i = 0; i <= 9 && i < m_totalRankReward->count(); i++)
+    {
+        auto oneDic = _dict(m_totalRankReward->objectAtIndex(i));
+        oneDic->setObject(__String::create(std::to_string(i + 1)), "min");
+        oneDic->setObject(__String::create(std::to_string(i + 1)), "max");
+        m_totalRankRewardForUI->addObject(m_totalRankReward->objectAtIndex(i));
+    }
+    // [11, 19]
+    for (int i = 10; i <= 18 && i < m_totalRankReward->count(); i++)
+    {
+        auto oneDic = _dict(m_totalRankReward->objectAtIndex(i));
+        oneDic->setObject(__String::create("11"), "min");
+        oneDic->setObject(__String::create("19"), "max");
+        m_totalRankRewardForUI->addObject(oneDic);
+        break;
+    }
+    for (int i = 19; i < m_totalRankReward->count(); i++)
+    {
+        if ((i + 1) % 10 == 0)
+        {
+            auto oneDic = _dict(m_totalRankReward->objectAtIndex(i));
+            oneDic->setObject(__String::create(std::to_string(i + 1)), "min");
+            oneDic->setObject(__String::create(std::to_string(i + 1 + 9)), "max");
+            m_totalRankRewardForUI->addObject(oneDic);
+        }
+    }
+    
+    PopupViewController::getInstance()->addPopupView(ActivityRewardView::create(m_totalRankRewardForUI, 8));
 }
 
 void ActivityBeginView::onClickRankReward(CCObject *pSender, CCControlEvent event){

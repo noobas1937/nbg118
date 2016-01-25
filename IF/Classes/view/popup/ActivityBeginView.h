@@ -25,6 +25,7 @@ public:
     ActivityBeginView()
     {
         m_rankRewardForUI = nullptr;
+        m_totalRankRewardForUI = nullptr;
     };
     ~ActivityBeginView()
     {
@@ -33,6 +34,7 @@ public:
         CC_SAFE_RELEASE_NULL(m_reward2);
         CC_SAFE_RELEASE_NULL(m_reward3);
         CC_SAFE_RELEASE_NULL(m_rankRewardForUI);
+        CC_SAFE_RELEASE_NULL(m_totalRankRewardForUI);
     };
     
     // TODO:
@@ -156,6 +158,7 @@ private:
     CCArray* m_rankReward;
     CCArray* m_rankRewardForUI;
     CCArray* m_totalRankReward;
+    CCArray* m_totalRankRewardForUI;
     CCArray* m_rewards;
     CCArray* m_reward1;
     CCArray* m_reward2;
