@@ -150,10 +150,10 @@ void NewPlotView::refreshWord(){
             m_iconNode->addChild(spr);
         }
         else {
-            if(GlobalData::shared()->analyticID == "cafebazaar" && figure=="guide_woman")
-            {
-                figure = "guide_archer";
-            }
+//            if(GlobalData::shared()->analyticID == "cafebazaar" && figure=="guide_woman")
+//            {
+//                figure = "guide_archer";
+//            }
             figure += ".png";
             auto spr = CCLoadSprite::createSprite(figure.c_str());
             spr->setAnchorPoint({0.5,0});
@@ -162,10 +162,16 @@ void NewPlotView::refreshWord(){
                 spr->setPositionY(spr->getPositionY()+65);
                 spr->setPositionX(spr->getPositionX()+135);
             }
-            if(figure == "guide_Warrior.png" )//fusheng 暂时是为了勇士
+            if(figure == "guide_Warrior.png" )//fusheng 勇士
             {
                 spr->setPositionY(spr->getPositionY()+62);
-                spr->setPositionX(spr->getPositionX()+130);
+                spr->setPositionX(spr->getPositionX()+145);
+            }
+            
+            if(figure == "guide_bulage.png" )//fusheng 布拉格
+            {
+                spr->setPositionY(spr->getPositionY()+62);
+                spr->setPositionX(spr->getPositionX()+120);
             }
 
             m_iconNode->addChild(spr);
