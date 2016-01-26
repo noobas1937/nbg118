@@ -475,10 +475,11 @@ void WorldMapView::removeCover(){
 
 CCNode *WorldMapView::getNodeByType(std::string typeStr){
     if(typeStr == "wood" || typeStr == "relic" || typeStr == "food"){
-        if(GuideController::share()->arr->count() != 1){
-            int count = GuideController::share()->arr->count();
+        if(GuideController::share()->arr == NULL || GuideController::share()->arr->count() == 0){//fusheng 忘了等于0这个情况了
+//            int count = GuideController::share()->arr->count();
             return NULL;
         }
+        
         
         unsigned int index = 0;
         if(typeStr == "wood" || typeStr == "food"){

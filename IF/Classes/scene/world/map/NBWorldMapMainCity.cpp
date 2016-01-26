@@ -78,7 +78,13 @@ Node * NBWorldMapMainCity::getMainCity(int island_index, int level, int nSpecial
     string picStr = "tile_place_holder.png";
     if (island_index == 0)
     {
-        if (level >= 15)
+        if (level >= 22)
+        {
+            picStr = "lv22.png";
+            house_pos.x = 180 - 210;
+            house_pos.y = 120 - 32;
+        }
+        else if (level >= 15)
         {
             picStr = "lv15.png";
             house_pos.x = 180 - 210;

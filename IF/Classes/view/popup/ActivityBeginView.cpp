@@ -427,8 +427,6 @@ void ActivityBeginView::getServerData(CCObject* param){
         }
         m_totalRankNum->setString(str);
         
-        m_progress1->setContentSize({totalRank > 0 ? static_cast<float>(532.0 * score / totalRank) : 0, 11});
-        
         CCArray* array = dynamic_cast<CCArray*>(dic->objectForKey("reward"));
         CC_SAFE_RELEASE_NULL(m_rewards);
         m_rewards = array;
@@ -595,6 +593,11 @@ void ActivityBeginView::getServerData(CCObject* param){
                 int per = len*100;
                 m_proTimer->setPercentage(per);
             }
+            
+            float w = threeScore > 0 ? 532.0 * score / threeScore : 0;
+            w = w > 0 ? w : 1;
+            w = w > 532 ? 532 : w;
+            m_progress1->setContentSize({w, 11});
         }
         
         m_eventIds.clear();
@@ -714,11 +717,75 @@ void ActivityBeginView::updateTime(float _time){
 }
 
 void ActivityBeginView::onClickReward(CCObject *pSender, CCControlEvent event){
-    PopupViewController::getInstance()->addPopupView(ActivityRewardView::create(m_totalRankReward,1));
+    CC_SAFE_RELEASE_NULL(m_totalRankRewardForUI);
+    m_totalRankRewardForUI = CCArray::create();
+    CC_SAFE_RETAIN(m_totalRankRewardForUI);
+    
+    // [1, 10]
+    for (int i = 0; i <= 9 && i < m_totalRankReward->count(); i++)
+    {
+        auto oneDic = _dict(m_totalRankReward->objectAtIndex(i));
+        oneDic->setObject(__String::create(CC_ITOA(i + 1)), "min");
+        oneDic->setObject(__String::create(CC_ITOA(i + 1)), "max");
+        m_totalRankRewardForUI->addObject(m_totalRankReward->objectAtIndex(i));
+    }
+    // [11, 19]
+    for (int i = 10; i <= 18 && i < m_totalRankReward->count(); i++)
+    {
+        auto oneDic = _dict(m_totalRankReward->objectAtIndex(i));
+        oneDic->setObject(__String::create("11"), "min");
+        oneDic->setObject(__String::create("19"), "max");
+        m_totalRankRewardForUI->addObject(oneDic);
+        break;
+    }
+    for (int i = 19; i < m_totalRankReward->count(); i++)
+    {
+        if ((i + 1) % 10 == 0)
+        {
+            auto oneDic = _dict(m_totalRankReward->objectAtIndex(i));
+            oneDic->setObject(__String::create(CC_ITOA(i + 1)), "min");
+            oneDic->setObject(__String::create(CC_ITOA(i + 1 + 9)), "max");
+            m_totalRankRewardForUI->addObject(oneDic);
+        }
+    }
+    
+    PopupViewController::getInstance()->addPopupView(ActivityRewardView::create(m_totalRankRewardForUI, 8));
 }
 
 void ActivityBeginView::onClickRankReward(CCObject *pSender, CCControlEvent event){
-    PopupViewController::getInstance()->addPopupView(ActivityRewardView::create(m_rankReward));
+    CC_SAFE_RELEASE_NULL(m_rankRewardForUI);
+    m_rankRewardForUI = CCArray::create();
+    CC_SAFE_RETAIN(m_rankRewardForUI);
+    
+    // [1, 10]
+    for (int i = 0; i <= 9 && i < m_rankReward->count(); i++)
+    {
+        auto oneDic = _dict(m_rankReward->objectAtIndex(i));
+        oneDic->setObject(__String::create(CC_ITOA(i + 1)), "min");
+        oneDic->setObject(__String::create(CC_ITOA(i + 1)), "max");
+        m_rankRewardForUI->addObject(m_rankReward->objectAtIndex(i));
+    }
+    // [11, 19]
+    for (int i = 10; i <= 18 && i < m_rankReward->count(); i++)
+    {
+        auto oneDic = _dict(m_rankReward->objectAtIndex(i));
+        oneDic->setObject(__String::create("11"), "min");
+        oneDic->setObject(__String::create("19"), "max");
+        m_rankRewardForUI->addObject(oneDic);
+        break;
+    }
+    for (int i = 19; i < m_rankReward->count(); i++)
+    {
+        if ((i + 1) % 10 == 0)
+        {
+            auto oneDic = _dict(m_rankReward->objectAtIndex(i));
+            oneDic->setObject(__String::create(CC_ITOA(i + 1)), "min");
+            oneDic->setObject(__String::create(CC_ITOA(i + 1 + 9)), "max");
+            m_rankRewardForUI->addObject(oneDic);
+        }
+    }
+    
+    PopupViewController::getInstance()->addPopupView(ActivityRewardView::create(m_rankRewardForUI, 7));
 }
 
 void ActivityBeginView::onClickRecord(CCObject *pSender, CCControlEvent event){

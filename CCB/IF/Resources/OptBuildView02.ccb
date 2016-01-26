@@ -3569,8 +3569,8 @@
 												<string>Position</string>
 												<key>value</key>
 												<array>
-													<real>25</real>
-													<real>36</real>
+													<real>135.58499145507812</real>
+													<real>141.74591064453125</real>
 													<integer>0</integer>
 												</array>
 											</dict>
@@ -3581,7 +3581,7 @@
 												<string>Point</string>
 												<key>value</key>
 												<array>
-													<real>0.0</real>
+													<real>0.5</real>
 													<real>0.0</real>
 												</array>
 											</dict>
@@ -3629,6 +3629,8 @@
 												</array>
 											</dict>
 										</array>
+										<key>selected</key>
+										<true/>
 									</dict>
 								</array>
 								<key>customClass</key>

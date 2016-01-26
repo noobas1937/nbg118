@@ -142,6 +142,33 @@ void AppDelegate::applicationDidEnterBackground()
     if (SceneController::getInstance()->currentSceneId != SCENE_ID_LOADING)
     {
         cocos2d::extension::CCDevice::pushNotice(987, 60);
+        
+        struct tm *tm = localtime(&(GlobalData::shared()->pauseTime));
+        // char date[20];
+        // strftime(date, sizeof(date), "%Y-%m-%d", tm);
+        
+        int h = 23 - tm->tm_hour;
+        h = h > 0 ? h : 0;
+        int m = 60 - tm->tm_min;
+        int s = 60 - tm->tm_sec;
+        int left = h * 60 * 60 + m * 60 + s;
+        
+        const char* idx[] = {"105675", "105676", "105677", "105696"};
+        int b = 3;
+        int a = 0;
+        // [0, 3]
+        srand((unsigned)time(NULL));
+        int id_0 = (rand() % (b-a+1))+ a;
+        int id_1 = (rand() % (b-a+1))+ a;
+        
+        // 最后下线时间次日12:30以及20:00各推一条推送，以当地时间（国家所属时区）为准。
+#if COCOS2D_DEBUG > 0
+        cocos2d::extension::CCDevice::pushNotice(988, 3, _lang(idx[id_0]));
+        cocos2d::extension::CCDevice::pushNotice(989, 6, _lang(idx[id_1]));
+#else
+        cocos2d::extension::CCDevice::pushNotice(988, left + 12.5 * 60 * 60, _lang(idx[id_0]));
+        cocos2d::extension::CCDevice::pushNotice(989, left + 20 * 60 * 60, _lang(idx[id_1]));
+#endif
     }
 }
 
@@ -149,7 +176,11 @@ void AppDelegate::applicationDidEnterBackground()
 void AppDelegate::applicationWillEnterForeground()
 {
     CCLOG("applicationWillEnterForeground");
+    
     cocos2d::extension::CCDevice::cancelNotice(987);
+    cocos2d::extension::CCDevice::cancelNotice(988);
+    cocos2d::extension::CCDevice::cancelNotice(989);
+    
     cocos2d::CCDirector::sharedDirector()->resume();
     CCDirector::sharedDirector()->startAnimation();
     if (CCUserDefault::sharedUserDefault()->getBoolForKey(BG_MUSIC_ON, true))

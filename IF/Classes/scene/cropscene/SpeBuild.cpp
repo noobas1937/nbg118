@@ -259,14 +259,14 @@ bool SpeBuild::initSpeBuild(int itemId)
         auto sprite9 = CCLoadSprite::createScale9Sprite("UI_biaotikuang.png");
         sprite9->setPreferredSize(CCSize(100, 30));
         m_textNode->addChild(sprite9, 1, 1);
-        sprite9->setPositionY(-80);
+        sprite9->setPosition(90,-20);
         m_timeEventlabel = CCLabelIFTTF::create();
         m_timeEventlabel->setFntFile(getNBFont(NB_FONT_Bold_Border));
         m_timeEventlabel->setColor({255,198,0});
         m_timeEventlabel->setAnchorPoint(ccp(0.5,0.5));
         m_timeEventlabel->setFontSize(20);
         m_textNode->addChild(m_timeEventlabel, 1, 2);
-        m_timeEventlabel->setPosition(ccp(0, -80));
+        m_timeEventlabel->setPosition(ccp(90, -20));
         m_textNode->setVisible(false);
         
         CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(schedule_selector(SpeBuild::checkLeftTime), this);
@@ -1310,7 +1310,8 @@ void SpeBuild::drowEffectSpr(int zOrder, int tmpOrd)
         }
     }
     
-    if (m_buildingKey == SPE_BUILD_HD) {
+    // tao.yu 暂时关掉粒子效果
+    if (false && m_buildingKey == SPE_BUILD_HD) {
         auto tmp_ptArray = CCPointArray::create(20);
         tmp_ptArray->addControlPoint(ccp(parentX+20, parentY));
         for (int j=0; j<tmp_ptArray->count(); j++) {
