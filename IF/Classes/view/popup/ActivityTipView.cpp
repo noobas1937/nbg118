@@ -85,6 +85,10 @@ bool ActivityTipView::init(){
 
 void ActivityTipView::initReward(){
     if(m_info->getReward()==NULL || m_info->getReward()->count()<=0) return ;
+    
+    
+    int TOOL_BG[] = {PURPLE, ORANGE, BLUE, BLUE};
+    
     string name = "";
     string icon = "";
     CCDictionary* reward = NULL;
@@ -105,10 +109,11 @@ void ActivityTipView::initReward(){
             }
             m_numTxt1->setString(CC_ITOA(value));
             m_rewardTxt1->setString(name);
-            CCSprite* spr = CCLoadSprite::createSprite(CCCommonUtils::getToolBgByColor(PURPLE).c_str());
+            CCSprite* spr = CCLoadSprite::createSprite(CCCommonUtils::getToolBgByColor(TOOL_BG[0]).c_str());
+            CCCommonUtils::setSpriteMaxSize(spr,  80);
             m_rewardIcon1->addChild(spr);
             spr = CCLoadSprite::createSprite(icon.c_str());
-            CCCommonUtils::setSpriteMaxSize(spr, 94,true);
+            CCCommonUtils::setSpriteMaxSize(spr,  84,true);
             m_rewardIcon1->addChild(spr);
         }
     }
@@ -130,10 +135,11 @@ void ActivityTipView::initReward(){
             }
             m_rewardTxt2->setString(name);
             m_numTxt2->setString(CC_ITOA(value));
-            CCSprite* spr = CCLoadSprite::createSprite(CCCommonUtils::getToolBgByColor(PURPLE).c_str());
+            CCSprite* spr = CCLoadSprite::createSprite(CCCommonUtils::getToolBgByColor(TOOL_BG[1]).c_str());
+            CCCommonUtils::setSpriteMaxSize(spr,  80);
             m_rewardIcon2->addChild(spr);
             spr = CCLoadSprite::createSprite(icon.c_str());
-            CCCommonUtils::setSpriteMaxSize(spr, 94,true);
+            CCCommonUtils::setSpriteMaxSize(spr,  84,true);
             m_rewardIcon2->addChild(spr);
         }
     }
@@ -155,18 +161,20 @@ void ActivityTipView::initReward(){
             }
             m_rewardTxt3->setString(name);
             m_numTxt3->setString(CC_ITOA(value));
-            CCSprite* spr = CCLoadSprite::createSprite(CCCommonUtils::getToolBgByColor(PURPLE).c_str());
+            CCSprite* spr = CCLoadSprite::createSprite(CCCommonUtils::getToolBgByColor(TOOL_BG[2]).c_str());
+            CCCommonUtils::setSpriteMaxSize(spr,  80);
             m_rewardIcon3->addChild(spr);
             spr = CCLoadSprite::createSprite(icon.c_str());
-            CCCommonUtils::setSpriteMaxSize(spr, 94,true);
+            CCCommonUtils::setSpriteMaxSize(spr,  84,true);
             m_rewardIcon3->addChild(spr);
         }
     }
     
-    CCSprite* spr = CCLoadSprite::createSprite(CCCommonUtils::getToolBgByColor(PURPLE).c_str());
+    CCSprite* spr = CCLoadSprite::createSprite(CCCommonUtils::getToolBgByColor(TOOL_BG[3]).c_str());
+    CCCommonUtils::setSpriteMaxSize(spr,  80);
     m_rewardIcon4->addChild(spr);
     spr = CCLoadSprite::createSprite("MonsterAttack_3.png");
-    CCCommonUtils::setSpriteMaxSize(spr, 94);
+    CCCommonUtils::setSpriteMaxSize(spr,  84);
     m_rewardIcon4->addChild(spr);
     m_rewardTxt4->setString(_lang("105849"));
 }
