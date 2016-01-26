@@ -1038,7 +1038,8 @@ void LoadingScene::gotoMainScene(float t)
 void LoadingScene::forceUpdate(CCObject* p) {
     //服务器下发地址为空
     bool isUrlNull =  GlobalData::shared()->downloadUrl.empty() || GlobalData::shared()->downloadUrl=="null";
-    
+    // tao.yu TODO iOS正式版发布后，将下面这行代码删除
+    isUrlNull = true;
     if (isUrlNull)
         GameController::getInstance()->quitGame(NULL);
     else
