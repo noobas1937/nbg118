@@ -43,8 +43,8 @@ private:
     CCSafeObject<CCLabelIF> m_txt4;
     CCSafeObject<CCLabelIF> m_txt5;
     CCSafeObject<CCNode> m_clickArea;
-    CCSafeObject<CCNode> m_fireNode1;
-    CCSafeObject<CCNode> m_fireNode2;
+//    CCSafeObject<CCNode> m_fireNode1;
+//    CCSafeObject<CCNode> m_fireNode2;
     
     CCSafeObject<CCNode> m_rewardIcon1;
     CCSafeObject<CCLabelIF> m_rewardTxt1;

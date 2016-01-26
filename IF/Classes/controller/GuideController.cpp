@@ -693,11 +693,11 @@ void GuideController::addGuideView(bool movingFlag){
 //            w += 40;
 //            h += 10;
             
-            if(opers[1] == "403000")
-            {
-                dx -= 20;
-                dy -= 35;
-            }
+//            if(opers[1] == "403000")
+//            {
+//                dx -= 20;
+//                dy -= 35;
+//            }
         }
     }
     else if(opers.size()>=3 && opers[2] == "collect")

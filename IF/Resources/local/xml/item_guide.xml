@@ -20,7 +20,7 @@
         <ItemSpec id="3313800" next="3313900" arrow="2" area="UI_titan" enforce="1"/>
         <ItemSpec id="3313900" next="3314000" arrow="5" area="Titan_Feed" enforce="1"/>
         <ItemSpec id="3314000" next="3314200" arrow="2" area="Titan_End" enforce="1"/>
-        <ItemSpec id="3314200" next="3314300" lag="6"/>
+        <ItemSpec id="3314200" next="3314300" lag="7"/>
         <ItemSpec id="3314300" next="3314400" plot="3314310" arrow="0" area="plot_continue" enforce="1"/>
         <ItemSpec id="3314400" next="3314500" arrow="1" area="Titan_Close" enforce="1"/>
         <ItemSpec id="3314500" next="3314600" plot="3314510" arrow="0" area="plot_continue" enforce="1" mark="1"/>
@@ -51,7 +51,8 @@
         <ItemSpec id="3320100" next="3320200" plot="3320110" arrow="0" area="plot_continue" enforce="1" mark="1"/>
         <ItemSpec id="3320200" next="3320300" arrow="2" area="UI_achievement" enforce="1"/>
         <ItemSpec id="3320300" next="3320400" arrow="1" area="AC_reward" enforce="1"/>
-        <ItemSpec id="3320400" lag="1"/>
+        <ItemSpec id="3320400" next="3320500" lag="1"/>
+        <ItemSpec id="3320500" arrow="1" area="AC_back" enforce="1"/>
         <ItemSpec id="3330100" next="3330200" plot="3330110" arrow="0" area="plot_continue" enforce="1" mark="1"/>
         <ItemSpec id="3330200" next="3330300" arrow="2" area="UI_goods" enforce="1"/>
         <ItemSpec id="3330300" next="3330400" arrow="1" area="GD_first" enforce="1"/>

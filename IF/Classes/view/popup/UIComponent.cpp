@@ -1044,6 +1044,8 @@ void UIComponent::onEnter()
     
     updateDragonStatus(nullptr);
     
+    showQuestTextNewOn(0);
+    
 #if(CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
     ChatServiceCocos2dx::postUIShow();
 #endif

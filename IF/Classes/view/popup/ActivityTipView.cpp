@@ -195,8 +195,8 @@ bool ActivityTipView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, con
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_txt4", CCLabelIF*, this->m_txt4);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_txt5", CCLabelIF*, this->m_txt5);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_clickArea", CCNode*, this->m_clickArea);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_fireNode1", CCNode*, this->m_fireNode1);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_fireNode2", CCNode*, this->m_fireNode2);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_fireNode1", CCNode*, this->m_fireNode1);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_fireNode2", CCNode*, this->m_fireNode2);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_rewardIcon1", CCNode*, this->m_rewardIcon1);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_rewardTxt1", CCLabelIF*, this->m_rewardTxt1);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_rewardIcon2", CCNode*, this->m_rewardIcon2);

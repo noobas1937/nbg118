@@ -48,26 +48,26 @@
                 <key>frame</key>
                 <string>{{617,4},{300,249}}</string>
                 <key>offset</key>
-                <string>{4,-9}</string>
+                <string>{-5,-9}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{29,18},{300,249}}</string>
+                <string>{{20,18},{300,249}}</string>
                 <key>sourceSize</key>
                 <string>{350,267}</string>
             </dict>
-            <key>guide_archer.png</key>
+            <key>guide_bulage.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,4},{270,441}}</string>
+                <string>{{617,411},{300,244}}</string>
                 <key>offset</key>
-                <string>{-40,1}</string>
+                <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,5},{270,441}}</string>
+                <string>{{0,0},{300,244}}</string>
                 <key>sourceSize</key>
-                <string>{350,453}</string>
+                <string>{300,244}</string>
             </dict>
             <key>guide_infantry.png</key>
             <dict>
@@ -111,7 +111,7 @@
             <key>nb_gm_tc1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{617,411},{300,136}}</string>
+                <string>{{549,661},{300,136}}</string>
                 <key>offset</key>
                 <string>{0,-5}</string>
                 <key>rotated</key>
@@ -222,7 +222,7 @@
             <key>size</key>
             <string>{1024,1024}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:--REMOVED----------------------------</string>
+            <string>$TexturePacker:SmartUpdate:8539a5ac12289d0acac57afe5b2cc284:1/1$</string>
             <key>textureFileName</key>
             <string>General_100.pvr.ccz</string>
         </dict>
