@@ -3986,9 +3986,9 @@ void CCCommonUtils::getGameDataAfterInit(){
     
 //结构    "id|seqid|channelType,id|seqid|channelType,id|seqid|channelType"
     
-    string param = ChatServiceCocos2dx::getChannelInfo();
-//     string param = "0|0|4";
-    ChatController::getInstance()->getNewMailMsg(param);
+//    string param = ChatServiceCocos2dx::getChannelInfo();// simon
+////     string param = "0|0|4";
+//    ChatController::getInstance()->getNewMailMsg(param);
 #endif
 }
 

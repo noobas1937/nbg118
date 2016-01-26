@@ -17,14 +17,24 @@
 #define CHAT_STATE_NOTICE_COMMAND "chat.notice"
 class CountryChatCommand: public CommandBase {
 public:
-    CountryChatCommand(string cmd,const string& msg,int post=0,string sendLocalTime=""):
+    CountryChatCommand(string cmd,const string& msg,int post=0,string sendLocalTime="",const string& dialog ="",CCArray* msgArr = NULL,string thxuuid=""):
     CommandBase(cmd){
         m_post = post;
         putParam("msg", CCString::create(msg));
         putParam("lang",CCString::create(CCCommonUtils::getLanguage()));
         putParam("post",CCInteger::create(post));
         putParam("sendLocalTime",CCString::create(sendLocalTime));
+        if (dialog!="") {
+            putParam("dialog",CCString::create(dialog));
+        }
+        if (msgArr!=NULL) {
+            putParam("msgarr",msgArr);
+        }
+        if(thxuuid!=""){
+            putParam("thanksUid",CCString::create(thxuuid));
+        }
     }
+
     
 protected:
     virtual bool handleRecieve(cocos2d::CCDictionary *dict);

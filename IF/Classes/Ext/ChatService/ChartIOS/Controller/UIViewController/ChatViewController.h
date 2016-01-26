@@ -23,6 +23,6 @@
 
 -(void) isShowJionAllance;
 -(void) hiddenJionAllanceView;
-
+-(void)chatVCEndingEdit;
 @end
 

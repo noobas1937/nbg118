@@ -28,47 +28,62 @@
 
 @implementation UserManager
 
--(void) addRestrictUser:(NSString *)name :(int)type
+-(void) addRestrictUser:(NSString *)uid :(int)type
 {
-    if (![self isInRestrictList:name :type] && type == 1){
-        [self.blockNameList addObject:name];
-    }else if(![self isInRestrictList:name :type] && type == 2){
-        [self.banNameList addObject:name];
+    if (![self isInRestrictList:uid :type] && type == 1){
+        [self.blockNameList addObject:uid];
+    }else if(![self isInRestrictList:uid :type] && type == 2){
+        [self.banNameList addObject:uid];
     }
     
 }
 
--(void) removeRestrictUser:(NSString *)name :(int)type
+
+-(void) removeRestrictUser:(NSString *)uid :(int)type
 {
     if (type == 1)
     {
-        for(NSString *n in self.blockNameList){
-            if([n isEqualToString:name]){
-                [self.blockNameList removeObject:n];
+        if ([self.blockNameList count] > 0){
+            int index = -1;
+            for (int i = 0 ; i < [self.blockNameList count] ; i++){
+                NSString *n = (NSString*)self.blockNameList[i];
+                if([n isEqualToString:uid]){
+                    index = i;
+                }
+            }
+            if (index >= 0 ) {
+                [self.blockNameList removeObjectAtIndex:index];
             }
         }
     }
     else if (type == 2)
     {
-        for(NSString *n in self.banNameList){
-            if([n isEqualToString:name]){
-                [self.banNameList removeObject:n];
+        if ([self.banNameList count] > 0){
+            int index = -1;
+            for (int i = 0 ; i < [self.banNameList count] ; i++){
+                NSString *n = (NSString*)self.banNameList[i];
+                if([n isEqualToString:uid]){
+                    index = i;
+                }
+            }
+            if (index >= 0 ) {
+                [self.banNameList removeObjectAtIndex:index];
             }
         }
     }
 }
 
--(BOOL) isInRestrictList:(NSString *)name :(int)type
+-(BOOL) isInRestrictList:(NSString *)uid :(int)type
 {
     if(type == 1){              //屏蔽
         for(NSString *n in self.blockNameList){
-            if([n isEqualToString:name]){
+            if([n isEqualToString:uid]){
                 return true;
             }
         }
     }else if(type == 2){        //禁言
         for(NSString *n in self.banNameList){
-            if([n isEqualToString:name]){
+            if([n isEqualToString:uid]){
                 return true;
             }
         }
@@ -84,7 +99,7 @@
  */
 -(void) onReceiveUserInfo:(NSMutableArray *)userInfos
 {
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+    dispatch_async([ServiceInterface serviceInterfaceSharedManager].csGetUserInfoQueue, ^{
         //加入耗时操作
         [self saveToDB:userInfos];
         
@@ -204,21 +219,50 @@
 
 -(NSUserInfo*) gettingUser:(NSString*)userID
 {
-    for(int i = 0 ; i < self.userList.count ; i ++)
-    {
-        NSUserInfo *userInfo = self.userList[i];
-        if ([userID isEqualToString:userInfo.uid])
-            return userInfo;
+    if  (userID.length > 0){
+        for(int i = 0 ; i < self.userList.count ; i ++)
+        {
+            NSUserInfo *userInfo = self.userList[i];
+            if ([userID isEqualToString:userInfo.uid])
+                return userInfo;
+        }
+
     }
     
     return nil;
 }
 
+-(NSUserInfo *)gettingUserInfoForMemoryAndDBWithUidString:(NSString *)vUidString{
+    NSUserInfo *userInfo  =[self gettingUser:vUidString];
+    if (userInfo ){
+        return userInfo;
+    }else{
+        userInfo = [self gettingUserInforWithUid:vUidString];
+        if(userInfo ){
+            if(userInfo.lastUpdateTime> 0){
+                [self.userList addObject:userInfo];
+                return userInfo;
+            }else{
+                [self.userList addObject:userInfo];
+                [self gettingServicerUser:vUidString];
+                return userInfo;
+            }
+            
+        }else{
+            [self gettingServicerUser:vUidString];
+            return nil;
+        }
+    }
+}
+
 -(void) gettingServicerUser:(NSString*)userID
 {
-    NSMutableArray *userUidArray = [[NSMutableArray alloc]init];
-    [userUidArray addObject:userID];
-    [[UserManager sharedUserManager] getMultiUserInfo:userUidArray];
+    if (userID.length> 0) {
+        NSMutableArray *userUidArray = [[NSMutableArray alloc]init];
+        [userUidArray addObject:userID];
+        [self getMultiUserInfo:userUidArray];
+
+    }
 }
 
 -(void) clearAllianceMember
@@ -244,9 +288,12 @@
             [self.queueUids addObject:uid];
             self.lastAddUidTime = [self gettingCurrentTimeMillis];
             if(self.timer == nil){
-                [self startTimer];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self startTimer];
+                    
+                });
+                
             }
-            
         }
     }
 }
@@ -274,7 +321,7 @@
 -(void) startTimeCallFun
 {
     long long now = [self gettingCurrentTimeMillis];
-//    DVLog(@"now:  %lld",now);
+    DVLog(@"now:  %lld",now);
     if ([self.queueUids count] > 0 && (now - self.lastAddUidTime) > 500 && ([self isLastCallSuccess] || [self isLastCallTimeOut])) {
         [self actualCall];
         [self stopTimer];
@@ -282,9 +329,7 @@
             [self startTimer];
         }
     }
-    
 }
-
 -(void) actualCall
 {
     
@@ -293,7 +338,7 @@
         if ([self isLastCallSuccess]) {
             [self.fechingUids removeAllObjects];
         }else{
-            NSLog(@"超时：fechingUids is not empty");
+            DVLog(@"超时：fechingUids is not empty");
         }
     }
     
@@ -304,10 +349,18 @@
         [self.queueUids removeObjectAtIndex:0];
     }
     
-    NSString *uidsStr = [ChatChannel getMembersString:self.fechingUids];
-    [[ChatServiceController chatServiceControllerSharedManager].gameHost getMultiUserInfo:uidsStr];
-    self.lastCallTime = [self gettingCurrentTimeMillis];
-    self.lastCallSuccessTime = [self gettingCurrentTimeMillis] * 2;
+    __block UserManager *weakSelf = self;
+    dispatch_async([ServiceInterface serviceInterfaceSharedManager].csGetUserInfoQueue, ^{
+        //加入耗时操作
+        NSString *uidsStr = [ChatChannel getMembersString:weakSelf.fechingUids];
+        [[ChatServiceController chatServiceControllerSharedManager].gameHost getMultiUserInfo:uidsStr];
+        weakSelf.lastCallTime = [weakSelf gettingCurrentTimeMillis];
+        weakSelf.lastCallSuccessTime = [weakSelf gettingCurrentTimeMillis] * 2;
+        
+        
+    });
+    
+    
     
 }
 
@@ -399,6 +452,9 @@
         self.fechingUids = [[NSMutableArray alloc]init];
         self.queueUids = [[NSMutableArray alloc]init];
         self.userList = [[NSMutableArray alloc]init];
+        self.reportList = [[NSMutableArray alloc]init];
+        self.friends_FAVO = [[NSMutableArray alloc] init];
+        self.friends_ordinary = [[NSMutableArray alloc] init];
         self.lastAddUidTime = 0;
         self.lastCallSuccessTime = 0;
         self.lastCallTime = 0;
@@ -439,7 +495,9 @@
         for (NSUserInfo *tempUserInfor in vArray) {
             NSUserInfo *dbTempUser =  [self gettingUserInforWithUid:tempUserInfor.uid];
             if (dbTempUser) {
-                [[DBManager sharedDBManager].dbHelper updateToDBWithModelTableName:[NSUserInfo getTableName] andWithModel:tempUserInfor where:[NSString stringWithFormat:@"UserID=%@",tempUserInfor.uid]];
+                tempUserInfor._id = dbTempUser._id;
+                [[DBManager sharedDBManager].dbHelper updateToDBWithModelTableName:[NSUserInfo getTableName] andWithModel:tempUserInfor where:[NSString stringWithFormat:@"(UserID='%@')",tempUserInfor.uid]];
+                
             }else{
                 [[DBManager sharedDBManager].dbHelper insertToDBWithModelTableName:[NSUserInfo getTableName] andWithModel:tempUserInfor];
             }
@@ -450,7 +508,7 @@
 
 -(NSUserInfo *)gettingUserInforWithUid:(NSString *)vUid{
     if  (ChatServiceCocos2dx::DB_UserInfo_switch){
-       NSUserInfo *tempUser =  [[DBManager sharedDBManager].dbHelper searchSingleWithModelTableName:[NSUserInfo getTableName] andWithModelClass:[NSUserInfo class] where:[NSString stringWithFormat:@"UserID=%@",vUid] orderBy:@"rowid asc"];
+        NSUserInfo *tempUser =  [[DBManager sharedDBManager].dbHelper searchSingleWithModelTableName:[NSUserInfo getTableName] andWithModelClass:[NSUserInfo class] where:[NSString stringWithFormat:@"(UserID = '%@')",vUid] orderBy:@"_id asc"];
         if (tempUser != nil) {
             tempUser.isDummy = NO;
             return  tempUser;
@@ -460,6 +518,28 @@
     }else{
         return nil;
     }
+}
+
+-(void)addReportList:(NSString *)uid
+{
+    [self.reportList addObject:uid];
+}
+
+-(void)removeReportList:(NSString *)uid
+{
+    [self.reportList removeObject:uid];
+}
+
+-(BOOL)isUid2ReportList:(NSString *)uid
+{
+//    return [self.reportList containsObject:uid];
+    for(NSString *tempUid in self.reportList)
+    {
+        if ([tempUid isEqualToString:uid]) {
+            return true;
+        }
+    }
+    return false;
 }
 
 @end

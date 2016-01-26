@@ -6,7 +6,7 @@
 
 #import "UIViewExt.h"
 
-CGPoint CGRectGetCenter(CGRect rect)
+CGPoint CGRectGetCenterPoint(CGRect rect)
 {
     CGPoint pt;
     pt.x = CGRectGetMidX(rect);

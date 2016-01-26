@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="CSMailBottomOperationToolBarView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ILu-8e-yyJ" userLabel="rootView">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3ch-A8-8tG" userLabel="backImage">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                            <animations/>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oVh-DY-lKR" userLabel="checkButton">
+                            <rect key="frame" x="6" y="9" width="26" height="26"/>
+                            <animations/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="oVh-DY-lKR" secondAttribute="height" multiplier="1:1" id="QZL-nt-nwH"/>
+                            </constraints>
+                            <state key="normal" image="mail_list_edit_check_box_unchecked"/>
+                            <state key="selected" image="mail_list_edit_check_box_checked"/>
+                            <connections>
+                                <action selector="selectAllButtonAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="9Eo-dZ-L6j"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Check all" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o0g-bl-z3J">
+                            <rect key="frame" x="38" y="15" width="52" height="15"/>
+                            <animations/>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fGa-oz-hnR" userLabel="giftButton">
+                            <rect key="frame" x="176" y="5" width="35" height="35"/>
+                            <animations/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="fGa-oz-hnR" secondAttribute="height" multiplier="1:1" id="OgB-L4-Lg3"/>
+                            </constraints>
+                            <state key="normal" image="mail_list_edit_gift"/>
+                            <connections>
+                                <action selector="giftButtonAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="Drr-K5-G77"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YZQ-BJ-3Bc" userLabel="delectedButton">
+                            <rect key="frame" x="249" y="5" width="34" height="34"/>
+                            <animations/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="YZQ-BJ-3Bc" secondAttribute="height" multiplier="1:1" id="hd0-PE-PAd"/>
+                            </constraints>
+                            <state key="normal" image="mail_list_edit_delete"/>
+                            <connections>
+                                <action selector="delectButtonAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="2oQ-gI-Y0W"/>
+                            </connections>
+                        </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ujc-MN-Rym" userLabel="delectView">
+                            <rect key="frame" x="283" y="0.0" width="37" height="44"/>
+                            <animations/>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U4w-zu-iHN" userLabel="jiaxinView">
+                            <rect key="frame" x="211" y="0.0" width="36" height="44"/>
+                            <animations/>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yhc-su-TR9" userLabel="giftView">
+                            <rect key="frame" x="140" y="0.0" width="36" height="44"/>
+                            <animations/>
+                        </view>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R2L-j7-53O" userLabel="starButton">
+                            <rect key="frame" x="103" y="5" width="34" height="34"/>
+                            <animations/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="R2L-j7-53O" secondAttribute="height" multiplier="1:1" id="6Jx-WH-BUt"/>
+                            </constraints>
+                            <state key="normal" image="mail_list_edit_favorite"/>
+                            <connections>
+                                <action selector="starButtonAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="iAb-XV-G3m"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <animations/>
+                    <constraints>
+                        <constraint firstItem="3ch-A8-8tG" firstAttribute="leading" secondItem="ILu-8e-yyJ" secondAttribute="leading" id="06h-lW-qCd"/>
+                        <constraint firstItem="fGa-oz-hnR" firstAttribute="height" secondItem="ILu-8e-yyJ" secondAttribute="height" multiplier="0.795" id="2JS-aD-oIn"/>
+                        <constraint firstItem="o0g-bl-z3J" firstAttribute="leading" secondItem="oVh-DY-lKR" secondAttribute="trailing" id="3VA-ov-boT"/>
+                        <constraint firstItem="oVh-DY-lKR" firstAttribute="leading" secondItem="ILu-8e-yyJ" secondAttribute="leading" constant="6" id="3no-Zj-j27"/>
+                        <constraint firstItem="U4w-zu-iHN" firstAttribute="width" secondItem="ILu-8e-yyJ" secondAttribute="width" multiplier="0.115" id="63n-7W-qVK"/>
+                        <constraint firstItem="YZQ-BJ-3Bc" firstAttribute="leading" secondItem="U4w-zu-iHN" secondAttribute="trailing" constant="2" id="8Gy-vY-fCa"/>
+                        <constraint firstItem="fGa-oz-hnR" firstAttribute="centerY" secondItem="ILu-8e-yyJ" secondAttribute="centerY" id="A85-O7-jca"/>
+                        <constraint firstItem="oVh-DY-lKR" firstAttribute="centerY" secondItem="ILu-8e-yyJ" secondAttribute="centerY" id="DkY-q7-Qkb"/>
+                        <constraint firstItem="Yhc-su-TR9" firstAttribute="width" secondItem="ILu-8e-yyJ" secondAttribute="width" multiplier="0.115" id="E3W-UW-hzY"/>
+                        <constraint firstItem="oVh-DY-lKR" firstAttribute="leading" secondItem="ILu-8e-yyJ" secondAttribute="leading" id="EQb-xT-VI5"/>
+                        <constraint firstAttribute="bottom" secondItem="Yhc-su-TR9" secondAttribute="bottom" id="EyH-oU-PCd"/>
+                        <constraint firstItem="Ujc-MN-Rym" firstAttribute="leading" secondItem="YZQ-BJ-3Bc" secondAttribute="trailing" id="HdL-O0-Hs9"/>
+                        <constraint firstAttribute="bottom" secondItem="oVh-DY-lKR" secondAttribute="bottom" constant="9" id="Iuz-ty-X9X"/>
+                        <constraint firstItem="R2L-j7-53O" firstAttribute="centerY" secondItem="ILu-8e-yyJ" secondAttribute="centerY" id="KzK-39-Tjv"/>
+                        <constraint firstItem="Ujc-MN-Rym" firstAttribute="width" secondItem="ILu-8e-yyJ" secondAttribute="width" multiplier="0.115" id="L2H-dn-2Vn"/>
+                        <constraint firstItem="R2L-j7-53O" firstAttribute="height" secondItem="ILu-8e-yyJ" secondAttribute="height" multiplier="0.795" id="NTg-y6-NTr"/>
+                        <constraint firstAttribute="trailing" secondItem="Ujc-MN-Rym" secondAttribute="trailing" id="VQa-BP-iqk"/>
+                        <constraint firstAttribute="bottom" secondItem="U4w-zu-iHN" secondAttribute="bottom" id="YLu-2o-2uB"/>
+                        <constraint firstItem="o0g-bl-z3J" firstAttribute="centerY" secondItem="ILu-8e-yyJ" secondAttribute="centerY" id="bV0-At-pDn"/>
+                        <constraint firstAttribute="bottom" secondItem="3ch-A8-8tG" secondAttribute="bottom" id="dJi-Mh-fN1"/>
+                        <constraint firstAttribute="bottom" secondItem="Ujc-MN-Rym" secondAttribute="bottom" id="fJ2-kV-btZ"/>
+                        <constraint firstItem="3ch-A8-8tG" firstAttribute="top" secondItem="ILu-8e-yyJ" secondAttribute="top" id="h8h-dw-1yU"/>
+                        <constraint firstItem="fGa-oz-hnR" firstAttribute="leading" secondItem="Yhc-su-TR9" secondAttribute="trailing" id="igy-h7-t1f"/>
+                        <constraint firstItem="YZQ-BJ-3Bc" firstAttribute="centerY" secondItem="ILu-8e-yyJ" secondAttribute="centerY" id="ilI-7E-vfs"/>
+                        <constraint firstItem="Ujc-MN-Rym" firstAttribute="top" secondItem="ILu-8e-yyJ" secondAttribute="top" id="jTx-ru-jKA"/>
+                        <constraint firstItem="o0g-bl-z3J" firstAttribute="leading" secondItem="oVh-DY-lKR" secondAttribute="trailing" constant="6" id="lxi-Ax-tLF"/>
+                        <constraint firstAttribute="trailing" secondItem="3ch-A8-8tG" secondAttribute="trailing" id="mUz-HO-j5E"/>
+                        <constraint firstItem="oVh-DY-lKR" firstAttribute="top" secondItem="ILu-8e-yyJ" secondAttribute="top" constant="9" id="mh0-XP-val"/>
+                        <constraint firstItem="U4w-zu-iHN" firstAttribute="top" secondItem="ILu-8e-yyJ" secondAttribute="top" id="n9h-Xv-pWJ"/>
+                        <constraint firstItem="YZQ-BJ-3Bc" firstAttribute="height" secondItem="ILu-8e-yyJ" secondAttribute="height" multiplier="0.795" id="rvd-H4-5hy"/>
+                        <constraint firstItem="U4w-zu-iHN" firstAttribute="leading" secondItem="fGa-oz-hnR" secondAttribute="trailing" id="sRq-Ob-1B9"/>
+                        <constraint firstItem="Yhc-su-TR9" firstAttribute="leading" secondItem="R2L-j7-53O" secondAttribute="trailing" constant="3" id="tXU-4T-tU2"/>
+                        <constraint firstAttribute="height" constant="44" id="tsD-Uf-DAu"/>
+                        <constraint firstItem="Yhc-su-TR9" firstAttribute="top" secondItem="ILu-8e-yyJ" secondAttribute="top" id="y6F-de-E7N"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="EQb-xT-VI5"/>
+                            <exclude reference="3VA-ov-boT"/>
+                        </mask>
+                    </variation>
+                </view>
+            </subviews>
+            <animations/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="ILu-8e-yyJ" secondAttribute="bottom" id="CEI-x6-hSq"/>
+                <constraint firstItem="ILu-8e-yyJ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Gwo-2b-DJa"/>
+                <constraint firstItem="ILu-8e-yyJ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="bwt-Nc-j0l"/>
+                <constraint firstAttribute="trailing" secondItem="ILu-8e-yyJ" secondAttribute="trailing" id="lqT-6K-oCB"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="backImageView" destination="3ch-A8-8tG" id="Yfu-PA-5zS"/>
+                <outlet property="checkAllLabel" destination="o0g-bl-z3J" id="JHI-3N-Sxt"/>
+                <outlet property="checkButton" destination="oVh-DY-lKR" id="pnU-vG-8Ax"/>
+                <outlet property="delectButton" destination="YZQ-BJ-3Bc" id="f6Y-xc-GLA"/>
+                <outlet property="giftButton" destination="fGa-oz-hnR" id="vFI-bG-Gfu"/>
+                <outlet property="starButton" destination="R2L-j7-53O" id="NsQ-Pq-tGw"/>
+            </connections>
+            <point key="canvasLocation" x="538" y="322"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="mail_list_edit_check_box_checked" width="40" height="40"/>
+        <image name="mail_list_edit_check_box_unchecked" width="40" height="40"/>
+        <image name="mail_list_edit_delete" width="70" height="70"/>
+        <image name="mail_list_edit_favorite" width="70" height="70"/>
+        <image name="mail_list_edit_gift" width="70" height="70"/>
+    </resources>
+</document>

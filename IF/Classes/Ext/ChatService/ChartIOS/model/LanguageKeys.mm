@@ -97,6 +97,9 @@
         self.TIP_SELECTED_MEMBER = @"105356";			//已加入
         self.TIP_SEARCH_RESULT = @"105357";			//搜索结果
         self.TIP_SEARCH_ThisCheck = @"4100011";     //本次勾选
+        self.TIP_EQUIP_SHARE = @"111660";           //我刚刚在铁匠铺在成功的锻造出了{0}
+        self.MENU_VIEW_EQUIPMENT = @"111665";       //查看装备
+        self.MENU_REPORT_HEADIMG = @"105777";       //举报头像
     }
     return self;
 }

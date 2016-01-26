@@ -16,7 +16,7 @@
 @property (nonatomic,strong) GameHostInterface *gameHost;
 +(instancetype) chatServiceControllerSharedManager;
 
--(void) doHostAction:(NSString*) action :(NSString*) uid :(NSString*) name :(NSString*) reportUid :(NSString*) detectReportUid :(BOOL) returnToChatAfterPopup;
+-(void)doHostAction:(NSString *)action :(NSString *)uid :(NSString *)name :(NSString *)reportUid :(NSString *)detectReportUid :(int)equipId :(BOOL)returnToChatAfterPopup;
 
 -(void) closekeyboard;
 
@@ -39,5 +39,13 @@
 -(void) updateMailList;
 
 -(void) addUser:(NSUserInfo*)userInfo;
+//当前国王UID
+@property (nonatomic,strong)NSString *kingUidString;
+@property (nonatomic,assign) BOOL isContactMod;
+@property (nonatomic,strong)NSString *banTimeString;
+
+@property (nonatomic,strong)NSMutableDictionary *redPackgeMsgDict;
+
+-(void)loadChatBarOnCocoas;
 
 @end

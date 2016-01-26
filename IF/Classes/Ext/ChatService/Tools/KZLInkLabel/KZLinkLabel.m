@@ -75,6 +75,13 @@
     [mutableAttributeString addAttributes:[self attributesFromProperties] range:NSMakeRange(0, mutableAttributeString.length)];
     [self updateTextStoreWithAttributedString:mutableAttributeString];
 }
+
+-(void)settingNSMutableAttributedString:(NSMutableAttributedString *)mutableAttributeString :(NSRange) range
+{
+    [self updateTextStoreWithAttributedString:mutableAttributeString];
+}
+
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="MailWriteEditView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vt7-sa-7s8" userLabel="rootView" customClass="UIControl">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
+                    <subviews>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" background="cs_mail_write_textView_back" translatesAutoresizingMaskIntoConstraints="NO" id="Sza-Gt-cUK" userLabel="nameTextField">
+                            <rect key="frame" x="60" y="14" width="200" height="32"/>
+                            <animations/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="17" id="nn9-u1-Wcn"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="nn9-u1-Wcn"/>
+                                </mask>
+                            </variation>
+                        </textField>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eN1-eA-Lc5" userLabel="separateImageView">
+                            <rect key="frame" x="10" y="55" width="300" height="1"/>
+                            <animations/>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="Tdk-us-3la"/>
+                            </constraints>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cs_mail_write_textView_back" translatesAutoresizingMaskIntoConstraints="NO" id="F3C-R7-GrQ" userLabel="textViewBackImage">
+                            <rect key="frame" x="57" y="66" width="253" height="124"/>
+                            <animations/>
+                        </imageView>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Rqi-54-Gs6">
+                            <rect key="frame" x="57" y="66" width="253" height="124"/>
+                            <animations/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gvp-jf-qF6" userLabel="nameButton">
+                            <rect key="frame" x="10" y="10" width="40" height="40"/>
+                            <animations/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="f1h-PZ-oNU"/>
+                                <constraint firstAttribute="width" secondItem="Gvp-jf-qF6" secondAttribute="height" multiplier="1:1" id="m9R-Gl-UZu"/>
+                            </constraints>
+                            <inset key="contentEdgeInsets" minX="6" minY="8" maxX="6" maxY="8"/>
+                            <state key="normal" image="cs_mail_write__name"/>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JW0-Sv-XST" userLabel="AddButton">
+                            <rect key="frame" x="270" y="10" width="40" height="40"/>
+                            <animations/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="JW0-Sv-XST" secondAttribute="height" multiplier="1:1" id="TLz-U0-2in"/>
+                            </constraints>
+                            <inset key="contentEdgeInsets" minX="6" minY="6" maxX="6" maxY="6"/>
+                            <state key="normal" image="cs_mail_write_AddButtonImage"/>
+                            <connections>
+                                <action selector="addButtonAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="BSk-Jm-ODS"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VyI-9d-sPY" userLabel="contentsButton">
+                            <rect key="frame" x="10" y="60" width="40" height="40"/>
+                            <animations/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="VyI-9d-sPY" secondAttribute="height" multiplier="1:1" id="UNc-aj-VSx"/>
+                            </constraints>
+                            <inset key="contentEdgeInsets" minX="6" minY="8" maxX="6" maxY="8"/>
+                            <state key="normal" image="cs_mail_write_write"/>
+                        </button>
+                    </subviews>
+                    <animations/>
+                    <constraints>
+                        <constraint firstItem="JW0-Sv-XST" firstAttribute="leading" secondItem="Sza-Gt-cUK" secondAttribute="trailing" constant="10" id="1Et-3d-c9x"/>
+                        <constraint firstItem="Gvp-jf-qF6" firstAttribute="width" secondItem="vt7-sa-7s8" secondAttribute="width" multiplier="0.125" id="26d-11-3dz"/>
+                        <constraint firstItem="VyI-9d-sPY" firstAttribute="top" secondItem="Gvp-jf-qF6" secondAttribute="bottom" constant="10" id="3m3-Uq-aA6"/>
+                        <constraint firstItem="VyI-9d-sPY" firstAttribute="leading" secondItem="vt7-sa-7s8" secondAttribute="leading" constant="10" id="4ZJ-2s-HC0"/>
+                        <constraint firstAttribute="trailing" secondItem="Rqi-54-Gs6" secondAttribute="trailing" constant="10" id="5bX-vD-p2L"/>
+                        <constraint firstItem="eN1-eA-Lc5" firstAttribute="top" secondItem="Gvp-jf-qF6" secondAttribute="bottom" constant="5" id="Ajo-T1-JOC"/>
+                        <constraint firstItem="Sza-Gt-cUK" firstAttribute="centerY" secondItem="Gvp-jf-qF6" secondAttribute="centerY" id="F6l-rK-snd"/>
+                        <constraint firstItem="Sza-Gt-cUK" firstAttribute="height" secondItem="Gvp-jf-qF6" secondAttribute="height" multiplier="0.8" id="GOc-gz-Hja"/>
+                        <constraint firstItem="JW0-Sv-XST" firstAttribute="top" secondItem="vt7-sa-7s8" secondAttribute="top" constant="10" id="Gmj-l1-tAL"/>
+                        <constraint firstItem="Rqi-54-Gs6" firstAttribute="top" secondItem="F3C-R7-GrQ" secondAttribute="top" id="IUv-o7-0nU"/>
+                        <constraint firstItem="Rqi-54-Gs6" firstAttribute="leading" secondItem="VyI-9d-sPY" secondAttribute="trailing" constant="7" id="KOz-x7-LAI"/>
+                        <constraint firstAttribute="trailing" secondItem="eN1-eA-Lc5" secondAttribute="trailing" constant="10" id="MnT-Fn-ANY"/>
+                        <constraint firstItem="Rqi-54-Gs6" firstAttribute="width" secondItem="F3C-R7-GrQ" secondAttribute="width" id="O8K-wc-8zw"/>
+                        <constraint firstAttribute="bottom" secondItem="Rqi-54-Gs6" secondAttribute="bottom" constant="10" id="U5b-BC-G8Q"/>
+                        <constraint firstItem="Rqi-54-Gs6" firstAttribute="height" secondItem="F3C-R7-GrQ" secondAttribute="height" id="U6i-T1-JAL"/>
+                        <constraint firstItem="Rqi-54-Gs6" firstAttribute="top" secondItem="eN1-eA-Lc5" secondAttribute="bottom" constant="10" id="ULZ-7P-vXi"/>
+                        <constraint firstItem="JW0-Sv-XST" firstAttribute="width" secondItem="vt7-sa-7s8" secondAttribute="width" multiplier="0.125" id="Zji-Fg-aNq"/>
+                        <constraint firstItem="eN1-eA-Lc5" firstAttribute="leading" secondItem="vt7-sa-7s8" secondAttribute="leading" constant="10" id="eFX-bN-Vv2"/>
+                        <constraint firstAttribute="trailing" secondItem="JW0-Sv-XST" secondAttribute="trailing" constant="10" id="g9O-iY-lTU"/>
+                        <constraint firstItem="VyI-9d-sPY" firstAttribute="width" secondItem="vt7-sa-7s8" secondAttribute="width" multiplier="0.125" id="jx1-hK-Yj2"/>
+                        <constraint firstItem="Rqi-54-Gs6" firstAttribute="leading" secondItem="F3C-R7-GrQ" secondAttribute="leading" id="lZQ-mM-pGE"/>
+                        <constraint firstItem="Gvp-jf-qF6" firstAttribute="top" secondItem="vt7-sa-7s8" secondAttribute="top" constant="10" id="s7I-wJ-2S1"/>
+                        <constraint firstItem="Gvp-jf-qF6" firstAttribute="leading" secondItem="vt7-sa-7s8" secondAttribute="leading" constant="10" id="sUo-2t-6kn"/>
+                        <constraint firstItem="Sza-Gt-cUK" firstAttribute="leading" secondItem="Gvp-jf-qF6" secondAttribute="trailing" constant="10" id="sdy-GY-O0E"/>
+                        <constraint firstItem="Sza-Gt-cUK" firstAttribute="leading" secondItem="Gvp-jf-qF6" secondAttribute="trailing" constant="10" id="vsJ-zo-FR2"/>
+                    </constraints>
+                    <connections>
+                        <action selector="touchDown:" destination="iN0-l3-epB" eventType="touchDown" id="IvE-KV-Wsd"/>
+                    </connections>
+                </view>
+            </subviews>
+            <animations/>
+            <constraints>
+                <constraint firstItem="vt7-sa-7s8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="gKn-2n-QGp"/>
+                <constraint firstItem="vt7-sa-7s8" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="iJY-pc-lI6"/>
+                <constraint firstAttribute="bottom" secondItem="vt7-sa-7s8" secondAttribute="bottom" id="k9X-O8-P08"/>
+                <constraint firstAttribute="trailing" secondItem="vt7-sa-7s8" secondAttribute="trailing" id="mbI-Un-zN2"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="addMemberButton" destination="JW0-Sv-XST" id="zvd-EE-0mx"/>
+                <outlet property="contentsTextView" destination="Rqi-54-Gs6" id="1JT-Cj-brR"/>
+                <outlet property="nameButton" destination="Gvp-jf-qF6" id="E4O-Eo-cut"/>
+                <outlet property="nameTextField" destination="Sza-Gt-cUK" id="EEd-7d-gZP"/>
+                <outlet property="textViewBackImageView" destination="F3C-R7-GrQ" id="vf5-6p-RrC"/>
+                <outlet property="writeContentsButton" destination="VyI-9d-sPY" id="sFP-HC-Q5g"/>
+            </connections>
+            <point key="canvasLocation" x="377" y="156"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="cs_mail_write_AddButtonImage" width="37" height="37"/>
+        <image name="cs_mail_write__name" width="37" height="32"/>
+        <image name="cs_mail_write_textView_back" width="47" height="40"/>
+        <image name="cs_mail_write_write" width="37" height="35"/>
+    </resources>
+</document>

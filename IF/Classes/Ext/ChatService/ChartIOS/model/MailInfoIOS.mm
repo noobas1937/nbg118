@@ -9,6 +9,7 @@
 #import "MailInfoIOS.h"
 
 @implementation MailInfoIOS
+
 -(MailInfoIOS*)init
 {
     self = [super init];

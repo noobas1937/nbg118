@@ -7,175 +7,259 @@
 //
 
 #import "LKDB+Mapping.h"
+#import "NSObject+LKModel.h"
 
-inline NSString *LKSQLTypeFromObjcType(NSString* objcType)
-{
-    if([LKSQLIntType rangeOfString:objcType].location != NSNotFound){
-        return LKSQLInt;
-    }
-    if ([LKSQLFloatType rangeOfString:objcType].location != NSNotFound) {
-        return LKSQLDouble;
-    }
-    if ([LKSQLBlobType rangeOfString:objcType].location != NSNotFound) {
-        return LKSQLBlob;
-    }
-    
-    return LKSQLText;
-}
-
-@implementation NSObject(TableMapping)
-+(NSDictionary *)getTableMapping
-{
-    return nil;
-}
-@end
-
+#pragma mark- 声明
 @interface LKDBProperty()
 {
     __strong NSString* _type;
     
-    __strong NSString* _sqlColumeName;
-    __strong NSString* _sqlColumeType;
+    __strong NSString* _sqlColumnName;
+    __strong NSString* _sqlColumnType;
     
     __strong NSString* _propertyName;
     __strong NSString* _propertyType;
 }
+@property(copy,nonatomic)NSString* type;
+@property(copy,nonatomic)NSString* sqlColumnName;
+@property(copy,nonatomic)NSString* sqlColumnType;
+@property(copy,nonatomic)NSString* propertyName;
+@property(copy,nonatomic)NSString* propertyType;
+
 -(id)initWithType:(NSString*)type cname:(NSString*)cname ctype:(NSString*)ctype pname:(NSString*)pname ptype:(NSString*)ptype;
-@end
-@implementation LKDBProperty
 
-//@synthesize type= _type;
-//@synthesize sqlColumeName=_sqlColumeName;
-//@synthesize sqlColumeType = _sqlColumeType;
-//@synthesize propertyName=_propertyName;
-//@synthesize propertyType=_propertyType;
-
--(id)initWithType:(NSString *)type cname:(NSString *)cname ctype:(NSString *)ctype pname:(NSString *)pname ptype:(NSString *)ptype
-{
-    self = [super init];
-    if(self)
-    {
-        _type = type;
-        _sqlColumeName = cname;
-        _sqlColumeType = ctype;
-        _propertyName = pname;
-        _propertyType = ptype;
-    }
-    return self;
-}
--(BOOL)isUserCalculate
-{
-    return (!_propertyName || [_propertyName isEqualToString:LKSQLUserCalculate]);
-}
 @end
 
 @interface LKModelInfos()
 {
     __strong NSMutableDictionary* _proNameDic;
     __strong NSMutableDictionary* _sqlNameDic;
+    __strong NSArray* _primaryKeys;
+}
+-(void)removeWithColumnName:(NSString*)columnName;
+-(void)addDBPropertyWithType:(NSString *)type cname:(NSString *)column_name ctype:(NSString *)ctype pname:(NSString *)pname ptype:(NSString *)ptype;
+@end
+
+#pragma mark- LKDBProperty
+@implementation LKDBProperty
+
+-(id)initWithType:(NSString *)type cname:(NSString *)cname ctype:(NSString *)ctype pname:(NSString *)pname ptype:(NSString *)ptype
+{
+    self = [super init];
+    if(self)
+    {
+        _type = [type copy];
+        _sqlColumnName = [cname copy];
+        _sqlColumnType = [ctype copy];
+        _propertyName = [pname copy];
+        _propertyType = [ptype copy];
+    }
+    return self;
+}
+-(void)enableUserCalculate
+{
+    _type = LKSQL_Mapping_UserCalculate;
+}
+-(BOOL)isUserCalculate
+{
+    return ([_type isEqualToString:LKSQL_Mapping_UserCalculate] || _propertyName == nil || [_propertyName isEqualToString:LKSQL_Mapping_UserCalculate]);
+}
+@end
+#pragma mark- NSObject - TableMapping
+@implementation NSObject(TableMapping)
++(NSDictionary *)getTableMapping
+{
+    return nil;
+}
++(void)setUserCalculateForCN:(NSString *)columnName
+{
+    if([LKDBUtils checkStringIsEmpty:columnName])
+    {
+        LKErrorLog(@"columnName is null");
+        return;
+    }
+    
+    LKModelInfos* infos = [self getModelInfos];
+    LKDBProperty* property = [infos objectWithSqlColumnName:columnName];
+    if(property)
+    {
+        [property enableUserCalculate];
+    }
+    else
+    {
+        [infos addDBPropertyWithType:LKSQL_Mapping_UserCalculate cname:columnName ctype:LKSQL_Type_Text pname:columnName ptype:@"NSString"];
+    }
+}
++(void)setUserCalculateForPTN:(NSString *)propertyTypeName
+{
+    if([LKDBUtils checkStringIsEmpty:propertyTypeName])
+    {
+        LKErrorLog(@"propertyTypeName is null");
+        return;
+    }
+    
+    Class clazz = NSClassFromString(propertyTypeName);
+    LKModelInfos* infos = [self getModelInfos];
+    for (int i=0; i<infos.count; i++) {
+        LKDBProperty* property = [infos objectWithIndex:i];
+        
+        Class p_cls = NSClassFromString(property.propertyType);
+        BOOL isSubClass = ((p_cls && clazz) && [p_cls isSubclassOfClass:clazz]);
+        BOOL isNameEqual = [property.propertyType isEqualToString:propertyTypeName];
+        if(isSubClass || isNameEqual)
+        {
+            [property enableUserCalculate];
+        }
+    }
+}
++(void)setTableColumnName:(NSString *)columnName bindingPropertyName:(NSString *)propertyName
+{
+    if([LKDBUtils checkStringIsEmpty:columnName] || [LKDBUtils checkStringIsEmpty:propertyName])
+        return;
+    
+    LKModelInfos* infos = [self getModelInfos];
+    
+    LKDBProperty* property = [infos objectWithPropertyName:propertyName];
+    if(property==nil)
+        return;
+    
+    LKDBProperty* column = [infos objectWithSqlColumnName:columnName];
+    if(column)
+    {
+        column.propertyName = propertyName;
+        column.propertyType = property.propertyType;
+    }
+    else{
+        [infos addDBPropertyWithType:LKSQL_Mapping_Binding cname:columnName ctype:LKSQL_Type_Text pname:propertyName ptype:property.propertyType];
+    }
+}
++(void)removePropertyWithColumnNameArray:(NSArray *)columnNameArray
+{
+    LKModelInfos* infos = [self getModelInfos];
+    for (NSString* columnName in columnNameArray)
+    {
+        [infos removeWithColumnName:columnName];
+    }
+}
++(void)removePropertyWithColumnName:(NSString *)columnName
+{
+    [[self getModelInfos] removeWithColumnName:columnName];
 }
 @end
 
+#pragma mark- LKModelInfos
+
 @implementation LKModelInfos
-- (id)initWithKeyMapping:(NSDictionary *)keyMapping propertyNames:(NSArray *)propertyNames propertyType:(NSArray *)propertyType
+- (id)initWithKeyMapping:(NSDictionary *)keyMapping propertyNames:(NSArray *)propertyNames propertyType:(NSArray *)propertyType primaryKeys:(NSArray *)primaryKeys
 {
     self = [super init];
     if (self) {
         
+        _primaryKeys = [NSArray arrayWithArray:primaryKeys];
+        
         _proNameDic = [[NSMutableDictionary alloc]init];
         _sqlNameDic = [[NSMutableDictionary alloc]init];
         
-        NSString  *type,*colume_name,*colume_type,*property_name,*property_type;
+        NSString  *type,*column_name,*column_type,*property_name,*property_type;
         if(keyMapping.count>0)
         {
             NSArray* sql_names = keyMapping.allKeys;
             
             for (int i =0; i< sql_names.count; i++) {
                 
-                type = colume_name = colume_type = property_name = property_type = nil;
+                type = column_name = column_type = property_name = property_type = nil;
                 
-                colume_name = [sql_names objectAtIndex:i];
-                NSString* mappingValue = [keyMapping objectForKey:colume_name];
+                column_name = [sql_names objectAtIndex:i];
+                NSString* mappingValue = [keyMapping objectForKey:column_name];
                 
-                //如果 设置的 属性名 是空白的  自动转成 使用ColumeName
+                //如果 设置的 属性名 是空白的  自动转成 使用ColumnName
                 if([LKDBUtils checkStringIsEmpty:mappingValue])
                 {
-                    NSLog(@"#ERROR sql colume name %@ mapping value is empty,automatically converted LKDBInherit",colume_name);
-                    mappingValue = LKSQLInherit;
+                    NSLog(@"#ERROR sql column name %@ mapping value is empty,automatically converted LKDBInherit",column_name);
+                    mappingValue = LKSQL_Mapping_Inherit;
                 }
                 
-                if([mappingValue isEqualToString:LKSQLUserCalculate])
+                if([mappingValue isEqualToString:LKSQL_Mapping_UserCalculate])
                 {
-                    type = LKSQLUserCalculate;
-                    colume_type = LKSQLText;
+                    type = LKSQL_Mapping_UserCalculate;
+                    column_type = LKSQL_Type_Text;
                 }
                 else
                 {
-//                    
-//                    if([mappingValue isEqualToString:LKSQLInherit] || [mappingValue isEqualToString:LKSQLBinding])
-//                    {
-//                        type = LKSQLInherit;
-//                        property_name = colume_name;
-//                    }
-//                    else
-//                    {
-//                        type = LKSQLBinding;
-//                        property_name = mappingValue;
-//                    }
-                    type = LKSQLBinding;
-                    property_name = mappingValue;
+                    
+                    if([mappingValue isEqualToString:LKSQL_Mapping_Inherit] || [mappingValue isEqualToString:LKSQL_Mapping_Binding])
+                    {
+                        type = LKSQL_Mapping_Inherit;
+                        property_name = column_name;
+                    }
+                    else
+                    {
+                        type = LKSQL_Mapping_Binding;
+                        property_name = mappingValue;
+                    }
                     
                     NSUInteger index = [propertyNames indexOfObject:property_name];
-                    if  (index > propertyNames.count  ){
-                        for (int x = 0; x<propertyNames.count; x++) {
-                            NSString *proString = propertyNames[x];
-                            if ([proString isEqualToString:mappingValue]) {
-                                index = x;
-                                break ;
-                            }
-                        }
-                    }
-                 
-                    NSAssert(index != NSNotFound, @"#ERROR TableMapping SQL colume name %@ not fount %@ property name",colume_name,property_name);
+                    
+                    NSAssert(index != NSNotFound, @"#ERROR TableMapping SQL column name %@ not fount %@ property name",column_name,property_name);
                     
                     property_type = [propertyType objectAtIndex:index];
-                    colume_type = LKSQLTypeFromObjcType(property_type);
+                    column_type = LKSQLTypeFromObjcType(property_type);
                 }
                 
-                [self addDBPropertyWithType:type cname:colume_name ctype:colume_type pname:property_name ptype:property_type];
+                [self addDBPropertyWithType:type cname:column_name ctype:column_type pname:property_name ptype:property_type];
             }
         }
         else
         {
             for (int i=0; i<propertyNames.count; i++) {
                 
-                type = LKSQLInherit;
+                type = LKSQL_Mapping_Inherit;
                 
                 property_name = [propertyNames objectAtIndex:i];
-                colume_name = property_name;
+                column_name = property_name;
                 
                 property_type = [propertyType objectAtIndex:i];
-                colume_type = LKSQLTypeFromObjcType(property_type);
+                column_type = LKSQLTypeFromObjcType(property_type);
                 
-                [self addDBPropertyWithType:type cname:colume_name ctype:colume_type pname:property_name ptype:property_type];
+                [self addDBPropertyWithType:type cname:column_name ctype:column_type pname:property_name ptype:property_type];
+            }
+        }
+        
+        if(_primaryKeys.count == 0)
+        {
+            _primaryKeys = [NSArray arrayWithObject:@"rowid"];
+        }
+        
+        for (NSString* pkname in _primaryKeys)
+        {
+            if([pkname.lowercaseString isEqualToString:@"rowid"])
+            {
+                if([self objectWithSqlColumnName:pkname] == nil)
+                {
+                    [self addDBPropertyWithType:LKSQL_Mapping_Inherit cname:pkname ctype:LKSQL_Type_Int pname:pkname ptype:@"int"];
+                }
             }
         }
     }
     return self;
 }
--(void)addDBPropertyWithType:(NSString *)type cname:(NSString *)colume_name ctype:(NSString *)ctype pname:(NSString *)pname ptype:(NSString *)ptype
+-(void)addDBPropertyWithType:(NSString *)type cname:(NSString *)column_name ctype:(NSString *)ctype pname:(NSString *)pname ptype:(NSString *)ptype
 {
-    LKDBProperty* db_property = [[LKDBProperty alloc]initWithType:type cname:colume_name ctype:ctype pname:pname ptype:ptype];
+    LKDBProperty* db_property = [[LKDBProperty alloc]initWithType:type cname:column_name ctype:ctype pname:pname ptype:ptype];
     
     if(db_property.propertyName)
     {
         [_proNameDic setObject:db_property forKey:db_property.propertyName];
     }
-    if(db_property.sqlColumeName){
-        [_sqlNameDic setObject:db_property forKey:db_property.sqlColumeName];
+    if(db_property.sqlColumnName){
+        [_sqlNameDic setObject:db_property forKey:db_property.sqlColumnName];
     }
 }
--(int)count
+-(NSArray *)primaryKeys
+{
+    return _primaryKeys;
+}
+-(NSUInteger)count
 {
     return _sqlNameDic.count;
 }
@@ -192,8 +276,20 @@ inline NSString *LKSQLTypeFromObjcType(NSString* objcType)
 {
     return [_proNameDic objectForKey:propertyName];
 }
--(LKDBProperty *)objectWithSqlColumeName:(NSString *)columeName
+-(LKDBProperty *)objectWithSqlColumnName:(NSString *)columnName
 {
-    return [_sqlNameDic objectForKey:columeName];
+    return [_sqlNameDic objectForKey:columnName];
+}
+-(void)removeWithColumnName:(NSString*)columnName
+{
+    if([LKDBUtils checkStringIsEmpty:columnName])
+        return;
+    
+    LKDBProperty* property =  [_sqlNameDic objectForKey:columnName];
+    if(property.propertyName)
+    {
+        [_proNameDic removeObjectForKey:property.propertyName];
+    }
+    [_sqlNameDic removeObjectForKey:columnName];
 }
 @end

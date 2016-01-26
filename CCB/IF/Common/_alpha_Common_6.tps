@@ -149,7 +149,6 @@
         <key>fileList</key>
         <array>
             <filename>Common_6</filename>
-            <filename>Common_9/Cloud.png</filename>
             <filename>Common_9/Mail_diban.png</filename>
         </array>
         <key>ignoreFileList</key>

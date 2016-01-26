@@ -12,29 +12,26 @@
 
 #import "LKDBUtils.h"
 
-#import "LKDB+Manager.h"
 #import "LKDB+Mapping.h"
 
 #import "NSObject+LKModel.h"
 #import "NSObject+LKDBHelper.h"
 
-#ifdef DEBUG
-#   define LKLog(fmt, ...) {NSLog((@"\n#LKDBHelper : %s [Line %d] \n" fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);}
-#else
-#   define LKLog(...)
-#endif
-
 @interface LKDBHelper : NSObject
-// you can use [LKDBHelper getUsingLKDBHelper]
-//+(LKDBHelper*)sharedDBHelper;
-
--(id)initWithDBName:(NSString*)dbname;
+/**
+ *	@brief  filepath the use of : "documents/db/" + fileName + ".db"
+ *  refer:  FMDatabase.h  + (instancetype)databaseWithPath:(NSString*)inPath;
+ */
+-(instancetype)initWithDBName:(NSString*)dbname;
 -(instancetype)initWithCustomNameDB;
+-(void)setDBName:(NSString*)fileName;
 
 /**
- *	@brief  change database , filepath the use of : "documents/db/" + fileName + ".db"
+ *	@brief  path of database file
+ *  refer:  FMDatabase.h  + (instancetype)databaseWithPath:(NSString*)inPath;
  */
--(void)setDBName:(NSString*)fileName;
+-(instancetype)initWithDBPath:(NSString*)filePath;
+-(void)setDBPath:(NSString*)filePath;
 
 /**
  *	@brief  execute database operations synchronously,not afraid of recursive deadlock  同步执行数据库操作 可递归调用
@@ -47,16 +44,15 @@
 
 @interface LKDBHelper(DatabaseManager)
 
-//create table with entity class
--(BOOL)createTableWithModelClass:(Class)model;
--(BOOL)createTableWithModelClassTableName:(NSString *)vTableName andModelClass:(Class)vModelClass;
+///get table has created
+-(BOOL)getTableCreatedWithClass:(Class)model;
+-(BOOL)getTableCreatedWithTableName:(NSString*)tableName;
 
-//drop all table
+///drop all table
 -(void)dropAllTable;
 
-//drop table with entity class
+///drop table with entity class
 -(BOOL)dropTableWithClass:(Class)modelClass;
-
 
 @end
 
@@ -71,11 +67,9 @@
  */
 -(int)rowCount:(Class)modelClass where:(id)where;
 /** zyt扩展 添加传入表名 */
--(int)rowCountWithModelClassName:(NSString *)vTableName where:(id)where;
-
+-(int)rowCountWithModelClassName:(NSString *)vTableName withModelClass:(Class)vModelClass where:(id)where;
 -(void)rowCount:(Class)modelClass where:(id)where callback:(void(^)(int rowCount))callback;
-/** zyt扩展 添加传入表名 */
--(void)rowCountWithModelClassName:(NSString *)vTableName where:(id)where callback:(void (^)(int))callback;
+
 /**
  *	@brief	query table
  *
@@ -91,21 +85,41 @@
  *	@return	query finished result is an array(model instance collection)
  */
 -(NSMutableArray*)search:(Class)modelClass where:(id)where orderBy:(NSString*)orderBy offset:(int)offset count:(int)count;
-/** zyt扩展 添加传入表名 */
--(NSMutableArray *)searchWithModelTableName:(NSString *)vTableNameString andWithModelClass:(Class)vModelClass where:(id)where orderBy:(NSString *)orderBy offset:(int)offset count:(int)count;
+-(NSMutableArray *)searchWithModelTableName:(NSString *)vTableNameString
+                          andWithModelClass:(Class)vModelClass
+                                      where:(id)where
+                                    orderBy:(NSString *)orderBy
+                                     offset:(int)offset
+                                      count:(int)count;
+/**
+ *  query sql, query finished result is an array(model instance collection)
+ *  you can use the "@t" replace Model TableName
+ *  example: 
+            NSMutableArray* array = [[LKDBHelper getUsingLKDBHelper] searchWithSQL:@"select * from @t where blah blah.." toClass:[ModelClass class]];
+ *
+ */
+-(NSMutableArray*)searchWithSQL:(NSString*)sql toClass:(Class)modelClass;
 
-//return first model or nil
+-(void)search:(Class)modelClass where:(id)where orderBy:(NSString*)orderBy offset:(int)offset count:(int)count callback:(void(^)(NSMutableArray* array))block;
+/**
+    columns may NSArray or NSString   if query column count == 1  return single column string array
+    other return models entity array
+ */
+-(NSMutableArray*)search:(Class)modelClass column:(id)columns where:(id)where orderBy:(NSString*)orderBy offset:(int)offset count:(int)count;
+
+///return first model or nil
 -(id)searchSingle:(Class)modelClass where:(id)where orderBy:(NSString*)orderBy;
-/** zyt扩展 添加传入表名 */
 -(id)searchSingleWithModelTableName:(NSString *)vTableNameString
                   andWithModelClass:(Class)vModelClass
                               where:(id)where
                             orderBy:(NSString *)orderBy;
 
--(void)search:(Class)modelClass where:(id)where orderBy:(NSString*)orderBy offset:(int)offset count:(int)count callback:(void(^)(NSMutableArray* array))block;
-/** zyt扩展 添加传入表名 */
--(void)searchWithModelTableName:(NSString *)vTableNameString andWithModelClass:(Class)vModelClass where:(id)where orderBy:(NSString *)orderBy offset:(int)offset count:(int)count callback:(void (^)(NSMutableArray *))block;
-
+-(void)searchSingleWithModelTableName:(NSString *)vTableNameString
+                    andWithModelClass:(Class)vModelClass
+                                where:(id)where orderBy:(NSString *)orderBy
+                               offset:(int)offset
+                                count:(int)count
+                             callback:(void (^)(NSMutableArray *))block;
 /**
  *	@brief	insert table
  *
@@ -114,12 +128,10 @@
  *	@return	the inserted was successful
  */
 -(BOOL)insertToDB:(NSObject*)model;
-/** zyt扩展 添加传入表名 */
+/** zyt 插入 */
 -(BOOL)insertToDBWithModelTableName:(NSString *)vTableName andWithModel:(NSObject *)model;
-
 -(void)insertToDB:(NSObject*)model callback:(void(^)(BOOL result))block;
-/** zyt扩展 添加传入表名 */
--(void)insertToDBWithModelTableName:(NSString *)vTableName andWithModel:(NSObject *)model callback:(void (^)(BOOL))block;
+
 /**
  *	@brief	insert when the entity primary key does not exist
  *
@@ -135,23 +147,15 @@
  *
  *	@param 	model 	you want to update the entity
  *	@param 	where 	can use NSString or NSDictionary or nil
-                    when "where" is nil : update the value based on rowid colume or primary key colume
+                    when "where" is nil : update the value based on rowid column or primary key column
  *
  *	@return	the updated was successful
  */
 -(BOOL)updateToDB:(NSObject *)model where:(id)where;
-/** zyt扩展 添加传入表名 */
 -(BOOL)updateToDBWithModelTableName:(NSString *)vTableName
                        andWithModel:(NSObject *)vModel
                               where:(id)where;
-
 -(void)updateToDB:(NSObject *)model where:(id)where callback:(void (^)(BOOL result))block;
-/** zyt扩展 添加传入表名 */
--(void)updateToDBWithModelTableName:(NSString *)vTableName
-                       andWithModel:(NSObject *)vModel
-                              where:(id)where
-                           callback:(void (^)(BOOL))block;
-
 -(BOOL)updateToDB:(Class)modelClass set:(NSString*)sets where:(id)where;
 /**
  *	@brief	delete table
@@ -162,15 +166,8 @@
  *	@return	the deleted was successful
  */
 -(BOOL)deleteToDB:(NSObject*)model;
-/** zyt扩展 添加传入表名 */
--(BOOL)deleteToDBWithModelTableName:(NSString *)vTableName
-                       andWithModel:(NSObject *)vModel;
-
+-(void)deleteWithClass:(Class)modelClass where:(id)where callback:(void (^)(BOOL result))block;
 -(void)deleteToDB:(NSObject*)model callback:(void(^)(BOOL result))block;
-/** zyt扩展 添加传入表名 */
--(void)deleteToDBWithModelTableName:(NSString *)vTableName
-                       andWithModel:(NSObject *)vModel
-                           callback:(void (^)(BOOL))block;
 
 /**
  *	@brief	delete table with "where" constraint
@@ -181,11 +178,13 @@
  *	@return	the deleted was successful
  */
 -(BOOL)deleteWithClass:(Class)modelClass where:(id)where;
+/** zyt 删除 */
+-(BOOL)deleteToDBWithModelTableName:(NSString *)vTableName where:(id)vWhere;
 -(void)deleteWithClass:(Class)modelClass where:(id)where callback:(void (^)(BOOL result))block;
 
 /**
  *	@brief   entity exists?
- *           for primary key colume 
+ *           for primary key column
             （if rowid > 0 would certainly exist so we do not rowid judgment）
  *	@param 	model 	entity
  *
@@ -201,15 +200,24 @@
  *	@param 	modelClass 	entity class
  */
 +(void)clearTableData:(Class)modelClass;
-   
+
 /**
  *	@brief	Clear Unused Data File
             if you property has UIImage or NSData, will save their data in the (documents dir)
  *
  *	@param 	modelClass      entity class
- *	@param 	columes         UIImage or NSData Colume Name
+ *	@param 	columns         UIImage or NSData Column Name
  */
-+(void)clearNoneImage:(Class)modelClass columes:(NSArray*)columes;
-+(void)clearNoneData:(Class)modelClass columes:(NSArray*)columes;
++(void)clearNoneImage:(Class)modelClass columns:(NSArray*)columns;
++(void)clearNoneData:(Class)modelClass columns:(NSArray*)columns;
 
+@end
+
+
+@interface LKDBHelper(Deprecated_Nonfunctional)
+/// you can use [LKDBHelper getUsingLKDBHelper]
+#pragma mark- deprecated
++(LKDBHelper*)sharedDBHelper __deprecated_msg("Method deprecated. Use `[Model getUsingLKDBHelper]`");
+-(BOOL)createTableWithModelClass:(Class)modelClass __deprecated_msg("Now you can not call it. Will automatically determine whether you need to create");
+#pragma mark-
 @end

@@ -8,16 +8,48 @@
 
 #import "ChatServiceController.h"
 #import "ChatServiceCocos2dx.h"
-#include "ServiceInterface.h"
+#import "ServiceInterface.h"
 #import "GameHost.h"
 
+#import "ChannelManager.h"
+#import "ChatChannel.h"
+#import "CSMessage.h"
+#import "CSMessageModel.h"
+#import "CSMessageModel+ModelManager.h"
+#import "ChatChannel+ChatMessage.h"
 static ChatServiceController * chatServiceController = nil;
 
 @implementation ChatServiceController
 
--(void)doHostAction:(NSString *)action :(NSString *)uid :(NSString *)name :(NSString *)reportUid :(NSString *)detectReportUid :(BOOL)returnToChatAfterPopup
+-(void)loadChatBarOnCocoas{
+    dispatch_async([ServiceInterface serviceInterfaceSharedManager].csChatMsgQueue, ^{
+        ChatChannel *countryChannel =[[ChannelManager sharedChannelManager]gettingCountryChannel];
+        CSMessage *lastMessage =  [countryChannel gettingLastMessageFromDB];
+        if  (lastMessage){
+            CSMessageModel * msgModel =[[CSMessageModel alloc]initWithMessage:lastMessage];
+            [msgModel messageModelShowingFormat];
+            if  ([NSThread isMainThread]){
+              
+                [self.gameHost refreshChatInfoWithCSMessage:msgModel];
+//                  [self.gameHost updateChatInfo:IOS_CHANNEL_TYPE_COUNTRY];
+            }else{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    [self.gameHost refreshChatInfoWithCSMessage:msgModel];
+//                    [self.gameHost updateChatInfo:IOS_CHANNEL_TYPE_COUNTRY];
+                });
+            }
+            
+        }
+
+    });
+}
+
+
+
+-(void)doHostAction:(NSString *)action :(NSString *)uid :(NSString *)name :(NSString *)reportUid :(NSString *)detectReportUid :(int)equipId :(BOOL)returnToChatAfterPopup
 {
-    [self.gameHost setActionAfterResume:action :uid :name :reportUid :detectReportUid :returnToChatAfterPopup];
+    [self.gameHost setActionAfterResume:action :uid :name :reportUid :detectReportUid :equipId :returnToChatAfterPopup];
 }
 
 -(void) closekeyboard
@@ -76,7 +108,9 @@ static ChatServiceController * chatServiceController = nil;
 -(instancetype)init{
     self = [super init];
     if (self){
+        self.isContactMod = false;
         self.gameHost = [[GameHost alloc]init];
+        
     }
     return self;
 }
@@ -96,6 +130,11 @@ static ChatServiceController * chatServiceController = nil;
 {
     return self;
 }
-
+-(NSMutableDictionary *)redPackgeMsgDict{
+    if  (_redPackgeMsgDict == nil){
+        _redPackgeMsgDict = [NSMutableDictionary dictionary];
+    }
+    return _redPackgeMsgDict;
+}
 
 @end

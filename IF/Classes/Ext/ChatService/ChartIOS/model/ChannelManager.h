@@ -17,13 +17,17 @@
 @property (nonatomic,assign) BOOL                   isGetingNewMsg;
 //保存频道数据 对应安卓 Map<String, ChatChannel>
 @property (nonatomic,strong) NSMutableDictionary    *channel_map;
-@property (nonatomic,strong) NSMutableArray         *channelViews;
+ 
 @property (nonatomic,strong) ChatChannel            *countryChannel;
 @property (nonatomic,strong) ChatChannel            *allianceChannel;
+@property (nonatomic,strong) NSMutableDictionary    *redPackageUnHandleMap;
 @property (nonatomic,assign) BOOL                   isFetching;
 
 /**联盟所有成员信息*/
 @property (nonatomic,strong) NSMutableDictionary         *userInfos;
+
+@property (nonatomic,strong)   dispatch_queue_t messageQueue;
+@property (nonatomic,strong)  dispatch_queue_t commandRequestQueue;
 
 -(BOOL) isContainFromUid:(NSString*)fromUid;
 
@@ -42,4 +46,44 @@
 /** 外部调用，会操作数据库 */
 -(void)settingChatChannel:(ChatChannel *)vChatChannel;
 -(void)deletingChatChannel:(ChatChannel *)vChatChannel;
+-(void)deleteChannelWithChannelArray:(NSArray *)vArray;
+-(void)updatingChannelForDBWithChannel:(ChatChannel *)vChannel;
+-(void)loadingAllChannelWithDB;
+/** 填入从数据库获取的channel的基本信息 */
+-(void)getMailChatChannelDetail;
+-(ChatChannel *)gettingMailChannelWithLastChanged;
+-(ChatChannel *)gettingRoomChatMailChannelWithLastChanged;
+-(void)updatingChannelForMail;
+-(void)updatingChannelForSysMail;
+/** 聊天室新数据请求command */
+-(NSString *)stringForChatRoomWithAllRoomChannel;
+-(NSArray *)gettingSystemMailArrayWithDB ;
+-(NSArray *)gettingSystemMailArrayWithChannelIDFromDB:(NSString *)vChannelID andGetCount:(int)vCount;
+-(NSArray *)gettingOldSystemMailArrayFromDBWithChannelID:(NSString *)vChannelID
+                                       andWithBeforeMail:(MailInfoDataModel *)vMailModel;
+-(NSArray *)gettingOneChatAndRoomChatChannelWithDB;
+
+-(int )systemMailChannelUnreadManager;
+-(void)systemMailChannelUnreadUpdateWithAppOpened;
+-(int )chatMailCHannelUnreadManager;
+-(int )chechAllUnreadCount;
+
+-(NSArray *)channelWithNormal;
+-(NSArray *)channelWithMod;
+
+/** 所有消息标记已读 */
+-(void)settingChatMailMsgReaded;
+-(void)settingModChatMailMsgReaded;
+/**
+ *  更新DB 作用于更新红包领取状态
+ */
+-(void) saveToDBByMsgItem:(NSMsgItem*) msgItem;
+/** 根据channelID返回对应的types类型 */
++(NSArray *)channelTypesWithChannelId:(NSString *)vChannelIDString;
+
+
+-(void) loadMoreSysMailFromDBByChannel:(ChatChannel*) channel withAddId:(MailInfoDataModel*)mailId;
+
+-(void) dealMailFrom2dxByMailId:(NSString*) mailUid;
++(NSDictionary *)lastMessageForUserUidArray:(NSArray *)vUidArray;
 @end

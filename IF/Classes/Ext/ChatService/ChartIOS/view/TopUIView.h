@@ -11,7 +11,9 @@
 @protocol TopUIViewDelegate <NSObject>
 @optional
 - (void)TopUIViewRightButtonAction ;
+-(void)topUIViewCancalButtonAction;
 - (void)clickButtonWithTag:(NSInteger)vTag ;
+-(void) openFriendsView;
 @end
 
 @interface TopUIView : UIView

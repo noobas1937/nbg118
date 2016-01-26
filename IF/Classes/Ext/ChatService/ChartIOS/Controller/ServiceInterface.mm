@@ -24,10 +24,15 @@
 #import "LanguageManager.h"
 #import "BBSIOSViewController.h"
 #import "UITableViewController+Extension.h"
+#import "CSConvertViewManager.h"
 //屏幕适配
 #define ScreenHeight [[UIScreen mainScreen] bounds].size.height
 #define ScreenWidth [[UIScreen mainScreen] bounds].size.width
 
+@interface ServiceInterface()
+@property (nonatomic,strong) BDKViewController *bdk;
+
+@end
 
 
 @implementation ServiceInterface
@@ -54,54 +59,33 @@
 
 -(void)showChatIOSFrom2dx:(int)chatType withAddState:(OpenChatState)ocs
 {
-    
-    [self initView];
-    
-    [self selectOpenView:chatType];
-    
-    [self showChatViewIOS];
-    
-    if (chatType == IOS_CHANNEL_TYPE_COUNTRY) {
-        if (ocs == OpenChatIOS_Normal) {
-            [[ServiceInterface serviceInterfaceSharedManager].chatViewController.countriesTableViewController tableViewScrollCurrentLine];
-        }else{
-            ChatChannel *cc = [[ChannelManager sharedChannelManager] gettingCountryChannel];
-            if (cc) {
-                [[ServiceInterface serviceInterfaceSharedManager].mailViewController.mailTableTableViewController adjustLocation2:cc.lastPosition];
-            }
-        }
-        
-    }else if(chatType == IOS_CHANNEL_TYPE_ALLIANCE){
-        if (ocs == OpenChatIOS_Normal) {
-            [[ServiceInterface serviceInterfaceSharedManager].chatViewController.allianceTableViewController tableViewScrollCurrentLine];
-        }else{
-            ChatChannel *cc = [[ChannelManager sharedChannelManager] gettingAllianceChannel];
-            if (cc) {
-                [[ServiceInterface serviceInterfaceSharedManager].mailViewController.mailTableTableViewController adjustLocation2:cc.lastPosition];
-            }
-        }
-        
+   // 顺序不能换
+    if (!ChatServiceCocos2dx::CS_CountryChat_OC_Native_New){
+        [self initView];
+    }
+    if (chatType == IOS_CHANNEL_TYPE_COUNTRY ||chatType == IOS_CHANNEL_TYPE_ALLIANCE) {
+        [self _initCountChatVC:chatType];
     }else if(chatType == IOS_CHANNEL_TYPE_USER || chatType == IOS_CHANNEL_TYPE_CHATROOM){
-        
-        if ([UserManager sharedUserManager].currentUser.allianceId.length >0) {
-            [[ServiceInterface serviceInterfaceSharedManager].mailViewController.topUIView settingAddMemberButtonShow:YES];
-        }else{
-            [[ServiceInterface serviceInterfaceSharedManager].mailViewController.topUIView settingAddMemberButtonShow:NO];
-        }
-        
-        //是否是普通视图打开
-        if (ocs == OpenChatIOS_Normal) {
-            [[ServiceInterface serviceInterfaceSharedManager].mailViewController.mailTableTableViewController tableViewScrollCurrentLine];
-        }else{
-            NSString *channelID = [UserManager sharedUserManager].currentMail.opponentUid;
-            ChatChannel *cc = [[ChannelManager sharedChannelManager] gettingChannelInfo:channelID];
-            
-            if (cc) {
-                [[ServiceInterface serviceInterfaceSharedManager].mailViewController.mailTableTableViewController adjustLocation2:cc.lastPosition];
-            }
-        }
+        [self _initMailVC:chatType];
+    }
+    if  (!ChatServiceCocos2dx::CS_CountryChat_OC_Native_New){
+             [self showChatViewIOS];
     }
     
+    
+ 
+    
+}
+
+-(void)reloadDataChatView
+{
+    [[ServiceInterface serviceInterfaceSharedManager].chatViewController.countriesTableViewController.tableView reloadData];
+    [[ServiceInterface serviceInterfaceSharedManager].chatViewController.allianceTableViewController.tableView reloadData];
+}
+
+-(void)reloadDataMailView
+{
+    [[ServiceInterface serviceInterfaceSharedManager].mailViewController.mailTableTableViewController.tableView reloadData];
 }
 
 -(void)openBBS
@@ -124,16 +108,192 @@
     self.chatRootWindow.rootViewController = chatVC;
     self.chatRootWindow.hidden = NO;
 }
--(void) selectOpenView:(int)chatType
-{
-    if(chatType == IOS_CHANNEL_TYPE_USER || chatType == IOS_CHANNEL_TYPE_CHATROOM)
+
+-(void)_initCountChatVC:(int)chatType{
+ 
+        
+        if  (ChatServiceCocos2dx::CS_CountryChat_OC_Native_New){
+            BOOL isChatVCPageJump = NO;
+            ChattingVC *chatVC;
+            if (self.chatRootWindow.rootViewController && [self.chatRootWindow.rootViewController isKindOfClass:[UINavigationController class]]){
+                
+                UIViewController *vc = [(UINavigationController *)self.chatRootWindow.rootViewController visibleViewController];
+                if ([vc isKindOfClass:[ChattingVC class]]){
+                     chatVC = vc;
+                    isChatVCPageJump = YES;
+                }else{
+                    chatVC =[[ChattingVC alloc]init];
+                }
+               
+            }else{
+               chatVC =[[ChattingVC alloc]init];
+            }
+            
+            
+            if  (chatType == IOS_CHANNEL_TYPE_COUNTRY){
+                chatVC.chatVCShowTableType = ChatVCShowTableType_left;
+            }else{
+                chatVC.chatVCShowTableType = ChatVCShowTableType_right;
+            }
+            
+  
+            ChatChannel *countryCC = [[ChannelManager sharedChannelManager]gettingCountryChannel];
+            chatVC.countryChannel = countryCC;
+            self.chatViewController.countriesTableViewController.currentChannel = countryCC;
+            if (countryCC.msgList.count <20){
+                [countryCC gettingFirstMsg];
+            }else{
+                
+                if ([countryCC.channelDelegate respondsToSelector:@selector(showNewMsg:)]) {
+                    [countryCC.channelDelegate showNewMsg:countryCC];
+                }
+            }
+            NSString *allianceId = [UserManager sharedUserManager].currentUser.allianceId;
+            
+            if (allianceId.length> 0) {
+                ChatChannel *  allianceCC = [[ChannelManager sharedChannelManager]gettingAllianceChannel];
+                chatVC.allianceChannel =allianceCC;
+                
+                if (allianceCC.msgList.count <20){
+                    [allianceCC gettingFirstMsg];
+                }else{
+                    
+                    if ([allianceCC.channelDelegate respondsToSelector:@selector(showNewMsg:)]) {
+                        [allianceCC.channelDelegate showNewMsg:allianceCC];
+                    }
+                }
+            }
+            
+            
+            if  (isChatVCPageJump){
+                //跳转
+                self.chatRootWindow.hidden = NO;
+                CCDirector::sharedDirector()->setVisitFlag(false);
+            }else{
+                //新建
+                UINavigationController *nav =[[UINavigationController alloc]initWithRootViewController:chatVC   ];
+                chatVC.navigationController.navigationBar.hidden = YES;
+                self.chatRootWindow.rootViewController = nav;
+                self.chatRootWindow.hidden = NO;
+                CCDirector::sharedDirector()->setVisitFlag(false);
+            }
+            
+            
+        }
+        else{
+            ChatChannel *countryCC = [[ChannelManager sharedChannelManager]gettingCountryChannel];
+            self.chatViewController.countriesTableViewController.currentChannel = countryCC;
+            if (countryCC.msgList.count <20){
+                [countryCC gettingFirstMsg];
+            }else{
+                //            if ([countryCC refreshingMsgListAtLastStatus]){
+                //                [countryCC msgArrayFormatToStartState];
+                //            }
+                if ([countryCC.channelDelegate respondsToSelector:@selector(showNewMsg:)]) {
+                    [countryCC.channelDelegate showNewMsg:countryCC];
+                }
+                
+            }
+            NSString *allianceId = [UserManager sharedUserManager].currentUser.allianceId;
+            if (allianceId.length> 0) {
+                ChatChannel *allianceCC = [[ChannelManager sharedChannelManager]gettingAllianceChannel];
+                self.chatViewController.allianceTableViewController.currentChannel = allianceCC;
+                
+                if (allianceCC.msgList.count <20){
+                    [allianceCC gettingFirstMsg];
+                }else{
+                    //                if ([allianceCC refreshingMsgListAtLastStatus]){
+                    //                    [allianceCC msgArrayFormatToStartState];
+                    //           	 }
+                    if ([allianceCC.channelDelegate respondsToSelector:@selector(showNewMsg:)]) {
+                        [allianceCC.channelDelegate showNewMsg:allianceCC];
+                    }
+                }
+            }
+            
+            if(ChatServiceCocos2dx::m_channelType == IOS_CHANNEL_TYPE_ALLIANCE){
+                
+                [self.chatViewController.topUIView selectASN];
+                [self.chatViewController isShowJionAllance];
+            }else{
+                [self.chatViewController.topUIView selectCoun];
+                
+                [self.chatViewController.view sendSubviewToBack:self.chatViewController.jionAllanceView];
+                [self.chatViewController.view bringSubviewToFront:self.chatViewController.countriesTableViewController.view];
+                if(ChatServiceCocos2dx::m_isNoticItemUsed){
+                    [self.chatViewController.keyBordView openRadio];
+                    ChatServiceCocos2dx::m_isNoticItemUsed = false;
+                }else{
+                    [self.chatViewController.keyBordView closeRadio];
+                }
+            }
+            
+            [self.vc_win bringSubviewToFront:self.chatViewController.view];
+            
+        }
+        
+ 
+
+}
+-(void)_initMailVC:(int)chatType{
+    if (ChatServiceCocos2dx::Mail_OC_Native_Enable )
     {
+        ChatChannel *cc= nil;
+        if  (chatType == IOS_CHANNEL_TYPE_CHATROOM){
+            self.m_curChatType = IOS_CHANNEL_TYPE_CHATROOM;
+            cc =[[ChannelManager sharedChannelManager].channel_map objectForKey:[UserManager sharedUserManager].currentMail.opponentUid];
+            
+            [cc gettingFirstMsg];
+            DVLog(@"chatChannel.memberUidArray %@",cc.memberUidArray);
+            
+            
+        }else{
+            NSString *channelString;
+            if  ([UserManager sharedUserManager].currentMail.type == 23 || [UserManager sharedUserManager].currentMail.type == 24){
+                //发送mod
+                channelString  = [UserManager sharedUserManager].currentMail.opponentUid;
+                if ([channelString hasSuffix:@"@mod"]){
+                    
+                }else{
+                    channelString = [channelString stringByAppendingString:@"@mod"];
+                }
+            }else{
+                channelString  = [UserManager sharedUserManager].currentMail.opponentUid;
+            }
+            [UserManager sharedUserManager].currentMail.opponentUid = channelString;
+           cc =[[ChannelManager sharedChannelManager].channel_map objectForKey:channelString];
+            if (cc == nil){
+                [[ChannelManager sharedChannelManager]createChatChannel:IOS_CHANNEL_TYPE_USER withAddChannelID:[UserManager sharedUserManager].currentMail.opponentUid];
+                cc =[[ChannelManager sharedChannelManager].channel_map objectForKey:[UserManager sharedUserManager].currentMail.opponentUid];
+            }
+            
+            NSString *userUid = [cc.channelID stringByReplacingOccurrencesOfString:@"@mod" withString:@""];
+            NSUserInfo *user =  [[UserManager sharedUserManager]gettingUserInfoForMemoryAndDBWithUidString:userUid];
+            if (user){
+                cc.nameString =user.userName ;
+            }
+            
+        }
+            CSMailChattingVC *mailChattingVC=[[CSMailChattingVC alloc]init];
+            mailChattingVC.currentChatChannel = cc;
+            
+            UINavigationController *nav =[[UINavigationController alloc]initWithRootViewController:mailChattingVC];
+            mailChattingVC.navigationController.navigationBarHidden = YES;
+            [ServiceInterface serviceInterfaceSharedManager].chatRootWindow.rootViewController = nav;
+            [ServiceInterface serviceInterfaceSharedManager].chatRootWindow.hidden = NO;
+            CCDirector::sharedDirector()->setVisitFlag(false);
+         
+        
+        
+    }
+    else{
         self.isInMailDialog = TRUE;
         
         if (chatType == IOS_CHANNEL_TYPE_CHATROOM)
         {
             self.m_curChatType = IOS_CHANNEL_TYPE_CHATROOM;
             ChatChannel *cc =[[ChannelManager sharedChannelManager].channel_map objectForKey:[UserManager sharedUserManager].currentMail.opponentUid];
+            
             [cc gettingFirstMsg];
             DVLog(@"chatChannel.memberUidArray %@",cc.memberUidArray);
             
@@ -144,48 +304,214 @@
             //设置邮件上方标题处。对方人物名称
             self.mailViewController.topUIView.titlePlayerName.text = [UserManager sharedUserManager].currentMail.opponentName;
             
+            NSString *channelID = nil;
+            if ([UserManager sharedUserManager].currentMail.type == 23 || [UserManager sharedUserManager].currentMail.type == 24) {
+                channelID = [UserManager sharedUserManager].currentMail.opponentUid;
+                channelID = [channelID stringByAppendingString:@"@mod"];
+            }else{
+                channelID = [UserManager sharedUserManager].currentMail.opponentUid;
+            }
             
-            NSString *channelID = [UserManager sharedUserManager].currentMail.opponentUid;
             ChannelManager *cm = [ChannelManager sharedChannelManager];
             if (![[cm.channel_map allKeys] containsObject:channelID]) {
                 [cm createChatChannel:IOS_CHANNEL_TYPE_USER withAddChannelID:channelID];
             }
             ChatChannel *cc = [[ChannelManager sharedChannelManager].channel_map objectForKey:channelID];
-            [cc gettingFirstMsg];
             cc.customName = [UserManager sharedUserManager].currentMail.opponentName;
             [ServiceInterface serviceInterfaceSharedManager].mailViewController.mailTableTableViewController.currentChatChannel = cc;
+            
+            [cc gettingFirstMsg];
+            
         }
         
         
         [self.vc_win bringSubviewToFront:self.mailViewController.view];
-        
+    }
+}
+
+-(void) selectOpenView:(int)chatType
+{
+    if(chatType == IOS_CHANNEL_TYPE_USER || chatType == IOS_CHANNEL_TYPE_CHATROOM)
+    {
+        if (ChatServiceCocos2dx::Mail_OC_Native_Enable )
+        {
+            NSString *channelString;
+            if  ([UserManager sharedUserManager].currentMail.type == 23 || [UserManager sharedUserManager].currentMail.type == 24){
+                //发送mod
+              channelString  = [UserManager sharedUserManager].currentMail.opponentUid;
+                if ([channelString hasSuffix:@"@mod"]){
+                    
+                }else{
+                    channelString = [channelString stringByAppendingString:@"@mod"];
+                }
+            }else{
+                 channelString  = [UserManager sharedUserManager].currentMail.opponentUid;
+            }
+            
+            ChatChannel *cc =[[ChannelManager sharedChannelManager].channel_map objectForKey:channelString];
+            if (cc == nil){
+                [[ChannelManager sharedChannelManager]createChatChannel:IOS_CHANNEL_TYPE_USER withAddChannelID:[UserManager sharedUserManager].currentMail.opponentUid];
+                cc =[[ChannelManager sharedChannelManager].channel_map objectForKey:[UserManager sharedUserManager].currentMail.opponentUid];
+            }
+            NSUserInfo *user =  [[UserManager sharedUserManager]gettingUserInfoForMemoryAndDBWithUidString:cc.channelID];
+            cc.nameString =[UserManager sharedUserManager].currentMail.opponentName; ;
+            CSMailChattingVC *mailChattingVC=[[CSMailChattingVC alloc]init];
+            mailChattingVC.currentChatChannel = cc;
+            
+            UINavigationController *nav =[[UINavigationController alloc]initWithRootViewController:mailChattingVC];
+            mailChattingVC.navigationController.navigationBarHidden = YES;
+            [ServiceInterface serviceInterfaceSharedManager].chatRootWindow.rootViewController = nav;
+            [ServiceInterface serviceInterfaceSharedManager].chatRootWindow.hidden = NO;
+                CCDirector::sharedDirector()->setVisitFlag(false);
+            
+        }
+        else{
+            self.isInMailDialog = TRUE;
+            
+            if (chatType == IOS_CHANNEL_TYPE_CHATROOM)
+            {
+                self.m_curChatType = IOS_CHANNEL_TYPE_CHATROOM;
+                ChatChannel *cc =[[ChannelManager sharedChannelManager].channel_map objectForKey:[UserManager sharedUserManager].currentMail.opponentUid];
+                
+                [cc gettingFirstMsg];
+                DVLog(@"chatChannel.memberUidArray %@",cc.memberUidArray);
+                
+                [[ServiceInterface serviceInterfaceSharedManager].mailViewController.mailTableTableViewController setCurrentChatChannel:cc];
+                [[ServiceInterface serviceInterfaceSharedManager] settingChatRoomName:cc.customName];
+            }else{
+                self.m_curChatType = IOS_CHANNEL_TYPE_USER;
+                //设置邮件上方标题处。对方人物名称
+                self.mailViewController.topUIView.titlePlayerName.text = [UserManager sharedUserManager].currentMail.opponentName;
+                
+                NSString *channelID = nil;
+                if ([UserManager sharedUserManager].currentMail.type == 23 || [UserManager sharedUserManager].currentMail.type == 24) {
+                    channelID = [UserManager sharedUserManager].currentMail.opponentUid;
+                    channelID = [channelID stringByAppendingString:@"@mod"];
+                }else{
+                    channelID = [UserManager sharedUserManager].currentMail.opponentUid;
+                }
+                
+                ChannelManager *cm = [ChannelManager sharedChannelManager];
+                if (![[cm.channel_map allKeys] containsObject:channelID]) {
+                    [cm createChatChannel:IOS_CHANNEL_TYPE_USER withAddChannelID:channelID];
+                }
+                ChatChannel *cc = [[ChannelManager sharedChannelManager].channel_map objectForKey:channelID];
+                cc.customName = [UserManager sharedUserManager].currentMail.opponentName;
+                [ServiceInterface serviceInterfaceSharedManager].mailViewController.mailTableTableViewController.currentChatChannel = cc;
+                
+                [cc gettingFirstMsg];
+                
+            }
+            
+            
+            [self.vc_win bringSubviewToFront:self.mailViewController.view];
+        }
     }
     else if(chatType == IOS_CHANNEL_TYPE_COUNTRY || chatType == IOS_CHANNEL_TYPE_ALLIANCE)
     {
-        if(ChatServiceCocos2dx::m_channelType == IOS_CHANNEL_TYPE_ALLIANCE){
-            ChatChannel *cc = [[ChannelManager sharedChannelManager]gettingAllianceChannel];
-            [cc gettingFirstMsg];
-            [self.chatViewController.topUIView selectASN];
-            [self.chatViewController isShowJionAllance];
-        }else{
-            [self.chatViewController.topUIView selectCoun];
-            ChatChannel *cc = [[ChannelManager sharedChannelManager]gettingCountryChannel];
-            [cc gettingFirstMsg];
-            [self.chatViewController.view sendSubviewToBack:self.chatViewController.jionAllanceView];
-            [self.chatViewController.view bringSubviewToFront:self.chatViewController.countriesTableViewController.view];
-            if(ChatServiceCocos2dx::m_isNoticItemUsed){
-                [self.chatViewController.keyBordView openRadio];
-                ChatServiceCocos2dx::m_isNoticItemUsed = false;
+        
+        if  (ChatServiceCocos2dx::CS_CountryChat_OC_Native_New){
+            ChattingVC *chatVC =[[ChattingVC alloc]init];
+            if  (chatType == IOS_CHANNEL_TYPE_COUNTRY){
+                 chatVC.chatVCShowTableType = ChatVCShowTableType_left;
             }else{
-                [self.chatViewController.keyBordView closeRadio];
+                chatVC.chatVCShowTableType = ChatVCShowTableType_right;
             }
+           
+           
+            
+            ChatChannel *countryCC = [[ChannelManager sharedChannelManager]gettingCountryChannel];
+            chatVC.countryChannel = countryCC;
+            self.chatViewController.countriesTableViewController.currentChannel = countryCC;
+            if (countryCC.msgList.count <20){
+                [countryCC gettingFirstMsg];
+            }else{
+ 
+                if ([countryCC.channelDelegate respondsToSelector:@selector(showNewMsg:)]) {
+                    [countryCC.channelDelegate showNewMsg:countryCC];
+                }
+            }
+            NSString *allianceId = [UserManager sharedUserManager].currentUser.allianceId;
+           
+            if (allianceId.length> 0) {
+               ChatChannel *  allianceCC = [[ChannelManager sharedChannelManager]gettingAllianceChannel];
+                 chatVC.allianceChannel =allianceCC;
+
+                if (allianceCC.msgList.count <20){
+                    [allianceCC gettingFirstMsg];
+                }else{
+ 
+                    if ([allianceCC.channelDelegate respondsToSelector:@selector(showNewMsg:)]) {
+                        [allianceCC.channelDelegate showNewMsg:allianceCC];
+                    }
+                }
+            }
+            
+
+
+            UINavigationController *nav =[[UINavigationController alloc]initWithRootViewController:chatVC   ];
+            chatVC.navigationController.navigationBar.hidden = YES;
+            self.chatRootWindow.rootViewController = nav;
+            self.chatRootWindow.hidden = NO;
+             CCDirector::sharedDirector()->setVisitFlag(false);
+            
+        }
+        else{
+            ChatChannel *countryCC = [[ChannelManager sharedChannelManager]gettingCountryChannel];
+            self.chatViewController.countriesTableViewController.currentChannel = countryCC;
+            if (countryCC.msgList.count <20){
+                [countryCC gettingFirstMsg];
+            }else{
+                //            if ([countryCC refreshingMsgListAtLastStatus]){
+                //                [countryCC msgArrayFormatToStartState];
+                //            }
+                if ([countryCC.channelDelegate respondsToSelector:@selector(showNewMsg:)]) {
+                    [countryCC.channelDelegate showNewMsg:countryCC];
+                }
+                
+            }
+            NSString *allianceId = [UserManager sharedUserManager].currentUser.allianceId;
+            if (allianceId.length> 0) {
+                ChatChannel *allianceCC = [[ChannelManager sharedChannelManager]gettingAllianceChannel];
+                self.chatViewController.allianceTableViewController.currentChannel = allianceCC;
+                
+                if (allianceCC.msgList.count <20){
+                    [allianceCC gettingFirstMsg];
+                }else{
+                    //                if ([allianceCC refreshingMsgListAtLastStatus]){
+                    //                    [allianceCC msgArrayFormatToStartState];
+                    //           	 }
+                    if ([allianceCC.channelDelegate respondsToSelector:@selector(showNewMsg:)]) {
+                        [allianceCC.channelDelegate showNewMsg:allianceCC];
+                    }
+                }
+            }
+            
+            if(ChatServiceCocos2dx::m_channelType == IOS_CHANNEL_TYPE_ALLIANCE){
+                
+                [self.chatViewController.topUIView selectASN];
+                [self.chatViewController isShowJionAllance];
+            }else{
+                [self.chatViewController.topUIView selectCoun];
+                
+                [self.chatViewController.view sendSubviewToBack:self.chatViewController.jionAllanceView];
+                [self.chatViewController.view bringSubviewToFront:self.chatViewController.countriesTableViewController.view];
+                if(ChatServiceCocos2dx::m_isNoticItemUsed){
+                    [self.chatViewController.keyBordView openRadio];
+                    ChatServiceCocos2dx::m_isNoticItemUsed = false;
+                }else{
+                    [self.chatViewController.keyBordView closeRadio];
+                }
+            }
+            
+            [self.vc_win bringSubviewToFront:self.chatViewController.view];
+
         }
         
-        [self.vc_win bringSubviewToFront:self.chatViewController.view];
     }
     
 }
-
+/*
 -(void)refreshData:(ResponseMsgType) rmt withAdd:(ChatChannel *) cc;
 {
     
@@ -229,9 +555,11 @@
         
     }
 }
+ */
 
 -(void) setPlayerInfo:(int)gmod headPicVer:(int)headPicVer customHeadImageUrl:(NSString*)customHeadImageUrl name:(NSString *)name uidStr:(NSString *)uidStr picStr:(NSString *)picStr vipStr:(NSString *)vipStr
 {
+    
     [UserManager sharedUserManager].currentUser.mGmod=gmod;
     [UserManager sharedUserManager].currentUser.userName=name;
     [UserManager sharedUserManager].currentUser.uid=uidStr;
@@ -267,8 +595,8 @@
     int channelType = ChatServiceCocos2dx::m_channelType;
     bool isSelfMsg = TRUE;
     int post = 0;
-    NSString *sendLocalTime = [NSString stringWithFormat:@"%d", (NSUInteger)[[NSDate date] timeIntervalSince1970]];
-    
+    NSString *sendLocalTime = [NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]];
+    DVLog(@" sendLocalTime   %@",sendLocalTime);
     NSMsgItem *mi = [[NSMsgItem alloc] initSend:ns_uid isNewMsg:isNewMsg isSelf:isSelfMsg channelType:channelType post:post msgStr:msg sendLocalTime:sendLocalTime];
     
     mi.vip = userInfo.vip;
@@ -293,17 +621,28 @@
 //    }
 //}
 /**第一次打开邮件显示历史数据20条*/
--(void) initMaiChannelData
-{
-    //对相同的fromUid第一次打开邮件 需要做滚动到最新行。在加载数据后调用滚动函数
-    [[ChatServiceController chatServiceControllerSharedManager].gameHost initChatToHistory_mail] ;
-}
+//-(void) initMaiChannelData
+//{
+//    //对相同的fromUid第一次打开邮件 需要做滚动到最新行。在加载数据后调用滚动函数
+//    [[ChatServiceController chatServiceControllerSharedManager].gameHost initChatToHistory_mail] ;
+//}
 
 -(void) flyHint:(NSString*)icon :(NSString*)titleText :(NSString*)contentText :(CGFloat)time :(CGFloat)dy :(BOOL)useDefaultIcon
 {
-    BDKViewController *bdk = [[BDKViewController alloc] init:contentText];
-    [self.vc_win addSubview:bdk.view];
-    
+    if (self.bdk) {
+        [self.bdk removeFromParentViewController];
+        [self.bdk.view removeFromSuperview];
+    }
+    self.bdk = [[BDKViewController alloc] init:contentText];
+    if ([ServiceInterface serviceInterfaceSharedManager].chatRootWindow && [ServiceInterface serviceInterfaceSharedManager].chatRootWindow.hidden == NO) {
+        UIViewController *recentView = nil;
+        
+        UINavigationController *nav = [ServiceInterface serviceInterfaceSharedManager].chatRootWindow.rootViewController;
+        [nav.topViewController.view addSubview:self.bdk.view];
+        [nav.topViewController.view bringSubviewToFront:self.bdk.view];
+    }else{
+        [self.vc_win addSubview:self.bdk.view];
+    }
 }
 
 -(void) initIsLoadVariable
@@ -316,22 +655,44 @@
 
 -(void) hideChatViewIOS
 {
-    [ServiceInterface serviceInterfaceSharedManager].vc_win.hidden = YES;
-    CCDirector::sharedDirector()->setVisitFlag(true);
+    if (ChatServiceCocos2dx::CS_CountryChat_OC_Native_New) {
+        [[CSConvertViewManager sharedMailInfoManager] chatWindowHidden];
+        [[NSNotificationCenter defaultCenter]postNotificationName:KCLOSEKEYBOARD object:nil userInfo:nil];
+    }else{
+        [ServiceInterface serviceInterfaceSharedManager].vc_win.hidden = YES;
+        CCDirector::sharedDirector()->setVisitFlag(true);
+    }
 }
 
 -(void) showChatViewIOS
 {
-    [ServiceInterface serviceInterfaceSharedManager].vc_win.hidden = NO;
+    if (ChatServiceCocos2dx::CS_CountryChat_OC_Native_New) {
+        [[CSConvertViewManager sharedMailInfoManager] chatWindowShow];
+    }else{
+        [ServiceInterface serviceInterfaceSharedManager].vc_win.hidden = NO;
+        CCDirector::sharedDirector()->setVisitFlag(false);
+    }
+}
+
+-(void) hideMailListIOS
+{
+    self.chatRootWindow.hidden = YES;
+    CCDirector::sharedDirector()->setVisitFlag(true);
+}
+
+-(void) showMailListIOS
+{
+    self.chatRootWindow.hidden = NO;
     CCDirector::sharedDirector()->setVisitFlag(false);
 }
 
 /**华丽的分割线－－－－－－－－－－－－－－单例－－－－－－－－－－－－－－－－－－－－－－－*/
 
--(ServiceInterface*)init
+-(instancetype)init
 {
     self = [super init];
     if (self) {
+        self.isChangeLanguage = FALSE;
         self.isInMailDialog = FALSE;
         self.m_curChatType = -1;
         self.rememberPosition = false;
@@ -340,8 +701,10 @@
 //        self.isFirstOpenIOS = TRUE;
         self.isSrollNewMsg = TRUE;
         self.isReturnOpengIOS = TRUE;
+        self.cs_CountryChat_OC_Native_New = ChatServiceCocos2dx::CS_CountryChat_OC_Native_New;
         [self screenAdaptation];
-        
+        self.csChatMsgQueue = dispatch_queue_create("com.chatServer.ServiceInterface", NULL);
+         self.csGetUserInfoQueue = dispatch_queue_create("com.chatServer.ServiceInterface.csGetUserInfoQueue", NULL);
         UIWindow *window=[[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
         self.vc_win = window;
         UIWindow *keywindow= [[[UIApplication sharedApplication ]delegate]window];
@@ -352,8 +715,10 @@
         /*zyt*/
         UIWindow *window1  =[[UIWindow alloc]init];
         window1.frame = [UIScreen mainScreen].bounds;
+//            [window1 becomeKeyWindow];
+            [window1 makeKeyAndVisible];
         self.chatRootWindow = window1;
-         window1 = nil;
+        
         self.chatRootWindow.hidden = YES;
         
         [keywindow addSubview:self.chatRootWindow];
@@ -417,11 +782,17 @@
         
         self.timefontSize = 25.0;
         
-        self.userInfofontSize = 15.0;
+        self.redPackageTimeSize = 15.0;
+        
+        self.userInfofontSize = 16.0;
         
         self.endtimeFontSize = 20.0;
         
         self.fontSize = 32.0;
+        
+        self.redEnvelopeFont = 26.0;
+        
+        self.redEnvelopeFont2 = 20.0;
         
         self.userInfoX = 0.10;
         
@@ -436,10 +807,14 @@
         
         self.chatLabel_icon_size_height = 30;
         self.chatLabel_icon_size_width = 70;
+        self.chatLabel_icon_size_height_1 = 30;
+        self.chatLabel_icon_size_width_1 = 30;
         self.chatLabel_LINE_HEIGHT = 40;
-        self.mail_native_nameLabelSize =27;
-        self.mail_native_contentsLabelSize =23;
-        self.mail_native_timeLabelSize = 18;
+        self.mail_native_nameLabelSize =23;
+        self.mail_native_contentsLabelSize =22;
+        self.mail_native_timeLabelSize = 22;
+        self.redPackageTimePosY = 0.2;
+        
     }else{
         
         self.autoSizeScaleX = 1.0;
@@ -452,10 +827,13 @@
         
         self.chatFontSize = 13.0;
         
-         self.chatSystemSize = 12.0;
+        self.chatSystemSize = 12.0;
+        
         self.timefontSize = 12.0;
         
-        self.userInfofontSize = 10.0;
+        self.redPackageTimeSize = 12.0;
+        
+        self.userInfofontSize = 11.0;
         
         self.endtimeFontSize = 10.0;
         
@@ -465,6 +843,10 @@
         
         self.font2dxSize = 12.0;
         
+        self.redEnvelopeFont = 10.5;
+        
+        self.redEnvelopeFont2 = 9.0;
+        
         self.x = 0.015;
         
         self.contentX = 0.09;
@@ -472,10 +854,13 @@
         
         self.chatLabel_icon_size_height = 20;
         self.chatLabel_icon_size_width = 40;
+        self.chatLabel_icon_size_height_1 = 20;
+        self.chatLabel_icon_size_width_1 = 20;
         self.chatLabel_LINE_HEIGHT = 20;
-        self.mail_native_nameLabelSize =17;
-        self.mail_native_contentsLabelSize =14;
+        self.mail_native_nameLabelSize =13;
+        self.mail_native_contentsLabelSize =12;
         self.mail_native_timeLabelSize = 13;
+        self.redPackageTimePosY = 0.25;
     }
     
 }
@@ -608,6 +993,83 @@
 {
     return [[UIDevice currentDevice].systemVersion isEqualToString:@"7.1"];
 }
+/** 关闭原生邮件列表，对象彻底释放 */
+-(void)closed_The_OC_Native_mailVC{
+    CCDirector::sharedDirector()->setVisitFlag(true);
+    self.chatRootWindow.rootViewController = nil;
+    self.chatRootWindow.hidden = YES;
+}
+
+-(void)openMail_OC_Native_Categary_ListWith3DTouch{
+    CCDirector::sharedDirector()->setVisitFlag(false);
+    self.chatRootWindow.rootViewController = nil;
+    ChatServiceCocos2dx::creatingMailListWith_OC_Native();
+}
+-(void)packageMsgCommand{
+    NSString *commandStr =@"";
+    if  (!ChatServiceCocos2dx::DB_MsgItem_switch){
+        //GlobalData::shared()->playerInfo.getAllianceId().c_str();
+        NSString *allianceID = [NSString stringWithCString:GlobalData::shared()->playerInfo.getAllianceId().c_str() encoding:4];
+        if(allianceID.length> 0){
+            commandStr = [commandStr stringByAppendingFormat:@"0|0|0,%@|0|1,0|0|2,0|0|4",allianceID];
+        }else{
+            commandStr = @"0|0|0,0|0|2,0|0|4";
+        }
+    }else{
+        //数据库开关打开
+        NSString *allianceID = [NSString stringWithCString:GlobalData::shared()->playerInfo.getAllianceId().c_str() encoding:4];
+        ChatChannel *chatChannel =  [[ChannelManager sharedChannelManager] gettingCountryChannel];
+        NSMsgItem *msg = nil;
+        if  (chatChannel ){
+            msg =  [chatChannel gettingLastMsg];
+        }
+        if(  msg == nil){
+            if(allianceID.length> 0){
+                commandStr = [commandStr stringByAppendingFormat:@"0|0|0,%@|0|1,0|0|2",allianceID];
+            }else{
+                commandStr = @"0|0|0";
+                
+            }
+        }else{
+            commandStr = [commandStr stringByAppendingFormat:@"%d|%d|0",[UserManager sharedUserManager].currentUser.serverId,msg.sequenceId];
+            if(allianceID.length> 0){
+                ChatChannel *allChannel =  [[ChannelManager sharedChannelManager] gettingAllianceChannel];
+                NSMsgItem *allianLastMsg =  [allChannel gettingLastMsg];
+                if(allianLastMsg){
+                    commandStr = [commandStr stringByAppendingString:@","];
+                    commandStr = [commandStr stringByAppendingFormat:@"%@|%d|1",allianceID,allianLastMsg.sequenceId];
+                }else{
+                    commandStr = [commandStr stringByAppendingString:@","];
+                    commandStr = [commandStr stringByAppendingFormat:@"%@|0|1",allianceID];
+                }
+            }
+            ChatChannel *mailChannel =   [[ChannelManager sharedChannelManager] gettingMailChannelWithLastChanged];
+            
+            NSMsgItem *mailMsg = nil;
+            if (mailChannel){
+                mailMsg=  [mailChannel gettingLastMsg];
+                if  (mailMsg){
+                    commandStr = [commandStr stringByAppendingString:@","];
+                    commandStr = [commandStr stringByAppendingFormat:@"0|%@|2",mailMsg.mailId];
+                }else{
+                    commandStr = [commandStr stringByAppendingString:@","];
+                    commandStr =[commandStr stringByAppendingString:@"0|0|2"];
+                }
+            }else{
+                commandStr = [commandStr stringByAppendingString:@","];
+                commandStr =[commandStr stringByAppendingString:@"0|0|2"];
+            }
+            
+            NSString * roomStrig   =  [[ChannelManager sharedChannelManager] stringForChatRoomWithAllRoomChannel];
+            commandStr = [commandStr stringByAppendingString:@","];
+            commandStr = [commandStr stringByAppendingString:roomStrig];
+            
+        }
+        
+    }
+    self.msgCommandString = commandStr;
+}
+
 
 @end
 

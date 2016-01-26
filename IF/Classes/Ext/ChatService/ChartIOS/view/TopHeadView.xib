@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8173.3" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8142"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -36,22 +36,33 @@
                                 <constraint firstAttribute="width" secondItem="szl-ei-4ek" secondAttribute="height" multiplier="1:1" id="W4b-Wa-MhP"/>
                             </constraints>
                             <inset key="contentEdgeInsets" minX="-1" minY="-1" maxX="-1" maxY="-1"/>
-                            <state key="normal" title="Button" image="but_back.png">
+                            <state key="normal" title="Button" image="CS_backButtonIcon">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
                                 <action selector="buttonAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="svM-v1-eq9"/>
                             </connections>
                         </button>
-                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6ve-UY-xLc" userLabel="rightButton">
-                            <rect key="frame" x="255" y="4" width="65" height="36"/>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6ve-UY-xLc" userLabel="rightEditButton">
+                            <rect key="frame" x="250" y="4" width="70" height="26"/>
                             <constraints>
-                                <constraint firstAttribute="width" secondItem="6ve-UY-xLc" secondAttribute="height" multiplier="9:5" id="4QK-r2-eY7"/>
+                                <constraint firstAttribute="width" secondItem="6ve-UY-xLc" secondAttribute="height" multiplier="128:48" id="4QK-r2-eY7"/>
                             </constraints>
-                            <state key="normal" image="mail_btn_edit"/>
-                            <state key="selected" image="mail_btn_fanhui"/>
+                            <state key="normal" image="mail_btn_write_mail"/>
+                            <state key="selected" image="mail_btn_complete"/>
                             <connections>
                                 <action selector="rightButtonAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="KEG-DF-B6b"/>
+                            </connections>
+                        </button>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tnF-Id-xPm" userLabel="rightChatRoomMemButton">
+                            <rect key="frame" x="274" y="-2" width="48" height="48"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="tnF-Id-xPm" secondAttribute="height" multiplier="1:1" id="U9f-2I-Q8D"/>
+                            </constraints>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <state key="normal" image="groupAddMerber"/>
+                            <connections>
+                                <action selector="rightButtonAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="lgc-B4-5PS"/>
                             </connections>
                         </button>
                     </subviews>
@@ -59,16 +70,19 @@
                     <constraints>
                         <constraint firstAttribute="centerY" secondItem="OHH-Bd-qT0" secondAttribute="centerY" id="1Oi-o9-YPb"/>
                         <constraint firstAttribute="trailing" secondItem="zBV-4A-JoW" secondAttribute="trailing" id="5nR-PD-hMu"/>
+                        <constraint firstItem="tnF-Id-xPm" firstAttribute="top" secondItem="n8w-nV-CkX" secondAttribute="top" constant="-2" id="Bh2-rs-IMi"/>
                         <constraint firstItem="zBV-4A-JoW" firstAttribute="top" secondItem="n8w-nV-CkX" secondAttribute="top" constant="-2" id="JAC-3X-Qe2"/>
                         <constraint firstAttribute="centerX" secondItem="OHH-Bd-qT0" secondAttribute="centerX" id="Nbq-tZ-Xwx"/>
-                        <constraint firstItem="6ve-UY-xLc" firstAttribute="centerY" secondItem="n8w-nV-CkX" secondAttribute="centerY" id="PNj-cp-7mG"/>
+                        <constraint firstItem="6ve-UY-xLc" firstAttribute="centerY" secondItem="n8w-nV-CkX" secondAttribute="centerY" constant="-5" id="PNj-cp-7mG"/>
                         <constraint firstItem="zBV-4A-JoW" firstAttribute="leading" secondItem="n8w-nV-CkX" secondAttribute="leading" id="UPX-3K-YK6"/>
                         <constraint firstAttribute="trailing" secondItem="6ve-UY-xLc" secondAttribute="trailing" id="Z5M-2b-SLL"/>
                         <constraint firstItem="szl-ei-4ek" firstAttribute="leading" secondItem="n8w-nV-CkX" secondAttribute="leading" constant="-2" id="hf3-Sw-Uth"/>
                         <constraint firstAttribute="bottom" secondItem="zBV-4A-JoW" secondAttribute="bottom" id="i5t-YL-9sY"/>
                         <constraint firstItem="szl-ei-4ek" firstAttribute="top" secondItem="n8w-nV-CkX" secondAttribute="top" constant="-2" id="pdw-Gu-GmZ"/>
-                        <constraint firstItem="6ve-UY-xLc" firstAttribute="height" secondItem="n8w-nV-CkX" secondAttribute="height" multiplier="0.8" id="rhR-tr-gId"/>
+                        <constraint firstAttribute="bottom" secondItem="tnF-Id-xPm" secondAttribute="bottom" constant="-2" id="qyw-Hu-CFb"/>
+                        <constraint firstItem="6ve-UY-xLc" firstAttribute="height" secondItem="n8w-nV-CkX" secondAttribute="height" multiplier="0.6" id="rhR-tr-gId"/>
                         <constraint firstAttribute="bottom" secondItem="szl-ei-4ek" secondAttribute="bottom" constant="-2" id="yRX-Mm-yTx"/>
+                        <constraint firstAttribute="trailing" secondItem="tnF-Id-xPm" secondAttribute="trailing" constant="-2" id="zoz-Ou-0Zb"/>
                     </constraints>
                 </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ui_huitiao2.png" translatesAutoresizingMaskIntoConstraints="NO" id="HIj-yo-kAo">
@@ -87,18 +101,21 @@
                 <constraint firstAttribute="trailing" secondItem="HIj-yo-kAo" secondAttribute="trailing" constant="-2" id="iEo-2Y-HTi"/>
                 <constraint firstItem="n8w-nV-CkX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="wRf-Wp-dYR"/>
             </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="rightButton" destination="6ve-UY-xLc" id="yi7-KJ-Rdu"/>
+                <outlet property="rightChatRoomMemberButton" destination="tnF-Id-xPm" id="mFe-CK-X6p"/>
+                <outlet property="rightEditButton" destination="6ve-UY-xLc" id="fsN-ev-MxA"/>
                 <outlet property="titleNameLabel" destination="OHH-Bd-qT0" id="5nA-bX-Mg2"/>
             </connections>
-            <point key="canvasLocation" x="390" y="116"/>
+            <point key="canvasLocation" x="372" y="121"/>
         </view>
     </objects>
     <resources>
-        <image name="but_back.png" width="88" height="88"/>
-        <image name="mail_btn_edit" width="109" height="63"/>
-        <image name="mail_btn_fanhui" width="109" height="63"/>
+        <image name="CS_backButtonIcon" width="88" height="88"/>
+        <image name="groupAddMerber" width="85" height="85"/>
+        <image name="mail_btn_complete" width="124" height="48"/>
+        <image name="mail_btn_write_mail" width="124" height="48"/>
         <image name="ui_gray_biaotilan.png" width="640" height="90"/>
         <image name="ui_huitiao2.png" width="648" height="30"/>
     </resources>

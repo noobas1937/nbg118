@@ -205,6 +205,36 @@
     [self.topView addConstraints:button_c_H];
     [self.topView addConstraints:button_c_V];
     
+    //新增按钮好友列表
+    int type = ChatServiceCocos2dx::m_channelType;
+    if (type == IOS_CHANNEL_TYPE_ALLIANCE || type == IOS_CHANNEL_TYPE_COUNTRY){
+        UIButton *friendsButton = [[UIButton alloc]init];
+        friendsButton.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.topView addSubview:friendsButton];
+        [friendsButton setBackgroundImage:[UIImage imageNamed:@"btn_show_friend_new2"] forState:UIControlStateNormal];
+        [friendsButton addTarget:self action:@selector(friendsPressed:) forControlEvents: UIControlEventTouchUpInside];
+        /**返回按钮约束 上 下 左 ＝ 0 宽度 ＝ 父高度*/
+        
+        NSArray *friendsButton_c_H=[NSLayoutConstraint constraintsWithVisualFormat:@"H:[friendsButton]-0-|"
+                                    　　　　　　　　　　　　　　　　　　　　　　　　　　　　options:0
+                                    　　　　　　　　　　　　　　　　　　　　　　　　　　　　metrics:nil
+                                    　　　　　　　　　　　　　　　　　　　　　　　　　　　　views:NSDictionaryOfVariableBindings(friendsButton)];
+        
+        NSArray *friendsButton_c_V=[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[friendsButton]-0-|"
+                                    　　　　　　　　　　　　　　　　　　　　　　　　　　　　options:0
+                                    　　　　　　　　　　　　　　　　　　　　　　　　　　　　metrics:nil
+                                    　　　　　　　　　　　　　　　　　　　　　　　　　　　　views:NSDictionaryOfVariableBindings(friendsButton)];
+        [self addConstraint:[NSLayoutConstraint constraintWithItem:friendsButton
+                                                         attribute:NSLayoutAttributeWidth
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:self.topView
+                                                         attribute:NSLayoutAttributeHeight
+                                                        multiplier:1.0
+                                                          constant:0]];//设置子视图的高度是父视图高度的一半
+        [self.topView addConstraints:friendsButton_c_H];
+        [self.topView addConstraints:friendsButton_c_V];
+    }
+    
     //为邮件或者聊天室
    
         
@@ -416,6 +446,10 @@
 
 -(void) backButtonPressed:(id)sender
 {
+    if( [self.topUIViewDelegate respondsToSelector:@selector(topUIViewCancalButtonAction)]){
+        [self.topUIViewDelegate topUIViewCancalButtonAction];
+    }
+    
     [[ChatServiceController chatServiceControllerSharedManager] closekeyboard];
     if (self.chatType == IOS_CHANNEL_TYPE_BBS) {
         NSString *url = [ServiceInterface serviceInterfaceSharedManager].bbsIOSViewController.bbsView.request.URL.absoluteString;
@@ -436,6 +470,14 @@
     [[ServiceInterface serviceInterfaceSharedManager] hideChatViewIOS];
     
     
+}
+
+-(void) friendsPressed:(id)sender
+{
+    DVLog(@"获取好友列表");
+    if ([self.topUIViewDelegate respondsToSelector:@selector(openFriendsView)]) {
+        [self.topUIViewDelegate openFriendsView];
+    }
 }
 
 -(void)addGroupMemberButton:(UIButton *)sender{
@@ -476,12 +518,7 @@
     [self.allianceButton setTitleColor:[UIColor colorWithRed:255 green:255 blue:0 alpha:0.3] forState:UIControlStateNormal];
     
     if ([ServiceInterface serviceInterfaceSharedManager].chatViewController.countriesTableViewController.tableView.hidden == YES) {
-        
-//        if([ServiceInterface serviceInterfaceSharedManager].isLoadCountriesData){
-//            //从本地加载还是从服务器请求
-//            
-//            [[ChatServiceController chatServiceControllerSharedManager].gameHost requestCountriesData];
-//        }
+ 
         
         [ServiceInterface serviceInterfaceSharedManager].chatViewController.allianceTableViewController.tableView.hidden = YES;
         

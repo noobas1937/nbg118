@@ -12,7 +12,7 @@
 #import "GameHostInterface.h"
 @interface GameHost : GameHostInterface
 
--(void) setActionAfterResume:(NSString*) action :(NSString*) uid :(NSString*) name :(NSString*) reportUid :(NSString*) detectReportUid :(BOOL) returnToChatAfterPopup;
+-(void) setActionAfterResume:(NSString*) action :(NSString*) uid :(NSString*) name :(NSString*) reportUid :(NSString*) detectReportUid :(int)equipId :(BOOL) returnToChatAfterPopup;
 -(void) onResume:(int) chatType;
 
 
@@ -77,7 +77,5 @@
 -(void) updateMailList;
 //发送邮件
 -(void) sendMail:(NSMsgItem *)mi;
-
-
 
 @end

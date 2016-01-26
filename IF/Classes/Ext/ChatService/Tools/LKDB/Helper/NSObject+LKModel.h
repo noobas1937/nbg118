@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
 #import <objc/runtime.h>
 
 @class LKDBProperty;
@@ -17,36 +16,71 @@
 #pragma mark- 表结构
 @interface NSObject(LKTabelStructure)
 
-// overwrite in your models, return # table name #
+/**
+ *  overwrite in your models(option)
+ *
+ *  @return # table name #
+ */
 +(NSString*)getTableName;
 
-// overwrite in your models, set colume attribute
-+(void)columeAttributeWithProperty:(LKDBProperty*)property;
+/**
+ *  if you set it will use it as a table name
+ */
+@property(copy,nonatomic)NSString* db_tableName;
 
 /**
- *	@brief	overwrite in your models, if your table has primary key
-            return # colume name  #
+ *  the model is inserting ..
+ */
+@property(readonly,nonatomic)BOOL db_inserting;
+
+/**
+ *  sqlite comes with rowid
+ */
+@property int rowid;
+
+/**
+ *  overwrite in your models, if your table has primary key
  
-            主键列名 如果rowid<0 则跟据此名称update 和delete
+ *  主键列名 如果rowid<0 则跟据此名称update 和delete
+ 
+ *  @return # column name  #
  */
 +(NSString*)getPrimaryKey;
 
-@property NSUInteger rowid;
+/**
+ *  multi primary key
+ *  联合主键
+ *  @return
+ */
++(NSArray*) getPrimaryKeyUnionArray;
+
+
+
+
+
+/**
+ *  overwrite in your models set column attribute
+ *
+ *  @param property infos
+ */
++(void)columnAttributeWithProperty:(LKDBProperty*)property;
+
 
 /**
  *	@brief   get saved pictures and data file path,can overwirte
  
-             获取保存的 图片和数据的文件路径
+    获取保存的 图片和数据的文件路径
  */
 +(NSString*)getDBImagePathWithName:(NSString*)filename;
 +(NSString*)getDBDataPathWithName:(NSString*)filename;
 @end
 
 
+
 #pragma mark- 表数据操作
 @interface NSObject(LKTableData)
 
-/**
+/***
  *	@brief      overwrite in your models,return insert sqlite table data
  *
  *
@@ -54,29 +88,39 @@
  */
 -(id)userGetValueForModel:(LKDBProperty*)property;
 
-/**
+/***
  *	@brief	overwrite in your models,return insert sqlite table data
  *
  *	@param 	property        will set property
- *	@param 	value           sqlite value (normal value is NSString type)
+ *	@param 	value           sqlite value (NSString(NSData UTF8 Coding) or NSData)
  */
 -(void)userSetValueForModel:(LKDBProperty*)property value:(id)value;
 
+///overwrite
++(NSDateFormatter*)getModelDateFormatter;
 
 //lkdbhelper use
 -(id)modelGetValue:(LKDBProperty*)property;
 -(void)modelSetValue:(LKDBProperty*)property value:(id)value;
--(id)getPrimaryValue;
+
+-(id)singlePrimaryKeyValue;
+-(BOOL)singlePrimaryKeyValueIsEmpty;
+-(LKDBProperty*)singlePrimaryKeyProperty;
 @end
 
 @interface NSObject (LKModel)
 
-//return model use LKDBHelper , default return global LKDBHelper;
+/**
+ *  return model use LKDBHelper , default return global LKDBHelper;
+ *
+ *  @return LKDBHelper
+ */
 +(LKDBHelper*)getUsingLKDBHelper;
 
 /**
- *	@brief  返回 该Model 的基础信息
+ *  class attributes
  *
+ *  @return LKModelInfos
  */
 +(LKModelInfos*)getModelInfos;
 
@@ -86,8 +130,17 @@
 +(BOOL)isContainParent;
 
 /**
+ *  当前表中的列是否包含自身的属性。
+ *
+ *  @return BOOL
+ */
++(BOOL)isContainSelf;
+
+/**
  *	@brief log all property 	打印所有的属性名称和数据
  */
 -(NSString*)printAllPropertys;
+-(NSString*)printAllPropertysIsContainParent:(BOOL)containParent;
 
+-(NSMutableString*)getAllPropertysString;
 @end

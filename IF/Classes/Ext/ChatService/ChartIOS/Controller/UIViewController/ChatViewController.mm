@@ -16,6 +16,8 @@
 #import "LanguageManager.h"
 #import "LanguageKeys.h"
 #import "UITableViewController+Extension.h"
+#import "CCSafeNotificationCenter.h"
+#import "MailController.h"
 
 #import "ChannelManager.h"
 @interface ChatViewController ()<KeyBordVIewDelegate,TopUIViewDelegate>
@@ -39,14 +41,14 @@ static float topUIViewH = 0;
     self.navigationController.navigationBarHidden=YES;
     self.view.backgroundColor = [UIColor blackColor];
     
-    [self addTopUIView];
-    [self addUIKeyBordVIew];
-    [self addUITableView];
-    [self addJoinAllance];
-    [self.view sendSubviewToBack:self.countriesTableViewController.view];
-    [self.view sendSubviewToBack:self.allianceTableViewController.view];
-    [self.view bringSubviewToFront:self.topUIView];
-    
+//    [self addTopUIView];
+//    [self addUIKeyBordVIew];
+//    [self addUITableView];
+//    [self addJoinAllance];
+//    [self.view sendSubviewToBack:self.countriesTableViewController.view];
+//    [self.view sendSubviewToBack:self.allianceTableViewController.view];
+//    [self.view bringSubviewToFront:self.topUIView];
+//    
     UITapGestureRecognizer *aTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(keyboardHide:)];
     //设置成NO表示当前控件响应后会传播到其他控件上，默认为YES。
     aTapGestureRecognizer.cancelsTouchesInView = NO;
@@ -67,15 +69,16 @@ static float topUIViewH = 0;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:)
                                                  name:UIApplicationDidBecomeActiveNotification object:nil]; //监听是否重新进入程序程序.
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatMsgPushNotify:) name:kChatMsgPushFromServer object:nil];
+
  
     
     
 }
 
 -(void)dealloc{
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:kChatMsgPushFromServer object:nil];
- 
+   
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIApplicationWillResignActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
 
@@ -85,7 +88,11 @@ static float topUIViewH = 0;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasHidden:) name:UIKeyboardWillHideNotification object:nil];
-    
+   
+}
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+   
 }
 
 -(void)keyboardWasShown:(NSNotification *)note
@@ -121,7 +128,7 @@ static float topUIViewH = 0;
         CGPoint offset = CGPointMake(0, vTableView.contentSize.height - vTableView.frame.size.height);
         [vTableView setContentOffset:offset animated:animal];
     }else{
-        NSLog(@"没有滚动");
+        DVLog(@"没有滚动");
     }
 }
 -(void)keyboardWasHidden:(NSNotification *)note
@@ -139,19 +146,38 @@ static float topUIViewH = 0;
 
 #pragma mark -
 #pragma mark UITopViewDelegate
+
+-(void)topUIViewCancalButtonAction{
+    [self.keyBordView.chatViewTextField resignFirstResponder];
+    CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MAIL_LIST_CHANGE);
+//    [self.countriesTableViewController.dataSourceArray removeAllObjects];
+//    [self.allianceTableViewController.dataSourceArray removeAllObjects];
+    [self.countriesTableViewController.tableView endUpdates];
+    [self.countriesTableViewController.currentChannel msgArrayFormatToStartState];
+    self.countriesTableViewController.currentChannel.channelDelegate = nil;
+    [self.allianceTableViewController.tableView endUpdates];
+    [self.allianceTableViewController.currentChannel msgArrayFormatToStartState];
+
+    self.allianceTableViewController.currentChannel.channelDelegate = nil;
+    
+    
+    
+}
 - (void)clickButtonWithTag:(NSInteger)vTag{
     DVLog(@"vTag :%d",vTag);
     if  ([self.keyBordView.chatViewTextField canBecomeFirstResponder]){
         if(vTag == 10001){
-            if(self.countriesTableViewController.dataSourceArray.count == 0){
-                 ChatChannel *countryChannel =  [[ChannelManager sharedChannelManager]gettingCountryChannel];
-                [countryChannel gettingFirstMsg];
-            }
+          
+//            if(self.countriesTableViewController.dataSourceArray.count == 0){
+//                 ChatChannel *countryChannel =  [[ChannelManager sharedChannelManager]gettingCountryChannel];
+//                [countryChannel gettingFirstMsg];
+//            }
         }else if ( vTag == 10002){
-            if(self.allianceTableViewController.dataSourceArray.count == 0){
-                ChatChannel *allianceChannel =  [[ChannelManager sharedChannelManager]gettingAllianceChannel];
-                [allianceChannel gettingFirstMsg];
-            }
+//            if(self.allianceTableViewController.dataSourceArray.count == 0){
+            
+//                ChatChannel *allianceChannel =  [[ChannelManager sharedChannelManager]gettingAllianceChannel];
+//                [allianceChannel gettingFirstMsg];
+//            }
         }
 
     }
@@ -160,7 +186,11 @@ static float topUIViewH = 0;
 
 //单机背景隐藏软键盘
 -(void)keyboardHide:(UITapGestureRecognizer*)tap{
+    [self chatVCEndingEdit];
+}
+-(void)chatVCEndingEdit{
     [self.keyBordView.chatViewTextField resignFirstResponder];
+
 }
 
 -(void)KeyBordView:(KeyBordVIew *)keyBoardView textFiledBegin:(UITextField *)textFiled
@@ -315,7 +345,7 @@ static float topUIViewH = 0;
         
     long time = (long)[datenow timeIntervalSince1970]-[ServiceInterface serviceInterfaceSharedManager].screenLockTime;
         
-    NSLog(@"%ld",time);
+    DVLog(@"%ld",time);
         
     if (time > 60)
     {
@@ -388,7 +418,7 @@ static float topUIViewH = 0;
 }
 
 -(void) isShowJionAllance{
-    if([[UserManager sharedUserManager].currentUser.allianceId isEqualToString:@""] || [UserManager sharedUserManager].currentUser.allianceId == nil){
+    if([[UserManager sharedUserManager].currentUser.allianceId isEqualToString:@""] || [UserManager sharedUserManager].currentUser.allianceId == nil ){
         [[ChatServiceController chatServiceControllerSharedManager] closekeyboard];
         [self.view bringSubviewToFront:self.jionAllanceView];
     }else{
@@ -403,99 +433,8 @@ static float topUIViewH = 0;
     [self.view sendSubviewToBack:self.jionAllanceView];
 }
 
-#pragma mark -
-#pragma mark Notify Action
--(void)chatMsgPushNotify:(NSNotification *)vNofify{
-    NSDictionary *dict = vNofify.userInfo;
-    DVLog(@"userInfo :%@",dict);
-    NSString *channelId = dict[@"channelID"];
-    int  msgCount = [dict[@"msgCount"] intValue];
-    int  msgTpyeInt =   [[dict objectForKey:@"msgType"] intValue];
-    
-     ChatChannel *channel = [[ChannelManager sharedChannelManager]gettingChannelInfo:channelId];
-        ResponseMsgType msgType ;
-    if(msgTpyeInt == 0 ){
-        msgType = ResponseMsgTypeInitHistoryMSG;
-    }else if (msgTpyeInt == 1){
-        msgType = ResponseMsgTypeActionMSG;
-    }else{
-        msgType = ResponseMsgTypeOneMSG;
-    }
-     __block typeof(self) weakSelf = self;
-    UITableViewController  *tempTableVC  = nil;
-    if(channel.channelType == IOS_CHANNEL_TYPE_COUNTRY){
-        
-       ChatCountriesTableViewController *  tempTableVC = self.countriesTableViewController ;
-        [tempTableVC setDataSourceArray:channel.msgList];
-        
-        if (msgType == ResponseMsgTypeInitHistoryMSG){
-            //        dispatch_async(dispatch_get_main_queue(), ^{
-            [tempTableVC endRefreshing];
-            [tempTableVC.tableView reloadData];
-            [tempTableVC.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:msgCount-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
-            //         });
-        }else if (msgType == ResponseMsgTypeActionMSG){
-            //        dispatch_async(dispatch_get_main_queue(), ^{
-            [tempTableVC endRefreshing];
-            [tempTableVC.tableView reloadData];
-            /**
-             *  下拉刷新效果 设置滚动视图Y坐标点 和QQ微信效果一样
-             */
-            [tempTableVC adjustLocation:[tempTableVC gettingOffsetY]];
-            
-//            [tempTableVC.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow: (msgCount -1)inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
-            //        });
-            
-        }else{
-            //        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            [tempTableVC.tableView reloadData];
-            CGPoint pt =tempTableVC.tableView.contentOffset;
-            CGFloat boundaryValueMax= tempTableVC.tableView.contentSize.height - tempTableVC.tableView.frame.size.height * 0.6 - tempTableVC.tableView.frame.size.height;
-            if (pt.y > boundaryValueMax && boundaryValueMax > 0) {
-                [tempTableVC.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:channel.msgList.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
-            }
-            //        });
-        }
-
-    }else if(channel.channelType == IOS_CHANNEL_TYPE_ALLIANCE){
-      ChatAllianceTableViewController *  tempTableVC = self.allianceTableViewController ;
-        [tempTableVC setDataSourceArray:channel.msgList];
-        if (msgType == ResponseMsgTypeInitHistoryMSG){
-            //        dispatch_async(dispatch_get_main_queue(), ^{
-            [tempTableVC endRefreshing];
-            [tempTableVC.tableView reloadData];
-            [tempTableVC.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:msgCount-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
-            //         });
-        }else if (msgType == ResponseMsgTypeActionMSG){
-            //        dispatch_async(dispatch_get_main_queue(), ^{
-            [tempTableVC endRefreshing];
-            [tempTableVC.tableView reloadData];
-            
-            /**
-             *  下拉刷新效果 设置滚动视图Y坐标点 和QQ微信效果一样
-             */
-            [tempTableVC adjustLocation:[tempTableVC gettingOffsetY]];
-            
-//            [tempTableVC.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow: (msgCount -1)inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
-            //        });
-            
-        }else{
-            //        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            [tempTableVC.tableView reloadData];
-            CGPoint pt =tempTableVC.tableView.contentOffset;
-            CGFloat boundaryValueMax= tempTableVC.tableView.contentSize.height - tempTableVC.tableView.frame.size.height * 0.6 - tempTableVC.tableView.frame.size.height;
-            if (pt.y > boundaryValueMax && boundaryValueMax > 0) {
-                [tempTableVC.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:channel.msgList.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
-            }
-            //        });
-        }
-
-    }
-
-    
-    
+-(void)openFriendsView{
+    [[ChatServiceController chatServiceControllerSharedManager].gameHost openFriendsView];
 }
 
 @end

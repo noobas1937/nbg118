@@ -16,7 +16,7 @@ typedef NS_ENUM(NSInteger, KZLinkType)
     KZLinkTypeHashTag,        //内容标签  eg: #hello
     KZLinkTypeURL,            //链接地址  eg: http://www.baidu.com
     KZLinkTypePhoneNumber,     //电话号码  eg: 13888888888
-    KZLinkTypeCoordinate    //坐标
+    KZLinkTypeCoordinate    //坐标  eg:   234:555
 };
 
 // 可用于识别的链接类型
@@ -49,5 +49,8 @@ typedef void (^KZLinkHandler)(KZLinkType linkType, NSString *string, NSRange ran
 @property (nonatomic, copy) KZLinkHandler linkTapHandler;
 
 @property (nonatomic, copy) KZLinkHandler linkLongPressHandler;
+
+
+-(void)settingNSMutableAttributedString:(NSMutableAttributedString *)mutableAttributeString :(NSRange) range;
 
 @end

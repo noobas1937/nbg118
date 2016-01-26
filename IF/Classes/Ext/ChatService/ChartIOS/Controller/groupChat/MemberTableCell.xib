@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8173.3" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8142"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
@@ -20,12 +20,14 @@
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tCa-Mh-Oka">
                                 <rect key="frame" x="76" y="20" width="42" height="21"/>
+                                <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j2F-0c-R5Z">
                                 <rect key="frame" x="273" y="10" width="39" height="39"/>
+                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="j2F-0c-R5Z" secondAttribute="height" multiplier="1:1" id="fJa-8x-sd7"/>
                                 </constraints>
@@ -33,19 +35,21 @@
                                 <state key="normal" image="choose_normal">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <state key="disabled" image="choose_selected"/>
-                                <state key="selected" image="choose_pressd"/>
+                                <state key="disabled" image="choose_pressd"/>
+                                <state key="selected" image="choose_selected"/>
                                 <connections>
                                     <action selector="selectedButtonAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="b79-Yb-YDj"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sO3-r2-y96">
                                 <rect key="frame" x="10" y="5" width="49" height="49"/>
+                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="sO3-r2-y96" secondAttribute="height" multiplier="1:1" id="LiG-gy-TjG"/>
                                 </constraints>
                             </imageView>
                         </subviews>
+                        <animations/>
                         <constraints>
                             <constraint firstItem="sO3-r2-y96" firstAttribute="top" secondItem="QbP-za-0OO" secondAttribute="top" constant="5" id="DSU-JY-LIy"/>
                             <constraint firstItem="j2F-0c-R5Z" firstAttribute="top" secondItem="QbP-za-0OO" secondAttribute="top" constant="10" id="Fl4-Aa-SDR"/>
@@ -58,6 +62,7 @@
                         </constraints>
                     </view>
                 </subviews>
+                <animations/>
                 <constraints>
                     <constraint firstItem="QbP-za-0OO" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="5gc-Xq-qax"/>
                     <constraint firstItem="QbP-za-0OO" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="9D7-he-EtW"/>
@@ -65,6 +70,7 @@
                     <constraint firstAttribute="bottom" secondItem="QbP-za-0OO" secondAttribute="bottom" id="qFO-YM-1pl"/>
                 </constraints>
             </tableViewCellContentView>
+            <animations/>
             <connections>
                 <outlet property="chooseButton" destination="j2F-0c-R5Z" id="ibs-FE-fRM"/>
                 <outlet property="faceImageVIew" destination="sO3-r2-y96" id="Zg6-32-sr2"/>

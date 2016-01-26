@@ -19,4 +19,7 @@
  */
 @property (nonatomic,assign)ChatMailTableVCType chatMailTableViewType;
 
+-(void)endEditWithTextField;
+-(void)loadingChannelAndMsg;
+
 @end

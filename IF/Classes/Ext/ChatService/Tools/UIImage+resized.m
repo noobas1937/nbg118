@@ -35,5 +35,17 @@
     CGFloat h = normal.size.height * 0.5;
     return [normal resizableImageWithCapInsets:UIEdgeInsetsMake(h, w, h, w)];
 }
-
++ (UIImage *)resizableBubbleImage:(NSString *)name
+{
+    UIImage *normal = [UIImage imageNamed:name];
+    CGFloat w = normal.size.width * 0.5;
+    CGFloat h = normal.size.height * 0.6;
+    return [normal resizableImageWithCapInsets:UIEdgeInsetsMake(h, w, h, w)];
+}
+-(UIImage *)resizebleBubbleImage{
+    CGFloat w = self.size.width * 0.5;
+    CGFloat h = self.size.height * 0.5;
+    return [self resizableImageWithCapInsets:UIEdgeInsetsMake(h, w, h, w)];
+    
+}
 @end

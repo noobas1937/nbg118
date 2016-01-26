@@ -18,6 +18,9 @@
 #import "ChatServiceController.h"
 #import "UIView+FrameMethods.h"
 #import "ChatController.h"
+#import "CSAlertView.h"
+#import "NSString+Cocos2dHelper.h"
+#import "YesNoDialog.h"
 
 @interface KeyBordVIew()<UITextFieldDelegate>
 //发送按钮
@@ -255,8 +258,11 @@
     //组装用户信息
     
     NSMsgItem *chatMessage = [[ServiceInterface serviceInterfaceSharedManager] createChatMessage:self.chatViewTextField.text];
-    
-    NSLog(@"%@",chatMessage.msg);
+    if (chatMessage.channelType == IOS_CHANNEL_TYPE_COUNTRY) {
+        if (![self isSendChat]) {
+            return ;
+        }
+    }
     
     if(self.radioTiaoView.hidden == NO){
         chatMessage.post = 6;
@@ -269,6 +275,54 @@
     self.chatViewTextField.text = @"";
     self.sendBtn.enabled = NO;
 
+}
+
+-(BOOL) isChatRestrict
+{
+    
+    BOOL ret = false;
+    
+    NSUserInfo *user = [UserManager sharedUserManager].currentUser;
+    NSString *uid = [UserManager sharedUserManager].currentUser.uid;
+    if(uid.length >= 3)
+    {
+        NSString *uidPostfix = [uid substringFromIndex:uid.length - 3];
+        if([uidPostfix isPureInt])
+        {
+            int serverId = [uidPostfix intValue];
+            uidPostfix = [NSString stringWithFormat:@"%d",serverId];
+            if(user!=nil && user.userName.length > 0)
+            {
+                if ([user.userName hasPrefix:@"Empire"] && [user.userName hasSuffix:uidPostfix])
+                    return true;
+                else
+                    return false;
+            }
+        }
+        
+    }
+    
+    return ret;
+}
+
+-(void) banSendMsgTip
+{
+    NSString * tipStr = [NSString stringWithMultilingualWithKey:@"132130"];
+    CSAlertView  * alertView = [CSAlertView alertViewWithTitleString:nil];
+    alertView.viewType = CHANGENAME;
+    [alertView showViewByType];
+    alertView.titleType = ZYTAlertViewTitleType_shield;
+    [alertView setNameString:tipStr];
+    
+    UIViewController *recentView = nil;
+    
+    recentView = [ServiceInterface serviceInterfaceSharedManager].chatViewController;
+    while (recentView.parentViewController != nil) {
+        recentView = recentView.parentViewController;
+    }
+    
+    [recentView.view addSubview:alertView];
+    
 }
 
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
@@ -545,6 +599,18 @@
 //重置约束
 -(void)resetConstraints{
     [self removeConstraints:self.constraints];
+}
+
+-(BOOL) isSendChat{
+    DVLog(@"isSendChat");
+    //判断是否改名
+    if([self isChatRestrict]){
+        [self.chatViewTextField resignFirstResponder];
+        [self banSendMsgTip];
+        return FALSE;
+    }
+    
+    return TRUE;
 }
 
 @end

@@ -1672,10 +1672,10 @@ void BattleReportMailPopUpView::onShareClick(CCObject *pSender, CCControlEvent e
         CCArray* msgArr = CCArray::create();
         msgArr->addObject(CCString::create(param1));
         msg = _lang_1(reportLang, param1.c_str());
-//        CountryChatCommand * cmd = new CountryChatCommand(CHAT_STATE_ALLIANCE_COMMAND,msg.c_str(),CHAT_TYPE_BATTLE_SHARE, "", dialog.c_str(), msgArr);
-//        cmd->putParam("reportUid", CCString::create(m_info->uid));
-//        cmd->putParam("reportLang",CCString::create(reportLang));
-//        cmd->sendAndRelease();  simon
+        CountryChatCommand * cmd = new CountryChatCommand(CHAT_STATE_ALLIANCE_COMMAND,msg.c_str(),CHAT_TYPE_BATTLE_SHARE, "", dialog.c_str(), msgArr);
+        cmd->putParam("reportUid", CCString::create(m_info->uid));
+        cmd->putParam("reportLang",CCString::create(reportLang));
+        cmd->sendAndRelease();
         double shareTime = GlobalData::shared()->getWorldTime();
         shareTime = shareTime + 10*60 - 1;
         m_info->shareTime = shareTime;
@@ -2913,7 +2913,7 @@ void MonsterInfoCell::onPosBtnClick(CCObject * pSender, Control::EventType pCCCo
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     ChatServiceCocos2dx::stopReturnToChat();
 #elif(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-//simon    ChatServiceCocos2dx::stopReturnToChat();
+   ChatServiceCocos2dx::stopReturnToChat();
 #endif
     CCPoint pt = WorldController::getPointByIndex(m_pointID);
     if(SceneController::getInstance()->currentSceneId == SCENE_ID_WORLD){
@@ -2951,7 +2951,7 @@ void MonsterInfoCell::cellTouch(CCTouch *pTouch){
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         ChatServiceCocos2dx::stopReturnToChat();
 #elif(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-//simon        ChatServiceCocos2dx::stopReturnToChat();
+        ChatServiceCocos2dx::stopReturnToChat();
 #endif
         if (m_info!=nullptr && m_info->objectForKey("pointId")) {
             int pos = m_info->valueForKey("pointId")->intValue();

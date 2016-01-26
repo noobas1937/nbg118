@@ -17,9 +17,17 @@
 #import "MJRefresh.h"
 #import "UITableViewController+Extension.h"
 #import "UITableView+FDTemplateLayoutCell.h"
+#import "ChatChannel.h"
+#import "SRRefreshView.h"
 
-@interface ChatCountriesTableViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface ChatCountriesTableViewController ()<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,ChatChannelDelegate,SRRefreshDelegate>
 @property (nonatomic,assign) CGFloat offsetY;
+@property (nonatomic,assign,getter=isHasNewMsgPushed)BOOL hasNewMsgPushed;
+@property (nonatomic,assign,getter=isHasLoadOldMsgPushed)BOOL hasLoadOldMsgPushed;
+@property (nonatomic,assign,getter=isRefreshingFlagTure)BOOL refreshingFlag;
+
+@property (strong, nonatomic) SRRefreshView *slimeView;
+
 @end
 
 static NSString *const countriesCell=@"countries";
@@ -31,6 +39,9 @@ static NSString *const countriesCell=@"countries";
     [self initwithData];
     
     self.dataSourceArray = [[NSMutableArray alloc]init];
+ 
+//    [cc.msgList removeAllObjects];
+//    [cc gettingFirstMsg];
     
     [self.tableView registerClass:[ChatCellIOS class] forCellReuseIdentifier:countriesCell];
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
@@ -40,69 +51,51 @@ static NSString *const countriesCell=@"countries";
     self.tableView.delegate=self;
     self.tableView.hidden = YES;
     
-    [self setupRefresh];
+//    [self setupRefresh];
+    [self.tableView addSubview:self.slimeView];
+    self.refreshingFlag = NO;
     [self.tableView reloadData];
 //    [self tableViewScrollCurrentLine];
     
 }
+ 
 
-- (void)viewDidAppear:(BOOL)animated{
-//    [self tableViewScrollCurrentLine];
+-(void)setCurrentChannel:(ChatChannel *)currentChannel{
+    _currentChannel = currentChannel;
+    _currentChannel.channelDelegate = self;
 }
-
 -(void)initwithData
 {
     self.isSrollNewMsg = TRUE;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
-- (void)setupRefresh
-{
-    
-    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-    
-    // 隐藏时间
-    header.lastUpdatedTimeLabel.hidden = YES;
-    
-    // 隐藏状态
-    header.stateLabel.hidden = YES;
-    
-    // 设置header
-    self.tableView.header = header;
-    
-}
 
--(void)endRefreshing
+- (SRRefreshView *)slimeView
 {
-    [self.tableView.header endRefreshing];
-}
-
-//下拉刷新
-- (void)headerRereshing
-{
-    
-    self.offsetY = self.tableView.contentSize.height;
-    
-    [ServiceInterface serviceInterfaceSharedManager].isSrollNewMsg = FALSE;
-    
-    BOOL flg = [self requestActionHistoryMsg];
-    
-    if (flg) {
-        [self beginRefreshing];
-    }else{
-        [self endRefreshing];
+    if (_slimeView == nil) {
+        _slimeView = [[SRRefreshView alloc] init];
+        _slimeView.delegate = self;
+        _slimeView.upInset = 0;
+        _slimeView.slimeMissWhenGoingBack = YES;
+        _slimeView.slime.bodyColor = [UIColor grayColor];
+        _slimeView.slime.skinColor = [UIColor grayColor];
+        _slimeView.slime.lineWith = 1;
+        _slimeView.slime.shadowBlur = 4;
+        _slimeView.slime.shadowColor = [UIColor grayColor];
     }
+    
+    return _slimeView;
 }
+
+
+ 
 
 /**下拉刷新请求数据*/
 -(BOOL) requestActionHistoryMsg
 {
-    ChatChannel *cc = [[ChannelManager sharedChannelManager] gettingCountryChannel];
-    return [cc gettingOldMsg];
+   
+    return [self.currentChannel gettingOldMsg];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -113,11 +106,11 @@ static NSString *const countriesCell=@"countries";
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ChatCellIOS *cell=[tableView dequeueReusableCellWithIdentifier:countriesCell forIndexPath:indexPath];
-    
     cell.backgroundColor=[UIColor clearColor];
-    
     ChatCellFrame *cellFrame = [self gettingCountriesCellFrames][indexPath.row];
-    
+    if (cellFrame.chatMessage.post == 12) {
+        [cellFrame.chatMessage changeRedPackageStatus];
+    }
     [cell setCellFrame:cellFrame];
     
     return cell;
@@ -134,29 +127,32 @@ static NSString *const countriesCell=@"countries";
 }
 
 
-/**类函数 刷新显示*/
+/** 刷新显示*/
 -(void)refreshDisplay:(ChatCellFrame*)cellFrame{
+    
     ChatChannel *cc = [[ChannelManager sharedChannelManager] gettingCountryChannel];
-    [cc.msgList addObject:cellFrame];
-    self.dataSourceArray = [cc.msgList mutableCopy];
-    [self tableViewScrollCurrentLine];
-}
-
-/**滚动到第一行自动刷新*/
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
-    CGPoint pt = [scrollView contentOffset];
-    
-    //获取是否滚动的最大边界值
-    CGFloat boundaryValueMax= scrollView.contentSize.height - self.view.frame.size.height * 0.6 - self.view.frame.size.height;
-    
-    if (pt.y > boundaryValueMax && boundaryValueMax > 0) {
-        self.isSrollNewMsg = TRUE;
-    }else{
-        self.isSrollNewMsg = FALSE;
-    }
+    //    [cc.msgList addObject:cellFrame];
+    [_dataSourceArray addObject:cellFrame];
+    [self.tableView reloadData];
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataSourceArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+ 
     
 }
+///**滚动到第一行自动刷新*/
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//    
+//    CGPoint pt = [scrollView contentOffset];
+//    
+//    //获取是否滚动的最大边界值
+//    CGFloat boundaryValueMax= scrollView.contentSize.height - self.view.frame.size.height * 0.6 - self.view.frame.size.height;
+//    
+//    if (pt.y > boundaryValueMax && boundaryValueMax > 0) {
+//        self.isSrollNewMsg = TRUE;
+//    }else{
+//        self.isSrollNewMsg = FALSE;
+//    }
+//    
+//}
 
 /**给先上屏的数据覆盖从服务器返回的SequenceId*/
 -(void) coverSequenceId:(NSMsgItem *)chatMessage
@@ -178,8 +174,8 @@ static NSString *const countriesCell=@"countries";
 -(void) setDataSourceArray:(NSMutableArray *)dataSourceArray
 {
     if (dataSourceArray.count > 0) {
-        _dataSourceArray = [[ChannelManager sharedChannelManager] gettingCountryChannel].msgList;
-        //[dataSourceArray mutableCopy];
+        [_dataSourceArray removeAllObjects];
+        _dataSourceArray = [dataSourceArray mutableCopy];
 //        [self.tableView reloadData];
     }
 }
@@ -189,4 +185,151 @@ static NSString *const countriesCell=@"countries";
     return self.offsetY;
 }
 
+#pragma mark -
+#pragma mark UIScrollView Delegate
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    if (self.isHasNewMsgPushed) {
+        [self reloadNewMsg];
+    }else if (self.isHasLoadOldMsgPushed){
+        [self reloadOldMsg];
+    }
+}
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (_slimeView) {
+        [_slimeView scrollViewDidScroll];
+    }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (_slimeView) {
+        [_slimeView scrollViewDidEndDraging];
+    }
+}
+
+
+
+-(void)reloadNewMsg{
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSIndexPath *tempIndexPath = [self.tableView.indexPathsForVisibleRows lastObject];
+        
+        int oldCount = self.dataSourceArray.count;
+        self.dataSourceArray = [self.currentChannel.msgList mutableCopy];
+        int indexCount = self.dataSourceArray.count - oldCount;
+        [self.tableView reloadData];
+        if (self.dataSourceArray.count > 0){
+            if (oldCount == 0) {
+                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataSourceArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+            }else{
+                if  (indexCount > 0){
+                    if  (tempIndexPath.row > oldCount-4){
+                        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataSourceArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+                    }
+                }
+            }
+        }
+        self.hasNewMsgPushed = NO;
+    });
+    
+}
+-(void)reloadOldMsg{
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSArray *indexPathArray =[self.tableView indexPathsForVisibleRows];
+        NSIndexPath *tempIndexPath ;
+        if (indexPathArray.count> 0) {
+            tempIndexPath =  [[self.tableView indexPathsForVisibleRows] objectAtIndex:0];
+        }
+        
+        int oldCount = self.dataSourceArray.count;
+        self.dataSourceArray = [self.currentChannel.msgList mutableCopy];
+        int indexCount = self.dataSourceArray.count - oldCount;
+        [self.tableView reloadData];
+        if (self.dataSourceArray.count> 0) {
+            if (tempIndexPath && tempIndexPath.row <= 3) {
+                //判断新数据来之前，数据表是否在顶端
+                if(self.dataSourceArray.count >= indexCount  ){
+                    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:indexCount inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+                }
+            }else{
+                if (self.dataSourceArray.count>(tempIndexPath.row +indexCount)) {
+                    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:(tempIndexPath.row +indexCount) inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+                }
+            }
+        }
+        self.hasLoadOldMsgPushed = NO;
+    });
+    
+    
+}
+#pragma mark -
+#pragma mark ChatChannel Delegate
+
+-(void)showNewMsg:(ChatChannel *)vChannle{
+    if ( self.tableView.dragging== NO && self.tableView.decelerating == NO) {
+        [self reloadNewMsg];
+        self.hasNewMsgPushed = NO;
+    }else{
+        self.hasNewMsgPushed = YES;
+    }
+}
+-(void)showOldMsg:(ChatChannel *)vChannel{
+    [self tableViewEndRefreshed];
+    if ( self.tableView.dragging== NO && self.tableView.decelerating == NO) {
+        [self reloadOldMsg];
+        self.hasLoadOldMsgPushed = NO;
+    }else{
+        self.hasLoadOldMsgPushed = YES;
+    }
+}
+
+-(void)showscreenLockedMsg:(ChatChannel *)vChannel{
+    if ( self.tableView.dragging== NO && self.tableView.decelerating == NO) {
+        [self reloadOldMsg];
+        self.hasLoadOldMsgPushed = NO;
+    }else{
+        self.hasLoadOldMsgPushed = YES;
+    }
+}
+#pragma mark -
+#pragma mark SRRefreshDelegate
+- (void)slimeRefreshStartRefresh:(SRRefreshView*)refreshView{
+    if (self.currentChannel.msgList.count== 0){
+        self.refreshingFlag = YES;
+    }else{
+        self.refreshingFlag = NO;
+    }
+ 
+    if (self.isRefreshingFlagTure == NO) {
+        
+        self.refreshingFlag = ![self tableViewBeginRefreshed];
+        if (self.isRefreshingFlagTure == YES) {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                // (最好在刷新表格后调用)调用endRefreshing可以结束刷新状态
+                if(self.isRefreshingFlagTure == YES ){
+                    [self tableViewEndRefreshed];
+                }
+            });
+        }else{
+            [self tableViewEndRefreshed];
+        }
+    }else{
+        [self.currentChannel gettingFirstMsg];
+        [_slimeView endRefresh];
+    }
+ 
+}
+-(BOOL)tableViewBeginRefreshed{
+    self.offsetY = self.tableView.contentSize.height;
+   return  [self requestActionHistoryMsg];
+
+}
+-(void)tableViewEndRefreshed{
+    self.refreshingFlag = NO;
+    [_slimeView endRefresh];
+}
 @end

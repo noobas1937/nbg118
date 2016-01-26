@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="61" id="KGk-i7-Jjw" customClass="SysMailListCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="61"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="60.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jb3-eF-T7p" userLabel="rootView">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MBc-Hw-eLG" userLabel="showMainView">
+                                <rect key="frame" x="36" y="0.0" width="284" height="60"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="G7R-4u-wtl" userLabel="headbackImageView">
+                                        <rect key="frame" x="5" y="5" width="50" height="50"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="G7R-4u-wtl" secondAttribute="height" multiplier="1:1" id="42N-Sm-7e8"/>
+                                            <constraint firstAttribute="width" secondItem="G7R-4u-wtl" secondAttribute="height" multiplier="1:1" id="eeQ-2P-URP"/>
+                                        </constraints>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mail_list_edit_gift" translatesAutoresizingMaskIntoConstraints="NO" id="yoG-3q-veZ" userLabel="giftImageView">
+                                        <rect key="frame" x="248" y="24" width="30" height="30"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="yoG-3q-veZ" secondAttribute="height" multiplier="1:1" id="ubz-w6-wpH"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="标题" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eiQ-tw-6v1" userLabel="titlelabel">
+                                        <rect key="frame" x="80" y="4" width="26" height="16"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Mail_seconLIst_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="MN2-14-HuU" userLabel="jiantouImageView">
+                                        <rect key="frame" x="271" y="7" width="8" height="12"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="MN2-14-HuU" secondAttribute="height" multiplier="11:18" id="Gh6-HD-aRE"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3IJ-bn-97a" userLabel="timelabel">
+                                        <rect key="frame" x="232" y="5" width="34" height="14.5"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Mail_02" translatesAutoresizingMaskIntoConstraints="NO" id="VC5-de-tfi" userLabel="unReadImageView">
+                                        <rect key="frame" x="65" y="7" width="10" height="10"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="VC5-de-tfi" secondAttribute="height" multiplier="1:1" id="2yI-kb-5nm"/>
+                                        </constraints>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mail_list_divider" translatesAutoresizingMaskIntoConstraints="NO" id="tC1-X2-fpX">
+                                        <rect key="frame" x="65" y="59" width="219" height="1"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="0nS-xe-iLw"/>
+                                        </constraints>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="g015.png" translatesAutoresizingMaskIntoConstraints="NO" id="Uar-JO-0lF" userLabel="headImage View">
+                                        <rect key="frame" x="5" y="5" width="50" height="50"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="Uar-JO-0lF" secondAttribute="height" multiplier="1:1" id="fLa-z8-Tbc"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ogg-Yp-KWq" userLabel="zhegaiButton">
+                                        <rect key="frame" x="0.0" y="0.0" width="284" height="60"/>
+                                        <animations/>
+                                        <state key="normal">
+                                            <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="zhegaiButtonAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="2oz-wD-46H"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="tC1-X2-fpX" secondAttribute="trailing" id="1hI-iB-py8"/>
+                                    <constraint firstItem="3IJ-bn-97a" firstAttribute="top" secondItem="MBc-Hw-eLG" secondAttribute="top" constant="5" id="1mp-pd-sec"/>
+                                    <constraint firstItem="Ogg-Yp-KWq" firstAttribute="top" secondItem="MBc-Hw-eLG" secondAttribute="top" id="2BO-am-syV"/>
+                                    <constraint firstItem="G7R-4u-wtl" firstAttribute="leading" secondItem="MBc-Hw-eLG" secondAttribute="leading" constant="5" id="5aj-IS-5pH"/>
+                                    <constraint firstItem="Ogg-Yp-KWq" firstAttribute="leading" secondItem="MBc-Hw-eLG" secondAttribute="leading" id="6dH-3v-yOt"/>
+                                    <constraint firstItem="MN2-14-HuU" firstAttribute="height" secondItem="MBc-Hw-eLG" secondAttribute="height" multiplier="0.2" id="8hM-ds-Jj5"/>
+                                    <constraint firstItem="G7R-4u-wtl" firstAttribute="centerY" secondItem="Uar-JO-0lF" secondAttribute="centerY" id="BT6-13-KHb"/>
+                                    <constraint firstAttribute="bottom" secondItem="Ogg-Yp-KWq" secondAttribute="bottom" id="D8o-1L-Nht"/>
+                                    <constraint firstAttribute="width" constant="284" id="EYs-GE-Jqd"/>
+                                    <constraint firstItem="G7R-4u-wtl" firstAttribute="top" secondItem="MBc-Hw-eLG" secondAttribute="top" constant="5" id="Etb-kn-98i"/>
+                                    <constraint firstItem="tC1-X2-fpX" firstAttribute="leading" secondItem="Uar-JO-0lF" secondAttribute="trailing" constant="10" id="Hlb-dw-df0"/>
+                                    <constraint firstAttribute="trailing" secondItem="Ogg-Yp-KWq" secondAttribute="trailing" id="Kkt-5e-ZZQ"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="284" id="N7I-7P-VVG"/>
+                                    <constraint firstItem="eiQ-tw-6v1" firstAttribute="centerY" secondItem="VC5-de-tfi" secondAttribute="centerY" id="SF9-01-vd8"/>
+                                    <constraint firstItem="yoG-3q-veZ" firstAttribute="height" secondItem="MBc-Hw-eLG" secondAttribute="height" multiplier="0.5" id="T15-o7-Mky"/>
+                                    <constraint firstItem="eiQ-tw-6v1" firstAttribute="top" secondItem="MBc-Hw-eLG" secondAttribute="top" constant="4" id="Ts7-Z3-x5e"/>
+                                    <constraint firstAttribute="trailing" secondItem="MN2-14-HuU" secondAttribute="trailing" constant="5" id="bWj-k1-agp"/>
+                                    <constraint firstItem="eiQ-tw-6v1" firstAttribute="width" relation="lessThanOrEqual" secondItem="MBc-Hw-eLG" secondAttribute="width" constant="-140" id="cUh-Ro-bbE"/>
+                                    <constraint firstItem="MN2-14-HuU" firstAttribute="centerY" secondItem="3IJ-bn-97a" secondAttribute="centerY" id="gbS-WP-l5X"/>
+                                    <constraint firstAttribute="trailing" secondItem="yoG-3q-veZ" secondAttribute="trailing" constant="6" id="gjk-TG-4MU"/>
+                                    <constraint firstAttribute="bottom" secondItem="tC1-X2-fpX" secondAttribute="bottom" id="mWN-wH-dTo"/>
+                                    <constraint firstItem="VC5-de-tfi" firstAttribute="height" secondItem="MBc-Hw-eLG" secondAttribute="height" multiplier="0.18" id="nI9-Uv-Rzo"/>
+                                    <constraint firstItem="eiQ-tw-6v1" firstAttribute="leading" secondItem="G7R-4u-wtl" secondAttribute="trailing" constant="24.899999999999999" id="nNh-yI-Og5"/>
+                                    <constraint firstItem="G7R-4u-wtl" firstAttribute="centerX" secondItem="Uar-JO-0lF" secondAttribute="centerX" id="oNM-7C-1uC"/>
+                                    <constraint firstAttribute="bottom" secondItem="G7R-4u-wtl" secondAttribute="bottom" constant="5" id="otU-mA-deC"/>
+                                    <constraint firstItem="G7R-4u-wtl" firstAttribute="width" secondItem="Uar-JO-0lF" secondAttribute="width" id="qWn-Uz-3f1"/>
+                                    <constraint firstItem="MN2-14-HuU" firstAttribute="leading" secondItem="3IJ-bn-97a" secondAttribute="trailing" constant="5" id="tDh-D3-aXg"/>
+                                    <constraint firstAttribute="bottom" secondItem="yoG-3q-veZ" secondAttribute="bottom" constant="6" id="uGu-rF-gvZ"/>
+                                    <constraint firstItem="VC5-de-tfi" firstAttribute="leading" secondItem="G7R-4u-wtl" secondAttribute="trailing" constant="10" id="w4e-8R-d0s"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tu4-Ia-h8Y">
+                                <rect key="frame" x="0.0" y="12" width="36" height="36"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="tu4-Ia-h8Y" secondAttribute="height" multiplier="1:1" id="B46-Ej-GzV"/>
+                                </constraints>
+                                <inset key="contentEdgeInsets" minX="6" minY="6" maxX="6" maxY="6"/>
+                                <state key="normal" image="mail_list_edit_check_box_unchecked"/>
+                                <state key="selected" image="mail_list_edit_check_box_checked"/>
+                                <connections>
+                                    <action selector="selectButtonAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="bLf-KA-CBG"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <animations/>
+                        <constraints>
+                            <constraint firstItem="tu4-Ia-h8Y" firstAttribute="leading" secondItem="jb3-eF-T7p" secondAttribute="leading" id="CML-cF-hfj"/>
+                            <constraint firstItem="tu4-Ia-h8Y" firstAttribute="centerY" secondItem="jb3-eF-T7p" secondAttribute="centerY" id="CWd-yf-s9R"/>
+                            <constraint firstItem="MBc-Hw-eLG" firstAttribute="leading" secondItem="jb3-eF-T7p" secondAttribute="leading" constant="36" id="GNy-ya-scJ"/>
+                            <constraint firstAttribute="trailing" secondItem="MBc-Hw-eLG" secondAttribute="trailing" id="IKt-Do-Jrg"/>
+                            <constraint firstItem="tu4-Ia-h8Y" firstAttribute="height" secondItem="jb3-eF-T7p" secondAttribute="height" multiplier="0.6" id="ZnS-Mb-JnL"/>
+                            <constraint firstItem="MBc-Hw-eLG" firstAttribute="top" secondItem="jb3-eF-T7p" secondAttribute="top" id="g3P-bM-SWV"/>
+                            <constraint firstAttribute="bottom" secondItem="MBc-Hw-eLG" secondAttribute="bottom" id="zrq-vg-hKM"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <animations/>
+                <constraints>
+                    <constraint firstItem="jb3-eF-T7p" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Awl-LL-C0A"/>
+                    <constraint firstAttribute="bottom" secondItem="jb3-eF-T7p" secondAttribute="bottom" id="YOn-dI-ALs"/>
+                    <constraint firstItem="jb3-eF-T7p" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="jcb-fS-zqX"/>
+                    <constraint firstAttribute="trailing" secondItem="jb3-eF-T7p" secondAttribute="trailing" id="spP-Nc-lFN"/>
+                </constraints>
+            </tableViewCellContentView>
+            <animations/>
+            <connections>
+                <outlet property="giftImageView" destination="yoG-3q-veZ" id="ttK-Pz-TZ5"/>
+                <outlet property="headBackImageView" destination="G7R-4u-wtl" id="GYs-Jf-yc5"/>
+                <outlet property="headImageView" destination="Uar-JO-0lF" id="xVH-ms-HFd"/>
+                <outlet property="rootMainView" destination="jb3-eF-T7p" id="uH5-RZ-6UT"/>
+                <outlet property="selectedButton" destination="tu4-Ia-h8Y" id="5Qi-IE-RPM"/>
+                <outlet property="showMainView" destination="MBc-Hw-eLG" id="CkR-KU-Xa5"/>
+                <outlet property="showMianViewLeadingConstraint" destination="GNy-ya-scJ" id="xFz-eU-giK"/>
+                <outlet property="timeLabel" destination="3IJ-bn-97a" id="weX-dX-BF0"/>
+                <outlet property="titleLabel" destination="eiQ-tw-6v1" id="9si-if-qCG"/>
+                <outlet property="titleLabelLeadIngConstraint" destination="nNh-yI-Og5" id="Zqv-gn-Y27"/>
+                <outlet property="titleLabelWidth_lessThan_Constraint" destination="cUh-Ro-bbE" id="qI6-OI-mSM"/>
+                <outlet property="unReadStatusImageView" destination="VC5-de-tfi" id="tZ5-RE-ArT"/>
+                <outlet property="zhegaiButton" destination="Ogg-Yp-KWq" id="J32-qh-XKt"/>
+            </connections>
+            <point key="canvasLocation" x="414" y="278.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="Mail_02" width="14" height="14"/>
+        <image name="Mail_seconLIst_arrow" width="11" height="18"/>
+        <image name="g015.png" width="136" height="136"/>
+        <image name="mail_list_divider" width="30" height="2"/>
+        <image name="mail_list_edit_check_box_checked" width="40" height="40"/>
+        <image name="mail_list_edit_check_box_unchecked" width="40" height="40"/>
+        <image name="mail_list_edit_gift" width="70" height="70"/>
+    </resources>
+</document>

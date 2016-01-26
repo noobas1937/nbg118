@@ -67,6 +67,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../IF/Classes/Ext/CCTouchNode.cpp \
 ../../IF/Classes/Ext/CCXMLParser.cpp \
 ../../IF/Classes/Ext/ChatService/ChatServiceCocos2dx.cpp \
+../../IF/Classes/Ext/ChatService/Tools/JsonUtil/CCJson.cpp \
 ../../IF/Classes/Ext/CheckBox.cpp \
 ../../IF/Classes/Ext/DTCursorTextField.cpp \
 ../../IF/Classes/Ext/FBUtilies.cpp \
@@ -160,6 +161,8 @@ LOCAL_SRC_FILES := main.cpp \
 ../../IF/Classes/model/MailConfig.cpp \
 ../../IF/Classes/model/MailCountObj.cpp \
 ../../IF/Classes/model/MailDialogInfo.cpp \
+../../IF/Classes/model/MailHeiqishiCellInfo.cpp \
+../../IF/Classes/model/MailHeiqishiInfo.cpp \
 ../../IF/Classes/model/MailInfo.cpp \
 ../../IF/Classes/model/MailMonsterCellInfo.cpp \
 ../../IF/Classes/model/MailMonsterInfo.cpp \
@@ -331,6 +334,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../IF/Classes/Net/command/GetMultiUserInfoCommand.cpp \
 ../../IF/Classes/Net/command/GetNewMailMsgCommand.cpp \
 ../../IF/Classes/Net/command/GetNewMsgCommand.cpp \
+../../IF/Classes/Net/command/GetNewSystemMailMsg_iOS_Command.cpp \
 ../../IF/Classes/Net/command/GetPowerInfoCommand.cpp \
 ../../IF/Classes/Net/command/GetStableEnergyCommand.cpp \
 ../../IF/Classes/Net/command/GetUpdateMailCommand.cpp \
@@ -801,6 +805,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../IF/Classes/view/popup/MailBattleDetailView.cpp \
 ../../IF/Classes/view/popup/MailDialogView.cpp \
 ../../IF/Classes/view/popup/MailGiftView.cpp \
+../../IF/Classes/view/popup/MailHeiqishiListView.cpp \
 ../../IF/Classes/view/popup/MailMonsterListView.cpp \
 ../../IF/Classes/view/popup/MailResourceHelpView.cpp \
 ../../IF/Classes/view/popup/MailResourcePopUpView.cpp \

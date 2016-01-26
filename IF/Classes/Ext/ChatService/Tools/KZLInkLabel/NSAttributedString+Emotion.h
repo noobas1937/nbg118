@@ -11,6 +11,8 @@
 
 @interface KZTextAttachment : NSTextAttachment
 @property (nonatomic,assign) NSRange  range;
+@property (nonatomic,strong)NSString  *imageNameString;
+
 @end
 
 @interface NSAttributedString (Emotion)

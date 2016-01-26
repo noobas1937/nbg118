@@ -21,9 +21,31 @@
         objc_property_t property = properties[i];
         NSString *propertyName = [NSString stringWithCString:property_getName(property) encoding:NSUTF8StringEncoding];
        
+        NSString *propertyType = [NSString stringWithCString: property_getAttributes(property) encoding:NSUTF8StringEncoding];
+        propertyType = [propertyType lowercaseString];
+//        DLog(@"%@ :%@",propertyName ,propertyType);
+        if ([propertyType hasPrefix:@"ti"] || [propertyType hasPrefix:@"tb"] || //int bool
+            [propertyType hasPrefix:@"tf"] ||  //float
+            [propertyType hasPrefix:@"td"] ||  //double
+            [propertyType hasPrefix:@"tc"] || //chat
+            [propertyType hasPrefix:@"tl"] || [propertyType hasPrefix:@"tq"] ||  //long
+            [propertyType hasPrefix:@"ts"]) //
+ 
+        {
             
-            [sb appendFormat:@" %@ : %@ \n",propertyName,[self valueForKey:propertyName]];
+              [sb appendFormat:@" %@ : %@ \n",propertyName,[self valueForKey:propertyName]];
         
+        }
+        else if([propertyType hasPrefix:@"t@\"ns"])
+        {
+            [sb appendFormat:@" %@ : %@ \n",propertyName,[self valueForKey:propertyName]];
+
+        }else{
+            id value = [self valueForUndefinedKey:propertyName];
+ 
+              [sb appendFormat:@" %@ : %@ \n",propertyName,value ];
+        }
+    
         
     }
     free(properties);

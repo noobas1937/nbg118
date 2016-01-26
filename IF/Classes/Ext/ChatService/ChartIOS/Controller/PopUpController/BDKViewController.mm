@@ -23,7 +23,8 @@
 - (id)init :(NSString*)text{
     if ((self = [super init])) {
         self.view.backgroundColor = [UIColor clearColor];
-        [self.view addGestureRecognizer:self.doubleTapRecognizer];
+//        [self.view addGestureRecognizer:self.doubleTapRecognizer];
+        self.view.userInteractionEnabled = NO;
         self.notificationText = text;
     }
     return self;

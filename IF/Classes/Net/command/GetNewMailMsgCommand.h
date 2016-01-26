@@ -17,7 +17,13 @@ class GetNewMailMsgCommand:public CommandBase
 {
 public:
     // "id|seqid|channelType,id|seqid|channelType,id|seqid|channelType"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    // "id|seqid|channelType,id|seqid|channelType,id|seqid|channelType"
     GetNewMailMsgCommand(std::string allChannelStr,std::string updateMailStr="") : CommandBase(CHAT_GET_NEW_MAIL_MSG)
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    // "id|seqid|channelType,id|seqid|channelType,id|seqid|channelType"
+    GetNewMailMsgCommand(int commandType,std::string allChannelStr,std::string updateMailStr="") : CommandBase(CHAT_GET_NEW_MAIL_MSG),ios_commandType(commandType)
+#endif
     {
         m_paramDic=CCDictionary::create();
         m_paramDic->retain();
@@ -55,6 +61,7 @@ private:
     std::string m_groupId;
     bool m_isDialogShowing;
     CCDictionary* m_paramDic;
+    int ios_commandType; //simon
 };
 
 

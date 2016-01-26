@@ -13,7 +13,7 @@
 #import "LanguageKeys.h"
 #import "NSString+Extension.h"
 #import "UserManager.h"
-#define contains(str1, str2) ([str1 rangeOfString: str2 ].location != NSNotFound)
+#import "ServiceInterface.h"
 
 @interface BBSIOSViewController ()<UIWebViewDelegate>
 @property (nonatomic,strong) TopUIView *topUIView;
@@ -178,7 +178,7 @@
     url = [url stringByReplacingOccurrencesOfString:@"|"withString:@"%7C"];
 //    url = @"http://f.elex.com/game_login.php?lang=zh-CN";
     
-    NSLog(@"url = %@",url);
+    DVLog(@"url = %@",url);
     
     NSURLRequest *request =[NSURLRequest requestWithURL:[NSURL URLWithString:url]];
     
@@ -311,7 +311,7 @@
     
 //    [self calcCurrentWebUrl];
     
-    if(contains(self.bbsView.request.URL.absoluteString, @"translate.google"))
+    if(CSCONTAINS(self.bbsView.request.URL.absoluteString, @"translate.google"))
     {
         self.webPageTranslated=true;
         NSString *originalItem_Str = [LanguageManager languageManager_getLangByKey:[LanguageKeys lkShared].MENU_ORIGINALLAN];
@@ -347,7 +347,7 @@
     //获取源语言网页URL
     NSString *url = self.bbsView.request.URL.absoluteString;
     
-    if(contains(url, @"=http:") && contains(url, @"=http://translate.google"))
+    if(CSCONTAINS(url, @"=http:") && CSCONTAINS(url, @"=http://translate.google"))
     {
         
         NSInteger langpairIndex = [url rangeOfString:@"&langpair="].location;
@@ -389,7 +389,7 @@
             self.currentWebUrl= [url substringToIndex:httpIndex+1];
         }
     }
-    else if(contains(url, @"http://") && contains(url, @"?s=")){
+    else if(CSCONTAINS(url, @"http://") && CSCONTAINS(url, @"?s=")){
         NSInteger index = [url rangeOfString:@"http://"].location;
         NSInteger index2 = [url rangeOfString:@"?s="].location;
         self.currentWebUrl = [url substringWithRange:NSMakeRange(index, index2)];

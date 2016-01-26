@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import <UIKit/UIKit.h>
 @interface NSString (Extension)
 /**
  *  返回字符串所占用的尺寸
@@ -23,4 +23,13 @@
  *  @return 返回md5后的字符串
  */
 -(NSString *)md5;
+
+/**
+ *  判断当前字符串在不在数组中
+ *
+ *  @param vArray 数组字符串
+ *
+ *  @return 存在返回yes，不存在返回no
+ */
+-(BOOL)stringRepeatInArray:(NSArray *)vArray ;
 @end

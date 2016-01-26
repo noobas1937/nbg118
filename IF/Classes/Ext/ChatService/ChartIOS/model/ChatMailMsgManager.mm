@@ -9,7 +9,7 @@
 #import "ChatMailMsgManager.h"
 #import "ServiceInterface.h"
 #import <string.h>
-
+#import "UserManager.h"
 @implementation ChatMailMsgManager
 +(NSMsgItem *)chatMsgWithChatMailInfo:(ChatMailInfo *)vMailInfo{
     NSMsgItem *msgItem = [[NSMsgItem alloc]init];
@@ -28,7 +28,7 @@
 //    ns_translateMsg = [ns_translateMsg stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
     msgItem.headPic = [NSString stringWithUTF8String:vMailInfo->headPic.c_str()];
     NSString * _sendLocalTime = [NSString stringWithUTF8String:vMailInfo->sendLocalTime.c_str()];
-    msgItem.sendLocalTime = [_sendLocalTime intValue];;
+    msgItem.sendLocalTime = [_sendLocalTime integerValue];;
     msgItem.originalLang = [NSString stringWithUTF8String:vMailInfo->originalLang.c_str()];
     msgItem.mailId = [NSString stringWithUTF8String:vMailInfo->id.c_str()];
     
@@ -41,10 +41,23 @@
     msgItem.post = vMailInfo->post;
     msgItem.headPicVer = vMailInfo->headPicVer;
     msgItem.sequenceId =  vMailInfo->sequenceId;
-    NSLog(@"sequenceId = %d",msgItem.sequenceId);
+ 
     msgItem.lastUpdateTime = vMailInfo->lastUpdateTime;
+    msgItem.sendState = 2;
     
-    
+    if  (msgItem.channelType == IOS_CHANNEL_TYPE_COUNTRY || msgItem.channelType == IOS_CHANNEL_TYPE_ALLIANCE){
+        msgItem.readState =1;
+    }else if(msgItem.channelType  == IOS_CHANNEL_TYPE_CHATROOM ){
+        if ([msgItem.uid isEqualToString:[UserManager sharedUserManager].currentUser.uid]) {
+            msgItem.readState = 1;
+        }else{
+            msgItem.readState = 0;
+        }
+        
+    }else{
+//         msgItem.readState = vMailInfo->readStatus; Simon
+    }
+   
     [msgItem packedMsg];
 
     

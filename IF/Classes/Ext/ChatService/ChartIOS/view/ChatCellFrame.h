@@ -14,6 +14,7 @@
 @property (nonatomic,assign) CGRect uiDownViewRect;
 @property (nonatomic,assign) CGRect iconRect;
 @property (nonatomic,assign) CGRect activityIndicatorRect;
+@property (nonatomic,assign) CGRect resetSendBtnRect;
 @property (nonatomic,assign) CGRect headPicRect;
 @property (nonatomic,assign) CGRect borderRect;
 @property (nonatomic,assign) CGRect gmodRect;
@@ -25,6 +26,7 @@
 @property (nonatomic,assign) CGRect vip_asn_name_Rect;
 @property (nonatomic,strong) NSMsgItem *chatMessage;
 @property (nonatomic,assign) CGFloat cellHeight; //cell高度
+@property (nonatomic,assign) CGRect redEnvelopeRect;
 -(void) isShowUiTopView:(NSMutableArray*) cellFrameArray;
 @property (nonatomic,assign) BOOL isShowUiTopView_BOOL;
 -(void)initWithData:(NSMsgItem*) chatMessage ;

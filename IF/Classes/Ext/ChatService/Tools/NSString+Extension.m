@@ -50,4 +50,22 @@
             ];
     
 }
+
+
+-(BOOL)stringRepeatInArray:(NSArray *)vArray {
+    NSString *tempString = nil;
+    for (NSString *uid  in vArray) {
+        if  ([uid isEqualToString:self]){
+            tempString = self;
+            break;
+        }
+    }
+    if (tempString ) {
+        return YES;
+    }else{
+        return NO;
+    }
+}
+
+
 @end

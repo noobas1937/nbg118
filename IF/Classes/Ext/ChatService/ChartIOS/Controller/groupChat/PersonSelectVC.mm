@@ -20,7 +20,7 @@
 #import "TopUIView.h"
 #include "MailController.h"
 #import "HeadEditView.h"
-#import "ZYTAlertView.h"
+#import "CSAlertView.h"
 #import "LanguageKeys.h"
 #import "LanguageManager.h"
 #import "ChatServiceController.h"
@@ -28,7 +28,8 @@
 #import "ChannelManager.h"
 #import "ChatServiceCocos2dx.h"
 #import "SearchEditView.h"
-
+#import "NSString+Cocos2dHelper.h"
+#import "ChatChannel.h"
 
 typedef enum :NSUInteger {
     PSVCTopButtonSelected_left,
@@ -40,9 +41,9 @@ typedef enum :NSUInteger {
     CCArray * groupUidCCArr;
     UIView *headDefaultView;
     
-    NSMutableArray * addUidArr ;
+//    NSMutableArray * addUidArr ;
     NSString *addNameString;
-    NSMutableArray *subUidArr;
+//    NSMutableArray *subUidArr;
     NSString *subNameString;
     NSUInteger alertCount;
     PSVCTopButtonSelected psVcTopButtonSelected;
@@ -54,16 +55,23 @@ typedef enum :NSUInteger {
 @property (strong, nonatomic)  UITableView *tableView;
 @property (nonatomic,strong) UIView *nameEditView ;
 
-@property (nonatomic,strong)NSMutableArray *selectedMemArr;
+@property (nonatomic,strong) NSMutableArray *selectedMemArr;
 @property (strong,nonatomic)  NSMutableArray * searchSelectedMemArr;
 @property (strong,nonatomic)  NSMutableArray * addMemberArr;
 @property (strong,nonatomic) NSMutableArray * subMemberArr;
-@property (nonatomic,strong)NSArray *membersArray;
+//@property (strong ,nonatomic)NSMutableArray *rightAddMemberArr;
+//@property (nonatomic,strong) NSMutableArray * repeatMemberArr;
+//@property (strong,nonatomic)NSMutableArray *rightSubMemberArr;
+@property (nonatomic,strong)NSArray *membersArray;//联盟所有成员
+
+@property (nonatomic,strong) NSArray  * chatRoomMemberUidArr;//聊天室已经加入成员Uid列表
+
+@property (nonatomic,strong) UserGroup * friendsGroup ;
 
 @property (nonatomic,strong)TopHeadView *topView;
 
 @property (nonatomic,strong)HeadEditView *headEditView;
-@property (strong,nonatomic) SearchEditView * searchEditView;
+//@property (strong,nonatomic) SearchEditView * searchEditView;
 
 @end
 
@@ -75,24 +83,87 @@ typedef enum :NSUInteger {
         self.selectedMemArr =[NSMutableArray array];
         self.personSelectVCType = vType;
         
-        NSArray *di = [(NSDictionary *)[UserManager sharedUserManager].allianceMemberInfoMap allValues];
-        
-        DVLog(@"%d",[di count]);
-        
-        self.membersArray =  [NSMutableArray arrayWithArray: [(NSDictionary *)[UserManager sharedUserManager].allianceMemberInfoMap allValues]];
-        [self managerMemberData];
+        ChatChannel *allChannel = [[ChannelManager sharedChannelManager]gettingAllianceChannel];
+        if (allChannel){
+            NSString *alliance_allUserUid = allChannel.memberUidString;
+            NSArray *uidArr = [alliance_allUserUid componentsSeparatedByString:@"_"];
+            NSMutableArray *tempArr = [NSMutableArray arrayWithCapacity:uidArr.count];
+            NSUserInfo *selfUser= nil;
+            for (NSString *uidString  in uidArr) {
+                NSUserInfo *userInfo = [[UserManager sharedUserManager]gettingUser:uidString];
+                if  (userInfo == nil){
+                    userInfo =[[UserManager sharedUserManager]gettingUserInforWithUid:uidString];
+                }
+                if ([userInfo.uid isEqualToString:[UserManager sharedUserManager].currentUser.uid]){
+                    selfUser = userInfo;
+                }
+                userInfo.chooseState = ChooseState_normal;
+                [tempArr addObject:userInfo];
+            }
+            if(selfUser){
+                selfUser.chooseState = ChooseState_selected;
+            }
+            self.membersArray = [NSArray arrayWithArray:tempArr];
+        }
+//        [self managerMemberData];
+        [[ChatServiceController chatServiceControllerSharedManager].gameHost gettingFriendsList];
+         [ self managerFriendMemDataArr: [UserManager sharedUserManager].friends_ordinary ];
     }
     return self;
 }
 -(void)setChatChannel:(ChatChannel *)chatChannel{
     _chatChannel = chatChannel;
-    [self managerMemberData];
+//    [self managerMemberData];
 }
 
 -(BOOL)isRoomCreater{
     return [self.chatChannel.roomOwner isEqualToString:[UserManager sharedUserManager].currentUser.uid];
 }
 -(void)managerMemberData{
+
+    for(NSString *uidString in self.memberInGroupArr){
+//        DLog(@" uidString  :%@",uidString);
+        
+        if ([self isRoomCreater]){
+            //我是房主
+            
+            for (NSUserInfo *tempUser in self.membersArray) {
+//                 DLog(@" tempUser uid-:%@   ",tempUser.uid);
+//                tempUser.chooseState = ChooseState_normal;//设置默认状态
+                if ([tempUser.uid isEqualToString:uidString]) {
+                    tempUser.chooseState = ChooseState_pressed;
+                }
+                if ([tempUser.uid isEqualToString:[UserManager sharedUserManager].currentUser.uid]){
+                    tempUser.chooseState = ChooseState_selected;
+                }
+            }
+            for (NSUserInfo *tempUser in self.friendsGroup.memberArray) {
+//                tempUser.chooseState = ChooseState_normal;//设置默认状态
+                if ([tempUser.uid isEqualToString:uidString]) {
+                    tempUser.chooseState = ChooseState_pressed;
+                }
+            }
+        }else{
+            //我不是房主
+            for (NSUserInfo *tempUser in self.membersArray) {
+//                tempUser.chooseState = ChooseState_normal;//设置默认状态
+                if ([tempUser.uid isEqualToString:uidString]) {
+                    tempUser.chooseState = ChooseState_selected;
+                }
+            }
+            for (NSUserInfo *tempUser in self.friendsGroup.memberArray) {
+//                tempUser.chooseState = ChooseState_normal;//设置默认状态
+                if ([tempUser.uid isEqualToString:uidString]) {
+                    tempUser.chooseState = ChooseState_pressed;
+                }
+            }
+         
+        }
+        
+    }
+    
+    
+    //联盟人员分组
     NSMutableArray *rank1=[[NSMutableArray alloc]init];
     NSMutableArray *rank2=[[NSMutableArray alloc]init];
     NSMutableArray *rank3=[[NSMutableArray alloc]init];
@@ -101,52 +172,18 @@ typedef enum :NSUInteger {
     NSArray *arr=@[rank5,rank4,rank3,rank2,rank1];
     
     NSMutableArray *newGroupArray = [[NSMutableArray alloc]init];
-    [self.selectedMemArr removeAllObjects];
     for (NSUserInfo *tempInfo in self.membersArray) {
-        tempInfo.chooseState = ChooseState_normal;
-//        DLog(@"self.chatChannel.roomOwner %@",self.chatChannel.roomOwner);
-//        DLog(@"[UserManager sharedUserManager].currentUser.uid %@",[UserManager sharedUserManager].currentUser.uid);
-//        DLog(@"tempInfo uid  %@",tempInfo.uid);
-
-        if ([self isRoomCreater]) {
-        //我是房主
-            if ([tempInfo.uid isEqualToString:[UserManager sharedUserManager].currentUser.uid]) {
-                tempInfo.chooseState = ChooseState_selected;
-            }else{
-                for (NSString * userUidString in self.memberInGroupArr) {
-                    if  ([userUidString isEqualToString:tempInfo.uid]){
-                        tempInfo.chooseState = ChooseState_pressed;
-                        [self.selectedMemArr addObject:tempInfo];
-                    }
-                }
-            }
-        }else{
-            for (NSString * userUidString in self.memberInGroupArr) {
-                if  ([userUidString isEqualToString:tempInfo.uid]){
-                    tempInfo.chooseState = ChooseState_selected;
-                    [self.selectedMemArr addObject:tempInfo];
-                }
-            }
-
-        }
-        
-        
-        if  (self.personSelectVCType == PersonSelectVCType_New){
-            if ([tempInfo.uid isEqualToString:[UserManager sharedUserManager].currentUser.uid]) {
-                tempInfo.chooseState = ChooseState_selected;
-            }
-        }
-        
-        if (tempInfo.allianceRank == 1) {
-            [rank1 addObject:tempInfo];
-        }else if (tempInfo.allianceRank == 2){
-            [rank2 addObject:tempInfo];
+ 
+        if (tempInfo.allianceRank == 5) {
+            [rank5 addObject:tempInfo];
+        }else if (tempInfo.allianceRank == 4){
+            [rank4 addObject:tempInfo];
         }else if (tempInfo.allianceRank == 3){
             [rank3 addObject:tempInfo];
-        }else if ( tempInfo.allianceRank == 4){
-            [rank4 addObject:tempInfo];
+        }else if ( tempInfo.allianceRank == 2){
+            [rank2 addObject:tempInfo];
         }else{
-            [rank5 addObject:tempInfo];
+            [rank1 addObject:tempInfo];
         }
     }
     
@@ -163,7 +200,7 @@ typedef enum :NSUInteger {
     }
     if (self.selectedMemArr.count> 0) {
         [self  settingNameEditViewHidden:NO];
-        [self settingVCTitleNameWithString:[NSString stringWithFormat:@"Chat Member (%d)",self.selectedMemArr.count+1 ]];
+        [self settingVCTitleNameWithString:[NSString stringWithFormat:@"Chat Member (%d)",self.selectedMemArr.count ]];
     }else{
         
     }
@@ -171,84 +208,54 @@ typedef enum :NSUInteger {
     [self.tableView reloadData];
 }
 
-
--(void)managerSearchMemberData:(NSArray *)vArray{
-    NSMutableArray *existingArray =[NSMutableArray array];
-    NSMutableArray *searchAllUserArray =[NSMutableArray array];
-    NSArray *arr=@[existingArray,self.searchSelectedMemArr,searchAllUserArray];
-    for ( NSUserInfo *tempUserInfo in vArray) {
-        tempUserInfo.chooseState = ChooseState_normal;
-        if ([tempUserInfo.uid  isEqualToString:[UserManager sharedUserManager].currentUser.uid]) {
-            //是否是我自己的uid
-            tempUserInfo.chooseState = ChooseState_selected;
-            [existingArray addObject:tempUserInfo];
-        }else{
-            for (NSUserInfo *user in self.selectedMemArr) {
-                if ([user.uid isEqualToString:tempUserInfo.uid]) {
-                //搜索的用户已经在我们的联盟中
-                   
-                    tempUserInfo.chooseState = ChooseState_selected;
-                    
-                    [existingArray addObject:tempUserInfo];
-                    
-                }
-            }
-            
-//            for (NSUserInfo *user in self.searchSelectedMemArr){
-//                 if ( user ==tempUserInfo ) {
-//                     user.chooseState =  ChooseState_pressed;
-//                 }
-//            }
-            for (int x= 0; x<self.searchSelectedMemArr.count; x++) {
-                NSUserInfo *user =[self.searchSelectedMemArr objectAtIndex:x];
-                if ([user.uid isEqualToString:tempUserInfo.uid]) {
-                    //搜索的用户已经添加到带加入数组中
-                    tempUserInfo.chooseState = ChooseState_pressed;
-                    [self.searchSelectedMemArr setObject:tempUserInfo atIndexedSubscript:x ];
-                
-                }
-            }
-        }
-        [searchAllUserArray addObject:tempUserInfo];
+-(void)managerFriendMemDataArr:(NSArray *)vArray{
+    NSMutableArray *friendTempArr =[NSMutableArray array];
+    for (NSUserInfo *tempUser in vArray) {
+        tempUser.chooseState = ChooseState_normal;
+        [friendTempArr addObject:tempUser];
     }
-    
-    NSMutableArray *seachGroupArr = [NSMutableArray array];
-    for (NSArray *tempArray  in arr ) {
-       
-            UserGroup *tempGroup =[UserGroup userGroup];
-            tempGroup.open = YES;
-            if(tempArray == existingArray){
-                tempGroup.grade = 1;
-                 tempGroup.groupNameString=[LanguageManager languageManager_getLangByKey:[LanguageKeys lkShared].TIP_SELECTED_MEMBER];
-            }else if (tempArray == searchAllUserArray){
-                tempGroup.grade = 3;
-                 tempGroup.groupNameString=[LanguageManager languageManager_getLangByKey:[LanguageKeys lkShared].TIP_SEARCH_RESULT];
-            }else if (tempArray == self.searchSelectedMemArr){
-                tempGroup.grade = 2;
-                 tempGroup.groupNameString=[LanguageManager languageManager_getLangByKey:[LanguageKeys lkShared].TIP_SEARCH_ThisCheck];
-            }
-           
-            tempGroup.memberArray = tempArray;
-            [seachGroupArr addObject:tempGroup];
-      
-    }
-    self.searchMemberArray = seachGroupArr;
-    [self.tableView reloadData];
+    self.friendsGroup = [UserGroup userGroup];
+    self.friendsGroup.memberArray = friendTempArr;
+    self.friendsGroup.open = YES;
+    self.friendsGroup.groupNameString =[NSString stringWithMultilingualWithKey:@"132103"];//   132103=好友列表
 }
+
+
+
 -(void)setMemberInGroupArr:(NSArray *)memberInGroupArr{
-    _memberInGroupArr = memberInGroupArr;
-    if (_memberInGroupArr.count>0) {
-        [self managerMemberData];
-    }
+//    _memberInGroupArr = memberInGroupArr;
+//    if (_memberInGroupArr.count>0) {
+//        [self managerMemberData];
+//    }
 }
-
+//拿取当前聊天室成员UID
+-(void)memberUidWithChatRoom{
+    NSMutableArray *tempArray =[NSMutableArray array ];
+    NSArray *memberTempArr =[self.chatChannel.memberUidString componentsSeparatedByString:@"_"];
+    for (NSString *tempUid in memberTempArr) {
+        [tempArray addObject:tempUid];
+    }
+   _memberInGroupArr= tempArray;
+    
+    self.selectedMemArr = self.memberInGroupArr;//要提前加入已经在聊天室的成员
+     [self managerMemberData];
+}
 -(void)dealloc{
     [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if (self.personSelectVCType == PersonSelectVCType_ChangeMember){
+        [self memberUidWithChatRoom];
+    }else{
+        [self managerMemberData];
+        [self.selectedMemArr addObject:[UserManager sharedUserManager].currentUser.uid];
+    }
+    if (self.selectedMemArr.count < 2){
+        [self settingNameEditViewHidden:YES];
+    }
     alertCount = 0;
-
+   
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(searchUserNotifyAction:) name:kSearchUserWithNameString object:nil];
     [self.view addSubview:self.headView];
     [self.view addSubview: self.footView];
@@ -258,15 +265,15 @@ typedef enum :NSUInteger {
     [self.view addSubview:self.tableView];
     [self.view bringSubviewToFront:self.headView];
     
-    TopHeadView *topView= [TopHeadView topHeadView];
+    TopHeadView *topView= [TopHeadView topHeadViewWithRightButtonShowFlag:NO andShowRightButtonType:TopHeadViewRightButtonType_ChatRoomMember];
     topView.frame = CGRectMake(0, 0, self.headView.width, self.headView.height/2);
     topView.topHeadViewDelegate = self;
-    topView.titleNameLabel.text = @"创建多人会话";
+    topView.titleNameLabel.text = [NSString stringWithMultilingualWithKey:@"105354"];//105354=多人聊天
     _topView = topView;
     [self.headView addSubview:topView];
     
     //顶部ButtonView
-    TopButtonView *topButtonView =[TopButtonView topButtonViewWithLeftButtonName:[LanguageKeys lkShared].BTN_ALLIANCE andWithRightButtonName:[LanguageKeys lkShared].BTN_SEARCH];
+    TopButtonView *topButtonView =[TopButtonView topButtonViewWithLeftButtonName:[NSString stringWithMultilingualWithKey:@"132106"] andWithRightButtonName:[NSString stringWithMultilingualWithKey:@"105602"]];//105602 = 联盟   132106= 好友
     topButtonView.frame = CGRectMake(0, self.headView.height/2, self.headView.width, self.headView.height/2);
     [topButtonView settingLeftButtonSelected:YES];
     psVcTopButtonSelected = PSVCTopButtonSelected_left;
@@ -275,19 +282,27 @@ typedef enum :NSUInteger {
     
     
     [self.nameEditView addSubview:self.headEditView];
-    [self.nameEditView addSubview:self.searchEditView];
-    [self settingSearchViewShow:NO];
+//    [self.nameEditView addSubview:self.searchEditView];
+//    [self settingSearchViewShow:NO];
+    
+    
+ 
     
     
     UIButton *qiutButton=[UIButton buttonWithType:UIButtonTypeCustom];
-    NSString *quitNameString = [LanguageManager languageManager_getLangByKey:[LanguageKeys lkShared].BTN_QUIT_CHATROOM];
-    NSString *enterNameString =[LanguageManager languageManager_getLangByKey:[LanguageKeys lkShared].BTN_CONFIRM];
+    NSString *quitNameString = [NSString stringWithMultilingualWithKey:@"105344"];// 105344=退出群组
+    NSString *enterNameString =[NSString stringWithMultilingualWithKey:@"101274"];//101274=确定
     [qiutButton setTitle:quitNameString forState:UIControlStateNormal];
     [qiutButton setTitleColor:[UIColor colorWithRed:190/255.0 green:151/255.0 blue:90/255.0 alpha:1] forState:UIControlStateNormal];
     [qiutButton setBackgroundImage:[UIImage imageNamed:@"buttonBack_red"] forState:UIControlStateNormal];
     qiutButton.frame = CGRectMake( (self.footView.width-120*2-40)/2, (self.footView.height-40)/2, 120, 40);
     qiutButton.tag = 1001;
     [qiutButton addTarget:self action:@selector(enterButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    if (self.personSelectVCType == PersonSelectVCType_New){
+         qiutButton.enabled = NO;
+    }else if(self.personSelectVCType == PersonSelectVCType_ChangeMember ){
+        qiutButton.enabled = YES;
+    }
     [self.footView addSubview:qiutButton];
     
     UIButton *enterButton=[UIButton buttonWithType:UIButtonTypeCustom];
@@ -301,14 +316,11 @@ typedef enum :NSUInteger {
     
    
     
-    if (self.selectedMemArr.count> 0) {
+    if (self.selectedMemArr.count> 1) {
         [self  settingNameEditViewHidden:NO];
-        [self settingVCTitleNameWithString:[NSString stringWithFormat:@"Chat Member (%d)",self.selectedMemArr.count+1 ]];
+        [self settingVCTitleNameWithString:[NSString stringWithFormat:@"Chat Member (%d)",self.selectedMemArr.count ]];
         
     }
-
-
-    
 }
 
 
@@ -348,9 +360,9 @@ typedef enum :NSUInteger {
     if (_nameEditView == nil) {
         UIView *nameEditView =[[UIView alloc]init];
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-            nameEditView.frame = CGRectMake(0, self.headView.bottom,  kMainScreenWidth, 120) ;
+            nameEditView.frame = CGRectMake(0, self.headView.bottom,  kMainScreenWidth, kMainScreenHeight * 0.14) ;
         }else{
-            nameEditView.frame = CGRectMake(0, self.headView.bottom,  kMainScreenWidth, 80) ;
+            nameEditView.frame = CGRectMake(0, self.headView.bottom,  kMainScreenWidth, kMainScreenHeight * 0.14) ;
         }
         _nameEditView = nameEditView;
     }
@@ -384,16 +396,7 @@ typedef enum :NSUInteger {
     }
     return _headEditView;
 }
--(SearchEditView *)searchEditView{
-    if  (_searchEditView == nil){
-        SearchEditView *searchEditView =[SearchEditView searchEditView];
-        searchEditView.frame = CGRectMake(0,0,self.nameEditView.width,  self.nameEditView.height) ;
-        searchEditView.searchEditTextField.delegate = self;
-        searchEditView.seachEditViewDelegate = self;
-        _searchEditView = searchEditView;
-    }
-    return _searchEditView;
-}
+
 
 -(NSMutableArray *)addMemberArr{
     if (_addMemberArr == nil    ){
@@ -409,6 +412,26 @@ typedef enum :NSUInteger {
     }
     return _subMemberArr;
 }
+
+//-(NSMutableArray *)rightAddMemberArr{
+//    if  (_rightAddMemberArr == nil){
+//        _rightAddMemberArr = [NSMutableArray array];
+//    }
+//    return _rightAddMemberArr;
+//}
+
+//-(NSMutableArray *)rightSubMemberArr{
+//    if  (_rightSubMemberArr == nil){
+//        _rightSubMemberArr =[NSMutableArray array];
+//    }
+//    return _rightSubMemberArr;
+//}
+//-(NSMutableArray *)repeatMemberArr{
+//    if  (_repeatMemberArr == nil){
+//        _repeatMemberArr =[NSMutableArray array];
+//    }
+//    return _repeatMemberArr;
+//}
 -(NSMutableArray *)searchSelectedMemArr{
     if  (_searchSelectedMemArr == nil){
         NSMutableArray *array =[NSMutableArray array];
@@ -417,27 +440,11 @@ typedef enum :NSUInteger {
     return _searchSelectedMemArr;
 }
 
-#pragma mark -
-#pragma mark 人数计算
-//计算已经加入的人
--(void)calculationJoinedMem{
 
-    //数目大于0 就行，因为还有创建者自己
-
-    for (int  x = 0 ;x<self.memberArr.count ;x++){
-        for (NSUserInfo *tempUserInfor  in [(UserGroup *)[self.memberArr objectAtIndex:x] memberArray ]) {
-            if(tempUserInfor.chooseState == ChooseState_pressed){
-                [self.selectedMemArr addObject:tempUserInfor];
-            }
-        }
-    }
-    
-   
-}
 /** 点击关闭键盘  */
 -(void)btnClick{
     [self.headEditView.editView resignFirstResponder];
-    [self.searchEditView.searchEditTextField resignFirstResponder];
+//    [self.searchEditView.searchEditTextField resignFirstResponder];
 
 }
 
@@ -448,7 +455,7 @@ typedef enum :NSUInteger {
     
     if (sender.tag == 1001) {
         //退出联盟
-        ZYTAlertView *alertView =[ZYTAlertView alertViewWithTitleString:nil];
+        CSAlertView *alertView =[CSAlertView alertViewWithTitleString:nil];
         alertView.titleType = ZYTAlertViewTitleType_quit;
         NSString *title = [LanguageManager languageManager_getLangByKey:[LanguageKeys lkShared].BTN_QUIT_CHATROOM];
         alertView.nameString = title;
@@ -463,7 +470,7 @@ typedef enum :NSUInteger {
             if (![_headEditView.editView.text isEqualToString:self.chatChannel.customName]) {
                 DVLog(@"名字不一样了");
                 
-                ZYTAlertView *alertView =[ZYTAlertView alertViewWithTitleString:nil];
+                CSAlertView *alertView =[CSAlertView alertViewWithTitleString:nil];
                 alertView.titleType = ZYTAlertViewTitleType_reName;
                 alertView.nameString = _headEditView.editView.text;
                 alertView.alertViewDelegate  = self;
@@ -476,24 +483,33 @@ typedef enum :NSUInteger {
             self.roomMemberName = @"";
             self.roomMemberUid = @"";
             
-            for (NSUserInfo *tempUserInfo in self.selectedMemArr) {
+            for (NSString *tempUserUid in self.selectedMemArr) {
+                NSUserInfo *user = [[UserManager sharedUserManager]gettingUser:tempUserUid];
+                if  (user == nil){
+                    user =[[UserManager sharedUserManager]gettingUserInforWithUid:tempUserUid];
+                }
+                
                 if (self.roomMemberName.length >0) {
                     self.roomMemberName =   [self.roomMemberName stringByAppendingString:@"、"];
                 }
+                if(user.userName.length > 0){
+                    self.roomMemberName =   [self.roomMemberName stringByAppendingString:user.userName];
+                }else{
+                    self.roomMemberName =   [self.roomMemberName stringByAppendingString:user.uid];
+                }
                 
-                self.roomMemberName =   [self.roomMemberName stringByAppendingString:tempUserInfo.userName];
                 
                 
                 if (self.roomMemberUid.length >0) {
                     self.roomMemberUid = [self.roomMemberUid stringByAppendingString:@"|"];
                 }
                 
-                self.roomMemberUid = [self.roomMemberUid stringByAppendingString:tempUserInfo.uid];
+                self.roomMemberUid = [self.roomMemberUid stringByAppendingString:tempUserUid];
                 
             }
             DVLog(@"%@",self.roomMemberName);
             
-            ZYTAlertView *alertView =[ZYTAlertView alertViewWithTitleString:nil];
+            CSAlertView *alertView =[CSAlertView alertViewWithTitleString:nil];
             alertView.titleType = ZYTAlertViewTitleType_creat;
             alertView.nameString = _roomMemberName;
             alertView.alertViewDelegate  = self;
@@ -507,19 +523,21 @@ typedef enum :NSUInteger {
                 [self.addMemberArr addObject:user];
             }
             if (self.addMemberArr.count>0) {
-                if (addUidArr == nil){
-                    addUidArr = [NSMutableArray array];
-                }
+ 
                 addNameString = @"";
-                for (NSUserInfo  *tempUserInfor in self.addMemberArr) {
-                    [addUidArr addObject:tempUserInfor.uid];
+                for (NSString   *tempUserUid in self.addMemberArr) {
+                    NSUserInfo *user = [[UserManager sharedUserManager]gettingUser:tempUserUid];
+                    if  (user == nil){
+                        user =[[UserManager sharedUserManager]gettingUserInforWithUid:tempUserUid];
+                    }
+
                     
                     if (addNameString.length >0 ) {
                         addNameString =[addNameString stringByAppendingString:@"|"];
                     }
-                    addNameString =[addNameString stringByAppendingString:tempUserInfor.userName];
+                    addNameString =[addNameString stringByAppendingString:user.userName];
                 }
-                ZYTAlertView *alertView =[ZYTAlertView alertViewWithTitleString:nil];
+                CSAlertView *alertView =[CSAlertView alertViewWithTitleString:nil];
                 alertView.titleType = ZYTAlertViewTitleType_add;
                 alertView.nameString = addNameString;
                 alertView.alertViewDelegate  = self;
@@ -530,18 +548,19 @@ typedef enum :NSUInteger {
             
             
             if (self.subMemberArr.count>0) {
-                if (subUidArr == nil) {
-                    subUidArr =[NSMutableArray array ];
-                }
+ 
                 subNameString = @"";
-                for (NSUserInfo  *tempUserInfor in self.subMemberArr) {
-                    [subUidArr addObject:tempUserInfor.uid];
+                for (NSString   *tempUserUid in self.subMemberArr) {
+                    NSUserInfo *user = [[UserManager sharedUserManager]gettingUser:tempUserUid];
+                    if  (user == nil){
+                        user =[[UserManager sharedUserManager]gettingUserInforWithUid:tempUserUid];
+                    }
                     if (subNameString.length >0 ) {
                         subNameString =[subNameString stringByAppendingString:@"|"];
                     }
-                    subNameString =[subNameString stringByAppendingString:tempUserInfor.userName];
+                    subNameString =[subNameString stringByAppendingString:user.userName];
                 }
-                ZYTAlertView *alertView =[ZYTAlertView alertViewWithTitleString:nil];
+                CSAlertView *alertView =[CSAlertView alertViewWithTitleString:nil];
                 alertView.titleType = ZYTAlertViewTitleType_sub;
                 alertView.nameString = subNameString;
                 alertView.alertViewDelegate  = self;
@@ -562,14 +581,33 @@ typedef enum :NSUInteger {
 -(void) commitCreateRoom
 {
     if (self.personSelectVCType == PersonSelectVCType_New) {
+        
         NSString *roomName=@"";
         if  (_headEditView.editView.text.length>0){
             roomName = _headEditView.editView.text;
         }else{
-            roomName = [LanguageManager languageManager_getLangByKey:[LanguageKeys lkShared].TITLE_CHATROOM];
+            roomName = [NSString stringWithMultilingualWithKey:@"105354"]; //     105354 = 多人聊天
+
         }
-        [[ChatServiceController chatServiceControllerSharedManager].gameHost selectChatRoomMember:roomName :self.roomMemberName :self.roomMemberUid ];
-        [self clickButton];
+        if (  self.personVCOpenFrom == PersonVCOpenFrom_OC_OneMailChat ) {
+            //从单人邮件打开的多人聊天创建
+            NSArray *tempArray =[self.roomMemberUid componentsSeparatedByString:@"|"];
+            CCArray *ccArr =CCArray::create();
+            for (NSString *str in tempArray) {
+                
+                ccArr->addObject(CCString::create([str UTF8String]));
+            }
+            MailController::getInstance()->createChatRoom([self.roomMemberName UTF8String], ccArr , [roomName UTF8String], "");
+        }else if( self.personVCOpenFrom == PersonVCOpenFrom_CocosAdd){
+            //从C++页面打开的多人聊天创建
+            [[ChatServiceController chatServiceControllerSharedManager].gameHost selectChatRoomMember:roomName :self.roomMemberName :self.roomMemberUid ];
+
+        }else if(self.personVCOpenFrom == PersonVCOpenFrom_OC_MailListAdd){
+            if ([self.personVCDelegate isKindOfClass:[UIViewController class]] && [self.personVCDelegate respondsToSelector:@selector(personSelectVCCreatChatRoomWithRoomMemberName:andWithUidString:andWithRoomName:)]){
+                [self.personVCDelegate personSelectVCCreatChatRoomWithRoomMemberName:self.roomMemberName andWithUidString:self.roomMemberUid andWithRoomName:roomName];
+            }
+        }
+           [self clickButton];
     }
 
 }
@@ -577,7 +615,7 @@ typedef enum :NSUInteger {
 -(void)commitAddRoomMember{
      if (self.personSelectVCType == PersonSelectVCType_ChangeMember ){
         if (self.addMemberArr.count>0){
-            [[ChatServiceController chatServiceControllerSharedManager].gameHost addGroupChatMemberWithGroupID:[UserManager sharedUserManager].currentMail.opponentUid andWithMemberUidArray:addUidArr andWithMemberName:addNameString];
+            [[ChatServiceController chatServiceControllerSharedManager].gameHost addGroupChatMemberWithGroupID:[UserManager sharedUserManager].currentMail.opponentUid andWithMemberUidArray:self.addMemberArr andWithMemberName:addNameString];
         }
         [self clickButton];
     }
@@ -586,7 +624,7 @@ typedef enum :NSUInteger {
 -(void)commitSubRoomMember{
     if (self.personSelectVCType == PersonSelectVCType_ChangeMember ){
         if (self.subMemberArr.count>0) {
-            [[ChatServiceController chatServiceControllerSharedManager].gameHost subGroupChatMemberWithGroupID:[UserManager sharedUserManager].currentMail.opponentUid andWithMemberUidArray:subUidArr andWithMemberName:subNameString ];
+            [[ChatServiceController chatServiceControllerSharedManager].gameHost subGroupChatMemberWithGroupID:[UserManager sharedUserManager].currentMail.opponentUid andWithMemberUidArray:self.subMemberArr andWithMemberName:subNameString ];
         }
         [self clickButton];
     }
@@ -602,27 +640,25 @@ typedef enum :NSUInteger {
 #pragma mark -
 #pragma mark tableView delegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    if (psVcTopButtonSelected == PSVCTopButtonSelected_left) {
+    if (psVcTopButtonSelected == PSVCTopButtonSelected_right) {
         return self.memberArr.count;
     }else{
-        return self.searchMemberArray.count;
+        return 1;
     }
     
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-
-    
     if (psVcTopButtonSelected == PSVCTopButtonSelected_left) {
-        UserGroup *tempGroup = [self.memberArr objectAtIndex:section];
+        UserGroup *tempGroup = self.friendsGroup;
         if (tempGroup.isOpen) {
             return tempGroup.memberArray.count;
         }else{
             return  0;
         }
     }else{
-        UserGroup *tempGroup = [self.searchMemberArray objectAtIndex:section];
+        UserGroup *tempGroup = [self.memberArr objectAtIndex:section];
         if (tempGroup.isOpen) {
             return tempGroup.memberArray.count;
         }else{
@@ -637,9 +673,9 @@ typedef enum :NSUInteger {
     cell.selectionStyle= UITableViewCellSelectionStyleNone;
     cell.memberCellDelegate = self;
     if (psVcTopButtonSelected == PSVCTopButtonSelected_left) {
-         cell.userInfo = [[[self.memberArr objectAtIndex:indexPath.section] memberArray] objectAtIndex:indexPath.row];
+         cell.userInfo = [self.friendsGroup.memberArray objectAtIndex:indexPath.row];
     }else{
-         cell.userInfo = [[[self.searchMemberArray objectAtIndex:indexPath.section] memberArray] objectAtIndex:indexPath.row];
+         cell.userInfo = [[[self.memberArr objectAtIndex:indexPath.section] memberArray] objectAtIndex:indexPath.row];
     }
    
     return cell;
@@ -665,15 +701,16 @@ typedef enum :NSUInteger {
     } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         return 30;
     }else{
-          return 30;
+        return 30;
     }
 }
+
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return 0.25;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
-    if (psVcTopButtonSelected == PSVCTopButtonSelected_left) {
+    if (psVcTopButtonSelected == PSVCTopButtonSelected_right) {
         SectionHeadView *headerView =[SectionHeadView sectionHeadViewWithTableView:tableView];
         headerView.sectionHeadViewDelegate = self;
         headerView.userGroup = [self.memberArr objectAtIndex:section];
@@ -682,12 +719,9 @@ typedef enum :NSUInteger {
     }else{
         SectionHeadView *headerView =[SectionHeadView sectionHeadViewWithTableView:tableView];
         headerView.sectionHeadViewDelegate = self;
-        headerView.userGroup = [self.searchMemberArray objectAtIndex:section];
+        headerView.userGroup = self.friendsGroup;
         return headerView;
     }
-    
-    
-  
     
 }
 
@@ -698,52 +732,40 @@ typedef enum :NSUInteger {
         //左侧按钮
         DVLog(@"左侧按钮");
         psVcTopButtonSelected = PSVCTopButtonSelected_left;
-        
-
-        if (self.selectedMemArr.count>0) {
-            [self settingNameEditViewHidden:NO];
-        }else{
-            [self settingNameEditViewHidden:YES];
-        }
-        
-        [self settingSearchViewShow:NO];
+        //计算坐标
+//        [self settingNameEditViewHidden:NO];
+        //控制子视图显示
+//        [self settingSearchViewShow:YES];
       
     }else if(sender.tag == 102){
+        
         //右侧按钮
         DVLog(@"右侧按钮");
-        psVcTopButtonSelected = PSVCTopButtonSelected_right;
-        //计算坐标
-        [self settingNameEditViewHidden:NO];
-        //控制子视图显示
-        [self settingSearchViewShow:YES];
-  
-      
+        psVcTopButtonSelected = PSVCTopButtonSelected_right ;
+        
+        
+//        if (self.selectedMemArr.count>0) {
+//            [self settingNameEditViewHidden:NO];
+//        }else{
+//            [self settingNameEditViewHidden:YES];
+//        }
+//        
+//        [self settingSearchViewShow:NO];
+        
     }
+    if (self.selectedMemArr.count>1) {
+        [self settingNameEditViewHidden:NO];
+    }else{
+        [self settingNameEditViewHidden:YES];
+    }
+    
     [self.tableView reloadData];
 }
 
+
 #pragma mark -
-#pragma mark SearchEditView Delegate
--(void)searchEditViewBtnPressedAction:(UIButton *)sender{
-    [self.searchEditView.searchEditTextField resignFirstResponder];
-    DVLog(@"搜索确定按钮点击 %@",sender);
-    NSString * searchString =self.searchEditView.searchEditTextField.text;
-    if (searchString.length >0) {
-        [[ChatServiceController chatServiceControllerSharedManager].gameHost gettingUsersWithSearchString:searchString];
-    }
-    
-//    for (UserGroup *tempgroup in self.searchMemberArray) {
-//        //临时选择的人
-//        if  (tempgroup.grade == 2){
-//            if  (tempgroup.memberArray.count>0){
-//                self.searchSelectedMemArr = tempgroup.memberArray;
-//            }
-//        }
-//    }
-}
-#pragma mark -
-#pragma mark ZYTAlertViewDelegate
-- (void)clickEnterButtonWithZYTAlertView:(ZYTAlertView *)vAlertView{
+#pragma mark CSAlertViewDelegate
+- (void)clickEnterButtonWithZYTAlertView:(CSAlertView *)vAlertView{
     alertCount = alertCount -1;
     if (vAlertView.titleType == ZYTAlertViewTitleType_creat) {
         [self commitCreateRoom ];
@@ -759,7 +781,7 @@ typedef enum :NSUInteger {
     }
     
 }
--(void)cancalBtnAction:(ZYTAlertView *)vAlertView{
+-(void)cancalBtnAction:(CSAlertView *)vAlertView{
     if (vAlertView.titleType == ZYTAlertViewTitleType_reName) {
         self.headEditView.editView.text =self.chatChannel.customName;
     }
@@ -771,8 +793,33 @@ typedef enum :NSUInteger {
     if (alertCount != 0) {
         return;
     }
-    [ServiceInterface serviceInterfaceSharedManager].chatRootWindow.hidden= YES;
-    [ServiceInterface serviceInterfaceSharedManager].chatRootWindow.rootViewController = nil;
+   
+    
+    if(ChatServiceCocos2dx::Mail_OC_Native_Enable){
+          //新版OC原生邮件列表
+        if  ([[ServiceInterface serviceInterfaceSharedManager].chatRootWindow.rootViewController isKindOfClass:[UINavigationController class]])
+        {
+        
+            UINavigationController *nav = [ServiceInterface serviceInterfaceSharedManager].chatRootWindow.rootViewController;
+            if ([nav.viewControllers objectAtIndex:0] == self){
+                [ServiceInterface serviceInterfaceSharedManager].chatRootWindow.hidden= YES;
+                [ServiceInterface serviceInterfaceSharedManager].chatRootWindow.rootViewController = nil;
+            }else{
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+
+        }else {
+            [ServiceInterface serviceInterfaceSharedManager].chatRootWindow.hidden= YES;
+            [ServiceInterface serviceInterfaceSharedManager].chatRootWindow.rootViewController = nil;
+
+        }
+        
+      
+    }else{
+        [ServiceInterface serviceInterfaceSharedManager].chatRootWindow.hidden= YES;
+        [ServiceInterface serviceInterfaceSharedManager].chatRootWindow.rootViewController = nil;
+    }
+    
 }
 
 #pragma mark -
@@ -780,10 +827,10 @@ typedef enum :NSUInteger {
 -(void)searchUserNotifyAction:(NSNotification *)vNotify{
     DVLog(@"%@",vNotify.userInfo);
     NSArray *userArray =[vNotify.userInfo objectForKey:@"users"];
-    [self managerSearchMemberData:userArray];
+//    [self managerSearchMemberData:userArray];
 }
 #pragma mark -
-#pragma mark HeadViewDelegate
+#pragma mark HeadEditViewDelegate
 - (void)editViewEditWithtextField:(UITextField *)vTextField{
     DLog(@"vTextField.text :%@",vTextField.text);
 }
@@ -825,82 +872,123 @@ typedef enum :NSUInteger {
     }
     
 }
-
-
--(void)groupMemberAddWithUserInfo:(NSUserInfo*)vUserInfo{
-      if (psVcTopButtonSelected == PSVCTopButtonSelected_left) {
-          [self.selectedMemArr addObject:vUserInfo];
-          [self.addMemberArr addObject:vUserInfo];
-          if (self.selectedMemArr.count >0) {
-              if ([self isRoomCreater]){
-                   [self settingVCTitleNameWithString:[NSString stringWithFormat:@"Chat Member (%d)",self.selectedMemArr.count +1]];
-              }else{
-                  [self settingVCTitleNameWithString:[NSString stringWithFormat:@"Chat Member (%d)",self.selectedMemArr.count ]];
-              }
-             
-              
-              [self.tableView reloadData];
-              
-              [self settingNameEditViewHidden:NO];
-          }
-          DVLog(@"%@",self.selectedMemArr);
-      }else{
-         
-          for (UserGroup *tempgroup in self.searchMemberArray) {
-              if  (tempgroup.grade == 2){
-                  [tempgroup.memberArray addObject:vUserInfo];
-                  if ([self isRoomCreater]){
-                      [self settingVCTitleNameWithString:[NSString stringWithFormat:@"Chat Member (%d)",self.selectedMemArr.count +1+tempgroup.memberArray.count]];
-                  }else{
-                      [self settingVCTitleNameWithString:[NSString stringWithFormat:@"Chat Member (%d)",self.selectedMemArr.count +tempgroup.memberArray.count]];
-                  }
-                  
-              }
-          }
-          [self.tableView reloadData];
-      }
-
-}
--(void)groupMemberRemoveWithUserInfo:(NSUserInfo *)vUserInfo{
-
-    if (psVcTopButtonSelected == PSVCTopButtonSelected_left) {
-        [self.selectedMemArr removeObject:vUserInfo];
-        [self.addMemberArr removeObject:vUserInfo];
-        [self.subMemberArr addObject:vUserInfo];
-        if (self.selectedMemArr.count == 0) {
-            //        self.tableView.tableHeaderView = headDefaultView;
-            
-            //            self.nameEditView.height = 0;
-            
-            [self settingNameEditViewHidden:YES];
-            [self.tableView reloadData];
-            [self settingVCTitleNameWithString:@"创建多人会话"];
-            
+//修改userinfo模型的选择状态
+-(void)changeWithAnotherListArrayForUserChooseStateWithUid:(NSString *)vUid
+                                           andWithAddOrSub:(int )vAddOrSubFlag{
+    if (vAddOrSubFlag == 1) {
+        //加
+        if (psVcTopButtonSelected == PSVCTopButtonSelected_right){
+            for (NSUserInfo *user in self.membersArray) {
+                if ([user.uid isEqualToString:vUid]){
+                    user.chooseState = ChooseState_pressed;
+                }
+            }
         }else{
-            
-            [self settingNameEditViewHidden:NO];
-            [self settingVCTitleNameWithString:[NSString stringWithFormat:@"Chat Member (%d)",self.selectedMemArr.count +1]];
-            
-        }
-        DVLog(@"%@",self.selectedMemArr);
-
-    }else{
-        
-        for (UserGroup *tempgroup in self.searchMemberArray) {
-            if  (tempgroup.grade == 2){
-                [tempgroup.memberArray removeObject:vUserInfo];
-                if(tempgroup.memberArray.count + self.selectedMemArr.count  == 0){
-                  
-                 
-                    [self settingVCTitleNameWithString:@"创建多人会话"];
-                }else{
-                   
-                    [self settingVCTitleNameWithString:[NSString stringWithFormat:@"Chat Member (%d)",self.selectedMemArr.count +1+tempgroup.memberArray.count]];
+            for (NSUserInfo *user in self.friendsGroup.memberArray) {
+                if ([user.uid isEqualToString:vUid]){
+                    user.chooseState = ChooseState_pressed;
                 }
             }
         }
-        [self.tableView reloadData];
+        
+    }else if ( vAddOrSubFlag == 0){
+        //减
+        if (psVcTopButtonSelected == PSVCTopButtonSelected_right){
+            for (NSUserInfo *user in self.membersArray) {
+                if ([user.uid isEqualToString:vUid]){
+                    user.chooseState = ChooseState_normal;
+                }
+            }
+        }else{
+            for (NSUserInfo *user in self.friendsGroup.memberArray) {
+                if ([user.uid isEqualToString:vUid]){
+                    user.chooseState = ChooseState_normal;
+                }
+            }
+        }
     }
+    
+
+}
+
+
+-(void)groupMemberAddWithUserInfo:(NSUserInfo*)vUserInfo{
+    [self changeWithAnotherListArrayForUserChooseStateWithUid:vUserInfo.uid andWithAddOrSub:1];
+    
+    NSString *tempUidStr = nil;
+    for (NSString *uid in self.subMemberArr) {
+        if  ([uid isEqualToString:vUserInfo.uid]){
+            tempUidStr = vUserInfo.uid;
+        }
+    }
+    if (tempUidStr){
+        [self.subMemberArr removeObject:tempUidStr];
+    }else{
+        [self.addMemberArr addObject:vUserInfo.uid];
+        [self.selectedMemArr addObject:vUserInfo.uid];
+    }
+ 
+    
+    
+    if (self.selectedMemArr.count >1) {
+        if  (self.personSelectVCType == PersonSelectVCType_New){
+            [self settingVCTitleNameWithString:[NSString stringWithFormat:@"Chat Member (%d)",self.selectedMemArr.count  ]];
+            [self settingNameEditViewHidden:NO];
+        }else{
+            if ([self isRoomCreater]){
+                [self settingNameEditViewHidden:NO];
+                [self settingVCTitleNameWithString:[NSString stringWithFormat:@"Chat Member (%d)",self.selectedMemArr.count  ]];
+            }else{
+                [self settingNameEditViewHidden:YES];
+                [self settingVCTitleNameWithString:[NSString stringWithFormat:@"Chat Member (%d)",self.selectedMemArr.count ]];
+            }
+        }
+       
+    }
+ 
+        [self.tableView reloadData];
+
+}
+-(void)groupMemberRemoveWithUserInfo:(NSUserInfo *)vUserInfo{
+        [self changeWithAnotherListArrayForUserChooseStateWithUid:vUserInfo.uid andWithAddOrSub:0];
+ 
+    NSString *tempUid = nil;
+ 
+    for (NSString *str in self.addMemberArr) {
+        if  ([vUserInfo.uid isEqualToString:str]){
+            tempUid = str;
+            break;
+        }
+    }
+    if  (tempUid == nil){
+        [self.subMemberArr addObject:vUserInfo.uid];
+    }else{
+        [self.addMemberArr removeObject:tempUid];
+    }
+
+     tempUid = nil;
+    for (NSString *str in self.selectedMemArr) {
+        if  ([vUserInfo.uid isEqualToString:str]){
+            tempUid = str;
+            break;
+        }
+    }
+    [self.selectedMemArr removeObject:tempUid];
+ 
+ 
+    if (self.selectedMemArr.count == 1) {
+ 
+        [self settingNameEditViewHidden:YES];
+        [self.tableView reloadData];
+        [self settingVCTitleNameWithString:[NSString stringWithMultilingualWithKey:@"105354"]];//105354=多人聊天]
+        
+    }else if(self.selectedMemArr.count > 1){
+        
+        [self settingNameEditViewHidden:NO];
+        [self settingVCTitleNameWithString:[NSString stringWithFormat:@"Chat Member (%d)",self.selectedMemArr.count ]];
+        
+    }
+     [self.tableView reloadData];
 }
 -(void)settingNameEditViewHidden:(BOOL)isHidden{
     if(isHidden){
@@ -916,9 +1004,6 @@ typedef enum :NSUInteger {
 
     }
 }
--(void)settingSearchViewShow:(BOOL)vShow{
-    self.searchEditView.hidden = !vShow;
-    self.headEditView.hidden = vShow;
-}
+
 
 @end

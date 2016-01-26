@@ -11,12 +11,18 @@
 #import "ServiceInterface.h"
 @implementation KZTextAttachment
 
+
 - (CGRect)attachmentBoundsForTextContainer:(NSTextContainer *)textContainer proposedLineFragment:(CGRect)lineFrag glyphPosition:(CGPoint)position characterIndex:(NSUInteger)charIndex
 {
-    //return CGRectMake( 0 , 0 , lineFrag.size.height + 6, lineFrag.size.height + 6);
-    CGFloat width = [ServiceInterface serviceInterfaceSharedManager].chatLabel_icon_size_width;
-    CGFloat height = [ServiceInterface serviceInterfaceSharedManager].chatLabel_icon_size_height;
-    return CGRectMake( 0 , -5, width, height);
+    if ([self.imageNameString isEqualToString:@"[equip_share]"]) {
+        CGFloat width = [ServiceInterface serviceInterfaceSharedManager].chatLabel_icon_size_width_1;
+        CGFloat height = [ServiceInterface serviceInterfaceSharedManager].chatLabel_icon_size_height_1;
+        return CGRectMake( 0 , -5, width, height);
+    }else{
+        CGFloat width = [ServiceInterface serviceInterfaceSharedManager].chatLabel_icon_size_width;
+        CGFloat height = [ServiceInterface serviceInterfaceSharedManager].chatLabel_icon_size_height;
+        return CGRectMake( 0 , -5, width, height);
+    }
 }
 @end
 
@@ -38,7 +44,7 @@
  */
 + (NSArray *)emojiStringArray
 {
-    return [NSArray arrayWithObjects:@"[sysChat]",@"[battlereport]",nil];
+    return [NSArray arrayWithObjects:@"[sysChat]",@"[battlereport]",@"[equip_share]",nil];
 }
 
 /*
@@ -106,8 +112,8 @@
                     [attributedString replaceCharactersInRange:range withString:@" "];
                     KZTextAttachment *attachment = [[KZTextAttachment alloc] initWithData:nil ofType:nil];
                     attachment.range = NSMakeRange(i + 1 - emojiStr.length, 1);
-                    attachment.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png",emojiStr]];
-                    
+                    attachment.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",emojiStr]];
+                    attachment.imageNameString =emojiStr;
                     i -= ([stack count] - 1);
                     [array addObject:attachment];
                 }

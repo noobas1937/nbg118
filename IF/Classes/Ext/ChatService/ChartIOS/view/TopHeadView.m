@@ -25,15 +25,12 @@
     }
     return self;
 }
-- (IBAction)buttonAction:(id)sender {
-    
-    if ( [self.topHeadViewDelegate respondsToSelector:@selector(clickButton)]) {
-        [self.topHeadViewDelegate clickButton ];
-    }
-}
 
-+(instancetype)topHeadView{
-   return  [[[NSBundle mainBundle ]loadNibNamed:@"TopHeadView" owner:nil options:nil] lastObject];
+
++(instancetype)topHeadViewWithRightButtonShowFlag:(BOOL )vshowFlag andShowRightButtonType:(TopHeadViewRightButtonType)vButtonType{
+   TopHeadView *headView =  [[[NSBundle mainBundle ]loadNibNamed:@"TopHeadView" owner:nil options:nil] lastObject];
+    [headView settingRightButtonShow:vshowFlag andRightButtonType:vButtonType];
+    return headView;
 }
 
 -(void)awakeFromNib{
@@ -42,7 +39,27 @@
     _titleNameLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:[ServiceInterface serviceInterfaceSharedManager].fontSize];
 }
 
+-(void)settingRightButtonShow:(BOOL)vShow andRightButtonType:(TopHeadViewRightButtonType)vButtonType{
+    if (vShow) {
+        if (vButtonType == TopHeadViewRightButtonType_ChatRoomMember) {
+            _rightChatRoomMemberButton.hidden = NO;
+            _rightEditButton.hidden = YES;
+        }else{
+            _rightChatRoomMemberButton.hidden = YES;
+            _rightEditButton.hidden = NO;
+        }
+    }else{
+        _rightChatRoomMemberButton.hidden = YES;
+        _rightEditButton.hidden = YES;
+    }
+}
 
+- (IBAction)buttonAction:(id)sender {
+    
+    if ( [self.topHeadViewDelegate respondsToSelector:@selector(clickButton)]) {
+        [self.topHeadViewDelegate clickButton ];
+    }
+}
 - (IBAction)rightButtonAction:(id)sender {
     if ( [self.topHeadViewDelegate respondsToSelector:@selector(rightButtonAction:)]) {
         [self.topHeadViewDelegate rightButtonAction:sender ];

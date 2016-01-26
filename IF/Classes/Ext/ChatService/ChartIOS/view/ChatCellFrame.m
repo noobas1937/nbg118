@@ -17,7 +17,7 @@
 #import "ChannelManager.h"
 #import "NSString+Extension.h"
 
-#import "ZYTGoogleTranslat.h"
+#import "CSGoogleTranslat.h"
 
 #import "NSAttributedString+Emotion.h"
 
@@ -52,7 +52,7 @@
     }
     __block ChatCellFrame *weakSelf = self;
     
-    ZYTGoogleTranslat *  translat =[[ZYTGoogleTranslat alloc]init];
+    CSGoogleTranslat *  translat =[[CSGoogleTranslat alloc]init];
     _chatMessage.translateMsg =  _chatMessage.msg;
     [translat translationingWithSL:@"auto" andWithTL:_chatMessage.localLanString andWithHL:@"en" andWithIE:@"UTF-8" andWithOE:@"UTF-8" andWithQ:_chatMessage.msg andResultBlock:^(ZYTGoogleTranslatHTTPStatus status,NSString *resultString,NSString *orgLangTypeString) {
         
@@ -155,6 +155,7 @@
         //上一个cell的时间
         NSString *previousTime = [[previous.chatMessage nsDataSwitchNSString:previous.chatMessage.createTime] substringToIndex:10];
         if([selfTime isEqualToString:previousTime]){
+            
             self.isShowUiTopView_BOOL = FALSE;
         }else{
             self.uiDownViewRect=CGRectMake(0,self.uiTopViewRect.size.height,winSize.width,self.cellHeight);
@@ -201,7 +202,7 @@ CGRectMake1(CGFloat x, CGFloat y, CGFloat width, CGFloat height)
     self.iconRect=CGRectMake(iconX, iconY, iconWidth, iconHeight);
     self.borderRect=CGRectMake(0, 0, self.iconRect.size.width, self.iconRect.size.height);
     self.headPicRect=CGRectMake(3, 3, self.iconRect.size.width - 8, self.iconRect.size.height - 7);
-    self.gmodRect=CGRectMake(self.iconRect.size.width * 0.6, self.iconRect.size.height * 0.67, self.iconRect.size.width * 0.35, self.iconRect.size.height * 0.25);
+    self.gmodRect=CGRectMake(self.iconRect.size.width * 0.56, self.iconRect.size.height * 0.67, self.iconRect.size.width * 0.35, self.iconRect.size.height * 0.25);
     
 }
 
@@ -278,16 +279,32 @@ CGRectMake1(CGFloat x, CGFloat y, CGFloat width, CGFloat height)
 /**设置cell中文本区域大小*/
 -(void) settingCellChatViewFrame
 {
-    _contentX=CGRectGetMaxX(self.iconRect)+kIconMarginX;
-    //chatView
-    if(_chatMessage.isSelfMsg){
-        CGFloat cx = [ServiceInterface serviceInterfaceSharedManager].contentX;
-        _contentX=kMainScreenWidth-_contentSize.width-self.iconRect.size.width - kMainScreenWidth * cx;
-    }else{
-        _contentX = _contentX - 5;
-    }
     
-    self.chatViewRect=CGRectMake(_contentX, kIconMarginY + self.vip_asn_name_Rect.size.height, _contentSize.width + 25, _contentSize.height + 10);
+    if (self.chatMessage.post == 12) {
+        _contentX=CGRectGetMaxX(self.iconRect)+kIconMarginX;
+        _contentSize =  CGSizeMake(kMainScreenWidth *0.6,kMainScreenHeight * 0.1);
+        //chatView
+        if(_chatMessage.isSelfMsg){
+            CGFloat cx = [ServiceInterface serviceInterfaceSharedManager].contentX;
+            _contentX=kMainScreenWidth-_contentSize.width-self.iconRect.size.width - kMainScreenWidth * cx;
+        }else{
+            _contentX = _contentX - 5;
+        }
+        
+        self.redEnvelopeRect=CGRectMake(_contentX, kIconMarginY + self.vip_asn_name_Rect.size.height, _contentSize.width + 25, _contentSize.height + 10);
+    }else{
+        _contentX=CGRectGetMaxX(self.iconRect)+kIconMarginX;
+        //chatView
+        if(_chatMessage.isSelfMsg){
+            CGFloat cx = [ServiceInterface serviceInterfaceSharedManager].contentX;
+            _contentX=kMainScreenWidth-_contentSize.width-self.iconRect.size.width - kMainScreenWidth * cx;
+        }else{
+            _contentX = _contentX - 5;
+        }
+        
+        self.chatViewRect=CGRectMake(_contentX, kIconMarginY + self.vip_asn_name_Rect.size.height, _contentSize.width + 25, _contentSize.height + 10);
+    }
+
 }
 
 /**设置显示cell中时间的frame*/
@@ -309,15 +326,21 @@ CGRectMake1(CGFloat x, CGFloat y, CGFloat width, CGFloat height)
 -(void) settingCellactivityRect
 {
     if (_chatMessage.isSelfMsg) {
-        self.activityIndicatorRect = CGRectMake( _contentX - kMainScreenWidth * 0.06, self.chatViewRect.size.height / 2 , kMainScreenWidth * 0.04 ,kMainScreenWidth * 0.04);
+        self.activityIndicatorRect = CGRectMake( _contentX - kMainScreenWidth * 0.075, self.chatViewRect.size.height / 2 + (kMainScreenHeight *(11/kMainScreenHeight)), kMainScreenWidth * 0.04 ,kMainScreenWidth * 0.04);
+        
+        self.resetSendBtnRect = CGRectMake( _contentX - kMainScreenWidth * 0.075, self.chatViewRect.size.height / 2 + (kMainScreenHeight *(6/kMainScreenHeight)), kMainScreenWidth * 0.06 ,kMainScreenWidth * 0.06);
     }
     
 }
 /**设置cell 高度 和 cell 下半部view的frame*/
 -(void) settingCellHAndSettingCellDownRect
 {
-    CGFloat cellH = self.chatLabelSize.height + self.vip_asn_name_Rect.size.height + self.endStrLabelSize.height;
-    
+    CGFloat cellH = 0;
+    if (self.chatMessage.post == 12) {
+        cellH = self.vip_asn_name_Rect.size.height + self.redEnvelopeRect.size.height;
+    }else{
+        cellH =self.chatLabelSize.height + self.vip_asn_name_Rect.size.height + self.endStrLabelSize.height;
+    }
     self.cellHeight = MAX(self.iconRect.size.height, cellH) + [self gettingWinSize].height * 0.04;
     
     self.uiDownViewRect=CGRectMake(0,0,kMainScreenWidth,self.cellHeight);

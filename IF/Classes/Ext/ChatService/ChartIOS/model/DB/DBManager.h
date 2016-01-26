@@ -23,4 +23,7 @@
  *  @return 返回表名字符串
  */
 -(NSString *)gettingChatTableNameWithChatChannel:(ChatChannel *)vChatChannel;
+-(void)removeDBManager;
+
++(NSString *)dbSqlWithChannelID:(NSString *)vChannelIdStr;
 @end

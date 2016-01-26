@@ -6,7 +6,7 @@
 
 #import <UIKit/UIKit.h>
 
-CGPoint CGRectGetCenter(CGRect rect);
+CGPoint CGRectGetCenterPoint(CGRect rect);
 CGRect  CGRectMoveToCenter(CGRect rect, CGPoint center);
 
 @interface UIView (ViewFrameGeometry)

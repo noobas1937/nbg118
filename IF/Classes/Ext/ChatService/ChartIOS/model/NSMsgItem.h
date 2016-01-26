@@ -16,26 +16,28 @@ typedef void(^MsgUserBlock)(NSUserInfo *userInfo) ;
 @interface NSMsgItem : NSObject
 
 /**数据库对应*/
-@property (nonatomic,assign) int        dbId;
+
 @property (nonatomic,assign) int        tableVer;
+@property (nonatomic,assign)    long         _id;
 /** 消息服务器序号  */
-@property (nonatomic,assign) int        sequenceId;
+@property (nonatomic,assign) long          sequenceId;
 /** 用来标识邮件的id */
-@property (nonatomic,strong) NSString * mailId;
+@property (nonatomic,strong) NSString   * mailId;
 /** 消息发送者uid  */
 @property (nonatomic,strong) NSString   *uid;                               // uid，群聊时才会存数据库
 /**
  *  0 国家 1 联盟 2 邮件 3 聊天室  4备用
  */
 @property (nonatomic,assign) int        channelType;                        // 频道类型
-@property (nonatomic,assign) int        createTime;                         // 收到的消息会在C++中初始化此字段，对应后台传回来的createTime 作用于更新信息创建时间。针对别的玩家
-@property (nonatomic,assign) int        post;                               // 数据库中名为type：是否为系统信息，“0”表示不是，非“0”表示是 100 聊天室系统消息 6喇叭消息
+@property (nonatomic,assign) long        createTime;                         // 收到的消息会在C++中初始化此字段，对应后台传回来的createTime 作用于更新信息创建时间。针对别的玩家
+@property (nonatomic,assign) long        sendLocalTime;                      // 本地发送时间戳 作用于自己发送的信息状态对比。
+@property (nonatomic,assign) int        post;                               // 数据库中名为type：是否为系统信息，“0”表示不是，非“0”表示是 100 聊天室系统消息 4战报 5侦查战报 6喇叭消息 7装备分享 8打招呼 9联盟集结 10轮盘分享 11联盟任务 12红包 200mod邮件
 @property (nonatomic,strong) NSString   *msg;                               // 消息体
 @property (nonatomic,strong) NSString   *translateMsg;                      // 翻译信息
 @property (nonatomic,strong) NSString   *originalLang;                      // 源语言国别类型
 @property (nonatomic,strong) NSString   *translatedLang;                    // 翻译的语言国别类型
 @property (nonatomic,assign) int        sendState;                          // 发送状态，0正在发送，1发送失败，2发送成功
-@property (nonatomic,strong) NSString   *attachmentId;                      // 战报UID，侦察战报UID
+@property (nonatomic,strong) NSString   *attachmentId;                      // 战报UID，侦察战报UID post == 12 attachmentId格式为 红包ID_服务器号_红包状态
 @property (nonatomic,strong) NSString   *media;                             //// 媒体资源
 @property (nonatomic,strong) NSString   *localLanString;                    //被翻译的语言类型
 
@@ -43,14 +45,20 @@ typedef void(^MsgUserBlock)(NSUserInfo *userInfo) ;
 @property (nonatomic,assign) BOOL       isSelfMsg;                          // 是否是自己的信息
 @property (nonatomic,assign) BOOL       isNewMsg;                           // 是否是新消息
 
+@property (nonatomic,assign) int        readState;
+
 @property (nonatomic,strong) NSString   *currentText;
 @property (nonatomic,assign) BOOL       hasTranslated;                      // 是否被翻译过
 @property (nonatomic,assign) BOOL       isSendDataShowed;
-@property (nonatomic,assign) int        lastUpdateTime;
-@property (nonatomic,assign) int       sendLocalTime;                      // 本地发送时间戳 作用于自己发送的信息状态对比。
+@property (nonatomic,assign) long         lastUpdateTime;
+
 @property (nonatomic,assign) BOOL       isSelfisTranslateByGoogleMsg;
 @property (nonatomic,assign) BOOL       isFirstNewMsg;
 @property (nonatomic,assign) int        sendfirstNewMsgStateState;          // 0:不是第一条 1:第一条且新消息数小于等于200条 2:第一条且新消息数超过200条
+/**
+ *  随机打招呼所保护的所有本地化语句
+ */
+@property (nonatomic,strong) NSMutableArray *helloStrs;
 
 @property (assign,getter= isShowTransLate,nonatomic) BOOL  showTransLate; //当前是否显示翻译
 
@@ -71,6 +79,18 @@ typedef void(^MsgUserBlock)(NSUserInfo *userInfo) ;
 //@property (nonatomic, assign)UIImage  *gettingCustomHeadPicImg; //获取自定义头像img
 @property (nonatomic, strong)NSString *gmodStr;                 //自定义头像URL
 
+/**
+ *  字体颜色
+ */
+@property (nonatomic,strong) NSString * fontColorStr;
+/**
+ *  会变色的字体
+ */
+@property (nonatomic,strong) NSString * changeColor2String;
+
+/**当前消息对应的channelID*/
+@property (nonatomic,strong)NSString *channelIDString;
+
 -(NSUserInfo*)  gettingUserInfo;                                //获取用户信息
 -(NSString*)    gettingServerId;
 -(NSString*)    gettingAsn;
@@ -90,6 +110,7 @@ typedef void(^MsgUserBlock)(NSUserInfo *userInfo) ;
 -(BOOL) isBattleReport;
 -(BOOL) isDetectReport;
 -(BOOL) isAnnounceInvite;
+-(BOOL) ischeckTheEquip;
 -(void) updateMsg;
 -(BOOL) playerIsVip;
 
@@ -103,5 +124,59 @@ typedef void(^MsgUserBlock)(NSUserInfo *userInfo) ;
  
 -(void)settingShowMsg:(NSString *)vlocalLanString;
 -(void)settingMsgUserNickString;
+//数据库出来的历史数据需要调用,来给翻译字段赋值
+-(void) initAttribute;
+-(void)msgFormatFromDBwithAdd:(NSString*)channelId;
 
+-(BOOL) isTranlateDisable;
+/**
+ *  判断是否是mod
+ */
+-(BOOL) isModMsg;
+
+-(void)msgItemCheckUserInfoWithMsgBeforeMsgSaveToDB;
+
+/**
+ *  判断信息源语言类型与本地语言类型是否一致
+ */
+-(BOOL) isOriginalSameAsTargetLang;
+/**
+ *  解析任务信息
+ */
+-(void) parsAllianceTast;
+/**
+ *  判断是否是接受任务
+ *
+ *  @return <#return value description#>
+ */
+-(BOOL) isAcceptTask;
+/**
+ *  createTime  转换 时间字符串
+ *
+ *  @param time <#time description#>
+ *
+ *  @return <#return value description#>
+ */
+-(NSString*) nsDataSwitchNSString:(NSUInteger) time;
+
+/**
+ *  更改红包状态
+ */
+-(void) changeRedPackageStatus;
+/**
+ *  更新msgitemDB
+ */
+-(void) redPackageStatusSave2DB;
+/**
+ *  信息是否匹配当前版本号
+ *
+ *  @return 
+ */
+-(BOOL) isMatchingVersion;
+/**
+ *  获取红包状态
+ *
+ *  @return <#return value description#>
+ */
+-(int) gettingRedPackageStatus;
 @end

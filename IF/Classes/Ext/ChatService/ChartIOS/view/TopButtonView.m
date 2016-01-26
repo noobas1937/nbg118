@@ -10,6 +10,7 @@
 #import "LanguageKeys.h"
 #import "LanguageManager.h"
 #import "ServiceInterface.h"
+#import "NSString+Cocos2dHelper.h"
 @interface TopButtonView  (){
     NSString *leftButtonName;
     NSString *rightButtonName;
@@ -44,14 +45,14 @@
 }
 
 -(void)setLeftButtonName:(NSString *)vLeftButtonName{
-    NSString *countriesStr = [LanguageManager languageManager_getLangByKey:vLeftButtonName];
-    [_countryButton setTitle:countriesStr forState:UIControlStateNormal];
-    [_countryButton setTitle:countriesStr forState:UIControlStateSelected];
+//    NSString *countriesStr = [NSString stringWithMultilingualWithKey:vLeftButtonName];
+    [_countryButton setTitle:vLeftButtonName forState:UIControlStateNormal];
+    [_countryButton setTitle:vLeftButtonName forState:UIControlStateSelected];
 }
 -(void)setRightButtonName:(NSString *)vRightButtonName{
-     NSString *allianceStr = [LanguageManager languageManager_getLangByKey:vRightButtonName];
-    [_allianceButton setTitle:allianceStr forState:UIControlStateNormal];
-    [_allianceButton setTitle:allianceStr forState:UIControlStateSelected];
+//    NSString *allianceStr = [NSString stringWithMultilingualWithKey:vRightButtonName];
+    [_allianceButton setTitle:vRightButtonName forState:UIControlStateNormal];
+    [_allianceButton setTitle:vRightButtonName forState:UIControlStateSelected];
 }
 -(void)awakeFromNib{
     

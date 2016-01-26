@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+
+typedef enum : NSUInteger {
+    TopHeadViewRightButtonType_ChatRoomMember = 0,
+    TopHeadViewRightButtonType_ViewEdit = 1,//下拉刷新数据
+ 
+}TopHeadViewRightButtonType;
+
 @protocol TopHeadViewDelegate <NSObject>
 @optional
 - (void)clickButton ;
@@ -17,10 +24,13 @@
 @interface TopHeadView : UIView
 @property (weak, nonatomic) IBOutlet UILabel *titleNameLabel;
 
-@property (weak, nonatomic) IBOutlet UIButton *rightButton;
+@property (weak, nonatomic) IBOutlet UIButton *rightEditButton;
+
+@property (weak,nonatomic)IBOutlet UIButton *rightChatRoomMemberButton;
+
 
 //@property (nonatomic,strong) UILabel *titleName;
 @property (nonatomic,assign)id<TopHeadViewDelegate>topHeadViewDelegate;
 
-+(instancetype)topHeadView;
++(instancetype)topHeadViewWithRightButtonShowFlag:(BOOL )vshowFlag andShowRightButtonType:(TopHeadViewRightButtonType)vButtonType;
 @end

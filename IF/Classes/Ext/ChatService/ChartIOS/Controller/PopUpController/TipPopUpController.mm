@@ -14,16 +14,18 @@
 #import "ChatServiceController.h"
 #import "UserManager.h"
 #import "MsgMessage.h"
+#import "ChatServiceCocos2dx.h"
+#import "CSMessage.h"
 
-
+#import "NSUserInfo.h"
 @interface TipPopUpController ()
-@property (nonatomic, strong) IBOutlet UIButton *yesBtn;
-@property (nonatomic, strong) IBOutlet UIButton *noBtn;
-@property (nonatomic, strong) IBOutlet UIImageView *backgroundImage;
-@property (nonatomic, strong) IBOutlet UILabel *yesStr;
-@property (nonatomic, strong) IBOutlet UIImageView *goldImage;
-@property (nonatomic, strong) IBOutlet UILabel *goldCount;
-@property (retain, nonatomic) IBOutlet UIButton *yesBtn2;
+@property (nonatomic, weak) IBOutlet UIButton *yesBtn;
+@property (nonatomic, weak) IBOutlet UIButton *noBtn;
+@property (nonatomic, weak) IBOutlet UIImageView *backgroundImage;
+@property (nonatomic, weak) IBOutlet UILabel *yesStr;
+@property (nonatomic, weak) IBOutlet UIImageView *goldImage;
+@property (nonatomic, weak) IBOutlet UILabel *goldCount;
+@property (weak, nonatomic) IBOutlet UIButton *yesBtn2;
 
 
 
@@ -160,22 +162,28 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark
- - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 - (IBAction)onClickYesBtn:(UIButton *)sender {
     switch(self.tipType)
     {
         case BLOCKTYPE:
             {
-                [[ChatServiceController chatServiceControllerSharedManager].gameHost block:self.cell.cellFrame.chatMessage.uid :self.cell.cellFrame.chatMessage.name];
+                NSString *uidString = nil;
+                NSString *nameString = nil;
+                if (ChatServiceCocos2dx::CS_ChatCell_OC_Native_New){
+                    uidString = self.cell.cellFrame.chatMessage.uid;
+                    nameString =self.cell.cellFrame.chatMessage.name;
+                }else{
+                    uidString = self.message.uid ;
+                    NSUserInfo *user = [[UserManager sharedUserManager]gettingUserInfoForMemoryAndDBWithUidString:uidString];
+                    if (user ){
+                        nameString = user.userName;
+                    }else{
+                        nameString = uidString;
+                    }
+                }
+                
+                [[ChatServiceController chatServiceControllerSharedManager].gameHost block:uidString:nameString];
                 //[[ServiceInterface serviceInterfaceSharedManager] flyHint:@"" :@"" :@"屏蔽成功" :0.0 :0.0 :true];
                 [self removeSelf];
             }
@@ -183,31 +191,55 @@
         case RESENDTYPE:
             {
                 
-                if(self.cell.cellFrame.chatMessage.post == 6 && self.cell.cellFrame.chatMessage.channelType == 0){
+                if (self.cell) {
+                    if(self.cell.cellFrame.chatMessage.post == 6 && self.cell.cellFrame.chatMessage.channelType == 0){
+                        if ([self.tipPopUpControllerDelegate respondsToSelector:@selector(resendRadioByMsg:)]){
+                            [self.tipPopUpControllerDelegate resendRadioByMsg:self.cell];
+                        }else{
+                            [[ChatServiceController chatServiceControllerSharedManager].gameHost sendRadio:self.cell.cellFrame.chatMessage];
+                        }
+                        
+                        [self removeSelf];
+                    }else{
+                        [self.cell exitResetSend];
+                    }
                     
-                    [[ChatServiceController chatServiceControllerSharedManager].gameHost sendRadio:self.cell.cellFrame.chatMessage];
                     [self removeSelf];
-                }else{
-                    [self.cell exitResetSend];
                 }
-                
-                [self removeSelf];
             }
             break;
         case NOHORN:
             {
                 //判断金币是否足够
                 if([[ChatServiceController chatServiceControllerSharedManager] isSatisfySendRadio]){
-                    NSLog(@"金币足够");
-                    //NSDate *datenow = [NSDate date];
-                    //NSString *timeSp = [NSString stringWithFormat:@"%d", (long)[datenow timeIntervalSince1970]];
-                    ChatCellFrame *cellFrame=[[ChatCellFrame alloc]init:self.chatMessage];
-                    [[MsgMessage msgMessageShared] addChatMsgList:self.chatMessage];
-                    [[ServiceInterface serviceInterfaceSharedManager].chatViewController.countriesTableViewController refreshDisplay:cellFrame];
-                    [[ChatServiceController chatServiceControllerSharedManager] sendNotice:self.chatMessage.msg :200011 :true :[NSString stringWithFormat:@"%d",self.chatMessage.sendLocalTime]];
+                    
+                    if  (ChatServiceCocos2dx::CS_ChatCell_OC_Native_New){
+                        if ([self.tipPopUpControllerDelegate respondsToSelector:@selector(onClickButtonSendRadio2WithMessage:andWithTiPView:)]){
+                            
+                                [self.tipPopUpControllerDelegate onClickButtonSendRadio2WithMessage:self.message andWithTiPView:self];
+                        }
+                          [self removeSelf];
+                    }else{
+                        if ([self.tipPopUpControllerDelegate respondsToSelector:@selector(onClickButtonSendRadio2:)]){
+                            if (self.chatMessage) {
+                                [self.tipPopUpControllerDelegate onClickButtonSendRadio2:self.chatMessage];
+                            }
+                        }else{
+                           
+                            //NSDate *datenow = [NSDate date];
+                            //NSString *timeSp = [NSString stringWithFormat:@"%d", (long)[datenow timeIntervalSince1970]];
+                            ChatCellFrame *cellFrame=[[ChatCellFrame alloc]init:self.chatMessage];
+                            [[MsgMessage msgMessageShared] addChatMsgList:self.chatMessage];
+                            [[ServiceInterface serviceInterfaceSharedManager].chatViewController.countriesTableViewController refreshDisplay:cellFrame];
+                            [[ChatServiceController chatServiceControllerSharedManager] sendNotice:self.chatMessage.msg :200011 :true :[NSString stringWithFormat:@"%ld",self.chatMessage.sendLocalTime]];
+                        }
+                        
+                    }
                     [ServiceInterface serviceInterfaceSharedManager].isFirstDeductRadioMoney = FALSE;
                     [self removeSelf];
-                }else{
+
+                    
+               }else{
                     NSLog(@"金币不足");
                     NSString *tipStr = [LanguageManager languageManager_getLangByKey:[LanguageKeys lkShared].TIP_CORN_NOT_ENOUGH];
                     self.tipText.text = tipStr;
@@ -229,20 +261,35 @@
             break;
         case RADIOTYPE:
         {
-//            NSDate *datenow = [NSDate date];
-//            NSString *timeSp = [NSString stringWithFormat:@"%d", (long)[datenow timeIntervalSince1970]];
-            ChatCellFrame *cellFrame=[[ChatCellFrame alloc]init:self.chatMessage];
-            [[MsgMessage msgMessageShared] addChatMsgList:self.chatMessage];
-            [[ServiceInterface serviceInterfaceSharedManager].chatViewController.countriesTableViewController refreshDisplay:cellFrame];
-            [[ChatServiceController chatServiceControllerSharedManager] sendNotice:self.chatMessage.msg :200011 :false :[NSString stringWithFormat:@"%d",self.chatMessage.sendLocalTime]];
-            [ServiceInterface serviceInterfaceSharedManager].isFirstDeductRadioCount = FALSE;
-            [self removeSelf];
+            if (self.chatMessage){
+                if (ChatServiceCocos2dx::CS_CountryChat_OC_Native_New) {
+                    if (ChatServiceCocos2dx::CS_ChatCell_OC_Native_New){
+                        if  ([self.tipPopUpControllerDelegate respondsToSelector:@selector(onClickButtonSendRadioWithMessage:andWithTiPView:)]){
+                            [self.tipPopUpControllerDelegate onClickButtonSendRadioWithMessage:self.message andWithTiPView:self];
+                        }
+                    }else{
+                        if ([self.tipPopUpControllerDelegate respondsToSelector:@selector(onClickButtonSendRadio:)] ) {
+                            [self.tipPopUpControllerDelegate onClickButtonSendRadio:self.chatMessage];
+                        }
+                    }
+                    
+                }else{
+                    //            NSDate *datenow = [NSDate date];
+                    //            NSString *timeSp = [NSString stringWithFormat:@"%d", (long)[datenow timeIntervalSince1970]];
+                    ChatCellFrame *cellFrame=[[ChatCellFrame alloc]init:self.chatMessage];
+                    [[MsgMessage msgMessageShared] addChatMsgList:self.chatMessage];
+                    [[ServiceInterface serviceInterfaceSharedManager].chatViewController.countriesTableViewController refreshDisplay:cellFrame];
+                    [[ChatServiceController chatServiceControllerSharedManager] sendNotice:self.chatMessage.msg :200011 :false :[NSString stringWithFormat:@"%ld",self.chatMessage.sendLocalTime]];
+                }
+                [ServiceInterface serviceInterfaceSharedManager].isFirstDeductRadioCount = FALSE;
+                [self removeSelf];
+            }
         }
             break;
 
         case INVITATION:
         {
-//            [self.personSelectVC commitCreateRoom];
+ 
         }
         break;
         default:

@@ -93,7 +93,8 @@
 @property (nonatomic, strong) NSString *TIP_SELECTED_MEMBER;							//已加入
 @property (nonatomic, strong) NSString *TIP_SEARCH_RESULT;								//搜索结果
 @property (nonatomic, strong) NSString *TIP_SEARCH_ThisCheck;                           //本次勾选
-
-
+@property (nonatomic, strong) NSString *TIP_EQUIP_SHARE;                                //我刚刚在铁匠铺在成功的锻造出了{0}
+@property (nonatomic, strong) NSString *MENU_VIEW_EQUIPMENT;                            //查看装备
+@property (nonatomic, strong) NSString *MENU_REPORT_HEADIMG;                            //举报头像
 @end
 static LanguageKeys * languageKeys = nil;

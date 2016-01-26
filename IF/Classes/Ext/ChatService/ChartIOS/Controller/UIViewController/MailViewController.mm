@@ -16,6 +16,8 @@
 #import "ChannelManager.h"
 #import "PersonSelectVC.h"
 #import "UITableViewController+Extension.h"
+#import "CCSafeNotificationCenter.h"
+#import "MailController.h"
 #define ISSYSTEMVERSION7 ([[UIDevice currentDevice].systemVersion floatValue] == 7.1 ? YES : NO)
 @interface MailViewController ()<KeyBordVIewDelegate,TopUIViewDelegate>
 
@@ -46,12 +48,8 @@
     //将触摸事件添加到TableView
     [self.mailTableTableViewController.tableView addGestureRecognizer:aTapGestureRecognizer];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:)
-                                                 name:UIApplicationWillResignActiveNotification object:nil]; //监听是否触发home键挂起程序.
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:)
-                                                 name:UIApplicationDidBecomeActiveNotification object:nil]; //监听是否重新进入程序程序.
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatMsgPushNotify:) name:kChatMailMsgPushFromServer object:nil];
+  
+
 
 }
 
@@ -62,11 +60,13 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasHidden:) name:UIKeyboardWillHideNotification object:nil];
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatMsgPushNotify:) name:kChatMailMsgPushFromServer object:nil];
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+//        [[NSNotificationCenter defaultCenter]removeObserver:self name:kChatMailMsgPushFromServer object:nil];
 }
 -(void)keyboardWasShown:(NSNotification *)note
 {
@@ -79,7 +79,7 @@
             CGRect keyBoardRect=[note.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
             CGFloat deltaY=keyBoardRect.size.height;
             
-            NSLog(@"%f",kMainScreenHeight - keyBoardRect.size.height- kMainScreenHeight*0.1);
+            DVLog(@"%f",kMainScreenHeight - keyBoardRect.size.height- kMainScreenHeight*0.1);
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.15 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 self.keyBordView.frame = CGRectMake( 0, kMainScreenHeight - keyBoardRect.size.height- kMainScreenHeight*0.1, kMainScreenWidth, kMainScreenHeight*0.1);
@@ -134,13 +134,17 @@
         CGPoint offset = CGPointMake(0, vTableView.contentSize.height - vTableView.frame.size.height);
         [vTableView setContentOffset:offset animated:animal];
     }else{
-        NSLog(@"没有滚动");
+        DVLog(@"没有滚动");
     }
 }
 
 //单机背景隐藏软键盘
 -(void)keyboardHide:(UITapGestureRecognizer*)tap{
+    [self endEditWithTextField];
     
+}
+
+-(void)endEditWithTextField{
     [self.keyBordView.chatViewTextField resignFirstResponder];
 }
 
@@ -165,7 +169,7 @@
     NSArray *keyBordView_c_H=[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[_keyBordView]-0-|"
                               　　　　　　　　　　　　　　　　　　　　　　　　　　　　options:0
                               　　　　　　　　　　　　　　　　　　　　　　　　　　　　metrics:nil
-                              　　　　　　　　　　　　　　　　　　　　　　　　　　　　views:NSDictionaryOfVariableBindings(_keyBordView)];
+                              　　　　　　　　　　　　　　　　　　　　　　　　　　　　views:views];
     
     NSArray *keyBordView_c_V=[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_keyBordView]-0-|"
                               　　　　　　　　　　　　　　　　　　　　　　　　　　　　options:0
@@ -239,23 +243,23 @@
     [super didReceiveMemoryWarning];
 }
 
-- (void)applicationWillResignActive:(NSNotification *)notification
-{
-//    [[ChannelManager sharedChannelManager].channel_map removeAllObjects];
-}
-
-- (void)applicationDidBecomeActive:(NSNotification *)notification
-{
-    if ([ServiceInterface serviceInterfaceSharedManager].vc_win.hidden == NO && ChatServiceCocos2dx::m_channelType == IOS_CHANNEL_TYPE_USER){
-    
-        NSString *ns_fromUid = [UserManager sharedUserManager].currentMail.opponentUid;
-        NSString *ns_fromName = [UserManager sharedUserManager].currentMail.opponentName;
-        
-        [[ChatServiceController chatServiceControllerSharedManager].gameHost openMailDialogViewFirst:ns_fromUid :ns_fromName];
-
-    
-    }
-}
+//- (void)applicationWillResignActive:(NSNotification *)notification
+//{
+////    [[ChannelManager sharedChannelManager].channel_map removeAllObjects];
+//}
+//
+//- (void)applicationDidBecomeActive:(NSNotification *)notification
+//{
+//    if ([ServiceInterface serviceInterfaceSharedManager].vc_win.hidden == NO && ChatServiceCocos2dx::m_channelType == IOS_CHANNEL_TYPE_USER){
+//    
+//        NSString *ns_fromUid = [UserManager sharedUserManager].currentMail.opponentUid;
+//        NSString *ns_fromName = [UserManager sharedUserManager].currentMail.opponentName;
+//        
+//        [[ChatServiceController chatServiceControllerSharedManager].gameHost openMailDialogViewFirst:ns_fromUid :ns_fromName];
+//
+//    
+//    }
+//}
 
 #pragma mark -
 #pragma mark TopUIView Delegate
@@ -267,7 +271,8 @@
     }else if(ChatServiceCocos2dx::m_channelType == IOS_CHANNEL_TYPE_CHATROOM){
         personSelectVC =[[PersonSelectVC alloc]initWithType:PersonSelectVCType_ChangeMember];
     }
-  
+    personSelectVC.personVCOpenFrom = PersonVCOpenFrom_CocosAdd;
+//    personSelectVC.ispushFrom_OC_Native = YES;
    
     NSString *groupChatKey = [UserManager sharedUserManager].currentMail.opponentUid;
     ChatChannel *chatChannel =  [[ChannelManager sharedChannelManager] gettingChannelInfo:groupChatKey];
@@ -280,59 +285,15 @@
      [ServiceInterface serviceInterfaceSharedManager].chatRootWindow.hidden = NO;
     [keywindow bringSubviewToFront:[ServiceInterface serviceInterfaceSharedManager].chatRootWindow];
     [ServiceInterface serviceInterfaceSharedManager].chatRootWindow.rootViewController = personSelectVC;
-   
-   
+}
+//返回按钮
+-(void)topUIViewCancalButtonAction{
+    [self.keyBordView.chatViewTextField resignFirstResponder];
+    CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MAIL_LIST_CHANGE);
+    self.mailTableTableViewController.currentChatChannel.channelDelegate = nil;
+    [self.mailTableTableViewController.currentChatChannel.msgList removeAllObjects];
+    self.mailTableTableViewController.currentChatChannel = nil;
 }
 
-#pragma mark -
-#pragma mark Notify Action
--(void)chatMsgPushNotify:(NSNotification *)vNofify{
-    NSDictionary *dict = vNofify.userInfo;
-    DVLog(@"userInfo :%@",dict);
-    NSString *channelId = dict[@"channelID"];
-    int  msgCount = [dict[@"msgCount"] intValue];
-    int  msgTpyeInt =   [[dict objectForKey:@"msgType"] intValue];
-    
-    ChatChannel *channel = [[ChannelManager sharedChannelManager]gettingChannelInfo:channelId];
-    ResponseMsgType msgType ;
-    if(msgTpyeInt == 0 ){
-        msgType = ResponseMsgTypeInitHistoryMSG;
-    }else if (msgTpyeInt == 1){
-        msgType = ResponseMsgTypeActionMSG;
-    }else{
-        msgType = ResponseMsgTypeOneMSG;
-    }
-    if ([[UserManager sharedUserManager].currentMail.opponentUid isEqualToString:channelId]){
-        [self.mailTableTableViewController setDataSourceArray:channel.msgList];
-        if (msgType == ResponseMsgTypeInitHistoryMSG){
-            //        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.mailTableTableViewController endRefreshing];
-            [self.mailTableTableViewController.tableView reloadData];
-            [self.mailTableTableViewController.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:msgCount-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
-            //         });
-        }else if (msgType == ResponseMsgTypeActionMSG){
-            //        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.mailTableTableViewController endRefreshing];
-            [self.mailTableTableViewController.tableView reloadData];
-            CGFloat offsetY = [self.mailTableTableViewController gettingOffsetY];
-            [self.mailTableTableViewController adjustLocation:offsetY];
-            
-//            [self.mailTableTableViewController.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow: (msgCount -1)inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
-            //        });
-            
-        }else{
-            //        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            [self.mailTableTableViewController.tableView reloadData];
-            CGPoint pt =self.mailTableTableViewController.tableView.contentOffset;
-            CGFloat boundaryValueMax= self.mailTableTableViewController.tableView.contentSize.height - self.mailTableTableViewController.tableView.frame.size.height * 0.6 - self.mailTableTableViewController.tableView.frame.size.height;
-            if (pt.y > boundaryValueMax && boundaryValueMax > 0) {
-                [self.mailTableTableViewController.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:channel.msgList.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
-            }
-            //        });
-        }
 
-    }
-    
-}
 @end

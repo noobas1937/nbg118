@@ -19,6 +19,8 @@
 /**根据id获取频道最后一条消息*/
 -(NSMsgItem*) gettingFirstMsg:(NSString*) channelID;
 
+@property (nonatomic,assign) int redPackageTime;
+
 -(void) addChatMsgList:(NSMsgItem *)cm;
 @end
 static MsgMessage * msgMessage = nil;

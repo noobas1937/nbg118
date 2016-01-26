@@ -17,7 +17,7 @@
 
 @implementation GameHostInterface
 
--(NSArray*) getChatLangArray
+-(NSArray*) gettingChatLangArray
 {
     const char* chatLang[] = {"E100068","115020","105207","105209","105210","105300","105302","105304","105307","105308"
         ,"105309","105312","105313","105315","105316","105321","105322","105502","105602","108584","115922","115923"
@@ -58,8 +58,7 @@
 //    else
 //        CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(IOSScheduleObject::showLatestMessage), IOSScheduleObject::getInstance(), 0.0f, 0, 1.0f, false);
 }
-
--(void) setActionAfterResume:(NSString *)action :(NSString *)uid :(NSString *)name :(NSString *)reportUid :(NSString *)detectReportUid :(BOOL)returnToChatAfterPopup
+-(void) setActionAfterResume:(NSString*) action :(NSString*) uid :(NSString*) name :(NSString*) reportUid :(NSString*) detectReportUid :(int)equipId :(BOOL) returnToChatAfterPopup
 {
 //    IOSScheduleObject::getInstance()->actionAfterResume = [action UTF8String];
 //    IOSScheduleObject::getInstance()->uid = [uid UTF8String];
@@ -91,7 +90,7 @@
 /**解除禁言玩家*/
 -(void) ban:(NSString*) uid :(NSString*)name :(int) banTime
 {
-//    NSLog(@"禁言");
+//    DVLog(@"禁言");
 //    BanPopUpController *banPopUpController = [[BanPopUpController alloc] initWithNibName:@"BanPopUpController" bundle:nil];
 //    
 //    [banPopUpController setInitData:chatMessage];
@@ -109,7 +108,7 @@
 {
     int type = ChatServiceCocos2dx::m_channelType;
     
-    [[ChatServiceController chatServiceControllerSharedManager] doHostAction:@"joinAlliance" :allianceId :name :@"" :@"" :TRUE ];
+    [[ChatServiceController chatServiceControllerSharedManager] doHostAction:@"joinAlliance" :allianceId :name :@"" :@"" :0 :TRUE ];
     [[ChatServiceController chatServiceControllerSharedManager].gameHost onResume:type];
 }
 
@@ -137,17 +136,17 @@
 {
     int type = ChatServiceCocos2dx::m_channelType;
     
-    [[ChatServiceController chatServiceControllerSharedManager] doHostAction:@"inviteJoinAlliance" :uid :name :@"" :@"" :TRUE ];
+    [[ChatServiceController chatServiceControllerSharedManager] doHostAction:@"inviteJoinAlliance" :uid :name :@"" :@"" :0 :TRUE ];
     [[ChatServiceController chatServiceControllerSharedManager].gameHost onResume:type];
 }
 
 - (void)battleMsg:(NSString *)uid :(NSString *)reportUid
 {
-    NSLog(@"查看战报");
+    DVLog(@"查看战报");
     
     int type = ChatServiceCocos2dx::m_channelType;
     
-    [[ChatServiceController chatServiceControllerSharedManager] doHostAction:@"viewBattleReport" :uid :reportUid :@"" :@"" :TRUE ];
+    [[ChatServiceController chatServiceControllerSharedManager] doHostAction:@"viewBattleReport" :uid :reportUid :@"" :@"" :0 :TRUE ];
     [[ServiceInterface serviceInterfaceSharedManager] hideChatViewIOS];
     [[ChatServiceController chatServiceControllerSharedManager].gameHost onResume:type];
     
@@ -155,12 +154,12 @@
 
 -(void) detectMsg:(NSString *)uid :(NSString *)detectReportUid
 {
-    NSLog(@"查看侦查战报");
+    DVLog(@"查看侦查战报");
     
     int type = ChatServiceCocos2dx::m_channelType;
     
     [[ServiceInterface serviceInterfaceSharedManager] hideChatViewIOS];
-    [[ChatServiceController chatServiceControllerSharedManager] doHostAction:@"viewDetectReport" :uid :detectReportUid :@"" :@"" :TRUE ];
+    [[ChatServiceController chatServiceControllerSharedManager] doHostAction:@"viewDetectReport" :uid :detectReportUid :@"" :@"" :0 :TRUE ];
     [[ChatServiceController chatServiceControllerSharedManager].gameHost onResume:type];
 }
 
@@ -169,7 +168,7 @@
     
     int type = ChatServiceCocos2dx::m_channelType;
     
-    [[ChatServiceController chatServiceControllerSharedManager] doHostAction:@"showPlayerInfo" :uid :name :@"" :@"" :TRUE ];
+    [[ChatServiceController chatServiceControllerSharedManager] doHostAction:@"showPlayerInfo" :uid :name :@"" :@"" :0 :TRUE ];
     [[ServiceInterface serviceInterfaceSharedManager] hideChatViewIOS];
     [[ChatServiceController chatServiceControllerSharedManager].gameHost onResume:type];
 }
@@ -313,7 +312,7 @@
 
 -(void) updateMailList
 {
-    NSLog(@"");
+    DVLog(@"");
 }
 
 //-(void) initChatToHistory_allance{}
@@ -369,5 +368,21 @@
 -(void) gettingServiceChannelNewMsg:(ChatChannel *)cc{}
 
 -(BOOL) gettingServiceChannelOldMsg:(ChatChannel *)cc{return FALSE;}
+
+-(void)viewEquipment:(NSString *)equipId{};
+
+-(void)reportCustomHeadPic:(NSString*) uid{}
+
+-(void) sendChatRoomMsg:(NSString*) msg :(NSString*) groupId sendLocalTime:(NSString*)sendLocalTime{}
+
+-(void) popUpCocosMailfByData:(MailData *)mailData{}
+
+-(NSDictionary *)result2JsonWithAddUid:(NSString *)uid{return nil;}
+
+-(NSString*) gettingPicByType:(int) type withVal:(int) val{return @"";}
+
+-(void) contentofReportWithUid:(NSString*)uid withContent:(NSString*)content{}
+
+-(BOOL) isAutoTranslate{return false;}
 
 @end

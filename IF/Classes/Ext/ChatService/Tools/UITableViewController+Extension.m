@@ -22,7 +22,7 @@
         CGPoint offset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.frame.size.height);
         [self.tableView setContentOffset:offset animated:FALSE];
     }else{
-        NSLog(@"没有滚动");
+        DLog(@"没有滚动");
     }
 }
 
@@ -45,6 +45,7 @@
 
 -(void) beginRefreshing
 {
+    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         // (最好在刷新表格后调用)调用endRefreshing可以结束刷新状态
         [self.tableView.header endRefreshing];

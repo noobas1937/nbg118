@@ -13,16 +13,22 @@
 #import "MsgMessage.h"
 #import "ServiceInterface.h"
 #import "UserManager.h"
-#import "ZYTChatSystemCell.h"
+#import "CSChatSystemCell.h"
 #import "ChannelManager.h"
-#import "PersonSelectVC.h"
+ 
 #include "ChatServiceCocos2dx.h"
 #import "MJRefresh.h"
 #import "UITableViewController+Extension.h"
 #import "UITableView+FDTemplateLayoutCell.h"
 
-@interface ChatMailTableTableViewController ()<UITableViewDataSource,UITableViewDelegate>
+#import "SRRefreshView.h"
+@interface ChatMailTableTableViewController ()<UITableViewDataSource,UITableViewDelegate,ChatChannelDelegate,SRRefreshDelegate>
 @property (nonatomic,assign) CGFloat offsetY;
+@property (nonatomic,assign,getter=isHasNewMsgPushed)BOOL hasNewMsgPushed;
+@property (nonatomic,assign,getter=isHasLoadOldMsgPushed)BOOL hasLoadOldMsgPushed;
+@property (nonatomic,assign,getter=isRefreshingFlagTure)BOOL refreshingFlag;
+
+@property (strong, nonatomic) SRRefreshView *slimeView;
 @end
 
 static NSString *const mailCell=@"mail";
@@ -31,7 +37,7 @@ static NSString *const mailCell=@"mail";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setupRefresh];
+ 
     [self.tableView registerClass:[ChatCellIOS class] forCellReuseIdentifier:mailCell];
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
     self.tableView.allowsSelection = NO;
@@ -39,19 +45,48 @@ static NSString *const mailCell=@"mail";
     self.tableView.dataSource=self;
     self.tableView.delegate=self;
     self.dataSourceArray = [NSMutableArray array];
+    
+    [self.tableView addSubview:self.slimeView];
+    self.refreshingFlag = NO;
 }
 
 - (void)viewDidAppear:(BOOL)animated{
 //    [self tableViewScrollCurrentLine];
 }
 
+
+
+- (SRRefreshView *)slimeView
+{
+    if (_slimeView == nil) {
+        _slimeView = [[SRRefreshView alloc] init];
+        _slimeView.delegate = self;
+        _slimeView.upInset = 0;
+        _slimeView.slimeMissWhenGoingBack = YES;
+        _slimeView.slime.bodyColor = [UIColor grayColor];
+        _slimeView.slime.skinColor = [UIColor grayColor];
+        _slimeView.slime.lineWith = 1;
+        _slimeView.slime.shadowBlur = 4;
+        _slimeView.slime.shadowColor = [UIColor grayColor];
+    }
+    
+    return _slimeView;
+}
+
+
+
+
 -(void)setCurrentChatChannel:(ChatChannel *)currentChatChannel{
     _currentChatChannel = currentChatChannel;
-   
-    if (_currentChatChannel.msgList > 0) {
-         _dataSourceArray = [_currentChatChannel.msgList mutableCopy];
-        [self.tableView reloadData];
-    }
+    _currentChatChannel.channelDelegate  = self;
+ 
+}
+
+-(void)setDataSourceArray:(NSMutableArray *)dataSourceArray{
+    [_dataSourceArray removeAllObjects ];
+    _dataSourceArray = [dataSourceArray mutableCopy];
+//    [self.tableView reloadData];
+//    [self tableViewScrollCurrentLine];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -67,7 +102,7 @@ static NSString *const mailCell=@"mail";
     
     if (cellFrame.chatMessage.post == 100) {
 
-        ZYTChatSystemCell *cell =[ZYTChatSystemCell chatSystemCellWithTableView:tableView];
+        CSChatSystemCell *cell =[CSChatSystemCell chatSystemCellWithTableView:tableView];
         [cell setChatCellFrame:cellFrame];
        
         cell.backgroundColor=[UIColor clearColor];
@@ -116,48 +151,13 @@ static NSString *const mailCell=@"mail";
     
 }
 
-/**------------------------------------------------------自定义函数------------------------------------------------------*/
-- (void)setupRefresh
-{
-    
-    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-    
-    // 隐藏时间
-    header.lastUpdatedTimeLabel.hidden = YES;
-    
-    // 隐藏状态
-    header.stateLabel.hidden = YES;
-    
-    // 设置header
-    self.tableView.header = header;
-}
 
 -(void)endRefreshing
 {
     [self.tableView.header endRefreshing];
 }
 
-//下拉刷新
-- (void)headerRereshing
-{
-    
-    if (self.currentChatChannel.channelType == IOS_CHANNEL_TYPE_USER) {
-        [self.tableView.header endRefreshing];
-        return;
-    }
-    
-    self.offsetY = self.tableView.contentSize.height;
-    [ServiceInterface serviceInterfaceSharedManager].isSrollNewMsg = FALSE;
-    
-    BOOL flg = [self.currentChatChannel gettingOldMsg];
-    
-    if (flg) {
-        [self beginRefreshing];
-    }else{
-        [self endRefreshing];
-    }
 
-}
 
 -(instancetype) init
 {
@@ -173,27 +173,17 @@ static NSString *const mailCell=@"mail";
 -(void)refreshDisplay:(ChatCellFrame *)cellFrame :(NSString *)fromUid {
 
     ChatChannel *cc = [[ChannelManager sharedChannelManager] gettingChannelInfo:fromUid];
-    [cc.msgList addObject:cellFrame];
-    ChatServiceCocos2dx::settingGroupChatMailVCChatChannel();
-    [self tableViewScrollCurrentLine];
+//    [cc.msgList addObject:cellFrame];
+    [_dataSourceArray addObject:cellFrame];
+    [self.tableView reloadData];
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataSourceArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+//    ChatServiceCocos2dx::settingGroupChatMailVCChatChannel();
+//    [self tableViewScrollCurrentLine];
 
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
-    
-    CGPoint pt = [scrollView contentOffset];
-        
-    //获取是否滚动的最大边界值
-    CGFloat boundaryValueMax= scrollView.contentSize.height - self.view.frame.size.height * 0.6 - self.view.frame.size.height;
-        
-    if (pt.y > boundaryValueMax && boundaryValueMax > 0) {
-        self.isSrollNewMsg = TRUE;
-    }else{
-        self.isSrollNewMsg = FALSE;
-    }
-    
-}
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+
 
 -(NSString*) gettingFromUid
 {
@@ -216,4 +206,146 @@ static NSString *const mailCell=@"mail";
 }
 
 
+#pragma mark -
+#pragma mark UIScrollView Delegate
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    if (self.isHasNewMsgPushed) {
+        [self reloadNewMsg];
+    }else if (self.isHasLoadOldMsgPushed){
+        [self reloadOldMsg];
+    }
+}
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (_slimeView) {
+        [_slimeView scrollViewDidScroll];
+    }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (_slimeView) {
+        [_slimeView scrollViewDidEndDraging];
+    }
+}
+#pragma mark -
+#pragma mark 滚动停止后，来消息处理
+-(void)reloadNewMsg{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        //更新UI操作
+        NSIndexPath *tempIndexPath = [self.tableView.indexPathsForVisibleRows lastObject];
+        
+        int oldCount = self.dataSourceArray.count;
+        self.dataSourceArray = [self.currentChatChannel.msgList mutableCopy];
+        int indexCount = self.dataSourceArray.count - oldCount;
+        [self.tableView reloadData];
+        if (self.dataSourceArray.count > 0){
+            if (oldCount == 0) {
+                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataSourceArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+            }else{
+                if  (indexCount > 0){
+                    if  (tempIndexPath.row > oldCount-4){
+                        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.dataSourceArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+                    }
+                }
+            }
+        }
+
+    });
+    self.hasNewMsgPushed = NO;
+}
+-(void)reloadOldMsg{
+    
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        NSIndexPath *tempIndexPath =  [[self.tableView indexPathsForVisibleRows] objectAtIndex:0];
+        
+        //更新UI操作
+        
+        int oldCount = self.dataSourceArray.count;
+        self.dataSourceArray = [self.currentChatChannel.msgList mutableCopy];
+        int indexCount = self.dataSourceArray.count - oldCount;
+        [self.tableView reloadData];
+        if (tempIndexPath.row<= 3) {
+            CGPoint pt =self.tableView.contentOffset;
+            CGFloat boundaryValueMax= self.tableView.contentSize.height - self.tableView.frame.size.height * 0.6 - self.tableView.frame.size.height;
+            if(indexCount > 0   ){
+                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:indexCount inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+            }
+        }
+
+    });
+   
+    
+}
+#pragma mark -
+#pragma mark ChatChannel Delegate
+
+-(void)showNewMsg:(ChatChannel *)vChannle{
+    if ( self.tableView.dragging== NO && self.tableView.decelerating == NO) {
+        [self reloadNewMsg];
+        self.hasNewMsgPushed = NO;
+    }else{
+        self.hasNewMsgPushed = YES;
+    }
+}
+-(void)showOldMsg:(ChatChannel *)vChannel{
+    [self tableViewEndRefreshed];
+    if ( self.tableView.dragging== NO && self.tableView.decelerating == NO) {
+        [self reloadOldMsg];
+        self.hasLoadOldMsgPushed = NO;
+    }else{
+        self.hasLoadOldMsgPushed = YES;
+    }
+}
+
+-(void)showscreenLockedMsg:(ChatChannel *)vChannel{
+    if ( self.tableView.dragging== NO && self.tableView.decelerating == NO) {
+        [self reloadOldMsg];
+        self.hasLoadOldMsgPushed = NO;
+    }else{
+        self.hasLoadOldMsgPushed = YES;
+    }
+}
+#pragma mark -
+#pragma mark SRRefreshDelegate
+
+- (void)slimeRefreshStartRefresh:(SRRefreshView*)refreshView{
+    if (self.dataSourceArray.count== 0){
+        //没有邮件消息，不让下拉刷新
+        self.refreshingFlag = YES;
+    }else{
+        self.refreshingFlag = NO;
+    }
+    if (self.isRefreshingFlagTure == NO) {
+        self.refreshingFlag = ![self tableViewBeginRefreshed];
+        if (self.isRefreshingFlagTure == YES) {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                // (最好在刷新表格后调用)调用endRefreshing可以结束刷新状态
+                if(self.isRefreshingFlagTure == YES ){
+                    [self tableViewEndRefreshed];
+                }
+                
+            });
+        }else{
+            [self tableViewEndRefreshed];
+        }
+        
+    }else{
+         [_slimeView endRefresh];
+    }
+}
+-(BOOL)tableViewBeginRefreshed{
+ 
+    self.offsetY = self.tableView.contentSize.height;
+   return [self.currentChatChannel gettingOldMsg];
+    
+}
+-(void)tableViewEndRefreshed{
+    self.refreshingFlag = NO;
+    [_slimeView endRefresh];
+}
 @end

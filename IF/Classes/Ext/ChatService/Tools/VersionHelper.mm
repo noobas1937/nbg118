@@ -16,13 +16,19 @@
     CGFloat floatVersion= 0.0;
     NSString *stringVersion = @"";
     for (int xx = 0; xx<array.count; xx++) {
-        stringVersion = [stringVersion stringByAppendingString:[array objectAtIndex:xx]];
         if (xx == 0) {
+            stringVersion = [stringVersion stringByAppendingString:[array objectAtIndex:xx]];
             stringVersion = [stringVersion stringByAppendingString:@"."];
+        }else{
+            NSString *tempString = [array objectAtIndex:xx];
+            if (tempString.length==1) {
+                tempString = [@"0" stringByAppendingString:tempString];
+            }
+            stringVersion = [stringVersion stringByAppendingString:tempString];
         }
     }
     floatVersion = [stringVersion floatValue];
-    DVLog(@"%f",floatVersion);
+    DVLog(@"%@转换的字符串 ：%f",versionStr,floatVersion);
     return floatVersion;
 }
 
