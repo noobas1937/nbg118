@@ -160,10 +160,12 @@ CCTableViewCell* ActivityRewardView::tableCellAtIndex(CCTableView *table, ssize_
         int min = oneDic->valueForKey("min")->intValue();
         int max = oneDic->valueForKey("max")->intValue();
         if(min!=max){
-            tempStr = _lang_1("105828","");
-            tempStr.append(CC_ITOA(min));
-            tempStr.append("~");
-            tempStr.append(CC_ITOA(max));
+            string t("");
+            t.append(CC_ITOA(min));
+            t.append("~");
+            t.append(CC_ITOA(max));
+            
+            tempStr = _lang_1("105828", t.c_str());
         }else{
             tempStr = _lang_1("105828",CC_ITOA(min));
         }
