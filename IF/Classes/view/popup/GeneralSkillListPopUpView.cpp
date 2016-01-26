@@ -1390,7 +1390,8 @@ bool GeneralSkillUpdatePopUpView::onAssignCCBMemberVariable(cocos2d::CCObject * 
 }
 
 SEL_CCControlHandler GeneralSkillUpdatePopUpView::onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName){
-    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onUpdateClick", GeneralSkillUpdatePopUpView::onUpdateClick);    
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onUpdateClick", GeneralSkillUpdatePopUpView::onUpdateClick);
+     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onUpdateMaxClick", GeneralSkillUpdatePopUpView::onUpdateMaxClick);
     return NULL;
 }
 

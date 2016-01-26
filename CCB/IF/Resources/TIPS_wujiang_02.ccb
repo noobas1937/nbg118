@@ -1464,7 +1464,7 @@
 										<string>BlockCCControl</string>
 										<key>value</key>
 										<array>
-											<string>onUpdateClick</string>
+											<string>onUpdateMaxClick</string>
 											<integer>2</integer>
 											<integer>33</integer>
 										</array>
@@ -1605,6 +1605,8 @@
 										</array>
 									</dict>
 								</array>
+								<key>selected</key>
+								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>
