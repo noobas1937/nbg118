@@ -228,7 +228,7 @@
         <ItemSpec id="2104101" name="2000151" target="2000152" type="2" para2="500" order2="200070" icon1="quest_Sawmill_icon1" icon2="quest_Collect_icon2"/>
         <ItemSpec id="2104201" name="2000153" target="2000154" type="2" para2="500" Order="0" icon1="quest_Farm_icon1" icon2="quest_Collect_icon2" rewardshow="wood"/>
         <ItemSpec id="2200101" name="2000030" target="2000031" type="1" para2="1" Order="100010" icon1="quest_Barrack_icon1" icon2="quest_Build_icon2" gotype="1" go="14" rewardshow="wood" profile="2"/>
-        <ItemSpec id="2200102" name="2000032" target="2000033" type="1" para2="2" Order="100200" icon1="quest_Barrack_icon1" icon2="quest_Upgrade_icon2" gotype="2" go="423000" rewardshow="wood" profile="2"/>
+        <ItemSpec id="2200102" name="2000032" target="2000033" type="1" para2="2" Order="100233" icon1="quest_Barrack_icon1" icon2="quest_Upgrade_icon2" gotype="2" go="423000" rewardshow="wood" profile="2"/>
         <ItemSpec id="2200103" name="2000032" target="2000033" type="1" para2="3" Order="100460" icon1="quest_Barrack_icon1" icon2="quest_Upgrade_icon2" gotype="2" go="423000" rewardshow="wood" profile="2"/>
         <ItemSpec id="2200104" name="2000032" target="2000033" type="1" para2="4" Order="100580" icon1="quest_Barrack_icon1" icon2="quest_Upgrade_icon2" gotype="2" go="423000" rewardshow="wood" profile="2"/>
         <ItemSpec id="2200105" name="2000032" target="2000033" type="1" para2="5" Order="100730" icon1="quest_Barrack_icon1" icon2="quest_Upgrade_icon2" gotype="2" go="423000" rewardshow="wood" profile="2"/>
@@ -257,8 +257,8 @@
         <ItemSpec id="2200128" name="2000032" target="2000033" type="1" para2="28" Order="106120" icon1="quest_Barrack_icon1" icon2="quest_Upgrade_icon2" gotype="2" go="423000" rewardshow="wood"/>
         <ItemSpec id="2200129" name="2000032" target="2000033" type="1" para2="29" Order="106340" icon1="quest_Barrack_icon1" icon2="quest_Upgrade_icon2" gotype="2" go="423000" rewardshow="wood"/>
         <ItemSpec id="2200130" name="2000032" target="2000033" type="2" para2="30" icon1="quest_Barrack_icon1" icon2="quest_Upgrade_icon2" gotype="2" go="423000" rewardshow="wood"/>
-        <ItemSpec id="2200201" name="2000034" target="2000035" type="1" para2="1" Order="100209" icon1="quest_Stable_icon1" icon2="quest_Build_icon2" gotype="1" go="10" rewardshow="food" profile="2"/>
-        <ItemSpec id="2200202" name="2000036" target="2000037" type="1" para2="2" Order="100210" icon1="quest_Stable_icon1" icon2="quest_Upgrade_icon2" gotype="2" go="424000" rewardshow="food" profile="2"/>
+        <ItemSpec id="2200201" name="2000034" target="2000035" type="1" para2="1" Order="100234" icon1="quest_Stable_icon1" icon2="quest_Build_icon2" gotype="1" go="10" rewardshow="food" profile="2"/>
+        <ItemSpec id="2200202" name="2000036" target="2000037" type="1" para2="2" Order="100235" icon1="quest_Stable_icon1" icon2="quest_Upgrade_icon2" gotype="2" go="424000" rewardshow="food" profile="2"/>
         <ItemSpec id="2200203" name="2000036" target="2000037" type="1" para2="3" Order="100470" icon1="quest_Stable_icon1" icon2="quest_Upgrade_icon2" gotype="2" go="424000" rewardshow="food" profile="2"/>
         <ItemSpec id="2200204" name="2000036" target="2000037" type="1" para2="4" Order="100590" icon1="quest_Stable_icon1" icon2="quest_Upgrade_icon2" gotype="2" go="424000" rewardshow="food" profile="2"/>
         <ItemSpec id="2200205" name="2000036" target="2000037" type="1" para2="5" Order="100740" icon1="quest_Stable_icon1" icon2="quest_Upgrade_icon2" gotype="2" go="424000" rewardshow="food" profile="2"/>

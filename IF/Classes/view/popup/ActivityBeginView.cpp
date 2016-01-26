@@ -427,8 +427,6 @@ void ActivityBeginView::getServerData(CCObject* param){
         }
         m_totalRankNum->setString(str);
         
-        m_progress1->setContentSize({totalRank > 0 ? static_cast<float>(532.0 * score / totalRank) : 0, 11});
-        
         CCArray* array = dynamic_cast<CCArray*>(dic->objectForKey("reward"));
         CC_SAFE_RELEASE_NULL(m_rewards);
         m_rewards = array;
@@ -595,6 +593,11 @@ void ActivityBeginView::getServerData(CCObject* param){
                 int per = len*100;
                 m_proTimer->setPercentage(per);
             }
+            
+            float w = threeScore > 0 ? 532.0 * score / threeScore : 0;
+            w = w > 0 ? w : 1;
+            w = w > 532 ? 532 : w;
+            m_progress1->setContentSize({w, 11});
         }
         
         m_eventIds.clear();
