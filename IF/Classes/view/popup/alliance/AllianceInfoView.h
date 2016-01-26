@@ -46,6 +46,8 @@ public:
     virtual void tableCellWillRecycle(CCTableView* table, CCTableViewCell* cell);
     
     void updateInfo();
+    
+    CCNode* getGuideNode(string str);
 private:
     virtual void onEnter();
     virtual void onExit();
@@ -235,6 +237,7 @@ class AllianceBottomNode:public Layer
 public:
     
     static AllianceBottomNode *create(AllianceInfo* info,AlliancePageTag tag);
+    
 
 private:
     AllianceBottomNode();

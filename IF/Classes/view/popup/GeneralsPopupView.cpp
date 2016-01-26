@@ -845,7 +845,7 @@ CCNode* GeneralsPopupView::getGuideNode(string _key)
 {
     if (_key == "General_set") {
 //        return m_clickNode3;
-        return m_button;
+        return m_clickNode3;
     }
     return NULL;
 }

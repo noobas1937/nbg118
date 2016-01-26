@@ -110,41 +110,15 @@ cp -rf ../../proj.android/obj/local/armeabi $copyPath >/dev/null
 echo "3.Cleaning for packing APK..."
 ant clean #>$logfileName.log 2>$logfileName.err
 rm -rf kit-libs
-cp -r ../kit-libs ./
-
-mkdir	./kit-libs/com-crashlytics-sdk-android_answers/src
-mkdir	./kit-libs/com-crashlytics-sdk-android_beta/src
-mkdir	./kit-libs/com-crashlytics-sdk-android_crashlytics/src
-mkdir	./kit-libs/com-crashlytics-sdk-android_crashlytics-ndk-labs/src
-mkdir	./kit-libs/io-fabric-sdk-android_fabric/src
-
-mkdir	./kit-libs/com-crashlytics-sdk-android_answers/res
-mkdir	./kit-libs/com-crashlytics-sdk-android_beta/res
-mkdir	./kit-libs/com-crashlytics-sdk-android_crashlytics/res
-mkdir	./kit-libs/com-crashlytics-sdk-android_crashlytics-ndk-labs/res
-mkdir	./kit-libs/io-fabric-sdk-android_fabric/res
-
-mkdir	./kit-libs/com-crashlytics-sdk-android_answers/assets
-mkdir	./kit-libs/com-crashlytics-sdk-android_beta/asset
-mkdir	./kit-libs/com-crashlytics-sdk-android_crashlytics/asset
-mkdir	./kit-libs/com-crashlytics-sdk-android_crashlytics-ndk-labs/asset
-mkdir	./kit-libs/io-fabric-sdk-android_fabric/asset
-
-mkdir	./kit-libs/com-crashlytics-sdk-android_answers/aidl
-mkdir	./kit-libs/com-crashlytics-sdk-android_beta/aidl
-mkdir	./kit-libs/com-crashlytics-sdk-android_crashlytics/aidl
-mkdir	./kit-libs/com-crashlytics-sdk-android_crashlytics-ndk-labs/aidl
-mkdir	./kit-libs/io-fabric-sdk-android_fabric/aidl
-
-# ant crashlytics-update-dependencies
+ant crashlytics-update-dependencies
 sed -i.bak 's/'"manifestmerger.enabled=true"'/'"manifestmerger.enabled=false"'/g' project.properties
 rm -f project.properties.bak
-# rm -rf kit-libs/com-crashlytics-sdk-android_crashlytics-ndk-labs/libs/arm64-v8a
-# rm -rf kit-libs/com-crashlytics-sdk-android_crashlytics-ndk-labs/libs/armeabi-v7a
-# rm -rf kit-libs/com-crashlytics-sdk-android_crashlytics-ndk-labs/libs/mips
-# rm -rf kit-libs/com-crashlytics-sdk-android_crashlytics-ndk-labs/libs/mips64
-# rm -rf kit-libs/com-crashlytics-sdk-android_crashlytics-ndk-labs/libs/x86
-# rm -rf kit-libs/com-crashlytics-sdk-android_crashlytics-ndk-labs/libs/x86_64
+rm -rf kit-libs/com-crashlytics-sdk-android_crashlytics-ndk-labs/libs/arm64-v8a
+rm -rf kit-libs/com-crashlytics-sdk-android_crashlytics-ndk-labs/libs/armeabi-v7a
+rm -rf kit-libs/com-crashlytics-sdk-android_crashlytics-ndk-labs/libs/mips
+rm -rf kit-libs/com-crashlytics-sdk-android_crashlytics-ndk-labs/libs/mips64
+rm -rf kit-libs/com-crashlytics-sdk-android_crashlytics-ndk-labs/libs/x86
+rm -rf kit-libs/com-crashlytics-sdk-android_crashlytics-ndk-labs/libs/x86_64
 errorMsg=`cat $logfileName.err`
 if [ ! -n "$errorMsg" ]; then
 	echo "[Done]"

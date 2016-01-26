@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <tns:database xmlns:tns="http://www.iw.com/sns/platform/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <Group id="plot">
+        <ItemSpec id="id" content="content" seat="seat" at="at" figure="figure" name="name"/>
         <ItemSpec id="3070110" content="3270111" seat="2" at="1" figure="guide_woman" name="3000001"/>
         <ItemSpec id="3070210" content="3270211" seat="2" at="1" figure="guide_woman" name="3000001"/>
         <ItemSpec id="3070310" content="3270311" seat="2" at="1" figure="guide_woman" name="3000001"/>
@@ -14,5 +15,34 @@
         <ItemSpec id="3074010" content="3274011" seat="2" at="1" figure="guide_woman" name="3000001"/>
         <ItemSpec id="3074210" content="3274211" seat="2" at="1" figure="guide_woman" name="3000001"/>
         <ItemSpec id="3074710" content="3274711" seat="2" at="1" figure="guide_woman" name="3000001"/>
+        <ItemSpec id="3311310" content="510003" seat="2" at="1" figure="guide_woman" name="3000001"/>
+        <ItemSpec id="3311410" content="510037" seat="2" at="1" figure="guide_bulage" name="3000002"/>
+        <ItemSpec id="3312510" content="510038" seat="2" at="1" figure="guide_woman" name="3000001"/>
+        <ItemSpec id="3313110" content="510007" seat="2" at="1" figure="guide_woman" name="3000001"/>
+        <ItemSpec id="3313610" content="510008" seat="3" at="1" figure="guide_Warrior" name="3000003"/>
+        <ItemSpec id="3313710" content="510009" seat="2" at="1" figure="guide_woman" name="3000001"/>
+        <ItemSpec id="3314310" content="510010" seat="2" at="1" figure="guide_woman" name="3000001"/>
+        <ItemSpec id="3314510" content="510011" seat="3" at="1" figure="guide_woman" name="3000001"/>
+        <ItemSpec id="3315110" content="510012" seat="2" at="1" figure="guide_woman" name="3000001"/>
+        <ItemSpec id="3315610" content="510013" seat="2" at="1" figure="guide_woman" name="3000001"/>
+        <ItemSpec id="3316210" content="510014" seat="2" at="1" figure="guide_woman" name="3000001"/>
+        <ItemSpec id="3316810" content="510015" seat="2" at="1" figure="guide_woman" name="3000001"/>
+        <ItemSpec id="3320110" content="510016" seat="2" at="1" figure="guide_woman" name="3000001"/>
+        <ItemSpec id="3330110" content="510017" seat="2" at="1" figure="guide_woman" name="3000001"/>
+        <ItemSpec id="3330510" content="510018" seat="2" at="1" figure="guide_woman" name="3000001"/>
+        <ItemSpec id="3350110" content="510019" seat="2" at="1" figure="guide_woman" name="3000001"/>
+        <ItemSpec id="3350810" content="510020" seat="2" at="1" figure="guide_woman" name="3000001"/>
+        <ItemSpec id="3370110" content="510021" seat="2" at="1" figure="guide_woman" name="3000001"/>
+        <ItemSpec id="3370610" content="510022" seat="2" at="1" figure="guide_woman" name="3000001"/>
+        <ItemSpec id="3380110" content="510023" seat="3" at="1" figure="guide_woman" name="3000001"/>
+        <ItemSpec id="3380510" content="510024" seat="3" at="1" figure="guide_woman" name="3000001"/>
+        <ItemSpec id="3390110" content="510025" seat="2" at="1" figure="guide_woman" name="3000001"/>
+        <ItemSpec id="3390410" content="510026" seat="2" at="1" figure="guide_woman" name="3000001"/>
+        <ItemSpec id="3410710" content="510028" seat="2" at="1" figure="guide_woman" name="3000001"/>
+        <ItemSpec id="3410810" content="510029" seat="2" at="1" figure="guide_woman" name="3000001"/>
+        <ItemSpec id="3431010" content="510033" seat="2" at="1" figure="guide_woman" name="3000001"/>
+        <ItemSpec id="3432010" content="510034" seat="2" at="1" figure="guide_woman" name="3000001"/>
+        <ItemSpec id="3433010" content="510035" seat="2" at="1" figure="guide_woman" name="3000001"/>
+        <ItemSpec id="3434010" content="510036" seat="2" at="1" figure="guide_woman" name="3000001"/>
     </Group>
 </tns:database>

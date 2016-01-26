@@ -20,6 +20,8 @@
 #include "CCClipNode.h"
 #include "ButtonLightEffect.h"
 
+#include "GuideController.h"
+
 string YesNoDialog::m_dialogStr="";
 string YesNoDialog::m_buttonName="";
 CCCallFunc* YesNoDialog::m_callBackFunc=NULL;
@@ -982,6 +984,12 @@ void YesNoDialog::keypressedBtnOk(CCObject * pSender, Control::EventType pCCCont
     if(m_isAlliance){
         PopupViewController::getInstance()->removeAllPopupView();
         PopupViewController::getInstance()->addPopupInView(AllianceInfoView::create(&GlobalData::shared()->playerInfo.allianceInfo));
+        
+        if(GlobalData::shared()->playerInfo.isfirstJoin && USE_NEW_GUIDE)//fusheng 第一次加入联盟
+        {
+            GuideController::share()->setGuide("3380100");//fusheng 联盟功能引导
+            
+        }
     }else if(m_closeAll){
         PopupViewController::getInstance()->removeAllPopupView();
     }else{

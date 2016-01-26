@@ -4802,6 +4802,18 @@
 									</dict>
 									<dict>
 										<key>name</key>
+										<string>contentSize</string>
+										<key>type</key>
+										<string>Size</string>
+										<key>value</key>
+										<array>
+											<real>640</real>
+											<real>155</real>
+											<integer>0</integer>
+										</array>
+									</dict>
+									<dict>
+										<key>name</key>
 										<string>anchorPoint</string>
 										<key>type</key>
 										<string>Point</string>

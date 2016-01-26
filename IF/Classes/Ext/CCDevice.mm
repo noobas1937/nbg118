@@ -143,7 +143,19 @@ string CCDevice::getHandSetInfo()
 
 string CCDevice::getVersionName()
 {
-    return [[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"] UTF8String];
+    string oriVersion = [[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"] UTF8String];
+    vector<std::string> oriVector;
+    CCCommonUtils::splitString(oriVersion, ".", oriVector);
+    vector<std::string> realVector;
+    string baseVersion = "1.1.8";
+    CCCommonUtils::splitString(baseVersion, ".", realVector);
+    int front = atoi(oriVector[0].c_str()) + atoi(realVector[0].c_str());
+    int middle = atoi(oriVector[1].c_str()) + atoi(realVector[1].c_str());
+    int end = atoi(oriVector[2].c_str()) + atoi(realVector[2].c_str());
+//    string realVersion = ""+CC_ITOA(front)+"."+CC_ITOA(middle)+"."+CC_ITOA(end);
+    string realVersion = CCString::createWithFormat("%d.%d.%d", front, middle, end)->getCString();
+//    realVersion.append(CC_ITOA(front));
+    return realVersion;
 }
 
 string CCDevice::getDLCVersionName()

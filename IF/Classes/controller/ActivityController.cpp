@@ -897,7 +897,9 @@ void ActivityController::openActivityView(){
         }
         
     }else if(endTime>0){
-        PopupViewController::getInstance()->addPopupView(ActivityBeginView::create());
+        auto popup = ActivityBeginView::create();
+        PopupViewController::getInstance()->addPopupView(popup);
+        popup->setPositionY(popup->getPositionY() + popup->height_offset / 2);
     }else{
         PopupViewController::getInstance()->addPopupView(ActivityHistoryView::create());
     }
@@ -2618,8 +2620,8 @@ void PortActController::addPush()
 
 bool PortActController::canPopNewRDView()
 {
-    if (QuestController::getInstance()->currentAchList.find("2102501") != QuestController::getInstance()->currentAchList.end()) {
-        QuestInfo* qusetTmp = QuestController::getInstance()->currentAchList["2102501"];
+    if (QuestController::getInstance()->currentAchList.find("2201001") != QuestController::getInstance()->currentAchList.end()) {
+        QuestInfo* qusetTmp = QuestController::getInstance()->currentAchList["2201001"];
         if(qusetTmp->state == ACCEPT) {
             return false;
         }

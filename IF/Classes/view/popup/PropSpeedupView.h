@@ -27,6 +27,7 @@ public:
     //virtual void scrollViewDidZoom(CCScrollView* view);
     void refreshView(CCObject* ccObj = NULL);
     void checkClose(CCObject* ccObj = NULL);
+    CCNode * getGuideNode();
 protected:
     void onEnter();
     void onExit();
@@ -63,6 +64,8 @@ protected:
     void sureToUseTool();
     void useTool();
     void setSelectSpritePosition();
+    
+    
 private:
     CCSafeObject<CCNode> m_sprBG;
     CCSafeObject<CCNode> m_nodeTime;

@@ -296,9 +296,9 @@ bool FunBuildBtnsView::onShowInfo()
     if (m_info->state == FUN_BUILD_NORMAL) {
         if (m_qid == QID_MAX) {
             m_toolNode->setPositionY(-100);
-            m_nameNode->setPositionY(300);
+            m_nameNode->setPosition(0,300);
             if (buildType == FUN_BUILD_WOOD || buildType == FUN_BUILD_STONE || buildType == FUN_BUILD_IRON || buildType == FUN_BUILD_FOOD || buildType == FUN_BUILD_BARRACK || buildType == FUN_BUILD_HOSPITAL){
-                m_nameNode->setPositionY(150);
+                m_nameNode->setPositionY(180);
             }
             //begin a by ljf
             if(buildType == FUN_BUILD_TRAINFIELD)
@@ -334,6 +334,10 @@ bool FunBuildBtnsView::onShowInfo()
                         m_btn5Node->setPosition(ccp(-200, 60));
                     }
                 }
+            }
+            if(buildType == FUN_BUILD_TRAINFIELD){
+                auto oldPos = m_nameNode->getPosition();
+                m_nameNode->setPosition(oldPos.x+30, oldPos.y - 110);
             }
         }
         else {//建筑正在造兵 或者 正在研究
@@ -1033,6 +1037,16 @@ CCNode* FunBuildBtnsView::getGuideNode(string _key)
                 return NULL;
             }
         }
+        else if (_key == "tool")
+        {
+            if (m_btn5Node->isVisible()) {
+                guidKey = _key;
+                return m_btn5;
+            }
+            else {
+                return NULL;
+            }
+        }
         else if(_key=="soldier") {
             guidKey = _key;
             return m_btn3;
@@ -1074,6 +1088,11 @@ void FunBuildBtnsView::onGuidClick()
     else if(guidKey=="forge") {
         guidKey = "";
         onBtn3Click(NULL,Control::EventType::TOUCH_DOWN);
+    }
+    else if(guidKey == "tool")
+    {
+        guidKey = "";
+        onBtn5Click(NULL,Control::EventType::TOUCH_DOWN);
     }
 }
 int FunBuildBtnsView::getSPDTypeByBuildingState(){
