@@ -54,9 +54,10 @@ bool ActivityTipView::init(){
         CCLoadSprite::doResourceByCommonIndex(8, true);
         CCLoadSprite::doResourceByCommonIndex(11, true);
         //TODO setCleanFunction
-//        setCleanFunction([](){
-//            CCLoadSprite::doResourceByCommonIndex(11, false);
-//        });
+        setCleanFunction([](){
+            CCLoadSprite::doResourceByCommonIndex(8, false);
+            CCLoadSprite::doResourceByCommonIndex(11, false);
+        });
         this->setModelLayerOpacity(160);
         auto node = CCBLoadFile("ActivityReadyView", this, this);
         CCSize winSize = CCDirector::sharedDirector()->getWinSize();
