@@ -119,6 +119,7 @@ void OutsideEnemy::move()
     CCSequence* sc = nullptr;
     CCSpawn * arrowAction = nullptr;
     Action* action = nullptr;
+    
     if(useTime != 0)
     {
         //sc = CCSequence::create(CCMoveTo::create(useTime, onePos),CCCallFunc::create(this, callfunc_selector(Walker::moveOnePoint)),NULL);
@@ -287,23 +288,25 @@ void OutsideEnemy::boatCome()
     char texturePath[256];
     sprintf(texturePath, "%s%d%s", "3d/ship/ship_", 1, ".jpg");
     
-      NBSprite3D * m_vikings3D = NBSprite3D::create(modelPath);
+    NBSprite3D * m_vikings3D = NBSprite3D::create(modelPath);
     m_vikings3D->setTexture(texturePath);
     m_vikings3D->setScale(1.1);
     
-    
-    auto vikingsRootNode = CCNode::create();
-    vikingsRootNode->setRotation3D(Vec3(38, 39, -24));
     auto rotateNode = CCNode::create();
     rotateNode->addChild(m_vikings3D);
     rotateNode->setRotation3D(Vec3(0, -80, 0));
+    
+    auto vikingsRootNode = CCNode::create();
+    vikingsRootNode->setRotation3D(Vec3(38, 39, -24));
+    
     vikingsRootNode->addChild(rotateNode);
     
+    auto pPosCCBNode = Node::create();
+    pPosCCBNode->setPosition(OutsideEnemy::PathBegin);
+    //vikingsRootNode->setPosition(mTouchLayer->convertToNodeSpace(pPosCCBNode->convertToWorldSpace(Point(0, 0))));
+    vikingsRootNode->setPosition(OutsideEnemy::PathBegin);
     
-    vikingsRootNode->setPosition(m_touchLayer->convertToNodeSpace(pPosCCBNode->convertToWorldSpace(Point(0, 0))));
-    
-    Node * m_vikingsParticleNode = Node::create();
-    vikingsRootNode->addChild(m_vikingsParticleNode);
+    mTouchLayer->addChild(vikingsRootNode);
     */
 }
 

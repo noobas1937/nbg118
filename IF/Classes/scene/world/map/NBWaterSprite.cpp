@@ -103,8 +103,8 @@ bool NBWaterSprite::initWithTexture(CCTexture2D* texture, const CCRect& rect)
         schedule(schedule_selector(NBWaterSprite::update));
         
         //begin a by ljf
-        m_shapeScaleX = 1.0 * m_pShape->getContentSize().width / getContentSize().width;
-        m_shapeScaleY = 1.0 * m_pShape->getContentSize().height / getContentSize().height;
+        m_shapeScaleX = 3.0 * m_pShape->getContentSize().width / getContentSize().width;
+        m_shapeScaleY = 3.0 * m_pShape->getContentSize().height / getContentSize().height;
         
         //end a by ljf
         return true;

@@ -1,12 +1,12 @@
 //
-//  CreateAllianceView.cpp
+//  CreateAllianceViewRecommend.cpp
 //  IF
 //
 //  Created by chenliang on 14-3-25.
 //
 //
 
-#include "CreateAllianceView.h"
+#include "CreateAllianceViewRecommend.h"
 #include "SoundController.h"
 #include "PopupViewController.h"
 #include "CreateAllianceCommand.h"
@@ -24,8 +24,8 @@ static int ALLIANCE_TAG_MAX_LENGTH = 3;
 
 static const float BOTTOM_BUTTON_AREA_HEIGHT = 106;
 
-CreateAllianceView* CreateAllianceView::create(float operateAreaHeight){
-    CreateAllianceView* ret = new CreateAllianceView(operateAreaHeight);
+CreateAllianceViewRecommend* CreateAllianceViewRecommend::create(float operateAreaHeight){
+    CreateAllianceViewRecommend* ret = new CreateAllianceViewRecommend(operateAreaHeight);
     if(ret && ret->init()){
         ret->autorelease();
     }else{
@@ -34,18 +34,18 @@ CreateAllianceView* CreateAllianceView::create(float operateAreaHeight){
     return ret;
 }
 
-void CreateAllianceView::editBoxEditingDidBegin(CCEditBox* editBox)
+void CreateAllianceViewRecommend::editBoxEditingDidBegin(CCEditBox* editBox)
 {
 }
 
-void CreateAllianceView::editBoxEditingDidEnd(CCEditBox* editBox)
+void CreateAllianceViewRecommend::editBoxEditingDidEnd(CCEditBox* editBox)
 {
 }
 
 static std::string allianceNameAvailableCharactersLeftPlaceHolder = "{1} characters left";
 static int ALLIANCE_NAME_VALID_LENGTH = 10;
 static int ALLIANCE_NAME_TAG_VALID_LENGTH = 3;
-void CreateAllianceView::editBoxTextChanged(CCEditBox* editBox, const std::string& text)
+void CreateAllianceViewRecommend::editBoxTextChanged(CCEditBox* editBox, const std::string& text)
 {
     if(editBox == m_allianceNameTagEditBox)
     {
@@ -55,14 +55,14 @@ void CreateAllianceView::editBoxTextChanged(CCEditBox* editBox, const std::strin
         
         CheckAllianceTagCommand* command = new CheckAllianceTagCommand();
         command->putParam("abbr", CCString::create(m_allianceNameTagEditBox->getText()));
-        command->setCallback(CCCallFuncO::create(this, callfuncO_selector(CreateAllianceView::onCheckAllianceTag), NULL));
+        command->setCallback(CCCallFuncO::create(this, callfuncO_selector(CreateAllianceViewRecommend::onCheckAllianceTag), NULL));
         command->sendAndRelease();
         
         m_allianceNameTagEditBox->setText(text.c_str());
     }
 }
 
-void CreateAllianceView::onCheckAllianceName(CCObject* data)
+void CreateAllianceViewRecommend::onCheckAllianceName(CCObject* data)
 {
     m_nameOkNode->setVisible(true);
     NetResult* result = dynamic_cast<NetResult*>(data);
@@ -76,7 +76,7 @@ void CreateAllianceView::onCheckAllianceName(CCObject* data)
     m_btnCreate->setEnabled(ok);
 }
 
-void CreateAllianceView::onCheckAllianceTag(CCObject* data)
+void CreateAllianceViewRecommend::onCheckAllianceTag(CCObject* data)
 {
     m_tagOkNode->setVisible(true);
     NetResult* result = dynamic_cast<NetResult*>(data);
@@ -89,7 +89,7 @@ void CreateAllianceView::onCheckAllianceTag(CCObject* data)
     m_tagOkNode->getChildByTag(1)->setVisible(ok);
 }
 
-void CreateAllianceView::onCreateAlliance(CCObject* data)
+void CreateAllianceViewRecommend::onCreateAlliance(CCObject* data)
 {
     NetResult* result = dynamic_cast<NetResult*>(data);
     
@@ -98,13 +98,13 @@ void CreateAllianceView::onCreateAlliance(CCObject* data)
     {
         GlobalData::shared()->playerInfo.allianceInfo.updateAllianceInfo(alliance);
         GlobalData::shared()->playerInfo.setAllianceId(GlobalData::shared()->playerInfo.allianceInfo.uid);
-        YesNoDialog::showVariableTitle(_lang_1("115012",GlobalData::shared()->playerInfo.allianceInfo.name.c_str()),CCCallFunc::create(this, callfunc_selector(CreateAllianceView::createSuccess)),_lang("confirm").c_str());
+        YesNoDialog::showVariableTitle(_lang_1("115012",GlobalData::shared()->playerInfo.allianceInfo.name.c_str()),CCCallFunc::create(this, callfunc_selector(CreateAllianceViewRecommend::createSuccess)),_lang("confirm").c_str());
     }else{
         PopupViewController::getInstance()->removeAllPopupView();
     }
 }
 
-void CreateAllianceView::createSuccess(){
+void CreateAllianceViewRecommend::createSuccess(){
     PopupViewController::getInstance()->removeAllPopupView();
     AllianceManager::getInstance()->addAnnounceEvent();
     PopupViewController::getInstance()->addPopupInView(AllianceInfoView::create(&GlobalData::shared()->playerInfo.allianceInfo));
@@ -114,11 +114,11 @@ void CreateAllianceView::createSuccess(){
     ChatController::getInstance()->sendCountryChat(str.c_str(), CHAT_COUNTRY, 1);
 }
 
-void CreateAllianceView::editBoxReturn(CCEditBox* editBox)
+void CreateAllianceViewRecommend::editBoxReturn(CCEditBox* editBox)
 {
 }
 
-bool CreateAllianceView::onAssignCCBMemberVariable(cocos2d::CCObject *pTarget, const char *pMemberVariableName, cocos2d::CCNode *pNode){
+bool CreateAllianceViewRecommend::onAssignCCBMemberVariable(cocos2d::CCObject *pTarget, const char *pMemberVariableName, cocos2d::CCNode *pNode){
     //step 1
     //CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_allianceNameEditBox", CCEditBox*, this->m_allianceNameEditBox);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_step1TitleLabel", CCLabelIF*, this->m_step1TitleLabel);
@@ -150,22 +150,22 @@ bool CreateAllianceView::onAssignCCBMemberVariable(cocos2d::CCObject *pTarget, c
     return true;
 }
 
-SEL_CCControlHandler CreateAllianceView::onResolveCCBCCControlSelector(cocos2d::CCObject *pTarget, const char *pSelectorName){
+SEL_CCControlHandler CreateAllianceViewRecommend::onResolveCCBCCControlSelector(cocos2d::CCObject *pTarget, const char *pSelectorName){
     
-    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "ontClickCreate", CreateAllianceView::ontClickCreate);
-    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onCancelClick", CreateAllianceView::onCancelClick);
-    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onNameBgClick", CreateAllianceView::onNameBgClick);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "ontClickCreate", CreateAllianceViewRecommend::ontClickCreate);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onCancelClick", CreateAllianceViewRecommend::onCancelClick);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onNameBgClick", CreateAllianceViewRecommend::onNameBgClick);
     return NULL;
 }
 
-void CreateAllianceView::onChooseAllianceSymbolBtnClick(CCObject *pSender, CCControlEvent event)
+void CreateAllianceViewRecommend::onChooseAllianceSymbolBtnClick(CCObject *pSender, CCControlEvent event)
 {
 //    SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
     
-    CCCallFuncO* callback = CCCallFuncO::create(this, callfuncO_selector(CreateAllianceView::iconSelected), NULL);
+    CCCallFuncO* callback = CCCallFuncO::create(this, callfuncO_selector(CreateAllianceViewRecommend::iconSelected), NULL);
 }
 
-void CreateAllianceView::ontClickCreate(CCObject *pSender, CCControlEvent event)
+void CreateAllianceViewRecommend::ontClickCreate(CCObject *pSender, CCControlEvent event)
 {
     m_allianceNameEditBox->setEnabled(false);
     m_allianceIntroEditBox->setEnabled(false);
@@ -182,15 +182,15 @@ void CreateAllianceView::ontClickCreate(CCObject *pSender, CCControlEvent event)
     command->putParam("intro", CCString::create(m_allianceIntroEditBox->getText()));
     command->putParam("language", CCString::create(language));
     
-    command->setCallback(CCCallFuncO::create(this, callfuncO_selector(CreateAllianceView::onCreateAlliance), NULL));
-    command->setFailCallback(CCCallFuncO::create(this, callfuncO_selector(CreateAllianceView::createFail), NULL));
+    command->setCallback(CCCallFuncO::create(this, callfuncO_selector(CreateAllianceViewRecommend::onCreateAlliance), NULL));
+    command->setFailCallback(CCCallFuncO::create(this, callfuncO_selector(CreateAllianceViewRecommend::createFail), NULL));
     command->sendAndRelease();
     
     m_btnCreate->setEnabled(false);
     addLoadingAni();
 }
 
-void CreateAllianceView::createFail(CCObject* obj)
+void CreateAllianceViewRecommend::createFail(CCObject* obj)
 {
     m_allianceNameEditBox->setEnabled(true);
     m_allianceIntroEditBox->setEnabled(true);
@@ -201,11 +201,11 @@ void CreateAllianceView::createFail(CCObject* obj)
     }
 }
 
-void CreateAllianceView::onCancelClick(CCObject *pSender, CCControlEvent event){
+void CreateAllianceViewRecommend::onCancelClick(CCObject *pSender, CCControlEvent event){
     this->closeSelf();
 }
 
-void CreateAllianceView::iconSelected(CCObject* object)
+void CreateAllianceViewRecommend::iconSelected(CCObject* object)
 {
     CCString* iconName = dynamic_cast<CCString*>(object);
     m_symbolPlaceHolder->removeAllChildren();
@@ -214,7 +214,7 @@ void CreateAllianceView::iconSelected(CCObject* object)
     m_symbolPlaceHolder->addChild(icon);
 }
 
-void CreateAllianceView::languageSelected(CCObject* data)
+void CreateAllianceViewRecommend::languageSelected(CCObject* data)
 {
     string language = dynamic_cast<CCString*>(data)->getCString();
     
@@ -222,12 +222,12 @@ void CreateAllianceView::languageSelected(CCObject* data)
     m_step4CurrentLanguageLabel->setString(_lang(language.c_str()).c_str());
 }
 
-void CreateAllianceView::onChooseAllianceLanguageBtnClick(CCObject *pSender, CCControlEvent event)
+void CreateAllianceViewRecommend::onChooseAllianceLanguageBtnClick(CCObject *pSender, CCControlEvent event)
 {
 //    SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
 }
 
-bool CreateAllianceView::init()
+bool CreateAllianceViewRecommend::init()
 {
     if(PopupBaseView::init())
     {
@@ -243,7 +243,7 @@ bool CreateAllianceView::init()
         scrollView->setAnchorPoint(CCPoint(0,0));
         scrollView->setPosition(0, BOTTOM_BUTTON_AREA_HEIGHT);
         
-        CCNode* node = CCBLoadFile("AllianceCreateView", this, this);
+        CCNode* node = CCBLoadFile("AllianceCreateViewRecommend", this, this);
         const CCSize& contentSize = node->getContentSize();
         this->setContentSize(contentSize);
         scrollView->setContentOffset(CCPoint(0, m_operateAreaHeight-contentSize.height));
@@ -344,14 +344,14 @@ bool CreateAllianceView::init()
             m_fireNode2->addChild(particle);
         }
         lastName = "";
-        this->schedule(schedule_selector(CreateAllianceView::checkName));
+        this->schedule(schedule_selector(CreateAllianceViewRecommend::checkName));
         return true;
     }
     
     return false;
 }
 
-void CreateAllianceView::addLoadingAni(){
+void CreateAllianceViewRecommend::addLoadingAni(){
     if(m_loadingIcon==NULL){
         m_loadingIcon = CCLoadSprite::createSprite("loading_1.png");
         m_loadingIcon->setAnchorPoint(ccp(0.5, 0.5));
@@ -367,11 +367,11 @@ void CreateAllianceView::addLoadingAni(){
     
 }
 
-void CreateAllianceView::onNameBgClick(CCObject *pSender, CCControlEvent event){
+void CreateAllianceViewRecommend::onNameBgClick(CCObject *pSender, CCControlEvent event){
         m_enterNameTxt->setString("");
 }
 
-void CreateAllianceView::checkName(float _time){
+void CreateAllianceViewRecommend::checkName(float _time){
     std::string str = m_allianceNameEditBox->getText();
     if(str=="" || lastName==str || str.length()<3){
         if (str.length() < 3) m_nameOkNode->setVisible(false);
@@ -382,18 +382,18 @@ void CreateAllianceView::checkName(float _time){
     m_step1ContentLabel->setString(_lang("115010"));
     CheckAllianceNameCommand* command = new CheckAllianceNameCommand();
     command->putParam("name", CCString::create(m_allianceNameEditBox->getText()));
-    command->setCallback(CCCallFuncO::create(this, callfuncO_selector(CreateAllianceView::onCheckAllianceName), NULL));
+    command->setCallback(CCCallFuncO::create(this, callfuncO_selector(CreateAllianceViewRecommend::onCheckAllianceName), NULL));
     command->sendAndRelease();
 }
 
-void CreateAllianceView::onEnter(){
+void CreateAllianceViewRecommend::onEnter(){
     PopupBaseView::onEnter();
 }
 
-void CreateAllianceView::onExit(){
+void CreateAllianceViewRecommend::onExit(){
     PopupBaseView::onExit();
 }
-string CreateAllianceView::setDefaultAllianceLanguge(){
+string CreateAllianceViewRecommend::setDefaultAllianceLanguge(){
     //联盟语言默认成设备语言。若设备语言不在xml所给列表，则设为all language。联盟语言的值保存为对应语言文件的ID。
     string langId = "";
     

@@ -49,6 +49,9 @@ public:
     long nextDayLoginVipReward;
     int consecutiveLoginDays;
     int isfirstJoin;        //首次加入联盟标志，0:非首次，1:首次。只有退盟的时候后台才会将其改为0.请前台不要再私自更改其值为0.一定要在退盟时改为0，否则。。。。.
+    //begin a by ljf
+    int onceJoinedAlliance; //是否加入过联盟，只要加入过联盟一次，这个字段就为1，退出联盟也不会置为0，跟isfirstJoin不一样
+    //end a by ljf
     double registerTime;//玩家的注册时间戳
     double sciencePower;
     int battleLose;

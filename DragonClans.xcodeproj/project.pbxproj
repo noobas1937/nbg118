@@ -1230,6 +1230,9 @@
 		ED2608C41BF42FE400D6BD14 /* Walker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED2608C21BF42FE400D6BD14 /* Walker.cpp */; };
 		ED8509631BE07AFD002E1B2C /* NBWaterMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED8509611BE07AFD002E1B2C /* NBWaterMap.cpp */; };
 		ED929BF71BFC650E005A44C9 /* Enemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED929BF51BFC650E005A44C9 /* Enemy.cpp */; };
+		ED9C328C1C560C64006A294F /* RecommendAllianceCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED9C328A1C560C64006A294F /* RecommendAllianceCommand.cpp */; };
+		EDA675B51C574D430017CA10 /* AlertAddAllianceViewRecommend.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDA675B31C574D430017CA10 /* AlertAddAllianceViewRecommend.cpp */; };
+		EDA675BC1C575F130017CA10 /* CreateAllianceViewRecommend.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDA675BA1C575F130017CA10 /* CreateAllianceViewRecommend.cpp */; };
 		EDAEDDF21C0BEE1D00F4DA59 /* VikingShip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDAEDDF01C0BEE1D00F4DA59 /* VikingShip.cpp */; };
 		EDC5D3CA1C1EF072006037D9 /* eeeq_0.png in Resources */ = {isa = PBXBuildFile; fileRef = EDC5D3C81C1EF072006037D9 /* eeeq_0.png */; };
 		EDC5D3CB1C1EF072006037D9 /* eeeq.fnt in Resources */ = {isa = PBXBuildFile; fileRef = EDC5D3C91C1EF072006037D9 /* eeeq.fnt */; };
@@ -3611,6 +3614,12 @@
 		ED8509621BE07AFD002E1B2C /* NBWaterMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBWaterMap.h; sourceTree = "<group>"; };
 		ED929BF51BFC650E005A44C9 /* Enemy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Enemy.cpp; sourceTree = "<group>"; };
 		ED929BF61BFC650E005A44C9 /* Enemy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Enemy.h; sourceTree = "<group>"; };
+		ED9C328A1C560C64006A294F /* RecommendAllianceCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecommendAllianceCommand.cpp; sourceTree = "<group>"; };
+		ED9C328B1C560C64006A294F /* RecommendAllianceCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecommendAllianceCommand.h; sourceTree = "<group>"; };
+		EDA675B31C574D430017CA10 /* AlertAddAllianceViewRecommend.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AlertAddAllianceViewRecommend.cpp; sourceTree = "<group>"; };
+		EDA675B41C574D430017CA10 /* AlertAddAllianceViewRecommend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertAddAllianceViewRecommend.h; sourceTree = "<group>"; };
+		EDA675BA1C575F130017CA10 /* CreateAllianceViewRecommend.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CreateAllianceViewRecommend.cpp; sourceTree = "<group>"; };
+		EDA675BB1C575F130017CA10 /* CreateAllianceViewRecommend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateAllianceViewRecommend.h; sourceTree = "<group>"; };
 		EDAEDDF01C0BEE1D00F4DA59 /* VikingShip.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VikingShip.cpp; path = vikingship/VikingShip.cpp; sourceTree = "<group>"; };
 		EDAEDDF11C0BEE1D00F4DA59 /* VikingShip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VikingShip.h; path = vikingship/VikingShip.h; sourceTree = "<group>"; };
 		EDC5D3C81C1EF072006037D9 /* eeeq_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = eeeq_0.png; path = Resources/eeeq_0.png; sourceTree = "<group>"; };
@@ -5395,6 +5404,8 @@
 		96D17A5718EBDA0600663FAC /* alliance */ = {
 			isa = PBXGroup;
 			children = (
+				ED9C328A1C560C64006A294F /* RecommendAllianceCommand.cpp */,
+				ED9C328B1C560C64006A294F /* RecommendAllianceCommand.h */,
 				960F05751B860ADD001BFBA9 /* checkAllianceRestrictcommamd.h */,
 				960F05761B860ADD001BFBA9 /* checkAllianceRestrictcommamd.cpp */,
 				96E0A0A4199B3EC9006B3BFB /* AllianceReinforceSoldier.cpp */,
@@ -5518,6 +5529,10 @@
 		96D57B9C18DFCF9700384045 /* alliance */ = {
 			isa = PBXGroup;
 			children = (
+				EDA675BA1C575F130017CA10 /* CreateAllianceViewRecommend.cpp */,
+				EDA675BB1C575F130017CA10 /* CreateAllianceViewRecommend.h */,
+				EDA675B31C574D430017CA10 /* AlertAddAllianceViewRecommend.cpp */,
+				EDA675B41C574D430017CA10 /* AlertAddAllianceViewRecommend.h */,
 				96E6BFFE196AA41300E1B913 /* AlertAddAllianceView.cpp */,
 				96E6BFFF196AA41300E1B913 /* AlertAddAllianceView.h */,
 				57BCA6311AEE2566003E489F /* AllianceActBossView.cpp */,
@@ -6364,7 +6379,6 @@
 				E6772EA9187D58CD000CE370 /* MailConfig.cpp */,
 				E6772EAA187D58CD000CE370 /* MailConfig.h */,
 				B1105CC0196C172E0021286E /* MailCountObj.cpp */,
-				7C0DAF63196C06CC007BA056 /* MailCountObj.h */,
 				7CC37B7E19CBDA850050B22C /* MailDialogInfo.cpp */,
 				7CC37B7F19CBDA850050B22C /* MailDialogInfo.h */,
 				E6FC9AF9181E01DA00BAFCFF /* MailInfo.cpp */,
@@ -7770,6 +7784,7 @@
 				27AD60571B5D014A00B6AD40 /* MJRefreshStateHeader.m in Sources */,
 				B86B5D1B1BCCA7340010EC71 /* NBWorldMapDecoration.cpp in Sources */,
 				6CD847BF1B2EE5C500C8AF0D /* MemberTableCell.m in Sources */,
+				EDA675BC1C575F130017CA10 /* CreateAllianceViewRecommend.cpp in Sources */,
 				9441E48C1ADBDB500077035B /* AllianceTerritoryView.cpp in Sources */,
 				96361CBF1ACA8DA9000E5272 /* MonsterSiegeActivityInfoCommand.cpp in Sources */,
 				1D38FE5B1B1EDBB6007E1835 /* ActivityExcView.cpp in Sources */,
@@ -7861,6 +7876,7 @@
 				7CDA498819C81050002609FF /* PlayerRankListView.cpp in Sources */,
 				57DC1DEA18CF185F0065E73A /* BattleView.cpp in Sources */,
 				966A67AA1AD7DD4700C53622 /* GetUserRankInfoCommand.cpp in Sources */,
+				ED9C328C1C560C64006A294F /* RecommendAllianceCommand.cpp in Sources */,
 				E69EB3781A31563300427503 /* WorldActivityPush.cpp in Sources */,
 				27AD60551B5D014A00B6AD40 /* MJRefreshGifHeader.m in Sources */,
 				1D63CBD31B4E13B100BD8CFB /* ActivityPopupView.cpp in Sources */,
@@ -8507,6 +8523,7 @@
 				96E4C48B197F6420007247BA /* ChangePicView.cpp in Sources */,
 				96CA33EB1925AB0200E56EF1 /* ProductionSoldiersView.cpp in Sources */,
 				96942009192B4D8200FA85CA /* GetPowerInfoCommand.cpp in Sources */,
+				EDA675B51C574D430017CA10 /* AlertAddAllianceViewRecommend.cpp in Sources */,
 				1DA643581A8354D3002E1482 /* SearchInfo.cpp in Sources */,
 				96ED942D19822657002ED36E /* AllianceTitleRankCell.cpp in Sources */,
 				9441E48F1ADBDBD50077035B /* TipsWithPicView.cpp in Sources */,

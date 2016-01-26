@@ -1,27 +1,27 @@
 //
-//  CreateAllianceView.h
+//  CreateAllianceViewRecommend.h
 //  IF
 //
 //  Created by chenliang on 14-3-25.
 //
 //
 
-#ifndef __IF__CreateAllianceView__
-#define __IF__CreateAllianceView__
+#ifndef __IF__CreateAllianceViewRecommend__
+#define __IF__CreateAllianceViewRecommend__
 
 #include "CommonInclude.h"
 #include "PopupBaseView.h"
 
-class CreateAllianceView: public PopupBaseView
+class CreateAllianceViewRecommend: public PopupBaseView
 ,public CCBSelectorResolver
 ,public CCBMemberVariableAssigner
 ,public CCEditBoxDelegate
 {
 public:
-    static CreateAllianceView* create(float operateAreaHeight);
-    CreateAllianceView(float operateAreaHeight):m_operateAreaHeight(operateAreaHeight){};
+    static CreateAllianceViewRecommend* create(float operateAreaHeight);
+    CreateAllianceViewRecommend(float operateAreaHeight):m_operateAreaHeight(operateAreaHeight){};
     
-    virtual ~CreateAllianceView(){}
+    virtual ~CreateAllianceViewRecommend(){}
     
     virtual void editBoxEditingDidBegin(CCEditBox* editBox);
     virtual void editBoxEditingDidEnd(CCEditBox* editBox);
@@ -109,4 +109,4 @@ private:
     float m_operateAreaHeight;
 };
 
-#endif /* defined(__IF__CreateAllianceView__) */
+#endif /* defined(__IF__CreateAllianceViewRecommend__) */

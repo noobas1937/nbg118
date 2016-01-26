@@ -1,12 +1,12 @@
 //
-//  AlertAddAllianceView.cpp
+//  AlertAddAllianceViewRecommend.cpp
 //  IF
 //
 //  Created by ganxiaohua on 14-7-7.
 //
 //
 
-#include "AlertAddAllianceView.h"
+#include "AlertAddAllianceViewRecommend.h"
 #include "UIComponent.h"
 #include "SceneController.h"
 #include "GuideController.h"
@@ -15,9 +15,12 @@
 #include "JoinAllianceView.h"
 #include "GetAllianceListCommand.h"
 #include "SoundController.h"
+//begin a by ljf
+#include "AllianceFlagPar.h"
+//end a by ljf
 
-AlertAddAllianceView *AlertAddAllianceView::create(){
-    AlertAddAllianceView *ret = new AlertAddAllianceView();
+AlertAddAllianceViewRecommend *AlertAddAllianceViewRecommend::create(AllianceInfo* info){
+    AlertAddAllianceViewRecommend *ret = new AlertAddAllianceViewRecommend(info);
     if(ret && ret->init()){
         ret->autorelease();
     }else{
@@ -26,7 +29,7 @@ AlertAddAllianceView *AlertAddAllianceView::create(){
     return ret;
 }
 
-void AlertAddAllianceView::onEnter(){
+void AlertAddAllianceViewRecommend::onEnter(){
     PopupBaseView::onEnter();
     setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
     setTouchEnabled(true);
@@ -35,13 +38,13 @@ void AlertAddAllianceView::onEnter(){
     //UIComponent::getInstance()->hideReturnBtn();
 }
 
-void AlertAddAllianceView::onExit(){
+void AlertAddAllianceViewRecommend::onExit(){
     setTouchEnabled(false);
     CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_ALERT_ALLIANCE_VIEW_CLOSE);
     PopupBaseView::onExit();
 }
 
-bool AlertAddAllianceView::init(){
+bool AlertAddAllianceViewRecommend::init(){
     bool ret = false;
     if(PopupBaseView::init()){
         this->setIsHDPanel(true);
@@ -54,7 +57,7 @@ bool AlertAddAllianceView::init(){
             CCLoadSprite::doResourceByCommonIndex(206, false);
         });
         
-        auto node = CCBLoadFile("AlertAddAllianceView", this, this);
+        auto node = CCBLoadFile("AlertAddAllianceViewRecommend", this, this);
         this->setContentSize(node->getContentSize());
         
 //        m_titleText->setString(_lang("115001"));
@@ -80,25 +83,60 @@ bool AlertAddAllianceView::init(){
         m_btnJoin->setTitleColorForState({0x8c, 0x51, 0x17}, cocos2d::extension::Control::State::HIGH_LIGHTED);
         m_btnJoin->setTitleColorForState({0x8c, 0x51, 0x17}, cocos2d::extension::Control::State::DISABLED);
         
+        //begin a by ljf
+        if(m_info!=NULL){
+            std::string str = "(";
+            str.append(m_info->shortName.c_str());
+            str.append(") ");
+            str.append(m_info->name.c_str());
+            m_allianceName->setString(str.c_str());
+            str = _lang_2("115016", CC_ITOA(m_info->currentNum),CC_ITOA(m_info->getSelfAllianceNum()));
+            m_memberNum->setString(str);
+            str = _lang_1("115015", m_info->leader.c_str());
+            m_allianceLeader->setString(str.c_str());
+            str = _lang_1("115017", CC_CMDITOAL(m_info->totalForce).c_str());
+            m_battleNum->setString(str);
+
+            string lang = ( strcmp(m_info->language.c_str(), "")==0?"115600":m_info->language );
+            m_language->setString(_lang(lang).c_str());
+
+            m_allianceIcon->removeAllChildren();
+            AllianceFlagPar* flag = AllianceFlagPar::create(m_info->getAllianceIcon().c_str());
+            m_allianceIcon->addChild(flag);
+
+            m_title->setString(_lang("115001"));
+            m_gemNum->setString("X200"); //应从配置文件里面读,ljf
+        }
+        //end a by ljf
         ret = true;
     }
     return ret;
 }
 
-bool AlertAddAllianceView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode){
+bool AlertAddAllianceViewRecommend::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode){
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_btnJoin", CCControlButton*, this->m_btnJoin);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_txt1", CCLabelIF*, this->m_txt1);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_txt3", CCLabelIF*, this->m_txt3);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_txt2", CCLabelIF*, this->m_txt2);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_clickNode", CCNode*, this->m_clickNode);
+    //begin a by ljf
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_title", CCLabelIF*, this->m_title);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_gemNum", CCLabelIF*, this->m_gemNum);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_allianceName", CCLabelIF*, this->m_allianceName);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_language", CCLabelIF*, this->m_language);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_allianceLeader", CCLabelIF*, this->m_allianceLeader);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_memberNum", CCLabelIF*, this->m_memberNum);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_battleNum", CCLabelIF*, this->m_battleNum);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_allianceIcon", CCSprite*, this->m_allianceIcon);
+    //end a by ljf
     return false;
 }
 
-bool AlertAddAllianceView::onTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent){
+bool AlertAddAllianceViewRecommend::onTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent){
     return true;
 }
 
-void AlertAddAllianceView::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent){
+void AlertAddAllianceViewRecommend::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent){
     if (isTouchInside(m_btnJoin, pTouch)) {
         SoundController::sharedSound()->playEffects(Music_Sfx_click_button);
         onClickClose(NULL,Control::EventType::TOUCH_DOWN);
@@ -108,11 +146,11 @@ void AlertAddAllianceView::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEve
     
 }
 
-SEL_CCControlHandler AlertAddAllianceView::onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName){
-    //CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onJoin", AlertAddAllianceView::onClickClose);
+SEL_CCControlHandler AlertAddAllianceViewRecommend::onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName){
+    //CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onJoin", AlertAddAllianceViewRecommend::onClickClose);
     return NULL;
 }
 
-void AlertAddAllianceView::onClickClose(CCObject * pSender, Control::EventType pCCControlEvent) {
+void AlertAddAllianceViewRecommend::onClickClose(CCObject * pSender, Control::EventType pCCControlEvent) {
     this->closeSelf();
 }

@@ -151,6 +151,9 @@ bool MailReadPopUpView::init(){
     int w = m_contentContainer->getContentSize().width;
     int h = m_contentContainer->getContentSize().height;
     m_scroll = CCScrollView::create(CCSize(w, h));
+    //begin a by ljf,临时解决列表不显示，需要手动拖动才能显示的问题。
+    m_scroll->getContainer()->runAction(CCMoveBy::create(2, Vec2(0, 1)));
+    //end a by ljf
     m_scroll->setAnchorPoint(ccp(0, 1));
     m_scroll->setTouchPriority(1);
     m_scroll->setDirection(kCCScrollViewDirectionVertical);

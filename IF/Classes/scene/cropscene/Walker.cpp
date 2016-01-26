@@ -189,7 +189,7 @@ void Walker::moveOnePoint()
     moveOnePoint(0);
 }
 void Walker::moveOnePoint(float tab){
-    if(m_movePositions.size()>m_moveIndex){
+    if(m_movePositions.size()>m_moveIndex){     
         mCurrentSeq = mTargetSeq;
         mTargetSeq = m_moveSeqs[m_moveIndex];
         CCPoint onePos = m_movePositions[m_moveIndex];

@@ -300,6 +300,12 @@ bool FunBuildBtnsView::onShowInfo()
             if (buildType == FUN_BUILD_WOOD || buildType == FUN_BUILD_STONE || buildType == FUN_BUILD_IRON || buildType == FUN_BUILD_FOOD || buildType == FUN_BUILD_BARRACK || buildType == FUN_BUILD_HOSPITAL){
                 m_nameNode->setPositionY(150);
             }
+            //begin a by ljf
+            if(buildType == FUN_BUILD_TRAINFIELD)
+            {
+                m_nameNode->setPositionY(250);
+            }
+            //end a by ljf
             m_spdNode->setVisible(false);
             m_icon1Node->removeAllChildren();
             auto icon = CCLoadSprite::createSprite("build_up_icon.png");
@@ -336,6 +342,12 @@ bool FunBuildBtnsView::onShowInfo()
             if (buildType == FUN_BUILD_HOSPITAL){
                 m_nameNode->setPositionY(120+60);
             }
+            //begin a by ljf
+            if(buildType == FUN_BUILD_TRAINFIELD)
+            {
+                m_nameNode->setPositionY(300+60 - 50);
+            }
+            //end a by ljf
             m_spdNode->setVisible(true);
             m_icon1Node->removeAllChildren();
             m_name2->setString(_lang("104903"));
@@ -380,6 +392,12 @@ bool FunBuildBtnsView::onShowInfo()
         if (buildType == FUN_BUILD_WOOD || buildType == FUN_BUILD_STONE || buildType == FUN_BUILD_IRON || buildType == FUN_BUILD_FOOD || buildType == FUN_BUILD_BARRACK || buildType == FUN_BUILD_HOSPITAL){
             m_nameNode->setPositionY(120+60);
         }
+        //begin a by ljf
+        if(buildType == FUN_BUILD_TRAINFIELD)
+        {
+            m_nameNode->setPositionY(300+60 - 50);
+        }
+        //end a by ljf
         m_spdNode->setVisible(true);
         m_icon1Node->removeAllChildren();
         m_name2->setString(_lang("104903"));

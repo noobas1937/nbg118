@@ -6,24 +6,25 @@
 //
 //
 
-#ifndef __IF__AlertAddAllianceView__
-#define __IF__AlertAddAllianceView__
+#ifndef __IF__AlertAddAllianceViewRecommend__
+#define __IF__AlertAddAllianceViewRecommend__
 
 #include "CommonInclude.h"
 #include "PopupBaseView.h"
 #include "QuestController.h"
 #include "CCMultiColTableView.h"
 #include "QuestInfo.h"
+#include "AllianceInfo.h"
 
-class AlertAddAllianceView : public PopupBaseView
+class AlertAddAllianceViewRecommend : public PopupBaseView
 , public CCBSelectorResolver
  
 , public CCBMemberVariableAssigner
 {
 public:
-    ~AlertAddAllianceView(){};
-    AlertAddAllianceView(){};
-    static AlertAddAllianceView *create();
+    ~AlertAddAllianceViewRecommend(){};
+    AlertAddAllianceViewRecommend(AllianceInfo* info):m_info(info){};
+    static AlertAddAllianceViewRecommend *create(AllianceInfo* info);
 protected:
     
 private:
@@ -44,5 +45,17 @@ private:
     CCSafeObject<CCLabelIF> m_txt1;
     CCSafeObject<CCLabelIF> m_txt2;
     CCSafeObject<CCLabelIF> m_txt3;
+    
+    //begin a by ljf
+    CCSafeObject<CCLabelIF> m_title;
+    CCSafeObject<CCLabelIF> m_gemNum;
+    CCSafeObject<CCLabelIF> m_allianceName;
+    CCSafeObject<CCLabelIF> m_language;
+    CCSafeObject<CCLabelIF> m_allianceLeader;
+    CCSafeObject<CCLabelIF> m_memberNum;
+    CCSafeObject<CCLabelIF> m_battleNum;
+    CCSafeObject<CCSprite> m_allianceIcon;
+    CCSafeObject<AllianceInfo> m_info;
+    //end a by ljf
 };
-#endif /* defined(__IF__AlertAddAllianceView__) */
+#endif /* defined(__IF__AlertAddAllianceViewRecommend__) */

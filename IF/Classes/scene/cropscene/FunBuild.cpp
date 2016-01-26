@@ -96,9 +96,7 @@ bool FunBuild::initTmpBuild(int itemId, int x, int y, CCSpriteBatchNode* batchNo
     m_mainNode = CCNode::create();
     this->addChild(m_mainNode);
     CCBLoadFile(ccbName.c_str(),m_mainNode,this);
-    //begin a by ljf
     
-    //end a by ljf
     parentX = x;
     parentY = y;
     m_batchNode = batchNode;
@@ -335,8 +333,9 @@ bool FunBuild::initFunBuild(int itemId, CCLabelBatchNode* nameLayer)
         auto& tileInfo = FunBuildController::getInstance()->m_tileMap[itemId];
         
         if (tileInfo.state == FUN_BUILD_LOCK) {
-            tileName = "res_tile_lock.png";
+            //tileName = "res_tile_lock.png";
         }
+        
         //end a by ljf
         
         if (tileInfo.xmlOpen == FUN_BUILD_HIDE) {
@@ -345,6 +344,12 @@ bool FunBuild::initFunBuild(int itemId, CCLabelBatchNode* nameLayer)
         }
         
         m_tile = CCLoadSprite::createSprite(tileName.c_str());
+        //begin a by ljf
+        if(tileInfo.state == FUN_BUILD_LOCK || tileInfo.xmlOpen == FUN_BUILD_HIDE)
+        {
+            m_tile->setVisible(false);
+        }
+        //end a by ljf
         m_tile->getTexture()->setAntiAliasTexParameters();
         this->setContentSize(m_tile->getContentSize());
         m_tile->setAnchorPoint(ccp(0.5,0.5));
@@ -428,14 +433,16 @@ void FunBuild::unLockTile(CCObject* params)
         if (itemId == m_buildingKey && m_tile) {
             m_tile->setOpacity(0);
             //begin a by ljf
+            /*
             CCSpriteFrame* newSp = CCLoadSprite::getSF("res_tile_1.png");
             m_tile->stopAllActions();
             m_tile->setDisplayFrame(newSp);
             m_tile->getTexture()->setAntiAliasTexParameters();
 //            m_tile->setScale(0.75);
+            */
             //end a by ljf
             m_tile->setVisible(true);
-            auto delate = CCDelayTime::create(0.5); //m by ljf, 1.6 to 0.5
+            auto delate = CCDelayTime::create(1.6); //m by ljf, 1.6 to 0.5
             auto fadeIn = CCFadeIn::create(1.0);
             m_tile->runAction(CCSequence::create(delate,fadeIn,NULL));
         }
@@ -585,12 +592,7 @@ void FunBuild::setNamePos(int x, int y, CCLayer* sginLayer, CCLayer* popLayer, C
     m_sprArray->addObject(m_moveFrame);
     m_moveFrame->setZOrder(zOrder*1000+tmpOrd);
     tmpOrd ++;
-    //begin a by ljf
-    if(m_info->type == FUN_BUILD_BARRACK2)
-    {
-        
-    }
-    //end a by ljf
+    
     if(m_mainNode) {
         auto& array = m_mainNode->getChildren();
         if (array.size()>0) {
@@ -705,23 +707,6 @@ void FunBuild::setSpineLayer(CCLayer* spineLayer)
 {
     m_spineLayer = spineLayer;
     m_spineLayer->setPosition(ccp(parentX, parentY));
-    
-    //begin d by ljf
-    /*
-    if (CCFileUtils::sharedFileUtils()->isFileExist("Spine/Imperial/lianjingongfang.json") &&
-        CCFileUtils::sharedFileUtils()->isFileExist("Imperial/Imperial_30.atlas"))
-    {
-        m_spineAni = new IFSkeletonAnimation("Spine/Imperial/lianjingongfang.json","Imperial/Imperial_30.atlas");
-        if (m_spineAni) {
-            m_spineLayer->addChild(m_spineAni);
-            spTrackEntry* entry = m_spineAni->setAnimation(0, "gongzuo", true);
-            m_spineAni->setTimeScale(entry->endTime/8.0f);
-        }
-    }
-    */
-    //end d by ljf
-    //begin a by ljf
-    //end a by ljf
 }
 //begin a by ljf
 void FunBuild::initSpineNode(string picName, Node * spineParent)
@@ -1551,6 +1536,7 @@ void FunBuild::onClickThis(float _time)
             }
         }
         //begin a by ljf
+        /*
         int position = tileInfo.tileId;
         if (FunBuildController::getInstance()->m_tilePositionUnlockMap.find(position) != FunBuildController::getInstance()->m_tilePositionUnlockMap.end()) //在position_unlock中配置过
         {
@@ -1590,7 +1576,7 @@ void FunBuild::onClickThis(float _time)
               }
 
             }
-        
+        */
         //end a by ljf
         
     }
@@ -1699,6 +1685,13 @@ void FunBuild::onClickThis(float _time)
                     dw = -30;
                     dh = 50;
                 }
+                //begin a by ljf,解决点击船坞的图标被船挡住的问题
+                if (m_info->type == FUN_BUILD_TRAINFIELD)
+                {
+                    dw = -50;
+                    dh = 50;
+                }
+                //end a by ljf
                 if (!m_info->is_Dirc && layer) {
                     layer->onShowBtnsView(parentX+dw, parentY+dh, m_buildingKey);
                     playShadow();
@@ -2115,26 +2108,7 @@ void FunBuild::canShowState()
         }
     }
     else if (m_info->type == FUN_BUILD_WOOD || m_info->type == FUN_BUILD_FOOD || m_info->type == FUN_BUILD_IRON || m_info->type == FUN_BUILD_STONE) {
-        //begin d by ljf
-        /*
-        if (!isEffectRunning && FunBuildController::getInstance()->canShowOutPut(m_info->itemId)) {
-            addFunBuildState();
-            isEffectRunning = true;
-            if(m_info->type == FUN_BUILD_FOOD || m_info->type == FUN_BUILD_WOOD) {
-                this->getAnimationManager()->runAnimationsForSequenceNamed("GrowthProcess");
-                
-            }
-        }
-        else if (isEffectRunning && !FunBuildController::getInstance()->canShowOutPut(m_info->itemId) && m_buildState->CanDel ) {
-            removeFunBuildState();
-            isEffectRunning = false;
-            if(m_info->type == FUN_BUILD_FOOD || m_info->type == FUN_BUILD_WOOD) {
-                this->getAnimationManager()->runAnimationsForSequenceNamed("Havest");
-                
-            }
-        }
-        */
-        //end d by ljf
+        
         //begin a by ljf
         //未长出状态未显示0，未长出状态已显示1， 长出过程未显示2， 长出过程已显示3， 等收割未显示4， 等收割已显示5， 收割未显示6， 收割已显示7
         //m_spineAni->setAnimation(0, "GrowthProcess", true);

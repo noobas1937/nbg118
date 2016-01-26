@@ -1,4 +1,4 @@
-//
+ //
 //  SpeBuild.cpp
 //  IF
 //
@@ -86,7 +86,8 @@ bool SpeBuild::initSpeBuild(int itemId)
         m_mainNode = CCNode::create();
         this->addChild(m_mainNode);
         m_isOpen = false;
-        string ccbName = "wasteland_";
+        //string ccbName = "wasteland_"; //d by ljf
+        string ccbName = "wasteland_new_"; //a by ljf
         bool isTile = true;
         if (itemId == BIG_TILE_1) {
             ccbName = ccbName+CC_ITOA(GlobalData::shared()->contryResType)+"_1";
@@ -167,7 +168,7 @@ bool SpeBuild::initSpeBuild(int itemId)
         if (isTile) {
             auto tileInfo = FunBuildController::getInstance()->m_bigTileMap[itemId];
             if (tileInfo.level <= FunBuildController::getInstance()->getMainCityLv()) {
-                ccbName = ccbName + "_2";
+                //ccbName = ccbName + "_2"; //d by ljf, 改用料子系统实现此效果，而不是用两种ccb
                 m_isOpen = true;
             }
         }
@@ -1486,9 +1487,16 @@ void SpeBuild::onHideParticle()
 void SpeBuild::onPlayUnlock()
 {
     isCanClick = false;
-    this->getAnimationManager()->setAnimationCompletedCallback(this, callfunc_selector(SpeBuild::playFadeOut));
-    this->getAnimationManager()->runAnimationsForSequenceIdTweenDuration(1, 0);
+    //begin d by ljf
+    //this->getAnimationManager()->setAnimationCompletedCallback(this, callfunc_selector(SpeBuild::playFadeOut));
+    //this->getAnimationManager()->runAnimationsForSequenceIdTweenDuration(1, 0);
+    //end d by ljf
+    //begin a by ljf
     onShowParticle();
+    this->schedule(schedule_selector(SpeBuild::dtPlayFadeOut), 0, 0, 1.0f);
+    //playFadeOut();
+    //end a by ljf
+    
 }
 
 void SpeBuild::playFadeOut()
@@ -1496,6 +1504,7 @@ void SpeBuild::playFadeOut()
     auto layer = dynamic_cast<ImperialScene*>(SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE));
     layer->onRemoveSpeBuild();
     onHideParticle();
+    
 }
 void SpeBuild::updateShipState(string state){
     if(state.empty()){

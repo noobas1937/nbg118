@@ -100,6 +100,12 @@ public:
     
     void pauseEnemy();
     void resumeEnemy();
+    void enemyBoatCome(float dt);
+    
+    void shipPlayIdle(CCNode* pNode, void *pObj);
+    void shipPlayMove(CCNode* pNode, void *pObj);
+    
+    void requestRecommendAlliance();
     //end a by ljf
     
     

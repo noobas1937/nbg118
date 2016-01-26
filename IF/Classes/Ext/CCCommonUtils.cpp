@@ -3428,6 +3428,9 @@ void CCCommonUtils::initPlayerInfo(CCDictionary *params){
     playerInfo.gmFlag = pUserInfo->valueForKey("gmFlag")->intValue();
 //    playerInfo.gmFlag = 1;
     playerInfo.isfirstJoin = pUserInfo->valueForKey("isfirstJoin")->intValue();
+    //begin a by ljf
+    playerInfo.onceJoinedAlliance = pUserInfo->valueForKey("onceJoinedAlliance")->intValue();
+    //end a by ljf
     playerInfo.registerTime = pUserInfo->valueForKey("registerTime")->doubleValue() / 1000;
     playerInfo.bindFlag = pUserInfo->valueForKey("bindFlag")->boolValue();
     playerInfo.inviCode = pUserInfo->valueForKey("inviCode")->getCString();

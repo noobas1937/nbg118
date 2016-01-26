@@ -72,6 +72,7 @@ bool GoldExchangeSaleView::init()
     {
         ccbFile = "GoldExchangeSaleActViewNewUser";
     }
+    
     CCBLoadFile(ccbFile.c_str(),this,this);
     //CCBLoadFile("GoldExchangeSaleActViewNewUser",this,this);
     //CCBLoadFile("GoldExchangeSaleActViewCityBuild",this,this);
@@ -461,7 +462,7 @@ bool GoldExchangeSaleCell::init(int itemId, int num,string popUpImage,int type)
     {
         ccbFile = "RechargeSaleCellNewUser";
     }
-    //ccbFile = "RechargeSaleCellNewUser";
+    
     CCBLoadFile(ccbFile.c_str(),this,this);
     //CCBLoadFile("RechargeSaleCellNewUser",this,this);
     //CCBLoadFile("RechargeSaleCellCityBuild",this,this);
@@ -480,6 +481,7 @@ bool GoldExchangeSaleCell::init(int itemId, int num,string popUpImage,int type)
             CCCommonUtils::setSpriteMaxSize(icon, size52, true);
             m_iconNode->addChild(icon);
             m_nameLabel->setString(name);
+            
             std::string numText = "x";
             numText = numText + CC_ITOA(num); //ljf
             m_numLabel->setString(numText);
@@ -489,6 +491,7 @@ bool GoldExchangeSaleCell::init(int itemId, int num,string popUpImage,int type)
             std::string numText = "x";
             numText = numText + CC_ITOA(num); //ljf
             m_numLabel->setString(numText);
+            
 //            auto& toolInfo = ToolController::getInstance()->getToolInfoById(itemId);
 //            name = _lang(toolInfo.name);
 //            picStr = CCCommonUtils::getIcon(CC_ITOA(itemId));
@@ -501,6 +504,7 @@ bool GoldExchangeSaleCell::init(int itemId, int num,string popUpImage,int type)
         auto& eInfo = EquipmentController::getInstance()->EquipmentInfoMap[itemId];
         name = _lang(eInfo.name);
         m_nameLabel->setString(name);
+        
         std::string numText = "x";
         numText = numText + CC_ITOA(num); //ljf
         m_numLabel->setString(numText);
