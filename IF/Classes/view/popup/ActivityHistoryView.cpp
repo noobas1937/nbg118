@@ -74,6 +74,12 @@ void ActivityHistoryView::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent){
     }
 }
 
+void ActivityHistoryView::onCloseClick(CCObject *pSender)
+{
+    m_needclose = false;
+    PopupViewController::getInstance()->removePopupView(this);
+}
+
 bool ActivityHistoryView::init(){
     bool ret = false;
     if(PopupBaseView::init()){
@@ -374,6 +380,13 @@ bool ActivityHistoryView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget,
 
 SEL_CCControlHandler ActivityHistoryView::onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName){
     
+    return NULL;
+}
+
+cocos2d::SEL_MenuHandler ActivityHistoryView::onResolveCCBCCMenuItemSelector(cocos2d::CCObject * pTarget, const char * pSelectorName)
+{
+    CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onCloseClick", ActivityHistoryView::onCloseClick);
+
     return NULL;
 }
 

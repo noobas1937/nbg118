@@ -41,6 +41,15 @@ void ActivityRewardView::onEnter(){
         case 5:
             m_titleTxt->setString(_lang("138005"));
             break;
+        case 6:
+            m_titleTxt->setString(_lang("105843"));
+            break;
+        case 7:
+            m_titleTxt->setString(_lang("105821"));
+            break;
+        case 8:
+            m_titleTxt->setString(_lang("105821"));
+            break;
         default:
             m_titleTxt->setString(_lang("105822"));
             break;
@@ -72,12 +81,20 @@ void ActivityRewardView::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent){
     }
 }
 
+void ActivityRewardView::onCloseClick(CCObject *pSender)
+{
+    m_needclose = false;
+    PopupViewController::getInstance()->removePopupView(this);
+}
+
 bool ActivityRewardView::init(){
     bool ret = false;
     if(PopupBaseView::init()){
         setIsHDPanel(true);
         auto node = CCBLoadFile("ActivityRewardView", this, this);
         this->setContentSize(node->getContentSize());
+        
+        this->setModelLayerOpacity(0);
 
         m_tabView = CCTableView::create(this, m_infoList->getContentSize());
         m_tabView->setDirection(kCCScrollViewDirectionVertical);
@@ -101,6 +118,12 @@ bool ActivityRewardView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, 
 
 SEL_CCControlHandler ActivityRewardView::onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName){
     
+    return NULL;
+}
+
+cocos2d::SEL_MenuHandler ActivityRewardView::onResolveCCBCCMenuItemSelector(cocos2d::CCObject * pTarget, const char * pSelectorName)
+{
+    CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onCloseClick", ActivityRewardView::onCloseClick);
     return NULL;
 }
 
@@ -132,18 +155,23 @@ CCTableViewCell* ActivityRewardView::tableCellAtIndex(CCTableView *table, ssize_
     auto oneDic = _dict(m_data->objectAtIndex(idx));
     CCArray* arr = dynamic_cast<CCArray*>(oneDic->objectForKey("reward"));
     std::string tempStr = _lang_1("105828",CC_ITOA((long)(idx+1)));
-    if (m_type==5) {
+    if (m_type==5 || m_type==7 || m_type==8) {
         //todo
         int min = oneDic->valueForKey("min")->intValue();
         int max = oneDic->valueForKey("max")->intValue();
         if(min!=max){
-            tempStr = _lang_1("105828","");
-            tempStr.append(CC_ITOA(min));
-            tempStr.append("~");
-            tempStr.append(CC_ITOA(max));
+            string t("");
+            t.append(CC_ITOA(min));
+            t.append("~");
+            t.append(CC_ITOA(max));
+            
+            tempStr = _lang_1("105828", t.c_str());
         }else{
             tempStr = _lang_1("105828",CC_ITOA(min));
         }
+    } else if (m_type == 6)
+    {
+     tempStr = "";
     }
     if(idx < m_data->count()){
         if(cell){

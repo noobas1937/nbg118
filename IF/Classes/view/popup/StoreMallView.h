@@ -33,6 +33,9 @@ public:
     virtual void selectionChanged(CCGallery *gallery, CCGalleryItem *pGItem);
     virtual void selectionDecided(CCGallery *gallery, CCGalleryItem *pGItem);
 protected:
+    
+    // tao.yu change event
+    void onChangeItem(int index);
     // scrollview delegate
     virtual CCSize tableCellSizeForIndex(CCTableView *table, ssize_t idx);
     virtual CCSize cellSizeForTable(CCTableView *table);

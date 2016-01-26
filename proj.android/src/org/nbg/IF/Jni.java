@@ -74,7 +74,7 @@ public class Jni {
 	private static ScheduledExecutorService disconnectService = Executors.newSingleThreadScheduledExecutor();
 	private static ScheduledFuture<?> disconnectFuture;
 	public static void pushNotification(int type,int time, String text, String soundKey, String pushType){
-		if(type == 987 && (disconnectFuture == null || disconnectFuture.isCancelled() || disconnectFuture.isDone())){
+		if((type == 987 || type == 988 || type == 989) && (disconnectFuture == null || disconnectFuture.isCancelled() || disconnectFuture.isDone())){
 			disconnectFuture = disconnectService.schedule(new Runnable() {
 				@Override
 				public void run() {

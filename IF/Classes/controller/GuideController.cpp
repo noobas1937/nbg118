@@ -43,7 +43,12 @@
 #include "SettingPopUpView.h"
 #include "SetAccountView.h"
 #include "GeneralTitanPopupView.h"
-#include "TitanUpgradeView.h"
+//#include "TitanUpgradeView.h"
+
+#include "PropSpeedupView.h"
+#include "AllianceInfoView.h"
+
+
 
 static GuideController* _instance;
 
@@ -159,7 +164,15 @@ bool GuideController::start(){
         std::string guideId = "";
         string gFake = CCUserDefault::sharedUserDefault()->getStringForKey("Guide_Fake","");
         if(GlobalData::shared()->playerInfo.level == 1 && GlobalData::shared()->playerInfo.exp == 0 && (gFake=="" || gFake=="start_1") && FunBuildController::getInstance()->getFunbuildById(FUN_BUILD_MAIN_CITY_ID).level == 1){
-            guideId = "3070100";//第一个引导
+            if (USE_NEW_GUIDE) {
+                 guideId = "3311100";
+            }
+            else
+            {
+                guideId = "3070100";//第一个引导
+            }
+            
+
         }else{
             std::string stepKey = GlobalData::shared()->playerInfo.uid + GUIDE_STEP;
             guideId = CCUserDefault::sharedUserDefault()->getStringForKey(stepKey.c_str());
@@ -256,6 +269,16 @@ void GuideController::doGuide(){
         b_lock = false;
     }
     
+    if(m_currentId == "3313600"){//fusheng 报告发现一个蛋
+        auto layer = dynamic_cast<ImperialScene*>(SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE));
+        if (layer)
+        {
+            layer->onMoveToPos(1114, 2511, TYPE_POS_MID, 1, 0.55, true);
+        
+        }
+        
+    }
+    
     if (b_lock) {
         m_gView->setModelLayerOpacity(0);
         this->scheduleOnce(schedule_selector(GuideController::clearLock), 5);
@@ -309,6 +332,17 @@ void GuideController::doGuide(){
                 }
             }
             
+        }
+        else if(cartoon == "cartoon1")//fusheng 世界地图 3只小船 飘过来
+        {
+            SceneController::getInstance()->gotoScene(SCENE_ID_WORLD);
+//            next();
+        }
+        else if(cartoon == "cartoon2")//fusheng 一群敌人袭来
+        {
+//            SceneController::getInstance()->gotoScene(SCENE_ID_WORLD);
+            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification("cartoon2");
+            next();
         }
     }
 }
@@ -377,6 +411,10 @@ void GuideController::checkUserAction(CCObject *obj){
         else if (str=="BU_424000_cd" && (m_currentId=="3073700" || m_currentId=="3073800" || m_currentId=="3073900")) {
             m_currentId = "3073900";//造兵，不秒兵，等待时间完成时 调用
             next();
+        }
+        else if(str == "fuck_use_acc_tool" && (m_currentId=="3390100" || m_currentId=="3390300" || m_currentId=="3390400"))//fusheng 使用道具加速 跳转到3390500
+        {
+            setGuide("3390500");
         }
     }
 }
@@ -450,7 +488,12 @@ void GuideController::onEnterFrame(float dt){
         CC_SAFE_RELEASE(m_node);
         m_node = NULL;
         m_gView = NULL;
-        next();
+        if(m_currentId == "3390100" || m_currentId == "3390300" || m_currentId == "3390400" ||m_currentId == "3390500")//fusheng 加速道具引导中 不做什么东西
+        {
+
+        }
+        else
+            next();
     }
     
     if (m_currentId == "" && !PopupViewController::getInstance()->CanPopPushView) {
@@ -632,12 +675,12 @@ void GuideController::addGuideView(bool movingFlag){
         {
             if (!CCCommonUtils::isIosAndroidPad())//fusheng edit  地块的偏移量
             {
-                dx -= 40;
-                dy -= 30;
+//                dx -= 40;
+//                dy -= 30;
             }
             
-            w += 20;
-            h += 20;
+//            w += 20;
+//            h += 20;
         }
         else
         {
@@ -649,6 +692,12 @@ void GuideController::addGuideView(bool movingFlag){
 //            
 //            w += 40;
 //            h += 10;
+            
+//            if(opers[1] == "403000")
+//            {
+//                dx -= 20;
+//                dy -= 35;
+//            }
         }
     }
     else if(opers.size()>=3 && opers[2] == "collect")
@@ -737,6 +786,21 @@ CCNode* GuideController::getNode(std::string str){
                 if(layer){
                     node = layer->getBuildById(atoi(opers[1].c_str()));
                 }
+            }
+        }
+        
+        if(opers[0] == "ALINFO" && opers.size() == 2){//主城特殊建筑
+            if(SceneController::getInstance()->currentSceneId == SCENE_ID_MAIN){
+//                ImperialScene* layer = dynamic_cast<ImperialScene*>(SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE));
+//                if(layer){
+//                    node = layer->getBuildById(atoi(opers[1].c_str()));
+//                }
+                AllianceInfoView *curView = dynamic_cast<AllianceInfoView*>(PopupViewController::getInstance()->getCurrentPopupView());
+                if(curView && curView->isAniComplete()){
+                    node = curView->getGuideNode(opers[1]);
+                }
+                
+
             }
         }
         
@@ -901,6 +965,15 @@ CCNode* GuideController::getNode(std::string str){
             if(curView && curView->isAniComplete()){
                 node = curView->getGuideNode(str);
             }
+        }
+        
+        if(str == "tool_use")//使用道具
+        {
+            //fusheng
+             PropSpeedupView *curView = dynamic_cast<PropSpeedupView*>(PopupViewController::getInstance()->getCurrentPopupView());
+            if(curView)
+                node = curView->getGuideNode();
+            
         }
         
         if(opers[0] == "Titan" && opers.size()>=2){

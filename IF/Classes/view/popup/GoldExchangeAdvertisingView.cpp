@@ -46,6 +46,12 @@ GoldExchangeAdvertisingView* GoldExchangeAdvertisingView::create(){
 
 bool GoldExchangeAdvertisingView::init()
 {
+    //begin a by ljf
+    CCLoadSprite::doResourceByCommonIndex(800, true);
+    setCleanFunction([](){
+        CCLoadSprite::doResourceByCommonIndex(800, false);
+    });
+    //end a by ljf
 
 //    CCLoadSprite::doResourceByCommonIndex(100, true);
     m_data = CCArray::create();
@@ -852,7 +858,10 @@ bool GoldExchangeAdvertisingCommCell::init()
     
     m_getLabel->setVisible(false);
     m_newPriceLabel->setPositionX(m_costBtn->getPositionX());
-    
+    //begin a by ljf
+    m_showMoreNodeOrignPos.x = m_showMoneyNode->getPositionX();
+    m_showMoreNodeOrignPos.y = m_showMoneyNode->getPositionY();
+    //end a by ljf
     refreshData();
     
     return true;
@@ -888,14 +897,18 @@ void GoldExchangeAdvertisingCommCell::refreshData(){
     
     //begin ljf
     string spriteName = "nb_libaoBG.png";
+    Vec2 addPos(0, 0);
     if(m_dataItem->popup_image == "Build")
     {
+        addPos.x = 150;
         spriteName = "abox_citybuild_ad.png";
     }
     if(m_dataItem->popup_image == "Newbie_Hot")
     {
+        addPos.x = 150;
         spriteName = "abox_newuser_ad.png";
     }
+    m_showMoneyNode->setPosition(m_showMoreNodeOrignPos + addPos);
     CCSpriteFrame* newSp = CCLoadSprite::getSF(spriteName.c_str());
     m_liebiaoBg->setDisplayFrame(newSp);
     //end ljf

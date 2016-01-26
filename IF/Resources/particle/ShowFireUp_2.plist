@@ -23,9 +23,9 @@
 	<key>finishColorBlue</key>
 	<real>0.0</real>
 	<key>finishColorGreen</key>
-	<real>0.0038349521346390247</real>
+	<real>0.001529086846858263</real>
 	<key>finishColorRed</key>
-	<real>0.131773442029953</real>
+	<real>0.072329379618167877</real>
 	<key>finishColorVarianceAlpha</key>
 	<real>0.0</real>
 	<key>finishColorVarianceBlue</key>
@@ -35,13 +35,13 @@
 	<key>finishColorVarianceRed</key>
 	<real>0.0</real>
 	<key>finishParticleSize</key>
-	<real>0.0</real>
+	<real>35</real>
 	<key>finishParticleSizeVariance</key>
-	<real>0.0</real>
+	<real>5</real>
 	<key>gravityx</key>
 	<real>0.0</real>
 	<key>gravityy</key>
-	<real>-25</real>
+	<real>0.0</real>
 	<key>maxParticles</key>
 	<real>25</real>
 	<key>maxRadius</key>
@@ -67,29 +67,29 @@
 	<key>rotatePerSecondVariance</key>
 	<real>0.0</real>
 	<key>rotationEnd</key>
-	<real>360</real>
+	<real>90</real>
 	<key>rotationEndVariance</key>
-	<real>360</real>
+	<real>25</real>
 	<key>rotationStart</key>
-	<real>0.0</real>
+	<real>90</real>
 	<key>rotationStartVariance</key>
-	<real>360</real>
+	<real>25</real>
 	<key>sourcePositionVariancex</key>
 	<real>0.0</real>
 	<key>sourcePositionVariancey</key>
 	<real>75</real>
 	<key>speed</key>
-	<real>75</real>
-	<key>speedVariance</key>
 	<real>25</real>
+	<key>speedVariance</key>
+	<real>10</real>
 	<key>startColorAlpha</key>
 	<real>1</real>
 	<key>startColorBlue</key>
 	<real>0.0</real>
 	<key>startColorGreen</key>
-	<real>0.65317612886428833</real>
+	<real>0.98371285200119019</real>
 	<key>startColorRed</key>
-	<real>1</real>
+	<real>0.8972400426864624</real>
 	<key>startColorVarianceAlpha</key>
 	<real>0.0</real>
 	<key>startColorVarianceBlue</key>
@@ -99,15 +99,15 @@
 	<key>startColorVarianceRed</key>
 	<real>0.0</real>
 	<key>startParticleSize</key>
-	<real>50</real>
+	<real>0.0</real>
 	<key>startParticleSizeVariance</key>
-	<real>25</real>
+	<real>0.0</real>
 	<key>tangentialAccelVariance</key>
 	<real>0.0</real>
 	<key>tangentialAcceleration</key>
 	<real>0.0</real>
 	<key>textureFileName</key>
-	<string>Effect_0000.png</string>
+	<string>Effect_0172.png</string>
 	<key>textureImageData</key>
 	<string></string>
 	<key>yCoordFlipped</key>

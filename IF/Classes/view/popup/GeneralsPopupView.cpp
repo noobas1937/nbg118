@@ -845,7 +845,7 @@ CCNode* GeneralsPopupView::getGuideNode(string _key)
 {
     if (_key == "General_set") {
 //        return m_clickNode3;
-        return m_button;
+        return m_clickNode3;
     }
     return NULL;
 }
@@ -1015,8 +1015,8 @@ void GeneralsPopupView::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
     }
     else
     {
-//        if(isTouchInsideVisible(m_clickNode7, pTouch))
-        if(false)//fusheng 去掉响应
+        if(isTouchInside(m_clickNode7, pTouch))
+//        if(false)//fusheng 去掉响应
         {
             onSkillClick(NULL, CCControlEvent::TOUCH_DOWN);
             
@@ -1027,6 +1027,7 @@ void GeneralsPopupView::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
             DataRecordCommand* cmd = new DataRecordCommand(OPEN_PANEL, p, d);
             cmd->sendAndRelease();
             m_particleNode->removeAllChildren();
+            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::create("onSkillBtnClick"));
             
         }else if(isTouchInside(m_nameTouch, pTouch)){
             onChangeName(NULL,Control::EventType::TOUCH_DOWN);

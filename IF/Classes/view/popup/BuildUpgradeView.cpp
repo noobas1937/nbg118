@@ -752,8 +752,12 @@ void BuildUpgradeView::onLastUp()
         {
             m_isReturn = false;
             PopupViewController::getInstance()->removeAllPopupView();
+            
+            
             auto layer = dynamic_cast<ImperialScene*>(SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE));
             layer->showBuildBtns(m_buildId);
+            
+            
         }
     }
     else {

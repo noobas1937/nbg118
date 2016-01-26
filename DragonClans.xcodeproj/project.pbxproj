@@ -1031,6 +1031,8 @@
 		B86B5D411BCF422E0010EC71 /* CloudLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B86B5D3F1BCF422E0010EC71 /* CloudLayer.cpp */; };
 		B8813C171BFACE5D00BED7A7 /* manifest in Resources */ = {isa = PBXBuildFile; fileRef = B8813C161BFACE5D00BED7A7 /* manifest */; };
 		B891A8131C2A493E00CA642D /* NBWorldUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B891A8111C2A493E00CA642D /* NBWorldUtils.cpp */; };
+		B892CE211C48D8F0005A910E /* NBAllianceHelpReportView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B892CE1F1C48D8F0005A910E /* NBAllianceHelpReportView.cpp */; };
+		B892CE281C48DB64005A910E /* IFAllianceHelpReportInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B892CE261C48DB64005A910E /* IFAllianceHelpReportInfo.cpp */; };
 		B8ECF0851BF58908002160E5 /* NBDLCController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8ECF0831BF58908002160E5 /* NBDLCController.cpp */; };
 		B8F554041BD093CB00AD16E3 /* NBWorldNPC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8F554021BD093CB00AD16E3 /* NBWorldNPC.cpp */; };
 		BA19245118C87ED7009C1CEA /* CCLabelIFBMFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA19244D18C87ED7009C1CEA /* CCLabelIFBMFont.cpp */; };
@@ -3151,7 +3153,6 @@
 		A8F4B1541ACD51F20052044C /* ChatMailInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChatMailInfo.cpp; sourceTree = "<group>"; };
 		A8F4B1551ACD51F20052044C /* ChatMailInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMailInfo.h; sourceTree = "<group>"; };
 		B1105CC0196C172E0021286E /* MailCountObj.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MailCountObj.cpp; sourceTree = "<group>"; };
-		B1105CC1196C172E0021286E /* MailCountObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MailCountObj.h; sourceTree = "<group>"; };
 		B121E9E71980E3C7009E13BC /* HowToPlayCell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HowToPlayCell.cpp; sourceTree = "<group>"; };
 		B121E9E81980E3C7009E13BC /* HowToPlayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HowToPlayCell.h; sourceTree = "<group>"; };
 		B121E9E91980E3C7009E13BC /* HowToPlayView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HowToPlayView.cpp; sourceTree = "<group>"; };
@@ -3229,6 +3230,10 @@
 		B8813C161BFACE5D00BED7A7 /* manifest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = manifest; path = Resources/manifest; sourceTree = "<group>"; };
 		B891A8111C2A493E00CA642D /* NBWorldUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBWorldUtils.cpp; sourceTree = "<group>"; };
 		B891A8121C2A493E00CA642D /* NBWorldUtils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NBWorldUtils.hpp; sourceTree = "<group>"; };
+		B892CE1F1C48D8F0005A910E /* NBAllianceHelpReportView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBAllianceHelpReportView.cpp; sourceTree = "<group>"; };
+		B892CE201C48D8F0005A910E /* NBAllianceHelpReportView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NBAllianceHelpReportView.hpp; sourceTree = "<group>"; };
+		B892CE261C48DB64005A910E /* IFAllianceHelpReportInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IFAllianceHelpReportInfo.cpp; sourceTree = "<group>"; };
+		B892CE271C48DB64005A910E /* IFAllianceHelpReportInfo.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IFAllianceHelpReportInfo.hpp; sourceTree = "<group>"; };
 		B8ECF0831BF58908002160E5 /* NBDLCController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBDLCController.cpp; sourceTree = "<group>"; };
 		B8ECF0841BF58908002160E5 /* NBDLCController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NBDLCController.hpp; sourceTree = "<group>"; };
 		B8F554021BD093CB00AD16E3 /* NBWorldNPC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBWorldNPC.cpp; sourceTree = "<group>"; };
@@ -5597,6 +5602,8 @@
 				96D57B9E18DFD07200384045 /* JoinAllianceView.h */,
 				57FA98AC1B7CAB9900ABF6FC /* JoinRecAllianceTipView.cpp */,
 				57FA98AD1B7CAB9900ABF6FC /* JoinRecAllianceTipView.h */,
+				B892CE1F1C48D8F0005A910E /* NBAllianceHelpReportView.cpp */,
+				B892CE201C48D8F0005A910E /* NBAllianceHelpReportView.hpp */,
 				7CDA498619C81050002609FF /* PlayerRankListView.cpp */,
 				7CDA498719C81050002609FF /* PlayerRankListView.h */,
 				946031D71B856F1F003CACF9 /* TerritoryBannerChoseView.cpp */,
@@ -6348,6 +6355,8 @@
 				7CD25562185FF166005870B8 /* GoldExchangeItem.h */,
 				963959EE182A2C4400BFCCA9 /* GuideInfo.cpp */,
 				963959EF182A2C4400BFCCA9 /* GuideInfo.h */,
+				B892CE261C48DB64005A910E /* IFAllianceHelpReportInfo.cpp */,
+				B892CE271C48DB64005A910E /* IFAllianceHelpReportInfo.hpp */,
 				FDD3AC7A184C267000AE9834 /* LoginRewardInfo.cpp */,
 				FDD3AC7B184C267000AE9834 /* LoginRewardInfo.h */,
 				E6E75B8C182357CA00219DD5 /* LordInfo.cpp */,
@@ -6355,7 +6364,7 @@
 				E6772EA9187D58CD000CE370 /* MailConfig.cpp */,
 				E6772EAA187D58CD000CE370 /* MailConfig.h */,
 				B1105CC0196C172E0021286E /* MailCountObj.cpp */,
-				B1105CC1196C172E0021286E /* MailCountObj.h */,
+				7C0DAF63196C06CC007BA056 /* MailCountObj.h */,
 				7CC37B7E19CBDA850050B22C /* MailDialogInfo.cpp */,
 				7CC37B7F19CBDA850050B22C /* MailDialogInfo.h */,
 				E6FC9AF9181E01DA00BAFCFF /* MailInfo.cpp */,
@@ -7174,11 +7183,6 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0700;
-				TargetAttributes = {
-					DB9F58F217CD9A520037F7E5 = {
-						DevelopmentTeam = N6JW9AVXL5;
-					};
-				};
 			};
 			buildConfigurationList = DB9F58EE17CD9A520037F7E5 /* Build configuration list for PBXProject "DragonClans" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -7939,6 +7943,7 @@
 				5709BAB419ED2FD40038FFA4 /* DropRdCCB.cpp in Sources */,
 				E6BEE94F1AA4722E002D11E9 /* IFLoadingSceneArmyNode.cpp in Sources */,
 				FD6F417E17CDD218008FDB9C /* CCScrollLayer.cpp in Sources */,
+				B892CE211C48D8F0005A910E /* NBAllianceHelpReportView.cpp in Sources */,
 				96DCAF881A53ED47008A7B7E /* AllianceInviteView.cpp in Sources */,
 				FD6F417F17CDD218008FDB9C /* CCWebView.cpp in Sources */,
 				0C345ED01AB1A80C007D4EDC /* EvaluationView.cpp in Sources */,
@@ -8388,6 +8393,7 @@
 				272AB61A1B15C7BC0052E896 /* ChatViewController.mm in Sources */,
 				570DD47F196699E00006D03B /* FunBuildBtnsView.cpp in Sources */,
 				0CD306A71A7FAB7600C1DB80 /* LotteryActCommand.cpp in Sources */,
+				B892CE281C48DB64005A910E /* IFAllianceHelpReportInfo.cpp in Sources */,
 				0CC29A431AFC4E60006B3BAF /* DailyActiveItemInfo.cpp in Sources */,
 				96D17A6318EC36C800663FAC /* CancelAllianceApplyCommand.cpp in Sources */,
 				96D17A6618EC376600663FAC /* RefuseAllianceApplyCommand.cpp in Sources */,
@@ -8736,15 +8742,11 @@
 					"-lz",
 					"-lsqlite3",
 					"-ObjC",
-					"-pagezero_size",
-					10000,
-					"-image_base",
-					100000000,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.elex-tech.DragonClans";
 				PRODUCT_NAME = DragonClans;
-				PROVISIONING_PROFILE = "";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				PROVISIONING_PROFILE = "d7b55ddb-5a47-4bd7-b396-417ed555219d";
+				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "\"IF/libs/Chipmunk/include/chipmunk\"";
 				VALIDATE_PRODUCT = NO;
 				WARNING_CFLAGS = (
@@ -8770,8 +8772,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: ELEX Technology Holdings Co., Ltd. (N6JW9AVXL5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ELEX Technology Holdings Co., Ltd. (N6JW9AVXL5)";
 				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -8818,15 +8820,11 @@
 					"-lz",
 					"-lsqlite3",
 					"-ObjC",
-					"-pagezero_size",
-					10000,
-					"-image_base",
-					100000000,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.elex-tech.DragonClans";
 				PRODUCT_NAME = DragonClans;
-				PROVISIONING_PROFILE = "";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				PROVISIONING_PROFILE = "d7b55ddb-5a47-4bd7-b396-417ed555219d";
+				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "\"IF/libs/Chipmunk/include/chipmunk\"";
 				VALIDATE_PRODUCT = NO;
 				WRAPPER_EXTENSION = app;

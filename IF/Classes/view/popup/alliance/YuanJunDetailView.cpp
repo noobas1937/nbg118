@@ -19,6 +19,7 @@
 #include "ChangeAllianceFlagView.h"
 #include "AllianceRallyListCommand.h"
 #include "YuanYunReturnCommand.h"
+#include "NBAllianceHelpReportView.hpp"
 
 #define  MSG_YUAN_JUN_CELL_CLICK       "msg_yuan_jun_cell_click"
 #define  MSG_REMOVE_ONE_YUAN_JUN_CELL       "msg_remove_one_yuan_jun_cell"
@@ -45,7 +46,9 @@ bool YuanJunDetailView::init()
     
     CCLoadSprite::doResourceByCommonIndex(204, true);
     CCLoadSprite::doResourceByCommonIndex(8, true);
+    CCLoadSprite::doResourceByCommonIndex(7, true);
     setCleanFunction([](){
+        CCLoadSprite::doResourceByCommonIndex(7, false);
         CCLoadSprite::doResourceByCommonIndex(8, false);
         CCLoadSprite::doResourceByCommonIndex(204, false);
     });
@@ -54,14 +57,13 @@ bool YuanJunDetailView::init()
     auto tmpCCB = CCBLoadFile("YuanJunDetailView",this,this);
     this->setContentSize(tmpCCB->getContentSize());
     
-    if (!CCCommonUtils::isIosAndroidPad()) {
-        int preH = m_viewBg->getContentSize().height;
-        changeBGHeight(m_viewBg);
-        int newH = m_viewBg->getContentSize().height;
-        int addH = newH- preH;
-        m_infoList->setContentSize(CCSize(m_infoList->getContentSize().width,m_infoList->getContentSize().height+addH));
-        m_infoList->setPositionY(m_infoList->getPositionY()-addH);
-    }
+    int preH = m_viewBg->getContentSize().height;
+    changeBGHeight(m_viewBg);
+    int newH = m_viewBg->getContentSize().height;
+    int addH = newH- preH;
+    m_infoList->setContentSize(CCSize(m_infoList->getContentSize().width,m_infoList->getContentSize().height+addH));
+    m_infoList->setPositionY(m_infoList->getPositionY()-addH);
+    m_bottomNode->setPositionY(m_bottomNode->getPositionY()-addH);
     
     m_data = CCArray::create();
     
@@ -75,15 +77,16 @@ bool YuanJunDetailView::init()
     int buildId = FunBuildController::getInstance()->getMaxLvBuildByType(FUN_BUILD_STABLE);
     if (buildId>0) {
         FunBuildInfo& info = FunBuildController::getInstance()->getFunbuildById(buildId);
-        if(&info!=NULL){
+//        if(&info!=NULL)
+//        {
             m_maxSoldier = atoi(info.para[3].c_str())+CCCommonUtils::getEffectValueByNum(141);
-            
-        }
+//        }
     }
     std::string numStr = "0/";
     numStr.append(CC_ITOA(m_maxSoldier));
     m_numTxt->setString(numStr);
     m_tip->setString(_lang("115173"));
+    CCCommonUtils::setButtonTitle(m_btnResult, _lang("115563").c_str());
     AllianceRallyListCommand* cmd = new AllianceRallyListCommand();
     cmd->setCallback(CCCallFuncO::create(this, callfuncO_selector(YuanJunDetailView::getServerData), NULL));
     cmd->sendAndRelease();
@@ -234,7 +237,7 @@ void YuanJunDetailView::removeOneCell(CCObject* param){
 
 SEL_CCControlHandler YuanJunDetailView::onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName)
 {
-    
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onClickResult", YuanJunDetailView::onClickResult);
     return NULL;
 }
 
@@ -244,9 +247,13 @@ bool YuanJunDetailView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, c
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_numTxt", CCLabelIF*, this->m_numTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_infoList", CCNode*, this->m_infoList);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_tip", CCLabelIF*, this->m_tip);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bottomNode", CCNode*, this->m_bottomNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_btnResult", CCControlButton*, this->m_btnResult);
     return false;
 }
-
+void YuanJunDetailView::onClickResult(CCObject * pSender, CCControlEvent pCCControlEvent){
+    PopupViewController::getInstance()->addPopupInView(NBAllianceHelpReportView::create());
+}
 YuanJunDetailCell *YuanJunDetailCell::create(YuanJunInfo* info){
     YuanJunDetailCell *ret = new YuanJunDetailCell(info);
     if(ret && ret->init()){

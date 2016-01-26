@@ -35,12 +35,16 @@ enum EnemyType
 class OutsideEnemy : public CCNode
 {
 public:
-    OutsideEnemy(CCNode * pBatchNode, CCNode * pArrowBatchNode,  int enemyType);
+    OutsideEnemy(CCNode * pBatchNode, CCNode * pArrowBatchNode,  int enemyType, bool isInGuide = false);
     virtual  ~OutsideEnemy();
     
-    static OutsideEnemy * create(CCNode * pBatchNode, CCNode * pArrowBatchNode,  int enemyType);
+    static OutsideEnemy * create(CCNode * pBatchNode, CCNode * pArrowBatchNode,  int enemyType, bool isInGuide = false);
     
     void start();
+    
+    void ResumeEnemy();
+    
+    void PauseEnemy();
     
     void update(float delta);
     
@@ -80,6 +84,9 @@ private:
     const float mspd;
     CCPoint mFromPos;
     CCPoint mToPos;
+    bool mIsInGuide;
     Vector<SpriteFrame*> mAnimationFrameArray;
+    void boatCome();
+    void boatGo();
 };
 #endif /* defined(__IF__Enemy__) */

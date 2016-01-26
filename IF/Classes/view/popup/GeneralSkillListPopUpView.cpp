@@ -38,6 +38,9 @@ bool GeneralSkillListPopUpView::init(){
         CCLoadSprite::doResourceByCommonIndex(100, true);
         CCLoadSprite::doResourceByCommonIndex(4, true);
         CCLoadSprite::doResourceByCommonIndex(7, true);
+        CCLoadSprite::doResourceByCommonIndex(500, true);
+  CCLoadSprite::doResourceByCommonIndex(2, true);
+         CCLoadSprite::doResourceByCommonIndex(8, true);
         auto bg = CCBLoadFile("Generaltianfu_02.ccbi", this, this);
         this->setContentSize(bg->getContentSize());
         CCLoadSprite::doResourceByCommonIndex(105, true);
@@ -58,8 +61,10 @@ bool GeneralSkillListPopUpView::init(){
         m_aniContainer->setContentSize(m_container->getContentSize());
         m_container->setPositionY(m_container->getPositionY() - add);
         m_aniContainer->setPositionY(m_aniContainer->getPositionY() - add);
-        m_parNode->setPositionY(m_parNode->getPositionY() - add/2);
-        m_viewBg->setVisible(false);
+        m_buttombar->setPositionY(m_buttombar->getPositionY()-add-3);
+//        m_parNode->setPositionY(m_parNode->getPositionY() - add/2);
+        m_viewBg->setVisible(true);
+//        m_parNode->setVisible(false);
 
         auto size2 = m_container->getContentSize();
         
@@ -73,6 +78,7 @@ bool GeneralSkillListPopUpView::init(){
         m_scrollView->setAnchorPoint(ccp(0, 0));
         m_scrollView->setTouchPriority(Touch_Popup);
         m_container->addChild(m_scrollView);
+        
         if (CCCommonUtils::isIosAndroidPad())
         {
             m_scrollView->getContainer()->setScale(2.0);
@@ -104,6 +110,10 @@ bool GeneralSkillListPopUpView::init(){
         }
         resetBtnIcon();
         ret = true;
+         ParticleFireAni* par = ParticleFireAni::create();
+        m_fireNode1->addChild(par);
+        ParticleFireAni* par2 = ParticleFireAni::create();
+        m_fireNode2->addChild(par2);
     }
     return ret;
 }
@@ -328,6 +338,7 @@ void GeneralSkillListPopUpView::refreshView(bool moveFlag){
 bool GeneralSkillListPopUpView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode){
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_skillResetBtn", CCControlButton*, m_skillResetBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_bNode", CCNode*, m_bNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_buttombar", CCNode*, m_buttombar);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nameTxt", CCLabelIF*, m_nameTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_expTxt", CCLabelIF*, m_expTxt);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_container", CCNode*, m_container);
@@ -343,9 +354,11 @@ bool GeneralSkillListPopUpView::onAssignCCBMemberVariable(cocos2d::CCObject * pT
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_tabValue3", CCLabelIF*, m_tabValue3);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_btnResetText", CCLabelIF*, m_btnResetText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_btnReseValue", CCLabelIF*, m_btnReseValue);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_parNode", CCNode*, m_parNode);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_parNode", CCNode*, m_parNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_aniContainer", CCNode*, m_aniContainer);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_resetNode", CCNode*, m_resetNode);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_fireNode2", CCNode*, m_fireNode2);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_fireNode1", CCNode*, m_fireNode1);
     return false;
 }
 
@@ -361,24 +374,24 @@ void GeneralSkillListPopUpView::onTabClick1(CCObject * pSender, Control::EventTy
     saveData();
     CCLoadSprite::doResourceByCommonIndex(105, true);
     m_bgNode->removeAllChildrenWithCleanup(true);
-    auto tbg = CCLoadSprite::loadResource("UI_UseSkill_picture_blackwhite.png");
-    auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
-    int maxHight = CCDirector::sharedDirector()->getWinSize().height;
-    int curHight = -500;
-    while (curHight<maxHight) {
-//        auto bg = CCLoadSprite::createSprite("UI_UseSkill_picture_01.png");
-        auto bg = CCCommonUtils::addFilterSprite("UI_UseSkill_picture_blackwhite.png", CCCommonUtils::covertHSBToRGB(20, 0.77, 1.0), 0, 1.04, 4.4);
-        bg->setAnchorPoint(ccp(0, 1));
-        if (CCCommonUtils::isIosAndroidPad())
-        {
-            bg->setScale(2.4);
-        }
-
-        bg->setPosition(ccp(0, curHight));
-        curHight += bg->getContentSize().height;
-        tBatchNode->addChild(bg);
-    }
-    m_bgNode->addChild(tBatchNode);
+//    auto tbg = CCLoadSprite::loadResource("nb_cx_BG2.png");
+//    auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
+//    int maxHight = CCDirector::sharedDirector()->getWinSize().height;
+//    int curHight = -500;
+//    while (curHight<maxHight) {
+////        auto bg = CCLoadSprite::createSprite("UI_UseSkill_picture_01.png");
+//        auto bg = CCCommonUtils::addFilterSprite("nb_cx_BG2.png", CCCommonUtils::covertHSBToRGB(20, 0.77, 1.0), 0, 1.04, 4.4);
+//        bg->setAnchorPoint(ccp(0, 1));
+//        if (CCCommonUtils::isIosAndroidPad())
+//        {
+//            bg->setScale(2.4);
+//        }
+//
+//        bg->setPosition(ccp(0, curHight));
+//        curHight += bg->getContentSize().height;
+//        tBatchNode->addChild(bg);
+//    }
+//    m_bgNode->addChild(tBatchNode);
     m_abilityId = "50000";
     m_tab1->setEnabled(false);
     m_tab2->setEnabled(true);
@@ -394,7 +407,7 @@ void GeneralSkillListPopUpView::onTabClick1(CCObject * pSender, Control::EventTy
     m_tabValue3->setColor({74,106,25});
     
     int viewH = m_viewBg->getContentSize().height;
-    m_viewBg->initWithSpriteFrame(CCLoadSprite::loadResource("UI_Skill_Red.png"));
+//    m_viewBg->initWithSpriteFrame(CCLoadSprite::loadResource("UI_Skill_Red.png"));
     
     if (CCCommonUtils::isIosAndroidPad())
     {
@@ -404,12 +417,12 @@ void GeneralSkillListPopUpView::onTabClick1(CCObject * pSender, Control::EventTy
         m_viewBg->setContentSize(CCSize(640,viewH));
     
     m_viewBg->setAnchorPoint(ccp(0.5, 1.0));
-    m_parNode->removeAllChildrenWithCleanup(true);
-    for (int i=1; i<3; i++) {
-        auto particle = ParticleController::createParticle(CCString::createWithFormat("SkillBG_R_%d",i)->getCString());
-        particle->setPositionY(i==1?-m_addH:m_addH);
-        m_parNode->addChild(particle);
-    }
+//    m_parNode->removeAllChildrenWithCleanup(true);
+//    for (int i=1; i<3; i++) {
+//        auto particle = ParticleController::createParticle(CCString::createWithFormat("SkillBG_R_%d",i)->getCString());
+//        particle->setPositionY(i==1?-m_addH:m_addH);
+//        m_parNode->addChild(particle);
+//    }
     refreshView();
 }
 
@@ -417,24 +430,24 @@ void GeneralSkillListPopUpView::onTabClick2(CCObject * pSender, Control::EventTy
     saveData();
     CCLoadSprite::doResourceByCommonIndex(105, true);
     m_bgNode->removeAllChildrenWithCleanup(true);
-    auto tbg = CCLoadSprite::loadResource("UI_UseSkill_picture_blackwhite.png");
-    auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
-    int maxHight = CCDirector::sharedDirector()->getWinSize().height;
-    int curHight = -500;
-    while (curHight<maxHight) {
-//        auto bg = CCLoadSprite::createSprite("UI_UseSkill_picture_02.png");
-        auto bg = CCCommonUtils::addFilterSprite("UI_UseSkill_picture_blackwhite.png", CCCommonUtils::covertHSBToRGB(190, 0.77, 1.0), 0, 1.04, 4.4);
-        bg->setAnchorPoint(ccp(0, 1));
-        bg->setPosition(ccp(0, curHight));
-        curHight += bg->getContentSize().height;
-        tBatchNode->addChild(bg);
-        
-    }
-    if (CCCommonUtils::isIosAndroidPad())
-    {
-        tBatchNode->setScale(2.4f);
-    }
-    m_bgNode->addChild(tBatchNode);
+//    auto tbg = CCLoadSprite::loadResource("nb_cx_BG2.png");
+//    auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
+//    int maxHight = CCDirector::sharedDirector()->getWinSize().height;
+//    int curHight = -500;
+//    while (curHight<maxHight) {
+////        auto bg = CCLoadSprite::createSprite("UI_UseSkill_picture_02.png");
+//        auto bg = CCCommonUtils::addFilterSprite("nb_cx_BG2.png", CCCommonUtils::covertHSBToRGB(190, 0.77, 1.0), 0, 1.04, 4.4);
+//        bg->setAnchorPoint(ccp(0, 1));
+//        bg->setPosition(ccp(0, curHight));
+//        curHight += bg->getContentSize().height;
+//        tBatchNode->addChild(bg);
+//        
+//    }
+//    if (CCCommonUtils::isIosAndroidPad())
+//    {
+//        tBatchNode->setScale(2.4f);
+//    }
+//    m_bgNode->addChild(tBatchNode);
     m_abilityId = "50001";
     m_tab1->setEnabled(true);
     m_tab2->setEnabled(false);
@@ -450,15 +463,15 @@ void GeneralSkillListPopUpView::onTabClick2(CCObject * pSender, Control::EventTy
     m_tabValue3->setColor({74,106,25});
     
     int viewH = m_viewBg->getContentSize().height;
-    m_viewBg->initWithSpriteFrame(CCLoadSprite::loadResource("skill_bg_blue.png"));
+//    m_viewBg->initWithSpriteFrame(CCLoadSprite::loadResource("skill_bg_blue.png"));
     m_viewBg->setContentSize(CCSize(640,viewH));
     m_viewBg->setAnchorPoint(ccp(0.5, 1.0));
-    m_parNode->removeAllChildrenWithCleanup(true);
-    for (int i=1; i<3; i++) {
-        auto particle = ParticleController::createParticle(CCString::createWithFormat("SkillBG_B_%d",i)->getCString());
-        particle->setPositionY(i==1?-m_addH:m_addH);
-        m_parNode->addChild(particle);
-    }
+//    m_parNode->removeAllChildrenWithCleanup(true);
+//    for (int i=1; i<3; i++) {
+//        auto particle = ParticleController::createParticle(CCString::createWithFormat("SkillBG_B_%d",i)->getCString());
+//        particle->setPositionY(i==1?-m_addH:m_addH);
+//        m_parNode->addChild(particle);
+//    }
     refreshView();
 }
 
@@ -466,24 +479,24 @@ void GeneralSkillListPopUpView::onTabClick3(CCObject * pSender, Control::EventTy
     saveData();
     CCLoadSprite::doResourceByCommonIndex(105, true);
     m_bgNode->removeAllChildrenWithCleanup(true);
-    auto tbg = CCLoadSprite::loadResource("UI_UseSkill_picture_blackwhite.png");
-    auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
-    int maxHight = CCDirector::sharedDirector()->getWinSize().height;
-    int curHight = -500;
-    while (curHight<maxHight) {
-//        auto bg = CCLoadSprite::createSprite("UI_UseSkill_picture_03.png");
-        auto bg = CCCommonUtils::addFilterSprite("UI_UseSkill_picture_blackwhite.png", CCCommonUtils::covertHSBToRGB(108, 0.77, 1.0), 0, 1.04, 4.4);
-
-        bg->setAnchorPoint(ccp(0, 1));
-        bg->setPosition(ccp(0, curHight));
-        curHight += bg->getContentSize().height;
-        tBatchNode->addChild(bg);
-    }
-    if (CCCommonUtils::isIosAndroidPad())
-    {
-        tBatchNode->setScale(2.4f);
-    }
-    m_bgNode->addChild(tBatchNode);
+//    auto tbg = CCLoadSprite::loadResource("nb_cx_BG2.png");
+//    auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
+//    int maxHight = CCDirector::sharedDirector()->getWinSize().height;
+//    int curHight = -500;
+//    while (curHight<maxHight) {
+////        auto bg = CCLoadSprite::createSprite("UI_UseSkill_picture_03.png");
+//        auto bg = CCCommonUtils::addFilterSprite("nb_cx_BG2.png", CCCommonUtils::covertHSBToRGB(108, 0.77, 1.0), 0, 1.04, 4.4);
+//
+//        bg->setAnchorPoint(ccp(0, 1));
+//        bg->setPosition(ccp(0, curHight));
+//        curHight += bg->getContentSize().height;
+//        tBatchNode->addChild(bg);
+//    }
+//    if (CCCommonUtils::isIosAndroidPad())
+//    {
+//        tBatchNode->setScale(2.4f);
+//    }
+//    m_bgNode->addChild(tBatchNode);
     m_abilityId = "50002";
     m_tab1->setEnabled(true);
     m_tab2->setEnabled(true);
@@ -499,15 +512,15 @@ void GeneralSkillListPopUpView::onTabClick3(CCObject * pSender, Control::EventTy
     m_tabValue3->setColor({157,227,0});
     
     int viewH = m_viewBg->getContentSize().height;
-    m_viewBg->initWithSpriteFrame(CCLoadSprite::loadResource("skill_bg_green.png"));
-    m_viewBg->setContentSize(CCSize(640,viewH));
-    m_viewBg->setAnchorPoint(ccp(0.5, 1.0));
-    m_parNode->removeAllChildrenWithCleanup(true);
-    for (int i=1; i<3; i++) {
-        auto particle = ParticleController::createParticle(CCString::createWithFormat("SkillBG_G_%d",i)->getCString());
-        particle->setPositionY(i==1?-m_addH:m_addH);
-        m_parNode->addChild(particle);
-    }
+//    m_viewBg->initWithSpriteFrame(CCLoadSprite::loadResource("skill_bg_green.png"));
+//    m_viewBg->setContentSize(CCSize(640,viewH));
+//    m_viewBg->setAnchorPoint(ccp(0.5, 1.0));
+//    m_parNode->removeAllChildrenWithCleanup(true);
+//    for (int i=1; i<3; i++) {
+//        auto particle = ParticleController::createParticle(CCString::createWithFormat("SkillBG_G_%d",i)->getCString());
+//        particle->setPositionY(i==1?-m_addH:m_addH);
+//        m_parNode->addChild(particle);
+//    }
     refreshView();
 }
 
@@ -995,17 +1008,21 @@ bool GeneralSkillCell::init(){
     }else{
         bgFile = "UI_Skill_icon_frame_green.png";
     }
-    m_skillItemBg->initWithSpriteFrame(CCLoadSprite::loadResource(bgFile.c_str()));
+    
     string icon = CCCommonUtils::getIcon(m_info->skillId);
+    CCLOG("%s...",icon.c_str());
     auto sprite = CCLoadSprite::createSprite(icon.c_str());
     this->m_picNode->addChild(sprite);
-    //sprite->setScale(120.0f / sprite->getContentSize().width);
+    sprite->setScale(120.0f / sprite->getContentSize().width);
     isPlayingAni = false;
     isOpened = false;
     //this->m_nameLabel->setString(CCCommonUtils::getNameById(m_info->skillId).c_str());
     m_lvLabel->setString(std::string("") + CC_ITOA(m_info->level) + "/" + CC_ITOA(m_info->maxLevel));
     if(!m_info->isLocked() && !m_isRequire){
-        m_lvLabel->setColor({255,255,0});
+        auto spritebg =CCLoadSprite::createSprite(bgFile.c_str());
+        spritebg->setPosition(m_skillItemBg->getContentSize().width/2, m_skillItemBg->getContentSize().height/2);
+        m_skillItemBg->addChild(spritebg);
+        m_lvLabel->setColor({147,82,1});
         if(m_info->level > 0){
             isOpened = true;
             //this->getAnimationManager()->runAnimationsForSequenceNamed("Default");
@@ -1033,10 +1050,10 @@ bool GeneralSkillCell::init(){
             }
         }
     }else{
-        m_nameLabel->setColor(ccGRAY);
-        m_lvLabel->setColor(ccGRAY);
-        CCCommonUtils::setSpriteGray(sprite, true);
-        CCCommonUtils::setSpriteGray(m_skillItemBg, true);
+//        m_nameLabel->setColor(ccGRAY);
+//        m_lvLabel->setColor(ccGRAY);
+//        CCCommonUtils::setSpriteGray(sprite, true);
+//        CCCommonUtils::setSpriteGray(m_skillItemBg, true);
         m_particleNode->removeAllChildrenWithCleanup(true);
         if(m_info->type>=10){// && m_info->type<16
             for(int i=1;i<5;i++){
@@ -1279,7 +1296,9 @@ bool GeneralSkillUpdatePopUpView::init(){
         }else{
             bgFile = "UI_Skill_icon_frame_green.png";
         }
-        m_skillItemBg->initWithSpriteFrame(CCLoadSprite::loadResource(bgFile.c_str()));
+        auto spritebg =CCLoadSprite::createSprite(bgFile.c_str());
+        spritebg->setPosition(m_skillItemBg->getContentSize().width/2, m_skillItemBg->getContentSize().height/2);
+        m_skillItemBg->addChild(spritebg);
         
         this->m_titleText->setString(CCCommonUtils::getNameById(m_info->skillId).c_str());
         string dialog = CCCommonUtils::getPropById(m_info->skillId, "description");
@@ -1299,6 +1318,7 @@ bool GeneralSkillUpdatePopUpView::init(){
         }
 
         CCCommonUtils::setButtonTitle(m_updateBtn, _lang("105445").c_str());
+        CCCommonUtils::setButtonTitle(m_maxBtn, _lang("150251").c_str());
         this->m_picContainer->removeAllChildren();
         string icon = CCCommonUtils::getIcon(m_info->skillId);
         auto sprite = CCLoadSprite::createSprite(icon.c_str());
@@ -1344,6 +1364,7 @@ void GeneralSkillUpdatePopUpView::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 
 bool GeneralSkillUpdatePopUpView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode){
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_updateBtn", CCControlButton*, m_updateBtn);
+     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_maxBtn", CCControlButton*, m_maxBtn);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_titleText", CCLabelIF*, m_titleText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_descriptionText", CCLabelIF*, m_descriptionText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_attAddText", CCLabelIF*, m_attAddText);
@@ -1364,11 +1385,13 @@ bool GeneralSkillUpdatePopUpView::onAssignCCBMemberVariable(cocos2d::CCObject * 
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_curRomanNode", CCNode*, m_curRomanNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_nextRomanNode", CCNode*, m_nextRomanNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_lockNode", CCNode*, m_lockNode);
+    
     return false;
 }
 
 SEL_CCControlHandler GeneralSkillUpdatePopUpView::onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName){
-    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onUpdateClick", GeneralSkillUpdatePopUpView::onUpdateClick);    
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onUpdateClick", GeneralSkillUpdatePopUpView::onUpdateClick);
+     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onUpdateMaxClick", GeneralSkillUpdatePopUpView::onUpdateMaxClick);
     return NULL;
 }
 
@@ -1381,8 +1404,10 @@ void GeneralSkillUpdatePopUpView::onUpdateClick(CCObject * pSender, Control::Eve
             m_isLongPressUpBtn=false;
             if(GeneralManager::getInstance()->getTotalFreeSkillPoint(*m_ginfo) < m_info->getUpgradeSkillPointNeed()){
                 m_updateBtn->setEnabled(false);
+                m_maxBtn->setEnabled(false);
             }else{
                 m_updateBtn->setEnabled(true);
+                m_maxBtn->setEnabled(true);
             }
         }else{
             if(m_info->level >= m_info->maxLevel){
@@ -1390,14 +1415,30 @@ void GeneralSkillUpdatePopUpView::onUpdateClick(CCObject * pSender, Control::Eve
             }
             if(GeneralManager::getInstance()->getTotalFreeSkillPoint(*m_ginfo) < m_info->getUpgradeSkillPointNeed()){
                 m_updateBtn->setEnabled(false);
+                m_maxBtn->setEnabled(false);
                 return;
             }
             m_info->level = m_info->level+1;
             m_updateBtn->setEnabled(false);
+            m_maxBtn->setEnabled(false);
             GeneralManager::getInstance()->saveSkill(m_info->abilityId, m_info->skillId);
-//            saveSuccess(NULL);
+            //            saveSuccess(NULL);
         }
     }
+}
+
+void GeneralSkillUpdatePopUpView::onUpdateMaxClick(CCObject * pSender, Control::EventType pCCControlEvent){
+    CCLOGFUNC();
+    m_maxBtn->setEnabled(false);
+    if(m_info->level >= m_info->maxLevel){
+        return;
+    }
+    int freeSkillPoint = GeneralManager::getInstance()->getTotalFreeSkillPoint(*m_ginfo);
+    int toMax = m_info->maxLevel - m_info->level;
+    int addPoint = freeSkillPoint<toMax?freeSkillPoint:toMax;
+    m_info->level = m_info->level+addPoint;
+    GeneralManager::getInstance()->saveSkill(m_info->abilityId, m_info->skillId);
+    
 }
 
 void GeneralSkillUpdatePopUpView::UpgradeSkill(float f){
@@ -1407,6 +1448,7 @@ void GeneralSkillUpdatePopUpView::UpgradeSkill(float f){
     }
     if(GeneralManager::getInstance()->getTotalFreeSkillPoint(*m_ginfo) < m_info->getUpgradeSkillPointNeed()){
         m_updateBtn->setEnabled(false);
+         m_maxBtn->setEnabled(false);
         return;
     }
     m_info->level = m_info->level+1;
@@ -1430,10 +1472,11 @@ void GeneralSkillUpdatePopUpView::cdClick(float _time){
     }
     if(GeneralManager::getInstance()->getTotalFreeSkillPoint(*m_ginfo) < m_info->getUpgradeSkillPointNeed()){
         m_updateBtn->setEnabled(false);
+        m_maxBtn->setEnabled(false);
         return;
     }
     m_updateBtn->setEnabled(true);
-}
+    m_maxBtn->setEnabled(true);}
 
 void GeneralSkillUpdatePopUpView::refreshView(){
     setBtnState();
@@ -1538,16 +1581,16 @@ void GeneralSkillUpdatePopUpView::setText(){
     this->m_addTxt->setString(addStr);
     float len = current*1.0/maxLv;
     if(len>1) len = 1.0;
-    m_progress->setContentSize(CCSize(338.0*len,23));
+    m_progress->setContentSize(CCSize(338.0*len,13));
     
     double next = addValue*(m_info->level+1);
     float nextLen = next*1.0/maxLv;
     if(nextLen>1) nextLen = 1.0;
-    m_nextPro->setContentSize(CCSize(338.0*nextLen,23));
+    m_nextPro->setContentSize(CCSize(338.0*nextLen,13));
     if (CCCommonUtils::isIosAndroidPad())
     {
-        m_progress->setContentSize(CCSize(338.0*len,46));
-        m_nextPro->setContentSize(CCSize(338.0*nextLen,46));
+        m_progress->setContentSize(CCSize(338.0*len,13));
+        m_nextPro->setContentSize(CCSize(338.0*nextLen,13));
     }
     if(m_info->type>=10){// && m_info->type<16
         m_proNode->setVisible(false);
@@ -1596,8 +1639,10 @@ void GeneralSkillUpdatePopUpView::setBtnState(){
     m_lockNode->removeAllChildrenWithCleanup(true);
     if(m_info->level >= m_info->maxLevel){
         m_updateBtn->setVisible(false);
+        m_maxBtn->setVisible(false);
     }else if(m_info->isLocked()){
         m_updateBtn->setVisible(false);
+        m_maxBtn->setVisible(false);
         std::string hintStr = "";
         std::string conditionSkill = CCCommonUtils::getPropById(m_info->skillId, "condition_skill");
         if(conditionSkill != ""){
@@ -1611,9 +1656,12 @@ void GeneralSkillUpdatePopUpView::setBtnState(){
                 std::string requiredskillId = vector1[0];
                 GeneralSkillInfo *skillInfo = m_ginfo->getSkill(m_info->abilityId, requiredskillId);
                 if(skillInfo){
-                    GeneralSkillCell *cell = GeneralSkillCell::create(skillInfo, &GlobalData::shared()->generals.begin()->second,m_lockNode,true);
-                    cell->setPosition(i*150, 0);
-                    m_lockNode->addChild(cell);
+                    if( !GlobalData::shared()->generals.empty() )
+                    {
+                        GeneralSkillCell *cell = GeneralSkillCell::create(skillInfo, &GlobalData::shared()->generals.begin()->second,m_lockNode,true);
+                        cell->setPosition(i*150, 0);
+                        m_lockNode->addChild(cell);
+                    }
                 }
                 i++;
             }
@@ -1626,8 +1674,10 @@ void GeneralSkillUpdatePopUpView::setBtnState(){
     }else{
         if(GeneralManager::getInstance()->getTotalFreeSkillPoint(*m_ginfo) < m_info->getUpgradeSkillPointNeed()){
             m_updateBtn->setEnabled(false);
+            m_maxBtn->setEnabled(false);
         }else{
             m_updateBtn->setEnabled(true);
+            m_maxBtn->setEnabled(true);
         }
     }
 }

@@ -177,6 +177,26 @@ bool AllianceInfoView::init()
     return true;
 }
 
+CCNode* AllianceInfoView::getGuideNode(string str)
+{
+    if(str == "1")
+    {
+        return m_nb_bg1;
+    }
+    else if(str == "2")
+    {
+        return m_funList;
+    }
+    else if(str == "3")
+    {
+        return m_nb_allianceBottomNode;
+    }
+    else
+    {
+        return nullptr;
+    }
+}
+
 void AllianceInfoView::sortData(){
     m_data->removeAllObjects();
     int num = m_srcData->count();

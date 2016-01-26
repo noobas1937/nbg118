@@ -22,14 +22,30 @@ class ActivityBeginView : public PopupBaseView
 {
 public:
     static ActivityBeginView *create();
-    ActivityBeginView(){};
-    ~ActivityBeginView(){};
+    ActivityBeginView()
+    {
+        m_rankRewardForUI = nullptr;
+        m_totalRankRewardForUI = nullptr;
+    };
+    ~ActivityBeginView()
+    {
+        CC_SAFE_RELEASE_NULL(m_rewards);
+        CC_SAFE_RELEASE_NULL(m_reward1);
+        CC_SAFE_RELEASE_NULL(m_reward2);
+        CC_SAFE_RELEASE_NULL(m_reward3);
+        CC_SAFE_RELEASE_NULL(m_rankRewardForUI);
+        CC_SAFE_RELEASE_NULL(m_totalRankRewardForUI);
+    };
+    
+    // TODO:
+    int height_offset;
+    
 private:
     virtual void onEnter();
     virtual void onExit();
     virtual bool init();
     virtual bool onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode);
-    virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(cocos2d::CCObject * pTarget, const char * pSelectorName){return NULL;}
+    virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(cocos2d::CCObject * pTarget, const char * pSelectorName);
 	virtual SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName);
     virtual bool onTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
     virtual void onTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
@@ -43,6 +59,14 @@ private:
     void onInfoBtn3Click(CCObject *pSender, CCControlEvent event);
     void onClickHistory(CCObject *pSender, CCControlEvent event);
     void onCloseClick(CCObject *pSender, CCControlEvent event);
+    void onCloseClick(CCObject *pSender);
+    void onTab1(CCObject *pSender);
+    void onTab2(CCObject *pSender);
+    void onTab3(CCObject *pSender);
+    
+    void onStep1(CCObject *pSender, CCControlEvent event);
+    void onStep2(CCObject *pSender, CCControlEvent event);
+    void onStep3(CCObject *pSender, CCControlEvent event);
     
     void updateTime(float _time);
     void getServerData(CCObject* param);
@@ -51,7 +75,13 @@ private:
     void removeLoadingAni(CCObject* obj);
     void showRewards(int hBG);
     
+    CCSafeObject<CCNode> m_viewBg;
+    
     CCSafeObject<CCSprite> m_loadingIcon;
+    
+    CCSafeObject<CCSprite> m_step1;
+    CCSafeObject<CCSprite> m_step2;
+    CCSafeObject<CCSprite> m_step3;
     
     CCSafeObject<CCLabelIF> m_titleTxt;
     CCSafeObject<CCLabelIF> m_sorceTxt;
@@ -61,6 +91,7 @@ private:
     CCSafeObject<CCLabelIF> m_rankNum;
     CCSafeObject<CCLabelIF> m_totalRankTxt;
     CCSafeObject<CCLabelIF> m_totalRankNum;
+    CCSafeObject<CCLabelIF> m_desc;
     
     CCSafeObject<CCNode> m_targetNode;
     CCSafeObject<CCNode> m_clipperNode;
@@ -79,9 +110,9 @@ private:
     CCSafeObject<CCLabelIF> m_trNum3;
     CCSafeObject<CCLabelIF> m_trNum2;
     CCSafeObject<CCLabelIF> m_trNum1;
-    CCSafeObject<CCNode> m_targetTxtBg3;
-    CCSafeObject<CCNode> m_targetTxtBg2;
-    CCSafeObject<CCNode> m_targetTxtBg1;
+//    CCSafeObject<CCNode> m_targetTxtBg3;
+//    CCSafeObject<CCNode> m_targetTxtBg2;
+//    CCSafeObject<CCNode> m_targetTxtBg1;
     
     CCSafeObject<CCNode> m_earnNode;
     CCSafeObject<CCNode> m_eNode;
@@ -107,6 +138,7 @@ private:
     CCSafeObject<CCNode> m_bottomL1;
     CCSafeObject<CCNode> m_bottomL2;
     CCSafeObject<CCScale9Sprite> m_scBG;
+    CCSafeObject<CCLayerGradient> m_progress1;
     CCSafeObject<CCLabelIF> m_totalRankTip;
     CCSafeObject<CCNode> m_rewardListNode;
     CCSafeObject<CCNode> m_tab1;
@@ -124,7 +156,14 @@ private:
     CCSafeObject<CCClipNode> m_clipper;
     CCSafeObject<CCProgressTimer> m_proTimer;
     CCArray* m_rankReward;
+    CCArray* m_rankRewardForUI;
     CCArray* m_totalRankReward;
+    CCArray* m_totalRankRewardForUI;
+    CCArray* m_rewards;
+    CCArray* m_reward1;
+    CCArray* m_reward2;
+    CCArray* m_reward3;
+    
     double m_haveTime;
     bool m_moveFlag;
     CCPoint m_touchPos;
