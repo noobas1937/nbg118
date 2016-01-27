@@ -2932,7 +2932,35 @@ void ImperialScene::hideFlyArrow(float _time){
     m_flyArrow->stopAllActions();
     m_flyArrow->setVisible(false);
 }
+void ImperialScene::setPointArrowAni(int buildId)
+{
+    FunBuild *build = NULL;
+    if(buildId>1000){
+        map<int, FunBuild*>::iterator it = m_buildItems.find(buildId);
+        if( it == m_buildItems.end()){
+            return;
+        }
+        build = m_buildItems[buildId];
+        
+    }else
+        return;
+    
+    int buildPosX = build->getParent()->getPositionX() + build->mainWidth / 2 ;
+    int buildPosY = build->getParent()->getPositionY() + build->mainHeight;
+    if (buildId == FUN_BUILD_MAIN_CITY_ID) {
+        buildPosY -= build->mainHeight/2;
+    }
+    m_flyArrow->setPosition(ccp(buildPosX, buildPosY + 80));
+    m_flyArrow->setVisible(true);
+    CCActionInterval * moveBy = CCMoveBy::create(0.5,ccp(30, 50));
+    CCActionInterval * moveRBy = CCMoveBy::create(0.5,ccp(-30, -50));
+    CCSequence* fadeAction = CCSequence::create(moveBy,moveRBy,NULL);
+    CCActionInterval * fadeForever =CCRepeatForever::create((CCActionInterval* )fadeAction);
+    m_flyArrow->runAction(fadeForever);
+    
+    scheduleOnce(schedule_selector(ImperialScene::hideFlyArrow), 5.0f);
 
+}
 void ImperialScene::onMoveToBuildAndOpen(int itemId, int type, float dt, bool bound)
 {
     float endS = 1;//fusheng 移动地块 设置为1
@@ -5167,7 +5195,11 @@ void ImperialScene::onShowBtnsView(int x, int y, int buildId)
     }
     
     m_buildBtnsView->setPosition(ccp(x,y));
-    m_buildBtnsView->onShow(buildId);
+    if (m_questEffect != 0) {
+        m_buildBtnsView->onShow(buildId,m_questEffect);
+    }
+    else
+        m_buildBtnsView->onShow(buildId);
 }
 
 void ImperialScene::onShowSpeBtnsView(int x, int y, int buildId)
@@ -6248,4 +6280,7 @@ void ImperialScene::removeCustomBatchLayer(){
         m_touchLayer->removeChild(m_rescustombatchNode);
         m_rescustombatchNode=NULL;
     }
+}
+void ImperialScene::setQuestEffect(int type){
+    m_questEffect = type;
 }
