@@ -91,6 +91,7 @@ public:
     
     void createWalker(float t);
     void createEnemy(float t);
+    void checkPopRecommendAlliance(float t);
     void shootArrow(float t);
     void openBridge(float t);
     void closeBridge(float t);
@@ -100,6 +101,9 @@ public:
     
     void pauseEnemy();
     void resumeEnemy();
+    
+    void requestRecommendAlliance();
+   
     //end a by ljf
     
     
