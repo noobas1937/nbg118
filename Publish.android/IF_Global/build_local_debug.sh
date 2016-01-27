@@ -24,7 +24,7 @@ mkdir $soTargetDir >/dev/null 2>/dev/null
 BRANCH=`git branch | awk '{if ($1=="*") print $2}'`
 COMMIT=`git rev-list HEAD -n 1 | cut -c 1-7`
 
-apkTargetPath=$apkTargetDir/DC_google_debug_$curDate_$curTime_$BRANCH_$COMMIT.apk
+apkTargetPath=$apkTargetDir/DC_google_debug_"$curDate"_"$curTime"_"$BRANCH"_"$COMMIT".apk
 apkTargetLastPath=$apkTargetDir/DC_google_debug.apk
 
 if [ ! -n "$ANDROID_HOME" ]; then
