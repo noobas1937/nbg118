@@ -69,6 +69,13 @@
 #include "WorldController.h"
 #include "NBGPostEffectLayer.h"
 #include "NBWaterSprite.hpp"
+#include "RecommendAllianceCommand.h"
+#include "AllianceInfoView.h"
+#include "CreateAllianceView.h"
+#include "CreateAllianceViewRecommend.h"
+#include "AlertAddAllianceViewRecommend.h"
+#include "RecommendAllianceController.h"
+#include "AllianceInfo.h"
 //end a by ljf
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
@@ -377,6 +384,7 @@ bool ImperialScene::init()
     water->setAnchorPoint(Vec2(0.5,0.5));
     m_waterNode->addChild(water);
     
+    RecommendAllianceController::getInstance()->checkToSendRecommendRequest();
     //UIComponent::getInstance()->loadSpineActivityBox();
     //end a by ljf
     return true;
@@ -616,6 +624,8 @@ void ImperialScene::buildingCallBack(CCObject* params)
     
     this->schedule(schedule_selector(ImperialScene::createWalker), 0.25, 1, 0.0f);
     
+    this->schedule(schedule_selector(ImperialScene::checkPopRecommendAlliance), 2.0, CC_REPEAT_FOREVER, 20.0f);
+    
 //    string gid = GuideController::share()->getCurrentId();
 //    if (gid != "3311100") {
 //        this->schedule(schedule_selector(ImperialScene::createEnemy), 30.0, CC_REPEAT_FOREVER, 0.0f);
@@ -778,6 +788,69 @@ void ImperialScene::onCreateVikingsShip(int level)
 }
 
 //begin a by ljf
+
+
+
+void ImperialScene::requestRecommendAlliance()
+{
+    RecommendAllianceController::getInstance()->checkToSendRecommendRequest();
+    int cnt = rand() % 6;
+    //int cnt = 0;
+    if(cnt == 1)
+    {
+        //RecommendAllianceCommand* command = new RecommendAllianceCommand();
+        /*
+        command->putParam("name", CCString::create(m_allianceNameEditBox->getText()));
+        command->putParam("abbr", CCString::create(""));
+        command->putParam("icon", CCString::create(""));
+        command->putParam("intro", CCString::create(m_allianceIntroEditBox->getText()));
+        command->putParam("language", CCString::create(language));
+        
+        command->setCallback(CCCallFuncO::create(this, callfuncO_selector(CreateAllianceViewRecommend::onCreateAlliance), NULL));
+        command->setFailCallback(CCCallFuncO::create(this, callfuncO_selector(CreateAllianceViewRecommend::createFail), NULL));
+        */
+        //command->sendAndRelease();
+    }
+    if(cnt == 2)
+    {
+        
+        //if(GlobalData::shared()->playerInfo.isInAlliance()){
+            CCCommonUtils::setIsHDViewPort(true);
+            PopupViewController::getInstance()->addPopupInView(AllianceInfoView::create(&GlobalData::shared()->playerInfo.allianceInfo));
+        //}
+        
+    }
+    if(cnt == 3)
+    {
+        PopupViewController::getInstance()->addPopupView(CreateAllianceView::create(11));
+    }
+    if(cnt == 4 )
+    {
+        PopupViewController::getInstance()->addPopupView(CreateAllianceViewRecommend::create(11));
+    }
+    if((cnt == 5) || (cnt == 0))
+    {
+        CCCommonUtils::setIsHDViewPort(true);
+        //PopupViewController::getInstance()->addPopupInView(AlertAddAllianceViewRecommend::create(&GlobalData::shared()->playerInfo.allianceInfo));
+        AllianceInfo * pGlobal = &(GlobalData::shared()->playerInfo.allianceInfo);
+        AllianceInfo * allInfo = new AllianceInfo();
+        allInfo->uid = pGlobal->uid;
+        allInfo->name = pGlobal->name;
+        allInfo->shortName = pGlobal->shortName;
+        allInfo->language = pGlobal->language;
+        allInfo->leader = pGlobal->leader;
+        allInfo->maxNum = pGlobal->maxNum;
+        allInfo->currentNum = pGlobal->currentNum;
+        allInfo->icon = pGlobal->icon;
+        //allInfo->fightpower = fightPower;
+        allInfo->totalForce = pGlobal->totalForce;
+        PopupViewController::getInstance()->addPopupView(AlertAddAllianceViewRecommend::create(&GlobalData::shared()->playerInfo.allianceInfo));
+        
+        delete allInfo;
+        allInfo = nullptr;
+    }
+}
+
 CCNode * ImperialScene::getVikingsShipCCBPosNodeBySeq(int seq)
 {
     if(seq == 1)
@@ -1114,11 +1187,13 @@ bool ImperialScene::onVikingsShipLockTouched(CCTouch* pTouch)
             unsigned int max = WorldController::getInstance()->getMaxMarchCount();
             //if (current >= max)
             {
-                WorldController::getInstance()->showMarchAlert(max);
+                WorldController::getInstance()->showMarchAlert(max); 
                 //return;
             }
 
-            
+            //begin ljf test
+            requestRecommendAlliance();
+            //end ljf test
             return true;
         }
     }
@@ -1517,6 +1592,11 @@ void ImperialScene::resumeEnemy()
     this->schedule(schedule_selector(ImperialScene::createEnemy), 30.0f, CC_REPEAT_FOREVER, 0.0f);
 }
 
+void ImperialScene::checkPopRecommendAlliance(float t)
+{
+    RecommendAllianceController::getInstance()->checkToPopRecommendAlliance();
+}
+
 void ImperialScene::createEnemy(float t)
 {
     if(m_isPauseEnemy)
@@ -1535,6 +1615,7 @@ void ImperialScene::createEnemy(float t)
         m_enemyArray.pushBack(soldier);
         //soldier->setSprScale(1);
     }
+    
 }
 
 void ImperialScene::shootArrow(float t)
@@ -3514,6 +3595,7 @@ void ImperialScene::update(float dt)
     {
         updateVikingsShipNum();
     }
+    //RecommendAllianceController::getInstance()->checkToPopRecommendAlliance();
 }
 
 

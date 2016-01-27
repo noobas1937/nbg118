@@ -6,20 +6,21 @@
 //
 //
 
-#include "CreateAllianceCommand.h"
+#include "RecommendAllianceCommand.h"
 #include "NetController.h"
 #include "UIComponent.h"
 #include "YesNoDialog.h"
+#include "RecommendAllianceController.h"
 
-static string COMMAND_NAME = "al.create";
+static string COMMAND_NAME = "al.recommend";
 
-CreateAllianceCommand::CreateAllianceCommand()
+RecommendAllianceCommand::RecommendAllianceCommand()
 : CommandBase(COMMAND_NAME)
 {
     
 }
 
-bool CreateAllianceCommand::handleRecieve(cocos2d::CCDictionary *dict)
+bool RecommendAllianceCommand::handleRecieve(cocos2d::CCDictionary *dict)
 {
     if (dict->valueForKey("cmd")->compare(COMMAND_NAME.c_str()) != 0)
         return false;
@@ -31,6 +32,7 @@ bool CreateAllianceCommand::handleRecieve(cocos2d::CCDictionary *dict)
     }
     const CCString *pStr = params->valueForKey("errorCode");
     if (pStr->compare("")!=0) {
+        /*
         if (pStr->compare("E100001") == 0) {
             YesNoDialog::gotoPayTips();
         }else if (pStr->compare("115506") == 0) {
@@ -39,18 +41,23 @@ bool CreateAllianceCommand::handleRecieve(cocos2d::CCDictionary *dict)
         else{
             CCCommonUtils::flyText(_lang(pStr->getCString()));
         }
+        */
+        
         callFail(NetResult::create(Error_OK, params));
     }else{
+        /*
         if(params->objectForKey("gold")){
             GlobalData::shared()->playerInfo.gold = params->valueForKey("gold")->intValue();
         }
         CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_CITY_RESOURCES_UPDATE);
         //GlobalData::shared()->playerInfo.isfirstJoin = 0;
         UIComponent::getInstance()->showFlygold();
-        //begin a by ljf,曾经加入过联盟
-        GlobalData::shared()->playerInfo.onceJoinedAlliance = 1;
-        //end a by ljf
-        callSuccess(NetResult::create(Error_OK, (CCObject*)(params->objectForKey("alliance"))));
+        */
+        //auto allianceDic = _dict(params->objectForKey("alliance"));
+        CCDictionary *pDict = _dict(params->objectForKey("recommendAlliance"));
+        RecommendAllianceController::getInstance()->hasSendRequest = true;
+        RecommendAllianceController::getInstance()->updateRecommendAllianceInfo(pDict);
+        callSuccess(NetResult::create(Error_OK, (CCObject*)(params->objectForKey("recommendAlliance"))));
     }
     return true;
 }

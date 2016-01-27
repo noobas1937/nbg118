@@ -70,6 +70,7 @@
 
 //begin a by ljf
 #include "NBWaterMap.h"
+#include "RecommendAllianceController.h"
 //end a by ljf
 
 static WorldMapView* worldMapInstance = nullptr;
@@ -4143,6 +4144,10 @@ void WorldMapView::update(float delta) {
     m_currentState = WorldController::getInstance()->getKingActivityStateByType(FIGHT_OF_KING);
     
     update_water_shader(m_map->getViewPointByTilePoint(m_map->currentTilePoint));
+    
+    //begin a by ljf
+    //RecommendAllianceController::getInstance()->checkToPopRecommendAlliance();
+    //end a by ljf
 }
 IFHeiqishiNode* WorldMapView::createHeiqishiSoldier(MarchInfo& info){//default info for （info.marchType MethodHeiqishi）、(info.targetType CityTile)
     float fNodeScale = 0.8;

@@ -13,7 +13,10 @@
 #include "ActivityController.h"
 #include "ChatServiceCocos2dx.h"
 #include "ChatController.h"
-
+//begin a by ljf
+#define ALLIANCE_RECOMMEND_JOIN_MAX "E100081"
+#include "RecommendAllianceController.h"
+//end a by ljf
 ApplyAllianceCommand::ApplyAllianceCommand(std::string allianceId)
 : CommandBase(APPLY_ALLIANCE),m_allianceId(allianceId)
 {
@@ -35,6 +38,13 @@ bool ApplyAllianceCommand::handleRecieve(cocos2d::CCDictionary *dict)
         if(pStr->compare("EE000000")==0){
             //无效处理，不让提给玩家
         }else{
+            //begin a by ljf
+            if(pStr->compare("ALLIANCE_RECOMMEND_JOIN_MAX")==0)
+            {
+                //RecommendAllianceController::getInstance()->applyRecommendAllianceFailTimes = RecommendAllianceController::getInstance()->applyRecommendAllianceFailTimes + 1;
+                RecommendAllianceController::getInstance()->onApplyRecommendAllianceFail();
+            }
+            //end a by ljf
             if (params->objectForKey("name") && pStr->compare("115463") == 0) {
                 CCCommonUtils::flyText(_lang_1(pStr->getCString(), params->valueForKey("name")->getCString()));
             } else {
@@ -65,6 +75,9 @@ bool ApplyAllianceCommand::handleRecieve(cocos2d::CCDictionary *dict)
                 }
             }
         }
+        //begin a by ljf,曾经加入过联盟
+        GlobalData::shared()->playerInfo.onceJoinedAlliance = 1;
+        //end a by ljf
         callSuccess(NetResult::create());
     }
     GameController::getInstance()->removeWaitInterface();
