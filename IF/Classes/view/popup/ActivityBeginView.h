@@ -139,6 +139,8 @@ private:
     CCSafeObject<CCNode> m_bottomL2;
     CCSafeObject<CCScale9Sprite> m_scBG;
     CCSafeObject<CCLayerGradient> m_progress1;
+    CCSafeObject<CCLayerGradient> m_progress2;
+    CCSafeObject<CCLayerGradient> m_progress3;
     CCSafeObject<CCLabelIF> m_totalRankTip;
     CCSafeObject<CCNode> m_rewardListNode;
     CCSafeObject<CCNode> m_tab1;

@@ -594,10 +594,31 @@ void ActivityBeginView::getServerData(CCObject* param){
 //                m_proTimer->setPercentage(per);
             }
             
-            float w = threeScore > 0 ? 532.0 * score / threeScore : 0;
-            w = w > 0 ? w : 1;
-            w = w > 532 ? 532 : w;
-            m_progress1->setContentSize({w, 11});
+
+            // 1
+            {
+                int len = 178;
+                float w = oneScore > 0 ? len * score / oneScore : 0;
+                w = w > 0 ? w : 1;
+                w = w > len ? len : w;
+                m_progress1->setContentSize({w, 11});
+            }
+            // 2
+            {
+                int len = 180;
+                float w = (twoScore - oneScore) > 0 ? len * (score - oneScore) / (twoScore - oneScore) : 0;
+                w = w > 0 ? w : 1;
+                w = w > len ? len : w;
+                m_progress2->setContentSize({w, 11});
+            }
+            // 3
+            {
+                int len = 170;
+                float w = (threeScore - twoScore - oneScore) > 0 ? len * (score - twoScore - oneScore) / (threeScore - twoScore - oneScore) : 0;
+                w = w > 0 ? w : 1;
+                w = w > len ? len : w;
+                m_progress3->setContentSize({w, 11});
+            }
         }
         
         m_eventIds.clear();
@@ -885,6 +906,8 @@ bool ActivityBeginView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, c
 
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_scBG", CCScale9Sprite*, this->m_scBG);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_progress1", CCLayerGradient*, this->m_progress1);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_progress2", CCLayerGradient*, this->m_progress2);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_progress3", CCLayerGradient*, this->m_progress3);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_totalRankTip", CCLabelIF*, this->m_totalRankTip);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_rewardListNode", CCNode*, this->m_rewardListNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_tab1", CCNode*, this->m_tab1);
