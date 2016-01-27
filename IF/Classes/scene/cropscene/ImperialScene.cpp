@@ -2945,8 +2945,8 @@ void ImperialScene::setPointArrowAni(int buildId)
     }else
         return;
     
-    int buildPosX = build->getParent()->getPositionX() + build->mainWidth / 2 ;
-    int buildPosY = build->getParent()->getPositionY() + build->mainHeight;
+    int buildPosX = build->getParent()->getPositionX();
+    int buildPosY = build->getParent()->getPositionY();
     if (buildId == FUN_BUILD_MAIN_CITY_ID) {
         buildPosY -= build->mainHeight/2;
     }
