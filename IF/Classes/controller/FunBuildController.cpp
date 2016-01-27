@@ -2118,6 +2118,28 @@ void FunBuildController::updateResPreSed(float t)
 //    lastAddWood += addWood;
 //    lastAddStone += addStone;
 //    lastAddIron += addIron;
+    
+    /////////是否开启资源保护以免部队将粮食吃光
+    if (GlobalData::shared()->foodMinimumSwith == 1 && addFood < 0) {
+        int foodMinimum = 0;
+        int buildId = FunBuildController::getInstance()->getMaxLvBuildByType(FUN_BUILD_CELLAR);
+        if (buildId > 0) {
+            auto buildInfo = FunBuildController::getInstance()->getFunbuildById(buildId);
+            int oFoodValue = atoi(buildInfo.para[4].c_str());
+            int addValue = CCCommonUtils::getEffectValueByNum(72);
+            float proValue = 1+CCCommonUtils::getEffectValueByNum(38)/100.0;
+            int addFoodValue = (oFoodValue+addValue)*proValue-oFoodValue;
+            foodMinimum = oFoodValue + addFoodValue;
+        }
+        
+        if (GlobalData::shared()->resourceInfo.lFood <= foodMinimum && foodMinimum > 0) {
+            addFood = 0;
+        }
+        else if (GlobalData::shared()->resourceInfo.lFood + addFood < foodMinimum && foodMinimum > 0) {
+            addFood = foodMinimum - GlobalData::shared()->resourceInfo.lFood;
+        }
+    }
+    
     lastAddFood += addFood;
     
     if (addFood >0 && GlobalData::shared()->resourceInfo.lFood >= GlobalData::shared()->resourceInfo.lStorageFood) {

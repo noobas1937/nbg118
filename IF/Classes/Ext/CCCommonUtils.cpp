@@ -2167,6 +2167,10 @@ void CCCommonUtils::initConfigData(CCDictionary *params){
         if (account->objectForKey("k6")) {
             GlobalData::shared()->trans_res_limit = account->valueForKey("k6")->longValue();
         }
+		GlobalData::shared()->foodMinimumSwith = 0;
+        if (account->objectForKey("k7")) {
+            GlobalData::shared()->foodMinimumSwith = account->valueForKey("k7")->intValue();
+        }
     }
     // tao.yu 第一版增加聊天开关
     CCDictionary* chatConfig = dynamic_cast<CCDictionary*>(dataConfig->objectForKey("chat_status"));
