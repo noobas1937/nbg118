@@ -71,6 +71,7 @@
 
 //begin a by ljf
 #include "NBWaterMap.h"
+#include "RecommendAllianceController.h"
 //end a by ljf
 
 static WorldMapView* worldMapInstance = nullptr;
@@ -4198,6 +4199,10 @@ void WorldMapView::update(float delta) {
     m_currentState = WorldController::getInstance()->getKingActivityStateByType(FIGHT_OF_KING);
     
     update_water_shader(m_map->getViewPointByTilePoint(m_map->currentTilePoint));
+    
+    //begin a by ljf
+    //RecommendAllianceController::getInstance()->checkToPopRecommendAlliance();
+    //end a by ljf
 }
 IFHeiqishiNode* WorldMapView::createHeiqishiSoldier(MarchInfo& info){//default info for （info.marchType MethodHeiqishi）、(info.targetType CityTile)
     float fNodeScale = 0.8;
@@ -6930,7 +6935,7 @@ void WorldMapView::removeWalkParticle(int tag){
 
 void WorldMapView::delBatchItem(BatchTagType type, unsigned int index) {
     // remove particle
-    if (type == FireTag || type == SmokeTag || type == CityMoveInTag || type == CityMoveOutTag || type == CityMoveInViewTag || type == Rock || type == Rock1 || type == Rock2 || type == Rock3 || type == WarFire || type == OfficerTagParticle || type == Partical_fieldMonster || type == AllianceTerritoryParticle|| type == Partical_mapMask) {
+    if (type == FireTag || type == SmokeTag || type == CityMoveInTag || type == CityMoveOutTag || type == CityMoveInViewTag || type == Rock || type == Rock1 || type == Rock2 || type == Rock3 || type == WarFire || type == OfficerTagParticle || type == Partical_fieldMonster || type == AllianceTerritoryParticle|| type == Partical_mapMask || type == MonsterParticle) {
         auto vec = m_particleVec.find(getBatchTag(type, index));
         if (vec != m_particleVec.end()) {
             for (auto &particle:vec->second) {

@@ -84,6 +84,7 @@ private:
     int m_parentType;
     
     CCSafeObject<CCScale9Sprite> m_titleLabelBg; //ljf
+    
 };
 
 class GoldExchangeSaleCell :

@@ -1167,15 +1167,29 @@ bool FunBuildBtnsView::onUpdateToolBtn(int type)
     m_icon5Node->addChild(icon);
     m_btn5Node->setVisible(true);
     m_btn5->setEnabled(true);
+    FunBuildInfo& fbiInfo = FunBuildController::getInstance()->getFunbuildById(m_buildingKey);
+    
+    FunBuildInfo& fbiCityInfo = FunBuildController::getInstance()->getFunbuildById(FUN_BUILD_MAIN_CITY_ID);
     if (toolInfo.type == ITEM_TYPE_SPD) {
         m_name5->setString("");
         m_msg5->setString(_lang("104903"));
         //m_msgV5->setString("1"+_lang("105591"));
         m_msgV5->setString("");
+        double utime = fbiInfo.updateTime;
+        double rtime = GlobalData::shared()->getWorldTime() ;
+        
+        double t = utime - rtime ;
+        
         if (m_info->level <= 3 && m_questType == 1) {
             auto btnEffect = FunBuildBtnsEffect::create();
             m_icon5Node->addChild(btnEffect);
         }
+        else if (fbiCityInfo.level <= 5 && t >= 10 *60 )
+        {
+            auto btnEffect = FunBuildBtnsEffect::create();
+            m_icon5Node->addChild(btnEffect);
+        }
+        
     }
     else {
         m_name5->setString(_lang_1("104907", CC_ITOA(toolInfo.getCNT())));

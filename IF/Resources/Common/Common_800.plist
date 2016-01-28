@@ -20,7 +20,72 @@
             <key>abox_newuser_ad.png</key>
             <dict>
                 <key>frame</key>
+                <string>{{1297,4},{640,245}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{640,245}}</string>
+                <key>sourceSize</key>
+                <string>{640,245}</string>
+            </dict>
+            <key>activitybox_alliance_ad.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{1296,255},{640,245}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{640,245}}</string>
+                <key>sourceSize</key>
+                <string>{640,245}</string>
+            </dict>
+            <key>activitybox_holiday_ad.png</key>
+            <dict>
+                <key>frame</key>
                 <string>{{651,4},{640,245}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{640,245}}</string>
+                <key>sourceSize</key>
+                <string>{640,245}</string>
+            </dict>
+            <key>activitybox_level_ad.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{650,255},{640,245}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{640,245}}</string>
+                <key>sourceSize</key>
+                <string>{640,245}</string>
+            </dict>
+            <key>activitybox_train_ad.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{4,255},{640,245}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{640,245}}</string>
+                <key>sourceSize</key>
+                <string>{640,245}</string>
+            </dict>
+            <key>activitybox_war_ad.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{650,255},{640,245}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -38,9 +103,9 @@
             <key>realTextureFileName</key>
             <string>Common_800.pvr.ccz</string>
             <key>size</key>
-            <string>{1295,253}</string>
+            <string>{1941,504}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:--REMOVED----------------------------</string>
+            <string>$TexturePacker:SmartUpdate:0dcb5410492a2e3139c4325d5d8df8a0:1/1$</string>
             <key>textureFileName</key>
             <string>Common_800.pvr.ccz</string>
         </dict>
