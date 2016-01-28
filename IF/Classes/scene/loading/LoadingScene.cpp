@@ -599,7 +599,9 @@ void LoadingScene::sendCmdLogin()
 {
     //login 记录账户信息
     std::string uid = CCUserDefault::sharedUserDefault()->getStringForKey(GAME_UID,"");
-    GA_ACCOUNT_ID(uid.c_str());
+    if (uid != "") {
+        GA_ACCOUNT_ID(uid.c_str());
+    }
     // Guidance
     CCLoadSprite::doResourceByGeneralIndex(100, true);//450ms
     
@@ -899,13 +901,13 @@ bool LoadingScene::isJP(){
 
 void LoadingScene::showLoading()
 {
+    GA_ON_EVENT("LOADING_START");
     schedule(schedule_selector(LoadingScene::loadingAni), 0.167f);
     selectLogin(0.0);
 }
 
 void LoadingScene::loadingAni(float t)
 {
-    GA_ON_EVENT("LOADING_START");
     if (m_steps == LOADING_STEP) {
         SoundController::sharedSound()->playBGMusic(Music_Sfx_logo_loading);
     }
@@ -1060,6 +1062,7 @@ void LoadingScene::onConnectionLost(cocos2d::CCObject *obj)
     auto ret = dynamic_cast<NetResult*>(obj);
     //loadingLog统计
     GameController::getInstance()->setLoadingLog("LoadingScene", "onConnectionLost");
+    GA_ON_EVENT("onConnectionLost");
     
     if (Error_Network_Lost==ret->getErrorCode() && !GlobalData::shared()->isPause) {
 //        LocalController::shared()->init();
