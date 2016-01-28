@@ -764,7 +764,7 @@ void LoadingScene::sendCmdGetServerList(CCObject* p){
     string _platformToken = GlobalData::shared()->platformToken;
     string _Country = GlobalData::shared()->fromCountry;
     string param = "";
-    GA_ACCOUNT_COUNTRY(_Country.c_str());
+//    GA_ACCOUNT_COUNTRY(_Country.c_str());
     
     auto currentTime = time(NULL);
     std::string timeStr = CC_ITOA(double(currentTime));
