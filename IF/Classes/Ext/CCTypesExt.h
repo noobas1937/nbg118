@@ -11,6 +11,8 @@
 
 #include "cocos2d.h"
 #include "cocosextV3.h"
+
+#include "GAMacros.h"
 NS_CC_BEGIN
 
 /**

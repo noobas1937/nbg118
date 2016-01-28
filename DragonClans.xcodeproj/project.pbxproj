@@ -1784,6 +1784,7 @@
 		36DE16E11BA188D60020785E /* DrawNode3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DrawNode3D.h; path = ../scene/titan/DrawNode3D.h; sourceTree = "<group>"; };
 		36DE16E21BA188D60020785E /* Titan.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Titan.cpp; sourceTree = "<group>"; };
 		36DE16E31BA188D60020785E /* Titan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Titan.h; sourceTree = "<group>"; };
+		36E3D5201C5A5CE200F5AA1F /* GAMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAMacros.h; sourceTree = "<group>"; };
 		57014AC118D2EB4B000F8720 /* UseToolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UseToolView.h; sourceTree = "<group>"; };
 		57014AC218D2EB5A000F8720 /* UseToolView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UseToolView.cpp; sourceTree = "<group>"; };
 		57016D8018BF2C07003F4060 /* ToolInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToolInfo.h; sourceTree = "<group>"; };
@@ -6684,6 +6685,7 @@
 		FD6F415817CDD218008FDB9C /* Ext */ = {
 			isa = PBXGroup;
 			children = (
+				36E3D5201C5A5CE200F5AA1F /* GAMacros.h */,
 				ED15CBAB1C27CDB900C665C5 /* NBGPostEffectLayer.cpp */,
 				ED15CBAC1C27CDB900C665C5 /* NBGPostEffectLayer.h */,
 				3676B3171BB393AC00120B78 /* CCGallery.cpp */,
