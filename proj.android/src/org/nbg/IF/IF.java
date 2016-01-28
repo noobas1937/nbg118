@@ -117,6 +117,7 @@ import com.elex.chatservice.model.MailManager;
 import com.elex.chatservice.model.db.DBManager;
 import android.os.Build;
 
+ import com.clash.of.publish.GlobalPublishImpl;
 // tao.yu TalkingData
 import com.tendcloud.tenddata.TalkingDataGA;
 
