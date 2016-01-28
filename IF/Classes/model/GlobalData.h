@@ -578,6 +578,7 @@ public:
     double cnt_forbidden_playingtime;//小号游戏时间限制
     int trans_res_forbidden_swith;//开关 1开 0关
     long trans_res_limit;//小号跨服迁城可带资源量
+	int foodMinimumSwith;//部队消耗粮食是否到0开关 1开 0关
     map<string, CCDictionary*> shareFbmap;//fb分享的数据
     CCDictionary* pushData = NULL;//push数据临时存储
     bool isInDataParsing;

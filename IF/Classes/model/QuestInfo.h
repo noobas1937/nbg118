@@ -50,6 +50,7 @@ public:
     int go;
     int gotype;
     int isShow;
+    int classType;
 };
 
 #endif /* defined(__IF__QuestInfo__) */

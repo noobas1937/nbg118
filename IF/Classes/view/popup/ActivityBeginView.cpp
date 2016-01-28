@@ -259,16 +259,16 @@ bool ActivityBeginView::init(){
         m_infoBtn3->setSwallowsTouches(false);
         m_sorceTargetBtn->setSwallowsTouches(false);
         
-        m_clipperNode->removeAllChildrenWithCleanup(true);
+//        m_clipperNode->removeAllChildrenWithCleanup(true);
         
-        m_proTimer = CCProgressTimer::create(CCLoadSprite::createSprite("Activities_jindutiao01.png"));//icon_jindutiao.png
-        m_proTimer->setType(kCCProgressTimerTypeBar);
-        m_proTimer->setMidpoint(ccp(1,0));   // 设置进度方向
-        m_proTimer->setBarChangeRate(ccp(0,1));  // 设置进度为水平还是垂直方向
-        m_proTimer->setPosition(ccp(0, -18));
-        m_proTimer->setAnchorPoint(ccp(0, 0));
-        m_proTimer->setPercentage(0);
-        m_clipperNode->addChild(m_proTimer);
+//        m_proTimer = CCProgressTimer::create(CCLoadSprite::createSprite("Activities_jindutiao01.png"));//icon_jindutiao.png
+//        m_proTimer->setType(kCCProgressTimerTypeBar);
+//        m_proTimer->setMidpoint(ccp(1,0));   // 设置进度方向
+//        m_proTimer->setBarChangeRate(ccp(0,1));  // 设置进度为水平还是垂直方向
+//        m_proTimer->setPosition(ccp(0, -18));
+//        m_proTimer->setAnchorPoint(ccp(0, 0));
+//        m_proTimer->setPercentage(0);
+//        m_clipperNode->addChild(m_proTimer);
         m_moveFlag = false;
         
         int totalH = 1590.0;
@@ -577,27 +577,48 @@ void ActivityBeginView::getServerData(CCObject* param){
                         m_targetIcon3->addChild(spr);
                     }
                 }
-                float len = 0;
-                if(score<=oneScore){
-                    len = score*1.0/oneScore;
-                    len = len*0.3;
-                }else if(score<=twoScore){
-                    len = (score-oneScore)*1.0/(twoScore-oneScore);
-                    len = len*0.33 +0.33;
-                }else{
-                    len = (score-twoScore)*1.0/(threeScore-twoScore);
-                    len = len*0.33 +0.66;
-                }
-                len = MIN(1,len);
-                len = MAX(0,len);
-                int per = len*100;
-                m_proTimer->setPercentage(per);
+//                float len = 0;
+//                if(score<=oneScore){
+//                    len = score*1.0/oneScore;
+//                    len = len*0.3;
+//                }else if(score<=twoScore){
+//                    len = (score-oneScore)*1.0/(twoScore-oneScore);
+//                    len = len*0.33 +0.33;
+//                }else{
+//                    len = (score-twoScore)*1.0/(threeScore-twoScore);
+//                    len = len*0.33 +0.66;
+//                }
+//                len = MIN(1,len);
+//                len = MAX(0,len);
+//                int per = len*100;
+//                m_proTimer->setPercentage(per);
             }
             
-            float w = threeScore > 0 ? 532.0 * score / threeScore : 0;
-            w = w > 0 ? w : 1;
-            w = w > 532 ? 532 : w;
-            m_progress1->setContentSize({w, 11});
+
+            // 1
+            {
+                int len = 178;
+                float w = oneScore > 0 ? len * score / oneScore : 0;
+                w = w > 0 ? w : 1;
+                w = w > len ? len : w;
+                m_progress1->setContentSize({w, 11});
+            }
+            // 2
+            {
+                int len = 180;
+                float w = (twoScore - oneScore) > 0 ? len * (score - oneScore) / (twoScore - oneScore) : 0;
+                w = w > 0 ? w : 1;
+                w = w > len ? len : w;
+                m_progress2->setContentSize({w, 11});
+            }
+            // 3
+            {
+                int len = 170;
+                float w = (threeScore - twoScore - oneScore) > 0 ? len * (score - twoScore - oneScore) / (threeScore - twoScore - oneScore) : 0;
+                w = w > 0 ? w : 1;
+                w = w > len ? len : w;
+                m_progress3->setContentSize({w, 11});
+            }
         }
         
         m_eventIds.clear();
@@ -839,7 +860,7 @@ bool ActivityBeginView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, c
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_desc", CCLabelIF*, this->m_desc);
     
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_targetNode", CCNode*, this->m_targetNode);
-    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_clipperNode", CCNode*, this->m_clipperNode);
+//    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_clipperNode", CCNode*, this->m_clipperNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_targetTxt3", CCLabelIF*, this->m_targetTxt3);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_targetTxt2", CCLabelIF*, this->m_targetTxt2);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_targetTxt1", CCLabelIF*, this->m_targetTxt1);
@@ -885,6 +906,8 @@ bool ActivityBeginView::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, c
 
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_scBG", CCScale9Sprite*, this->m_scBG);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_progress1", CCLayerGradient*, this->m_progress1);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_progress2", CCLayerGradient*, this->m_progress2);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_progress3", CCLayerGradient*, this->m_progress3);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_totalRankTip", CCLabelIF*, this->m_totalRankTip);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_rewardListNode", CCNode*, this->m_rewardListNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this,"m_tab1", CCNode*, this->m_tab1);
