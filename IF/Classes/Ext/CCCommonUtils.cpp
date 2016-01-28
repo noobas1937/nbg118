@@ -4732,62 +4732,148 @@ bool CCCommonUtils::isTestPlatformAndServer(string key)
     return ret;
 }
 
-//通用hs的上传
-cocos2d::CCDictionary* CCCommonUtils::getHelpShiftDefaultMeta(){
-    cocos2d::CCDictionary *meta = new CCDictionary();
-    meta->setObject(new CCString(cocos2d::extension::CCDevice::getVersionName()), "VersionName");
-    meta->setObject(new CCString(cocos2d::extension::CCDevice::getVersionCode()), "VersionCode");
+////通用hs的上传
+//cocos2d::CCDictionary* CCCommonUtils::getHelpShiftDefaultMeta(){
+//    cocos2d::CCDictionary *meta = new CCDictionary();
+//    meta->setObject(new CCString(cocos2d::extension::CCDevice::getVersionName()), "VersionName");
+//    meta->setObject(new CCString(cocos2d::extension::CCDevice::getVersionCode()), "VersionCode");
+//    return meta;
+//}
+//
+////通用hs的tag
+//cocos2d::CCArray* CCCommonUtils::getHelpShiftDefaultTags(){
+//    cocos2d::CCArray *tags = new cocos2d::CCArray();
+//    tags->init();
+//    if(GlobalData::shared()->playerInfo.vipEndTime>GlobalData::shared()->getWorldTime())
+//        tags->addObject(CCString::createWithFormat("VIP %d",VipUtil::getVipLevel(GlobalData::shared()->playerInfo.vipPoints)));
+//    if(GlobalData::shared()->playerInfo.payTotal>6000000)//总充值金币数大于600万
+//        tags->addObject(new CCString("whale"));
+//    else if(GlobalData::shared()->playerInfo.payTotal>0)
+//        tags->addObject(new CCString("paid"));
+//    tags->addObject(CCString::createWithFormat("s%d",GlobalData::shared()->playerInfo.selfServerId));
+//#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+//    tags->addObject(new CCString("ios"));
+//#else
+//    if(GlobalData::shared()->isXiaoMiPlatForm())
+//        tags->addObject(new CCString("mi"));
+//    else if(GlobalData::shared()->analyticID != "market_global")
+//        tags->addObject(new CCString(GlobalData::shared()->analyticID));
+//    else
+//        tags->addObject(new CCString("google"));
+//#endif
+//    return tags;
+//}
+
+/通用hs的上传
+cocos2d::ValueMap CCCommonUtils::getHelpShiftDefaultMeta(){
+    ValueMap meta;
+    meta["VersionName"] = cocos2d::extension::CCDevice::getVersionName();
+    meta["VersionCode"] = cocos2d::extension::CCDevice::getVersionCode();
+    meta["DeviceId"] = cocos2d::extension::CCDevice::getDeviceUid();
     return meta;
 }
 
 //通用hs的tag
-cocos2d::CCArray* CCCommonUtils::getHelpShiftDefaultTags(){
-    cocos2d::CCArray *tags = new cocos2d::CCArray();
-    tags->init();
+cocos2d::ValueVector CCCommonUtils::getHelpShiftDefaultTags(){
+    cocos2d::ValueVector tags;
     if(GlobalData::shared()->playerInfo.vipEndTime>GlobalData::shared()->getWorldTime())
-        tags->addObject(CCString::createWithFormat("VIP %d",VipUtil::getVipLevel(GlobalData::shared()->playerInfo.vipPoints)));
-    if(GlobalData::shared()->playerInfo.payTotal>6000000)//总充值金币数大于600万
-        tags->addObject(new CCString("whale"));
-    else if(GlobalData::shared()->playerInfo.payTotal>0)
-        tags->addObject(new CCString("paid"));
-    tags->addObject(CCString::createWithFormat("s%d",GlobalData::shared()->playerInfo.selfServerId));
+        tags.push_back(Value(CCString::createWithFormat("VIP %d",VipUtil::getVipLevel(GlobalData::shared()->playerInfo.vipPoints))->getCString()));
+    
+    long payTotal = GlobalData::shared()->playerInfo.payTotal;
+    if(payTotal > 0){
+        if(payTotal>6000000){
+            tags.push_back(Value("whale"));//总充值金币数大于600万
+            tags.push_back(Value("paid 8"));
+        }
+        if(payTotal>2000000)
+            tags.push_back(Value("paid 7"));
+        else if(payTotal>1000000)
+            tags.push_back(Value("paid 6"));
+        else if(payTotal>150000)
+            tags.push_back(Value("paid 5"));
+        else if(payTotal>75000)
+            tags.push_back(Value("paid 4"));
+        else if(payTotal>63000)
+            tags.push_back(Value("paid 3"));
+        else if(payTotal>21000)
+            tags.push_back(Value("paid 2"));
+        else
+            tags.push_back(Value("paid 1"));
+    }
+    tags.push_back(Value(CCString::createWithFormat("s%d",GlobalData::shared()->playerInfo.selfServerId)->getCString()));
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    tags->addObject(new CCString("ios"));
+    tags.push_back(Value("ios"));
 #else
-    if(GlobalData::shared()->isXiaoMiPlatForm())
-        tags->addObject(new CCString("mi"));
-    else if(GlobalData::shared()->analyticID != "market_global")
-        tags->addObject(new CCString(GlobalData::shared()->analyticID));
+    //    if(GlobalData::shared()->isXiaoMiPlatForm())
+    //        tags.push_back(Value("mi"));
+    //    else
+    if(GlobalData::shared()->analyticID != "market_global")
+        tags.push_back(Value(GlobalData::shared()->analyticID));
     else
-        tags->addObject(new CCString("google"));
+        tags.push_back(Value("google"));
 #endif
     return tags;
 }
 
 void CCCommonUtils::showBanHelpShift(){
-    cocos2d::CCDictionary *config = new cocos2d::CCDictionary();
-    cocos2d::CCDictionary *meta = getHelpShiftDefaultMeta();
-    cocos2d::CCArray *tags = getHelpShiftDefaultTags();
-    tags->addObject(new CCString("ban"));
-    meta->setObject(tags, HS_TAGS_KEY);
-    config->setObject(meta, HS_META_DATA_KEY);
+//    cocos2d::CCDictionary *config = new cocos2d::CCDictionary(); simon
+//    cocos2d::CCDictionary *meta = getHelpShiftDefaultMeta();
+//    cocos2d::CCArray *tags = getHelpShiftDefaultTags();
+//    tags->addObject(new CCString("ban"));
+//    meta->setObject(tags, HS_TAGS_KEY);
+//    config->setObject(meta, HS_META_DATA_KEY);
+//    GlobalData::shared()->isBind = true;
+//    HelpshiftCocos2dx::showConversation(config);
+    
+    ValueMap meta = getHelpShiftDefaultMeta();
+    meta["GameUid"] = CCUserDefault::sharedUserDefault()->getStringForKey(GAME_UID,"");
+    HelpshiftCocos2dx::addProperties(meta);
+    
+    ValueVector tags;
+    tags.push_back(Value("ban"));
+    meta[HS_TAGS_KEY] = tags;
+    
+    ValueMap config;
+    config[HS_META_DATA_KEY] = meta;
+    
     GlobalData::shared()->isBind = true;
     HelpshiftCocos2dx::showConversation(config);
 }
 
 void CCCommonUtils::showHelpShiftFAQ()
 {
+//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) simon
+//    GameController::getInstance()->platformCollectUserInfo(GlobalData::shared()->playerInfo.uid,GlobalData::shared()->playerInfo.name,CC_ITOA(GlobalData::shared()->playerInfo.level));
+//#else
+//    HelpshiftCocos2dx::setUserIdentifier(GlobalData::shared()->playerInfo.uid.c_str());
+//    HelpshiftCocos2dx::setNameAndEmail(GlobalData::shared()->playerInfo.name.c_str(),"");
+//#endif
+//    cocos2d::CCDictionary *config = new cocos2d::CCDictionary();
+//    cocos2d::CCDictionary *meta = getHelpShiftDefaultMeta();
+//    cocos2d::CCArray *tags = getHelpShiftDefaultTags();
+//    meta->setObject(tags, HS_TAGS_KEY);
+//    config->setObject(meta, HS_META_DATA_KEY);
+//    GlobalData::shared()->isBind = true;
+//#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+//    GlobalData::shared()->isBind = false;
+//#endif
+//    
+//    HelpshiftCocos2dx::showFAQs(config);
+    
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     GameController::getInstance()->platformCollectUserInfo(GlobalData::shared()->playerInfo.uid,GlobalData::shared()->playerInfo.name,CC_ITOA(GlobalData::shared()->playerInfo.level));
 #else
     HelpshiftCocos2dx::setUserIdentifier(GlobalData::shared()->playerInfo.uid.c_str());
     HelpshiftCocos2dx::setNameAndEmail(GlobalData::shared()->playerInfo.name.c_str(),"");
 #endif
-    cocos2d::CCDictionary *config = new cocos2d::CCDictionary();
-    cocos2d::CCDictionary *meta = getHelpShiftDefaultMeta();
-    cocos2d::CCArray *tags = getHelpShiftDefaultTags();
-    meta->setObject(tags, HS_TAGS_KEY);
-    config->setObject(meta, HS_META_DATA_KEY);
+    ValueMap meta = getHelpShiftDefaultMeta();
+    HelpshiftCocos2dx::addProperties(meta);
+    
+    ValueVector tags = getHelpShiftDefaultTags();
+    meta[HS_TAGS_KEY] = tags;
+    
+    ValueMap config;
+    config[HS_META_DATA_KEY] = meta;
     GlobalData::shared()->isBind = true;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     GlobalData::shared()->isBind = false;

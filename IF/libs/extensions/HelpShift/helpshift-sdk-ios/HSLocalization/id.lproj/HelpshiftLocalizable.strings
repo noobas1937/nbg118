@@ -71,7 +71,7 @@
 "YES, THANKS!" = "YA, TERIMA KASIH!";
 "START A NEW CONVERSATION" = "MULAI PERCAKAPAN BARU";
 "New Conversation" = "Percakapan Baru";
-"What's on your mind?" = "Apa yang Anda pikirkan?";
+"How can we help?" = "Ada yang bisa kami bantu?";
 "Thanks for contacting us." = "Terima kasih telah menghubungi kami.";
 "Your message has been received." = "Pesan Anda telah diterima.";
 "What else can we help you with?" = "Apa lagi yang dapat kami bantu?";
@@ -93,3 +93,38 @@
 "SEND ANYWAY" = "TETAP KIRIM";
 "Done" = "Selesai";
 "Suggestions" = "Saran";
+
+//IssueDescriptionMinimumCharacterLength:
+//This value is the minimum number of visible characters that should be entered by the user for the description of the issue.
+"IssueDescriptionMinimumCharacterLength" = 1;
+
+//Localization for Campaigns
+"Yes" = "Ya";
+"No" = "Tidak";
+"Accept" = "Terima";
+"Decline" = "Tolak";
+"Shop Now" = "Belanja Sekarang";
+"Remind Later" = "Ingatkan Nanti";
+"View Now" = "Lihat Sekarang";
+"Buy Now" = "Beli Sekarang";
+"Book Now" = "Pesan Sekarang";
+"Download" = "Unduh";
+"Share" = "Bagikan";
+"Like" = "Suka";
+"Dislike" = "Tidak Suka";
+"Send Feedback" = "Kirim Umpan Balik";
+"Chat Now" = "Berbincang Sekarang";
+"Read FAQs" = "Baca Tanya Jawab (FAQ)";
+"Read FAQ" = "Baca Tanya Jawab (FAQ)";
+"Reply" = "Balas";
+"Open Help" = "Buka Bantuan";
+"Rate App" = "Nilai Aplikasi";
+"Remind Later" = "Ingatkan Nanti";
+
+//Localization for voice-over
+"Star" = "Star";
+"Stars" = "Stars";
+"You rated the service with" = "Your rated the service with";
+"Attach screenshot" = "Attach screenshot";
+"Send a new message" = "Send a new message";
+"Remove screenshot" = "Remove screenshot";

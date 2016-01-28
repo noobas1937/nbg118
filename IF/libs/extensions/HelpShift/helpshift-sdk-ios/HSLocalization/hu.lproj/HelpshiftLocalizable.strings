@@ -71,7 +71,7 @@
 "YES, THANKS!" = "IGEN, KÖSZÖNÖM!";
 "START A NEW CONVERSATION" = "KEZDJEN ÚJ PÁRBESZÉDET";
 "New Conversation" = "Új Párbeszéd";
-"What's on your mind?" = "Mi jár a fejében?";
+"How can we help?" = "Miben segíthetünk?";
 "Thanks for contacting us." = "Köszönjük, hogy felvette velünk a kapcsolatot.";
 "Your message has been received." = "Üzenete kézbesítve.";
 "What else can we help you with?" = "Miben tudunk még segítségére lenni?";
@@ -93,3 +93,38 @@
 "SEND ANYWAY" = "MINDENKÉPP ELKÜLDÉS";
 "Done" = "Kész";
 "Suggestions" = "Javaslatok";
+
+//IssueDescriptionMinimumCharacterLength:
+//This value is the minimum number of visible characters that should be entered by the user for the description of the issue.
+"IssueDescriptionMinimumCharacterLength" = 1;
+
+//Localization for Campaigns
+"Yes" = "Igen";
+"No" = "Nem";
+"Accept" = "Elfogadom";
+"Decline" = "Nem fogadom el";
+"Shop Now" = "Vásárlás";
+"Remind Later" = "Később";
+"View Now" = "Megtekintés";
+"Buy Now" = "Vásárlás";
+"Book Now" = "Foglalás";
+"Download" = "Letöltés";
+"Share" = "Megosztás";
+"Like" = "Tetszik";
+"Dislike" = "Nem tetszik";
+"Send Feedback" = "Visszajelzés";
+"Chat Now" = "Csevegés";
+"Read FAQs" = "GYIK-ek";
+"Read FAQ" = "GYIK";
+"Reply" = "Válasz";
+"Open Help" = "Súgó";
+"Rate App" = "Értékelés";
+"Remind Later" = "Később";
+
+//Localization for voice-over
+"Star" = "Star";
+"Stars" = "Stars";
+"You rated the service with" = "Your rated the service with";
+"Attach screenshot" = "Attach screenshot";
+"Send a new message" = "Send a new message";
+"Remove screenshot" = "Remove screenshot";

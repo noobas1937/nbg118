@@ -71,7 +71,7 @@
 "YES, THANKS!" = "はい、ありがとう!";
 "START A NEW CONVERSATION" = "新規の会話を開始";
 "New Conversation" = "新しい会話";
-"What's on your mind?" = "何を考えていますか?";
+"How can we help?" = "何かお困りですか?";
 "Thanks for contacting us." = "ご連絡ありがとうございます。";
 "Your message has been received." = "メッセージが受領されました。";
 "What else can we help you with?" = "他にお手伝いできることはありますか?";
@@ -93,3 +93,38 @@
 "SEND ANYWAY" = "それでも送信";
 "Done" = "完了";
 "Suggestions" = "提案";
+
+//IssueDescriptionMinimumCharacterLength:
+//This value is the minimum number of visible characters that should be entered by the user for the description of the issue.
+"IssueDescriptionMinimumCharacterLength" = 1;
+
+//Localization for Campaigns
+"Yes" = "はい";
+"No" = "いいえ";
+"Accept" = "同意する";
+"Decline" = "同意しない";
+"Shop Now" = "今すぐ買い物";
+"Remind Later" = "あとで通知";
+"View Now" = "今すぐ見る";
+"Buy Now" = "今すぐ買う";
+"Book Now" = "今すぐ予約";
+"Download" = "ダウンロード";
+"Share" = "シェア";
+"Like" = "いいね";
+"Dislike" = "いやだね";
+"Send Feedback" = "フィードバックを送る";
+"Chat Now" = "今すぐチャット";
+"Read FAQs" = "FAQを読む";
+"Read FAQ" = "FAQを読む";
+"Reply" = "返信";
+"Open Help" = "ヘルプを開く";
+"Rate App" = "アプリを評価";
+"Remind Later" = "あとで";
+
+//Localization for voice-over
+"Star" = "Star";
+"Stars" = "Stars";
+"You rated the service with" = "Your rated the service with";
+"Attach screenshot" = "Attach screenshot";
+"Send a new message" = "Send a new message";
+"Remove screenshot" = "Remove screenshot";

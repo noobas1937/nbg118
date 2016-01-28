@@ -327,7 +327,7 @@ bool MailReadPopUpView::init(){
         {
             string backImg = "Mail_headBack.png";
             string renderImg = "Mail_head_backBattle.png";
-//            m_headImgNode->initHeadImgUrl3(m_userHeadContainer, CCCommonUtils::getCustomPicUrl(uid, picVer), 1.0f, 74, true, ccp(sizeLayer.width / 2, sizeLayer.height / 2 - 2), sizeLayer, backImg, renderImg); simon
+           m_headImgNode->initHeadImgUrl3(m_userHeadContainer, CCCommonUtils::getCustomPicUrl(uid, picVer), 1.0f, 74, true, ccp(sizeLayer.width / 2, sizeLayer.height / 2 - 2), sizeLayer, backImg, renderImg);//  simon
         }
     }
     
@@ -1030,7 +1030,6 @@ void MailReadPopUpView::blockAction(){
 void MailReadPopUpView::onReplyClick(cocos2d::CCObject *pSender, CCControlEvent event){
     if(PopupViewController::getInstance()->getPlayingInAnim())
         return;
-    
     if(m_info->type == MAIL_USER||m_info->type==MAIL_Alliance_ALL/*||m_info.type==MAIL_ALLIANCEINVITE*/){
 //        this->closeSelf();
         //PopupViewController::getInstance()->addPopupInView(MailWritePopUpView::create(m_info.fromName, ""));
@@ -1046,7 +1045,7 @@ void MailReadPopUpView::onReplyClick(cocos2d::CCObject *pSender, CCControlEvent 
         HelpshiftCocos2dx::setNameAndEmail(GlobalData::shared()->playerInfo.name.c_str(),"");
 #endif
         ValueMap meta;
-//        HelpshiftCocos2dx::addProperties(meta); simon
+        HelpshiftCocos2dx::addProperties(meta); //simon
 
         ValueVector tags;
         string server_id = CCUserDefault::sharedUserDefault()->getStringForKey(SERVER_ID,"");
@@ -1077,7 +1076,7 @@ void MailReadPopUpView::onReplyClick(cocos2d::CCObject *pSender, CCControlEvent 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         GlobalData::shared()->isBind = false;
 #endif
-//        HelpshiftCocos2dx::showConversation(config); simon
+        HelpshiftCocos2dx::showConversation(config); //simon
 //                PopupViewController::getInstance()->addPopupInView(SuggestionView::create());
     }else if(m_info->type == MAIL_ALLIANCE_PACKAGE){
         string tmpStr = _lang_1("101046", m_info->crGroupId.c_str());
@@ -1090,6 +1089,7 @@ void MailReadPopUpView::onReplyClick(cocos2d::CCObject *pSender, CCControlEvent 
             m_info->isThanks=true;
         }
     }
+    CCLog("replay");
 }
 
 void MailReadPopUpView::onFbLikeClick(CCObject *pSender, CCControlEvent event){
@@ -2149,8 +2149,8 @@ void MailInviteTeleCell::onAcceptBtnClick(CCObject *pSender, CCControlEvent even
         SceneController::getInstance()->gotoScene(SCENE_ID_WORLD, false, true, pos);
     }
     //zym 2015.12.11
-//    PopupViewController::getInstance()->forceClearAll(true); simon
-    PopupViewController::getInstance()->removeAllPopupView();
+    PopupViewController::getInstance()->forceClearAll(true); //simon
+   // PopupViewController::getInstance()->removeAllPopupView();
 }
 
 void MailInviteTeleCell::afterGetNearestPoint(CCObject* obj)
@@ -2192,7 +2192,7 @@ void MailInviteTeleCell::afterGetNearestPoint(CCObject* obj)
     }
     PopupViewController::getInstance()->removeAllPopupView();
     //zym 2015.12.11
-//    PopupViewController::getInstance()->forceClearAll(true); simon
+    PopupViewController::getInstance()->forceClearAll(true);// simon
 }
 
 void MailInviteTeleCell::removeWaitInterface()

@@ -71,7 +71,7 @@
 "YES, THANKS!" = "VÂNG, CẢM ƠN!";
 "START A NEW CONVERSATION" = "BẮT ĐẦU CUỘC TRÒ CHUYỆN MỚI";
 "New Conversation" = "Cuộc trò chuyện mới";
-"What's on your mind?" = "Bạn đang nghĩ gì vậy?";
+"How can we help?" = "Chúng tôi có thể giúp được gì?";
 "Thanks for contacting us." = "Xin cảm ơn đã liên hệ với chúng tôi.";
 "Your message has been received." = "Đã nhận được tin nhắn của bạn.";
 "What else can we help you with?" = "Chúng tôi có thể giúp gì thêm cho bạn được không?";
@@ -93,3 +93,38 @@
 "SEND ANYWAY" = "CỨ GỬI";
 "Done" = "Hoàn tất";
 "Suggestions" = "Đề xuất";
+
+//IssueDescriptionMinimumCharacterLength:
+//This value is the minimum number of visible characters that should be entered by the user for the description of the issue.
+"IssueDescriptionMinimumCharacterLength" = 1;
+
+//Localization for Campaigns
+"Yes" = "Có";
+"No" = "Không";
+"Accept" = "Chấp nhận";
+"Decline" = "Từ chối";
+"Shop Now" = "Mua sắm ngay";
+"Remind Later" = "Nhắc nhở sau";
+"View Now" = "Xem ngay";
+"Buy Now" = "Mua ngay";
+"Book Now" = "Đặt ngay";
+"Download" = "Tải về";
+"Share" = "Chia sẻ";
+"Like" = "Thích";
+"Dislike" = "Không thích";
+"Send Feedback" = "Gửi phản hồi";
+"Chat Now" = "Trò chuyện ngay";
+"Read FAQs" = "Tham khảo Câu hỏi thường gặp";
+"Read FAQ" = "Tham khảo Câu hỏi thường gặp";
+"Reply" = "Trả lời";
+"Open Help" = "Mở Trợ giúp";
+"Rate App" = "Đánh giá ứng dụng";
+"Remind Later" = "Nhắc nhở sau";
+
+//Localization for voice-over
+"Star" = "Star";
+"Stars" = "Stars";
+"You rated the service with" = "Your rated the service with";
+"Attach screenshot" = "Attach screenshot";
+"Send a new message" = "Send a new message";
+"Remove screenshot" = "Remove screenshot";

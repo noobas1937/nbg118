@@ -71,7 +71,7 @@
 "YES, THANKS!" = "ใช่ ขอบคุณ!";
 "START A NEW CONVERSATION" = "เริ่มการสนทนาใหม่";
 "New Conversation" = "การสนทนาใหม่";
-"What's on your mind?" = "คุณคิดอะไรอยู่";
+"How can we help?" = "มีอะไรให้เราช่วยบ้าง";
 "Thanks for contacting us." = "ขอบคุณที่ติดต่อเรา";
 "Your message has been received." = "เราได้รับข้อความของคุณแล้ว";
 "What else can we help you with?" = "มีสิ่งอื่นให้เราช่วยอีกหรือไม่";
@@ -93,3 +93,37 @@
 "SEND ANYWAY" = "ยืนยันจะส่ง";
 "Done" = "เรียบร้อย";
 "Suggestions" = "คำแนะนำ";
+
+//IssueDescriptionMinimumCharacterLength:
+//This value is the minimum number of visible characters that should be entered by the user for the description of the issue.
+"IssueDescriptionMinimumCharacterLength" = 1;
+
+"Yes" = "ใช่";
+"No" = "ไม่ใช่";
+"Accept" = "ยอมรับ";
+"Decline" = "ปฏิเสธ";
+"Shop Now" = "ช้อปตอนนี้";
+"Remind Later" = "เตือนภายหลัง";
+"View Now" = "ดูทันที";
+"Buy Now" = "ซื้อตอนนี้";
+"Book Now" = "จองตอนนี้";
+"Download" = "ดาวน์โหลด";
+"Share" = "แบ่งปัน";
+"Like" = "ชอบ";
+"Dislike" = "ไม่ชอบ";
+"Send Feedback" = "ส่งเสียงตอบรับ";
+"Chat Now" = "แชทตอนนี้";
+"Read FAQs" = "อ่านคำถามถามบ่อย";
+"Read FAQ" = "อ่านคำถามถามบ่อย";
+"Reply" = "ตอบ";
+"Open Help" = "เปิดความช่วยเหลือ";
+"Rate App" = "ให้คะแนนแอพ";
+"Remind Later" = "เตือนภายหลัง";
+
+//Localization for voice-over
+"Star" = "Star";
+"Stars" = "Stars";
+"You rated the service with" = "Your rated the service with";
+"Attach screenshot" = "Attach screenshot";
+"Send a new message" = "Send a new message";
+"Remove screenshot" = "Remove screenshot";

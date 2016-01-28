@@ -71,7 +71,7 @@
 "YES, THANKS!" = "是的，谢谢!";
 "START A NEW CONVERSATION" = "开始新会话";
 "New Conversation" = "新会话";
-"What's on your mind?" = "有什么问题或反馈吗?";
+"How can we help?" = "我们能帮什么忙吗？";
 "Thanks for contacting us." = "感谢联系我们。";
 "Your message has been received." = "你的信息已收到。";
 "What else can we help you with?" = "还有其他需要帮助的吗?";
@@ -93,3 +93,38 @@
 "SEND ANYWAY" = "仍然发送";
 "Done" = "完成";
 "Suggestions" = "建议";
+
+//IssueDescriptionMinimumCharacterLength:
+//This value is the minimum number of visible characters that should be entered by the user for the description of the issue.
+"IssueDescriptionMinimumCharacterLength" = 1;
+
+//Localization for Campaigns
+"Yes" = "是";
+"No" = "否";
+"Accept" = "接受";
+"Decline" = "拒绝";
+"Shop Now" = "现在购买";
+"Remind Later" = "稍后提醒";
+"View Now" = "现在查看";
+"Buy Now" = "现在购买";
+"Book Now" = "现在预订";
+"Download" = "下载";
+"Share" = "分享";
+"Like" = "喜欢";
+"Dislike" = "不喜欢";
+"Send Feedback" = "发送反馈";
+"Chat Now" = "现在聊天";
+"Read FAQs" = "阅读常见问题";
+"Read FAQ" = "阅读常见问题";
+"Reply" = "回复";
+"Open Help" = "打开帮助";
+"Rate App" = "评价应用程序";
+"Remind Later" = "稍后提醒";
+
+//Localization for voice-over
+"Star" = "Star";
+"Stars" = "Stars";
+"You rated the service with" = "Your rated the service with";
+"Attach screenshot" = "Attach screenshot";
+"Send a new message" = "Send a new message";
+"Remove screenshot" = "Remove screenshot";

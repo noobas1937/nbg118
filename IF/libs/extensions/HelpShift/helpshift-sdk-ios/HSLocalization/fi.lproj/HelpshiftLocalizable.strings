@@ -1,0 +1,130 @@
+/*
+  HelpshiftLocalizable.strings
+  Helpshift
+
+  Copyright (c) 2014 Helpshift,Inc., All rights reserved.
+*/
+
+
+"Rate our App" = "Arvioi sovellus";
+"If you love our app, please take a moment to rate it in the App Store" = "Jos pidät sovelluksestamme, käytä hetki sen arvioimiseen App Storessa";
+"Rate" = "Arvioi";
+"Send Feedback" = "Anna palautetta";
+"No Internet!" = "Ei Internetiä!";
+"No working Internet connection is found." = "Toimivaa Internet-yhteyttä ei löydy.";
+"Take a screenshot on your iPhone" = "Ota kuvakaappaus iPhonellasi";
+"Take a screenshot on your iPad" = "Ota kuvakaappaus iPadillasi";
+"Go to the screen you want a screenshot of, hold down the power button and the home button on your iPhone, at the same time." = "Mene näytölle, josta haluat kuvakaappauksen, pidä iPhonesi virtapainiketta ja kotipainiketta painettuna samaan aikaan.";
+"Go to the screen you want a screenshot of, hold down the power button and the home button on your iPad, at the same time." = "Mene näytölle, josta haluat kuvakaappauksen, pidä iPadisi virtapainiketta ja kotipainiketta painettuna samaan aikaan.";
+"That's it, your screenshot is now in your iPhone gallery!" = "Siinä se, kuvakaappaus on nyt iPhonesi galleriassa!";
+"That's it, your screenshot is now in your iPad gallery!" = "Siinä se, kuvakaappaus on nyt iPadisi galleriassa!";
+"Take screenshot" = "Ota kuvakaappaus";
+"Opening Gallery..." = "Avataan Galleriaa...";
+"Screenshot sent" = "Kuvakaappaus lähetetty";
+"Your message was not sent.Tap \"Try Again\" to send this message?" = "Viestiäsi ei lähetetty. Napauta \"Yritä uud.\", niin viesti lähetetään?";
+"No faqs found in this section" = "Osiosta ei löytynyt UKK-kys.";
+"Could not fetch faqs" = "UKK-kys. ei voitu hakea";
+"We could not fetch the required data" = "Emme saaneet haettua tarvittavia tietoja";
+"FAQ" = "UKK";
+"Can't find what you were looking for?" = "Etkö löydä etsimääsi?";
+"Sorry to hear that. Could you please tell us a little bit more about the problem you are facing?" = "Harmillista. Voisitko kertoa meille hieman enemmän tästä ongelmasta?";
+"We're happy to help you!" = "Autamme mielellämme!";
+"Describe your problem" = "Kuvaa ongelmaasi";
+"Email invalid" = "Virheellinen sähköposti";
+"Please provide a valid email address." = "Anna voimassa oleva sähköpostiosoite.";
+"Invalid Entry" = "Virheellinen syöte";
+"Please enter a brief description of the issue you are facing." = "Kerro ongelmasta lyhyesti.";
+"Question" = "Kysymys";
+"Was this helpful?" = "Oliko tästä apua?";
+"You found this helpful." = "Tästä oli sinulle apua.";
+"You didn't find this helpful." = "Tästä ei ollut sinulle apua.";
+"Try Again" = "Yritä uud.";
+"Cancel" = "Peruuta";
+"REVIEW" = "ARVIOI";
+"Send" = "Lähetä";
+"Ok, attach" = "Ok, liitä";
+"Learn how" = "Opettele";
+"YES" = "KYLLÄ";
+"NO" = "EI";
+"Accepted review request" = "Hyväksytty arviopyyntö";
+"SEND" = "LÄHETÄ";
+"OK" = "OK";
+"Close" = "Sulje";
+"Loading..." = "Ladataan";
+"Help" = "Ohje";
+"Sending failed!" = "Lähetys epäonnistui!";
+"Screenshot could not be sent. Image is too large, try again with another image" = "Kuvakaappausta ei voitu lähettää. Kuva on liian suuri, yritä toisella kuvalla";
+"Name invalid" = "Virheellinen nimi";
+"Please provide a name." = "Anna nimi.";
+"New message from Support" = "Uusi viesti tuelta";
+"new messages from Support" = "uudet viestit tuelta";
+"No FAQs found" = "UKK-kys. ei löytynyt";
+"Conversation" = "Keskustelu";
+"Name" = "Nimi";
+"Email (optional)" = "Sähköp. (vapaaeht.)";
+"Email" = "Sähköp.";
+"Sending your message..." = "Viestiä lähetetään...";
+"Message send failure." = "Viestin lähetysvirhe.";
+"Please check your network connection and try again." = "Tarkista verkkoyhteytesi ja yritä uudestaan.";
+"CONTACT US" = "OTA YHTEYTTÄ";
+"Back" = "Takaisin";
+"YES, THANKS!" = "KYLLÄ, KIITOS!";
+"START A NEW CONVERSATION" = "ALOITA UUSI KESKUSTELU";
+"New Conversation" = "Uusi keskustelu";
+"How can we help?" = "Miten voimme auttaa?";
+"Thanks for contacting us." = "Kiitos yhteydenotostasi.";
+"Your message has been received." = "Viestisi on vastaanotettu.";
+"What else can we help you with?" = "Miten muuten voimme auttaa sinua?";
+"Would you like to review the app?" = "Haluaisitko arvioida sovelluksen?";
+"This conversation has ended." = "Keskustelu on päättynyt.";
+"What's your feedback about our customer support?" = "Millaista palautetta annat asiakastuesta?";
+"Service Rating" = "Palvelun arviointi";
+"Hated it" = "En pitänyt";
+"Loved it" = "Pidin";
+"Any other feedback? (optional)" = "Muuta palautetta? (vapaaeht.)";
+"Thanks for messaging us!" = "Kiitos viesteistäsi!";
+"Did we answer all your questions?" = "Vastasimmeko kaikkiin kysymyksiisi?";
+"Preview" = "Esikatsele";
+"Your Rating:" = "Arviosi:";
+"Thanks for rating us." = "Kiitos arviostasi.";
+"Your feedback has been received." = "Palautteesi on vastaanotettu.";
+"or" = "tai";
+"Questions that may already have your answer" = "Kysymykset, joihin ehkä olet jo vastannut";
+"SEND ANYWAY" = "LÄHETÄ KUITENKIN";
+"Done" = "Valmis";
+"Suggestions" = "Ehdotukset";
+
+//IssueDescriptionMinimumCharacterLength:
+//This value is the minimum number of visible characters that should be entered by the user for the description of the issue.
+"IssueDescriptionMinimumCharacterLength" = 1;
+
+//Localization for Campaigns
+"Yes" = "Kyllä";
+"No" = "Ei";
+"Accept" = "Hyväksy";
+"Decline" = "Kieltäydy";
+"Shop Now" = "Tee ostoksia";
+"Remind Later" = "Muistuta myöhemmin";
+"View Now" = "Katso heti";
+"Buy Now" = "Osta heti";
+"Book Now" = "Varaa heti";
+"Download" = "Lataa";
+"Share" = "Jaa";
+"Like" = "Tykkää";
+"Dislike" = "Älä tykkää";
+"Send Feedback" = "Lähetä palautetta";
+"Chat Now" = "Chattaile heti";
+"Read FAQs" = "Lue UKK-osio";
+"Read FAQ" = "Lue UKK";
+"Reply" = "Vastaa";
+"Open Help" = "Avaa apuosio";
+"Rate App" = "Arvostele sovellus";
+"Remind Later" = "Muistuta myöhemmin";
+
+//Localization for voice-over
+"Star" = "Star";
+"Stars" = "Stars";
+"You rated the service with" = "Your rated the service with";
+"Attach screenshot" = "Attach screenshot";
+"Send a new message" = "Send a new message";
+"Remove screenshot" = "Remove screenshot";

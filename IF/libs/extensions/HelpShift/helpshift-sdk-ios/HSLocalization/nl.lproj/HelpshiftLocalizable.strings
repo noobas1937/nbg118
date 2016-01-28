@@ -71,7 +71,7 @@
 "YES, THANKS!" = "JA BEDANKT!";
 "START A NEW CONVERSATION" = "NIEUW GESPREK STARTEN";
 "New Conversation" = "Nieuw Gesprek";
-"What's on your mind?" = "Wat is het probleem?";
+"How can we help?" = "Hoe kunnen wij helpen?";
 "Thanks for contacting us." = "Dank voor het contact opnemen met ons.";
 "Your message has been received." = "Je bericht is ontvangen.";
 "What else can we help you with?" = "Waarmee kunnen we je nog meer helpen?";
@@ -93,3 +93,38 @@
 "SEND ANYWAY" = "TOCH STUREN";
 "Done" = "Klaar";
 "Suggestions" = "Suggesties";
+
+//IssueDescriptionMinimumCharacterLength:
+//This value is the minimum number of visible characters that should be entered by the user for the description of the issue.
+"IssueDescriptionMinimumCharacterLength" = 1;
+
+//Localization for Campaigns
+"Yes" = "Ja";
+"No" = "Nee";
+"Accept" = "Accepteer";
+"Decline" = "Weiger";
+"Shop Now" = "Shop Nu";
+"Remind Later" = "Herinner Mij";
+"View Now" = "Bekijk Nu";
+"Buy Now" = "Koop Nu";
+"Book Now" = "Boek Nu";
+"Download" = "Download";
+"Share" = "Deel";
+"Like" = "Vind Ik Leuk";
+"Dislike" = "Vind Ik Niet Leuk";
+"Send Feedback" = "Stuur Feedback";
+"Chat Now" = "Chat Nu";
+"Read FAQs" = "Lees FAQs";
+"Read FAQ" = "Lees FAQ";
+"Reply" = "Beantwoord";
+"Open Help" = "Open Help";
+"Rate App" = "Beoordeel App";
+"Remind Later" = "Herinner Mij";
+
+//Localization for voice-over
+"Star" = "Star";
+"Stars" = "Stars";
+"You rated the service with" = "Your rated the service with";
+"Attach screenshot" = "Attach screenshot";
+"Send a new message" = "Send a new message";
+"Remove screenshot" = "Remove screenshot";

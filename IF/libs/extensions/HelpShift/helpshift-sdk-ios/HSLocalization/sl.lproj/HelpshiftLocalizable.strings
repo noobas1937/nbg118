@@ -71,7 +71,7 @@
 "YES, THANKS!" = "Ja, hvala!";
 "START A NEW CONVERSATION" = "Začeti nov pogovor";
 "New Conversation" = "New Pogovor";
-"What's on your mind?" = "Kaj imaš v mislih?";
+"How can we help?" = "Kako lahko pomagamo?";
 "Thanks for contacting us." = "Hvala za obrnete na nas.";
 "Your message has been received." = "Vaše sporočilo je bilo prejeto.";
 "What else can we help you with?" = "Kaj vam lahko pomagamo?";
@@ -93,3 +93,38 @@
 "SEND ANYWAY" = "Vseeno poslati";
 "Done" = "Končano";
 "Suggestions" = "Predlogi";
+
+//IssueDescriptionMinimumCharacterLength:
+//This value is the minimum number of visible characters that should be entered by the user for the description of the issue.
+"IssueDescriptionMinimumCharacterLength" = 1;
+
+//Localization for Camapigns
+"Yes" = "Da";
+"No" = "Ne";
+"Accept" = "Sprejmi";
+"Decline" = "Zavrni";
+"Shop Now" = "Nakup";
+"Remind Later" = "Opomni kasneje";
+"View Now" = "Poglej zdaj";
+"Buy Now" = "Kupi zdaj";
+"Book Now" = "Rezerviraj";
+"Download" = "Prenesi";
+"Share" = "Deli";
+"Like" = "Všeč mi je";
+"Dislike" = "Ni mi všeč";
+"Send Feedback" = "Pošlji odziv";
+"Chat Now" = "Klepet";
+"Read FAQs" = "Preberi naše FAQ";
+"Read FAQ" = "Preberi naš FAQ";
+"Reply" = "Odgovori";
+"Open Help" = "Odpri pomoč";
+"Rate App" = "Oceni App";
+"Remind Later" = "Opomni kasneje";
+
+//Localization for voice-over
+"Star" = "Star";
+"Stars" = "Stars";
+"You rated the service with" = "Your rated the service with";
+"Attach screenshot" = "Attach screenshot";
+"Send a new message" = "Send a new message";
+"Remove screenshot" = "Remove screenshot";

@@ -448,6 +448,7 @@
 		1D0780481C5872AD0051038F /* vip_certification.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D077FD71C5872AD0051038F /* vip_certification.png */; };
 		1D0780491C5872AD0051038F /* world_wild_reward.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D077FD81C5872AD0051038F /* world_wild_reward.png */; };
 		1D07804A1C5872AD0051038F /* xsearch_loading.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D077FD91C5872AD0051038F /* xsearch_loading.png */; };
+		1D07805A1C58B41E0051038F /* HelpshiftAssetCatalog.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D0780591C58B41E0051038F /* HelpshiftAssetCatalog.xcassets */; };
 		1D17A5A51A4D5FCA003995E3 /* PortActCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1D17A5A31A4D5FCA003995E3 /* PortActCommand.cpp */; };
 		1D17A5AA1A4D6007003995E3 /* PortActView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1D17A5A61A4D6007003995E3 /* PortActView.cpp */; };
 		1D17A5AB1A4D6007003995E3 /* TimeExchangeView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1D17A5A81A4D6007003995E3 /* TimeExchangeView.cpp */; };
@@ -2436,6 +2437,11 @@
 		1D077FD71C5872AD0051038F /* vip_certification.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vip_certification.png; sourceTree = "<group>"; };
 		1D077FD81C5872AD0051038F /* world_wild_reward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = world_wild_reward.png; sourceTree = "<group>"; };
 		1D077FD91C5872AD0051038F /* xsearch_loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xsearch_loading.png; sourceTree = "<group>"; };
+		1D0780511C58B3FF0051038F /* HelpshiftAll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpshiftAll.h; sourceTree = "<group>"; };
+		1D0780521C58B3FF0051038F /* HelpshiftCampaigns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpshiftCampaigns.h; sourceTree = "<group>"; };
+		1D0780531C58B3FF0051038F /* HelpshiftCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpshiftCore.h; sourceTree = "<group>"; };
+		1D0780541C58B3FF0051038F /* HelpshiftSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpshiftSupport.h; sourceTree = "<group>"; };
+		1D0780591C58B41E0051038F /* HelpshiftAssetCatalog.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = HelpshiftAssetCatalog.xcassets; sourceTree = "<group>"; };
 		1D17A5A31A4D5FCA003995E3 /* PortActCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PortActCommand.cpp; sourceTree = "<group>"; };
 		1D17A5A41A4D5FCA003995E3 /* PortActCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PortActCommand.h; sourceTree = "<group>"; };
 		1D17A5A61A4D6007003995E3 /* PortActView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PortActView.cpp; sourceTree = "<group>"; };
@@ -7640,6 +7646,11 @@
 		BAC692231A2DBD9B0014C752 /* helpshift-sdk-ios */ = {
 			isa = PBXGroup;
 			children = (
+				1D0780591C58B41E0051038F /* HelpshiftAssetCatalog.xcassets */,
+				1D0780511C58B3FF0051038F /* HelpshiftAll.h */,
+				1D0780521C58B3FF0051038F /* HelpshiftCampaigns.h */,
+				1D0780531C58B3FF0051038F /* HelpshiftCore.h */,
+				1D0780541C58B3FF0051038F /* HelpshiftSupport.h */,
 				59D7EFF71AF0BF84000120F9 /* Helpshift.h */,
 				59D7EFF81AF0BF84000120F9 /* HSLocalization */,
 				59D7F00D1AF0BF84000120F9 /* HSResources */,
@@ -9125,6 +9136,7 @@
 				1D0780201C5872AD0051038F /* mail_list_main_icon_battle.png in Resources */,
 				59D7F03C1AF0BF85000120F9 /* HS-powered-by-logo.png in Resources */,
 				1D077FFB1C5872AD0051038F /* mail_list_arrow.png in Resources */,
+				1D07805A1C58B41E0051038F /* HelpshiftAssetCatalog.xcassets in Resources */,
 				DB971A8F1A26CA9F00A194DB /* Images.xcassets in Resources */,
 				59D7F0441AF0BF85000120F9 /* HSChatBubbleWhite.png in Resources */,
 				59143E1C1B5F3F90005B101A /* WeiboSDK.bundle in Resources */,

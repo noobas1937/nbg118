@@ -1,6 +1,6 @@
 /*
  *    Helpshift.h
- *    SDK version 4.10.2
+ *    SDK Version 5.2.2
  *
  *    Get the documentation at http://www.helpshift.com/docs
  *
@@ -15,506 +15,385 @@ typedef enum HSAlertToRateAppAction
     HS_RATE_ALERT_FEEDBACK,
     HS_RATE_ALERT_SUCCESS,
     HS_RATE_ALERT_FAIL
-} HSAlertToRateAppAction;
+} HSAlertToRateAppAction __deprecated;
 
 typedef NSDictionary * (^metadataBlock)(void);
 typedef void (^AppRatingAlertViewCompletionBlock)(HSAlertToRateAppAction);
 
-// A Reserved key (HSCustomMetadataKey) constant to be used in options dictionary of showFAQs, showConversation, showFAQSection, showSingleFAQ to
-// provide a dictionary for custom data to be attached along with new conversations.
-//
-// If you want to attach custom data along with new conversation, use this constant key and a dictionary value containing the meta data key-value pairs
-// and pass it in withOptions param before calling any of the 4 support APIs.
-//
-// Available in SDK version 4.2.0 or later
-//
-// Example usages:
-//  NSDictionary *metaDataWithTags = @{@"usertype": @"paid", @"level":@"7", @"score":@"12345", HSTagsKey:@[@"feedback",@"paid user",@"v4.1"]};
-//  [[Helpshift sharedInstance] showFAQs:self withOptions:@{@"gotoConversationAfterContactUs":@"YES", HSCustomMetadataKey: metaDataWithTags}];
-//
-//  NSDictionary *metaData = @{@"usertype": @"paid", @"level":@"7", @"score":@"12345"]};
-//  [[Helpshift sharedInstance] showConversation:self withOptions:@{HSCustomMetadataKey: metaData}];
-//
-extern NSString *const HSCustomMetadataKey;
-
-
-// A Reserved key (HSTagsKey) constant to be used with metadataBlock (of type NSDictionary) to pass NSArray (of type only NSStrings)
-// which get interpreted at server and added as Tags for the issue being reported.
-// If an object in NSArray is not of type NSString then the object will be removed from Tags and will not be added for the issue.
-//
-// Available in SDK version 3.2.0 or later
-// Example usage 1:
-//    [Helpshift metadataWithBlock:^(void){
-//        return [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObjects:@"feedback", @"paid user",nil], HSTagsKey, nil];
-//    }];
-// Example usage 2 (Available in SDK version 4.2.0 or later):
-//    NSDictionary *metaData = @{@"usertype": @"paid", @"level":@"7", @"score":@"12345", HSTagsKey:@[@"feedback",@"paid user",@"v4.1"]};
-//    [[Helpshift sharedInstance] showConversation:self withOptions:@{HSCustomMetadataKey: metaData}];
-//
-extern NSString *const HSTagsKey;
-
-// String constant to check which type of message you get in userRepliedToConversationWithMessage: delegate.
-// When you use userRepliedToConversationWithMessage: delegate, you can check the type of message user replied with.
-// When user replied with text message you will get that message string in delegate method.
-// Example usage 1:
-// - (void) userRepliedToConversationWithMessage:(NSString *)newMessage {
-//   if ([newMessage isEqualToString:HSUserAcceptedTheSolution]) {
-//    // do something here
-//    }
-// }
-
-static NSString *HSUserAcceptedTheSolution = @"User accepted the solution";
-static NSString *HSUserRejectedTheSolution = @"User rejected the solution";
-static NSString *HSUserSentScreenShot = @"User sent a screenshot";
-static NSString *HSUserReviewedTheApp = @"User reviewed the app";
+/**
+ *  A Reserved key (HSCustomMetadataKey) constant to be used in options dictionary of showFAQs, showConversation, showFAQSection, showSingleFAQ to provide a dictionary for custom data to be attached along with new conversations. If you want to attach custom data along with new conversation, use this constant key and a dictionary value containing the meta data key-value pairs and pass it in withOptions param before calling any of the 4 support APIs.
+ *
+ *  @available Version 4.2.0 or later
+ *
+ *  Example usage -
+ *  NSDictionary *metaDataWithTags = @{@"usertype": @"paid", @"level":@"7", @"score":@"12345", HSTagsKey:@[@"feedback",@"paid user",@"v4.1"]};
+ * [[Helpshift sharedInstance] showFAQs:self withOptions:@{@"gotoConversationAfterContactUs":@"YES", HSCustomMetadataKey: metaDataWithTags}];
+ *
+ * NSDictionary *metaData = @{@"usertype": @"paid", @"level":@"7", @"score":@"12345"]};
+ * [[Helpshift sharedInstance] showConversation:self withOptions:@{HSCustomMetadataKey: metaData}];
+ */
+extern NSString *const HSCustomMetadataKey __deprecated;
 
 /**
- * This document describes the API exposed by the Helpshift SDK (4.x) which the developers can use to integrate Helpshift support into their iOS applications. If you want documentation regarding how to use the various features provided by the Helpshift SDK, please visit the [developer docs](http://developers.helpshift.com/)
+ *  A Reserved key (HSTagsKey) constant to be used with metadataBlock (of type NSDictionary) to pass NSArray (of type only NSStrings) which get interpreted at server and added as Tags for the issue being reported.
+ *  If an object in NSArray is not of type NSString then the object will be removed from Tags and will not be added for the issue.
+ *
+ *  Example usage - (Version 3.2.0 or later)
+ *  [Helpshift metadataWithBlock:^(void){
+ * return [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObjects:@"feedback", @"paid user",nil], HSTagsKey, nil];
+ * }];
+ *
+ *  Example usage - (Version 4.2.0 or later)
+ *  NSDictionary *metaData = @{@"usertype": @"paid", @"level":@"7", @"score":@"12345", HSTagsKey:@[@"feedback",@"paid user",@"v4.1"]};
+ * [[Helpshift sharedInstance] showConversation:self withOptions:@{HSCustomMetadataKey: metaData}];
  */
 
-@protocol HelpshiftDelegate;
-@interface Helpshift : NSObject <UIAlertViewDelegate>
-{
-    id <HelpshiftDelegate> delegate;
-}
+extern NSString *const HSTagsKey __deprecated;
 
-@property (nonatomic,retain) id<HelpshiftDelegate> delegate;
+/**
+ *  Types of auto message responses generated on user actions. These values can be used in your userRepliedToConversationWithMessage: delegate call. If the user replied with a custom message, then that string will be returned instead.
+ *
+ *  Example usage -
+ *  - (void) userRepliedToConversationWithMessage:(NSString *)newMessage {
+ *      if ([newMessage isEqualToString:HSUserAcceptedTheSolution]) {
+ *          //Do something
+ *      }
+ *  }
+ */
 
-/** Initialize helpshift support
+__deprecated static NSString *HSUserAcceptedTheSolution = @"User accepted the solution";
+__deprecated static NSString *HSUserRejectedTheSolution = @"User rejected the solution";
+__deprecated static NSString *HSUserSentScreenShot = @"User sent a screenshot";
+__deprecated static NSString *HSUserReviewedTheApp = @"User reviewed the app";
+
+__deprecated @protocol HelpshiftDelegate;
+__deprecated @interface Helpshift : NSObject
+@property (nonatomic, strong) id<HelpshiftDelegate> delegate;
+
+/**
+ *  Initialise Helpshift. This invocation typically needs to happen in your application:didFinishLaunchingWithOptions: method.
  *
- * When initializing Helpshift you must pass these three tokens. You initialize Helpshift by adding the following lines in the implementation file for your app delegate, ideally at the top of application:didFinishLaunchingWithOptions. If you use this api to initialize helpshift support, in-app notifications will be enabled by default.
- * In-app notifications are banner like notifications shown by the Helpshift SDK to alert the user of any updates to an ongoing conversation.
- * If you want to disable the in-app notifications please refer to the installForAppID:domainName:apiKey:withOptions: api
+ *  @param apiKey            Your developer API Key.
+ *  @param domainName        Your domain name (without 'http:/' or forward slashes)
+ *  @param appID             Unique ID assigned to your app.
  *
- *  @param apiKey This is your developer API Key
- *  @param domainName This is your domain name without any http:// or forward slashes
- *  @param appID This is the unique ID assigned to your app
- *
- *  @available Available in SDK version 4.0.0 or later
+ *  @available Version 4.0.0 or later
  */
 + (void) installForApiKey:(NSString *)apiKey domainName:(NSString *)domainName appID:(NSString *)appID;
 
-/** Initialize helpshift support
+/**
+ *  Initialise Helpshift. This invocation typically needs to happen into your applications didFinishLaunchingWithOptions: method.
  *
- * When initializing Helpshift you must pass these three tokens. You initialize Helpshift by adding the following lines in the implementation file for your app delegate, ideally at the top of application:didFinishLaunchingWithOptions
+ *  @param apiKey            Your developer API Key.
+ *  @param domainName        Your domain name (without 'http:/' or forward slashes)
+ *  @param appID             Unique ID assigned to your app.
+ *  @param optionsDictionary Optional dictionary containing Helpshift's configuration options and their values.
+ *                           Example: @{@"enableInAppNotification":@"no"}
  *
- * @param apiKey This is your developer API Key
- * @param domainName This is your domain name without any http:// or forward slashes
- * @param appID This is the unique ID assigned to your app
- * @param withOptions This is the dictionary which contains additional configuration options for the HelpshiftSDK. Currently we support the "enableInAppNotification" as the only available option. Possible values are <"YES"/"NO">. If you set the flag to "YES", the helpshift SDK will show notifications similar to the banner notifications supported by Apple Push notifications. These notifications will alert the user of any updates to ongoing conversations. If you set the flag to "NO", the in-app notifications will be disabled.
- *
- * @available Available in SDK version 4.0.0 or later
+ *  @available Version 4.0.0 or later
  */
-
 + (void) installForApiKey:(NSString *)apiKey domainName:(NSString *)domainName appID:(NSString *)appID withOptions:(NSDictionary *)optionsDictionary;
 
-/** Returns an instance of Helpshift
+/**
+ *  Shared instance of Helpshift class. Use this instance to make all subsequent calls like showConversation:
  *
- * When calling any Helpshift instance method you must use sharedInstance. For example to call showSupport: you must call it like [[Helpshift sharedInstance] showSupport:self];
+ *  @return Shared Helpshift instance object.
  *
- * @available Available in SDK version 1.0.0 or later
+ *  @available Version 1.0.0 or later
  */
 + (Helpshift *) sharedInstance;
 
-/** To pause and restart the display of inapp notification
+/**
+ *  Pause/resume the display of in-app notifications.
  *
- * When this method is called with boolean value YES, inapp notifications are paused and not displayed.
- * To restart displaying inapp notifications pass the boolean value NO.
+ *  @param pauseInApp If yes, the display of in-app notification is paused. To resume, pauseInApp needs to be set to no.
  *
- * @param pauseInApp the boolean value to pause/restart inapp nofitications
- *
- * @available Available in SDK version 4.3.0 or later
+ *  @available Version 4.3.0 or later
  */
 + (void) pauseDisplayOfInAppNotification:(BOOL)pauseInApp;
 
-/** Show the helpshift conversation screen (with Optional Arguments)
+/**
+ *  Change the SDK language manually. By default, Helpshift picks up the device language.
+ *  If there is no localisation found for the language code or if a Helpshift session is already active, this method returns false.
+ *  Note: Switching between RTL and LTR languages will change the actual language used but the UI controls will not change as this requires OS support.
  *
- * To show the Helpshift conversation screen with optional arguments you will need to pass the name of the viewcontroller on which the conversation screen will show up and an options dictionary. If you do not want to pass any options then just pass nil which will take on the default options.
+ *  @param languageCode The string representing the language code. (like "fr" for french)
  *
- * @param viewController viewController on which the helpshift report issue screen will show up.
- * @param optionsDictionary the dictionary which will contain the arguments passed to the Helpshift conversation session (that will start with this method call).
+ *  @return A bool indicating wether the language change was successful. In case the language code passed could not be associated with any localisation available this will be false. SDK will fall back to the default language in this case.
  *
- * Please check the docs for available options.
- *
- * @available Available in SDK version 4.0.0 or later
+ *  @available Version 4.11.0 or later
  */
+- (BOOL) setSDKLanguage:(NSString *)languageCode;
+
+/**
+ *  Display the conversation screen.
+ *
+ *  @param viewController      The view controller on which Helpshift's view stack will be presented.
+ *  @param optionsDictionary   Helpshift configuration options relevant to this method call. Pass nil, if not applicable.
+ *
+ *  @available Version 4.0.0 or later
+ */
+
 - (void) showConversation:(UIViewController *)viewController withOptions:(NSDictionary *)optionsDictionary;
 
-/** Show the support screen with only the faqs (with Optional Arguments)
+/**
+ *  Display the FAQs.
  *
- * To show the Helpshift screen with only the faq sections with search with optional arguments, you can use this api. If you do not want to pass any options then just pass nil which will take on the default options.
+ *  @param viewController      The view controller on which Helpshift's view stack will be presented.
+ *  @param optionsDictionary   Helpshift configuration options relevant to this method call. Pass nil, if not applicable.
  *
- * @param viewController viewController on which the helpshift faqs screen will show up.
- * @param optionsDictionary the dictionary which will contain the arguments passed to the Helpshift faqs screen session (that will start with this method call).
- *
- * Please check the docs for available options.
- *
- * @available Available in SDK version 2.0.0 or later
+ *  @available Version 2.0.0 or later
  */
-
 - (void) showFAQs:(UIViewController *)viewController withOptions:(NSDictionary *)optionsDictionary;
 
-/** Show the helpshift screen with faqs from a particular section
+/**
+ *  Display an FAQ section to the user. This view will have a close button to take user back to the app.
  *
- * To show the Helpshift screen for showing a particular faq section you need to pass the publish-id of the faq section and the name of the viewcontroller on which the faq section screen will show up. For example from inside a viewcontroller you can call the Helpshift faq section screen by passing the argument “self” for the viewController parameter. If you do not want to pass any options then just pass nil which will take on the default options.
+ *  @param faqSectionPublishID The publish-id of the FAQ section.
+ *  @param viewController      The view controller on which Helpshift's view stack will be presented.
+ *  @param optionsDictionary   Helpshift configuration options relevant to this method call. Pass nil, if not applicable.
  *
- * @param faqSectionPublishID the publish id associated with the faq section which is shown in the FAQ page on the admin side (__yourcompanyname__.helpshift.com/admin/faq/).
- * @param viewController viewController on which the helpshift faq section screen will show up.
- * @param optionsDictionary the dictionary which will contain the arguments passed to the Helpshift session (that will start with this method call).
- *
- * @available Available in SDK version 2.0.0 or later
+ *  @available Version 2.0.0 or later
  */
-
 - (void) showFAQSection:(NSString *)faqSectionPublishID withController:(UIViewController *)viewController withOptions:(NSDictionary *)optionsDictionary;
 
-/** Show the helpshift screen with a single faq
+/**
+ *  Display a single FAQ to the user. This view will have a close button to take user back to the app.
  *
- * To show the Helpshift screen for showing a single faq you need to pass the publish-id of the faq and the name of the viewcontroller on which the faq screen will show up. For example from inside a viewcontroller you can call the Helpshift faq section screen by passing the argument “self” for the viewController parameter. If you do not want to pass any options then just pass nil which will take on the default options.
+ *  @param faqPublishID      The publish-id of the FAQ.
+ *  @param viewController    The view controller on which Helpshift's view stack will be presented.
+ *  @param optionsDictionary Helpshift configuration options relevant to this method call. Pass nil, if not applicable.
  *
- * @param faqPublishID the publish id associated with the faq which is shown when you expand a single FAQ (__yourcompanyname__.helpshift.com/admin/faq/)
- * @param viewController viewController on which the helpshift faq section screen will show up.
- * @param optionsDictionary the dictionary which will contain the arguments passed to the Helpshift session (that will start with this method call).
- *
- * @available Available in SDK version 4.0.0 or later
+ *  @available Version 4.0.0 or later
  */
-
 - (void) showSingleFAQ:(NSString *)faqPublishID withController:(UIViewController *)viewController withOptions:(NSDictionary *)optionsDictionary;
 
-/** Show alert for app rating
+/**
+ *  Show the App rating view alert.
+ *  Note that automated reviews need to be disabled in the admin to make this call effective. Also, if there is an ongoing conversation, the review alert will not show up.
+ *  @param url             The App store URL to redirect to.
+ *  @param completionBlock The completion block.
  *
- * To manually show an alert for app rating, you need automated reviews disabled in admin.
- * Also, if there is an ongoing conversation, the review alert will not show up.
- *
- * @available Available in SDK version 4.4.0 or later
+ *  @available Version 4.4.0 or later
  */
 + (void) showAlertToRateAppWithURL:(NSString *)url withCompletionBlock:(AppRatingAlertViewCompletionBlock)completionBlock;
 
-/** Set an user identifier for your users.
+/**
+ *  Set an identifier for the default user.
+ *  This is part of additional user configuration. The user identifier will be passed through to the admin dashboard as "User ID" under customer info.
+ *  @param userIdentifier A unique string identifying the default user.
  *
- * This is part of additional user configuration. The user identifier will be passed through to the admin dashboard as "User ID" under customer info.
- *  @param userIdentifier A string to identify your users.
- *
- *  @available Available in SDK version 1.0.0 or later
+ *  @available Version 1.0.0 or later
  */
-
 + (void) setUserIdentifier:(NSString *)userIdentifier;
 
-/** Set the name and email of the application user.
+/**
+ *  Set the name and email of the current logged in user. If you are not using the login API, the current logged in user will the the default user.
+ *  The information provided here will be used to pre populate the conversation screen. Pass nil to clear the existing values.
  *
- * This is part of additional user configuration. If this is provided through the api, user will not be prompted to re-enter this information again.
- * Pass nil values for both name and email to clear out old existing values.
+ *  @param name  NSString representing user's name.
+ *  @param email NSString representing user's email.
  *
- *   @param name The name of the user.
- *   @param email The email address of the user.
- *
- *   @available Available in SDK version 4.0.0 or later
+ *  @available Version 4.0.0 or later
  */
-
 + (void) setName:(NSString *)name andEmail:(NSString *)email;
 
-/** Add extra debug information regarding user-actions.
+/**
+ *  Add extra information about user actions. You can add details about system state or user actions which can later be used to see what was going on before an issue was reported.
+ *  @param breadCrumbString The string to be sent to server.
  *
- * You can add additional debugging statements to your code, and see exactly what the user was doing right before they reported the issue.
- *
- *  @param breadCrumbString The string containing any relevant debugging information.
- *
- *  @available Available in SDK version 1.0.0 or later
+ *  @available Version 1.0.0 or later
  */
-
 + (void) leaveBreadCrumb:(NSString *)breadCrumbString;
 
-/** Provide a block which returns a dictionary for custom meta data to be attached along with new conversations
+/**
+ *  A block which returns a dictionary containing the custom meta data to be attached along with new conversations
+ *  If you want to attach custom data along with any new conversation, use this api to provide a block which accepts zero arguments and returns an NSDictionary containing the meta data key-value pairs. Every time an issue is reported, the SDK will call this block and attach the returned meta data dictionary along with the reported issue. Ideally this metaDataBlock should be provided before the user can file an issue.
+ *  @param metadataBlock A block variable which accepts zero arguments and returns an NSDictionary.
  *
- * If you want to attach custom data along with any new conversation, use this api to provide a block which accepts zero arguments and returns an NSDictionary containing the meta data key-value pairs. Everytime an issue is reported, the SDK will call this block and attach the returned meta data dictionary along with the reported issue. Ideally this metaDataBlock should be provided before the user can file an issue.
- *
- *  @param metadataBlock a block variable which accepts zero arguments and returns an NSDictionary.
- *
- *  @available Available in SDK version 4.0.0 or later
+ *  @available Version 4.0.0 or later
  */
-
 + (void) setMetadataBlock:(metadataBlock)metadataBlock;
 
-/** Get the notification count for replies to new conversations.
+/**
+ *  Get the number of unread messages for current user. This comes in two flavours depending on the value used for 'isRemote'.
  *
+ *  If you want to get the unread messages available locally in the SDK for the current issue, set 'isRemote' to false. In this case the value is immediately returned.
+ *  if you want Helpshift to get the number of unread messages from the servers, set 'isRemote' to true. In this case the value returned is -1. A server call is made to fetch the value. When the server call is successful, the value is passed to you via the didReceiveNotificationCount: delegate. To receive this call back make sure you are registered as the delegate: [[Helpshift sharedInstance] setDelegate:self];
+ *  @param isRemote Should the value be returned from local data or server.
  *
- * If you want to show your user notifications for replies on any ongoing conversation, you can get the notification count asynchronously by implementing the HelpshiftDelegate in your respective .h and .m files.
- * Use the following method to set the delegate, where self is the object implementing the delegate.
- * [[Helpshift sharedInstance] setDelegate:self];
- * Now you can call the method
- * [[Helpshift sharedInstance] getNotificationCountFromRemote:YES];
- * This will return a notification count in the
- * - (void) didReceiveNotificationCount:(NSInteger)count
- * count delegate method.
- * If you want to retrieve the current notification count synchronously, you can call the same method with the parameter set to false, i.e
- * NSInteger count = [[Helpshift sharedInstance] getNotificationCountFromRemote:NO]
+ *  @return if isRemote was false, the number of unread messages for current issue is retuned. If isRemote was true, -1 is returned.
  *
- * @param isRemote Whether the notification count is to be returned asynchronously via delegate mechanism or synchronously as a return val for this api
- *
- * @available Available in SDK version 4.0.0 or later
+ *  @available Version 4.0.0 or later
  */
-
 - (NSInteger) getNotificationCountFromRemote:(BOOL)isRemote;
 
-/** Register the deviceToken to enable push notifications
+/**
+ *  Use this method to register the device for push notifications.
+ *  To enable push notifications from Helpshift (like when an agent replies to user's issue), pass the deviceToken received in your application delegate's didRegisterForRemoteNotificationsWithDeviceToken: method.
  *
- *
- * To enable push notifications in the Helpshift iOS SDK, set the Push Notifications’ deviceToken using this method inside your application:didRegisterForRemoteNotificationsWithDeviceToken application delegate.
- *
- *  @param deviceToken The deviceToken received from the push notification servers.
- *
- * Example usage
- *  - (void) application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:
- *              (NSData *)deviceToken
+ * Example usage -
+ *  - (void) application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
  *  {
  *      [[Helpshift sharedInstance] registerDeviceToken:deviceToken];
  *  }
  *
- *  @available Available in SDK version 1.4.0 or later
- *
+ *  @param deviceToken Token received from APNS.
  */
 - (void) registerDeviceToken:(NSData *)deviceToken;
 
-/** Forward the push notification for the Helpshift lib to handle
+#ifdef UNITY_SUPPORT
+- (void) registerDeviceTokenForUnity:(NSData *)deviceTokenData;
+#endif
+
+/**
+ *  Pass control to Helpshift for handling a push notification.
+ *  In your application delegate's didReceiveRemoteNotification: method, check if "origin" is "helpshift". If yes, you should call this method.
  *
- *
- * To show support on Notification opened, call handleRemoteNotification in your application:didReceiveRemoteNotification application delegate.
- * If the value of the “origin” field is “helpshift” call the handleRemoteNotification api
- *
- *  @param notification The dictionary containing the notification information
- *  @param viewController ViewController on which the helpshift support screen will show up.
- *
- * Example usage
+ *  Example usage -
  *  - (void) application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
  *  {
- *      if ([[userInfo objectForKey:@"origin"] isEqualToString:@"helpshift"]) {
+ *      if ([[notification.userInfo objectForKey:@"origin"] isEqualToString:@"helpshift"]) {
  *          [[Helpshift sharedInstance] handleRemoteNotification:userInfo withController:self.viewController];
  *      }
  *  }
  *
- *  @available Available in SDK version 4.0.0 or later
+ *  @param notification   The NSDictionary object received.
+ *  @param viewController The current view controller on which Helpshift's view stack will shown.
  *
+ *  @available Version 4.0.0 or later
  */
 - (void) handleRemoteNotification:(NSDictionary *)notification withController:(UIViewController *)viewController;
 
-/** Forward the local notification for the Helpshift lib to handle
+/**
+ *  Pass control to Helpshift for handling a local notification.
+ *  In your application delegate's didReceiveLocalNotification: method, check if "origin" is "helpshift". If yes, you should call this method.
  *
- *
- * To show support on Notification opened, call handleLocalNotification in your application:didReceiveLocalNotification application delegate.
- * If the value of the “origin” field is “helpshift” call the handleLocalNotification api
- *
- * @param notification The UILocalNotification object containing the notification information
- * @param viewController ViewController on which the helpshift support screen will show up.
- *
- * Example usage
+ *  Example usage -
  *  - (void) application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
  *  {
- *      if ([[notification.userInfo objectForKey:@"origin"] isEqualToString:@"helpshift"])
- *      [[Helpshift sharedInstance] handleLocalNotification:notification withController:self.viewController];
+ *      if ([[notification.userInfo objectForKey:@"origin"] isEqualToString:@"helpshift"]) {
+ *          [[Helpshift sharedInstance] handleLocalNotification:notification withController:self.viewController];
+ *      }
  *  }
  *
- * @available Available in SDK version 2.4.0 or later
+ *  @param notification   The UILocalNotification object received.
+ *  @param viewController The current view controller on which Helpshift's view stack will shown.
  *
+ *  @available Version 2.4.0 or later
  */
-
 - (void) handleLocalNotification:(UILocalNotification *)notification withController:(UIViewController *)viewController;
 
-/** Clears Breadcrumbs list.
+/**
+ *  Clears the current Breadcrumbs.
+ *  Breadcrumbs is a list of user's latest 100 actions. Use the leaveBreadCrumb: method to leave a Breadcrumb.
  *
- * Breadcrumbs list stores upto 100 latest actions. You'll receive those in every Issue.
- * If for some reason you want to clear previous messages, you can use this method.
- *
- * @available Available in SDK version 2.3.0 or later
- *
+ *  @available Version 2.3.0 or later
  */
 - (void) clearBreadCrumbs;
 
-/** Close the current Helpshift session
+/**
+ *  Closes the Helpshift session. Ignored if a Helpshift session is not active.
+ *  Helpshift's view stack is popped and user returns to the app.
  *
- * If currently any Helpshift session is active, this API will close that session.
- * Otherwise if any Helpshift session is not active, this API does nothing.
- *
- * @available Available in SDK version 4.8.0 or later
- *
+ *  @available Version 4.8.0 or later
  */
 - (void) closeHelpshiftSession;
 
-/** Login a user with a given identifier
+/**
+ *  Logs in a user to Helpshift. This is useful in multi-login scenarios where more than one person might use the app.
+ *  Creating individual logins for each user ensures that their issues remain separate. This method will not work if a Helpshift session is already active.
  *
- * This api introduces support for multiple logins in Helpshift.
- * The identifier uniquely identifies the user. Name and email are optional.
- * If any Helpshift session is active, then any login attempt is ignored.
+ *  @param identifier A unique string to identify a user.
+ *  @param name       Name of the user. This will be used to pre populate the 'name' field on issue filing screen. (optional, please pass nil if you want to ignore)
+ *  @param email      Email of the user. This will be used to pre populate the 'email' field on issue filing screen. (optional, please pass nil if you want to ignore)
  *
- * @param name The name of the user
- * @param email The email of the user
- *
- * @available Available in SDK version 4.10.0 or later
- *
+ *  @available Version 4.10.0 or later
  */
 + (void) loginWithIdentifier:(NSString *)identifier withName:(NSString *)name andEmail:(NSString *)email;
 
-/** Logout the currently logged in user
+/**
+ *  Logs out the current user and falls back to default login. If the current logged is user was already the default profile, this call is ignored.
+ *  This call is ignored if a Helpshift session is already active.
  *
- * After logout, Helpshift falls back to the default login.
- * If any Helpshift session is active, then any logout attempt is ignored.
- *
- * @available Available in SDK version 4.10.0 or later
- *
+ *  @available Version 4.10.0 or later
  */
 + (void) logout;
 
-// Deprecated API calls
-
-/**
- * @warning Deprecated API call. Use installForApiKey:domainName:appID: instead.
- */
-+ (void) installForAppID:(NSString *)appID domainName:(NSString *)domainName apiKey:(NSString *)apiKey
-    __attribute__((deprecated("Use installForApiKey:domainName:appID: instead")));
-
-/**
- * @warning Deprecated API call. Use installForApiKey:domainName:appID:withOptions: instead.
- */
-+ (void) installForAppID:(NSString *)appID domainName:(NSString *)domainName apiKey:(NSString *)apiKey withOptions:(NSDictionary *)optionsDictionary
-    __attribute__((deprecated("Use installForApiKey:domainName:appID:withOptions: instead")));
-
-/**
- * @warning Deprecated API call. Use showFAQs:withOptions: instead.
- */
-- (void) showSupport:(UIViewController *)viewController withOptions:(NSDictionary *)optionsDictionary
-    __attribute__((deprecated("Use showFAQs:withOptions: instead")));
-
-/**
- * @warning Deprecated API call. Use showFAQs:withOptions: instead.
- */
-- (void) showSupport:(UIViewController *)viewController
-    __attribute__((deprecated("Use showFAQs:withOptions: instead")));
-
-/**
- * @warning Deprecated API call. Use showFAQs:withOptions: instead.
- */
-- (void) showFAQs:(UIViewController *)viewController
-    __attribute__((deprecated("Use showFAQs:withOptions: instead")));
-
-/**
- * @warning Deprecated API call. Use showConversation:withOptions: instead.
- */
-- (void) reportIssue:(UIViewController *)viewController
-    __attribute__((deprecated("Use showConversation:withOptions: instead")));
-
-/**
- * @warning Deprecated API call. Use showConversation:withOptions: instead.
- */
-- (void) reportIssue:(UIViewController *)viewController withOptions:(NSDictionary *)optionsDictionary
-    __attribute__((deprecated("Use showConversation:withOptions: instead")));
-
-/**
- * @warning Deprecated API call. Use showFAQSection:withController:withOptions: instead.
- */
-- (void) showFAQSection:(NSString *)faqSectionPublishID withController:(UIViewController *)viewController
-    __attribute__((deprecated("Use showFAQSection:withController:withOptions: instead")));
-
-/**
- * @warning Deprecated API call. Use showSingleFAQ:withController:withOptions: instead.
- */
-- (void) showFAQ:(NSString *)faqPublishID withController:(UIViewController *)viewController
-    __attribute__((deprecated("Use showSingleFAQ:withController:withOptions: instead")));
-
-/**
- * @warning Deprecated API call. Use showConversation:withOptions: instead.
- */
-- (void) showInbox:(UIViewController *)viewController
-    __attribute__((deprecated("Use showConversation:withOptions: instead")));
-
-/**
- * @warning Deprecated API call. Use getNotificationCountFromRemote: instead.
- */
-- (NSInteger) notificationCountAsync:(BOOL)isAsync
-    __attribute__((deprecated("Use getNotificationCountFromRemote: instead")));
-
-/**
- * @warning Deprecated API call. Use handleRemoteNotification:withController: instead.
- */
-- (void) handleNotification:(NSDictionary *)notification withController:(UIViewController *)viewController
-    __attribute__((deprecated("Use handleRemoteNotification:withController: instead")));
-
-/**
- * @warning Deprecated API call. Use setName:andEmail: instead.
- */
-+ (void) setUsername:(NSString *)name
-    __attribute__((deprecated("Use setName:andEmail: instead")));
-
-/**
- * @warning Deprecated API call. Use setName:andEmail: instead.
- */
-+ (void) setUseremail:(NSString *)email
-    __attribute__((deprecated("Use setName:andEmail: instead")));
 
 @end
 
-@protocol HelpshiftDelegate <NSObject>
+__deprecated @protocol HelpshiftDelegate <NSObject>
 
-/** Delegate method call that should be implemented if you are calling getNotificationCountFromRemote:YES
- * @param count Returns the number of unread messages for the ongoing conversation
+/**
+ *  This delegate is the response to the 'getNotificationCountFromRemote:' method with 'isRemote' set to YES. It provides the number of unread messages in the current conversation.
+ *  @param count Number of unread messages in the current conversation as indicated by the server.
  *
- * @available Available in SDK version 4.0.0 or later
+ *  @available Version 4.0.0 or later
  */
-
 - (void) didReceiveNotificationCount:(NSInteger)count;
 
 @optional
-/** Optional delegate method that is called when the a Helpshift session begins.
+
+/**
+ *  Optional delegate method that is called when a Helpshift session begins.
+ *  When a Helpshift session begins (via showFAQ:, showConversation:, etc.), Helpshift's view stack is presented on top of the app's view controller.
  *
- *
- * Helpshift session is any Helpshift support screen opened via showFAQ:, showConversation: or other API calls.
- * Whenever one of these APIs launches a view on screen, this method is invoked.
- *
- *  @available Available in SDK version 4.10.1 or later
+ *  @available Version 4.10.1 or later
  */
 - (void) helpshiftSessionHasBegun;
 
-/** Optional delegate method that is called when the Helpshift session ends.
+/**
+ *  Optional delegate method that will be called when Helpshift's session ends.
+ *  When a Helpshift session ends, the Helpshift view pops and user is taken back to the app.
  *
- *
- * Helpshift session is any Helpshift support screen opened via showSupport: or other API calls.
- * Whenever the user closes that support screen and returns back to the app this method is invoked.
- *
- *  @available Available in SDK version 1.4.3 or later
+ *  @available Version 1.4.3 or later
  */
 - (void) helpshiftSessionHasEnded;
 
-/** Optional delegate method that is called when a Helpshift inapp notification arrives and is shown
- *  @param count Returns the number of messages that has arrived via inapp notification.
+/**
+ *  Optional delegate method that is called when a Helpshift in-app notification is received and displayed.
+ *  In-app notifications are push notifications that are received when the app is in the foreground.
  *
- * @available Available in SDK version 4.3.0 or later
+ *  @param count The number of messages contained in the notification.
+ *
+ *  @available Version 4.3.0 or later
  */
 - (void) didReceiveInAppNotificationWithMessageCount:(NSInteger)count;
 
-/** Optional delegate method that is called when new conversation get started via any Helpshift API Ex:- showFaq:, showConversation:,etc
- * @param newConversationMessage Return first message of new conversation.
- * @available Available in SDK version 4.10.0 or later
+/**
+ * Optional delegate method that is called when the user starts a new conversation via any Helpshift APIs (showFaq:, showConversation:, etc.)
+ * @param newConversationMessage First message of new conversation.
+ *
+ * @available Version 4.10.0 or later
  */
 - (void) newConversationStartedWithMessage:(NSString *)newConversationMessage;
 
-/** Optional delegate method that is called when user reply on current open conversation via any Helpshift API Ex:- showFaq:, showConversation:, etc
- * @param newMessage Return reply message on open conversation.
- * @available Available in SDK version 4.10.0 or later
+/**
+ * Optional delegate method that is called when a user sends a message on the current open conversation.
+ * @param newMessage User's message.
+ *
+ * @available Version 4.10.0 or later
  */
 - (void) userRepliedToConversationWithMessage:(NSString *)newMessage;
 
-/**Optional delegate method that is called when user complete customer satisfaction survey after issue getting resolved.
- * @param rating Return the rating of customer satisfaction survey.
- * @param feedback Return text which user added in customer satisfaction survey.
+/**
+ * Optional delegate method that is called when user complete customer satisfaction survey. The customer satisfaction survey is shown after an issue gets resolved.
+ * @param rating User rating in the customer satisfaction survey.
+ * @param feedback The feedback text added by user in customer satisfaction survey.
  *
- * @available Available in SDK version 4.10.1 or later.
+ * @available Version 4.10.1 or later.
  */
 - (void) userCompletedCustomerSatisfactionSurvey:(NSInteger)rating withFeedback:(NSString *)feedback;
 
-/** Optional delegate method that is called when the user taps an downloaded attachment file to view it.
+/**
+ * Optional delegate method that is called when the user taps an downloaded attachment file to view it.
  *  @return If the app chooses to display the attachment file itself, return true
- *          If the app does not wish to handle the attachment, return false. In this case, the SDK will display the attachment
- *  @param fileLocation Returns the location on the downloaded attachment file.
- *         parentViewController Returns SDK's top view controller that the app can use to present its view.
+ *          If the app does not wish to handle the attachment, return false. In this case, the SDK will display the attachment using Quicklook Framework.
+ *  @param fileLocation Location of the downloaded attachment file.
+ *  @param parentViewController Helpshift's top view controller that can be used to present custom viewController.
  *
- * @available Available in SDK version 4.10.0 or later
+ * @available Version 4.10.0 or later
  */
 - (BOOL) displayAttachmentFileAtLocation:(NSURL *)fileLocation onViewController:(UIViewController *)parentViewController;
 

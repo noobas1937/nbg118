@@ -71,7 +71,7 @@
 "YES, THANKS!" = "好，謝謝！";
 "START A NEW CONVERSATION" = "開始一段新對話";
 "New Conversation" = "新對話";
-"What's on your mind?" = "您在想什麼？";
+"How can we help?" = "您需要什麼幫助？";
 "Thanks for contacting us." = "感謝您和我們聯絡。";
 "Your message has been received." = "已收到您的訊息。";
 "What else can we help you with?" = "您還需要其他協助嗎？";
@@ -93,3 +93,38 @@
 "SEND ANYWAY" = "仍要送出";
 "Done" = "完成";
 "Suggestions" = "建議";
+
+//IssueDescriptionMinimumCharacterLength:
+//This value is the minimum number of visible characters that should be entered by the user for the description of the issue.
+"IssueDescriptionMinimumCharacterLength" = 1;
+
+//Localization for Campaigns
+"Yes" = "是";
+"No" = "否";
+"Accept" = "接受";
+"Decline" = "拒絕";
+"Shop Now" = "立即購物";
+"Remind Later" = "稍後提醒";
+"View Now" = "立即檢視";
+"Buy Now" = "立即購買";
+"Book Now" = "立即預訂";
+"Download" = "下載";
+"Share" = "分享";
+"Like" = "讚";
+"Dislike" = "爛";
+"Send Feedback" = "送出回饋";
+"Chat Now" = "立即對話";
+"Read FAQs" = "閱讀 FAQ";
+"Read FAQ" = "閱讀 FAQ";
+"Reply" = "回覆";
+"Open Help" = "開啟說明";
+"Rate App" = "評價 App";
+"Remind Later" = "稍後提醒";
+
+//Localization for voice-over
+"Star" = "Star";
+"Stars" = "Stars";
+"You rated the service with" = "Your rated the service with";
+"Attach screenshot" = "Attach screenshot";
+"Send a new message" = "Send a new message";
+"Remove screenshot" = "Remove screenshot";

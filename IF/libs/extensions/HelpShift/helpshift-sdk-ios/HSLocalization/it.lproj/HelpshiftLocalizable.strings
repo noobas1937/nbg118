@@ -71,7 +71,7 @@
 "YES, THANKS!" = "SÌ, GRAZIE!";
 "START A NEW CONVERSATION" = "INIZIA NUOVA CONVERSAZIONE";
 "New Conversation" = "Nuova conversazione";
-"What's on your mind?" = "A cosa stai pensando?";
+"How can we help?" = "Come possiamo aiutarti?";
 "Thanks for contacting us." = "Grazie per averci contattato.";
 "Your message has been received." = "Il tuo messaggio è stato ricevuto.";
 "What else can we help you with?" = "Possiamo aiutarti con qualche altra cosa?";
@@ -93,3 +93,38 @@
 "SEND ANYWAY" = "INVIA COMUNQUE";
 "Done" = "Fatto";
 "Suggestions" = "Suggerimenti";
+
+//IssueDescriptionMinimumCharacterLength:
+//This value is the minimum number of visible characters that should be entered by the user for the description of the issue.
+"IssueDescriptionMinimumCharacterLength" = 1;
+
+//Localization for Campaigns
+"Yes" = "Sì";
+"No" = "No";
+"Accept" = "Accetta";
+"Decline" = "Rifiuta";
+"Shop Now" = "Acquista Ora";
+"Remind Later" = "Ricorda Dopo";
+"View Now" = "Vedi Ora";
+"Buy Now" = "Compra Ora";
+"Book Now" = "Prenota Ora";
+"Download" = "Scarica";
+"Share" = "Condividi";
+"Like" = "Mi piace";
+"Dislike" = "Non mi piace";
+"Send Feedback" = "Invia Feedback";
+"Chat Now" = "Chatta Ora";
+"Read FAQs" = "Leggi FAQ";
+"Read FAQ" = "Leggi FAQ";
+"Reply" = "Rispondi";
+"Open Help" = "Apri Aiuto";
+"Rate App" = "Valuta App";
+"Remind Later" = "Ricorda Dopo";
+
+//Localization for voice-over
+"Star" = "Star";
+"Stars" = "Stars";
+"You rated the service with" = "Your rated the service with";
+"Attach screenshot" = "Attach screenshot";
+"Send a new message" = "Send a new message";
+"Remove screenshot" = "Remove screenshot";

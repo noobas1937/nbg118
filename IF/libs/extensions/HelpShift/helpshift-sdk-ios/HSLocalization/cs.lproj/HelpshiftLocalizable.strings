@@ -71,7 +71,7 @@
 "YES, THANKS!" = "ANO, DĚKUJI!";
 "START A NEW CONVERSATION" = "ZAHÁJIT NOVOU KONVERZACI";
 "New Conversation" = "Nová konverzace";
-"What's on your mind?" = "Co si přejete?";
+"How can we help?" = "Jak vám můžeme pomoci?";
 "Thanks for contacting us." = "Děkujeme, že jste nás kontaktovali.";
 "Your message has been received." = "Vaše zpráva byla přijata.";
 "What else can we help you with?" = "S čím vám ještě můžeme pomoct?";
@@ -93,3 +93,38 @@
 "SEND ANYWAY" = "PŘESTO ODESLAT";
 "Done" = "Hotovo";
 "Suggestions" = "Návrhy";
+
+//IssueDescriptionMinimumCharacterLength:
+//This value is the minimum number of visible characters that should be entered by the user for the description of the issue.
+"IssueDescriptionMinimumCharacterLength" = 1;
+
+//Localization for Campaigns
+"Yes" = "Ano";
+"No" = "Ne";
+"Accept" = "Přijmout";
+"Decline" = "Odmítnout";
+"Shop Now" = "Nakupovat teď";
+"Remind Later" = "Připomenout pak";
+"View Now" = "Prohlédnout teď";
+"Buy Now" = "Koupit teď";
+"Book Now" = "Zamluvit teď";
+"Download" = "Stáhnout";
+"Share" = "Sdílet";
+"Like" = "Líbí se";
+"Dislike" = "Nelíbí se";
+"Send Feedback" = "Poslat reakci";
+"Chat Now" = "Chatovat teď";
+"Read FAQs" = "Číst FAQs";
+"Read FAQ" = "Číst FAQ";
+"Reply" = "Odpovědět";
+"Open Help" = "Otevřít nápovědu";
+"Rate App" = "Hodnotit app";
+"Remind Later" = "Připomenout pak";
+
+//Localization for voice-over
+"Star" = "Star";
+"Stars" = "Stars";
+"You rated the service with" = "Your rated the service with";
+"Attach screenshot" = "Attach screenshot";
+"Send a new message" = "Send a new message";
+"Remove screenshot" = "Remove screenshot";

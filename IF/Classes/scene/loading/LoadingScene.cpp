@@ -358,22 +358,44 @@ void LoadingScene::onTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 
 void LoadingScene::onGoToHelpShift(CCObject* p)
 {
-    cocos2d::CCArray *tags = new cocos2d::CCArray();
-    tags->init();
-    cocos2d::CCDictionary *config = new cocos2d::CCDictionary();
-    cocos2d::CCDictionary *meta = new CCDictionary();
-    tags->addObject(new CCString("loading"));
+//    cocos2d::CCArray *tags = new cocos2d::CCArray();
+//    tags->init();
+//    cocos2d::CCDictionary *config = new cocos2d::CCDictionary();
+//    cocos2d::CCDictionary *meta = new CCDictionary();
+//    tags->addObject(new CCString("loading"));
+//#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+//    tags->addObject(new CCString("ios"));
+//#else
+//    if(GlobalData::shared()->analyticID != "market_global")
+//        tags->addObject(new CCString(GlobalData::shared()->analyticID));
+//#endif
+//    meta->setObject(tags, HS_TAGS_KEY);
+//    meta->setObject(CCString::create(GameController::getInstance()->getLoadingLogString()), "loadingLog");
+//    config->setObject(meta, HS_META_DATA_KEY);
+//    ValueMap config;
+//    config[HS_META_DATA_KEY] = meta;
+//    GlobalData::shared()->isBind = true;
+//    HelpshiftCocos2dx::showConversation(config);
+    ValueMap meta;
+    meta["loadingLog"] = GameController::getInstance()->getLoadingLogString();
+    HelpshiftCocos2dx::addProperties(meta);
+    
+    ValueVector tags;
+    tags.push_back(Value("loading"));
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    tags->addObject(new CCString("ios"));
+    tags.push_back(Value("ios"));
 #else
     if(GlobalData::shared()->analyticID != "market_global")
-        tags->addObject(new CCString(GlobalData::shared()->analyticID));
+        tags.push_back(Value(GlobalData::shared()->analyticID));
 #endif
-    meta->setObject(tags, HS_TAGS_KEY);
-    meta->setObject(CCString::create(GameController::getInstance()->getLoadingLogString()), "loadingLog");
-    config->setObject(meta, HS_META_DATA_KEY);
+    meta[HS_TAGS_KEY] = tags;
+    
+    ValueMap config;
+    config[HS_META_DATA_KEY] = meta;
     GlobalData::shared()->isBind = true;
     HelpshiftCocos2dx::showConversation(config);
+//    postLoadingLogToServer(NULL);
+
 }
 
 #pragma mark * update ini & xml

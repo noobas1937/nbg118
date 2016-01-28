@@ -55,7 +55,7 @@
 "Sending failed!" = "Senden ist fehlgeschlagen!";
 "Screenshot could not be sent. Image is too large, try again with another image" = "Screenshot konnte nicht gesendet werden. Bild zu groß ist, nochmals mit einem anderen Bild";
 "Name invalid" = "Name ungültig";
-"Please provide a name." = "Bitte geben sie einen name.";
+"Please provide a name." = "Bitte geben Sie einen Namen ein.";
 "New message from Support" = "Neue Nachricht vom Support";
 "new messages from Support" = "neue Nachrichten vom Support";
 "No FAQs found" = "Keine FAQs gefunden";
@@ -71,7 +71,7 @@
 "YES, THANKS!" = "JA, DANKE!";
 "START A NEW CONVERSATION" = "NEUE UNTERHALTUNG ANFANGEN";
 "New Conversation" = "Neue Unterhaltung";
-"What's on your mind?" = "Was möchten Sie uns mitteilen?";
+"How can we help?" = "Wie können wir helfen?";
 "Thanks for contacting us." = "Danke, dass Sie uns kontaktieren.";
 "Your message has been received." = "Ihre Nachricht ist eingegangen.";
 "What else can we help you with?" = "Wie können wir Ihnen sonst noch helfen?";
@@ -93,3 +93,38 @@
 "SEND ANYWAY" = "TROTZDEM ABSCHICKEN";
 "Done" = "Fertig";
 "Suggestions" = "Vorschläge";
+
+//IssueDescriptionMinimumCharacterLength:
+//This value is the minimum number of visible characters that should be entered by the user for the description of the issue.
+"IssueDescriptionMinimumCharacterLength" = 1;
+
+//Localization for Campaigns
+"Yes" = "Ja";
+"No" = "Nein";
+"Accept" = "Akzeptieren";
+"Decline" = "Ablehnen";
+"Shop Now" = "Jetzt einkaufen";
+"Remind Later" = "Später erinnern";
+"View Now" = "Jetzt anzeigen";
+"Buy Now" = "Jetzt kaufen";
+"Book Now" = "Jetzt buchen";
+"Download" = "Download";
+"Share" = "Teilen";
+"Like" = "Like";
+"Dislike" = "Dislike";
+"Send Feedback" = "Feedback senden";
+"Chat Now" = "Jetzt chatten";
+"Read FAQs" = "FAQs lesen";
+"Read FAQ" = "FAQ lesen";
+"Reply" = "Antworten";
+"Open Help" = "Hilfe öffnen";
+"Rate App" = "App bewerten";
+"Remind Later" = "Später erinnern";
+
+//Localization for voice-over
+"Star" = "Star";
+"Stars" = "Stars";
+"You rated the service with" = "Your rated the service with";
+"Attach screenshot" = "Attach screenshot";
+"Send a new message" = "Send a new message";
+"Remove screenshot" = "Remove screenshot";

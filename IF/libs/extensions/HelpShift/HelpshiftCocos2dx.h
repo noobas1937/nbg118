@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014-2015 by Helpshift, Inc. All Rights Reserved.
+ * Copyright (c) 2015-2016 by Helpshift, Inc. All Rights Reserved.
  *
  */
 
@@ -25,10 +25,20 @@
 #define HS_SHOW_SEARCH_ON_NEW_CONVERSATION "showSearchOnNewConversation"
 #define HS_PRESENT_FULL_SCREEN_ON_IPAD "presentFullScreenOniPad"
 #define HS_ENABLE_DIALOG_UI_FOR_TABLETS "enableDialogUIForTablets"
+#define HS_SHOW_CONVERSATION_RESOLUTION_QUESTION "showConversationResolutionQuestion"
+#define HS_ENABLE_DEFAULT_FALL_BACK_LANGUAGE "enableDefaultFallbackLanguage"
+#define HS_WITH_TAGS_MATCHING "withTagsMatching"
+#define HS_FILTER_TAGS "tags"
+
+#define HS_ADD_FAQS_TO_DEVICE_SEARCH "addFaqsToDeviceSearch"
+#define HS_ADD_FAQS_TO_DEVICE_SEARCH_ON_INSTALL "on_install"
+#define HS_ADD_FAQS_TO_DEVICE_SEARCH_AFTER_VIEWING_FAQS "after_viewing_faqs"
+#define HS_ADD_FAQS_TO_DEVICE_SEARCH_NEVER "never"
 
 #define HS_ENABLE_CONTACT_US_ALWAYS "always"
 #define HS_ENABLE_CONTACT_US_NEVER "never"
 #define HS_ENABLE_CONTACT_US_AFTER_VIEWING_FAQS "after_viewing_faqs"
+#define HS_ENABLE_CONTACT_US_AFTER_MARKING_ANSWER_UNHELPFUL "after_marking_answer_unhelpful"
 
 #define HS_ALERT_CLOSE 0
 #define HS_ALERT_FEEDBACK 1
@@ -39,6 +49,17 @@
 #define HS_USER_REJECTED_SOLUTION "User rejected the solution"
 #define HS_USER_SENT_SCREENSHOT "User sent a screenshot"
 #define HS_USER_REVIEWED_APP "User reviewed the app"
+
+#define HS_FLOW_TYPE "type"
+#define HS_FLOW_CONFIG "config"
+#define HS_FLOW_TITLE_RESOURCE "titleResourceName"
+#define HS_FLOW_TITLE "title"
+#define HS_FLOW_DATA "data"
+
+#define HS_FAQS_FLOW "faqsFlow"
+#define HS_CONVERSATION_FLOW "conversationFlow"
+#define HS_FAQ_SECTION_FLOW "faqSectionFlow"
+#define HS_SINGLE_FAQ_FLOW "singleFaqFlow"
 
 /*! \mainpage Documentation for the Cocos2dx plugin
  *
@@ -54,13 +75,13 @@ class HelpshiftCocos2dx
 public:
 
     static void showFAQs();
-    static void showFAQs(cocos2d::CCDictionary *config);
+    static void showFAQs(cocos2d::ValueMap& config);
     static void showConversation();
-    static void showConversation(cocos2d::CCDictionary *config);
+    static void showConversation(cocos2d::ValueMap& config);
     static void showFAQSection(const char *sectionPublishId);
-    static void showFAQSection(const char *sectionPublishId, cocos2d::CCDictionary *config);
+    static void showFAQSection(const char *sectionPublishId, cocos2d::ValueMap& config);
     static void showSingleFAQ(const char *publishId);
-    static void showSingleFAQ(const char *publishId, cocos2d::CCDictionary *config);
+    static void showSingleFAQ(const char *publishId, cocos2d::ValueMap& config);
     static void setNameAndEmail(const char *name, const char *email);
     static void setUserIdentifier(const char *userIdentifier);
     static void registerDeviceToken(const char *deviceToken);
@@ -71,27 +92,44 @@ public:
     static void logout();
     static void registerSessionDelegates (void (*sessionBeganListener)(),
                                           void (*sessionEndedListener)());
-    static void registerConversationDelegates (void (*newConversationStartedListener)(const char *message),
-                                               void (*userRepliedToConversationListener)(const char *message),
-                                               void (*userCompletedCustomerSatisfactionSurveyListener)(int rating, const char *feedback));
+    static void registerDisplayAttachmentDelegate (void (*displayAttachmentListener)(const char *filePath));
+
+    static bool setSDKLanguage(const char* locale);
+
+    static bool addStringProperty(const char* key, const char* value);
+    static bool addIntegerProperty(const char* key, int value);
+    static bool addBooleanProperty(const char* key, bool value);
+    static bool addDateProperty(const char* key, double secondsSinceEpoch);
+    static void addProperties(cocos2d::ValueMap& properties);
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     static void install( const char *apiKey, const char *domainName, const char *appID);
-    static void install( const char *apiKey, const char *domainName, const char *appID, cocos2d::CCDictionary *config);
+    static void install( const char *apiKey, const char *domainName, const char *appID, cocos2d::ValueMap& config);
     static void pauseDisplayOfInAppNotification(bool pauseInApp);
     static int  getNotificationCountFromRemote(bool isRemote, void (*notificationHandler) (int count));
     static void handleLocalNotification(const char *issueId);
-    static void handleRemoteNotification(cocos2d::CCDictionary *notification);
+    static void handleRemoteNotification(cocos2d::ValueMap& notification);
     static void setInAppNotificationHandler (void (*inAppNotificationHandler) (int count));
+    static void registerConversationDelegates (void (*newConversationStartedListener)(const char *message),
+                                               void (*userRepliedToConversationListener)(const char *message),
+                                               void (*userCompletedCustomerSatisfactionSurveyListener)(int rating, const char *feedback));
+    static void showDynamicForm(const char *title, cocos2d::ValueVector& data);
+
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     static int  getNotificationCount(bool isAsync, void (*receiver) (int count));
-    static void handlePush(const char *issueId);
+    static void handlePush(cocos2d::ValueMap& notification);
+    static void registerConversationDelegates (void (*newConversationStartedListener)(const char *message),
+                                               void (*userRepliedToConversationListener)(const char *message),
+                                               void (*userCompletedCustomerSatisfactionSurveyListener)(int rating, const char *feedback),
+                                               void (*didReceiveNotificationListenerArg)(int newMessageCount));
     static int  logd(const char *tag, const char *format, ...);
     static int  logi(const char *tag, const char *format, ...);
     static int  logw(const char *tag, const char *format, ...);
     static int  logv(const char *tag, const char *format, ...);
-
+    static void showDynamicForm(cocos2d::ValueVector& data);
+    static void sendHelpshiftLog(const char* IP, const char* uid, const char* tag);
 #endif
 };
 

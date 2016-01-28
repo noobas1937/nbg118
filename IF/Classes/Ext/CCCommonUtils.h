@@ -321,8 +321,10 @@ namespace CCCommonUtils {
     string getCustomPicUrl(string uid, int picVer);
     string getShakePicUrl(string picName);
     bool isUseCustomPic(int picVer);
-    cocos2d::CCDictionary* getHelpShiftDefaultMeta();
-    cocos2d::CCArray* getHelpShiftDefaultTags();
+//    cocos2d::CCDictionary* getHelpShiftDefaultMeta(); simon
+//    cocos2d::CCArray* getHelpShiftDefaultTags();
+    cocos2d::ValueMap getHelpShiftDefaultMeta();
+    cocos2d::ValueVector getHelpShiftDefaultTags();
     void showHelpShiftFAQ();
     void showHelpShiftFAQ(string itemId);
     void showBanHelpShift();

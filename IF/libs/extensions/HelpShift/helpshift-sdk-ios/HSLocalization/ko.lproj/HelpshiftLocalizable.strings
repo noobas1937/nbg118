@@ -72,7 +72,7 @@
 "YES, THANKS!" = "네, 고마워요!";
 "START A NEW CONVERSATION" = "새로운 대화 시작";
 "New Conversation" = "새로운 대화";
-"What's on your mind?" = "무슨 도움이 필요하세요?";
+"How can we help?" = "무엇을 도와 드릴까요?";
 "Thanks for contacting us." = "연락해주셔서 감사합니다.";
 "Your message has been received." = "메시지가 수신되었습니다.";
 "What else can we help you with?" = "또 도와드릴 것이 있습니까?";
@@ -94,3 +94,38 @@
 "SEND ANYWAY" = "그래도 보내기";
 "Done" = "완료";
 "Suggestions" = "제안";
+
+//IssueDescriptionMinimumCharacterLength:
+//This value is the minimum number of visible characters that should be entered by the user for the description of the issue.
+"IssueDescriptionMinimumCharacterLength" = 1;
+
+//Localization for Campaigns
+"Yes" = "예";
+"No" = "아니요";
+"Accept" = "수락";
+"Decline" = "거절";
+"Shop Now" = "지금 쇼핑";
+"Remind Later" = "나중에 알림";
+"View Now" = "지금 보기";
+"Buy Now" = "지금 구입";
+"Book Now" = "지금 예약";
+"Download" = "다운로드";
+"Share" = "공유";
+"Like" = "좋아요";
+"Dislike" = "좋아요 해제";
+"Send Feedback" = "피드백 보내기";
+"Chat Now" = "지금 채팅";
+"Read FAQs" = "자주 묻는 질문 읽기";
+"Read FAQ" = "자주 묻는 질문 읽기";
+"Reply" = "답장";
+"Open Help" = "도움말 열기";
+"Rate App" = "앱 평가하기";
+"Remind Later" = "나중에 알림";
+
+//Localization for voice-over
+"Star" = "Star";
+"Stars" = "Stars";
+"You rated the service with" = "Your rated the service with";
+"Attach screenshot" = "Attach screenshot";
+"Send a new message" = "Send a new message";
+"Remove screenshot" = "Remove screenshot";

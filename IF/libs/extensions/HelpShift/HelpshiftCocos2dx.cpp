@@ -4,13 +4,12 @@
  */
 
 #include "HelpshiftCocos2dx.h"
-#include <string>
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include <jni.h>
 #include "platform/android/jni/JniHelper.h"
 #include <android/log.h>
-
+#include <string>
 
 using namespace std;
 
@@ -22,15 +21,17 @@ static void (*helpshiftSessionEndedListener) () = NULL;
 static void (*newConversationStartedListener) (const char *message) = NULL;
 static void (*userRepliedToConversationListener) (const char *message) = NULL;
 static void (*userCompletedCustomerSatisfactionSurveyListener) (int rating, const char *message) = NULL;
+static void (*didReceiveNotificationListener) (int newMessageCount) = NULL;
+static void (*displayAttachmentListener)(const char *filePath) = NULL;
 
 /*! \brief Parses the tags array
  *         from the metaData and creates a Java ArrayList
  *
  *  \param env The JNIEnv
- *  \param metaData The metaData dictionary which contains the tags array
+ *  \param Tags The tags array which contains the tags.
  */
-jobject parseTagsArray (JNIEnv *env, cocos2d::CCDictionary* metaData) {
-    if(metaData == NULL) {
+jobject parseValueVectorToArray (JNIEnv *env, cocos2d::ValueVector& tags) {
+    if(tags.empty()) {
         return NULL;
     }
     const char* arraylist_class_name = "java/util/ArrayList";
@@ -40,12 +41,11 @@ jobject parseTagsArray (JNIEnv *env, cocos2d::CCDictionary* metaData) {
     jmethodID array_add_method = 0;
     array_add_method = env->GetMethodID(clsArrayList, "add", "(Ljava/lang/Object;)Z");
 
-    cocos2d::CCArray* tags = dynamic_cast<cocos2d::CCArray*> (metaData->objectForKey(HS_TAGS_KEY));
-    int j = 0;
-    for (j = 0; j < tags->count(); j++) {
-        cocos2d::CCString *valStr = dynamic_cast<cocos2d::CCString*> (tags->objectAtIndex(j));
-        if (valStr != NULL && valStr->length() > 0) {
-            jstring value = env->NewStringUTF(valStr->getCString());
+    for (const auto &tag : tags)
+    {
+        std::string valStr = tag.asString();
+        if (!valStr.empty()) {
+            jstring value = env->NewStringUTF(valStr.c_str());
             env->CallBooleanMethod(jarrayobj, array_add_method, value);
         }
     }
@@ -53,14 +53,8 @@ jobject parseTagsArray (JNIEnv *env, cocos2d::CCDictionary* metaData) {
 }
 
 
-/*! \brief Parses the config dictionary
- *         and created a Java HashMap to pass to the native layer
- *
- *  \param env The JNIEnv
- *  \param config The config dictionary which contains various config options which accepted by the SDK
- */
-jobject parseConfigDictionary (JNIEnv* env, cocos2d::CCDictionary *config) {
-    if(config == NULL) {
+jobject parseValueMapToHashMap (JNIEnv *env, cocos2d::ValueMap& properties) {
+    if(properties.empty()) {
         return NULL;
     }
     const char* hashmap_class_name = "java/util/HashMap";
@@ -72,97 +66,132 @@ jobject parseConfigDictionary (JNIEnv* env, cocos2d::CCDictionary *config) {
     jmethodID map_put_method = 0;
     map_put_method = env->GetMethodID(clsHashMap, "put", "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;");
 
-    jstring key = env->NewStringUTF(HS_ENABLE_IN_APP_NOTIFICATION);
+    jstring key ;
+
+    for (auto iter = properties.begin(); iter != properties.end(); ++iter) {
+        key = env->NewStringUTF(iter->first.c_str());
+        if (iter->second.getType() == cocos2d::Value::Type::STRING) {
+            std::string valueStr = properties[iter->first].asString();
+            if(!valueStr.empty()) {
+                jstring value = env->NewStringUTF(valueStr.c_str());
+                env->CallObjectMethod(jmapobj, map_put_method, key, value);
+            }
+        } else if (iter->second.getType() == cocos2d::Value::Type::INTEGER) {
+            int value = properties[iter->first].asInt();
+            env->CallObjectMethod(jmapobj, map_put_method, key, value);
+        } else if (iter->second.getType() == cocos2d::Value::Type::DOUBLE) {
+            double value = properties[iter->first].asDouble();
+            env->CallObjectMethod(jmapobj, map_put_method, key, value);
+        } else if (iter->second.getType() == cocos2d::Value::Type::BOOLEAN) {
+            int value = properties[iter->first].asBool();
+            env->CallObjectMethod(jmapobj, map_put_method, key, value);
+        }
+    }
+    return jmapobj;
+}
+
+
+jobject parseValueVectorToArrayOfHashMaps (JNIEnv *env, cocos2d::ValueVector& data) {
+    if(data.empty()) {
+        return NULL;
+    }
+    const char* arraylist_class_name = "java/util/ArrayList";
+    jclass clsArrayList = env->FindClass(arraylist_class_name);
+    jmethodID arrayConstructorID = env->GetMethodID (clsArrayList, "<init>", "()V");
+    jobject jarrayobj = env->NewObject(clsArrayList, arrayConstructorID);
+    jmethodID array_add_method = 0;
+    array_add_method = env->GetMethodID(clsArrayList, "add", "(Ljava/lang/Object;)Z");
+
+    for (const auto &map : data) {
+        jobject value = parseValueMapToHashMap(env, (cocos2d::ValueMap &)map.asValueMap());
+        env->CallBooleanMethod(jarrayobj, array_add_method, value);
+    }
+    return jarrayobj;
+}
+
+
+/*! \brief Parses the config dictionary
+ *         and created a Java HashMap to pass to the native layer
+ *
+ *  \param env The JNIEnv
+ *  \param config The config dictionary which contains various config options which accepted by the SDK
+ */
+jobject parseConfigDictionary (JNIEnv* env, cocos2d::ValueMap& config) {
+    if(config.empty()) {
+        return NULL;
+    }
+    const char* hashmap_class_name = "java/util/HashMap";
+    jclass clsHashMap = env->FindClass(hashmap_class_name);
+    jmethodID constructorID = env->GetMethodID (clsHashMap, "<init>", "()V");
+
+    jobject jmapobj = env->NewObject(clsHashMap, constructorID);
+
+    jmethodID map_put_method = 0;
+    map_put_method = env->GetMethodID(clsHashMap, "put", "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;");
+
+    jstring key ;
     jstring data;
 
-    cocos2d::CCString* enableInAppStr = dynamic_cast<cocos2d::CCString*>(config->objectForKey(HS_ENABLE_IN_APP_NOTIFICATION));
-    if (enableInAppStr != NULL && enableInAppStr->length() > 0) {
-        data = env->NewStringUTF(enableInAppStr->getCString());
-        env->CallObjectMethod(jmapobj, map_put_method, key, data);
-    }
-
-    key = env->NewStringUTF(HS_ENABLE_CONTACT_US);
-    cocos2d::CCString* enableContactUsStr = dynamic_cast<cocos2d::CCString*>(config->objectForKey(HS_ENABLE_CONTACT_US));
-    if (enableContactUsStr != NULL && enableContactUsStr->length() > 0) {
-        data = env->NewStringUTF(enableContactUsStr->getCString());
-        env->CallObjectMethod(jmapobj, map_put_method, key, data);
-    }
-
-    key = env->NewStringUTF(HS_GOTO_CONVERSATION_AFTER_CONTACT_US);
-    cocos2d::CCString* gotoConvStr = dynamic_cast<cocos2d::CCString*>(config->objectForKey(HS_GOTO_CONVERSATION_AFTER_CONTACT_US));
-    if (gotoConvStr != NULL && gotoConvStr->length() > 0) {
-        data = env->NewStringUTF(gotoConvStr->getCString());
-        env->CallObjectMethod(jmapobj, map_put_method, key, data);
-    }
-
-    key = env->NewStringUTF(HS_REQUIRE_EMAIL);
-    cocos2d::CCString* requireEmailStr = dynamic_cast<cocos2d::CCString*>(config->objectForKey(HS_REQUIRE_EMAIL));
-    if (requireEmailStr != NULL && requireEmailStr->length() > 0) {
-        data = env->NewStringUTF(requireEmailStr->getCString());
-        env->CallObjectMethod(jmapobj, map_put_method, key, data);
-    }
-
-    key = env->NewStringUTF(HS_HIDE_NAME_AND_EMAIL);
-    cocos2d::CCString* hideNameEmailStr = dynamic_cast<cocos2d::CCString*>(config->objectForKey(HS_HIDE_NAME_AND_EMAIL));
-    if (hideNameEmailStr != NULL && hideNameEmailStr->length() > 0) {
-        data = env->NewStringUTF(hideNameEmailStr->getCString());
-        env->CallObjectMethod(jmapobj, map_put_method, key, data);
-    }
-
-    key = env->NewStringUTF(HS_META_DATA_KEY);
-    cocos2d::CCDictionary* metaData = dynamic_cast<cocos2d::CCDictionary*>(config->objectForKey(HS_META_DATA_KEY));
-    if (metaData!= NULL) {
-        jobject metaMap = env->NewObject(clsHashMap, constructorID);
-        cocos2d::CCArray *keys = metaData->allKeys();
-        int i = 0;
-        for(i = 0; i < keys->count(); i++) {
-            cocos2d::CCString* keyStr = dynamic_cast<cocos2d::CCString*> (keys->objectAtIndex(i));
-            if (keyStr != NULL && keyStr->length() > 0) {
-                jstring key = env->NewStringUTF(keyStr->getCString());
-                cocos2d::CCString *valStr = dynamic_cast<cocos2d::CCString*> (metaData->objectForKey(keyStr->getCString()));
-                if(valStr != NULL && valStr->length() > 0) {
-                    jstring value = env->NewStringUTF(valStr->getCString());
-                    env->CallObjectMethod(metaMap, map_put_method, key, value);
-                } else if (valStr == NULL) {
-                    env->CallObjectMethod(metaMap, map_put_method, key, parseTagsArray(env, metaData));
+    for (auto iter = config.begin(); iter != config.end(); ++iter) {
+        key = env->NewStringUTF(iter->first.c_str());
+        // the object is a Dictionary
+        if (iter->second.getType() == cocos2d::Value::Type::STRING) {
+            std::string valueStr = config[iter->first].asString();
+            if(!valueStr.empty()) {
+                data = env->NewStringUTF(valueStr.c_str());
+                env->CallObjectMethod(jmapobj, map_put_method, key, data);
+            }
+        } else if(iter->second.getType() == cocos2d::Value::Type::MAP) {
+            cocos2d::ValueMap& metaData = config[iter->first].asValueMap();
+            jobject metaMap = env->NewObject(clsHashMap, constructorID);
+            if (!metaData.empty()) {
+                for (auto metaIter = metaData.begin(); metaIter != metaData.end(); ++metaIter) {
+                    std::string keyStr = metaIter->first;
+                    if (!keyStr.empty()) {
+                        jstring metaKey = env->NewStringUTF(keyStr.c_str());
+                        if (metaIter->second.getType() == cocos2d::Value::Type::VECTOR) {
+                            env->CallObjectMethod(metaMap, map_put_method, metaKey, parseValueVectorToArray(env, metaIter->second.asValueVector()));
+                        } else if (metaIter->second.getType() == cocos2d::Value::Type::STRING) {
+                            std::string valStr = metaIter->second.asString();
+                            jstring value = env->NewStringUTF(valStr.c_str());
+                            env->CallObjectMethod(metaMap, map_put_method, metaKey, value);
+                        }
+                    }
+                }
+            }
+            env->CallObjectMethod(jmapobj, map_put_method, key, metaMap);
+        } else if (iter->second.getType() == cocos2d::Value::Type::VECTOR) {
+            std::string keyStr = iter->first;
+            if (!keyStr.empty()) {
+                if( keyStr == HS_WITH_TAGS_MATCHING) {
+                    env->CallObjectMethod(jmapobj, map_put_method, key, parseValueVectorToArray(env, iter->second.asValueVector()));
                 }
             }
         }
-        env->CallObjectMethod(jmapobj, map_put_method, key, metaMap);
     }
-
-    key = env->NewStringUTF(HS_CONVERSATION_PREFILL_TEXT);
-    cocos2d::CCString* prefillStr = dynamic_cast<cocos2d::CCString*>(config->objectForKey(HS_CONVERSATION_PREFILL_TEXT));
-    if (prefillStr != NULL && prefillStr->length() > 0) {
-        data = env->NewStringUTF(prefillStr->getCString());
-        env->CallObjectMethod(jmapobj, map_put_method, key, data);
-    }
-
-    key = env->NewStringUTF(HS_SHOW_SEARCH_ON_NEW_CONVERSATION);
-    cocos2d::CCString* showSearchOnConversationStr = dynamic_cast<cocos2d::CCString*>(config->objectForKey(HS_SHOW_SEARCH_ON_NEW_CONVERSATION));
-    if (showSearchOnConversationStr != NULL && showSearchOnConversationStr->length() > 0) {
-        data = env->NewStringUTF(showSearchOnConversationStr->getCString());
-        env->CallObjectMethod(jmapobj, map_put_method, key, data);
-    }
-
-    key = env->NewStringUTF(HS_ENABLE_FULL_PRIVACY);
-    cocos2d::CCString* fullPrivacyStr = dynamic_cast<cocos2d::CCString*>(config->objectForKey(HS_ENABLE_FULL_PRIVACY));
-    if (fullPrivacyStr != NULL && fullPrivacyStr->length() > 0) {
-        data = env->NewStringUTF(fullPrivacyStr->getCString());
-        env->CallObjectMethod(jmapobj, map_put_method, key, data);
-    }
-
-    key = env->NewStringUTF(HS_ENABLE_DIALOG_UI_FOR_TABLETS);
-    cocos2d::CCString* dialogUIStr = dynamic_cast<cocos2d::CCString*>(config->objectForKey(HS_ENABLE_DIALOG_UI_FOR_TABLETS));
-    if (dialogUIStr != NULL && dialogUIStr->length() > 0) {
-        data = env->NewStringUTF(dialogUIStr->getCString());
-        env->CallObjectMethod(jmapobj, map_put_method, key, data);
-    }
-
 
     return jmapobj;
 }
 
+
+void HelpshiftCocos2dx::sendHelpshiftLog(const char* IP, const char* uid, const char* tag) {
+    cocos2d::JniMethodInfo minfo;
+    bool hasMethod = cocos2d::JniHelper::getStaticMethodInfo(minfo,
+                                                             "com/helpshift/HelpshiftBridge",
+                                                             "sendLog",
+                                                             "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
+    if (hasMethod) {
+        jstring _IP = minfo.env->NewStringUTF(IP);
+        jstring _uid = minfo.env->NewStringUTF(uid);
+        jstring _tag = minfo.env->NewStringUTF(tag);
+        minfo.env->CallStaticVoidMethod(minfo.classID, minfo.methodID, _IP, _uid, _tag);
+        
+        minfo.env->DeleteLocalRef(_IP);
+        minfo.env->DeleteLocalRef(_uid);
+        minfo.env->DeleteLocalRef(_tag);
+        minfo.env->DeleteLocalRef(minfo.classID);
+    }
+}
 
 /*! \brief You can use this api call to provide a way
  *         for the user to send feedback or start a new conversation with you.
@@ -188,7 +217,7 @@ void HelpshiftCocos2dx::showConversation(void) {
  *
  * \param config Extra config
  */
-void HelpshiftCocos2dx::showConversation(cocos2d::CCDictionary *config) {
+void HelpshiftCocos2dx::showConversation(cocos2d::ValueMap& config) {
     cocos2d::JniMethodInfo minfo;
     bool hasMethod = cocos2d::JniHelper::getStaticMethodInfo(minfo,
                                                              "com/helpshift/HelpshiftBridge",
@@ -234,7 +263,7 @@ void HelpshiftCocos2dx::showFAQSection(const char *sectionPublishId) {
  * \param sectionPublishId id specifying a section
  * \param config Additional config
  */
-void HelpshiftCocos2dx::showFAQSection(const char *sectionPublishId, cocos2d::CCDictionary *config) {
+void HelpshiftCocos2dx::showFAQSection(const char *sectionPublishId, cocos2d::ValueMap& config) {
     if(sectionPublishId == NULL || strlen(sectionPublishId) == 0) {
         return;
     }
@@ -289,7 +318,7 @@ void HelpshiftCocos2dx::showSingleFAQ(const char *publishId) {
  * \param publishId id specifying a question
  * \param config Additional config
  */
-void HelpshiftCocos2dx::showSingleFAQ(const char *publishId, cocos2d::CCDictionary *config) {
+void HelpshiftCocos2dx::showSingleFAQ(const char *publishId, cocos2d::ValueMap& config) {
     if(publishId == NULL || strlen(publishId) == 0) {
         return;
     }
@@ -334,7 +363,7 @@ void HelpshiftCocos2dx::showFAQs() {
  *
  * \param config Additional config
  */
-void HelpshiftCocos2dx::showFAQs(cocos2d::CCDictionary *config) {
+void HelpshiftCocos2dx::showFAQs(cocos2d::ValueMap& config) {
     cocos2d::JniMethodInfo minfo;
     bool hasMethod = cocos2d::JniHelper::getStaticMethodInfo(minfo,
                                                              "com/helpshift/HelpshiftBridge",
@@ -346,6 +375,17 @@ void HelpshiftCocos2dx::showFAQs(cocos2d::CCDictionary *config) {
     }
 }
 
+void HelpshiftCocos2dx::showDynamicForm(cocos2d::ValueVector& data) {
+    cocos2d::JniMethodInfo minfo;
+    bool hasMethod = cocos2d::JniHelper::getStaticMethodInfo(minfo,
+                                                             "com/helpshift/HelpshiftBridge",
+                                                             "showDynamicForm",
+                                                             "(Ljava/util/List;)V");
+    if (hasMethod) {
+        jobject listOfHashMaps = parseValueVectorToArrayOfHashMaps(minfo.env, data);
+        minfo.env->CallStaticVoidMethod(minfo.classID, minfo.methodID, listOfHashMaps);
+    }
+}
 
 /*! \brief API to login a user to the Help section.
  * \param identifier The unique id for the login
@@ -538,24 +578,24 @@ int HelpshiftCocos2dx::getNotificationCount(bool isAsync, void (*receiver) (int 
 }
 
 
-/*! \brief If you receive a push notification from the Helpshift server, the "origin" field of the notification will be set to "helpshift". In such a case, you can forward the notification to Helpshift so that the relevant issue chat screen is opened. To forward the push notification to the Helpshift sdk, please use this api.
- *
- * \param issueId The "issue_id" field of the received notification dictionary
+/*! \brief If you receive a push notification from the Helpshift server, the "origin" field of the notification will be set to "helpshift". In such a case, you can forward the notification to Helpshift.
+ * \param notification The notification object received.
  */
-void HelpshiftCocos2dx::handlePush(const char *issueId) {
-    if (issueId == NULL || strlen(issueId) == 0) {
+
+void HelpshiftCocos2dx::handlePush(cocos2d::ValueMap& notification) {
+    if (notification.empty()) {
         return;
     }
     cocos2d::JniMethodInfo minfo;
     bool hasMethod = cocos2d::JniHelper::getStaticMethodInfo(minfo,
                                                              "com/helpshift/HelpshiftBridge",
                                                              "handlePush",
-                                                             "(Ljava/lang/String;)V");
+                                                             "(Ljava/util/HashMap;)V");
     if(hasMethod) {
-        jstring issueIdStr = minfo.env->NewStringUTF(issueId);
+        jobject notificationMap = parseValueMapToHashMap(minfo.env, notification);
         minfo.env->CallStaticVoidMethod(minfo.classID,
                                         minfo.methodID,
-                                        issueIdStr);
+                                        notificationMap);
     }
 }
 
@@ -571,7 +611,8 @@ void HelpshiftCocos2dx::registerSessionDelegates (void (*sessionBeganListener)()
 
 void HelpshiftCocos2dx::registerConversationDelegates (void (*newConversationStartedListenerArg)(const char *message),
                                                        void (*userRepliedToConversationListenerArg)(const char *message),
-                                                       void (*userCompletedCustomerSatisfactionSurveyListenerArg)(int rating, const char *feedback)) {
+                                                       void (*userCompletedCustomerSatisfactionSurveyListenerArg)(int rating, const char *feedback),
+                                                       void (*didReceiveNotificationListenerArg)(int newMessageCount)) {
     if(newConversationStartedListenerArg != NULL) {
         newConversationStartedListener = newConversationStartedListenerArg;
     }
@@ -582,6 +623,16 @@ void HelpshiftCocos2dx::registerConversationDelegates (void (*newConversationSta
 
     if(userCompletedCustomerSatisfactionSurveyListenerArg != NULL) {
         userCompletedCustomerSatisfactionSurveyListener = userCompletedCustomerSatisfactionSurveyListenerArg;
+    }
+
+    if(didReceiveNotificationListener != NULL) {
+        didReceiveNotificationListener = didReceiveNotificationListenerArg;
+    }
+}
+
+void HelpshiftCocos2dx::registerDisplayAttachmentDelegate (void (*displayAttachmentListenerArg)(const char *filePath)) {
+    if(displayAttachmentListenerArg != NULL) {
+        displayAttachmentListener = displayAttachmentListenerArg;
     }
 }
 
@@ -601,7 +652,7 @@ int logger (const char* logFunction, const char *tagString, const char* logStrin
     cocos2d::JniMethodInfo minfo;
     int retVal;
     bool hasMethod = cocos2d::JniHelper::getStaticMethodInfo(minfo,
-                                                             "com/helpshift/Log",
+                                                             "com/helpshift/support/Log",
                                                              logFunction,
                                                              "(Ljava/lang/String;Ljava/lang/String;)I");
     if(hasMethod) {
@@ -613,6 +664,106 @@ int logger (const char* logFunction, const char *tagString, const char* logStrin
                                                 logStr);
     }
     return retVal;
+}
+
+bool HelpshiftCocos2dx::setSDKLanguage(const char *locale) {
+    if(locale == NULL || strlen(locale) == 0) {
+        return false;
+    }
+    cocos2d::JniMethodInfo minfo;
+    bool hasMethod = cocos2d::JniHelper::getStaticMethodInfo(minfo,
+                                                             "com/helpshift/HelpshiftBridge",
+                                                             "setSDKLanguage",
+                                                             "(Ljava/lang/String;)V");
+    if(hasMethod) {
+        jstring idStr = minfo.env->NewStringUTF(locale);
+        minfo.env->CallStaticVoidMethod(minfo.classID, minfo.methodID, idStr);
+    }
+    return true;
+}
+
+bool HelpshiftCocos2dx::addStringProperty(const char *key, const char *value) {
+    cocos2d::JniMethodInfo minfo;
+    int retVal;
+    bool hasMethod = cocos2d::JniHelper::getStaticMethodInfo(minfo,
+                                                             "com/helpshift/HelpshiftBridge",
+                                                             "addProperty",
+                                                             "(Ljava/lang/String;Ljava/lang/String;)Z");
+    if(hasMethod) {
+        jstring keyStr = minfo.env->NewStringUTF(key);
+        jstring valueStr = minfo.env->NewStringUTF(value);
+        retVal = minfo.env->CallStaticBooleanMethod(minfo.classID,
+                                                minfo.methodID,
+                                                keyStr,
+                                                valueStr);
+    }
+    return retVal;
+}
+
+bool HelpshiftCocos2dx::addIntegerProperty(const char *key, int value) {
+    cocos2d::JniMethodInfo minfo;
+    int retVal;
+    bool hasMethod = cocos2d::JniHelper::getStaticMethodInfo(minfo,
+                                                             "com/helpshift/HelpshiftBridge",
+                                                             "addProperty",
+                                                             "(Ljava/lang/String;I)Z");
+    if(hasMethod) {
+        jstring keyStr = minfo.env->NewStringUTF(key);
+        retVal = minfo.env->CallStaticBooleanMethod(minfo.classID,
+                                                minfo.methodID,
+                                                keyStr,
+                                                value);
+    }
+    return retVal;
+}
+
+bool HelpshiftCocos2dx::addBooleanProperty(const char *key, bool value) {
+    cocos2d::JniMethodInfo minfo;
+    int retVal;
+    bool hasMethod = cocos2d::JniHelper::getStaticMethodInfo(minfo,
+                                                             "com/helpshift/HelpshiftBridge",
+                                                             "addProperty",
+                                                             "(Ljava/lang/String;Z)Z");
+    if(hasMethod) {
+        jstring keyStr = minfo.env->NewStringUTF(key);
+        retVal = minfo.env->CallStaticBooleanMethod(minfo.classID,
+                                                minfo.methodID,
+                                                keyStr,
+                                                value);
+    }
+    return retVal;
+}
+
+bool HelpshiftCocos2dx::addDateProperty(const char *key, double value) {
+    cocos2d::JniMethodInfo minfo;
+    int retVal;
+    bool hasMethod = cocos2d::JniHelper::getStaticMethodInfo(minfo,
+                                                             "com/helpshift/HelpshiftBridge",
+                                                             "addProperty",
+                                                             "(Ljava/lang/String;D)Z");
+    if(hasMethod) {
+        jstring keyStr = minfo.env->NewStringUTF(key);
+        retVal = minfo.env->CallStaticBooleanMethod(minfo.classID,
+                                                minfo.methodID,
+                                                keyStr,
+                                                value);
+    }
+    return retVal;
+}
+
+
+void HelpshiftCocos2dx::addProperties(cocos2d::ValueMap& properties) {
+    cocos2d::JniMethodInfo minfo;
+    bool hasMethod = cocos2d::JniHelper::getStaticMethodInfo(minfo,
+                                                             "com/helpshift/HelpshiftBridge",
+                                                             "addProperties",
+                                                             "(Ljava/util/HashMap;)V");
+    if(hasMethod) {
+        jobject propertiesObject = parseValueMapToHashMap(minfo.env, properties);
+        minfo.env->CallStaticVoidMethod(minfo.classID,
+                                        minfo.methodID,
+                                        propertiesObject);
+    }
 }
 
 
@@ -663,7 +814,7 @@ int HelpshiftCocos2dx::logv(const char *tag, const char *format, ...) {
 
 
 extern "C" {
-    void Java_com_helpshift_HelpshiftBridge_alertToRateAppAction (JNIEnv *env,
+    JNIEXPORT void JNICALL Java_com_helpshift_HelpshiftBridge_alertToRateAppAction (JNIEnv *env,
                                                                   jobject object,
                                                                   int message) {
         if(alertToRateAppListener) {
@@ -671,7 +822,7 @@ extern "C" {
         }
     }
 
-    void Java_com_helpshift_HelpshiftBridge_didReceiveNotificationCount (JNIEnv *env,
+    JNIEXPORT void JNICALL Java_com_helpshift_HelpshiftBridge_didReceiveNotificationCount (JNIEnv *env,
                                                                          jobject object,
                                                                          int message) {
         if(didReceiveNotificationCount) {
@@ -679,21 +830,21 @@ extern "C" {
         }
     }
 
-    void Java_com_helpshift_HelpshiftBridge_helpshiftSessionBegan (JNIEnv *env,
+    JNIEXPORT void JNICALL Java_com_helpshift_HelpshiftBridge_helpshiftSessionBegan (JNIEnv *env,
                                                                    jobject object) {
         if(helpshiftSessionBeganListener) {
             helpshiftSessionBeganListener();
         }
     }
 
-    void Java_com_helpshift_HelpshiftBridge_helpshiftSessionEnded (JNIEnv *env,
+    JNIEXPORT void JNICALL Java_com_helpshift_HelpshiftBridge_helpshiftSessionEnded (JNIEnv *env,
                                                                    jobject object) {
         if(helpshiftSessionEndedListener) {
             helpshiftSessionEndedListener();
         }
     }
 
-    void Java_com_helpshift_HelpshiftBridge_newConversationStarted (JNIEnv *env,
+    JNIEXPORT void JNICALL Java_com_helpshift_HelpshiftBridge_newConversationStarted (JNIEnv *env,
                                                                     jobject object,
                                                                     jstring messageString) {
         const char *message  = env->GetStringUTFChars(messageString, NULL);
@@ -702,7 +853,7 @@ extern "C" {
         }
     }
 
-    void Java_com_helpshift_HelpshiftBridge_userRepliedToConversation (JNIEnv *env,
+    JNIEXPORT void JNICALL Java_com_helpshift_HelpshiftBridge_userRepliedToConversation (JNIEnv *env,
                                                                        jobject object,
                                                                        jstring messageString) {
         const char *message  = env->GetStringUTFChars(messageString, NULL);
@@ -711,13 +862,30 @@ extern "C" {
         }
     }
 
-    void Java_com_helpshift_HelpshiftBridge_userCompletedCustomerSatisfactionSurvey (JNIEnv *env,
+    JNIEXPORT void JNICALL Java_com_helpshift_HelpshiftBridge_userCompletedCustomerSatisfactionSurvey (JNIEnv *env,
                                                                                      jobject object,
                                                                                      int rating,
                                                                                      jstring feedbackString) {
         const char *feedback = env->GetStringUTFChars(feedbackString, NULL);
         if(userCompletedCustomerSatisfactionSurveyListener) {
             userCompletedCustomerSatisfactionSurveyListener(rating, feedback);
+        }
+    }
+
+    JNIEXPORT void JNICALL Java_com_helpshift_HelpshiftBridge_didReceiveNotification(JNIEnv *env,
+                                                                    jobject object,
+                                                                    int newMessageCount) {
+        if(didReceiveNotificationListener) {
+            didReceiveNotificationListener(newMessageCount);
+        }
+    }
+
+    JNIEXPORT void JNICALL Java_com_helpshift_HelpshiftBridge_displayAttachmentFile(JNIEnv *env,
+                                                                    jobject object,
+                                                                    jstring filePath) {
+        const char *path = env->GetStringUTFChars(filePath, NULL);
+        if(displayAttachmentListener) {
+            displayAttachmentListener(path);
         }
     }
 

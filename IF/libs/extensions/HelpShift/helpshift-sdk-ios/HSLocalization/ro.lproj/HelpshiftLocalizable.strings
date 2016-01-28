@@ -1,0 +1,130 @@
+/*
+  HelpshiftLocalizable.strings
+  Helpshift
+
+  Copyright (c) 2014 Helpshift,Inc., All rights reserved.
+*/
+
+
+"Rate our App" = "Evaluați-ne aplicația";
+"If you love our app, please take a moment to rate it in the App Store" = "Dacă vă place aplicația noastră, vă rugăm să o evaluați în App Store";
+"Rate" = "Evaluați";
+"Send Feedback" = "Trimiteți comentariu";
+"No Internet!" = "Nu este internet!";
+"No working Internet connection is found." = "Nicio conexiune la internet activă găsită.";
+"Take a screenshot on your iPhone" = "Faceți o captură de ecran pe iPhone.";
+"Take a screenshot on your iPad" = "Faceți o captură de ecran pe iPad.";
+"Go to the screen you want a screenshot of, hold down the power button and the home button on your iPhone, at the same time." = "Mergeți la ecranul pe care îl doriți capturat, țineți apăsate, în același timp, butonul de alimentare și butonul Acasă de pe iPhone.";
+"Go to the screen you want a screenshot of, hold down the power button and the home button on your iPad, at the same time." = "Mergeți la ecranul pe care îl doriți capturat, țineți apăsate, în același timp, butonul de alimentare și butonul Acasă de pe iPad.";
+"That's it, your screenshot is now in your iPhone gallery!" = "Gata, captura se află acum în galeria iPhone-ului dvs.!";
+"That's it, your screenshot is now in your iPad gallery!" = "Gata, captura se află acum în galeria iPad-ului dvs.!";
+"Take screenshot" = "Faceți captură de ecran";
+"Opening Gallery..." = "Se deschide Galeria...";
+"Screenshot sent" = "Captură de ecran trimisă";
+"Your message was not sent.Tap \"Try Again\" to send this message?" = "Mesajul dvs. nu s-a trimis. Atingeți \"Reîncearcă\" pentru a trimite mesajul?";
+"No faqs found in this section" = "Nu sunt întrebări frecvente în această secțiune";
+"Could not fetch faqs" = "Nu s-au preluat întrebări frecvente";
+"We could not fetch the required data" = "Nu am putut prelua datele cerute";
+"FAQ" = "Întrebări frecvente";
+"Can't find what you were looking for?" = "Nu găsiți ceea ce căutați?";
+"Sorry to hear that. Could you please tell us a little bit more about the problem you are facing?" = "Ne pare rău să auzim asta. Ne puteți spune mai multe despre problema cu care vă confruntați?";
+"We're happy to help you!" = "Ne bucurăm să vă ajutăm!";
+"Describe your problem" = "Descrieți problema dvs.";
+"Email invalid" = "E-mail eronat";
+"Please provide a valid email address." = "Vă rugăm să dați o adresă de e-mail validă.";
+"Invalid Entry" = "Înregistrare eronată";
+"Please enter a brief description of the issue you are facing." = "Introduceți o scurtă descriere a problemei cu care vă confruntați.";
+"Question" = "Întrebare";
+"Was this helpful?" = "A fost util acest lucru?";
+"You found this helpful." = "Vi s-a părut util";
+"You didn't find this helpful." = "Nu vi s-a părut util.";
+"Try Again" = "Reîncearcă";
+"Cancel" = "Anulare";
+"REVIEW" = "RECENZIE";
+"Send" = "Trimite";
+"Ok, attach" = "Ok, atașează";
+"Learn how" = "Aflați cum";
+"YES" = "DA";
+"NO" = "NU";
+"Accepted review request" = "Cerere de recenzie acceptată";
+"SEND" = "TRIMITE";
+"OK" = "OK";
+"Close" = "Închide";
+"Loading..." = "Se încarcă...";
+"Help" = "Ajutor";
+"Sending failed!" = "Trimitere eșuată!";
+"Screenshot could not be sent. Image is too large, try again with another image" = "Captura nu a putut fi trimisă. Imaginea este prea mare, reîncercați cu altă imagine";
+"Name invalid" = "Nume eronat";
+"Please provide a name." = "Vă rugăm să dați un nume.";
+"New message from Support" = "Mesaj nou de la Asistență";
+"new messages from Support" = "mesaje noi de la Asistență";
+"No FAQs found" = "Nu s-au găsit întrebări frecvente";
+"Conversation" = "Conversație";
+"Name" = "Nume";
+"Email (optional)" = "E-mail (opțional)";
+"Email" = "E-mail";
+"Sending your message..." = "Se trimite mesajul dvs...";
+"Message send failure." = "Trimiterea mesajului a eșuat.";
+"Please check your network connection and try again." = "Vă rugăm verificați conexiunea la rețea și încercați din nou.";
+"CONTACT US" = "CONTACTAȚI-NE";
+"Back" = "Înapoi";
+"YES, THANKS!" = "DA, MULȚUMESC!";
+"START A NEW CONVERSATION" = "ÎNCEPE O CONVERSAȚIE NOUĂ";
+"New Conversation" = "Conversație nouă";
+"How can we help?" = "Cu ce vă putem ajuta?";
+"Thanks for contacting us." = "Mulțumim că ne-ați contactat.";
+"Your message has been received." = "Mesajul dvs. a fost primit.";
+"What else can we help you with?" = "Cu ce vă mai putem ajuta?";
+"Would you like to review the app?" = "Ați dori să recenzați aplicația?";
+"This conversation has ended." = "Această conversație s-a încheiat.";
+"What's your feedback about our customer support?" = "Care este opinia dvs. despre asistența nostră pentru clienți?";
+"Service Rating" = "Evaluarea serviciului";
+"Hated it" = "Nu mi-a plăcut";
+"Loved it" = "Mi-a plăcut";
+"Any other feedback? (optional)" = "Alte comentarii? (opțional)";
+"Thanks for messaging us!" = "Mulțumim pentru mesaj!";
+"Did we answer all your questions?" = "V-am răspuns la toate întrebările?";
+"Preview" = "Previzualizare";
+"Your Rating:" = "Evaluarea dvs:";
+"Thanks for rating us." = "Mulțumim pentru evaluare.";
+"Your feedback has been received." = "Comentariul dvs. a fost primit.";
+"or" = "sau";
+"Questions that may already have your answer" = "Întrebări care poate au deja răspunsul pentru dvs.";
+"SEND ANYWAY" = "TRIMITE ORICUM";
+"Done" = "Gata";
+"Suggestions" = "Sugestii";
+
+//IssueDescriptionMinimumCharacterLength:
+//This value is the minimum number of visible characters that should be entered by the user for the description of the issue.
+"IssueDescriptionMinimumCharacterLength" = 1;
+
+//Localization for Campaigns
+"Yes" = "Da";
+"No" = "Nu";
+"Accept" = "Acceptă";
+"Decline" = "Respinge";
+"Shop Now" = "Cumpără acum";
+"Remind Later" = "Reaminteşte mai târziu";
+"View Now" = "Vezi acum";
+"Buy Now" = "Cumpără acum";
+"Book Now" = "Rezervă acum";
+"Download" = "Descarcă";
+"Share" = "Partajează";
+"Like" = "Apreciere";
+"Dislike" = "Respingere";
+"Send Feedback" = "Trimite feedback";
+"Chat Now" = "Discută acum";
+"Read FAQs" = "Citeşte întrebări frecvente";
+"Read FAQ" = "Citeşte întrebări frecvente";
+"Reply" = "Răspunde";
+"Open Help" = "Deschide Ajutor";
+"Rate App" = "Evaluează aplicația";
+"Remind Later" = "Reaminteşte mai târziu";
+
+//Localization for voice-over
+"Star" = "Star";
+"Stars" = "Stars";
+"You rated the service with" = "Your rated the service with";
+"Attach screenshot" = "Attach screenshot";
+"Send a new message" = "Send a new message";
+"Remove screenshot" = "Remove screenshot";

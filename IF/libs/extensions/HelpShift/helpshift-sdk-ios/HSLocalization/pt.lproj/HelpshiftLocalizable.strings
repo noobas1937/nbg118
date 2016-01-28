@@ -71,7 +71,7 @@
 "YES, THANKS!" = "SIM, OBG!";
 "START A NEW CONVERSATION" = "INICIAR NOVA CONVERSAÇÃO";
 "New Conversation" = "Nova Conversa";
-"What's on your mind?" = "No que você está pensando?";
+"How can we help?" = "Como podemos ajudar?";
 "Thanks for contacting us." = "Obrigado por contatar-nos.";
 "Your message has been received." = "Sua mensagem foi recebida.";
 "What else can we help you with?" = "Com o que mais podemos ajudá-lo?";
@@ -93,3 +93,38 @@
 "SEND ANYWAY" = "SIM, ENVIAR";
 "Done" = "Feito";
 "Suggestions" = "Sugestões";
+
+//IssueDescriptionMinimumCharacterLength:
+//This value is the minimum number of visible characters that should be entered by the user for the description of the issue.
+"IssueDescriptionMinimumCharacterLength" = 1;
+
+//Localization for Campaigns
+"Yes" = "Sim";
+"No" = "Não";
+"Accept" = "Aceitar";
+"Decline" = "Rejeitar";
+"Shop Now" = "Comprar Agora";
+"Remind Later" = "Lembrar Mais Tarde ";
+"View Now" = "Ver Agora";
+"Buy Now" = "Comprar Agora";
+"Book Now" = "Reservar Agora";
+"Download" = "Descarregar";
+"Share" = "Partilhar";
+"Like" = "Gostar";
+"Dislike" = "Não Gostar";
+"Send Feedback" = "Enviar Feedback";
+"Chat Now" = "Conversar Agora";
+"Read FAQs" = "Ler as Perguntas Mais Frequentes";
+"Read FAQ" =  "Ler as Perguntas Mais Frequentes";
+"Reply" = "Responder";
+"Open Help" = "Abrir Ajuda";
+"Rate App" = "Classificar Aplicação";
+"Remind Later" = "Lembrar Mais Tarde";
+
+//Localization for voice-over
+"Star" = "Star";
+"Stars" = "Stars";
+"You rated the service with" = "Your rated the service with";
+"Attach screenshot" = "Attach screenshot";
+"Send a new message" = "Send a new message";
+"Remove screenshot" = "Remove screenshot";
