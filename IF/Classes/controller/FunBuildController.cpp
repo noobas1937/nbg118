@@ -1265,6 +1265,7 @@ void FunBuildController::endUpFunBuild(CCDictionary* dict, int type)
             {
                 
                 CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_INFORMATION_RESET, NULL);
+                CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("Titan_End"));//fusheng 通知服务器 升级
             }
             (*curBuildsInfo)[id].updateTime = tmp;
             CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_CHECK_TIME, CCInteger::create(id));
