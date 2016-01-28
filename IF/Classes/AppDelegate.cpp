@@ -59,7 +59,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 #endif
     // tao.yu TalkingData
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    TDCCTalkingDataGA::onStart("E020286589120C45394E3994E90F44D8", "AppStore");
+    TDCCTalkingDataGA::onStart("60F26143DEB8D4F42A8EB350689FBC6A", "AppStore");
 #endif
     // initialize director
     Director* pDirector = Director::getInstance();
