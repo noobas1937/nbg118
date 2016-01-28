@@ -194,11 +194,11 @@ void RecommendAllianceController::checkToSendRecommendRequest()
 {
     if(applyRecommendAllianceFailTimes < 3)
     {
-        //tmp d by lj if(hasSendRequest)
-            //return;
+        if(hasSendRequest)
+            return;
         if(GlobalData::shared()->playerInfo.level >= 4) //用户等级没有到4
         {
-            //tmp d by ljf if(GlobalData::shared()->playerInfo.onceJoinedAlliance == 0) //没有加入过联盟
+            if(GlobalData::shared()->playerInfo.onceJoinedAlliance == 0) //没有加入过联盟
             {
                 //if(GlobalData::shared()->playerInfo.isfirstJoin == 0)
                 {

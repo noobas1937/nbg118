@@ -51,6 +51,7 @@ bool ApplyAllianceCommand::handleRecieve(cocos2d::CCDictionary *dict)
                 CCCommonUtils::flyText(_lang(pStr->getCString()));
             }
         }
+        callFail(NetResult::create()); //a by ljf
         CCSafeNotificationCenter::sharedNotificationCenter()->postNotification("ApplyAllianceError");
     }else{
         map<std::string, AllianceInfo*>::iterator it = AllianceManager::getInstance()->allianceList.find(m_allianceId);

@@ -1192,7 +1192,7 @@ bool ImperialScene::onVikingsShipLockTouched(CCTouch* pTouch)
             }
 
             //begin ljf test
-            requestRecommendAlliance();
+            //requestRecommendAlliance();
             //end ljf test
             return true;
         }
