@@ -389,6 +389,24 @@ bool ImperialScene::init()
 //    GameController::getInstance()->m_manager->update();
 //}
 
+void ImperialScene::cartoonHander(CCObject* params)
+{
+    if(params)
+    {
+        string str = ((CCString*)params)->_string;
+        if (str == "cartoon2") {
+            m_enemyNum = 30;
+            this->schedule(schedule_selector(ImperialScene::createEnemy), 0.0f, 0, 0.0f);
+        }
+        else if (str == "cartoon3") {
+            this->pauseEnemy();
+        }
+        else if (str == "cartoon4") {
+            this->resumeEnemy();
+        }
+    }
+}
+
 void ImperialScene::buildingCallBack(CCObject* params)
 {
     //loadingLog统计
@@ -587,9 +605,19 @@ void ImperialScene::buildingCallBack(CCObject* params)
             {
                 scale = HD_SCALE;
             }
-            scale = 0.55;//fusheng 修改放缩
+//            scale = 0.55;//fusheng 修改放缩
             canMoveToRequest = false;
             onMoveToPos(m_curBuildPosx, m_curBuildPosy, TYPE_POS_MID, 0, scale, true);//fusheng 这里是进入城里的屏幕的位置
+        }
+        else if (GuideController::share()->isInTutorial() && GlobalData::shared()->playerInfo.level == 1 && GlobalData::shared()->playerInfo.exp == 0)
+        {
+            m_curBuildPosx = 3950;//fusheng 修改位置
+            m_curBuildPosy = 620;//fusheng 修改位置
+            float scale = 1.2;
+
+            canMoveToRequest = false;
+            onMoveToPos(m_curBuildPosx, m_curBuildPosy, TYPE_POS_MID, 0, scale, true);//fusheng 这里是进入城里的屏幕的位置
+
         }
     }
 
@@ -1932,7 +1960,7 @@ void ImperialScene::onEnter()
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::titanChangeStatus), MSG_TITAN_STATUS_CHANGE, NULL);//fusheng 泰坦状态改变
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::handleTitanUpgrade), MSG_TITAN_UPGRADE_COMPLETE, NULL);
     
-    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::handleTitanUpgrade), "cartoon2", NULL);
+    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::cartoonHander), "cartoon", NULL);
     
 
     
@@ -2555,7 +2583,7 @@ void ImperialScene::onExit()
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_TITAN_STATUS_CHANGE);
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_TITAN_UPGRADE_COMPLETE);
     
-    CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, "cartoon2");
+    CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, "cartoon");
     
     if (m_praticle) {
         m_praticle->stopAllActions();

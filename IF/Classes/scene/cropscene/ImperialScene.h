@@ -227,6 +227,7 @@ private:
 
     
     void buildingCallBack(CCObject* params);
+    void cartoonHander(CCObject* params);
     void wallCallBack(CCObject* params);
     void showHarvestEffect(CCObject* obj);
     void scheduleHarvestEffect(float _time);

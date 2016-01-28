@@ -341,7 +341,19 @@ void GuideController::doGuide(){
         else if(cartoon == "cartoon2")//fusheng 一群敌人袭来
         {
 //            SceneController::getInstance()->gotoScene(SCENE_ID_WORLD);
-            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification("cartoon2");
+            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification("cartoon",CCString::create("cartoon2"));
+            next();
+        }
+        else if(cartoon == "cartoon3")//fusheng 隐藏敌人
+        {
+            //            SceneController::getInstance()->gotoScene(SCENE_ID_WORLD);
+            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification("cartoon",CCString::create("cartoon3"));
+            next();
+        }
+        else if(cartoon == "cartoon4")//fusheng 显示敌人
+        {
+            //            SceneController::getInstance()->gotoScene(SCENE_ID_WORLD);
+            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification("cartoon",CCString::create("cartoon4"));
             next();
         }
     }
