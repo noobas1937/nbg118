@@ -6364,7 +6364,6 @@
 				E6772EA9187D58CD000CE370 /* MailConfig.cpp */,
 				E6772EAA187D58CD000CE370 /* MailConfig.h */,
 				B1105CC0196C172E0021286E /* MailCountObj.cpp */,
-				7C0DAF63196C06CC007BA056 /* MailCountObj.h */,
 				7CC37B7E19CBDA850050B22C /* MailDialogInfo.cpp */,
 				7CC37B7F19CBDA850050B22C /* MailDialogInfo.h */,
 				E6FC9AF9181E01DA00BAFCFF /* MailInfo.cpp */,
@@ -8742,6 +8741,10 @@
 					"-lz",
 					"-lsqlite3",
 					"-ObjC",
+					"-pagezero_size",
+					10000,
+					"-image_base",
+					100000000,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.elex-tech.DragonClans";
 				PRODUCT_NAME = DragonClans;
@@ -8820,6 +8823,10 @@
 					"-lz",
 					"-lsqlite3",
 					"-ObjC",
+					"-pagezero_size",
+					10000,
+					"-image_base",
+					100000000,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.elex-tech.DragonClans";
 				PRODUCT_NAME = DragonClans;

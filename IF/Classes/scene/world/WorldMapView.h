@@ -97,6 +97,7 @@ enum BatchTagType {
     ,MonsterTalkLine
     ,AllianceParticle
     ,MonsterAttackParticle
+    ,MonsterParticle
     ,TrebuchetWait
     ,TrebuchetAttack
     ,OfficerTagBG

@@ -6930,7 +6930,7 @@ void WorldMapView::removeWalkParticle(int tag){
 
 void WorldMapView::delBatchItem(BatchTagType type, unsigned int index) {
     // remove particle
-    if (type == FireTag || type == SmokeTag || type == CityMoveInTag || type == CityMoveOutTag || type == CityMoveInViewTag || type == Rock || type == Rock1 || type == Rock2 || type == Rock3 || type == WarFire || type == OfficerTagParticle || type == Partical_fieldMonster || type == AllianceTerritoryParticle|| type == Partical_mapMask) {
+    if (type == FireTag || type == SmokeTag || type == CityMoveInTag || type == CityMoveOutTag || type == CityMoveInViewTag || type == Rock || type == Rock1 || type == Rock2 || type == Rock3 || type == WarFire || type == OfficerTagParticle || type == Partical_fieldMonster || type == AllianceTerritoryParticle|| type == Partical_mapMask || type == MonsterParticle) {
         auto vec = m_particleVec.find(getBatchTag(type, index));
         if (vec != m_particleVec.end()) {
             for (auto &particle:vec->second) {
