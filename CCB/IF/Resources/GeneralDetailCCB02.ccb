@@ -14652,8 +14652,6 @@
 										<false/>
 									</dict>
 								</array>
-								<key>selected</key>
-								<true/>
 							</dict>
 							<dict>
 								<key>animatedProperties</key>
@@ -16171,8 +16169,8 @@
 												<string>SpriteFrame</string>
 												<key>value</key>
 												<array>
-													<string>Common/Common_305.plist</string>
-													<string>btn_02.png</string>
+													<string>Common/Common_1.plist</string>
+													<string>nb_InfoIconBG.png</string>
 												</array>
 											</dict>
 											<dict>
@@ -16182,8 +16180,8 @@
 												<string>Size</string>
 												<key>value</key>
 												<array>
-													<real>113</real>
-													<real>92</real>
+													<real>94</real>
+													<real>90</real>
 													<integer>0</integer>
 												</array>
 											</dict>
@@ -16409,8 +16407,8 @@
 														<string>Position</string>
 														<key>value</key>
 														<array>
-															<real>56</real>
-															<real>20</real>
+															<real>55</real>
+															<real>33</real>
 															<integer>0</integer>
 														</array>
 													</dict>
@@ -16432,8 +16430,8 @@
 														<string>ScaleLock</string>
 														<key>value</key>
 														<array>
-															<real>1.2000000476837158</real>
-															<real>1.2000000476837158</real>
+															<real>1</real>
+															<real>1</real>
 															<true/>
 															<integer>0</integer>
 														</array>
@@ -16538,8 +16536,8 @@
 														<string>Position</string>
 														<key>value</key>
 														<array>
-															<real>55</real>
-															<real>20</real>
+															<real>59</real>
+															<real>33</real>
 															<integer>0</integer>
 														</array>
 													</dict>
@@ -16550,8 +16548,8 @@
 														<string>Point</string>
 														<key>value</key>
 														<array>
-															<real>0.5</real>
-															<real>0.5</real>
+															<real>0.58550912141799927</real>
+															<real>0.48090279102325439</real>
 														</array>
 													</dict>
 													<dict>
@@ -16653,6 +16651,8 @@
 														<string>119</string>
 													</dict>
 												</array>
+												<key>selected</key>
+												<true/>
 											</dict>
 										</array>
 										<key>customClass</key>
@@ -16784,6 +16784,110 @@
 											</dict>
 										</array>
 									</dict>
+									<dict>
+										<key>baseClass</key>
+										<string>CCLabelTTF</string>
+										<key>children</key>
+										<array/>
+										<key>customClass</key>
+										<string></string>
+										<key>displayName</key>
+										<string>CCLabelTTF</string>
+										<key>memberVarAssignmentName</key>
+										<string></string>
+										<key>memberVarAssignmentType</key>
+										<integer>0</integer>
+										<key>properties</key>
+										<array>
+											<dict>
+												<key>name</key>
+												<string>anchorPoint</string>
+												<key>type</key>
+												<string>Point</string>
+												<key>value</key>
+												<array>
+													<real>0.5</real>
+													<real>0.5</real>
+												</array>
+											</dict>
+											<dict>
+												<key>name</key>
+												<string>scale</string>
+												<key>type</key>
+												<string>ScaleLock</string>
+												<key>value</key>
+												<array>
+													<real>1</real>
+													<real>1</real>
+													<false/>
+													<integer>0</integer>
+												</array>
+											</dict>
+											<dict>
+												<key>name</key>
+												<string>ignoreAnchorPointForPosition</string>
+												<key>type</key>
+												<string>Check</string>
+												<key>value</key>
+												<false/>
+											</dict>
+											<dict>
+												<key>name</key>
+												<string>fontName</string>
+												<key>type</key>
+												<string>FontTTF</string>
+												<key>value</key>
+												<string>Helvetica</string>
+											</dict>
+											<dict>
+												<key>name</key>
+												<string>fontSize</string>
+												<key>type</key>
+												<string>FloatScale</string>
+												<key>value</key>
+												<array>
+													<real>12</real>
+													<integer>0</integer>
+												</array>
+											</dict>
+											<dict>
+												<key>name</key>
+												<string>dimensions</string>
+												<key>type</key>
+												<string>Size</string>
+												<key>value</key>
+												<array>
+													<real>0.0</real>
+													<real>0.0</real>
+													<integer>0</integer>
+												</array>
+											</dict>
+											<dict>
+												<key>name</key>
+												<string>horizontalAlignment</string>
+												<key>type</key>
+												<string>IntegerLabeled</string>
+												<key>value</key>
+												<integer>0</integer>
+											</dict>
+											<dict>
+												<key>name</key>
+												<string>verticalAlignment</string>
+												<key>type</key>
+												<string>IntegerLabeled</string>
+												<key>value</key>
+												<integer>0</integer>
+											</dict>
+											<dict>
+												<key>name</key>
+												<string>string</string>
+												<key>type</key>
+												<string>Text</string>
+												<key>value</key>
+												<string>Sample Text</string>
+											</dict>
+										</array>
+									</dict>
 								</array>
 								<key>customClass</key>
 								<string></string>
@@ -16795,14 +16899,6 @@
 								<integer>0</integer>
 								<key>properties</key>
 								<array>
-									<dict>
-										<key>name</key>
-										<string>visible</string>
-										<key>type</key>
-										<string>Check</string>
-										<key>value</key>
-										<false/>
-									</dict>
 									<dict>
 										<key>name</key>
 										<string>position</string>
@@ -18131,7 +18227,7 @@
 			<key>name</key>
 			<string>Loop</string>
 			<key>offset</key>
-			<real>4.2595577239990234</real>
+			<real>1.34422767162323</real>
 			<key>position</key>
 			<real>17.433332443237305</real>
 			<key>resolution</key>

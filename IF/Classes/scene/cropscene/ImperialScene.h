@@ -54,7 +54,7 @@
 class ImperialScene:public CCLayer,public ITouchDelegate,public CCBMemberVariableAssigner
 {
 public:
-    ImperialScene():lastTouchBuildId(-1),curTouchBuildId(-1),m_count(0),m_singleTouchState(false),m_mainPatPlayTime(0),m_waterType(0)
+    ImperialScene():lastTouchBuildId(-1),curTouchBuildId(-1),m_count(0),m_singleTouchState(false),m_mainPatPlayTime(0),m_waterType(0),m_questEffect(0)
     ,m_curBuildId(0),m_curBuildPosx(0),m_curBuildPosy(0),m_tmpMoveX(0),m_tmpMoveY(0),m_canClick(true),m_buildingInitState(false)
     ,m_oldScale(1.0),m_oldPosX(0),m_oldPosY(0),m_isOnlyPower(0),m_isSave(false),m_tmpBuildPos(0),m_removeSpeBId(0),m_curGuideEnd(false),m_isLogin(false),m_beginTouchType(0),m_forceMove(false),m_exit(false),m_isDay(false),m_isRain(false),m_sysTime(0),m_talkTime(0), m_lotteryBuild(NULL),mActionManager(NULL),m_nightLights(NULL),m_rescustombatchNode(NULL),m_Titan(NULL),m_bridgeOpened(false),m_bridge3D_Up(NULL),m_bridge3D_Down(NULL),m_isBridgeCanClick(true){};
     
@@ -91,6 +91,7 @@ public:
     
     void createWalker(float t);
     void createEnemy(float t);
+    void checkPopRecommendAlliance(float t);
     void shootArrow(float t);
     void openBridge(float t);
     void closeBridge(float t);
@@ -100,6 +101,9 @@ public:
     
     void pauseEnemy();
     void resumeEnemy();
+    
+    void requestRecommendAlliance();
+   
     //end a by ljf
     
     
@@ -185,6 +189,8 @@ public:
     void setAnimationManager(CCBAnimationManager *pAnimationManager);
     CCSpriteBatchNode* createCustomBatchLayer(string image);
     void removeCustomBatchLayer();
+    void setQuestEffect(int type);
+	void setPointArrowAni(int buildId);
 private:
     int lastTouchBuildId;
     int curTouchBuildId;
@@ -557,5 +563,6 @@ private:
     int completeLightTime;
     int m_useItemId;
     CCBAnimationManager* mActionManager;
+    int m_questEffect;//默认为0，传1时为推荐任务
 };
 #endif /* defined(__IF__ImperialScene__) */

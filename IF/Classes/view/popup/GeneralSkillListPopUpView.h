@@ -71,6 +71,9 @@ private:
     CCSafeObject<CCControlButton> m_skillResetBtn;
     CCSafeObject<CCLabelIF> m_nameTxt;
     CCSafeObject<CCNode> m_bNode;
+    CCSafeObject<CCNode> m_fireNode1;
+    CCSafeObject<CCNode> m_fireNode2;
+    CCSafeObject<CCNode> m_buttombar;
     CCSafeObject<CCLabelIF> m_expTxt;
     CCSafeObject<CCScale9Sprite> m_viewBg;
     CCSafeObject<CCControlButton> m_tab1;
@@ -162,6 +165,7 @@ private:
     virtual void onTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
     
     void onUpdateClick(CCObject * pSender, Control::EventType pCCControlEvent);
+     void onUpdateMaxClick(CCObject * pSender, Control::EventType pCCControlEvent);
     void cdClick(float _time);
     
     void UpgradeSkill(float f);
@@ -172,6 +176,7 @@ private:
     CCSafeObject<GeneralInfo> m_ginfo;
     CCSafeObject<GeneralSkillInfo> m_info;
     CCSafeObject<CCControlButton> m_updateBtn;
+    CCSafeObject<CCControlButton> m_maxBtn;
     CCSafeObject<CCLabelIF> m_titleText;
     CCSafeObject<CCLabelIF> m_descriptionText;
     CCSafeObject<CCLabelIF> m_attAddText;

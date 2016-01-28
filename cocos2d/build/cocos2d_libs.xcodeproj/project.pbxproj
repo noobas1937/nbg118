@@ -1234,6 +1234,32 @@
 		299CF1FE19A434BC00C378C1 /* ccRandom.h in Headers */ = {isa = PBXBuildFile; fileRef = 299CF1FA19A434BC00C378C1 /* ccRandom.h */; };
 		2A257A311B874233005BF6B8 /* CCPThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A257A2F1B874233005BF6B8 /* CCPThread.cpp */; };
 		2A257A321B874233005BF6B8 /* CCPThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A257A301B874233005BF6B8 /* CCPThread.h */; };
+		36E3D4FE1C5A1FB000F5AA1F /* TalkingData.h in Headers */ = {isa = PBXBuildFile; fileRef = 36E3D4E01C5A1FB000F5AA1F /* TalkingData.h */; };
+		36E3D4FF1C5A1FB000F5AA1F /* TalkingData.h in Headers */ = {isa = PBXBuildFile; fileRef = 36E3D4E01C5A1FB000F5AA1F /* TalkingData.h */; };
+		36E3D5001C5A1FB000F5AA1F /* TDCCAccount.h in Headers */ = {isa = PBXBuildFile; fileRef = 36E3D4E11C5A1FB000F5AA1F /* TDCCAccount.h */; };
+		36E3D5011C5A1FB000F5AA1F /* TDCCAccount.h in Headers */ = {isa = PBXBuildFile; fileRef = 36E3D4E11C5A1FB000F5AA1F /* TDCCAccount.h */; };
+		36E3D5021C5A1FB000F5AA1F /* TDCCItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 36E3D4E21C5A1FB000F5AA1F /* TDCCItem.h */; };
+		36E3D5031C5A1FB000F5AA1F /* TDCCItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 36E3D4E21C5A1FB000F5AA1F /* TDCCItem.h */; };
+		36E3D5041C5A1FB000F5AA1F /* TDCCMission.h in Headers */ = {isa = PBXBuildFile; fileRef = 36E3D4E31C5A1FB000F5AA1F /* TDCCMission.h */; };
+		36E3D5051C5A1FB000F5AA1F /* TDCCMission.h in Headers */ = {isa = PBXBuildFile; fileRef = 36E3D4E31C5A1FB000F5AA1F /* TDCCMission.h */; };
+		36E3D5061C5A1FB000F5AA1F /* TDCCTalkingDataGA.h in Headers */ = {isa = PBXBuildFile; fileRef = 36E3D4E41C5A1FB000F5AA1F /* TDCCTalkingDataGA.h */; };
+		36E3D5071C5A1FB000F5AA1F /* TDCCTalkingDataGA.h in Headers */ = {isa = PBXBuildFile; fileRef = 36E3D4E41C5A1FB000F5AA1F /* TDCCTalkingDataGA.h */; };
+		36E3D5081C5A1FB000F5AA1F /* TDCCVirtualCurrency.h in Headers */ = {isa = PBXBuildFile; fileRef = 36E3D4E51C5A1FB000F5AA1F /* TDCCVirtualCurrency.h */; };
+		36E3D5091C5A1FB000F5AA1F /* TDCCVirtualCurrency.h in Headers */ = {isa = PBXBuildFile; fileRef = 36E3D4E51C5A1FB000F5AA1F /* TDCCVirtualCurrency.h */; };
+		36E3D50A1C5A1FB000F5AA1F /* libTalkingDataGA.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36E3D4E71C5A1FB000F5AA1F /* libTalkingDataGA.a */; };
+		36E3D50B1C5A1FB000F5AA1F /* libTalkingDataGA.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36E3D4E71C5A1FB000F5AA1F /* libTalkingDataGA.a */; };
+		36E3D50C1C5A1FB000F5AA1F /* TalkingDataGA.h in Headers */ = {isa = PBXBuildFile; fileRef = 36E3D4E81C5A1FB000F5AA1F /* TalkingDataGA.h */; };
+		36E3D50D1C5A1FB000F5AA1F /* TalkingDataGA.h in Headers */ = {isa = PBXBuildFile; fileRef = 36E3D4E81C5A1FB000F5AA1F /* TalkingDataGA.h */; };
+		36E3D50E1C5A1FB000F5AA1F /* TDCCAccount.mm in Sources */ = {isa = PBXBuildFile; fileRef = 36E3D4E91C5A1FB000F5AA1F /* TDCCAccount.mm */; };
+		36E3D50F1C5A1FB000F5AA1F /* TDCCAccount.mm in Sources */ = {isa = PBXBuildFile; fileRef = 36E3D4E91C5A1FB000F5AA1F /* TDCCAccount.mm */; };
+		36E3D5101C5A1FB000F5AA1F /* TDCCItem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 36E3D4EA1C5A1FB000F5AA1F /* TDCCItem.mm */; };
+		36E3D5111C5A1FB000F5AA1F /* TDCCItem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 36E3D4EA1C5A1FB000F5AA1F /* TDCCItem.mm */; };
+		36E3D5121C5A1FB000F5AA1F /* TDCCMission.mm in Sources */ = {isa = PBXBuildFile; fileRef = 36E3D4EB1C5A1FB000F5AA1F /* TDCCMission.mm */; };
+		36E3D5131C5A1FB000F5AA1F /* TDCCMission.mm in Sources */ = {isa = PBXBuildFile; fileRef = 36E3D4EB1C5A1FB000F5AA1F /* TDCCMission.mm */; };
+		36E3D5141C5A1FB000F5AA1F /* TDCCTalkingDataGA.mm in Sources */ = {isa = PBXBuildFile; fileRef = 36E3D4EC1C5A1FB000F5AA1F /* TDCCTalkingDataGA.mm */; };
+		36E3D5151C5A1FB000F5AA1F /* TDCCTalkingDataGA.mm in Sources */ = {isa = PBXBuildFile; fileRef = 36E3D4EC1C5A1FB000F5AA1F /* TDCCTalkingDataGA.mm */; };
+		36E3D5161C5A1FB000F5AA1F /* TDCCVirtualCurrency.mm in Sources */ = {isa = PBXBuildFile; fileRef = 36E3D4ED1C5A1FB000F5AA1F /* TDCCVirtualCurrency.mm */; };
+		36E3D5171C5A1FB000F5AA1F /* TDCCVirtualCurrency.mm in Sources */ = {isa = PBXBuildFile; fileRef = 36E3D4ED1C5A1FB000F5AA1F /* TDCCVirtualCurrency.mm */; };
 		382383EE1A258FA7002C4610 /* flatbuffers.h in Headers */ = {isa = PBXBuildFile; fileRef = 382383E41A258FA7002C4610 /* flatbuffers.h */; };
 		382383EF1A258FA7002C4610 /* flatbuffers.h in Headers */ = {isa = PBXBuildFile; fileRef = 382383E41A258FA7002C4610 /* flatbuffers.h */; };
 		382383F01A258FA7002C4610 /* flatc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 382383E51A258FA7002C4610 /* flatc.cpp */; };
@@ -3574,10 +3600,10 @@
 		B6DD2FF61B04825B00E47F5F /* fastlz.c in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2FA51B04825B00E47F5F /* fastlz.c */; };
 		B6DD2FF71B04825B00E47F5F /* fastlz.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2FA61B04825B00E47F5F /* fastlz.h */; };
 		B6DD2FF81B04825B00E47F5F /* fastlz.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2FA61B04825B00E47F5F /* fastlz.h */; };
-		B8EF95691BCB64A40059A0FD /* CCTMXTiledSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8EF95671BCB64A40059A0FD /* CCTMXTiledSprite.cpp */; settings = {ASSET_TAGS = (); }; };
-		B8EF956A1BCB64A40059A0FD /* CCTMXTiledSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8EF95671BCB64A40059A0FD /* CCTMXTiledSprite.cpp */; settings = {ASSET_TAGS = (); }; };
-		B8EF956B1BCB64A40059A0FD /* CCTMXTiledSprite.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B8EF95681BCB64A40059A0FD /* CCTMXTiledSprite.hpp */; settings = {ASSET_TAGS = (); }; };
-		B8EF956C1BCB64A40059A0FD /* CCTMXTiledSprite.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B8EF95681BCB64A40059A0FD /* CCTMXTiledSprite.hpp */; settings = {ASSET_TAGS = (); }; };
+		B8EF95691BCB64A40059A0FD /* CCTMXTiledSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8EF95671BCB64A40059A0FD /* CCTMXTiledSprite.cpp */; };
+		B8EF956A1BCB64A40059A0FD /* CCTMXTiledSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8EF95671BCB64A40059A0FD /* CCTMXTiledSprite.cpp */; };
+		B8EF956B1BCB64A40059A0FD /* CCTMXTiledSprite.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B8EF95681BCB64A40059A0FD /* CCTMXTiledSprite.hpp */; };
+		B8EF956C1BCB64A40059A0FD /* CCTMXTiledSprite.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B8EF95681BCB64A40059A0FD /* CCTMXTiledSprite.hpp */; };
 		C50306691B60B583001E6D43 /* CCBoneNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C50306631B60B583001E6D43 /* CCBoneNode.cpp */; };
 		C503066A1B60B583001E6D43 /* CCBoneNode.h in Headers */ = {isa = PBXBuildFile; fileRef = C50306641B60B583001E6D43 /* CCBoneNode.h */; };
 		C503066B1B60B583001E6D43 /* CCSkeletonNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C50306651B60B583001E6D43 /* CCSkeletonNode.cpp */; };
@@ -4090,6 +4116,19 @@
 		29E99D1D1957BA7000046604 /* CocoLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoLoader.h; sourceTree = "<group>"; };
 		2A257A2F1B874233005BF6B8 /* CCPThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPThread.cpp; sourceTree = "<group>"; };
 		2A257A301B874233005BF6B8 /* CCPThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPThread.h; sourceTree = "<group>"; };
+		36E3D4E01C5A1FB000F5AA1F /* TalkingData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TalkingData.h; sourceTree = "<group>"; };
+		36E3D4E11C5A1FB000F5AA1F /* TDCCAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCCAccount.h; sourceTree = "<group>"; };
+		36E3D4E21C5A1FB000F5AA1F /* TDCCItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCCItem.h; sourceTree = "<group>"; };
+		36E3D4E31C5A1FB000F5AA1F /* TDCCMission.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCCMission.h; sourceTree = "<group>"; };
+		36E3D4E41C5A1FB000F5AA1F /* TDCCTalkingDataGA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCCTalkingDataGA.h; sourceTree = "<group>"; };
+		36E3D4E51C5A1FB000F5AA1F /* TDCCVirtualCurrency.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCCVirtualCurrency.h; sourceTree = "<group>"; };
+		36E3D4E71C5A1FB000F5AA1F /* libTalkingDataGA.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTalkingDataGA.a; sourceTree = "<group>"; };
+		36E3D4E81C5A1FB000F5AA1F /* TalkingDataGA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TalkingDataGA.h; sourceTree = "<group>"; };
+		36E3D4E91C5A1FB000F5AA1F /* TDCCAccount.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TDCCAccount.mm; sourceTree = "<group>"; };
+		36E3D4EA1C5A1FB000F5AA1F /* TDCCItem.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TDCCItem.mm; sourceTree = "<group>"; };
+		36E3D4EB1C5A1FB000F5AA1F /* TDCCMission.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TDCCMission.mm; sourceTree = "<group>"; };
+		36E3D4EC1C5A1FB000F5AA1F /* TDCCTalkingDataGA.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TDCCTalkingDataGA.mm; sourceTree = "<group>"; };
+		36E3D4ED1C5A1FB000F5AA1F /* TDCCVirtualCurrency.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TDCCVirtualCurrency.mm; sourceTree = "<group>"; };
 		373B910718787C0B00198F86 /* CCComBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCComBase.h; sourceTree = "<group>"; };
 		37936A341869B76800E974DD /* document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = document.h; sourceTree = "<group>"; };
 		37936A351869B76800E974DD /* filestream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filestream.h; sourceTree = "<group>"; };
@@ -5556,6 +5595,7 @@
 				B21770421977ECF8009EE11B /* ApplicationServices.framework in Frameworks */,
 				B21770401977ECE6009EE11B /* OpenGL.framework in Frameworks */,
 				B217703C1977ECB4009EE11B /* IOKit.framework in Frameworks */,
+				36E3D50A1C5A1FB000F5AA1F /* libTalkingDataGA.a in Frameworks */,
 				292F1A641A52447100E479F8 /* libcurl.a in Frameworks */,
 				1A570347180BD0850088DEC7 /* libglfw3.a in Frameworks */,
 				1A570361180BD1080088DEC7 /* libpng.a in Frameworks */,
@@ -5574,6 +5614,7 @@
 				15AE1B4A19AAD49000C27E9E /* libcurl.a in Frameworks */,
 				292F1A5E1A5151CE00E479F8 /* libssl.a in Frameworks */,
 				A07A4CAF1783777C0073F6A7 /* Foundation.framework in Frameworks */,
+				36E3D50B1C5A1FB000F5AA1F /* libTalkingDataGA.a in Frameworks */,
 				1A570364180BD1120088DEC7 /* libpng.a in Frameworks */,
 				1A570378180BD1B40088DEC7 /* libjpeg.a in Frameworks */,
 				1A5703A4180BD2350088DEC7 /* libtiff.a in Frameworks */,
@@ -6127,6 +6168,7 @@
 		1A57033E180BD0490088DEC7 /* external */ = {
 			isa = PBXGroup;
 			children = (
+				36E3D4D41C5A1FB000F5AA1F /* TalkingDataGameAnalytics */,
 				68B39B391B1C5C670084F72C /* clipper */,
 				B6DD2F731B04820C00E47F5F /* recast */,
 				B6CAB0021AF9A9EE00B9B856 /* bullet */,
@@ -6893,6 +6935,43 @@
 				2905F9F718CF08D000240AA3 /* UIImageView.h */,
 			);
 			name = widgets;
+			sourceTree = "<group>";
+		};
+		36E3D4D41C5A1FB000F5AA1F /* TalkingDataGameAnalytics */ = {
+			isa = PBXGroup;
+			children = (
+				36E3D4DF1C5A1FB000F5AA1F /* include */,
+				36E3D4E61C5A1FB000F5AA1F /* ios */,
+			);
+			name = TalkingDataGameAnalytics;
+			path = ../external/TalkingDataGameAnalytics;
+			sourceTree = "<group>";
+		};
+		36E3D4DF1C5A1FB000F5AA1F /* include */ = {
+			isa = PBXGroup;
+			children = (
+				36E3D4E01C5A1FB000F5AA1F /* TalkingData.h */,
+				36E3D4E11C5A1FB000F5AA1F /* TDCCAccount.h */,
+				36E3D4E21C5A1FB000F5AA1F /* TDCCItem.h */,
+				36E3D4E31C5A1FB000F5AA1F /* TDCCMission.h */,
+				36E3D4E41C5A1FB000F5AA1F /* TDCCTalkingDataGA.h */,
+				36E3D4E51C5A1FB000F5AA1F /* TDCCVirtualCurrency.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		36E3D4E61C5A1FB000F5AA1F /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				36E3D4E71C5A1FB000F5AA1F /* libTalkingDataGA.a */,
+				36E3D4E81C5A1FB000F5AA1F /* TalkingDataGA.h */,
+				36E3D4E91C5A1FB000F5AA1F /* TDCCAccount.mm */,
+				36E3D4EA1C5A1FB000F5AA1F /* TDCCItem.mm */,
+				36E3D4EB1C5A1FB000F5AA1F /* TDCCMission.mm */,
+				36E3D4EC1C5A1FB000F5AA1F /* TDCCTalkingDataGA.mm */,
+				36E3D4ED1C5A1FB000F5AA1F /* TDCCVirtualCurrency.mm */,
+			);
+			path = ios;
 			sourceTree = "<group>";
 		};
 		37936A361869B76800E974DD /* internal */ = {
@@ -9283,6 +9362,7 @@
 				1A570204180BCBD40088DEC7 /* CCClippingNode.h in Headers */,
 				15AE1A7B19AAD40300C27E9E /* b2PolygonContact.h in Headers */,
 				15AE1A2919AAD3D500C27E9E /* b2Collision.h in Headers */,
+				36E3D5021C5A1FB000F5AA1F /* TDCCItem.h in Headers */,
 				182C5CE71A9D725400C30D34 /* UserCameraReader.h in Headers */,
 				38B8E2D719E66581002D7CE7 /* CSLoader.h in Headers */,
 				50643BE419BFCF1800EF68ED /* CCPlatformMacros.h in Headers */,
@@ -9478,7 +9558,9 @@
 				1A12775B18DFCC540005F345 /* CCTweenFunction.h in Headers */,
 				B6CAB4271AF9AA1A00B9B856 /* btSolveProjectedGaussSeidel.h in Headers */,
 				1A5702CA180BCE370088DEC7 /* CCTextFieldTTF.h in Headers */,
+				36E3D5041C5A1FB000F5AA1F /* TDCCMission.h in Headers */,
 				15EFA213198A2BB5000C57D3 /* CCProtectedNode.h in Headers */,
+				36E3D5061C5A1FB000F5AA1F /* TDCCTalkingDataGA.h in Headers */,
 				B6CAB3551AF9AA1A00B9B856 /* gim_linear_math.h in Headers */,
 				1A5702EC180BCE750088DEC7 /* CCTileMapAtlas.h in Headers */,
 				15AE18E019AAD35000C27E9E /* TriggerBase.h in Headers */,
@@ -9514,6 +9596,7 @@
 				15AE191019AAD35000C27E9E /* CCInputDelegate.h in Headers */,
 				B665E4301AA80A6600DDB1C5 /* CCPUVelocityMatchingAffectorTranslator.h in Headers */,
 				15AE184C19AAD30800C27E9E /* SimpleAudioEngine.h in Headers */,
+				36E3D5081C5A1FB000F5AA1F /* TDCCVirtualCurrency.h in Headers */,
 				50ABBDA11925AB4100A911A9 /* CCGroupCommand.h in Headers */,
 				B665E24C1AA80A6500DDB1C5 /* CCPUColorAffector.h in Headers */,
 				29394CF019B01DBA00D2DE1A /* UIWebView.h in Headers */,
@@ -9570,6 +9653,7 @@
 				B665E38C1AA80A6500DDB1C5 /* CCPUPlane.h in Headers */,
 				B665E3801AA80A6500DDB1C5 /* CCPUParticleSystem3DTranslator.h in Headers */,
 				50ABBD621925AB0000A911A9 /* Vec4.h in Headers */,
+				36E3D50C1C5A1FB000F5AA1F /* TalkingDataGA.h in Headers */,
 				B6CAB4E51AF9AA1A00B9B856 /* SpuSampleTaskProcess.h in Headers */,
 				B6CAB2B51AF9AA1A00B9B856 /* btConvexShape.h in Headers */,
 				B60C5BD619AC68B10056FBDE /* CCBillBoard.h in Headers */,
@@ -9698,6 +9782,7 @@
 				1A01C69218F57BE800EFE3A6 /* CCDouble.h in Headers */,
 				15AE18F919AAD35000C27E9E /* CCBone.h in Headers */,
 				50ABBE251925AB6F00A911A9 /* base64.h in Headers */,
+				36E3D5001C5A1FB000F5AA1F /* TDCCAccount.h in Headers */,
 				15AE1B9C19AADFDF00C27E9E /* UIRelativeBox.h in Headers */,
 				B665E3341AA80A6500DDB1C5 /* CCPUOnEmissionObserver.h in Headers */,
 				15AE1A7519AAD40300C27E9E /* b2EdgeAndCircleContact.h in Headers */,
@@ -9836,6 +9921,7 @@
 				B6CAB37F1AF9AA1A00B9B856 /* btManifoldPoint.h in Headers */,
 				15AE18DE19AAD35000C27E9E /* TriggerObj.h in Headers */,
 				15AE183E19AAD2F700C27E9E /* CCSkeleton3D.h in Headers */,
+				36E3D4FE1C5A1FB000F5AA1F /* TalkingData.h in Headers */,
 				B6CAB5371AF9AA1A00B9B856 /* btVector3.h in Headers */,
 				B6CAB2EB1AF9AA1A00B9B856 /* btStaticPlaneShape.h in Headers */,
 				3EACC9A219F5014D00EB3C5E /* CCCamera.h in Headers */,
@@ -10042,6 +10128,7 @@
 				B665E3A91AA80A6500DDB1C5 /* CCPURandomiser.h in Headers */,
 				15AE19AF19AAD39700C27E9E /* PageViewReader.h in Headers */,
 				B6CAB29A1AF9AA1A00B9B856 /* btConcaveShape.h in Headers */,
+				36E3D4FF1C5A1FB000F5AA1F /* TalkingData.h in Headers */,
 				B6CAB2AE1AF9AA1A00B9B856 /* btConvexPointCloudShape.h in Headers */,
 				B29A7DD419EE1B7700872B35 /* Skin.h in Headers */,
 				B6CAB2221AF9AA1A00B9B856 /* btBoxBoxDetector.h in Headers */,
@@ -10202,6 +10289,7 @@
 				15AE18D419AAD33D00C27E9E /* CCParticleSystemQuadLoader.h in Headers */,
 				B665E3411AA80A6500DDB1C5 /* CCPUOnEventFlagObserverTranslator.h in Headers */,
 				B6CAB5041AF9AA1A00B9B856 /* btDefaultMotionState.h in Headers */,
+				36E3D50D1C5A1FB000F5AA1F /* TalkingDataGA.h in Headers */,
 				B6CAB52A1AF9AA1A00B9B856 /* btScalar.h in Headers */,
 				B6DD2FF41B04825B00E47F5F /* DetourTileCacheBuilder.h in Headers */,
 				B29A7DFA19EE1B7700872B35 /* Json.h in Headers */,
@@ -10403,6 +10491,7 @@
 				15AE1B7319AADA9A00C27E9E /* UIListView.h in Headers */,
 				15AE192A19AAD35100C27E9E /* TriggerMng.h in Headers */,
 				5034CA2C191D591100CE6051 /* ccShader_PositionTextureA8Color.vert in Headers */,
+				36E3D5011C5A1FB000F5AA1F /* TDCCAccount.h in Headers */,
 				B6CAB2741AF9AA1A00B9B856 /* btSphereTriangleCollisionAlgorithm.h in Headers */,
 				50ABBE981925AB6F00A911A9 /* CCProtocols.h in Headers */,
 				B6CAB3801AF9AA1A00B9B856 /* btManifoldPoint.h in Headers */,
@@ -10413,6 +10502,8 @@
 				B6CAB2261AF9AA1A00B9B856 /* btCollisionCreateFunc.h in Headers */,
 				15AE194419AAD35100C27E9E /* CCComBase.h in Headers */,
 				15AE1A3B19AAD3D500C27E9E /* b2BroadPhase.h in Headers */,
+				36E3D5031C5A1FB000F5AA1F /* TDCCItem.h in Headers */,
+				36E3D5051C5A1FB000F5AA1F /* TDCCMission.h in Headers */,
 				15AE195619AAD35100C27E9E /* CCDisplayManager.h in Headers */,
 				15AE1B8719AADA9A00C27E9E /* UIButton.h in Headers */,
 				38F526411A48363B000DB7F7 /* ArmatureNodeReader.h in Headers */,
@@ -10692,6 +10783,7 @@
 				B6CAB3441AF9AA1A00B9B856 /* gim_box_collision.h in Headers */,
 				B665E3F11AA80A6600DDB1C5 /* CCPUSlaveBehaviourTranslator.h in Headers */,
 				15AE1BF419AAE01E00C27E9E /* CCControlSaturationBrightnessPicker.h in Headers */,
+				36E3D5091C5A1FB000F5AA1F /* TDCCVirtualCurrency.h in Headers */,
 				15AE1AD119AAD40300C27E9E /* b2RevoluteJoint.h in Headers */,
 				B665E26D1AA80A6500DDB1C5 /* CCPUDoFreezeEventHandler.h in Headers */,
 				50643BD519BFAECF00EF68ED /* CCGL.h in Headers */,
@@ -10710,6 +10802,7 @@
 				B29A7DDA19EE1B7700872B35 /* SkeletonRenderer.h in Headers */,
 				15AE194119AAD35100C27E9E /* CCBone.h in Headers */,
 				D0FD035A1A3B51AA00825BB5 /* CCAllocatorStrategyDefault.h in Headers */,
+				36E3D5071C5A1FB000F5AA1F /* TDCCTalkingDataGA.h in Headers */,
 				50ABBD471925AB0000A911A9 /* CCVertex.h in Headers */,
 				B6CAB4D81AF9AA1A00B9B856 /* SpuLocalSupport.h in Headers */,
 				B6CAB2921AF9AA1A00B9B856 /* btCollisionShape.h in Headers */,
@@ -10993,6 +11086,7 @@
 				B665E3E21AA80A6600DDB1C5 /* CCPUSineForceAffector.cpp in Sources */,
 				50ABBD501925AB0000A911A9 /* Quaternion.cpp in Sources */,
 				B6CAB2751AF9AA1A00B9B856 /* btUnionFind.cpp in Sources */,
+				36E3D5161C5A1FB000F5AA1F /* TDCCVirtualCurrency.mm in Sources */,
 				B665E36E1AA80A6500DDB1C5 /* CCPUOnVelocityObserverTranslator.cpp in Sources */,
 				15AE190119AAD35000C27E9E /* CCComController.cpp in Sources */,
 				B6CAB4071AF9AA1A00B9B856 /* btMultiBodyJointLimitConstraint.cpp in Sources */,
@@ -11224,6 +11318,7 @@
 				B6DD2FAB1B04825B00E47F5F /* DetourDebugDraw.cpp in Sources */,
 				15AE191719AAD35000C27E9E /* CCSpriteFrameCacheHelper.cpp in Sources */,
 				B665E2E21AA80A6500DDB1C5 /* CCPULineAffectorTranslator.cpp in Sources */,
+				36E3D50E1C5A1FB000F5AA1F /* TDCCAccount.mm in Sources */,
 				B6CAB2A31AF9AA1A00B9B856 /* btConvexHullShape.cpp in Sources */,
 				1A087AE81860400400196EF5 /* edtaa3func.cpp in Sources */,
 				50ABBD831925AB4100A911A9 /* CCBatchCommand.cpp in Sources */,
@@ -11354,6 +11449,7 @@
 				B6CAB3331AF9AA1A00B9B856 /* btGImpactShape.cpp in Sources */,
 				382383F01A258FA7002C4610 /* flatc.cpp in Sources */,
 				B6DD2FA71B04825B00E47F5F /* DebugDraw.cpp in Sources */,
+				36E3D5121C5A1FB000F5AA1F /* TDCCMission.mm in Sources */,
 				B665E31A1AA80A6500DDB1C5 /* CCPUOnClearObserver.cpp in Sources */,
 				1A57028A180BCC900088DEC7 /* CCSpriteFrameCache.cpp in Sources */,
 				15AE18E619AAD35000C27E9E /* CCActionFrameEasing.cpp in Sources */,
@@ -11396,6 +11492,7 @@
 				15AE1B5519AADA9900C27E9E /* UIScrollView.cpp in Sources */,
 				15AE191919AAD35000C27E9E /* CCSSceneReader.cpp in Sources */,
 				B6CAB1FD1AF9AA1A00B9B856 /* btDispatcher.cpp in Sources */,
+				36E3D5141C5A1FB000F5AA1F /* TDCCTalkingDataGA.mm in Sources */,
 				B6CAB2BF1AF9AA1A00B9B856 /* btEmptyShape.cpp in Sources */,
 				50ABBE7D1925AB6F00A911A9 /* CCEventTouch.cpp in Sources */,
 				B665E22A1AA80A6500DDB1C5 /* CCPUBoxCollider.cpp in Sources */,
@@ -11523,6 +11620,7 @@
 				50ABBE831925AB6F00A911A9 /* ccFPSImages.c in Sources */,
 				B6CAB4CD1AF9AA1A00B9B856 /* SpuContactResult.cpp in Sources */,
 				15AE1B7019AADA9900C27E9E /* CocosGUI.cpp in Sources */,
+				36E3D5101C5A1FB000F5AA1F /* TDCCItem.mm in Sources */,
 				B6CAB2AF1AF9AA1A00B9B856 /* btConvexPolyhedron.cpp in Sources */,
 				B6CAB4EF1AF9AA1A00B9B856 /* Win32ThreadSupport.cpp in Sources */,
 				B6CAB3E71AF9AA1A00B9B856 /* btDiscreteDynamicsWorld.cpp in Sources */,
@@ -11900,6 +11998,7 @@
 				50ABBE7E1925AB6F00A911A9 /* CCEventTouch.cpp in Sources */,
 				15AE183119AAD2F700C27E9E /* CCOBB.cpp in Sources */,
 				B6CAB4FC1AF9AA1A00B9B856 /* btConvexHull.cpp in Sources */,
+				36E3D5131C5A1FB000F5AA1F /* TDCCMission.mm in Sources */,
 				B29A7DCA19EE1B7700872B35 /* SlotData.c in Sources */,
 				15AE18C519AAD33D00C27E9E /* CCLayerLoader.cpp in Sources */,
 				15AE1BF719AAE01E00C27E9E /* CCControlStepper.cpp in Sources */,
@@ -12099,7 +12198,9 @@
 				B6CAB4CA1AF9AA1A00B9B856 /* SpuCollisionShapes.cpp in Sources */,
 				15AE1B7C19AADA9A00C27E9E /* UISlider.cpp in Sources */,
 				B6DD2FC41B04825B00E47F5F /* DetourNavMesh.cpp in Sources */,
+				36E3D50F1C5A1FB000F5AA1F /* TDCCAccount.mm in Sources */,
 				B6CAAFFB1AF9A9E100B9B856 /* CCPhysics3DWorld.cpp in Sources */,
+				36E3D5111C5A1FB000F5AA1F /* TDCCItem.mm in Sources */,
 				B665E3471AA80A6500DDB1C5 /* CCPUOnExpireObserverTranslator.cpp in Sources */,
 				B6CAB2A41AF9AA1A00B9B856 /* btConvexHullShape.cpp in Sources */,
 				15AE1AA519AAD40300C27E9E /* b2Fixture.cpp in Sources */,
@@ -12259,6 +12360,7 @@
 				15AE194D19AAD35100C27E9E /* CCDataReaderHelper.cpp in Sources */,
 				5053850D1B02819E00793096 /* CCVertexAttribBinding.cpp in Sources */,
 				15FB20901AE7C57D00C31518 /* advancing_front.cc in Sources */,
+				36E3D5151C5A1FB000F5AA1F /* TDCCTalkingDataGA.mm in Sources */,
 				15AE1B8C19AADA9A00C27E9E /* UIScale9Sprite.cpp in Sources */,
 				15AE19AE19AAD39700C27E9E /* PageViewReader.cpp in Sources */,
 				B68778FD1A8CA82E00643ABF /* CCParticle3DEmitter.cpp in Sources */,
@@ -12421,6 +12523,7 @@
 				B6CAB4141AF9AA1A00B9B856 /* btMultiBodyPoint2Point.cpp in Sources */,
 				50ABBD841925AB4100A911A9 /* CCBatchCommand.cpp in Sources */,
 				B665E2171AA80A6500DDB1C5 /* CCPUBeamRender.cpp in Sources */,
+				36E3D5171C5A1FB000F5AA1F /* TDCCVirtualCurrency.mm in Sources */,
 				50ABBDA81925AB4100A911A9 /* CCRenderCommand.cpp in Sources */,
 				B665E1FB1AA80A6500DDB1C5 /* CCPUAffectorTranslator.cpp in Sources */,
 				B665E3931AA80A6500DDB1C5 /* CCPUPlaneColliderTranslator.cpp in Sources */,
@@ -12670,6 +12773,8 @@
 					"\"$(SRCROOT)/../external/chipmunk/prebuilt/mac\"",
 					"\"$(SRCROOT)/../external/curl/prebuilt/mac\"",
 					"\"$(SRCROOT)/../external/zlib/prebuilt/mac\"",
+					"$(PROJECT_DIR)/ios",
+					"$(PROJECT_DIR)/TalkingDataGameAnalytics/ios",
 				);
 				MACH_O_TYPE = staticlib;
 				OTHER_LDFLAGS = "";
@@ -12707,6 +12812,8 @@
 					"\"$(SRCROOT)/../external/chipmunk/prebuilt/mac\"",
 					"\"$(SRCROOT)/../external/curl/prebuilt/mac\"",
 					"\"$(SRCROOT)/../external/zlib/prebuilt/mac\"",
+					"$(PROJECT_DIR)/ios",
+					"$(PROJECT_DIR)/TalkingDataGameAnalytics/ios",
 				);
 				MACH_O_TYPE = staticlib;
 				OTHER_LDFLAGS = "";
@@ -12737,6 +12844,8 @@
 					"\"$(SRCROOT)/../external/curl/prebuilt/ios\"",
 					"\"$(SRCROOT)/../external/websockets/prebuilt/ios\"",
 					"\"$(SRCROOT)/../external/chipmunk/prebuilt/ios\"",
+					"$(PROJECT_DIR)/ios",
+					"$(PROJECT_DIR)/TalkingDataGameAnalytics/ios",
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -12769,6 +12878,8 @@
 					"\"$(SRCROOT)/../external/curl/prebuilt/ios\"",
 					"\"$(SRCROOT)/../external/websockets/prebuilt/ios\"",
 					"\"$(SRCROOT)/../external/chipmunk/prebuilt/ios\"",
+					"$(PROJECT_DIR)/ios",
+					"$(PROJECT_DIR)/TalkingDataGameAnalytics/ios",
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";

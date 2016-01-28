@@ -28,6 +28,8 @@
 
 #include "CCLuaEngine.h"
 #include "lua_module_register.h"
+// tao.yu TalkingData
+#include "../../cocos2d/external/TalkingDataGameAnalytics/include/TDCCTalkingDataGA.h"
 
 #define IS_HD 1  // 1 是HD版本 0 不是
 
@@ -55,7 +57,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     TestinCrashHelper::initTestinAgent("f1d4256db620d787f78a1e28c415c5fd", "AppStore");
     #endif
 #endif
-
+    // tao.yu TalkingData
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    TDCCTalkingDataGA::onStart("E020286589120C45394E3994E90F44D8", "AppStore");
+#endif
     // initialize director
     Director* pDirector = Director::getInstance();
     auto glview = pDirector->getOpenGLView();

@@ -82,10 +82,11 @@ void FunBuildBtnsView::onHide()
     this->getAnimationManager()->runAnimationsForSequenceNamed("FadeOut");
 }
 
-void FunBuildBtnsView::onShow(int buildId)
+void FunBuildBtnsView::onShow(int buildId, int questType)
 {
     guidKey = "";
     m_toolInfoId = 0;
+    m_questType = questType;
     m_info = &((*FunBuildController::getInstance()->curBuildsInfo)[buildId]);
     m_buildingKey = buildId;
     m_toolNode->setVisible(false);
@@ -239,6 +240,12 @@ void FunBuildBtnsView::onShow(int buildId)
                 m_btn3->setOpacity(200);
             }
         }
+        else if (buildType == FUN_BUILD_SCIENE){
+            if (m_info->level <= 3 && m_questType == 2) {
+                auto btnEffect = FunBuildBtnsEffect::create();
+                m_icon3Node->addChild(btnEffect);
+            }
+        }
     }
     
     m_btn4Node->setVisible(false);
@@ -280,6 +287,10 @@ void FunBuildBtnsView::onShow(int buildId)
     this->setVisible(true);
     onShowInfo();
     this->getAnimationManager()->runAnimationsForSequenceNamed("FadeIn");
+    auto layer = dynamic_cast<ImperialScene*>(SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE));
+    if (layer) {
+        layer->setQuestEffect(0);
+    }
 }
 
 bool FunBuildBtnsView::onShowInfo()
@@ -306,6 +317,10 @@ bool FunBuildBtnsView::onShowInfo()
 //            CCCommonUtils::setSpriteMaxSize(icon, 90, true); //fusheng 使用原大小
             m_icon1Node->addChild(icon);
             m_name2->setString(_lang("102270"));
+                if (m_info->level <= 3 && m_questType == 1) {
+                    auto btnEffect = FunBuildBtnsEffect::create();
+                    m_icon1Node->addChild(btnEffect);
+                }
             
             if(isTmp && buildType!=FUN_BUILD_FORGE) {
                 m_btn1Node->setPosition(ccp(0, -16));
@@ -1152,11 +1167,29 @@ bool FunBuildBtnsView::onUpdateToolBtn(int type)
     m_icon5Node->addChild(icon);
     m_btn5Node->setVisible(true);
     m_btn5->setEnabled(true);
+    FunBuildInfo& fbiInfo = FunBuildController::getInstance()->getFunbuildById(m_buildingKey);
+    
+    FunBuildInfo& fbiCityInfo = FunBuildController::getInstance()->getFunbuildById(FUN_BUILD_MAIN_CITY_ID);
     if (toolInfo.type == ITEM_TYPE_SPD) {
         m_name5->setString("");
         m_msg5->setString(_lang("104903"));
         //m_msgV5->setString("1"+_lang("105591"));
         m_msgV5->setString("");
+        double utime = fbiInfo.updateTime;
+        double rtime = GlobalData::shared()->getWorldTime() ;
+        
+        double t = utime - rtime ;
+        
+        if (m_info->level <= 3 && m_questType == 1) {
+            auto btnEffect = FunBuildBtnsEffect::create();
+            m_icon5Node->addChild(btnEffect);
+        }
+        else if (fbiCityInfo.level <= 5 && t >= 10 *60 )
+        {
+            auto btnEffect = FunBuildBtnsEffect::create();
+            m_icon5Node->addChild(btnEffect);
+        }
+        
     }
     else {
         m_name5->setString(_lang_1("104907", CC_ITOA(toolInfo.getCNT())));
@@ -1165,4 +1198,25 @@ bool FunBuildBtnsView::onUpdateToolBtn(int type)
     }
     
     return true;
+}
+FunBuildBtnsEffect *FunBuildBtnsEffect::create(){
+    FunBuildBtnsEffect *ret = new FunBuildBtnsEffect();
+    if(ret && ret->init()){
+        ret->autorelease();
+    }else{
+        CC_SAFE_DELETE(ret);
+    }
+    return ret;
+}
+
+bool FunBuildBtnsEffect::init(){
+    auto bg = CCBLoadFile("BuildBtnEffect", this, this);
+    this->getAnimationManager()->runAnimationsForSequenceNamed("Default Timeline");
+    return true;
+}
+bool FunBuildBtnsEffect::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode){
+    return false;
+}
+SEL_CCControlHandler FunBuildBtnsEffect::onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName){
+    return NULL;
 }

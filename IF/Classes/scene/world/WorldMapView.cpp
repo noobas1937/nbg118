@@ -67,9 +67,11 @@
 #include "NBWorldMonster.hpp"
 #include "NBWorldMapMainCity.hpp"
 #include "NBWaterSprite.hpp"
+#include "NBWorldUtils.hpp"
 
 //begin a by ljf
 #include "NBWaterMap.h"
+#include "RecommendAllianceController.h"
 //end a by ljf
 
 static WorldMapView* worldMapInstance = nullptr;
@@ -3250,8 +3252,12 @@ bool WorldMapView::updateMarchTarget(MarchInfo &info, double now, float delta) {
     };
     
     auto drawMarchNode = [&](CCNode* node,MarchInfo& info) {
-        auto endPos = m_map->getViewPointByTilePoint(WorldController::getPointByIndex(info.endPointIndex),info.serverId);
-        auto startPos = m_map->getViewPointByTilePoint(WorldController::getPointByIndex(info.startPointIndex),info.serverId);
+        auto endPoint = WorldController::getPointByIndex(info.endPointIndex);
+        auto startPoint = WorldController::getPointByIndex(info.startPointIndex);
+        
+        auto endPos = m_map->getViewPointByTilePoint(endPoint, info.serverId);
+        auto startPos = m_map->getViewPointByTilePoint(startPoint, info.serverId);
+        
         auto currentPos = ccp(-1, -1);
         auto realEndPos = ccp(-1, -1);
         auto realStartPos = ccp(-1, -1);
@@ -3538,6 +3544,56 @@ bool WorldMapView::updateMarchTarget(MarchInfo &info, double now, float delta) {
             float x = halfWinSize.width - nextPos.x*scaleX;
             float y = halfWinSize.height - nextPos.y*scaleY;
             m_map->setPosition(ccp(x, y));
+        }
+        
+        if (node)
+        {
+            // 船进出岛屿时的半透明效果
+            for (auto c : node->getChildren())
+            {
+                if (c->getTag() == SOILDERTYPE::TITAN)
+                    continue;
+                
+                bool bResourceTile = false;
+                int oResourceTile = 255;
+                if (info.targetType == ResourceTile)
+                {
+                    int tile_length = _tile_width * _tile_width / 16;
+                    Vec2 offset;
+                    if (info.stateType != StateReturn) // arrive Resource Tile
+                    {
+                        offset = c->getPosition() + node->getPosition() - realEndPos;
+                    }
+                    else // leave Resource Tile
+                    {
+                        offset = c->getPosition() + node->getPosition() - realStartPos;
+                    }
+                    
+                    float distance = offset.x * offset.x + offset.y * offset.y;
+                    bResourceTile = distance - tile_length < 0;
+                    oResourceTile = 255 * distance / tile_length;
+                }
+             
+                int tile_length = _tile_width * _tile_width / 4;
+                Vec2 offset;
+                if (info.stateType != StateReturn)
+                {
+                    offset = c->getPosition() + node->getPosition() - realStartPos;
+                }
+                else
+                {
+                    offset = c->getPosition() + node->getPosition() - realEndPos;
+                }
+                float distance = offset.x * offset.x + offset.y * offset.y;
+                if (bResourceTile)
+                {
+                    c->setOpacity(oResourceTile);
+                }
+                else
+                {
+                    c->setOpacity(distance - tile_length < 0 ? 255 * distance / tile_length : 255);
+                }
+            }
         }
     };
     
@@ -4143,6 +4199,10 @@ void WorldMapView::update(float delta) {
     m_currentState = WorldController::getInstance()->getKingActivityStateByType(FIGHT_OF_KING);
     
     update_water_shader(m_map->getViewPointByTilePoint(m_map->currentTilePoint));
+    
+    //begin a by ljf
+    //RecommendAllianceController::getInstance()->checkToPopRecommendAlliance();
+    //end a by ljf
 }
 IFHeiqishiNode* WorldMapView::createHeiqishiSoldier(MarchInfo& info){//default info for （info.marchType MethodHeiqishi）、(info.targetType CityTile)
     float fNodeScale = 0.8;
@@ -4315,6 +4375,7 @@ CCSprite* WorldMapView::createMarchSprite(MarchInfo& info) {
                 for (int i = 0; i < info.marchSoldier.size(); ++i) {
                     if (info.marchSoldier[i].type == TITAN) {
                         auto titan = Sprite::create();
+                        titan->setTag(TITAN);
                         auto titanAni = createMarchAni(AniCollectTitan,direction);
                         titan->runAction(titanAni);
                         sp->addChild(titan,1000);
@@ -6874,7 +6935,7 @@ void WorldMapView::removeWalkParticle(int tag){
 
 void WorldMapView::delBatchItem(BatchTagType type, unsigned int index) {
     // remove particle
-    if (type == FireTag || type == SmokeTag || type == CityMoveInTag || type == CityMoveOutTag || type == CityMoveInViewTag || type == Rock || type == Rock1 || type == Rock2 || type == Rock3 || type == WarFire || type == OfficerTagParticle || type == Partical_fieldMonster || type == AllianceTerritoryParticle|| type == Partical_mapMask) {
+    if (type == FireTag || type == SmokeTag || type == CityMoveInTag || type == CityMoveOutTag || type == CityMoveInViewTag || type == Rock || type == Rock1 || type == Rock2 || type == Rock3 || type == WarFire || type == OfficerTagParticle || type == Partical_fieldMonster || type == AllianceTerritoryParticle|| type == Partical_mapMask || type == MonsterParticle) {
         auto vec = m_particleVec.find(getBatchTag(type, index));
         if (vec != m_particleVec.end()) {
             for (auto &particle:vec->second) {
@@ -6907,7 +6968,7 @@ void WorldMapView::delBatchItem(BatchTagType type, unsigned int index) {
         monster->removeFromParentAndCleanup(true);
     }
     // guo.jiang
-    int tag = 1000000 * 100 + monsterTag;
+    int tag = NB_WORLD_MONSTER_START_TAG + monsterTag;
     monster = m_mapMonstersNode->getChildByTag(tag);
     if (monster) {
         monster->removeFromParentAndCleanup(true);
