@@ -70,6 +70,16 @@ void WorldMapView::monsterDeathCB(CCObject* obj)
                     CCFadeOut* fadeOut = CCFadeOut::create(2.0f);
                     CCSequence* seq = CCSequence::create(delayTime, fadeOut, nullptr);
                     c->runAction(seq);
+                    
+                    auto vec = WORLD_MAP_VIEW->m_particleVec.find(getBatchTag(MonsterParticle, index));
+                    if (vec != WORLD_MAP_VIEW->m_particleVec.end())
+                    {
+                        for (auto &particle:vec->second)
+                        {
+                            particle->setOpacity(180);
+                            particle->runAction(seq->clone());
+                        }
+                    }
                 }
             }
         }
@@ -570,11 +580,54 @@ void NBWorldMonster::createMonsterBatchItem(BatchTagType type, unsigned int inde
     {
         monsterNode->setVisible(false);
         
+        auto addMonsterParticles = [](Vec2 particlePos, float scaleX, int index, const string& monsterId){
+            std::string monster = CCCommonUtils::getPropById(monsterId, "monster");
+            std::string lv = CCCommonUtils::getPropById(monsterId, "level");
+            float rotation = 0;
+            bool b = false;
+            if (monster == "Kulou")
+            {
+                b = true;
+                if (lv == "1")
+                {
+                    particlePos.x += -10;
+                    particlePos.y += -20;
+                }
+                else
+                {
+                    particlePos.x += 15;
+                    particlePos.y += -20;
+                }
+                
+                rotation = 30;
+            }
+            else if (monster == "rm")
+            {
+                b = true;
+                particlePos.y += -20;
+            }
+            
+            if (b)
+            {
+                const char * particleFiles[] = {"WorldRipple_1", "WorldRipple_2", "WorldRipple_3"};
+                for (int i = 0; i < 3; ++i)
+                {
+                    auto particle = ParticleController::createParticle(particleFiles[i]);
+                    particle->setPosition(particlePos);
+                    particle->setRotation(rotation);
+                    particle->setScaleX(scaleX);
+                    WORLD_MAP_VIEW->addParticleToBatch(particle, WORLD_MAP_VIEW->getBatchTag(MonsterParticle, index));
+                    WORLD_MAP_VIEW->m_cityItem[index].push_back(particle);
+                }
+            }
+        };
+        
         int tag = NB_WORLD_MONSTER_START_TAG + monsterNode->getTag();
         auto c = WORLD_MAP_VIEW->m_mapMonstersNode->getChildByTag(tag);
         if (c)
         {
             c->removeFromParent();
+            WORLD_MAP_VIEW->delBatchItem(MonsterParticle, index);
         }
         
         if (type == MonsterAttack || bPlayAttackAnimation)
@@ -586,6 +639,7 @@ void NBWorldMonster::createMonsterBatchItem(BatchTagType type, unsigned int inde
                 if (c)
                 {
                     c->removeFromParent();
+                    WORLD_MAP_VIEW->delBatchItem(MonsterParticle, index);
                 }
             }
             
@@ -595,6 +649,8 @@ void NBWorldMonster::createMonsterBatchItem(BatchTagType type, unsigned int inde
             octopus->setPosition(monsterNode->getPosition() + Vec2(octopus->getContentSize().width * 0, octopus->getContentSize().height / 2 + _tile_height / 4));
             octopus->setTag(tag);
             WORLD_MAP_VIEW->m_mapMonstersNode->addChild(octopus, monsterNode->getZOrder());
+            
+            addMonsterParticles(octopus->getPosition(), monsterNode->getScaleX(), index, info.fieldMonsterInfo.monsterId);
         }
         else if (type != MonsterDead)
         {
@@ -604,6 +660,8 @@ void NBWorldMonster::createMonsterBatchItem(BatchTagType type, unsigned int inde
             octopus->setPosition(monsterNode->getPosition() + Vec2(octopus->getContentSize().width * 0, octopus->getContentSize().height / 2 + _tile_height / 4));
             octopus->setTag(tag);
             WORLD_MAP_VIEW->m_mapMonstersNode->addChild(octopus, monsterNode->getZOrder());
+            
+            addMonsterParticles(octopus->getPosition(), monsterNode->getScaleX(), index, info.fieldMonsterInfo.monsterId);
         }
     }
     

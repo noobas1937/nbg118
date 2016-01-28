@@ -8765,6 +8765,10 @@
 					"-lz",
 					"-lsqlite3",
 					"-ObjC",
+					"-pagezero_size",
+					10000,
+					"-image_base",
+					100000000,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.elex-tech.DragonClans";
 				PRODUCT_NAME = DragonClans;
@@ -8843,6 +8847,10 @@
 					"-lz",
 					"-lsqlite3",
 					"-ObjC",
+					"-pagezero_size",
+					10000,
+					"-image_base",
+					100000000,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.elex-tech.DragonClans";
 				PRODUCT_NAME = DragonClans;
