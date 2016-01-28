@@ -600,6 +600,11 @@ bool Soldier::init(){
     m_parent->addChild(m_sprite, 1);
     m_sprite->setVisible(false);
     
+    if (m_type == TITAN)
+    {
+        m_sprite->setTag(m_type);
+    }
+    
     if(m_info.officer == KINGDOM_KING_ID){
         m_kingSprite2 = CCLoadSprite::createSprite("KingsArmy_2.png");
         m_kingSprite2->setAnchorPoint(ccp(0.5, 0));

@@ -6796,8 +6796,8 @@ void UIComponent::setSerchCoordState(){
 //        m_yCoordLabel->setPositionX(76);
 //        m_yCoordText->setPositionX(114);
 //        m_yBG->setPositionX(114);
-//        m_serverNode->setVisible(true);
-//        setServerText(GlobalData::shared()->playerInfo.currentServerId);
+        m_serverNode->setVisible(true);
+        setServerText(GlobalData::shared()->playerInfo.currentServerId);
     }
 }
 

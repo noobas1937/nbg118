@@ -67,6 +67,7 @@
 #include "NBWorldMonster.hpp"
 #include "NBWorldMapMainCity.hpp"
 #include "NBWaterSprite.hpp"
+#include "NBWorldUtils.hpp"
 
 //begin a by ljf
 #include "NBWaterMap.h"
@@ -6962,7 +6963,7 @@ void WorldMapView::delBatchItem(BatchTagType type, unsigned int index) {
         monster->removeFromParentAndCleanup(true);
     }
     // guo.jiang
-    int tag = 1000000 * 100 + monsterTag;
+    int tag = NB_WORLD_MONSTER_START_TAG + monsterTag;
     monster = m_mapMonstersNode->getChildByTag(tag);
     if (monster) {
         monster->removeFromParentAndCleanup(true);

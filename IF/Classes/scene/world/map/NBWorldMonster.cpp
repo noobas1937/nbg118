@@ -58,10 +58,12 @@ void WorldMapView::monsterDeathCB(CCObject* obj)
             
             for (int i = MonsterAttack; i <= MonsterBreath; i++)
             {
-                int tag = 1000000 * 100 + WORLD_MAP_VIEW->getBatchTag(BatchTagType(i), index);
+                int tag = NB_WORLD_MONSTER_START_TAG + WORLD_MAP_VIEW->getBatchTag(BatchTagType(i), index);
                 auto c = WORLD_MAP_VIEW->m_mapMonstersNode->getChildByTag(tag);
                 if (c)
                 {
+                    auto s = c->getChildByTag(NB_WORLD_MONSTER_ANIM_TAG);
+                    if (s) s->stopAllActions();
                     c->stopAllActions();
                     c->setOpacity(180);
                     CCDelayTime* delayTime = CCDelayTime::create(3.0f);
@@ -82,7 +84,7 @@ void WorldMapView::refreshMonster(CCObject *obj){
         
         for (int i = MonsterAttack; i <= MonsterBreath; i++)
         {
-            int tag = 1000000 * 100 + WORLD_MAP_VIEW->getBatchTag(BatchTagType(i), in->getValue());
+            int tag = NB_WORLD_MONSTER_START_TAG + WORLD_MAP_VIEW->getBatchTag(BatchTagType(i), in->getValue());
             auto c = WORLD_MAP_VIEW->m_mapMonstersNode->getChildByTag(tag);
             if (c)
             {
@@ -568,7 +570,7 @@ void NBWorldMonster::createMonsterBatchItem(BatchTagType type, unsigned int inde
     {
         monsterNode->setVisible(false);
         
-        int tag = 1000000 * 100 + monsterNode->getTag();
+        int tag = NB_WORLD_MONSTER_START_TAG + monsterNode->getTag();
         auto c = WORLD_MAP_VIEW->m_mapMonstersNode->getChildByTag(tag);
         if (c)
         {
@@ -579,7 +581,7 @@ void NBWorldMonster::createMonsterBatchItem(BatchTagType type, unsigned int inde
         {
             for (int i = MonsterAttack; i <= MonsterBreath; i++)
             {
-                int tag = 1000000 * 100 + WORLD_MAP_VIEW->getBatchTag(BatchTagType(i), index);
+                int tag = NB_WORLD_MONSTER_START_TAG + WORLD_MAP_VIEW->getBatchTag(BatchTagType(i), index);
                 auto c = WORLD_MAP_VIEW->m_mapMonstersNode->getChildByTag(tag);
                 if (c)
                 {
@@ -590,7 +592,7 @@ void NBWorldMonster::createMonsterBatchItem(BatchTagType type, unsigned int inde
             auto octopus = NBWorldUtils::createSeaMonsterAndAttackAnimation(info.fieldMonsterInfo.monsterId);
         
             octopus->setScaleX(monsterNode->getScaleX());
-            octopus->setPosition(monsterNode->getPosition() + Vec2(octopus->getContentSize().width * 0, octopus->getContentSize().height / 4));
+            octopus->setPosition(monsterNode->getPosition() + Vec2(octopus->getContentSize().width * 0, octopus->getContentSize().height / 2 + _tile_height / 4));
             octopus->setTag(tag);
             WORLD_MAP_VIEW->m_mapMonstersNode->addChild(octopus, monsterNode->getZOrder());
         }
@@ -599,7 +601,7 @@ void NBWorldMonster::createMonsterBatchItem(BatchTagType type, unsigned int inde
             auto octopus = NBWorldUtils::createSeaMonsterAndWaitingAnimation(info.fieldMonsterInfo.monsterId);
             
             octopus->setScaleX(monsterNode->getScaleX());
-            octopus->setPosition(monsterNode->getPosition() + Vec2(octopus->getContentSize().width * 0, octopus->getContentSize().height / 4));
+            octopus->setPosition(monsterNode->getPosition() + Vec2(octopus->getContentSize().width * 0, octopus->getContentSize().height / 2 + _tile_height / 4));
             octopus->setTag(tag);
             WORLD_MAP_VIEW->m_mapMonstersNode->addChild(octopus, monsterNode->getZOrder());
         }
