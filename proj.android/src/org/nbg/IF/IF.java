@@ -117,7 +117,7 @@ import com.elex.chatservice.model.MailManager;
 import com.elex.chatservice.model.db.DBManager;
 import android.os.Build;
 
- import com.clash.of.publish.GlobalPublishImpl;
+ // import com.clash.of.publish.GlobalPublishImpl;
 // tao.yu TalkingData
 import com.tendcloud.tenddata.TalkingDataGA;
 
@@ -314,7 +314,8 @@ public class IF extends Cocos2dxActivity implements IAnalyticTracker {
 		setDefaultUncaughtExceptionHandler();
 		Native.nativeSetPlatformUID("");
 		// tao.yu TalkingData
-		TalkingDataGA.init(this.getApplicationContext(), "E020286589120C45394E3994E90F44D8", GlobalPublishImpl.getPublishChannel());
+		// TalkingDataGA.init(this.getApplicationContext(), "E020286589120C45394E3994E90F44D8", getPublishImpl().getPublishChannel());
+		TalkingDataGA.init(this.getApplicationContext(), "E020286589120C45394E3994E90F44D8", "GooglePlay");
 
 		// facebook 初始化
 		if(facebookEnabled){
