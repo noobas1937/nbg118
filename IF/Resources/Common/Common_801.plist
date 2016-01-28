@@ -4,96 +4,83 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>abox_citybuild_ad.png</key>
+            <key>activitybox_alliance_title_bg.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,4},{641,245}}</string>
+                <string>{{861,4},{640,384}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{641,245}}</string>
+                <string>{{0,0},{640,384}}</string>
                 <key>sourceSize</key>
-                <string>{641,245}</string>
+                <string>{640,384}</string>
             </dict>
-            <key>abox_newuser_ad.png</key>
+            <key>activitybox_holiday_shengzi.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1297,4},{640,245}}</string>
+                <string>{{1580,169},{42,375}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{640,245}}</string>
+                <string>{{0,0},{42,375}}</string>
                 <key>sourceSize</key>
-                <string>{640,245}</string>
+                <string>{42,375}</string>
             </dict>
-            <key>activitybox_alliance_ad.png</key>
+            <key>activitybox_holiday_titlebg.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1296,255},{640,245}}</string>
+                <string>{{1251,4},{632,323}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{640,245}}</string>
+                <string>{{0,0},{632,323}}</string>
                 <key>sourceSize</key>
-                <string>{640,245}</string>
+                <string>{632,323}</string>
             </dict>
-            <key>activitybox_holiday_ad.png</key>
+            <key>activitybox_train_titlebg.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{651,4},{640,245}}</string>
+                <string>{{458,4},{640,397}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{640,245}}</string>
+                <string>{{0,0},{640,397}}</string>
                 <key>sourceSize</key>
-                <string>{640,245}</string>
+                <string>{640,397}</string>
             </dict>
-            <key>activitybox_level_ad.png</key>
+            <key>activitybox_war_genbox.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{650,255},{640,245}}</string>
+                <string>{{1580,4},{159,141}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{640,245}}</string>
+                <string>{{0,0},{159,141}}</string>
                 <key>sourceSize</key>
-                <string>{640,245}</string>
+                <string>{159,141}</string>
             </dict>
-            <key>activitybox_train_ad.png</key>
+            <key>activitybox_war_titlebg.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,255},{640,245}}</string>
+                <string>{{4,4},{594,448}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{640,245}}</string>
+                <string>{{0,0},{594,448}}</string>
                 <key>sourceSize</key>
-                <string>{640,245}</string>
-            </dict>
-            <key>activitybox_war_ad.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{650,255},{640,245}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{640,245}}</string>
-                <key>sourceSize</key>
-                <string>{640,245}</string>
+                <string>{594,448}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -101,13 +88,13 @@
             <key>format</key>
             <integer>2</integer>
             <key>realTextureFileName</key>
-            <string>Common_800.pvr.ccz</string>
+            <string>Common_801.pvr.ccz</string>
             <key>size</key>
-            <string>{1941,504}</string>
+            <string>{1725,648}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:0dcb5410492a2e3139c4325d5d8df8a0:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:0da8c53013829f3404ea8fb359554a74:1/1$</string>
             <key>textureFileName</key>
-            <string>Common_800.pvr.ccz</string>
+            <string>Common_801.pvr.ccz</string>
         </dict>
     </dict>
 </plist>
