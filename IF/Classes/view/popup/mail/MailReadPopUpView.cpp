@@ -157,6 +157,9 @@ bool MailReadPopUpView::init(){
     m_contentContainer->addChild(m_scroll);
     m_ListNode = CCNode::create();
     m_scroll->addChild(m_ListNode);
+    //begin a by ljf, 临时解决内容需要拖动才能显示的问题
+    m_scroll->getContainer()->runAction(CCMoveBy::create(1.0, Vec2(0, 1)));
+    //end a by ljf
     if(!m_info.isReadContent){
         MailController::getInstance()->readMailFromServer(m_info.uid, CC_ITOA(m_info.type));
         GameController::getInstance()->showWaitInterface();
