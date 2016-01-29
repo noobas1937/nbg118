@@ -72,10 +72,12 @@ bool UseSkillPopUpView::init(){
         CCLoadSprite::doResourceByCommonIndex(209, true);
         CCLoadSprite::doResourceByCommonIndex(105, true);
         CCLoadSprite::doResourceByCommonIndex(500, true);
+         CCLoadSprite::doResourceByCommonIndex(7, true);
         setCleanFunction([](){
             CCLoadSprite::doResourceByCommonIndex(209, false);
             CCLoadSprite::doResourceByCommonIndex(105, false);
             CCLoadSprite::doResourceByCommonIndex(500, false);
+            CCLoadSprite::doResourceByCommonIndex(7, true);
         });
         CCBLoadFile("UseSkillViewCCB", this, this);
         this->setContentSize(CCDirector::sharedDirector()->getWinSize());
@@ -85,6 +87,7 @@ bool UseSkillPopUpView::init(){
         m_tabView->setVerticalFillOrder(kCCTableViewFillTopDown);
         m_tabView->setMultiColTableViewDelegate(this);
         m_tabView->setTouchPriority(0);
+         m_tabView->getContainer()->runAction(CCMoveBy::create(1.0, Vec2(0, 1)));
         m_listContainer->addChild(m_tabView);
         
         m_skillId = "";
@@ -205,6 +208,7 @@ void UseSkillPopUpView::onPicClick(CCObject *data){
             m_head->addChild(lock);
         }
         updateCDTime(0.0);
+        m_skillItemBg->setVisible(false);
     }
 }
 
@@ -534,7 +538,7 @@ UseSkillItemCell *UseSkillItemCell::create(std::string skillId){
 void UseSkillItemCell::setData(std::string skillId){
     m_skillId = skillId;
     std::string head = CCCommonUtils::getIcon(skillId);
-    m_clickNode->initWithSpriteFrame(CCLoadSprite::loadResource(GeneralManager::getInstance()->getBgBySkill(skillId).c_str()));
+    m_clickNode->initWithSpriteFrame(CCLoadSprite::loadResource("icon_kuang_keji.png"));
     m_clickNode->setScale(0.7);
     m_head->removeAllChildrenWithCleanup(true);
     CCSprite* icon = CCLoadSprite::createSprite(head.c_str());
