@@ -3538,6 +3538,7 @@ bool UIComponent::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const c
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_limitActBg", CCNode*, this->m_limitActBg);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_skillNode", CCNode*, this->m_skillNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_skillBG", CCNode*, this->m_skillBG);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_skillBG2", CCNode*, this->m_skillBG2);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_serverNode", CCNode*, this->m_serverNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_homeText", CCLabelIF*, this->m_homeText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_serverIdText", CCLabelIF*, this->m_serverIdText);
@@ -3942,6 +3943,13 @@ bool UIComponent::onTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEven
         return true;
         
     }
+    else if(m_mainControlNode->isVisible() && m_skillNode->isVisible() && isTouchInside(this->m_skillBG2, pTouch)){
+        
+        hintType = 36;
+        
+        return true;
+        
+    }
     else if(m_mainControlNode->isVisible() && m_fireNode->isVisible() && isTouchInside(this->m_fireNode, pTouch)){
         hintType = 27;
         return true;
@@ -4331,8 +4339,6 @@ void UIComponent::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEven
             break;
         }
         case 26:{
-//            SoundController::sharedSound()->playEffects(Music_Sfx_click_button);  fusheng
-//            PopupViewController::getInstance()->addPopupView(UseSkillPopUpView::create());
             PopupViewController::getInstance()->addPopupInView(GeneralTitanPopupView::create(),true);
             CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("UI_titan"));
             
@@ -4395,6 +4401,12 @@ void UIComponent::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEven
         }
         case 35:{
             PopupViewController::getInstance()->addPopupInView(CrossServiceTargetView::create());
+            break;
+        }
+        case 36:{ //simon
+            CCLOG("hit 36....");
+            SoundController::sharedSound()->playEffects(Music_Sfx_click_button); // fusheng
+            PopupViewController::getInstance()->addPopupView(UseSkillPopUpView::create());
             break;
         }
         default:
