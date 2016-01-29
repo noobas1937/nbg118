@@ -585,7 +585,31 @@ void ActivityBox::loadSpine()
         spineJsonName = "Spine/Imperial/activitybox_cailiao.json";
         timePos.y = 10;
     }
-    
+    if(m_dataItem->popup_image == "War" && CCFileUtils::sharedFileUtils()->isFileExist("Spine/Imperial/zhanzhenglibao.json"))
+    {
+        spineJsonName = "Spine/Imperial/zhanzhenglibao.json";
+        timePos.y = 10;
+    }
+    if(m_dataItem->popup_image == "Alliance" && CCFileUtils::sharedFileUtils()->isFileExist("Spine/Imperial/lianmenglibao.json"))
+    {
+        spineJsonName = "Spine/Imperial/lianmenglibao.json";
+        timePos.y = 10;
+    }
+    if(m_dataItem->popup_image == "Train" && CCFileUtils::sharedFileUtils()->isFileExist("Spine/Imperial/zaobinglibao.json"))
+    {
+        spineJsonName = "Spine/Imperial/zaobinglibao.json";
+        timePos.y = 10;
+    }
+    if(m_dataItem->popup_image == "Holiday" && CCFileUtils::sharedFileUtils()->isFileExist("Spine/Imperial/jiarilibao.json"))
+    {
+        spineJsonName = "Spine/Imperial/jiarilibao.json";
+        timePos.y = 10;
+    }
+    if(m_dataItem->popup_image == "Level" && CCFileUtils::sharedFileUtils()->isFileExist("Spine/Imperial/dengjilibao.json"))
+    {
+        spineJsonName = "Spine/Imperial/dengjilibao.json";
+        timePos.y = 10;
+    }
     //const string spineJsonName = "Spine/Imperial/activitybox_cailiao.json";
     //const string spineJsonName = "Spine/Imperial/activitybox_chengjian.json";
     const string spineAtlasName = "Imperial/Imperial_30.atlas";

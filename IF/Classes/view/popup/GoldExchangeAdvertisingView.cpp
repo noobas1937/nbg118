@@ -861,6 +861,8 @@ bool GoldExchangeAdvertisingCommCell::init()
     //begin a by ljf
     m_showMoreNodeOrignPos.x = m_showMoneyNode->getPositionX();
     m_showMoreNodeOrignPos.y = m_showMoneyNode->getPositionY();
+    m_getGoldNumTextOrignPos.x = m_getGoldNumText->getPositionX();
+    m_getGoldNumTextOrignPos.y = m_getGoldNumText->getPositionY();
     //end a by ljf
     refreshData();
     
@@ -898,6 +900,7 @@ void GoldExchangeAdvertisingCommCell::refreshData(){
     //begin ljf
     string spriteName = "nb_libaoBG.png";
     Vec2 addPos(0, 0);
+    Vec2 addPos2(0, 0);
     if(m_dataItem->popup_image == "Build")
     {
         addPos.x = 150;
@@ -908,7 +911,36 @@ void GoldExchangeAdvertisingCommCell::refreshData(){
         addPos.x = 150;
         spriteName = "abox_newuser_ad.png";
     }
+    
+    if(m_dataItem->popup_image == "Alliance")
+    {
+        addPos.x = 270;
+        addPos2.x = -20;
+        spriteName = "activitybox_alliance_ad.png";
+    }
+    if(m_dataItem->popup_image == "War")
+    {
+        addPos.x = 160;
+        spriteName = "activitybox_war_ad.png";
+    }
+    if(m_dataItem->popup_image == "Train")
+    {
+        addPos.x = 270;
+        addPos2.x = -20;
+        spriteName = "activitybox_train_ad.png";
+    }
+    if(m_dataItem->popup_image == "Holiday")
+    {
+        addPos.x = 160;
+        spriteName = "activitybox_holiday_ad.png";
+    }
+    if(m_dataItem->popup_image == "Level")
+    {
+        addPos.x = 160;
+        spriteName = "activitybox_level_ad.png";
+    }
     m_showMoneyNode->setPosition(m_showMoreNodeOrignPos + addPos);
+    m_getGoldNumText->setPosition(m_getGoldNumTextOrignPos + addPos2);
     CCSpriteFrame* newSp = CCLoadSprite::getSF(spriteName.c_str());
     m_liebiaoBg->setDisplayFrame(newSp);
     //end ljf

@@ -47,6 +47,9 @@ bool CreateAllianceCommand::handleRecieve(cocos2d::CCDictionary *dict)
         CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_CITY_RESOURCES_UPDATE);
         //GlobalData::shared()->playerInfo.isfirstJoin = 0;
         UIComponent::getInstance()->showFlygold();
+        //begin a by ljf,曾经加入过联盟
+        GlobalData::shared()->playerInfo.onceJoinedAlliance = 1;
+        //end a by ljf
         callSuccess(NetResult::create(Error_OK, (CCObject*)(params->objectForKey("alliance"))));
     }
     return true;

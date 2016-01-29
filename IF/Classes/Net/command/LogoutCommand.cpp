@@ -30,6 +30,9 @@
 #include "UserBindCommand.h"
 #include "ChatServiceCocos2dx.h"
 #include "ShakeController.h"
+//begin a by ljf
+#include "RecommendAllianceController.h"
+//end a by ljf
 LogoutCommand::LogoutCommand()
 : CommandBase(LOGOUT_COMMAND)
 {
@@ -75,6 +78,9 @@ void LogoutCommand::doReload(float f)
     PopupViewController::getInstance()->removeAllPopupView();
     SceneController::getInstance()->clearLayerByLevelAndSceneId(LEVEL_GUI,SCENE_ID_GUI);
     FunBuildController::purgeData();
+    //begin a by ljf
+    RecommendAllianceController::getInstance()->purgeData();
+    //end a by ljf
     DragonBuildingController::purgeData();
     ToolController::purgeData();
     ChatController::purgeData();

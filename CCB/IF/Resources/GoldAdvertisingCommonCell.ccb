@@ -771,7 +771,7 @@
 						<key>customClass</key>
 						<string></string>
 						<key>displayName</key>
-						<string>CCNode</string>
+						<string>m_showMoneyNode</string>
 						<key>memberVarAssignmentName</key>
 						<string>m_showMoneyNode</string>
 						<key>memberVarAssignmentType</key>
@@ -823,8 +823,6 @@
 								<false/>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>

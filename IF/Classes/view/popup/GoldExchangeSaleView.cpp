@@ -36,9 +36,12 @@ bool GoldExchangeSaleView::init()
 {
     CCLoadSprite::doResourceByCommonIndex(8, true);
     CCLoadSprite::doResourceByCommonIndex(102, true);
+    CCLoadSprite::doResourceByCommonIndex(801, true);
+
     setCleanFunction([](){
         CCLoadSprite::doResourceByCommonIndex(8, false);
         CCLoadSprite::doResourceByCommonIndex(102, false);
+        CCLoadSprite::doResourceByCommonIndex(801, false);
         CCLoadSprite::releaseDynamicResourceByType(CCLoadSpriteType_GOODS);
     });
     /* d by ljf, 目前只提供了一个界面
@@ -71,6 +74,27 @@ bool GoldExchangeSaleView::init()
     if(m_dataItem->popup_image == "Newbie_Hot")
     {
         ccbFile = "GoldExchangeSaleActViewNewUser";
+    }
+    
+    if(m_dataItem->popup_image == "Alliance")
+    {
+        ccbFile = "GoldExchangeSaleActViewAlliance";
+    }
+    if(m_dataItem->popup_image == "War")
+    {
+        ccbFile = "GoldExchangeSaleActViewWar";
+    }
+    if(m_dataItem->popup_image == "Train")
+    {
+        ccbFile = "GoldExchangeSaleActViewTrain";
+    }
+    if(m_dataItem->popup_image == "Holiday")
+    {
+        ccbFile = "GoldExchangeSaleActViewHoliday";
+    }
+    if(m_dataItem->popup_image == "Level")
+    {
+        ccbFile = "GoldExchangeSaleActViewLevel";
     }
     CCBLoadFile(ccbFile.c_str(),this,this);
     //CCBLoadFile("GoldExchangeSaleActViewNewUser",this,this);
@@ -460,6 +484,27 @@ bool GoldExchangeSaleCell::init(int itemId, int num,string popUpImage,int type)
     if(popUpImage == "Newbie_Hot")
     {
         ccbFile = "RechargeSaleCellNewUser";
+    }
+    
+    if(popUpImage == "Alliance")
+    {
+        ccbFile = "RechargeSaleCellAlliance";
+    }
+    if(popUpImage == "War")
+    {
+        ccbFile = "RechargeSaleCellWar";
+    }
+    if(popUpImage == "Train")
+    {
+        ccbFile = "RechargeSaleCellTrain";
+    }
+    if(popUpImage == "Holiday")
+    {
+        ccbFile = "RechargeSaleCellHoliday";
+    }
+    if(popUpImage == "Level")
+    {
+        ccbFile = "RechargeSaleCellLevel";
     }
     //ccbFile = "RechargeSaleCellNewUser";
     CCBLoadFile(ccbFile.c_str(),this,this);

@@ -203,6 +203,7 @@ private:
     
     //begin a by ljf
     Vec2 m_showMoreNodeOrignPos;
+    Vec2 m_getGoldNumTextOrignPos;
     //end a by ljf
     CCPoint m_touchLocation;
 };
