@@ -72,12 +72,12 @@ TDCCAccount* TDCCAccount::setAccount(const char* accountId) {
 
 void TDCCAccount::setAccountName(const char* accountName) {
 	TDGAJniMethodInfo t;
-	if (_accountInstance && _accountInstance->mAccount && TDGAJniHelper::getMethodInfo(t
+	if (mAccount && TDGAJniHelper::getMethodInfo(t
 		, gClass_Account
 		, "setAccountName"
 		, "(Ljava/lang/String;)V")) {
 		jstring jaccountName = t.env->NewStringUTF(accountName);
-		t.env->CallVoidMethod((jobject)(_accountInstance->mAccount), t.methodID, jaccountName);
+		t.env->CallVoidMethod((jobject)mAccount, t.methodID, jaccountName);
 		t.env->DeleteLocalRef(jaccountName);
 	}
 }
