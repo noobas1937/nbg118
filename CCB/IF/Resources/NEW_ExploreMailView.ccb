@@ -3506,8 +3506,6 @@
 										<string>Your troops from LV. 3 yard carry resource 00000</string>
 									</dict>
 								</array>
-								<key>selected</key>
-								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>
@@ -4457,8 +4455,8 @@
 										<string>Size</string>
 										<key>value</key>
 										<array>
-											<real>26</real>
-											<real>41</real>
+											<real>50</real>
+											<real>50</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -4673,8 +4671,8 @@
 										<string>Size</string>
 										<key>value</key>
 										<array>
-											<real>35</real>
-											<real>39</real>
+											<real>43</real>
+											<real>43</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -4881,8 +4879,8 @@
 										<string>Size</string>
 										<key>value</key>
 										<array>
-											<real>43</real>
-											<real>41</real>
+											<real>50</real>
+											<real>50</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -4964,6 +4962,8 @@
 										</array>
 									</dict>
 								</array>
+								<key>selected</key>
+								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>

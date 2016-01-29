@@ -727,6 +727,36 @@ void PopupViewController::removeLastSystemMailPopupView() {
     removePopupView(getPopupView(m_currentId),true,true);
 }
 
+void PopupViewController::forceClearAll(bool bAutoRelease)
+{
+    for(map<int, PopupBaseView*>::iterator it = m_stack.begin();it!=m_stack.end();++it)
+    {
+        it->second->ForceClear(bAutoRelease) ;
+        it->second->release();
+    }
+    m_stack.clear();
+    for(map<int, PopupBaseView*>::iterator it = m_gobackStack.begin();it!=m_gobackStack.end();++it)
+    {
+        it->second->ForceClear( bAutoRelease );
+        it->second->release();
+        it->second->release();
+    }
+    
+    m_gobackStack.clear();
+    if(CCCommonUtils::isIosAndroidPad())
+    {
+        CCCommonUtils::setIsHDViewPort(true);
+    }
+    if( bAutoRelease )
+    {
+        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_POPUP_VIEW_OUT);
+        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_SCENE_CHANGED);
+        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_MAINSCENCE_REMOVE_TMPBUILD);
+        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_MAINSCENCE_GOBACK);
+    }
+    
+}
+
 void PopupViewController::removeAllPopupView() {
     if (m_currentId == -1) {
         return;

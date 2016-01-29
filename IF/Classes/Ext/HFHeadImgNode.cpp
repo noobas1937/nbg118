@@ -14,6 +14,16 @@ using namespace std;
 
 #define CREATE_SPRITE_FRAME CCLoadSprite::loadResource
 
+autoDefaultEnable::autoDefaultEnable()
+{
+//    Director::getInstance()->getTextureCache()->EnableDefaultTexture(false);
+}
+
+autoDefaultEnable::~autoDefaultEnable()
+{
+//    Director::getInstance()->getTextureCache()->EnableDefaultTexture(true);
+}
+
 bool HFHeadImgNode::init()
 {
 	
@@ -124,6 +134,37 @@ void HFHeadImgNode::initHeadImgUrl2(cocos2d::CCNode *parentNode, string url, flo
     HFUrlImageCache::shared()->loadImageAsync(m_headImgUrl, CCCallFuncO::create(this, callfuncO_selector(HFHeadImgNode::onMyheadImgBack), NULL));
 }
 
+void HFHeadImgNode::initHeadImgUrl3(CCNode* parentNode, string url, float scale, float size, bool clearNode, CCPoint p, CCSize cSize, string backImg, string renderImg)
+{
+    if (UploadImageController::shared()->getUploadImageFlag() == 0)
+    {
+        url = "";
+    }
+    
+    if (url == "") {
+        return;
+    }
+    
+    m_scale = scale;
+    m_size = size;
+    m_clearNode = clearNode;
+    m_myParentNode = parentNode;
+    m_imgPoint = p;
+    m_retry = 0;
+    m_cSize = cSize;
+    m_backImg = backImg;
+    m_renderImg = renderImg;
+    // 自己的头像
+    if(m_headImgUrl.length() > 0)
+    {
+        HFUrlImageCache::shared()->cancelImageLoad(m_headImgUrl, this);
+        m_headImgUrl.clear();
+    }
+    
+    m_headImgUrl = url;
+    HFUrlImageCache::shared()->loadImageAsync(m_headImgUrl, CCCallFuncO::create(this, callfuncO_selector(HFHeadImgNode::onMyheadImgBack2), NULL));
+}
+
 // 回家显示自己的头像
 void HFHeadImgNode::showHeadImg()
 {
@@ -209,6 +250,64 @@ void HFHeadImgNode::onMyheadImgBack(cocos2d::CCObject *pObj)
     }
     
     m_headImgUrl.clear();
+}
+
+void HFHeadImgNode::onMyheadImgBack2(cocos2d::CCObject *pObj)
+{
+//    CCString* image = dynamic_cast<CCString*>(pObj);
+//    if (image == NULL) {
+//        return;
+//    }
+//    
+//    CCSpriteFrame* pFrame = getSpriteFrame(image->getCString());
+//    if (pFrame == NULL)
+//    {
+//        int removeState = std::remove(image->getCString());
+//        if (removeState==0 && m_retry<6)//重试5次
+//        {
+//            autoDefaultEnable tmp;
+//            m_retry++;
+//            HFUrlImageCache::shared()->loadImageAsync(m_headImgUrl, CCCallFuncO::create(this, callfuncO_selector(HFHeadImgNode::onMyheadImgBack2), NULL));
+//        }
+//        return;
+//    }
+//    autoDefaultEnable tmp;
+//    m_retry = 0;
+//    CCSize ccsz = pFrame->getOriginalSizeInPixels();
+//    CCSprite* head = CCSprite::createWithSpriteFrame(pFrame);
+//    head->setAnchorPoint(ccp(0.5, 0.5));
+//    
+//    if (m_size > 1E-6)
+//    {
+//        CCCommonUtils::setSpriteMaxSize(head, m_size, true);
+//    }
+//    else
+//    {
+//        head->setScale(m_scale);
+//    }
+//    m_myRenderTexture = CCRenderTexture::create(m_cSize.width, m_cSize.height);
+//    m_myRenderTexture->setAnchorPoint(ccp(0.5, 0.5));
+//    ccBlendFunc cbf = {GL_ZERO,GL_ONE_MINUS_SRC_ALPHA};
+//    auto spr = CCLoadSprite::createSprite(m_backImg.c_str());
+//    auto bgCircle = CCLoadSprite::createSprite(m_renderImg.c_str());
+//    spr->setScale(1);
+//    spr->setPosition(ccp(m_cSize.width / 2, m_cSize.height / 2));
+//    if (!m_imgPoint.equals(CCPointZero))
+//    {
+//        head->setPosition(m_imgPoint);
+//    }
+//    bgCircle->setPosition(ccp(m_cSize.width / 2, m_cSize.height / 2));
+//    bgCircle->setBlendFunc(cbf);
+//    m_myRenderTexture->begin();
+//    spr->visit();
+//    head->visit();
+//    bgCircle->visit();
+//    m_myRenderTexture->end();
+//    if (m_clearNode) {
+//        m_myParentNode->removeAllChildrenWithCleanup(true);
+//    }
+//    m_myParentNode->addChild(m_myRenderTexture);
+//    m_headImgUrl.clear();
 }
 
 void HFHeadImgNode::onFBImageLoaded(CCObject* object)

@@ -77,7 +77,7 @@ public:
     void playOpenFinish();
     void playReturnFinish();
     CC_SYNTHESIZE(bool, m_inFlag, InFlag);
-    
+    void ForceClear(bool bAutoRelease = false );   // 强制清除
     void setModelLayerTouchCallback(std::function<void(cocos2d::CCTouch *pTouch)> function);
     
     bool getIsHDPanel() {return m_isHDPanel;}

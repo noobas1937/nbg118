@@ -21,6 +21,8 @@ typedef void (CCObject::*SEL_TIMEFINISH)(CCObject*);
 
 #define timeTick_selector(_SELECTOR) (SEL_TIMETICK)(&_SELECTOR)
 #define timeFinish_selector(_SELECTOR) (SEL_TIMEFINISH)(&_SELECTOR)
+// 是否退出游戏
+bool IsQuitGame();
 
 class TimeStampObserver :
 public CCObject

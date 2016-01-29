@@ -24,6 +24,13 @@
 #include "PushBase.h"
 #include "AppLibHelper.h"
 
+bool g_bQuitGame = false;
+
+bool IsQuitGame()
+{
+    return g_bQuitGame;
+}
+
 void TimeStampObserver::doTimeTick(int timeLeft){
     if (m_target && (timeLeft >= 0)) {
         (m_target->*m_timeTick)(m_objectTick, timeLeft);
@@ -341,6 +348,7 @@ void GameController::quitGame(CCObject* p){
     {
         NetController::shared()->disconnect();
     }
+    g_bQuitGame = true;
     cocos2d::extension::CCDevice::finishGame();
 	CCDirector::sharedDirector()->end();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)

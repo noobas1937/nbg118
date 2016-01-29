@@ -47,6 +47,7 @@ public:
     int getCurrViewCount();
     void removeLastPopupView();
     void removeAllPopupView();
+    void forceClearAll( bool bAutoRelease = false );  // 强制删除
     void addGoBackStack(bool isCloseAnim = false);
     int addPopupFromAndroidInView(PopupBaseView *view, bool needLayout=true) ;
     void addGoBackViewFromAndroidWithAnim(bool isCloseAnim);

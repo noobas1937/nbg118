@@ -677,25 +677,25 @@ bool MailGiftReadPopUpView::init(){
         m_rewardNode->setPositionY(m_rewardNode->getPositionY() - extH);
         m_downNode->setPositionY(m_downNode->getPositionY() - extH);
         m_bgNode->setPositionY(m_bgNode->getPositionY() - extH);
-        auto tbg = CCLoadSprite::loadResource("Mail_diban.png");
-        auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
-        auto picBg1 = CCLoadSprite::createSprite("Mail_diban.png");
-        picBg1->setAnchorPoint(ccp(0, 0));
-        picBg1->setPosition(ccp(0, 0));
-        picBg1->setScaleX(2.4);
-        tBatchNode->addChild(picBg1);
-        int maxHeight = CCDirector::sharedDirector()->getWinSize().height;
-        int curHeight = picBg1->getContentSize().height;
-        while(curHeight < maxHeight)
-        {
-            auto picBg2 = CCLoadSprite::createSprite("Mail_diban.png");
-            picBg2->setAnchorPoint(ccp(0, 0));
-            picBg2->setPosition(ccp(0, curHeight));
-            picBg2->setScaleX(2.4);
-            tBatchNode->addChild(picBg2);
-            curHeight += picBg2->getContentSize().height;
-        }
-        m_bgNode->addChild(tBatchNode);
+//        auto tbg = CCLoadSprite::loadResource("Mail_diban.png");
+//        auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
+//        auto picBg1 = CCLoadSprite::createSprite("Mail_diban.png");
+//        picBg1->setAnchorPoint(ccp(0, 0));
+//        picBg1->setPosition(ccp(0, 0));
+//        picBg1->setScaleX(2.4);
+//        tBatchNode->addChild(picBg1);
+//        int maxHeight = CCDirector::sharedDirector()->getWinSize().height;
+//        int curHeight = picBg1->getContentSize().height;
+//        while(curHeight < maxHeight)
+//        {
+//            auto picBg2 = CCLoadSprite::createSprite("Mail_diban.png");
+//            picBg2->setAnchorPoint(ccp(0, 0));
+//            picBg2->setPosition(ccp(0, curHeight));
+//            picBg2->setScaleX(2.4);
+//            tBatchNode->addChild(picBg2);
+//            curHeight += picBg2->getContentSize().height;
+//        }
+//        m_bgNode->addChild(tBatchNode);
     }
     else {
         int extH = getExtendHeight();
@@ -705,23 +705,23 @@ bool MailGiftReadPopUpView::init(){
         m_rewardNode->setPositionY(m_rewardNode->getPositionY() - extH);
         m_downNode->setPositionY(m_downNode->getPositionY() - extH);
         m_bgNode->setPositionY(m_bgNode->getPositionY() - extH);
-        auto tbg = CCLoadSprite::loadResource("Mail_diban.png");
-        auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
-        auto picBg1 = CCLoadSprite::createSprite("Mail_diban.png");
-        picBg1->setAnchorPoint(ccp(0, 0));
-        picBg1->setPosition(ccp(0, 0));
-        tBatchNode->addChild(picBg1);
-        int maxHeight = CCDirector::sharedDirector()->getWinSize().height;
-        int curHeight = picBg1->getContentSize().height;
-        while(curHeight < maxHeight)
-        {
-            auto picBg2 = CCLoadSprite::createSprite("Mail_diban.png");
-            picBg2->setAnchorPoint(ccp(0, 0));
-            picBg2->setPosition(ccp(0, curHeight));
-            tBatchNode->addChild(picBg2);
-            curHeight += picBg2->getContentSize().height;
-        }
-        m_bgNode->addChild(tBatchNode);
+//        auto tbg = CCLoadSprite::loadResource("Mail_diban.png");
+//        auto tBatchNode = CCSpriteBatchNode::createWithTexture(tbg->getTexture());
+//        auto picBg1 = CCLoadSprite::createSprite("Mail_diban.png");
+//        picBg1->setAnchorPoint(ccp(0, 0));
+//        picBg1->setPosition(ccp(0, 0));
+//        tBatchNode->addChild(picBg1);
+//        int maxHeight = CCDirector::sharedDirector()->getWinSize().height;
+//        int curHeight = picBg1->getContentSize().height;
+//        while(curHeight < maxHeight)
+//        {
+//            auto picBg2 = CCLoadSprite::createSprite("Mail_diban.png");
+//            picBg2->setAnchorPoint(ccp(0, 0));
+//            picBg2->setPosition(ccp(0, curHeight));
+//            tBatchNode->addChild(picBg2);
+//            curHeight += picBg2->getContentSize().height;
+//        }
+//        m_bgNode->addChild(tBatchNode);
     }
     
     this->m_nameText->setFntFile("Arial_Bold.fnt");

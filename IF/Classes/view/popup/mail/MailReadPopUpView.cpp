@@ -263,7 +263,7 @@ bool MailReadPopUpView::init(){
         }
         else
             pic = CCLoadSprite::createSprite("guidePlayerIcon.png");
-        pic->setScale(0.5);
+//        pic->setScale(0.5);
     } else if (m_info->type == MAIL_ALLIANCEAPPLY) {
         showCustomPic = true;
         picVer = m_info->picVer;
@@ -278,7 +278,7 @@ bool MailReadPopUpView::init(){
             pic = CCLoadSprite::createSprite(head.c_str());
         }
        
-        CCCommonUtils::setSpriteMaxSize(pic, 70);
+        CCCommonUtils::setSpriteMaxSize(pic, 100);
     }else{
         showCustomPic = true;
         if(m_info->pic=="0"||m_info->pic==""){
@@ -294,7 +294,7 @@ bool MailReadPopUpView::init(){
             picVer = m_info->picVer;
             uid = m_info->fromUid;
         }
-        CCCommonUtils::setSpriteMaxSize(pic, 70);
+        CCCommonUtils::setSpriteMaxSize(pic, 100);
     }
 //    m_userHeadContainer->addChild(pic);
 //    pic->setPositionY(pic->getPositionY() - 3);
@@ -315,7 +315,7 @@ bool MailReadPopUpView::init(){
         auto bgCircle = CCLoadSprite::createSprite("Mail_head_backBattle.png");
         bgCircle->setBlendFunc(cbf);
         bgCircle->setPosition(ccp(sizeLayer.width / 2, sizeLayer.height / 2));
-        pic->setPosition(ccp(sizeLayer.width / 2, sizeLayer.height / 2 - 3));
+        pic->setPosition(ccp(sizeLayer.width / 2, sizeLayer.height / 2));
         //    pic->removeFromParent();
         m_selfModelLayer->begin();
         spr->visit();
@@ -347,7 +347,7 @@ void MailReadPopUpView::setAllBtnPosition(){
     CCCommonUtils::setButtonTitle(m_blockBtn, _lang("105312").c_str());
     m_blockBtn->setVisible(false);
     
-    auto btnPic1 = CCLoadSprite::createScale9Sprite("Mail_btn03.png");
+    auto btnPic1 = CCLoadSprite::createScale9Sprite("nb_tool_get_btn.png");
     m_rewardBtn =CCControlButton::create(btnPic1);
     m_rewardBtn->setEffectStr(Music_Sfx_UI_collect_item);
     m_rewardBtn->setPreferredSize(CCSizeMake(170, 64));
@@ -360,7 +360,7 @@ void MailReadPopUpView::setAllBtnPosition(){
     CCCommonUtils::setButtonTitle(m_rewardBtn, _lang("105572").c_str());
     m_rewardBtn->setVisible(false);
     
-    auto btnPic2 = CCLoadSprite::createScale9Sprite("Mail_btn05.png");
+    auto btnPic2 = CCLoadSprite::createScale9Sprite("nb_tool_use_btn.png");
     m_replyBtn =CCControlButton::create(btnPic2);
     m_replyBtn->setPreferredSize(CCSizeMake(170, 64));
     if (CCCommonUtils::isIosAndroidPad()) {
@@ -646,18 +646,18 @@ void MailReadPopUpView::refrehsReward(){
         CCArray *itemAndGeneralArr = CCArray::create();
         bool gray = (m_info->rewardStatus!=0);
         int count =vector.size();
-        int ceHG = 120;
+        int ceHG = 130;
         if (CCCommonUtils::isIosAndroidPad()) {
             ceHG = 288;
         }
-        
-        if(count>1){
+        CCLog("%d-----",count);
+        if(count>=1){
             if (CCCommonUtils::isIosAndroidPad()) {
-                m_listBG->setContentSize(CCSize(m_listBG->getContentSize().width, 288+(count-1)*ceHG));
+                m_listBG->setContentSize(CCSize(w-60, 338+(count-1)*ceHG));
 //                m_kuangBG->setContentSize(CCSize(m_kuangBG->getContentSize().width, 384+(count-1)*ceHG));
             }
             else {
-                m_listBG->setContentSize(CCSize(m_listBG->getContentSize().width, 120+(count-1)*ceHG));
+                m_listBG->setContentSize(CCSize(w-60, 170+(count-1)*ceHG));
 //                m_kuangBG->setContentSize(CCSize(m_kuangBG->getContentSize().width, 160+(count-1)*ceHG));
             }
         }
@@ -666,6 +666,7 @@ void MailReadPopUpView::refrehsReward(){
         if (CCCommonUtils::isIosAndroidPad()) {
             startY = -288+m_rewardNode->getPositionY();
         }
+        startY -=25 ;
         while(i < count){
             std::string rewardStr = vector[i];
             vector1.clear();
@@ -697,9 +698,20 @@ void MailReadPopUpView::refrehsReward(){
             if (CCCommonUtils::isIosAndroidPad()) {
                 cellNode->setScale(2.4);
             }
+            
+            auto bg = CCScale9Sprite::createWithSpriteFrameName("Mail_cell_bg.png");
+            auto bgs9 = CCScale9Sprite::createWithSpriteFrameName("Mail_head_backCommon.png");
+            
+            cellNode->addChild(bgs9);
             m_ListNode->addChild(cellNode);
-            auto icon0  = CCLoadSprite::createSprite("icon_kuang.png");
-            icon0->setPositionX(10+57);
+            cellNode->addChild(bg);
+            bg->setVisible(false);
+            auto icon0  = CCLoadSprite::createSprite("tool_2.png");
+            icon0->setPositionX(45+57);
+             bg->setPosition(w/2, icon0->getContentSize().height /2);
+            bgs9->setPosition(w/2-3, icon0->getContentSize().height /2);
+            bgs9->setContentSize(CCSize(m_listBG->getContentSize().width-30,icon0->getContentSize().height+10));
+             bg->setContentSize(CCSize(m_listBG->getContentSize().width-29,icon0->getContentSize().height+10));
             icon0->setPositionY(57);
             cellNode->addChild(icon0);
             icon0->setScale(98/icon0->getContentSize().width);
@@ -710,8 +722,9 @@ void MailReadPopUpView::refrehsReward(){
 //                    nameStr = (*titer).second.getName();
 //                }else{
                     nameStr = CCCommonUtils::getNameById(CC_ITOA(value));
+                CCLOG(nameStr.c_str());
 //                }
-                CCCommonUtils::createGoodsIcon(value, icon0, CCSize(114, 114));
+                CCCommonUtils::createGoodsIcon(value, icon0, CCSize(icon0->getContentSize().width, icon0->getContentSize().height));
 //                if(CCCommonUtils::isIosAndroidPad())
 //                    cellNode->setPositionX(180);
 //                else
@@ -727,6 +740,7 @@ void MailReadPopUpView::refrehsReward(){
             }else if(type == R_GENERAL){
                 nameStr = CCCommonUtils::getNameById(CC_ITOA(value));
                 picStr =CCCommonUtils::getIcon(CC_ITOA(value));
+                CCLOG(nameStr.c_str());
                 //float sacle = 1.0;
                 if(picStr==".png"){
                     picStr = "no_iconFlag.png";
@@ -735,8 +749,8 @@ void MailReadPopUpView::refrehsReward(){
                 auto icon  = CCLoadSprite::createSprite(picStr.c_str());
                 sacle = 94/icon->getContentSize().width;
                 cellNode->addChild(icon,1);
-                icon->setScale(sacle);
-                icon->setPositionX(10+57);
+//                icon->setScale(sacle);
+                icon->setPositionX(45+57);
                 icon->setPositionY(57);
                 if(m_info->rewardStatus==1){
                     icon->setColor({90,85,81});
@@ -753,12 +767,13 @@ void MailReadPopUpView::refrehsReward(){
                 
             }else if(type == R_HONOR || type == R_ALLIANCE_POINT || type == R_CRYSTAL){
                 nameStr = RewardController::getInstance()->getNameByType(type,0);
+                CCLOG(nameStr.c_str());
                 picStr = RewardController::getInstance()->getPicByType(type,0);
                 auto icon  = CCLoadSprite::createSprite(picStr.c_str());
                 sacle = 94/icon->getContentSize().width;
                 cellNode->addChild(icon);
                 icon->setScale(sacle);
-                icon->setPositionX(10+57);
+                icon->setPositionX(45+57);
                 icon->setPositionY(57);
                 if(m_info->rewardStatus==1){
                     icon->setColor({90,85,81});
@@ -767,6 +782,7 @@ void MailReadPopUpView::refrehsReward(){
                 if(EquipmentController::getInstance()->EquipmentInfoMap.find(value)!=EquipmentController::getInstance()->EquipmentInfoMap.end()){
                     auto& eInfo = EquipmentController::getInstance()->EquipmentInfoMap[value];
                     nameStr = _lang(eInfo.name) + "   "+_lang("102203")+" " + CC_ITOA(eInfo.level);
+                    CCLOG(nameStr.c_str());
                     string bgPath = CCCommonUtils::getToolBgByColor(eInfo.color);
                     auto iconBg = CCLoadSprite::createSprite(bgPath.c_str());
                     iconBg->setPosition(ccp(40+49, 0+49));
@@ -774,7 +790,7 @@ void MailReadPopUpView::refrehsReward(){
                     cellNode->addChild(iconBg);
                     picStr = CCCommonUtils::getIcon(CC_ITOA(value));
                     auto icon = CCLoadSprite::createSprite(picStr.c_str(),true,CCLoadSpriteType_EQUIP);
-                    icon->setPosition(ccp(10+57, 57));
+                    icon->setPosition(ccp(45+57, 57));
                     CCCommonUtils::setSpriteMaxSize(icon, 94, true);
                     cellNode->addChild(icon);
                     if(m_info->rewardStatus==1){
@@ -783,6 +799,7 @@ void MailReadPopUpView::refrehsReward(){
                 }
             }else{
                 nameStr = CCCommonUtils::getResourceNameByType(type);
+                CCLOG(nameStr.c_str());
                 picStr =CCCommonUtils::getResourceIconByType(type);
                 
                 if(picStr==".png"){
@@ -794,7 +811,7 @@ void MailReadPopUpView::refrehsReward(){
                 sacle = 94/icon->getContentSize().width;
                 cellNode->addChild(icon);
                 icon->setScale(sacle);
-                icon->setPositionX(10+57);
+                icon->setPositionX(45+57);
                 icon->setPositionY(57);
                 if(m_info->rewardStatus==1){
                     icon->setColor({90,85,81});
@@ -824,31 +841,31 @@ void MailReadPopUpView::refrehsReward(){
             cellNode->addChild(label1);
             
             
-            if(m_info->rewardStatus==1){
-                label->setColor({90,85,81});
-                label1->setColor({90,85,81});
+//            if(m_info->rewardStatus==1){
+                label->setColor({50,51,34});
+                label1->setColor({50,51,34});
                 
-            }
+//            }
             if (type == R_GOODS) {
                 if (CCCommonUtils::isIosAndroidPad()) {
-                    label->setPosition(120, 80);
-                    label1->setPosition(620, 20);
+                    label->setPosition(160, 60);
+                    label1->setPosition(580, 20);
                     cellNode->setPositionY(startY-i*ceHG);
                 }
                 else {
-                    label->setPosition(120, 80);
-                    label1->setPosition(620, 20);
+                    label->setPosition(160, 60);
+                    label1->setPosition(570, 20);
                     cellNode->setPositionY(startY-i*ceHG);
                 }
             }else{
                 if (CCCommonUtils::isIosAndroidPad()) {
-                    label->setPosition(120, 80);
-                    label1->setPosition(620, 20);
+                    label->setPosition(160, 60);
+                    label1->setPosition(570, 20);
                     cellNode->setPositionY(startY-i*ceHG);
                 }
                 else {
-                    label->setPosition(120, 80);
-                    label1->setPosition(620, 20);
+                    label->setPosition(160, 60);
+                    label1->setPosition(570, 20);
                     cellNode->setPositionY(startY-i*ceHG);
                 }
             }
@@ -1228,6 +1245,7 @@ void MailReadPopUpView::refreshContent(CCObject* p){
     }
     
     CCRichLabelTTF *richLabel= CCRichLabelTTF::create("", "Helvetica", fontSize,CCSize(txtW-30,0),kCCTextAlignmentLeft,kCCVerticalTextAlignmentCenter);
+    richLabel->setColor({51,50,32});
     this->m_ListNode->removeAllChildren();
     this->m_ListNode->addChild(richLabel);
     richLabel->setAnchorPoint(ccp(0, 1));
@@ -1316,6 +1334,7 @@ void MailReadPopUpView::refreshContent(CCObject* p){
 //        node->setPositionY(node->getPositionY() + m_totalH);
 //    }
     //m_totalH += 30;
+    m_totalH-=20 ;
     this->m_ListNode->setPositionY(-m_totalH);
     m_scroll->setContentSize(CCSize(m_contentContainer->getContentSize().width, -m_totalH));
     m_scroll->setContentOffset(ccp(0, m_contentContainer->getContentSize().height - (-m_totalH)));

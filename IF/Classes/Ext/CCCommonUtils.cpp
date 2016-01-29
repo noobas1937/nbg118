@@ -4764,7 +4764,7 @@ bool CCCommonUtils::isTestPlatformAndServer(string key)
 //    return tags;
 //}
 
-/通用hs的上传
+//通用hs的上传
 cocos2d::ValueMap CCCommonUtils::getHelpShiftDefaultMeta(){
     ValueMap meta;
     meta["VersionName"] = cocos2d::extension::CCDevice::getVersionName();

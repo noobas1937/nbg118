@@ -483,21 +483,21 @@ public abstract class MyActionBarActivity extends FragmentActivity
 					(int) (88 * ConfigManager.scaleRatioButton));
 			param2.setMargins(0, 0, ScaleUtil.dip2px(this, -4), 0);
 			param2.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-			optionButton.setLayoutParams(param2);
+//			optionButton.setLayoutParams(param2);
 
 			RelativeLayout.LayoutParams param3 = new RelativeLayout.LayoutParams((int) (124 * ConfigManager.scaleRatioButton),
 					(int) (48 * ConfigManager.scaleRatioButton));
 			param3.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
 			param3.addRule(RelativeLayout.CENTER_VERTICAL);
-			editButton.setLayoutParams(param3);
-			returnButton.setLayoutParams(param3);
+//			editButton.setLayoutParams(param3);
+//			returnButton.setLayoutParams(param3);
 
 			RelativeLayout.LayoutParams param4 = new RelativeLayout.LayoutParams((int) (124 * ConfigManager.scaleRatioButton),
 					(int) (48 * ConfigManager.scaleRatioButton));
 			param4.setMargins(0, 0, 0, 0);
 			param4.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
 			param4.addRule(RelativeLayout.CENTER_VERTICAL);
-			writeButton.setLayoutParams(param4);
+//			writeButton.setLayoutParams(param4);
 
 			RelativeLayout.LayoutParams param5 = new RelativeLayout.LayoutParams((int) (88 * ConfigManager.scaleRatioButton),
 					(int) (88 * ConfigManager.scaleRatioButton));

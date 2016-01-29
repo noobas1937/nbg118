@@ -10,6 +10,7 @@
 #include "PopupViewController.h"
 #include "SceneController.h"
 #include "UIComponent.h"
+#include "GameController.h"
 
 void PopupBaseView::closeSelf() {
     PopupViewController::getInstance()->removePopupView(this);
@@ -254,7 +255,7 @@ void PopupBaseView::removeFromLayer(bool returnFlag,bool isNewMailListPopup){
         float x = this->getPositionX() + this->getContentSize().width;
         float y = this->getPositionY();
 //        CCMoveTo* userMove = CCMoveTo::create(0.3f, ccp(x,y));
-        CCDelayTime* delay = CCDelayTime::create(0.8f);
+        CCDelayTime* delay = CCDelayTime::create(0.1f);
         this->runAction(CCSequence::create(
 //                                           CCEaseSineOut::create(userMove)
                                            delay
@@ -288,6 +289,33 @@ void PopupBaseView::onRemoveAnimationPlayBack(bool returnFlag){
     
     if (returnFlag) {
 //        doWhenClose();
+    }
+}
+
+void PopupBaseView::ForceClear( bool bAutoRelease )
+{
+    if(this->getParent()){
+        if(_modelLayer){
+            _modelLayer->getParent()->removeChild(_modelLayer);
+            _modelLayer = NULL;
+        }
+        
+        // 暂时先都autorelease吧
+        //if( bAutoRelease )
+        {
+            if( IsQuitGame() == false )
+            {
+                this->retain();
+                this->autorelease();
+            }
+        }
+        
+        this->getParent()->removeChild(this);
+        
+    }
+    else{
+        this->removeAllChildren();
+        _modelLayer = NULL;
     }
 }
 void PopupBaseView::setOpenAnimation(bool b){
