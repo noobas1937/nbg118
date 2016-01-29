@@ -505,6 +505,7 @@ public abstract class MyActionBarActivity extends FragmentActivity
 			param5.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
 			param5.addRule(RelativeLayout.CENTER_VERTICAL);
 			showFriend.setLayoutParams(param5);
+            showFriend.setVisibility(View.INVISIBLE);
 
 			ScaleUtil.adjustTextSize(titleLabel, ConfigManager.scaleRatio);
 
