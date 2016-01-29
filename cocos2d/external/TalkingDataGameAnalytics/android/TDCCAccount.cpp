@@ -70,7 +70,7 @@ TDCCAccount* TDCCAccount::setAccount(const char* accountId) {
 		t.env->DeleteLocalRef(jobj);
 	}
 
-    return &account;
+    return _accountInstance;
 }
 
 void TDCCAccount::setAccountName(const char* accountName) {
