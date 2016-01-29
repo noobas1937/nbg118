@@ -396,6 +396,9 @@ public:
     
     void showCanFeedRedPoint(bool isShow);
     
+    void playQuestAnimation();//fusheng 播放任务动画
+    void playQuestAnimationCallBack();
+    
     CCSafeObject<CCNode> m_nbXHD;
     
     

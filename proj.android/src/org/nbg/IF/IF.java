@@ -115,8 +115,11 @@ import android.graphics.Bitmap;
 
 import com.elex.chatservice.model.MailManager;
 import com.elex.chatservice.model.db.DBManager;
-import android.os.Build; 
+import android.os.Build;
 
+ // import com.clash.of.publish.GlobalPublishImpl;
+// tao.yu TalkingData
+import com.tendcloud.tenddata.TalkingDataGA;
 
 public class IF extends Cocos2dxActivity implements IAnalyticTracker {
 	private static IF instance = null;
@@ -310,6 +313,10 @@ public class IF extends Cocos2dxActivity implements IAnalyticTracker {
 		instance = this;
 		setDefaultUncaughtExceptionHandler();
 		Native.nativeSetPlatformUID("");
+		// tao.yu TalkingData
+		// TalkingDataGA.init(this.getApplicationContext(), "E020286589120C45394E3994E90F44D8", getPublishImpl().getPublishChannel());
+		TalkingDataGA.init(this.getApplicationContext(), "E020286589120C45394E3994E90F44D8", "GooglePlay");
+
 		// facebook 初始化
 		if(facebookEnabled){
 			FacebookSdk.sdkInitialize(this);
@@ -606,6 +613,7 @@ public class IF extends Cocos2dxActivity implements IAnalyticTracker {
 	public void onResume() {
 		super.onResume();
 		Adjust.onResume(this);
+		TalkingDataGA.onResume(this);
 		//AppEventsLogger.activateApp(this);
 		try {
 			// 接入FaceBook广告
@@ -632,6 +640,7 @@ public class IF extends Cocos2dxActivity implements IAnalyticTracker {
 	protected void onPause() {
 		super.onPause();
 		Adjust.onPause();
+		TalkingDataGA.onPause(this);
 		if(facebookEnabled)
 			AppEventsLogger.deactivateApp(this);
 		if(miAnalyticsEnabled)

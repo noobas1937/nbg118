@@ -591,13 +591,58 @@ bool QuestController::goToQuestTarget(QuestInfo* quest, bool isSt){
                         ret = true;
                         layer->onMoveToBuildAndPlay(itemId);
                     }else{
-                        int bid = FunBuildController::getInstance()->getMaxLvBuildByType(itemId);
+                        int limitLv = 0;
+                        if (quest->classType == 8) {//建造 n个 m级的 建筑
+                            int toLv1 = quest->para1 - itemId;
+                            int toLv2 = quest->para1%100;
+                            if (toLv1 == toLv2 && toLv1>1) {
+                                limitLv = toLv1 - 1;
+                            }
+                        }
+                        
+                        int bid = FunBuildController::getInstance()->getMaxLvBuildByType(itemId, limitLv);
                         if(bid>0){
                             ret = true;
                             if(bid == 400000000)
                                 PopupViewController::getInstance()->addPopupInView(GeneralTitanPopupView::create(),true);//fusheng 从外面任务索引点击龙升级 直接打开龙界面
                             else
-                                layer->onMoveToBuildAndPlay(bid);
+                            {
+                                //fusheng begin
+                                if (quest->classType != 2 && quest->classType != 22) {//不是造兵或者造陷阱的时候记录旧的镜头信息
+                                    layer->onMoveToBuildAndPlay(bid);
+                                    if (quest->classType == 14 || quest->classType == 1) {
+                                        layer->setQuestEffect(2);
+                                    }
+                                    else
+                                        layer->setQuestEffect(1);
+                                    FunBuildController::getInstance()->canPointArrow = true;
+                                    layer->showBuildBtns(bid);
+                                }
+                                
+//                                if (quest->classType == 2 || quest->classType == 22) { //造兵 造陷阱
+//                                    layer->onMoveToBuildAndPlay(bid,false,false);
+//                                    int needNum = quest->maxValue - quest->curValue;
+//                                    string armyId = CC_ITOA(quest->para1);
+//                                    
+//                                    auto& build = FunBuildController::getInstance()->getFunbuildById(bid);
+//                                    if (build.itemId>0 && build.state == FUN_BUILD_NORMAL)
+//                                    {
+//                                        int qType = CCCommonUtils::getQueueTypeByBuildType(itemId);
+//                                        int qid1 = QueueController::getInstance()->getCanRecQidByType(qType);
+//                                        int qid2 = QueueController::getInstance()->canMakeItemByType(qType, 0);
+//                                        if (qid1 == QID_MAX && qid2 != QID_MAX) {
+//                                            ps_bid = bid;
+//                                            ps_needNum = needNum;
+//                                            ps_armyId = armyId;
+//                                            GuideController::share()->setLagStopTouch(1.0);
+//                                            CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(QuestController::popupPSoilderView), this, 1.1,1, 0.0f, false);
+//                                        }
+//                                    }
+//                                    
+//                                }
+                                //fusheng end
+                            }
+//                                layer->onMoveToBuildAndPlay(bid);
                         }
                     }
                 }

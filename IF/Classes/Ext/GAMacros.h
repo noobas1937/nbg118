@@ -1,0 +1,72 @@
+//
+//  GAMacros.h
+//  IF
+//
+//  Created by 舒 圣林 on 15/1/23.
+//
+//
+
+#ifndef IF_GAMacros_h
+#define IF_GAMacros_h
+
+#include "../../../cocos2d/external/TalkingDataGameAnalytics/include/TalkingData.h"
+
+#if defined(COCOS2D_DEBUG) && COCOS2D_DEBUG > 0
+
+#define STAT_LOG(...) NULL
+
+// 游戏数据分析相关接口
+// 账户
+#define GA_ACCOUNT_ID(ACCOUNT_ID)           CCLOGFUNCF("GA_ACCOUNT_ID(%s)",ACCOUNT_ID)
+#define GA_ACCOUNT_COUNTRY(COUNTRY_ID)      CCLOGFUNCF("GA_ACCOUNT_COUNTRY(%s)",COUNTRY_ID)
+#define GA_ACCOUNT_LEVEL(ACCOUNT_LEVEL)     CCLOGFUNCF("GA_ACCOUNT_LEVEL(%s)",ACCOUNT_LEVEL)
+#define GA_ACCOUNT_SERVER(SERVER_ID)        CCLOGFUNCF("GA_ACCOUNT_SERVER(%s)",SERVER_ID)
+
+// 任务
+#define GA_MISSION_BEGIN(strMISSION_ID)       CCLOGFUNCF("GA_MISSION_BEGIN(%s)",strMISSION_ID)
+#define GA_MISSION_COMPLETED(strMISSION_ID)   CCLOGFUNCF("GA_MISSION_COMPLETED(%s)",strMISSION_ID)
+#define GA_MISSION_FAIL(strMISSION_ID,strCAUSE)  CCLOGFUNCF("GA_MISSION_FAIL(%s,%s)",strMISSION_ID,strCAUSE)
+// 支付
+#define GA_PAY_START(strORDER_ID,strPRODUCT_ID,dGROSS_AMOUNT,strCURRENCY_TYPE,dAMOUNT,strPAY_TYPE) \
+        CCLOGFUNCF("GA_PAY_START(%s,%s,%.2lf,%s,%.2lf,%s)",strORDER_ID,strPRODUCT_ID,dGROSS_AMOUNT,strCURRENCY_TYPE,dAMOUNT,strPAY_TYPE)
+#define GA_PAY_SUCCESS(strORDER_ID) CCLOGFUNCF("GA_PAY_SUCCESS(%s)",strORDER_ID)
+// 奖励虚拟币
+#define GA_COIN_REWARD(dCOINS, strREASON) CCLOGFUNCF("GA_COIN_REWARD(%d,%s)",dCOINS, strREASON)
+// 物品的购买和使用
+#define GA_ITEM_PURCHASE(strITEM_ID,iITEM_NUM,dPRICE) CCLOGFUNCF("GA_ITEM_PURCHASE(%s,%d,%.2lf)",strITEM_ID,iITEM_NUM,dPRICE)
+#define GA_ITEM_USE(strITEM_ID,iITEM_NUM) CCLOGFUNCF("GA_ITEM_USE(%s)",strITEM_ID,iITEM_NUM)
+// 自定义事件
+#define GA_ON_EVENT(strEVENT) CCLOGFUNCF("GA_ON_EVENT(%s)",strEVENT)
+#define GA_ON_EVENT1(strEVENT,PARAMS) CCLOGFUNCF("GA_ON_EVENT1(%s)",strEVENT)
+
+
+#else
+
+#define STAT_LOG(...) NULL
+
+// 游戏数据分析相关接口
+// 账户
+#define GA_ACCOUNT_ID(ACCOUNT_ID)           TDCCAccount::setAccount(ACCOUNT_ID)
+#define GA_ACCOUNT_COUNTRY(COUNTRY_ID)      TDCCAccount::setAccountName(COUNTRY_ID)
+#define GA_ACCOUNT_LEVEL(ACCOUNT_LEVEL)     TDCCAccount::setLevel(ACCOUNT_LEVEL)
+#define GA_ACCOUNT_SERVER(SERVER_ID)        TDCCAccount::setGameServer(SERVER_ID)
+// 任务
+#define GA_MISSION_BEGIN(MISSION_ID)       TDCCMission::onBegin(MISSION_ID)
+#define GA_MISSION_COMPLETED(MISSION_ID)   TDCCMission::onCompleted(MISSION_ID)
+#define GA_MISSION_FAIL(MISSION_ID,CAUSE)  TDCCMission::onFailed(MISSION_ID,CAUSE)
+// 支付
+#define GA_PAY_START(ORDER_ID,PRODUCT_ID,GROSS_AMOUNT,CURRENCY_TYPE,AMOUNT,PAY_TYPE) \
+TDCCVirtualCurrency::onChargeRequest(ORDER_ID,PRODUCT_ID,GROSS_AMOUNT,CURRENCY_TYPE,AMOUNT,PAY_TYPE)
+#define GA_PAY_SUCCESS(ORDER_ID) TDCCVirtualCurrency::onChargeSuccess(ORDER_ID)
+// 奖励虚拟币
+#define GA_COIN_REWARD(COINS, REASON) TDGAVirtualCurrency::onReward(COINS, REASON)
+// 物品的购买和使用
+#define GA_ITEM_PURCHASE(ITEM_ID,ITEM_NUM,PRICE) TDCCItem::onPurchase(ITEM_ID,ITEM_NUM,PRICE)
+#define GA_ITEM_USE(ITEM_ID,ITEM_NUM) TDCCItem::onUse(ITEM_ID,ITEM_NUM)
+// 自定义事件
+#define GA_ON_EVENT(EVENT) TDCCTalkingDataGA::onEvent(EVENT)
+#define GA_ON_EVENT1(EVENT,PARAMS) TDCCTalkingDataGA::onEvent(EVENT,PARAMS)
+
+#endif // defined(COCOS2D_DEBUG) && COCOS2D_DEBUG > 0
+
+#endif //IF_GAMacros_h

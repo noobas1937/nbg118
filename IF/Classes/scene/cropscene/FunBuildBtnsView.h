@@ -41,7 +41,7 @@ public:
     virtual void onEnter();
     virtual void onExit();
     void onHide();
-    void onShow(int buildId);
+    void onShow(int buildId, int questType = -1);
     CCSafeObject<CCNode> m_toolNode;
 protected:
     FunBuildInfo* m_info;
@@ -52,7 +52,7 @@ protected:
     int m_qid;
     int lastTime;
     string guidKey;
-    
+    int m_questType;
     void onBtn1Click(CCObject * pSender, Control::EventType pCCControlEvent);
     void onBtn2Click(CCObject * pSender, Control::EventType pCCControlEvent);
     void onBtn3Click(CCObject * pSender, Control::EventType pCCControlEvent);
@@ -118,5 +118,17 @@ protected:
 private:
     
 };
-
+class FunBuildBtnsEffect : public CCAniNode
+, public CCBSelectorResolver
+, public CCBMemberVariableAssigner
+{
+public:
+    static FunBuildBtnsEffect *create();
+private:
+    FunBuildBtnsEffect(){};
+    virtual bool init();
+    virtual bool onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const char * pMemberVariableName, cocos2d::CCNode * pNode);
+    virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector(cocos2d::CCObject * pTarget, const char * pSelectorName){return NULL;}
+    virtual SEL_CCControlHandler onResolveCCBCCControlSelector(cocos2d::CCObject * pTarget, const char * pSelectorName);
+};
 #endif

@@ -21,8 +21,11 @@ apkTargetDir=$packageroot/$curDate
 soTargetDir=$soRootPath/$curDate
 mkdir $soTargetDir >/dev/null 2>/dev/null
 
-apkTargetPath=$apkTargetDir/DragonClans_google-release-$curDate-$curTime.apk
-apkTargetLastPath=$apkTargetDir/DragonClans_google-release.apk
+BRANCH=`git branch | awk '{if ($1=="*") print $2}'`
+COMMIT=`git rev-list HEAD -n 1 | cut -c 1-7`
+
+apkTargetPath=$apkTargetDir/DC_google_release_"$curDate"_"$curTime"_"$BRANCH"_"$COMMIT".apk
+apkTargetLastPath=$apkTargetDir/DC_google_release.apk
 
 if [ ! -n "$ANDROID_HOME" ]; then
 echo "Error:Need to specify ANDROID_HOME first"

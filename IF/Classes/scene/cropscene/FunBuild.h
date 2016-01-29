@@ -274,6 +274,7 @@ public:
     virtual void onEnter();
     virtual void onExit();
     bool isCanClick();
+    bool isCanGather();
     void ClickState();
     void onShowRecState();
     void showUpNode(bool isShow);

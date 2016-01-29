@@ -171,7 +171,7 @@ void NewPlotView::refreshWord(){
             if(figure == "guide_bulage.png" )//fusheng 布拉格
             {
                 spr->setPositionY(spr->getPositionY()+62);
-                spr->setPositionX(spr->getPositionX()+120);
+                spr->setPositionX(spr->getPositionX()+115);
             }
 
             m_iconNode->addChild(spr);
