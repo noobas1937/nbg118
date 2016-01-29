@@ -606,8 +606,7 @@ void LoadingScene::sendCmdLogin()
         string _uuid = cocos2d::extension::CCDevice::getDeviceUid();
         GA_ACCOUNT_ID(_uuid.c_str());
     }
-    string _Country = GlobalData::shared()->fromCountry;
-    GA_ACCOUNT_COUNTRY(_Country.c_str());
+    // string _Country = GlobalData::shared()->fromCountry;
     
     // Guidance
     CCLoadSprite::doResourceByGeneralIndex(100, true);//450ms

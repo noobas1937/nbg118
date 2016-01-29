@@ -45,32 +45,29 @@ TDCCAccount::~TDCCAccount() {
 	}
 }
 
-// tao.yu
-static TDCCAccount* _accountInstance;
-
 TDCCAccount* TDCCAccount::setAccount(const char* accountId) {
     if (NULL == accountId || strlen(accountId) == 0) {
         return NULL;
     }
-    
+    static TDCCAccount account;
     TDGAJniMethodInfo t;
 	if (TDGAJniHelper::getStaticMethodInfo(t
 		, gClass_Account
 		, "setAccount"
 		, "(Ljava/lang/String;)Lcom/tendcloud/tenddata/TDGAAccount;")) {
-		if (_accountInstance && _accountInstance->mAccount) {
-			t.env->DeleteGlobalRef((jobject)_accountInstance->mAccount);
-			_accountInstance->mAccount == NULL;
+		if (account.mAccount) {
+			t.env->DeleteGlobalRef((jobject)account.mAccount);
+			account.mAccount == NULL;
 		}
 
 		jstring jaccountId = t.env->NewStringUTF(accountId);
 		jobject jobj = t.env->CallStaticObjectMethod(gClass_Account, t.methodID, jaccountId);
-		_accountInstance->mAccount = (void*)t.env->NewGlobalRef(jobj);
+		account.mAccount = (void*)t.env->NewGlobalRef(jobj);
 		t.env->DeleteLocalRef(jaccountId);
 		t.env->DeleteLocalRef(jobj);
 	}
 
-    return _accountInstance;
+    return &account;
 }
 
 void TDCCAccount::setAccountName(const char* accountName) {
