@@ -1538,6 +1538,10 @@ void FunBuild::onClickThis(float _time)
     if (layer) {
         layer->hideFlyArrow(0);
     }
+    if (m_buildState && m_buildState->isCanGather() && layer && FunBuildController::getInstance()->canPointArrow) {
+        layer->setPointArrowAni(m_buildingKey);
+    }
+    FunBuildController::getInstance()->canPointArrow = false;
     
     if(m_buildingKey<1000)
     {
@@ -3945,6 +3949,14 @@ bool FunBuildState::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const
 bool FunBuildState::isCanClick()
 {
     if (m_freeNode->isVisible() || m_recNode->isVisible() || m_helpNode->isVisible() || m_getNode->isVisible()) {
+        return true;
+    }
+    return false;
+}
+
+bool FunBuildState::isCanGather()
+{
+    if (m_getNode->isVisible()) {
         return true;
     }
     return false;

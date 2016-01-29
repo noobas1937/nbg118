@@ -25,6 +25,15 @@ void QuestInfo::parse(CCDictionary *dict){
     icon2 = dict->valueForKey("icon2")->getCString();
     rewardshow = dict->valueForKey("rewardshow")->getCString();
     isShow = dict->valueForKey("profile")->intValue();
+    
+    
+    classType = -1;
+    if (dict->objectForKey("type2")) {
+        classType = dict->valueForKey("type2")->intValue();
+    }
+    para1 = dict->valueForKey("para1")->intValue();
+    
+    
     if(icon1!=""){
         icon1+=".png";
     }

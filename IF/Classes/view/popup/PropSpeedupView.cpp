@@ -468,9 +468,18 @@ void PropSpeedupView::sliderCallBack(Ref *pSender, NBSlider::EventType type){
     }else{
         m_trainSlider->setEnabled(true);
     }
-    string tip = _lang("102457");
-    string time = CC_SECTOA(m_addTime * m_chooseCount);
-    tip.append(time);
+
+    string tip = "";
+    if(m_proptype == ItemSpdMenu_City){
+        string time = CC_SECTOA(m_addTime * m_chooseCount);
+        int freeTime = GlobalData::shared()->GlobalData::shared()->freeSpdT/60;
+        string freeTimeStr = CC_ITOA(freeTime) + _lang("105590");
+        tip = _lang_2("101090", time.c_str(), freeTimeStr.c_str());//101090=加速时间：{0}（免费时间：{1}）
+    }else{
+        tip = _lang("102457");
+        string time = CC_SECTOA(m_addTime * m_chooseCount);
+        tip.append(time);
+    }
     m_lblTimeTip->setString(tip.c_str());
     
 }
@@ -542,12 +551,25 @@ void PropSpeedupView::refreshEditBox(){
         }else{
             m_addTime = 0;
         }
-        
-        m_maxCount = MIN(m_maxCount, ceil(m_buildTime/m_addTime));
+        int ceilVal = 0;
+        if(m_addTime > 300){
+            ceilVal = floor(m_buildTime/m_addTime);
+        }else{
+            ceilVal = ceil(m_buildTime/m_addTime);
+        }
+        m_maxCount = MIN(m_maxCount, ceilVal);
+        m_maxCount = MAX(m_maxCount, 1);
         float minVal = 1.0/m_maxCount;
         m_trainSlider->setMinimumValue(minVal);
         m_trainSlider->setMaximumValue(1);
         m_trainSlider->setValue(1);
+        
+        if(m_proptype == ItemSpdMenu_City && m_addTime == 300){
+            int fitNum = ceil((m_buildTime - GlobalData::shared()->GlobalData::shared()->freeSpdT)/m_addTime);
+            float fitVal = (fitNum*1.0)/(m_maxCount*1.0);
+            fitVal = MAX(minVal,fitVal);
+            m_trainSlider->setValue(fitVal);
+        }
     }
 }
 void PropSpeedupView::animationCallback(){
@@ -601,6 +623,9 @@ void PropSpeedupView::sureToUseTool(){
         addT = m_addTime * m_chooseCount;
     }
     if(curTime <= addT){
+        closeDialog();
+        m_buildTime=0;
+    }else if(m_proptype == ItemSpdMenu_City && curTime <= (addT+GlobalData::shared()->GlobalData::shared()->freeSpdT)){
         closeDialog();
         m_buildTime=0;
     }else{

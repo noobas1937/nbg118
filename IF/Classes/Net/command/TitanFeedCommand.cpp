@@ -38,7 +38,7 @@ bool TitanFeedCommand::handleRecieve(cocos2d::CCDictionary *dict)
         
         
 //        TitanController::getInstance()->parse(_dict(params->objectForKey("params")));
-        
+        CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("Titan_Feed"));//fusheng 喂食成功
         
         return true;
     }

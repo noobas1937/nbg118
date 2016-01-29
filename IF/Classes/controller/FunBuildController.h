@@ -169,7 +169,7 @@ public:
     string getBuildByPos(int pos);
     string orderBuild(string buildings);
     
-    int getMaxLvBuildByType(int type);
+    int getMaxLvBuildByType(int type , int limitLv = 0);
     FunBuildInfo& getFunbuildById(int itemId);
     int getBuildKey(int type, int pos);
     
@@ -290,6 +290,8 @@ public:
     vector<int> WillMovePos;
     int willMoveToBuildType;
     int willMoveToBuildItemID;//fusheng 直接跳转的ItemID
+    
+    bool canPointArrow;//四种矿上当可以收集时，通过推荐任务跳转添加手指提示
 private:
     map<int, string> posToTypeMap;
     

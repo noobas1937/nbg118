@@ -3192,7 +3192,59 @@
             <key>lv1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{4,1412},{198,159}}</string>
+                <string>{{4,1412},{158,117}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{158,117}}</string>
+                <key>sourceSize</key>
+                <string>{158,117}</string>
+            </dict>
+            <key>lv11.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{168,1412},{171,131}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{171,131}}</string>
+                <key>sourceSize</key>
+                <string>{171,131}</string>
+            </dict>
+            <key>lv15.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{345,1412},{188,150}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{188,150}}</string>
+                <key>sourceSize</key>
+                <string>{188,150}</string>
+            </dict>
+            <key>lv19.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{539,1412},{189,150}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{189,150}}</string>
+                <key>sourceSize</key>
+                <string>{189,150}</string>
+            </dict>
+            <key>lv22.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{734,1412},{198,159}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -3202,10 +3254,10 @@
                 <key>sourceSize</key>
                 <string>{198,159}</string>
             </dict>
-            <key>lv11.png</key>
+            <key>lv24.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{208,1412},{224,205}}</string>
+                <string>{{938,1412},{224,205}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -3215,23 +3267,10 @@
                 <key>sourceSize</key>
                 <string>{224,205}</string>
             </dict>
-            <key>lv15.png</key>
+            <key>lv26.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{438,1412},{223,209}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{223,209}}</string>
-                <key>sourceSize</key>
-                <string>{223,209}</string>
-            </dict>
-            <key>lv22.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{667,1412},{250,231}}</string>
+                <string>{{1168,1412},{250,231}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -3241,10 +3280,49 @@
                 <key>sourceSize</key>
                 <string>{250,231}</string>
             </dict>
+            <key>lv28.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{1424,1412},{223,209}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{223,209}}</string>
+                <key>sourceSize</key>
+                <string>{223,209}</string>
+            </dict>
+            <key>lv30.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{1653,1412},{318,258}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{318,258}}</string>
+                <key>sourceSize</key>
+                <string>{318,258}</string>
+            </dict>
+            <key>lv6.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{4,1676},{160,128}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{160,128}}</string>
+                <key>sourceSize</key>
+                <string>{160,128}</string>
+            </dict>
             <key>tile_place_holder.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{923,1412},{256,128}}</string>
+                <string>{{170,1676},{256,128}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>

@@ -94,7 +94,7 @@ private:
     CCSafeObject<CCLabelIF> m_desc;
     
     CCSafeObject<CCNode> m_targetNode;
-    CCSafeObject<CCNode> m_clipperNode;
+//    CCSafeObject<CCNode> m_clipperNode;
     CCSafeObject<CCLabelIF> m_targetTxt3;
     CCSafeObject<CCLabelIF> m_targetTxt2;
     CCSafeObject<CCLabelIF> m_targetTxt1;
@@ -139,6 +139,8 @@ private:
     CCSafeObject<CCNode> m_bottomL2;
     CCSafeObject<CCScale9Sprite> m_scBG;
     CCSafeObject<CCLayerGradient> m_progress1;
+    CCSafeObject<CCLayerGradient> m_progress2;
+    CCSafeObject<CCLayerGradient> m_progress3;
     CCSafeObject<CCLabelIF> m_totalRankTip;
     CCSafeObject<CCNode> m_rewardListNode;
     CCSafeObject<CCNode> m_tab1;
@@ -153,8 +155,8 @@ private:
     CCSafeObject<CCNode> m_titleNode3;
     
     CCSafeObject<CCScrollView> m_scrollView;
-    CCSafeObject<CCClipNode> m_clipper;
-    CCSafeObject<CCProgressTimer> m_proTimer;
+//    CCSafeObject<CCClipNode> m_clipper;
+//    CCSafeObject<CCProgressTimer> m_proTimer;
     CCArray* m_rankReward;
     CCArray* m_rankRewardForUI;
     CCArray* m_totalRankReward;
