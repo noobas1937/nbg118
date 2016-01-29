@@ -98,8 +98,8 @@ public:
     CCNode * getVikingsShipCCBPosNodeBySeq(int seq);
     CCNode * getVikingsShipCCBTouchNodeBySeq(int seq);
     
-    void pauseEnemy();
-    void resumeEnemy();
+    void pauseEnemy(bool inGuide = false);
+    void resumeEnemy(bool inGuide = false);
     //end a by ljf
     
     

@@ -356,6 +356,11 @@ void GuideController::doGuide(){
             CCSafeNotificationCenter::sharedNotificationCenter()->postNotification("cartoon",CCString::create("cartoon4"));
             next();
         }
+        else if(cartoon == "cartoon5")//fusheng 显示任务条
+        {
+            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification("cartoon",CCString::create("cartoon5"));
+            next();
+        }
     }
 }
 

@@ -1558,14 +1558,14 @@ void UIComponent::showQuestTextNewOn(float t)
         checkShowQuestPrc();
         if (m_recommandQuest->state!=COMPLETE) {
             this->m_questTitle->setString(_lang("107527"));
-            
+
             this->m_quest_statues_icon->setSpriteFrame("UI_quest.png");
             
         }
         else {
             this->m_questTitle->setString("");
             auto rwdLabel = Label::create();
-            rwdLabel->setColor(ccWHITE);
+            rwdLabel->setColor({35,111,0});
             rwdLabel->setFontSize(20);
             string str = _lang("107516");
             
@@ -1581,7 +1581,7 @@ void UIComponent::showQuestTextNewOn(float t)
             
             rwdLabel->setPositionX(350);
             
-            rwdLabel->enableOutline({0,0,0,255},1);
+//            rwdLabel->enableOutline({0,0,0,255},1);
             
             m_questNameNode->addChild(rwdLabel);
             
@@ -2410,6 +2410,12 @@ void UIComponent::onSceneChanged(CCObject* params){
                 m_newuserHelpNode->setPositionY(CCDirector::sharedDirector()->getWinSize().height*0.5);
             }
         }
+        
+        //fusheng begin
+        if (GlobalData::shared()->playerInfo.level == 1 && GlobalData::shared()->playerInfo.exp == 0) {
+//            m_UIQuestNode->setVisible(false);//fusheng 1.29 不使用这个引导
+        }
+        //fusheng end
         m_testFeedBackNode->setPositionY(CCDirector::sharedDirector()->getWinSize().height*0.5 - 120);
         setTestFBNodeVisible(true);
         setLotteryNodeVisible(true);
@@ -2564,7 +2570,40 @@ void UIComponent::onUpdateStamine(CCObject *params)
     m_stamineBar->setScaleX(scalex);
     
 }
+//fusheng begin 新手引导播放任务出现动画
+void UIComponent::playQuestAnimation()
+{
+    //icon_quest_status_complete.png
+    auto spr = CCLoadSprite::createSprite("icon_quest_status_complete.png");
+    
+    auto beginPos = this->convertToNodeSpace(m_quest_statues_icon->getParent()->convertToWorldSpace( m_quest_statues_icon->getPosition()));
+    
+//    spr->setPosition(beginPos);
+    
+    this->addChild(spr);
+    
+    spr->setScale(0);
+    
+    CCSize size = CCDirector::sharedDirector()->getWinSize();
+    
+    auto midPos = this->convertToNodeSpace({size.width/2,size.height/2});//中心点
+    
+    spr->setPosition({static_cast<float>(size.width*0.5),static_cast<float>(size.height*0.4)});//移动到40％
+    
+    auto midPos2 = this->convertToNodeSpace({static_cast<float>(size.width*0.5),static_cast<float>(size.height*0.6)});//移动到60％
+    
+    spr->runAction(Sequence::create(Spawn::createWithTwoActions(ScaleTo::create(0.3, 1.5),MoveTo::create(0.3, midPos2)),DelayTime::create(0.8),Spawn::createWithTwoActions(ScaleTo::create(0.7, 0),MoveTo::create(0.7, beginPos)), CallFunc::create(CC_CALLBACK_0(UIComponent::playQuestAnimationCallBack, this )), NULL));//fusheng 0.3秒移动到(0.5,0.6) 等待0.8秒 ， 0.7秒移动到最初的位置
 
+}
+void UIComponent::playQuestAnimationCallBack()
+{
+    
+//    UIComponent::getInstance()->questStatRefreshNewOn();
+//    showQuestTextNewOn(0);
+    questIconAction();
+    showUIQuestNode(true);
+}
+//fusheng end
 
 
 void UIComponent::setUserData(){
@@ -6919,16 +6958,25 @@ void UIComponent::checkWatchInfo(float t){
 
 void UIComponent::showUIQuestNode(bool b)
 {
-    if(!b) {
-        m_UIQuestNodeStat = false;
-        m_UIQuestNode->setVisible(b);
-    }else {
-        m_UIQuestNodeStat = true;
-        auto layer = dynamic_cast<ImperialScene*>(SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE));
-        if(layer && m_buildNode->isVisible()) {
-            CheckGuideUIShow();
-        }
-    }
+    //fusheng begin del
+//    if(!b) {
+//        m_UIQuestNodeStat = false;
+//        m_UIQuestNode->setVisible(b);
+//    }else {
+//        m_UIQuestNodeStat = true;
+//        auto layer = dynamic_cast<ImperialScene*>(SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE));
+//        if(layer && m_buildNode->isVisible()) {
+//            CheckGuideUIShow();
+//        }
+//    }
+    //fusheng end del
+    
+    
+    
+    //fusheng begin
+    m_UIQuestNode->setVisible(b);
+    //fusheng end
+    
 }
 
 void UIComponent::resetKingsGiftNodePos(){

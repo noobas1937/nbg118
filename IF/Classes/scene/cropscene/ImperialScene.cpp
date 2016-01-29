@@ -399,10 +399,15 @@ void ImperialScene::cartoonHander(CCObject* params)
             this->schedule(schedule_selector(ImperialScene::createEnemy), 0.0f, 0, 0.0f);
         }
         else if (str == "cartoon3") {
-            this->pauseEnemy();
+            this->pauseEnemy(true);
         }
         else if (str == "cartoon4") {
-            this->resumeEnemy();
+            this->resumeEnemy(true);
+        }
+        else if (str == "cartoon5") {
+//            UIComponent::getInstance()->showUIQuestNode(true);
+//            UIComponent::getInstance()->questStatRefreshNewOn();
+            UIComponent::getInstance()->playQuestAnimation();
         }
     }
 }
@@ -1516,7 +1521,7 @@ void ImperialScene::createWalker(float t)
     }
 }
 
-void ImperialScene::pauseEnemy()
+void ImperialScene::pauseEnemy(bool isGuide)
 {
     m_isPauseEnemy = true;
     int i = 0;
@@ -1526,12 +1531,14 @@ void ImperialScene::pauseEnemy()
         
         node->PauseEnemy();
     }
-
-    this->unschedule(schedule_selector(ImperialScene::createEnemy));
+    if (!isGuide) {
+        this->unschedule(schedule_selector(ImperialScene::createEnemy));
+    }
+    
     
 }
 
-void ImperialScene::resumeEnemy()
+void ImperialScene::resumeEnemy(bool isGuide)
 {
     m_isPauseEnemy = false;
     int i = 0;
@@ -1541,8 +1548,10 @@ void ImperialScene::resumeEnemy()
         
         node->ResumeEnemy();
     }
-
-    this->schedule(schedule_selector(ImperialScene::createEnemy), 30.0f, CC_REPEAT_FOREVER, 0.0f);
+    if (!isGuide) {
+        this->schedule(schedule_selector(ImperialScene::createEnemy), 30.0f, CC_REPEAT_FOREVER, 0.0f);
+    }
+    
 }
 
 void ImperialScene::createEnemy(float t)
