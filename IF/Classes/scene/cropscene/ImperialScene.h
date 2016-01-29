@@ -99,11 +99,14 @@ public:
     CCNode * getVikingsShipCCBPosNodeBySeq(int seq);
     CCNode * getVikingsShipCCBTouchNodeBySeq(int seq);
     
-    void pauseEnemy();
-    void resumeEnemy();
+
     
     void requestRecommendAlliance();
    
+
+    void pauseEnemy(bool inGuide = false);
+    void resumeEnemy(bool inGuide = false);
+
     //end a by ljf
     
     
@@ -231,6 +234,7 @@ private:
 
     
     void buildingCallBack(CCObject* params);
+    void cartoonHander(CCObject* params);
     void wallCallBack(CCObject* params);
     void showHarvestEffect(CCObject* obj);
     void scheduleHarvestEffect(float _time);

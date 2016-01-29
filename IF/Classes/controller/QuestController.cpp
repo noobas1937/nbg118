@@ -591,7 +591,16 @@ bool QuestController::goToQuestTarget(QuestInfo* quest, bool isSt){
                         ret = true;
                         layer->onMoveToBuildAndPlay(itemId);
                     }else{
-                        int bid = FunBuildController::getInstance()->getMaxLvBuildByType(itemId);
+                        int limitLv = 0;
+                        if (quest->classType == 8) {//建造 n个 m级的 建筑
+                            int toLv1 = quest->para1 - itemId;
+                            int toLv2 = quest->para1%100;
+                            if (toLv1 == toLv2 && toLv1>1) {
+                                limitLv = toLv1 - 1;
+                            }
+                        }
+                        
+                        int bid = FunBuildController::getInstance()->getMaxLvBuildByType(itemId, limitLv);
                         if(bid>0){
                             ret = true;
                             if(bid == 400000000)

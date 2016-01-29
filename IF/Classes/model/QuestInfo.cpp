@@ -31,6 +31,7 @@ void QuestInfo::parse(CCDictionary *dict){
     if (dict->objectForKey("type2")) {
         classType = dict->valueForKey("type2")->intValue();
     }
+    para1 = dict->valueForKey("para1")->intValue();
     
     
     if(icon1!=""){

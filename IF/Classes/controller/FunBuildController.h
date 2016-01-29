@@ -169,7 +169,7 @@ public:
     string getBuildByPos(int pos);
     string orderBuild(string buildings);
     
-    int getMaxLvBuildByType(int type);
+    int getMaxLvBuildByType(int type , int limitLv = 0);
     FunBuildInfo& getFunbuildById(int itemId);
     int getBuildKey(int type, int pos);
     

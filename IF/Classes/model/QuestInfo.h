@@ -51,6 +51,7 @@ public:
     int gotype;
     int isShow;
     int classType;
+    int para1;
 };
 
 #endif /* defined(__IF__QuestInfo__) */
