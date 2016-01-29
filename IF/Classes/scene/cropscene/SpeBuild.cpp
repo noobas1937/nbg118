@@ -86,7 +86,7 @@ bool SpeBuild::initSpeBuild(int itemId)
         m_mainNode = CCNode::create();
         this->addChild(m_mainNode);
         m_isOpen = false;
-        string ccbName = "wasteland_";
+        string ccbName = "wasteland_new_";
         bool isTile = true;
         if (itemId == BIG_TILE_1) {
             ccbName = ccbName+CC_ITOA(GlobalData::shared()->contryResType)+"_1";
@@ -167,7 +167,7 @@ bool SpeBuild::initSpeBuild(int itemId)
         if (isTile) {
             auto tileInfo = FunBuildController::getInstance()->m_bigTileMap[itemId];
             if (tileInfo.level <= FunBuildController::getInstance()->getMainCityLv()) {
-                ccbName = ccbName + "_2";
+                //ccbName = ccbName + "_2"; //d by ljf,只有一种ccbs
                 m_isOpen = true;
             }
         }
@@ -1283,15 +1283,18 @@ void SpeBuild::drowEffectSpr(int zOrder, int tmpOrd)
     if (m_isOpen) {
         auto tmp_ptArray = CCPointArray::create(20);
         if (m_buildingKey == BIG_TILE_1) {
-            tmp_ptArray->addControlPoint(ccp(parentX+250, parentY+270));
-            tmp_ptArray->addControlPoint(ccp(parentX+90, parentY+130));
+            //tmp_ptArray->addControlPoint(ccp(parentX+250, parentY+270));
+            //tmp_ptArray->addControlPoint(ccp(parentX+90, parentY+130));
+            tmp_ptArray->addControlPoint(ccp(parentX+200, parentY+150));
+            tmp_ptArray->addControlPoint(ccp(parentX+250, parentY+150));
         }
         else if (m_buildingKey == BIG_TILE_2) {
-            tmp_ptArray->addControlPoint(ccp(parentX+370, parentY+210));
-            tmp_ptArray->addControlPoint(ccp(parentX+70, parentY+150));
+            //tmp_ptArray->addControlPoint(ccp(parentX+370, parentY+210));
+            //tmp_ptArray->addControlPoint(ccp(parentX+70, parentY+150));
+            tmp_ptArray->addControlPoint(ccp(parentX+280, parentY+120));
         }
         else if (m_buildingKey == BIG_TILE_3) {
-            tmp_ptArray->addControlPoint(ccp(parentX+220, parentY+210));
+            tmp_ptArray->addControlPoint(ccp(parentX+170, parentY+200));
         }
         else if (m_buildingKey == BIG_TILE_4) {
             tmp_ptArray->addControlPoint(ccp(parentX+170, parentY+180));
@@ -1300,13 +1303,19 @@ void SpeBuild::drowEffectSpr(int zOrder, int tmpOrd)
             tmp_ptArray->addControlPoint(ccp(parentX+220, parentY+210));
         }
         for (int j=0; j<tmp_ptArray->count(); j++) {
-            auto particle1 = ParticleController::createParticle("Collection_Loop_3");
+            //auto particle1 = ParticleController::createParticle("Collection_Loop_3");
+            auto particle1 = ParticleController::createParticle("Unlockgound_0");
             particle1->setPosition(tmp_ptArray->getControlPointAtIndex(j));
             addParticleToBatch(particle1);
             
-            auto particle2 = ParticleController::createParticle("Collection_Loop_4");
+            //auto particle2 = ParticleController::createParticle("Collection_Loop_4");
+            auto particle2 = ParticleController::createParticle("Unlockgound_1");
             particle2->setPosition(tmp_ptArray->getControlPointAtIndex(j));
             addParticleToBatch(particle2);
+            
+            auto particle3 = ParticleController::createParticle("Unlockgound_2");
+            particle3->setPosition(tmp_ptArray->getControlPointAtIndex(j));
+            addParticleToBatch(particle3);
         }
     }
     
@@ -1444,10 +1453,20 @@ void SpeBuild::onHideParticle()
 void SpeBuild::onPlayUnlock()
 {
     isCanClick = false;
-    this->getAnimationManager()->setAnimationCompletedCallback(this, callfunc_selector(SpeBuild::playFadeOut));
-    this->getAnimationManager()->runAnimationsForSequenceIdTweenDuration(1, 0);
+    //begin d by ljf
+    //this->getAnimationManager()->setAnimationCompletedCallback(this, callfunc_selector(SpeBuild::playFadeOut));
+    //this->getAnimationManager()->runAnimationsForSequenceIdTweenDuration(1, 0);
+    //end d by ljf
     onShowParticle();
+    this->scheduleOnce(schedule_selector(SpeBuild::toPlayFadeOut), 1.0); //a by ljf,新图没有动画了
 }
+
+//begin a by ljf
+void SpeBuild::toPlayFadeOut(float dt)
+{
+    playFadeOut();
+}
+//end a by ljf
 
 void SpeBuild::playFadeOut()
 {

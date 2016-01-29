@@ -49,6 +49,9 @@ public:
     void setGary();
     void setWhite();
     void playFadeOut();
+    //begin a by ljf
+    void toPlayFadeOut(float dt);
+    //end a by ljf
     void playShadow();
     void stopShadow();
     void onBuildDelete();

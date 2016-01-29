@@ -96,9 +96,7 @@ bool FunBuild::initTmpBuild(int itemId, int x, int y, CCSpriteBatchNode* batchNo
     m_mainNode = CCNode::create();
     this->addChild(m_mainNode);
     CCBLoadFile(ccbName.c_str(),m_mainNode,this);
-    //begin a by ljf
     
-    //end a by ljf
     parentX = x;
     parentY = y;
     m_batchNode = batchNode;
@@ -335,19 +333,25 @@ bool FunBuild::initFunBuild(int itemId, CCLabelBatchNode* nameLayer)
         auto& tileInfo = FunBuildController::getInstance()->m_tileMap[itemId];
         
         if (tileInfo.state == FUN_BUILD_LOCK) {
-            tileName = "res_tile_lock.png";
+            //tileName = "res_tile_lock.png"; //d by ljf, /改回大地块整体开启
         }
         //end a by ljf
         
         if (tileInfo.xmlOpen == FUN_BUILD_HIDE) {
             // tao.yu 如果表中配置hide，则不显示地块
-            tileName = "build_hide.png";
+            //tileName = "build_hide.png"; //d by ljf, /改回大地块整体开启
         }
         
         m_tile = CCLoadSprite::createSprite(tileName.c_str());
         m_tile->getTexture()->setAntiAliasTexParameters();
         this->setContentSize(m_tile->getContentSize());
         m_tile->setAnchorPoint(ccp(0.5,0.5));
+        //begin a by ljf, 改回大地块整体开启
+        if(tileInfo.state == FUN_BUILD_LOCK || tileInfo.xmlOpen == FUN_BUILD_HIDE)
+        {
+            m_tile->setVisible(false);
+        }
+        //end a by ljf
         mainWidth = m_tile->getContentSize().width;
         mainHeight = m_tile->getContentSize().height;
         m_moveFrame = CCLoadSprite::createSprite("Tile_frame.png");
@@ -427,15 +431,17 @@ void FunBuild::unLockTile(CCObject* params)
         int itemId = dynamic_cast<CCInteger*>(params)->getValue();
         if (itemId == m_buildingKey && m_tile) {
             m_tile->setOpacity(0);
-            //begin a by ljf
+            //begin a by ljf,
+            /* 改回大地块整体开启
             CCSpriteFrame* newSp = CCLoadSprite::getSF("res_tile_1.png");
             m_tile->stopAllActions();
             m_tile->setDisplayFrame(newSp);
             m_tile->getTexture()->setAntiAliasTexParameters();
 //            m_tile->setScale(0.75);
+            */
             //end a by ljf
             m_tile->setVisible(true);
-            auto delate = CCDelayTime::create(0.5); //m by ljf, 1.6 to 0.5
+            auto delate = CCDelayTime::create(1.6); //m by ljf, 1.6 to 0.5
             auto fadeIn = CCFadeIn::create(1.0);
             m_tile->runAction(CCSequence::create(delate,fadeIn,NULL));
         }
@@ -585,12 +591,7 @@ void FunBuild::setNamePos(int x, int y, CCLayer* sginLayer, CCLayer* popLayer, C
     m_sprArray->addObject(m_moveFrame);
     m_moveFrame->setZOrder(zOrder*1000+tmpOrd);
     tmpOrd ++;
-    //begin a by ljf
-    if(m_info->type == FUN_BUILD_BARRACK2)
-    {
-        
-    }
-    //end a by ljf
+    
     if(m_mainNode) {
         auto& array = m_mainNode->getChildren();
         if (array.size()>0) {
@@ -1560,6 +1561,7 @@ void FunBuild::onClickThis(float _time)
             }
         }
         //begin a by ljf
+        /*
         int position = tileInfo.tileId;
         if (FunBuildController::getInstance()->m_tilePositionUnlockMap.find(position) != FunBuildController::getInstance()->m_tilePositionUnlockMap.end()) //在position_unlock中配置过
         {
@@ -1599,7 +1601,7 @@ void FunBuild::onClickThis(float _time)
               }
 
             }
-        
+        */
         //end a by ljf
         
     }
@@ -2132,27 +2134,7 @@ void FunBuild::canShowState()
         }
     }
     else if (m_info->type == FUN_BUILD_WOOD || m_info->type == FUN_BUILD_FOOD || m_info->type == FUN_BUILD_IRON || m_info->type == FUN_BUILD_STONE) {
-        //begin d by ljf
-        /*
-        if (!isEffectRunning && FunBuildController::getInstance()->canShowOutPut(m_info->itemId)) {
-            addFunBuildState();
-            isEffectRunning = true;
-            if(m_info->type == FUN_BUILD_FOOD || m_info->type == FUN_BUILD_WOOD) {
-                this->getAnimationManager()->runAnimationsForSequenceNamed("GrowthProcess");
-                
-            }
-        }
-        else if (isEffectRunning && !FunBuildController::getInstance()->canShowOutPut(m_info->itemId) && m_buildState->CanDel ) {
-            removeFunBuildState();
-            isEffectRunning = false;
-            if(m_info->type == FUN_BUILD_FOOD || m_info->type == FUN_BUILD_WOOD) {
-                this->getAnimationManager()->runAnimationsForSequenceNamed("Havest");
-                
-            }
-        }
-        */
-        //end d by ljf
-        //begin a by ljf
+                //begin a by ljf
         //未长出状态未显示0，未长出状态已显示1， 长出过程未显示2， 长出过程已显示3， 等收割未显示4， 等收割已显示5， 收割未显示6， 收割已显示7
         //m_spineAni->setAnimation(0, "GrowthProcess", true);
         

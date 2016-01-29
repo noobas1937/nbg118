@@ -4986,7 +4986,7 @@ void ImperialScene::initBigTile()
         return;
     }
     
-    /*
+    
     map<int, BigTileInfo>::iterator it=FunBuildController::getInstance()->m_bigTileMap.begin();
     for (; it!=FunBuildController::getInstance()->m_bigTileMap.end(); it++) {
         if(it->second.state == FUN_BUILD_LOCK) {
@@ -5007,7 +5007,7 @@ void ImperialScene::initBigTile()
             }
        }
     }
-    */
+    
     
     m_flagBuild = SpeBuild::create(SPE_BUILD_FLAG);
     m_flagNode->addChild(m_flagBuild);
