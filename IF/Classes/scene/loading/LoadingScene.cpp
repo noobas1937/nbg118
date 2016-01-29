@@ -27,6 +27,7 @@
 #include "IFSkeletonDataManager.h"
 #include "md5.h"
 #include "NBDLCController.hpp"
+#include "../../Ext/GAMacros.h"
 
 #define MSG_MAIN_THREAD_XML 453
 #define LOADING_STEP        80
@@ -596,6 +597,18 @@ void LoadingScene::doLogin(CCObject* p)
 
 void LoadingScene::sendCmdLogin()
 {
+    //login 记录账户信息
+    std::string uid = CCUserDefault::sharedUserDefault()->getStringForKey(GAME_UID,"");
+    if (uid != "") {
+        GA_ACCOUNT_ID(uid.c_str());
+    }
+    else {
+        string _uuid = cocos2d::extension::CCDevice::getDeviceUid();
+        GA_ACCOUNT_ID(_uuid.c_str());
+    }
+    string _Country = GlobalData::shared()->fromCountry;
+    GA_ACCOUNT_COUNTRY(_Country.c_str());
+    
     // Guidance
     CCLoadSprite::doResourceByGeneralIndex(100, true);//450ms
     
@@ -748,6 +761,7 @@ void LoadingScene::onRelogin(CCObject* p)
 
 void LoadingScene::sendCmdGetServerList(CCObject* p){
     //loadingLog统计
+    GA_ON_EVENT("SEND_CMD_GET_SERVER_LIST");
     GameController::getInstance()->setLoadingLog("LoadingScene", "sendCmdGetServerList");
 
     CCHttpRequest* request = new CCHttpRequest();
@@ -893,6 +907,7 @@ bool LoadingScene::isJP(){
 
 void LoadingScene::showLoading()
 {
+    GA_ON_EVENT("LOADING_START");
     schedule(schedule_selector(LoadingScene::loadingAni), 0.167f);
     selectLogin(0.0);
 }
@@ -1032,6 +1047,7 @@ void LoadingScene::gotoMainScene(float t)
             SceneController::getInstance()->gotoScene(SCENE_ID_MAIN);
         }
         CCCommonUtils::recordStep("5");
+        GA_ON_EVENT("LOADING_END");
     }
 }
 
@@ -1052,6 +1068,7 @@ void LoadingScene::onConnectionLost(cocos2d::CCObject *obj)
     auto ret = dynamic_cast<NetResult*>(obj);
     //loadingLog统计
     GameController::getInstance()->setLoadingLog("LoadingScene", "onConnectionLost");
+    GA_ON_EVENT("onConnectionLost");
     
     if (Error_Network_Lost==ret->getErrorCode() && !GlobalData::shared()->isPause) {
 //        LocalController::shared()->init();

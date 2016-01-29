@@ -69,6 +69,13 @@
 #include "WorldController.h"
 #include "NBGPostEffectLayer.h"
 #include "NBWaterSprite.hpp"
+#include "RecommendAllianceCommand.h"
+#include "AllianceInfoView.h"
+#include "CreateAllianceView.h"
+#include "CreateAllianceViewRecommend.h"
+#include "AlertAddAllianceViewRecommend.h"
+#include "RecommendAllianceController.h"
+#include "AllianceInfo.h"
 //end a by ljf
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
@@ -377,6 +384,7 @@ bool ImperialScene::init()
     water->setAnchorPoint(Vec2(0.5,0.5));
     m_waterNode->addChild(water);
     
+    RecommendAllianceController::getInstance()->checkToSendRecommendRequest();
     //UIComponent::getInstance()->loadSpineActivityBox();
     //end a by ljf
     return true;
@@ -388,6 +396,29 @@ bool ImperialScene::init()
 //    GameController::getInstance()->m_manager->setDelegate(GameController::getInstance());
 //    GameController::getInstance()->m_manager->update();
 //}
+
+void ImperialScene::cartoonHander(CCObject* params)
+{
+    if(params)
+    {
+        string str = ((CCString*)params)->_string;
+        if (str == "cartoon2") {
+            m_enemyNum = 30;
+            this->schedule(schedule_selector(ImperialScene::createEnemy), 0.0f, 0, 0.0f);
+        }
+        else if (str == "cartoon3") {
+            this->pauseEnemy(true);
+        }
+        else if (str == "cartoon4") {
+            this->resumeEnemy(true);
+        }
+        else if (str == "cartoon5") {
+//            UIComponent::getInstance()->showUIQuestNode(true);
+//            UIComponent::getInstance()->questStatRefreshNewOn();
+            UIComponent::getInstance()->playQuestAnimation();
+        }
+    }
+}
 
 void ImperialScene::buildingCallBack(CCObject* params)
 {
@@ -587,9 +618,19 @@ void ImperialScene::buildingCallBack(CCObject* params)
             {
                 scale = HD_SCALE;
             }
-            scale = 0.55;//fusheng 修改放缩
+//            scale = 0.55;//fusheng 修改放缩
             canMoveToRequest = false;
             onMoveToPos(m_curBuildPosx, m_curBuildPosy, TYPE_POS_MID, 0, scale, true);//fusheng 这里是进入城里的屏幕的位置
+        }
+        else if (GuideController::share()->isInTutorial() && GlobalData::shared()->playerInfo.level == 1 && GlobalData::shared()->playerInfo.exp == 0)
+        {
+            m_curBuildPosx = 3950;//fusheng 修改位置
+            m_curBuildPosy = 620;//fusheng 修改位置
+            float scale = 1.2;
+
+            canMoveToRequest = false;
+            onMoveToPos(m_curBuildPosx, m_curBuildPosy, TYPE_POS_MID, 0, scale, true);//fusheng 这里是进入城里的屏幕的位置
+
         }
     }
 
@@ -615,6 +656,8 @@ void ImperialScene::buildingCallBack(CCObject* params)
     m_touchLayer->addChild(m_jianBatchNode, 1999);
     
     this->schedule(schedule_selector(ImperialScene::createWalker), 0.25, 1, 0.0f);
+    
+    this->schedule(schedule_selector(ImperialScene::checkPopRecommendAlliance), 2.0, CC_REPEAT_FOREVER, 20.0f);
     
 //    string gid = GuideController::share()->getCurrentId();
 //    if (gid != "3311100") {
@@ -778,6 +821,69 @@ void ImperialScene::onCreateVikingsShip(int level)
 }
 
 //begin a by ljf
+
+
+
+void ImperialScene::requestRecommendAlliance()
+{
+    RecommendAllianceController::getInstance()->checkToSendRecommendRequest();
+    int cnt = rand() % 6;
+    //int cnt = 0;
+    if(cnt == 1)
+    {
+        //RecommendAllianceCommand* command = new RecommendAllianceCommand();
+        /*
+        command->putParam("name", CCString::create(m_allianceNameEditBox->getText()));
+        command->putParam("abbr", CCString::create(""));
+        command->putParam("icon", CCString::create(""));
+        command->putParam("intro", CCString::create(m_allianceIntroEditBox->getText()));
+        command->putParam("language", CCString::create(language));
+        
+        command->setCallback(CCCallFuncO::create(this, callfuncO_selector(CreateAllianceViewRecommend::onCreateAlliance), NULL));
+        command->setFailCallback(CCCallFuncO::create(this, callfuncO_selector(CreateAllianceViewRecommend::createFail), NULL));
+        */
+        //command->sendAndRelease();
+    }
+    if(cnt == 2)
+    {
+        
+        //if(GlobalData::shared()->playerInfo.isInAlliance()){
+            CCCommonUtils::setIsHDViewPort(true);
+            PopupViewController::getInstance()->addPopupInView(AllianceInfoView::create(&GlobalData::shared()->playerInfo.allianceInfo));
+        //}
+        
+    }
+    if(cnt == 3)
+    {
+        PopupViewController::getInstance()->addPopupView(CreateAllianceView::create(11));
+    }
+    if(cnt == 4 )
+    {
+        PopupViewController::getInstance()->addPopupView(CreateAllianceViewRecommend::create(11));
+    }
+    if((cnt == 5) || (cnt == 0))
+    {
+        CCCommonUtils::setIsHDViewPort(true);
+        //PopupViewController::getInstance()->addPopupInView(AlertAddAllianceViewRecommend::create(&GlobalData::shared()->playerInfo.allianceInfo));
+        AllianceInfo * pGlobal = &(GlobalData::shared()->playerInfo.allianceInfo);
+        AllianceInfo * allInfo = new AllianceInfo();
+        allInfo->uid = pGlobal->uid;
+        allInfo->name = pGlobal->name;
+        allInfo->shortName = pGlobal->shortName;
+        allInfo->language = pGlobal->language;
+        allInfo->leader = pGlobal->leader;
+        allInfo->maxNum = pGlobal->maxNum;
+        allInfo->currentNum = pGlobal->currentNum;
+        allInfo->icon = pGlobal->icon;
+        //allInfo->fightpower = fightPower;
+        allInfo->totalForce = pGlobal->totalForce;
+        PopupViewController::getInstance()->addPopupView(AlertAddAllianceViewRecommend::create(&GlobalData::shared()->playerInfo.allianceInfo));
+        
+        delete allInfo;
+        allInfo = nullptr;
+    }
+}
+
 CCNode * ImperialScene::getVikingsShipCCBPosNodeBySeq(int seq)
 {
     if(seq == 1)
@@ -1114,11 +1220,13 @@ bool ImperialScene::onVikingsShipLockTouched(CCTouch* pTouch)
             unsigned int max = WorldController::getInstance()->getMaxMarchCount();
             //if (current >= max)
             {
-                WorldController::getInstance()->showMarchAlert(max);
+                WorldController::getInstance()->showMarchAlert(max); 
                 //return;
             }
 
-            
+            //begin ljf test
+            //requestRecommendAlliance();
+            //end ljf test
             return true;
         }
     }
@@ -1488,7 +1596,7 @@ void ImperialScene::createWalker(float t)
     }
 }
 
-void ImperialScene::pauseEnemy()
+void ImperialScene::pauseEnemy(bool isGuide)
 {
     m_isPauseEnemy = true;
     int i = 0;
@@ -1498,12 +1606,14 @@ void ImperialScene::pauseEnemy()
         
         node->PauseEnemy();
     }
-
-    this->unschedule(schedule_selector(ImperialScene::createEnemy));
+    if (!isGuide) {
+        this->unschedule(schedule_selector(ImperialScene::createEnemy));
+    }
+    
     
 }
 
-void ImperialScene::resumeEnemy()
+void ImperialScene::resumeEnemy(bool isGuide)
 {
     m_isPauseEnemy = false;
     int i = 0;
@@ -1513,8 +1623,15 @@ void ImperialScene::resumeEnemy()
         
         node->ResumeEnemy();
     }
+    if (!isGuide) {
+        this->schedule(schedule_selector(ImperialScene::createEnemy), 30.0f, CC_REPEAT_FOREVER, 0.0f);
+    }
+    
+}
 
-    this->schedule(schedule_selector(ImperialScene::createEnemy), 30.0f, CC_REPEAT_FOREVER, 0.0f);
+void ImperialScene::checkPopRecommendAlliance(float t)
+{
+    RecommendAllianceController::getInstance()->checkToPopRecommendAlliance();
 }
 
 void ImperialScene::createEnemy(float t)
@@ -1535,6 +1652,7 @@ void ImperialScene::createEnemy(float t)
         m_enemyArray.pushBack(soldier);
         //soldier->setSprScale(1);
     }
+    
 }
 
 void ImperialScene::shootArrow(float t)
@@ -1932,7 +2050,7 @@ void ImperialScene::onEnter()
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::titanChangeStatus), MSG_TITAN_STATUS_CHANGE, NULL);//fusheng 泰坦状态改变
     CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::handleTitanUpgrade), MSG_TITAN_UPGRADE_COMPLETE, NULL);
     
-    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::handleTitanUpgrade), "cartoon2", NULL);
+    CCSafeNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(ImperialScene::cartoonHander), "cartoon", NULL);
     
 
     
@@ -2555,7 +2673,7 @@ void ImperialScene::onExit()
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_TITAN_STATUS_CHANGE);
     CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_TITAN_UPGRADE_COMPLETE);
     
-    CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, "cartoon2");
+    CCSafeNotificationCenter::sharedNotificationCenter()->removeObserver(this, "cartoon");
     
     if (m_praticle) {
         m_praticle->stopAllActions();
@@ -2932,7 +3050,35 @@ void ImperialScene::hideFlyArrow(float _time){
     m_flyArrow->stopAllActions();
     m_flyArrow->setVisible(false);
 }
+void ImperialScene::setPointArrowAni(int buildId)
+{
+    FunBuild *build = NULL;
+    if(buildId>1000){
+        map<int, FunBuild*>::iterator it = m_buildItems.find(buildId);
+        if( it == m_buildItems.end()){
+            return;
+        }
+        build = m_buildItems[buildId];
+        
+    }else
+        return;
+    
+    int buildPosX = build->getParent()->getPositionX();
+    int buildPosY = build->getParent()->getPositionY();
+    if (buildId == FUN_BUILD_MAIN_CITY_ID) {
+        buildPosY -= build->mainHeight/2;
+    }
+    m_flyArrow->setPosition(ccp(buildPosX, buildPosY + 80));
+    m_flyArrow->setVisible(true);
+    CCActionInterval * moveBy = CCMoveBy::create(0.5,ccp(30, 50));
+    CCActionInterval * moveRBy = CCMoveBy::create(0.5,ccp(-30, -50));
+    CCSequence* fadeAction = CCSequence::create(moveBy,moveRBy,NULL);
+    CCActionInterval * fadeForever =CCRepeatForever::create((CCActionInterval* )fadeAction);
+    m_flyArrow->runAction(fadeForever);
+    
+    scheduleOnce(schedule_selector(ImperialScene::hideFlyArrow), 5.0f);
 
+}
 void ImperialScene::onMoveToBuildAndOpen(int itemId, int type, float dt, bool bound)
 {
     float endS = 1;//fusheng 移动地块 设置为1
@@ -3514,6 +3660,7 @@ void ImperialScene::update(float dt)
     {
         updateVikingsShipNum();
     }
+    //RecommendAllianceController::getInstance()->checkToPopRecommendAlliance();
 }
 
 
@@ -5167,7 +5314,11 @@ void ImperialScene::onShowBtnsView(int x, int y, int buildId)
     }
     
     m_buildBtnsView->setPosition(ccp(x,y));
-    m_buildBtnsView->onShow(buildId);
+    if (m_questEffect != 0) {
+        m_buildBtnsView->onShow(buildId,m_questEffect);
+    }
+    else
+        m_buildBtnsView->onShow(buildId);
 }
 
 void ImperialScene::onShowSpeBtnsView(int x, int y, int buildId)
@@ -6248,4 +6399,7 @@ void ImperialScene::removeCustomBatchLayer(){
         m_touchLayer->removeChild(m_rescustombatchNode);
         m_rescustombatchNode=NULL;
     }
+}
+void ImperialScene::setQuestEffect(int type){
+    m_questEffect = type;
 }

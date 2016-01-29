@@ -1843,7 +1843,7 @@ void GeneralTitanPopupView::onLastUp()
         }
     
     
-    CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("Titan_End"));
+    
 }
 
 void GeneralTitanPopupView::onInstantClick(CCObject * pSender, Control::EventType pCCControlEvent)
@@ -2357,7 +2357,6 @@ void GeneralTitanPopupView::onTitanFeedClick(CCObject * pSender, Control::EventT
 
             TitanFeedCommand *tfCommand = new TitanFeedCommand();
             tfCommand->sendAndRelease();
-            CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("Titan_Feed"));
             m_titanFeedBtn->setEnabled(false);
             
         }

@@ -300,6 +300,7 @@ public:
     
     CCSafeObject<CCNode> m_skillNode;
     CCSafeObject<CCNode> m_skillBG;
+    CCSafeObject<CCNode> m_skillBG2;
     
     CCSafeObject<CCNode> m_serverNode;
     CCSafeObject<CCLabelIF> m_homeText;
@@ -396,6 +397,9 @@ public:
     
     void showCanFeedRedPoint(bool isShow);
     
+    void playQuestAnimation();//fusheng 播放任务动画
+    void playQuestAnimationCallBack();
+    
     CCSafeObject<CCNode> m_nbXHD;
     
     
@@ -463,6 +467,7 @@ public:
     CCSafeObject<CCSprite> m_stoneIcon;
     CCSafeObject<CCNode> m_watchNode;
     CCSafeObject<CCNode> m_skillBG;
+    CCSafeObject<CCNode> m_skillBG2;
     CCSafeObject<CCNode> m_bagTipNode;
     CCSafeObject<CCSprite> m_bagTipBG;
     CCSafeObject<CCLabelIF> m_bagTipNum;

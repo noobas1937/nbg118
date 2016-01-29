@@ -70,6 +70,8 @@ FunBuildController::FunBuildController()
     OpenMoveBuildStat = false;
     willMoveToBuildType = 0;
     willMoveToBuildItemID = 0;
+    
+    canPointArrow = false;
     //初始化FunBuildController
     curBuildsInfo = &(GlobalData::shared()->imperialInfo);
     curUpBuildsInfo = &(GlobalData::shared()->UpgradeBuildsInfo);
@@ -1263,6 +1265,7 @@ void FunBuildController::endUpFunBuild(CCDictionary* dict, int type)
             {
                 
                 CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_TITAN_INFORMATION_RESET, NULL);
+                CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("Titan_End"));//fusheng 通知服务器 升级
             }
             (*curBuildsInfo)[id].updateTime = tmp;
             CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_CHECK_TIME, CCInteger::create(id));
@@ -1378,7 +1381,7 @@ int FunBuildController::getBuildNumByType(int type)
     return ret;
 }
 
-int FunBuildController::getMaxLvBuildByType(int type)
+int FunBuildController::getMaxLvBuildByType(int type, int limitLv)
 {
     int retBuildID = 0;
     int lv = -1;
@@ -1387,8 +1390,16 @@ int FunBuildController::getMaxLvBuildByType(int type)
     for(it=curBuildsInfo->begin(); it != curBuildsInfo->end(); ++it)
     {
         if ((it->second).type == type && lv<(it->second).level){
-            lv = (it->second).level;
-            retBuildID = it->first;
+            if (limitLv > 0 ) {
+                if ((it->second).level<=limitLv) {
+                    lv = (it->second).level;
+                    retBuildID = it->first;
+                }
+            }
+            else {
+                lv = (it->second).level;
+                retBuildID = it->first;
+            }
         }
     }
     return retBuildID;
@@ -2116,6 +2127,28 @@ void FunBuildController::updateResPreSed(float t)
 //    lastAddWood += addWood;
 //    lastAddStone += addStone;
 //    lastAddIron += addIron;
+    
+    /////////是否开启资源保护以免部队将粮食吃光
+    if (GlobalData::shared()->foodMinimumSwith == 1 && addFood < 0) {
+        int foodMinimum = 0;
+        int buildId = FunBuildController::getInstance()->getMaxLvBuildByType(FUN_BUILD_CELLAR);
+        if (buildId > 0) {
+            auto buildInfo = FunBuildController::getInstance()->getFunbuildById(buildId);
+            int oFoodValue = atoi(buildInfo.para[4].c_str());
+            int addValue = CCCommonUtils::getEffectValueByNum(72);
+            float proValue = 1+CCCommonUtils::getEffectValueByNum(38)/100.0;
+            int addFoodValue = (oFoodValue+addValue)*proValue-oFoodValue;
+            foodMinimum = oFoodValue + addFoodValue;
+        }
+        
+        if (GlobalData::shared()->resourceInfo.lFood <= foodMinimum && foodMinimum > 0) {
+            addFood = 0;
+        }
+        else if (GlobalData::shared()->resourceInfo.lFood + addFood < foodMinimum && foodMinimum > 0) {
+            addFood = foodMinimum - GlobalData::shared()->resourceInfo.lFood;
+        }
+    }
+    
     lastAddFood += addFood;
     
     if (addFood >0 && GlobalData::shared()->resourceInfo.lFood >= GlobalData::shared()->resourceInfo.lStorageFood) {

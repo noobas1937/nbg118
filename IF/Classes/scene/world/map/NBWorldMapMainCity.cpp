@@ -34,7 +34,7 @@ int NBWorldMapMainCity::getMainCityIslandImageIndex(const WorldCityInfo* info, i
         isKing = true;
     }
     
-    int startIndex = getMainCityId(level, isKing, nSpecialId);
+    int startIndex = getMainCityStartIndex(level, isKing, nSpecialId);
     if (startIndex > -1 && startIndex < 100) // no worldcastle.xls/addPic
     {
         return addIndex;
@@ -53,7 +53,7 @@ Node * NBWorldMapMainCity::getMainCityIslandImage(int island_index, int x, int y
     const char* ISLANDS = "z_island_001.png";
     if (random_variable == 1)
     {
-        positon.setPoint(offsetx - 172, offsety - 84);
+        positon.setPoint(offsetx - 172, offsety - 104);
         ISLANDS = "z_island_002.png";
     }
     else if (random_variable == 2)
@@ -72,37 +72,22 @@ Node * NBWorldMapMainCity::getMainCityIslandImage(int island_index, int x, int y
     return island;
 }
 
-Node * NBWorldMapMainCity::getMainCity(int island_index, int level, int nSpecialId)
+Node * NBWorldMapMainCity::getMainCity(int island_index, int level, bool isKing, int nSpecialId)
 {
     Vec2 house_pos(0, 0);
     string picStr = "tile_place_holder.png";
     if (island_index == 0)
     {
-        if (level >= 22)
-        {
-            picStr = "lv22.png";
-            house_pos.x = 180 - 210;
-            house_pos.y = 120 - 32;
-        }
-        else if (level >= 15)
-        {
-            picStr = "lv15.png";
-            house_pos.x = 180 - 210;
-            house_pos.y = 120 - 32;
-        }
-        else if (level >= 11)
-        {
-            picStr = "lv11.png";
-            house_pos.x = 180 - 210;
-            house_pos.y = 120 - 32;
-        }
-        else
-        {
-            picStr = "lv1.png";
-            // 美术给出的坐标为 x：-180，y：-120
-            house_pos.x = 180 - 180;
-            house_pos.y = 120 - 32;
-        }
+        int id = getMainCityId(level, isKing, nSpecialId);
+        std::string image = CCCommonUtils::getPropById(CC_ITOA(id), "picStr");
+        std::string x = CCCommonUtils::getPropById(CC_ITOA(id), "x");
+        std::string y = CCCommonUtils::getPropById(CC_ITOA(id), "y");
+
+        if (image.length() > 4) // .png
+            picStr = image;
+        
+        house_pos.x = atoi(x.c_str());
+        house_pos.y = atoi(y.c_str());
     }
     
     auto house = CCLoadSprite::createSprite(picStr.c_str());
@@ -113,6 +98,14 @@ Node * NBWorldMapMainCity::getMainCity(int island_index, int level, int nSpecial
         house->setOpacity(0);
     }
     return house;
+}
+
+bool NBWorldMapMainCity::isKing(const WorldCityInfo &info)
+{
+    auto playerInfo = WorldController::getInstance()->m_playerInfo.find(info.playerName);
+    bool ret = playerInfo != WorldController::getInstance()->m_playerInfo.end()
+    && playerInfo->second.officer == KINGDOM_KING_ID;
+    return ret;
 }
 
 int NBWorldMapMainCity::getMainCityId(int level, bool isKing, int nSpecialId)
@@ -126,6 +119,12 @@ int NBWorldMapMainCity::getMainCityId(int level, bool isKing, int nSpecialId)
     {
         id = nSpecialId;
     }
+    return id;
+}
+
+int NBWorldMapMainCity::getMainCityStartIndex(int level, bool isKing, int nSpecialId)
+{
+    int id = getMainCityId(level, isKing, nSpecialId);
     int startIndex = -1;
     int mainCityIndex = atoi(CCCommonUtils::getPropById(CC_ITOA(id), "Basics").c_str()); // [0, 6]
     int startBaseIndex = 41;

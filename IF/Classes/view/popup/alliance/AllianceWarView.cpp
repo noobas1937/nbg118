@@ -1252,7 +1252,7 @@ void AllianceWarCell::setData(AllianceTeamInfo* info){
 //                mapIndex--;
 //            }
             
-            auto house = NBWorldMapMainCity::getMainCity(0, level, -1);
+            auto house = NBWorldMapMainCity::getMainCity(0, level, false, -1);
             // house->setAnchorPoint({.5, .5});
             house->setPosition({-20, 0});
             cityNode->addChild(house);
