@@ -1381,7 +1381,7 @@ int FunBuildController::getBuildNumByType(int type)
     return ret;
 }
 
-int FunBuildController::getMaxLvBuildByType(int type)
+int FunBuildController::getMaxLvBuildByType(int type, int limitLv)
 {
     int retBuildID = 0;
     int lv = -1;
@@ -1390,8 +1390,16 @@ int FunBuildController::getMaxLvBuildByType(int type)
     for(it=curBuildsInfo->begin(); it != curBuildsInfo->end(); ++it)
     {
         if ((it->second).type == type && lv<(it->second).level){
-            lv = (it->second).level;
-            retBuildID = it->first;
+            if (limitLv > 0 ) {
+                if ((it->second).level<=limitLv) {
+                    lv = (it->second).level;
+                    retBuildID = it->first;
+                }
+            }
+            else {
+                lv = (it->second).level;
+                retBuildID = it->first;
+            }
         }
     }
     return retBuildID;
