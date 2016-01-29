@@ -2693,7 +2693,7 @@ void WorldMapView::doTeleport(unsigned int type, unsigned int index, const strin
 //        mapIndex--;
 //    }
     
-    auto house = NBWorldMapMainCity::getMainCity(0, player.cityLv, -1);
+    auto house = NBWorldMapMainCity::getMainCity(0, player.cityLv, NBWorldMapMainCity::isKing(info), -1);
     house->setPosition(0, _tile_height / 2);
     house->setAnchorPoint({.5, .5});
     cityNode->addChild(house);
@@ -5438,7 +5438,7 @@ void WorldMapView::addUnderNode(unsigned int index) {
                             }
                         }
                         
-                        house = NBWorldMapMainCity::getMainCity(island_idx, player.cityLv, -1);
+                        house = NBWorldMapMainCity::getMainCity(island_idx, player.cityLv, NBWorldMapMainCity::isKing(info), -1);
                     }
 //                    if (island_idx == 0)
 //                    {
@@ -5463,7 +5463,7 @@ void WorldMapView::addUnderNode(unsigned int index) {
                 }
                 else
                 {
-                    house = NBWorldMapMainCity::getMainCity(-1, player.cityLv, -1);
+                    house = NBWorldMapMainCity::getMainCity(-1, player.cityLv, NBWorldMapMainCity::isKing(info), -1);
                 }
                 if (house)
                 {
@@ -7245,13 +7245,8 @@ void WorldMapView::showAndHideFieldMonster(){return;
 }
 
 CCArray *WorldMapView::getCityPicArr(int addIndex, int level, bool isKing ,int nSpecialId, const Vec2& pos){
-    int id = 44100 - 1 + level;
-    if(isKing){
-        id = 44999;
-    }
-    if (nSpecialId != -1) {
-        id = nSpecialId;
-    }
+    int id = NBWorldMapMainCity::getMainCityId(level, isKing, nSpecialId);
+    
     int mainCityIndex = atoi(CCCommonUtils::getPropById(CC_ITOA(id), "Basics").c_str());
     CCArray *arr = CCArray::create();
     int startBaseIndex = 41;
@@ -7319,12 +7314,8 @@ CCArray *WorldMapView::getCityPicArr(WorldCityInfo &info, int level,int nSpecial
     }else if(info.cityIndex == info.parentCityIndex - WorldController::getInstance()->_current_tile_count_x){
         addIndex = 3;
     }
-    bool isKing = false;
-    auto playerInfo = WorldController::getInstance()->m_playerInfo.find(info.playerName);
-    if(playerInfo != WorldController::getInstance()->m_playerInfo.end() && playerInfo->second.officer == KINGDOM_KING_ID){
-        isKing = true;
-    }
-    return getCityPicArr(addIndex, level, isKing ,nSpecialId, pos);
+
+    return getCityPicArr(addIndex, level, NBWorldMapMainCity::isKing(info),nSpecialId, pos);
 }
 void WorldMapView::changeServer(int serverId){
     GlobalData::shared()->playerInfo.currentServerId = serverId;

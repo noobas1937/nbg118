@@ -285,7 +285,7 @@ bool AllianceWarDetailView::init(){
 //        {
 //            m_cityIconNode->addChild(island);
 //        }
-        auto house = NBWorldMapMainCity::getMainCity(0, level, -1);
+        auto house = NBWorldMapMainCity::getMainCity(0, level, false, -1);
         house->setAnchorPoint({.5, .5});
         house->setPosition({0, 0});
         m_cityIconNode->addChild(house);
