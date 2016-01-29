@@ -182,8 +182,6 @@
 								</array>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -207,8 +205,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>290.9998779296875</real>
-									<real>86.399978637695312</real>
+									<real>387.9998779296875</real>
+									<real>216.39997863769531</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -290,8 +288,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>356.1998291015625</real>
-									<real>124.09998321533203</real>
+									<real>452.1998291015625</real>
+									<real>259.0999755859375</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -328,6 +326,8 @@
 								<false/>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 				</array>
 				<key>customClass</key>
