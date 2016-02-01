@@ -9,6 +9,9 @@
 #import "TDCCAccount.h"
 #import "TalkingDataGA.h"
 
+// tao.yu
+static TDCCAccount* _accountInstance;
+
 TDCCAccount::TDCCAccount():mAccount(NULL) {
 }
 
@@ -21,18 +24,19 @@ TDCCAccount* TDCCAccount::setAccount(const char* accountId) {
     }
     NSString* id = [NSString stringWithUTF8String:accountId];
     
-    static TDCCAccount account;
-    account.mAccount = [TDGAAccount setAccount:id];
-    return &account;
+//    static TDCCAccount account;
+    _accountInstance->mAccount = [TDGAAccount setAccount:id];
+    return _accountInstance;
 }
 
 void TDCCAccount::setAccountName(const char* accountName) {
     if (NULL == accountName || strlen(accountName) == 0) {
         return;
     }
-    if (mAccount) {
+//    if (mAccount) {
+    if (_accountInstance && _accountInstance->mAccount) {
         NSString* value = [NSString stringWithUTF8String:accountName];
-        TDGAAccount* a = (TDGAAccount*)mAccount;
+        TDGAAccount* a = (TDGAAccount*)_accountInstance->mAccount;
         [a setAccountName:value];
     }
 }

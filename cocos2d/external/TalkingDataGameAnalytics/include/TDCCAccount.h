@@ -49,7 +49,7 @@ public:
     
     static TDCCAccount* setAccount(const char* accountId);
 
-	void setAccountName(const char* accountName);
+	static void setAccountName(const char* accountName);
 
 	void setAccountType(TDCCAccountType accountType);
 
