@@ -47,6 +47,9 @@ bool AchievementDetailPopUpView::init(){
         auto bg = CCBLoadFile("AchievementInfoPopUpView", this, this);
         this->setContentSize(bg->getContentSize());
         setTitleName(_lang("107500"));
+        
+        CCLoadSprite::doResourceByGeneralIndex(101, true);
+        CCLoadSprite::doResourceByGeneralIndex(102, true);
         setCleanFunction([](){
             CCLoadSprite::doResourceByGeneralIndex(101, false);
             CCLoadSprite::doResourceByGeneralIndex(102, false);

@@ -2683,7 +2683,7 @@ void FunBuild::updateStorehouseDisplay(CCObject* obj)
             }
             else
             {
-                m_ironSpr->setSpriteFrame("nb_stone_status0.png");
+                m_stoneSpr->setSpriteFrame("nb_stone_status0.png");
             }
             m_stoneSpr->setVisible(true);
         }
