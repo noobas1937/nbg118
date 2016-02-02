@@ -61,8 +61,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     TDCCTalkingDataGA::onStart("E020286589120C45394E3994E90F44D8", "AppStore");
 #endif
-    // tao.yu TalkingData game start
-    GA_ON_EVENT("OPEN_GAME");
+    
     // initialize director
     Director* pDirector = Director::getInstance();
     auto glview = pDirector->getOpenGLView();
@@ -107,6 +106,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     
 // ------------------------------------------------------------------------------------
 #ifdef USING_LUA
+    
+    // tao.yu TalkingData game start
+    GA_ON_EVENT("OPEN_GAME");
+    
     // register lua module
     auto engine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
