@@ -78,6 +78,10 @@
 #include "AllianceInfo.h"
 //end a by ljf
 
+//fusheng begin
+#include "MerchantCar.h"
+//fusheng end
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/jni/JniHelper.h"
 #endif
@@ -5112,7 +5116,52 @@ void ImperialScene::initBigTile()
         createDockShip();
     }
     // tao.yu 第一版不开放旅行商人
-    if(false) {
+    //fusheng 2.2 开放旅行商人
+#pragma mark 旅行商人
+    if(true) {
+        
+        m_merchanteNode->retain();
+        
+        m_merchanteNode->removeFromParent();
+        
+//        m_merchanteNode->setGlobalZOrder(1000000);
+        
+        m_node3d->addChild(m_merchanteNode);
+        
+        auto mc = MerchantCar::create();
+        
+        
+        
+        m_merchanteNode->addChild(mc);
+        
+        m_merchanteNode->setPosition(m_touchLayer->convertToNodeSpace(m_merchanteNode->convertToWorldSpace(Point(0, 0))));
+        
+        
+        
+//        auto a3d = Animation3D::create("3d/ship/ship_gem.c3b");
+//        
+//        dockShip->runAction(RepeatForever::create(Animate3D::create(a3d)));
+        
+//        m_node3d->addChild(mc);
+        
+
+//        m_merchanteNode->setCameraMask((unsigned short) CameraFlag::USER2, true);
+        
+        m_touchLayer->setCameraMask((unsigned short)CameraFlag::USER4, true);
+        
+        m_node3d->setCameraMask((unsigned short) CameraFlag::USER2, true);
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         m_merchanteBuild = SpeBuild::create(SPE_BUILD_MERCHANTE);
         m_merchanteNode->addChild(m_merchanteBuild);
         int hod = m_merchanteNode->getZOrder();

@@ -961,6 +961,7 @@
 		9708FD5F1BAA861D00C6B3C3 /* TitanUpgradeView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9708FD5D1BAA861D00C6B3C3 /* TitanUpgradeView.cpp */; };
 		9716CF2A1BD4A1BC00BC3D38 /* NBSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9716CF281BD4A1BC00BC3D38 /* NBSlider.cpp */; };
 		972666461BAC07D300D59BC2 /* TitanInView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 972666441BAC07D300D59BC2 /* TitanInView.cpp */; };
+		9726E73F1C60A801009355EE /* MerchantCar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9726E73D1C60A801009355EE /* MerchantCar.cpp */; };
 		9737F0B31BD6188900E1B440 /* NBCommonUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9737F0B11BD6188900E1B440 /* NBCommonUtils.cpp */; };
 		974034461BAFDB3C00330AD3 /* TitanController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 974034441BAFDB3C00330AD3 /* TitanController.cpp */; };
 		975778DB1C07F97200D6CB14 /* nb_fnt1.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 975778D71C07F97200D6CB14 /* nb_fnt1.fnt */; };
@@ -3115,6 +3116,8 @@
 		9716CF291BD4A1BC00BC3D38 /* NBSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBSlider.h; sourceTree = "<group>"; };
 		972666441BAC07D300D59BC2 /* TitanInView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TitanInView.cpp; sourceTree = "<group>"; };
 		972666451BAC07D300D59BC2 /* TitanInView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitanInView.h; sourceTree = "<group>"; };
+		9726E73D1C60A801009355EE /* MerchantCar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MerchantCar.cpp; sourceTree = "<group>"; };
+		9726E73E1C60A801009355EE /* MerchantCar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MerchantCar.h; sourceTree = "<group>"; };
 		9737F0B11BD6188900E1B440 /* NBCommonUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NBCommonUtils.cpp; sourceTree = "<group>"; };
 		9737F0B21BD6188900E1B440 /* NBCommonUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBCommonUtils.h; sourceTree = "<group>"; };
 		974034441BAFDB3C00330AD3 /* TitanController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TitanController.cpp; sourceTree = "<group>"; };
@@ -4813,6 +4816,8 @@
 		366E308117D5C4DB006CCCBF /* cropscene */ = {
 			isa = PBXGroup;
 			children = (
+				9726E73D1C60A801009355EE /* MerchantCar.cpp */,
+				9726E73E1C60A801009355EE /* MerchantCar.h */,
 				ED2608C21BF42FE400D6BD14 /* Walker.cpp */,
 				ED2608C31BF42FE400D6BD14 /* Walker.h */,
 				57EAD1921991F8AC007B8946 /* Animal.cpp */,
@@ -8002,6 +8007,7 @@
 				366E1C6A17D04FA0006CCCBF /* SoundController.cpp in Sources */,
 				571F0DA31A763B3A00A1957D /* EquipFinishView.cpp in Sources */,
 				96E6C000196AA41300E1B913 /* AlertAddAllianceView.cpp in Sources */,
+				9726E73F1C60A801009355EE /* MerchantCar.cpp in Sources */,
 				366E1C6D17D07261006CCCBF /* LocalController.cpp in Sources */,
 				FDC9E78F18BDED2100F0962F /* BaseTileInfo.cpp in Sources */,
 				7C25FD3C1A25EDD8000B24A8 /* MailResourceHelpView.cpp in Sources */,
