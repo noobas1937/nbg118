@@ -2413,7 +2413,7 @@ void UIComponent::onSceneChanged(CCObject* params){
         
         //fusheng begin
         if (GlobalData::shared()->playerInfo.level == 1 && GlobalData::shared()->playerInfo.exp == 0) {
-//            m_UIQuestNode->setVisible(false);//fusheng 1.29 不使用这个引导
+            m_UIQuestNode->setVisible(false);
         }
         //fusheng end
         m_testFeedBackNode->setPositionY(CCDirector::sharedDirector()->getWinSize().height*0.5 - 120);
@@ -2580,7 +2580,7 @@ void UIComponent::playQuestAnimation()
     
 //    spr->setPosition(beginPos);
     
-    this->addChild(spr);
+    this->addChild(spr,1001);
     
     spr->setScale(0);
     
@@ -2592,7 +2592,7 @@ void UIComponent::playQuestAnimation()
     
     auto midPos2 = this->convertToNodeSpace({static_cast<float>(size.width*0.5),static_cast<float>(size.height*0.6)});//移动到60％
     
-    spr->runAction(Sequence::create(Spawn::createWithTwoActions(ScaleTo::create(0.3, 1.5),MoveTo::create(0.3, midPos2)),DelayTime::create(0.8),Spawn::createWithTwoActions(ScaleTo::create(0.7, 0),MoveTo::create(0.7, beginPos)), CallFunc::create(CC_CALLBACK_0(UIComponent::playQuestAnimationCallBack, this )), NULL));//fusheng 0.3秒移动到(0.5,0.6) 等待0.8秒 ， 0.7秒移动到最初的位置
+    spr->runAction(Sequence::create(Spawn::createWithTwoActions(ScaleTo::create(0.3, 1.5),MoveTo::create(0.3, midPos2)),CallFunc::create(CC_CALLBACK_0(UIComponent::playQuestAnimationCallBackForCreateParticle, this )),DelayTime::create(0.8),Spawn::createWithTwoActions(ScaleTo::create(0.7, 0),MoveTo::create(0.7, beginPos)), CallFunc::create(CC_CALLBACK_0(UIComponent::playQuestAnimationCallBack, this )), NULL));//fusheng 0.3秒移动到(0.5,0.6) 等待0.8秒 ， 0.7秒移动到最初的位置
 
 }
 void UIComponent::playQuestAnimationCallBack()
@@ -2602,6 +2602,28 @@ void UIComponent::playQuestAnimationCallBack()
 //    showQuestTextNewOn(0);
     questIconAction();
     showUIQuestNode(true);
+}
+
+void UIComponent::playQuestAnimationCallBackForCreateParticle()
+{
+   
+    for(int i =1 ;i<=7;i++)
+    {
+        auto particle = ParticleController::createParticle(CCString::createWithFormat("nbQusetBomb_%d",i)->getCString());
+        if(particle)
+        {
+            CCSize size = CCDirector::sharedDirector()->getWinSize();
+            
+            auto pos = this->convertToNodeSpace({static_cast<float>(size.width*0.5),static_cast<float>(size.height*0.6)});
+            
+            particle->setPosition(pos);
+            
+            particle->setAutoRemoveOnFinish(true);
+            
+            this->addChild(particle,999);
+        }
+        
+    }
 }
 //fusheng end
 

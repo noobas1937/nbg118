@@ -54,7 +54,9 @@
         <ItemSpec id="3316600" next="3316700" arrow="2" area="BC_413000_build" enforce="1"/>
         <ItemSpec id="3316700" next="3316800" lag="3"/>
         <ItemSpec id="3316800" next="3316900" plot="3316810" arrow="0" area="plot_continue" enforce="1" mark="1"/>
-        <ItemSpec id="3316900" arrow="2" area="UI_target" enforce="1"/>
+        <ItemSpec id="3316900" next="3317000" cartoon="cartoon5" enforce="1"/>
+        <ItemSpec id="3317000" next="3317100" lag="2.5"/>
+        <ItemSpec id="3317100" arrow="2" area="UI_target" enforce="1"/>
         <ItemSpec id="3320100" next="3320200" plot="3320110" arrow="0" area="plot_continue" enforce="1" mark="1"/>
         <ItemSpec id="3320200" next="3320300" arrow="2" area="UI_achievement" enforce="1"/>
         <ItemSpec id="3320300" next="3320400" arrow="1" area="AC_reward" enforce="1"/>
