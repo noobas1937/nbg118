@@ -47,6 +47,7 @@ private:
     void onOKBtnClick(CCObject * pSender, Control::EventType pCCControlEvent);
     void onRewardBtnClick(CCObject * pSender, Control::EventType pCCControlEvent);
     void onShareBtnClick(CCObject * pSender, Control::EventType pCCControlEvent);
+    void onGetOkBtnClick(CCObject * pSender, Control::EventType pCCControlEvent); //ljf
     void playLvAnim();
     void playLvParticle();
     void playhatParticle();
@@ -64,9 +65,11 @@ private:
 //    CCSafeObject<CCLabelIF> m_nameLabel;
     CCSafeObject<CCLabelIF> m_lvLabel;
     CCSafeObject<CCLabelIF> m_powLabel;
-    CCSafeObject<CCLabelBMFont> m_powNumLabel;
+    //CCSafeObject<CCLabelBMFont> m_powNumLabel;
+    CCSafeObject<CCLabelIF> m_powNumLabel;
     CCSafeObject<CCLabelIF> m_skillLabel;
-    CCSafeObject<CCLabelBMFont> m_skillNumLabel;
+    //CCSafeObject<CCLabelBMFont> m_skillNumLabel;
+    CCSafeObject<CCLabelIF> m_skillNumLabel;
     CCSafeObject<CCNode>  m_rewardlist;
     CCSafeObject<CCScale9Sprite> m_buildBG;
     CCSafeObject<CCScale9Sprite> m_kuangBG;
@@ -76,12 +79,19 @@ private:
     CCSafeObject<CCArray> m_cellArr;
     CCSafeObject<CCLabelIFTTF> m_fbTxt;
     CCSafeObject<CCControlButton> m_fbShareBtn;
+    
     CCSafeObject<WaitInterface> m_waitInterFace;
     
     vector<std::string> vector_item;
     vector<std::string> vector_number;
     int m_falg;
     int m_endfalg;
+    
+    //begin a by ljf
+    CCSafeObject<CCControlButton> m_btnJoin;
+    CCSafeObject<CCNode>  m_bgNode;
+     CCSafeObject<CCNode>  m_spineNode;
+    //end a by ljf
 };
 
 #endif
