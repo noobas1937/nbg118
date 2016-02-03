@@ -5120,21 +5120,34 @@ void ImperialScene::initBigTile()
 #pragma mark 旅行商人
     if(true) {
         
-        m_merchanteNode->retain();
+//        m_merchanteNode->retain();
+//        
+//        m_merchanteNode->removeFromParent();
+//        
+//        m_node3d->addChild(m_merchanteNode);
+//        
+//        auto mc = MerchantCar::create();
+//        
+//        m_merchanteNode->setPosition(m_touchLayer->convertToNodeSpace(m_merchanteNode->convertToWorldSpace(Point(0, 0))));
+//        
+//        m_merchanteNode->addChild(mc);
         
-        m_merchanteNode->removeFromParent();
+        auto mShadowSpr = CCLoadSprite::createSprite("walker_shadow.png");
+        mShadowSpr->setAnchorPoint(ccp(0.5, 0.5));
+        mShadowSpr->setOpacity(255);
+        mShadowSpr->setScaleX(5);
+        mShadowSpr->setScaleY(2.6);
+        mShadowSpr->setPositionX(-70);
+        mShadowSpr->setPositionY(110);
+        mShadowSpr->setRotation(25);
         
-//        m_merchanteNode->setGlobalZOrder(1000000);
+//        mShadowSpr->setPositionZ(10);
+        mShadowSpr->setPosition(m_touchLayer->convertToNodeSpace(m_merchanteNode->convertToWorldSpace(Point(0, 0))));
         
-        m_node3d->addChild(m_merchanteNode);
+        m_touchLayer->addChild(mShadowSpr);
         
-        auto mc = MerchantCar::create();
+
         
-        
-        
-        m_merchanteNode->addChild(mc);
-        
-        m_merchanteNode->setPosition(m_touchLayer->convertToNodeSpace(m_merchanteNode->convertToWorldSpace(Point(0, 0))));
         
         
         

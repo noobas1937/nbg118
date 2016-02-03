@@ -45,6 +45,10 @@ bool MerchantCar::init()
         CCLog("fuck 3d create error");
         return false;
     }
+    
+
+
+    
     rotateRootNode = Node::create();
     
     rotateRootNode->setRotation3D(Vec3(38, 39, -24));
@@ -64,8 +68,10 @@ bool MerchantCar::init()
     
     this->addChild(rotateRootNode);
     
-//    playWalk();
-
+    playStand();
+    
+    
+    
 	return true;
 }
 
