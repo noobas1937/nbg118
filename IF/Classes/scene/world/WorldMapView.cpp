@@ -5410,74 +5410,83 @@ void WorldMapView::addUnderNode(unsigned int index) {
         case CityTile:{
             auto &player = WorldController::getInstance()->m_playerInfo[info.playerName];
             CCArray *arr = getCityPicArr(info, player.cityLv, -1, pos);
-            int count = arr->count();
-            int i = 0;
-            while (i < count) {
-                auto pics = _dict(arr->objectAtIndex(i));
-                std::string picStr = pics->valueForKey("pic")->getCString();
-                int x = pics->valueForKey("x")->intValue();
-                int y = pics->valueForKey("y")->intValue();
-                
+//            int count = arr->count();
+//            int i = 0;
+//            while (i < count) {
+//                auto pics = _dict(arr->objectAtIndex(i));
+//                std::string picStr = pics->valueForKey("pic")->getCString();
+//                int x = pics->valueForKey("x")->intValue();
+//                int y = pics->valueForKey("y")->intValue();
+//                
+//                Node* under = Node::create();
+//                under->setAnchorPoint(ccp(0, 0));
+//                under->setTag(index);
+//                under->setPosition(ccp(pos.x - _halfTileSize.width, pos.y - _halfTileSize.height) + ccp(x, y)); // left-bottom corner
+//                m_cityItem[index].push_back(under);
+//                m_cityBatchNode->addChild(under, index + i);
+//                i++;
+//                
+//                // guo.jiang todo
+//                // 暂时按照 COK 的规则填充 4 个 tile
+//                Node* house = nullptr;
+//                if (i == 1) // 附加图不考虑 worldcastle.xls/addPic
+//                {
+//                    int island_idx = NBWorldMapMainCity::getMainCityIslandImageIndex(&info, player.cityLv, -1);
+//                    if (island_idx >= 0)
+//                    {
+//                        if (island_idx == 0)
+//                        {
+//                            auto island = NBWorldMapMainCity::getMainCityIslandImage(island_idx, pos.x, pos.y);
+//                            if (island)
+//                            {
+//                                under->addChild(island);
+//                            }
+//                        }
+//                        
+//                        house = NBWorldMapMainCity::getMainCity(island_idx, player.cityLv, NBWorldMapMainCity::isKing(info), -1);
+//                    }
+//                }
+//                else
+//                {
+//                    house = NBWorldMapMainCity::getMainCity(-1, player.cityLv, NBWorldMapMainCity::isKing(info), -1);
+//                }
+//                if (house)
+//                {
+//                    under->addChild(house);
+//                    under->setContentSize(house->getContentSize());
+//                }
+//            }
+            
+            if (info.parentCityIndex == info.cityIndex)
+            {
                 Node* under = Node::create();
                 under->setAnchorPoint(ccp(0, 0));
                 under->setTag(index);
-                under->setPosition(ccp(pos.x - _halfTileSize.width, pos.y - _halfTileSize.height) + ccp(x, y)); // left-bottom corner
+                under->setPosition(ccp(pos.x - _halfTileSize.width, pos.y - _halfTileSize.height));
                 m_cityItem[index].push_back(under);
-                m_cityBatchNode->addChild(under, index + i);
-                i++;
+                m_cityBatchNode->addChild(under, index);
                 
-                // guo.jiang todo
-                // 暂时按照 COK 的规则填充 4 个 tile
                 Node* house = nullptr;
-                if (i == 1) // 附加图不考虑 worldcastle.xls/addPic
+                int island_idx = NBWorldMapMainCity::getMainCityIslandImageIndex(&info, player.cityLv, -1);
+                if (island_idx >= 0)
                 {
-                    int island_idx = NBWorldMapMainCity::getMainCityIslandImageIndex(&info, player.cityLv, -1);
-                    if (island_idx >= 0)
+                    if (island_idx == 0)
                     {
-                        if (island_idx == 0)
+                        auto island = NBWorldMapMainCity::getMainCityIslandImage(island_idx, pos.x, pos.y);
+                        if (island)
                         {
-                            auto island = NBWorldMapMainCity::getMainCityIslandImage(island_idx, pos.x, pos.y);
-                            if (island)
-                            {
-                                under->addChild(island);
-                            }
+                            under->addChild(island);
                         }
-                        
-                        house = NBWorldMapMainCity::getMainCity(island_idx, player.cityLv, NBWorldMapMainCity::isKing(info), -1);
                     }
-//                    if (island_idx == 0)
-//                    {
-//                        static const char* images[] = {"z_island_001.png", "z_island_002.png", "z_island_003.png", "z_island_004.png"};
-//                        float xy[] = {0,       0 + 256, 0, 0 + 256,
-//                                      0 + 128, 0 + 128, 0,       0, };
-//                        
-//                        for (int iii = 0; iii < 4; iii++)
-//                        {
-//                            auto island = CCLoadSprite::createSprite(images[iii]);
-//                            island->setAnchorPoint(Vec2(0, 0));
-//                            island->setPosition(Vec2(xy[iii], xy[iii + 4]));
-//                            under->addChild(island);
-//                        }
-//                        
-//                        house = NBWorldMapMainCity::getMainCity(island_idx, player.cityLv, -1);
-//                    }
-//                    else
-//                    {
-//                        house = NBWorldMapMainCity::getMainCity(island_idx, player.cityLv, -1);
-//                    }
-                }
-                else
-                {
-                    house = NBWorldMapMainCity::getMainCity(-1, player.cityLv, NBWorldMapMainCity::isKing(info), -1);
+                    
+                    house = NBWorldMapMainCity::getMainCity(island_idx, player.cityLv, NBWorldMapMainCity::isKing(info), -1);
                 }
                 if (house)
                 {
                     under->addChild(house);
                     under->setContentSize(house->getContentSize());
                 }
-            }
-            
-            if (info.parentCityIndex == info.cityIndex) {
+                
                 
                 auto &player = WorldController::getInstance()->m_playerInfo[info.playerName];
                 auto now = WorldController::getInstance()->getTime();

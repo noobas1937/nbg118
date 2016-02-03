@@ -699,8 +699,8 @@ void GCMRewardController::flyRewardFromPointToPoint(Array *arr, float time, bool
             }
         }
         else {
-            endX = 325;
-            endY = 35;
+            endX = 190;//fusheng 物品按钮的位置
+            endY = 45;
             if (CCCommonUtils::isIosAndroidPad()) {
                 endX = 800;
                 endY = 80;

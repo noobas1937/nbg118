@@ -194,6 +194,8 @@ public:
     void removeCustomBatchLayer();
     void setQuestEffect(int type);
 	void setPointArrowAni(int buildId);
+    
+    void checkTileGlow(CCObject* obj);
 private:
     int lastTouchBuildId;
     int curTouchBuildId;
@@ -268,7 +270,7 @@ private:
     
     void clearDrop(float _time);
     
-    void checkTileGlow(CCObject* obj);
+    
     
     void onRemoveGuideParticle(CCObject* obj);
 

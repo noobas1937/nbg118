@@ -458,8 +458,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>10</real>
-							<real>437.26889038085938</real>
+							<real>14</real>
+							<real>502.26889038085938</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -884,8 +884,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>13.456000328063965</real>
-							<real>440.72488403320312</real>
+							<real>16.456001281738281</real>
+							<real>505.72488403320312</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -1164,8 +1164,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>60</real>
-											<real>-121</real>
+											<real>57</real>
+											<real>-58</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -1372,8 +1372,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>102.24999237060547</real>
-											<real>-137.5</real>
+											<real>104.24999237060547</real>
+											<real>-75.5</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -1385,7 +1385,7 @@
 										<key>value</key>
 										<array>
 											<real>0.5</real>
-											<real>0.5</real>
+											<real>0.51289063692092896</real>
 										</array>
 									</dict>
 									<dict>
@@ -1464,7 +1464,7 @@
 										<key>value</key>
 										<array>
 											<real>102.77777099609375</real>
-											<real>-138.19444274902344</real>
+											<real>-78.194442749023438</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -1486,8 +1486,8 @@
 										<string>ScaleLock</string>
 										<key>value</key>
 										<array>
-											<real>1</real>
-											<real>1</real>
+											<real>-0.028641531243920326</real>
+											<real>-0.028641531243920326</real>
 											<false/>
 											<integer>0</integer>
 										</array>
@@ -1547,7 +1547,7 @@
 										<key>value</key>
 										<array>
 											<real>47.916664123535156</real>
-											<real>-119.80555725097656</real>
+											<real>-59.805557250976562</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -2504,8 +2504,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>50</real>
-							<real>327</real>
+							<real>53</real>
+							<real>428</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -2706,8 +2706,6 @@
 										</array>
 									</dict>
 								</array>
-								<key>selected</key>
-								<true/>
 							</dict>
 						</array>
 						<key>customClass</key>
@@ -2772,8 +2770,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>60</real>
-							<real>230</real>
+							<real>66</real>
+							<real>340</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -2795,8 +2793,8 @@
 						<string>ScaleLock</string>
 						<key>value</key>
 						<array>
-							<real>1.2999999523162842</real>
-							<real>1.2999999523162842</real>
+							<real>1</real>
+							<real>1</real>
 							<false/>
 							<integer>0</integer>
 						</array>
@@ -2810,6 +2808,8 @@
 						<false/>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>
@@ -2925,8 +2925,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>50</real>
-							<real>398</real>
+							<real>194</real>
+							<real>449</real>
 							<integer>0</integer>
 						</array>
 					</dict>

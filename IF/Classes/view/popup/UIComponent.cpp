@@ -395,6 +395,17 @@ bool UIComponentGold::init(long goldValue) {
         mInAnimation = false;
         m_goldNum->setString(CC_CMDITOAL(mNowValue));
 //        this->getAnimationManager()->runAnimationsForSequenceNamed("0");
+        
+
+        auto particle1 = ParticleController::createParticle("DiamondEntrance");
+        
+        if(particle1)
+        {
+            particle1->setPosition(m_goldIcon->getPosition());
+            this->addChild(particle1,-10);
+        }
+        
+        
         ret = true;
     }
     return ret;
@@ -410,7 +421,7 @@ void UIComponentGold::setGoldValue(long goldValue){
     mFinalValue = goldValue;
     if(mFinalValue>=0 && mFinalValue!=mNowValue && !mInAnimation){
 //        this->getAnimationManager()->runAnimationsForSequenceNamed("1");
-        m_goldStar->setVisible(false);
+        m_goldStar->setVisible(false);//fusheng del
         CCSequence* pSizeSeq = CCSequence::create(CCScaleTo::create(0.1f, 0.95f), CCScaleTo::create(0.1f, 1.15f), NULL);
         m_goldIcon->runAction(CCRepeatForever::create(pSizeSeq));
         CCSequence* pSizeSeq1 = CCSequence::create(CCScaleTo::create(0.1f, 0.95f), CCScaleTo::create(0.1f, 1.15f), NULL);
@@ -2413,7 +2424,7 @@ void UIComponent::onSceneChanged(CCObject* params){
         
         //fusheng begin
         if (GlobalData::shared()->playerInfo.level == 1 && GlobalData::shared()->playerInfo.exp == 0) {
-//            m_UIQuestNode->setVisible(false);//fusheng 1.29 不使用这个引导
+            m_UIQuestNode->setVisible(false);
         }
         //fusheng end
         m_testFeedBackNode->setPositionY(CCDirector::sharedDirector()->getWinSize().height*0.5 - 120);
@@ -2580,7 +2591,7 @@ void UIComponent::playQuestAnimation()
     
 //    spr->setPosition(beginPos);
     
-    this->addChild(spr);
+    this->addChild(spr,1001);
     
     spr->setScale(0);
     
@@ -2592,7 +2603,7 @@ void UIComponent::playQuestAnimation()
     
     auto midPos2 = this->convertToNodeSpace({static_cast<float>(size.width*0.5),static_cast<float>(size.height*0.6)});//移动到60％
     
-    spr->runAction(Sequence::create(Spawn::createWithTwoActions(ScaleTo::create(0.3, 1.5),MoveTo::create(0.3, midPos2)),DelayTime::create(0.8),Spawn::createWithTwoActions(ScaleTo::create(0.7, 0),MoveTo::create(0.7, beginPos)), CallFunc::create(CC_CALLBACK_0(UIComponent::playQuestAnimationCallBack, this )), NULL));//fusheng 0.3秒移动到(0.5,0.6) 等待0.8秒 ， 0.7秒移动到最初的位置
+    spr->runAction(Sequence::create(Spawn::createWithTwoActions(ScaleTo::create(0.3, 1.5),MoveTo::create(0.3, midPos2)),CallFunc::create(CC_CALLBACK_0(UIComponent::playQuestAnimationCallBackForCreateParticle, this )),DelayTime::create(1.2),Spawn::createWithTwoActions(ScaleTo::create(0.7, 0),MoveTo::create(0.7, beginPos)), CallFunc::create(CC_CALLBACK_0(UIComponent::playQuestAnimationCallBack, this )), NULL));//fusheng 0.3秒移动到(0.5,0.6) 等待1.2秒 ， 0.7秒移动到最初的位置
 
 }
 void UIComponent::playQuestAnimationCallBack()
@@ -2602,6 +2613,28 @@ void UIComponent::playQuestAnimationCallBack()
 //    showQuestTextNewOn(0);
     questIconAction();
     showUIQuestNode(true);
+}
+
+void UIComponent::playQuestAnimationCallBackForCreateParticle()
+{
+   
+    for(int i =1 ;i<=7;i++)
+    {
+        auto particle = ParticleController::createParticle(CCString::createWithFormat("nbQusetBomb_%d",i)->getCString());
+        if(particle)
+        {
+            CCSize size = CCDirector::sharedDirector()->getWinSize();
+            
+            auto pos = this->convertToNodeSpace({static_cast<float>(size.width*0.5),static_cast<float>(size.height*0.6)});
+            
+            particle->setPosition(pos);
+            
+            particle->setAutoRemoveOnFinish(true);
+            
+            this->addChild(particle,999);
+        }
+        
+    }
 }
 //fusheng end
 
@@ -3538,6 +3571,7 @@ bool UIComponent::onAssignCCBMemberVariable(cocos2d::CCObject * pTarget, const c
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_limitActBg", CCNode*, this->m_limitActBg);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_skillNode", CCNode*, this->m_skillNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_skillBG", CCNode*, this->m_skillBG);
+    CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_skillBG2", CCNode*, this->m_skillBG2);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_serverNode", CCNode*, this->m_serverNode);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_homeText", CCLabelIF*, this->m_homeText);
     CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_serverIdText", CCLabelIF*, this->m_serverIdText);
@@ -3942,6 +3976,13 @@ bool UIComponent::onTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEven
         return true;
         
     }
+    else if(m_mainControlNode->isVisible() && m_skillNode->isVisible() && isTouchInside(this->m_skillBG2, pTouch)){
+        
+        hintType = 36;
+        
+        return true;
+        
+    }
     else if(m_mainControlNode->isVisible() && m_fireNode->isVisible() && isTouchInside(this->m_fireNode, pTouch)){
         hintType = 27;
         return true;
@@ -4331,8 +4372,6 @@ void UIComponent::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEven
             break;
         }
         case 26:{
-//            SoundController::sharedSound()->playEffects(Music_Sfx_click_button);  fusheng
-//            PopupViewController::getInstance()->addPopupView(UseSkillPopUpView::create());
             PopupViewController::getInstance()->addPopupInView(GeneralTitanPopupView::create(),true);
             CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(GUIDE_INDEX_CHANGE, CCString::createWithFormat("UI_titan"));
             
@@ -4395,6 +4434,12 @@ void UIComponent::onTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEven
         }
         case 35:{
             PopupViewController::getInstance()->addPopupInView(CrossServiceTargetView::create());
+            break;
+        }
+        case 36:{ //simon
+            CCLOG("hit 36....");
+            SoundController::sharedSound()->playEffects(Music_Sfx_click_button); // fusheng
+            PopupViewController::getInstance()->addPopupView(UseSkillPopUpView::create());
             break;
         }
         default:

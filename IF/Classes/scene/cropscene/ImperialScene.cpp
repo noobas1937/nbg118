@@ -404,7 +404,7 @@ void ImperialScene::cartoonHander(CCObject* params)
         string str = ((CCString*)params)->_string;
         if (str == "cartoon2") {
             m_enemyNum = 30;
-            this->schedule(schedule_selector(ImperialScene::createEnemy), 0.0f, 0, 0.0f);
+            createEnemy(0);
         }
         else if (str == "cartoon3") {
             this->pauseEnemy(true);
@@ -5735,42 +5735,61 @@ void ImperialScene::playWatchGlow()
 
 void ImperialScene::checkTileGlow(CCObject* obj)
 {
-    QuestInfo *qinfo = QuestController::getInstance()->getRecommendQuest(false);
-    int buildType = 0;
-    if (qinfo && qinfo->itemId == "2200101") {//建造步兵营任务
-        buildType = FUN_BUILD_BARRACK1;
-    }
-    else if (qinfo && qinfo->itemId == "2400101") {//建造学院任务
-        buildType = FUN_BUILD_SCIENE;
-    }
-    
-    if (buildType == 0) {
+    if(obj)
+    {
+        int pos = dynamic_cast<CCString*>(obj)->intValue();
         m_tileGlowNode->removeAllChildren();
-    }
-    else {
-        int bid = FunBuildController::getInstance()->getMaxLvBuildByType(buildType);
-        int pos = -1;
-        if (bid > 0) {
-            FunBuildInfo& info = FunBuildController::getInstance()->getFunbuildById(bid);
-            pos = info.pos;
-        }
-        else {
-            pos = findCanBuildTile(qinfo->go);
-        }
-        if (pos>0) {
-            m_tileGlowNode->removeAllChildren();
+        
+        if (pos>0 && pos < BUILD_COUNT - 1) {
+
             m_tileGlowNode->setPosition( m_nodeBuildings[pos]->getPosition());
-//            m_tileGlowNode->setPosition( m_nodeBuildings[pos]->getPosition()+ccp(130,65) );
-//            for (int i=1; i<=8; i++) {
-//                auto particle = ParticleController::createParticle(CCString::createWithFormat("GuideRegional_%d",i)->getCString());
-//                m_tileGlowNode->addChild(particle);
-//            }
+     
             for (int i=0; i<=3; i++) {
                 auto particle = ParticleController::createParticle(CCString::createWithFormat("NewRegional2_%d",i)->getCString());
                 m_tileGlowNode->addChild(particle);
             }
         }
     }
+    else
+    {
+        QuestInfo *qinfo = QuestController::getInstance()->getRecommendQuest(false);
+        int buildType = 0;
+        if (qinfo && qinfo->itemId == "2200101") {//建造步兵营任务
+            buildType = FUN_BUILD_BARRACK1;
+        }
+        else if (qinfo && qinfo->itemId == "2400101") {//建造学院任务
+            buildType = FUN_BUILD_SCIENE;
+        }
+        
+        if (buildType == 0) {
+            m_tileGlowNode->removeAllChildren();
+        }
+        else {
+            int bid = FunBuildController::getInstance()->getMaxLvBuildByType(buildType);
+            int pos = -1;
+            if (bid > 0) {
+                FunBuildInfo& info = FunBuildController::getInstance()->getFunbuildById(bid);
+                pos = info.pos;
+            }
+            else {
+                pos = findCanBuildTile(qinfo->go);
+            }
+            if (pos>0) {
+                m_tileGlowNode->removeAllChildren();
+                m_tileGlowNode->setPosition( m_nodeBuildings[pos]->getPosition());
+                //            m_tileGlowNode->setPosition( m_nodeBuildings[pos]->getPosition()+ccp(130,65) );
+                //            for (int i=1; i<=8; i++) {
+                //                auto particle = ParticleController::createParticle(CCString::createWithFormat("GuideRegional_%d",i)->getCString());
+                //                m_tileGlowNode->addChild(particle);
+                //            }
+                for (int i=0; i<=3; i++) {
+                    auto particle = ParticleController::createParticle(CCString::createWithFormat("NewRegional2_%d",i)->getCString());
+                    m_tileGlowNode->addChild(particle);
+                }
+            }
+        }
+    }
+    
 }
 
 void ImperialScene::makeCanPlayArrowPoint()
