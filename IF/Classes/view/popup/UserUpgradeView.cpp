@@ -271,6 +271,7 @@ bool UserUpgradeView::init()
     }
 
     //begin a by ljf
+    /* //spine  有问题，先去掉。
     const string spineJsonName = "Spine/Imperial/shengji.json";
     const string spineAtlasName = "Imperial/Imperial_30.atlas";
     if (CCFileUtils::sharedFileUtils()->isFileExist(spineJsonName) &&
@@ -296,7 +297,7 @@ bool UserUpgradeView::init()
             
         }
     }
-
+    */
     //end a by ljf
     return true;
 }
