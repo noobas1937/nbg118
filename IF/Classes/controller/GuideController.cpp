@@ -553,6 +553,10 @@ void GuideController::getPositionNode(float t){
                                                , CCCallFuncN::create(this, callfuncN_selector(GuideController::movingCallBack))
                                                , NULL
                                                ));
+
+            layer->checkTileGlow(CCString::create(opers[1]));
+    
+            
         }
         else if (opers.size() == 2 && opers[0] == "SMC") {
             auto layer = dynamic_cast<ImperialScene*>(SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE));
@@ -846,6 +850,8 @@ CCNode* GuideController::getNode(std::string str){
                     node = buildListView->getGuideNode(opers[1]);
                 }
             }
+            auto layer = dynamic_cast<ImperialScene*>(SceneController::getInstance()->getCurrentLayerByLevel(LEVEL_SCENE));
+            layer->checkTileGlow(nullptr);
         }
         if(opers[0] == "BC"){//建造升级面板
             BuildUpgradeView *curView = dynamic_cast<BuildUpgradeView*>(PopupViewController::getInstance()->getCurrentPopupView());

@@ -399,6 +399,7 @@ public:
     
     void playQuestAnimation();//fusheng 播放任务动画
     void playQuestAnimationCallBack();
+    void playQuestAnimationCallBackForCreateParticle();
     
     CCSafeObject<CCNode> m_nbXHD;
     

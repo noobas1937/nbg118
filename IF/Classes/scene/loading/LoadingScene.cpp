@@ -606,8 +606,7 @@ void LoadingScene::sendCmdLogin()
         string _uuid = cocos2d::extension::CCDevice::getDeviceUid();
         GA_ACCOUNT_ID(_uuid.c_str());
     }
-    string _Country = GlobalData::shared()->fromCountry;
-    GA_ACCOUNT_COUNTRY(_Country.c_str());
+    // string _Country = GlobalData::shared()->fromCountry;
     
     // Guidance
     CCLoadSprite::doResourceByGeneralIndex(100, true);//450ms
@@ -908,6 +907,7 @@ bool LoadingScene::isJP(){
 void LoadingScene::showLoading()
 {
     GA_ON_EVENT("LOADING_START");
+    GA_MISSION_BEGIN("LOADING");
     schedule(schedule_selector(LoadingScene::loadingAni), 0.167f);
     selectLogin(0.0);
 }
@@ -1048,6 +1048,7 @@ void LoadingScene::gotoMainScene(float t)
         }
         CCCommonUtils::recordStep("5");
         GA_ON_EVENT("LOADING_END");
+        GA_MISSION_COMPLETED("LOADING");
     }
 }
 
