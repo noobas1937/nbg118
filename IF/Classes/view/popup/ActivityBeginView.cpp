@@ -761,7 +761,14 @@ void ActivityBeginView::onClickReward(CCObject *pSender, CCControlEvent event){
     }
     for (int i = 19; i < m_totalRankReward->count(); i++)
     {
-        if ((i + 1) % 10 == 0)
+        if (i + 1 == 100)
+        {
+            auto oneDic = _dict(m_totalRankReward->objectAtIndex(i));
+            oneDic->setObject(__String::create(CC_ITOA(i + 1)), "min");
+            oneDic->setObject(__String::create(CC_ITOA(i + 1)), "max");
+            m_totalRankRewardForUI->addObject(oneDic);
+        }
+        else if ((i + 1) % 10 == 0)
         {
             auto oneDic = _dict(m_totalRankReward->objectAtIndex(i));
             oneDic->setObject(__String::create(CC_ITOA(i + 1)), "min");
@@ -797,7 +804,14 @@ void ActivityBeginView::onClickRankReward(CCObject *pSender, CCControlEvent even
     }
     for (int i = 19; i < m_rankReward->count(); i++)
     {
-        if ((i + 1) % 10 == 0)
+        if (i + 1 == 100)
+        {
+            auto oneDic = _dict(m_rankReward->objectAtIndex(i));
+            oneDic->setObject(__String::create(CC_ITOA(i + 1)), "min");
+            oneDic->setObject(__String::create(CC_ITOA(i + 1)), "max");
+            m_rankRewardForUI->addObject(oneDic);
+        }
+        else if ((i + 1) % 10 == 0)
         {
             auto oneDic = _dict(m_rankReward->objectAtIndex(i));
             oneDic->setObject(__String::create(CC_ITOA(i + 1)), "min");

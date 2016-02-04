@@ -329,6 +329,58 @@
                 <key>sourceSize</key>
                 <string>{122,135}</string>
             </dict>
+            <key>nb_diamond_frame0.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{593,475},{10,18}}</string>
+                <key>offset</key>
+                <string>{-26,0}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{1,16},{10,18}}</string>
+                <key>sourceSize</key>
+                <string>{64,50}</string>
+            </dict>
+            <key>nb_diamond_frame1.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{811,416},{38,44}}</string>
+                <key>offset</key>
+                <string>{-12,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{1,3},{38,44}}</string>
+                <key>sourceSize</key>
+                <string>{64,50}</string>
+            </dict>
+            <key>nb_diamond_frame2.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{905,124},{52,44}}</string>
+                <key>offset</key>
+                <string>{2,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{8,3},{52,44}}</string>
+                <key>sourceSize</key>
+                <string>{64,50}</string>
+            </dict>
+            <key>nb_diamond_frame3.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{855,421},{32,40}}</string>
+                <key>offset</key>
+                <string>{14,1}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{30,4},{32,40}}</string>
+                <key>sourceSize</key>
+                <string>{64,50}</string>
+            </dict>
             <key>nb_main_bottom_bg.png</key>
             <dict>
                 <key>frame</key>
@@ -378,7 +430,7 @@
             <key>size</key>
             <string>{1020,1066}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:--REMOVED----------------------------</string>
+            <string>$TexturePacker:SmartUpdate:0445047cd133b8341f9ea5de0d817687:1/1$</string>
             <key>textureFileName</key>
             <string>Common_3.pvr.ccz</string>
         </dict>

@@ -395,6 +395,17 @@ bool UIComponentGold::init(long goldValue) {
         mInAnimation = false;
         m_goldNum->setString(CC_CMDITOAL(mNowValue));
 //        this->getAnimationManager()->runAnimationsForSequenceNamed("0");
+        
+
+        auto particle1 = ParticleController::createParticle("DiamondEntrance");
+        
+        if(particle1)
+        {
+            particle1->setPosition(m_goldIcon->getPosition());
+            this->addChild(particle1,-10);
+        }
+        
+        
         ret = true;
     }
     return ret;
@@ -410,7 +421,7 @@ void UIComponentGold::setGoldValue(long goldValue){
     mFinalValue = goldValue;
     if(mFinalValue>=0 && mFinalValue!=mNowValue && !mInAnimation){
 //        this->getAnimationManager()->runAnimationsForSequenceNamed("1");
-        m_goldStar->setVisible(false);
+        m_goldStar->setVisible(false);//fusheng del
         CCSequence* pSizeSeq = CCSequence::create(CCScaleTo::create(0.1f, 0.95f), CCScaleTo::create(0.1f, 1.15f), NULL);
         m_goldIcon->runAction(CCRepeatForever::create(pSizeSeq));
         CCSequence* pSizeSeq1 = CCSequence::create(CCScaleTo::create(0.1f, 0.95f), CCScaleTo::create(0.1f, 1.15f), NULL);
@@ -2592,7 +2603,7 @@ void UIComponent::playQuestAnimation()
     
     auto midPos2 = this->convertToNodeSpace({static_cast<float>(size.width*0.5),static_cast<float>(size.height*0.6)});//移动到60％
     
-    spr->runAction(Sequence::create(Spawn::createWithTwoActions(ScaleTo::create(0.3, 1.5),MoveTo::create(0.3, midPos2)),CallFunc::create(CC_CALLBACK_0(UIComponent::playQuestAnimationCallBackForCreateParticle, this )),DelayTime::create(0.8),Spawn::createWithTwoActions(ScaleTo::create(0.7, 0),MoveTo::create(0.7, beginPos)), CallFunc::create(CC_CALLBACK_0(UIComponent::playQuestAnimationCallBack, this )), NULL));//fusheng 0.3秒移动到(0.5,0.6) 等待0.8秒 ， 0.7秒移动到最初的位置
+    spr->runAction(Sequence::create(Spawn::createWithTwoActions(ScaleTo::create(0.3, 1.5),MoveTo::create(0.3, midPos2)),CallFunc::create(CC_CALLBACK_0(UIComponent::playQuestAnimationCallBackForCreateParticle, this )),DelayTime::create(1.2),Spawn::createWithTwoActions(ScaleTo::create(0.7, 0),MoveTo::create(0.7, beginPos)), CallFunc::create(CC_CALLBACK_0(UIComponent::playQuestAnimationCallBack, this )), NULL));//fusheng 0.3秒移动到(0.5,0.6) 等待1.2秒 ， 0.7秒移动到最初的位置
 
 }
 void UIComponent::playQuestAnimationCallBack()
