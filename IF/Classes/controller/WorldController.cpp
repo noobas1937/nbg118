@@ -808,7 +808,10 @@ void WorldController::update(float dt) {
             }
             m_marchInfo.erase(it++);
             if(isSelf){
-                TimeUpMarchProcesser::getInstance()->addTimeUpMarch(uid);
+#pragma mark 新手引导期间  不请求服务器数据
+                //fusheng 新手引导期间  不请求服务器数据
+                if(GuideController::share()->getCurGuideID()!="3311100")//fusheng 新手引导  第二步
+                    TimeUpMarchProcesser::getInstance()->addTimeUpMarch(uid);
                 CCSafeNotificationCenter::sharedNotificationCenter()->postNotification(MSG_QUEUE_REMOVE);
             }
             
@@ -834,10 +837,8 @@ void WorldController::update(float dt) {
         }
     }
     autoAddStamine();
-#pragma mark 新手引导期间  不请求服务器数据
-    //fusheng 新手引导期间  不请求服务器数据
-    if(GuideController::share()->getCurGuideID()!="3311100")//fusheng 新手引导  第二步
-        TimeUpMarchProcesser::getInstance()->refresh();
+
+    TimeUpMarchProcesser::getInstance()->refresh();
     
     auto activityIt = WorldController::getInstance()->m_worldActivity.find(FIGHT_OF_KING);
     if(activityIt != WorldController::getInstance()->m_worldActivity.end()){
