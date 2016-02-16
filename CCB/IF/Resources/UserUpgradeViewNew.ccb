@@ -50,7 +50,7 @@
 								<key>value</key>
 								<array>
 									<real>0.88000011444091797</real>
-									<real>76.388824462890625</real>
+									<real>36.400001525878906</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -105,7 +105,7 @@
 								<key>value</key>
 								<array>
 									<real>560</real>
-									<real>600</real>
+									<real>520</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -162,69 +162,6 @@
 								<real>0.0</real>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
-					</dict>
-					<dict>
-						<key>baseClass</key>
-						<string>CCNode</string>
-						<key>children</key>
-						<array/>
-						<key>customClass</key>
-						<string>CCNode</string>
-						<key>displayName</key>
-						<string>m_spineNode</string>
-						<key>memberVarAssignmentName</key>
-						<string>m_spineNode</string>
-						<key>memberVarAssignmentType</key>
-						<integer>2</integer>
-						<key>properties</key>
-						<array>
-							<dict>
-								<key>name</key>
-								<string>position</string>
-								<key>type</key>
-								<string>Position</string>
-								<key>value</key>
-								<array>
-									<real>4</real>
-									<real>298</real>
-									<integer>0</integer>
-								</array>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>anchorPoint</string>
-								<key>type</key>
-								<string>Point</string>
-								<key>value</key>
-								<array>
-									<real>0.0</real>
-									<real>0.0</real>
-								</array>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>scale</string>
-								<key>type</key>
-								<string>ScaleLock</string>
-								<key>value</key>
-								<array>
-									<real>1</real>
-									<real>1</real>
-									<false/>
-									<integer>0</integer>
-								</array>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>ignoreAnchorPointForPosition</string>
-								<key>type</key>
-								<string>Check</string>
-								<key>value</key>
-								<false/>
-							</dict>
-						</array>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -249,7 +186,7 @@
 								<key>value</key>
 								<array>
 									<real>-147</real>
-									<real>205</real>
+									<real>125</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -332,7 +269,7 @@
 								<key>value</key>
 								<array>
 									<real>150</real>
-									<real>205</real>
+									<real>125</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -389,6 +326,67 @@
 									<integer>770</integer>
 									<integer>771</integer>
 								</array>
+							</dict>
+						</array>
+					</dict>
+					<dict>
+						<key>baseClass</key>
+						<string>CCNode</string>
+						<key>children</key>
+						<array/>
+						<key>customClass</key>
+						<string>CCNode</string>
+						<key>displayName</key>
+						<string>m_spineNode</string>
+						<key>memberVarAssignmentName</key>
+						<string>m_spineNode</string>
+						<key>memberVarAssignmentType</key>
+						<integer>2</integer>
+						<key>properties</key>
+						<array>
+							<dict>
+								<key>name</key>
+								<string>position</string>
+								<key>type</key>
+								<string>Position</string>
+								<key>value</key>
+								<array>
+									<real>-30</real>
+									<real>0.0</real>
+									<integer>0</integer>
+								</array>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>anchorPoint</string>
+								<key>type</key>
+								<string>Point</string>
+								<key>value</key>
+								<array>
+									<real>0.0</real>
+									<real>0.0</real>
+								</array>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>scale</string>
+								<key>type</key>
+								<string>ScaleLock</string>
+								<key>value</key>
+								<array>
+									<real>1</real>
+									<real>1</real>
+									<false/>
+									<integer>0</integer>
+								</array>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>ignoreAnchorPointForPosition</string>
+								<key>type</key>
+								<string>Check</string>
+								<key>value</key>
+								<false/>
 							</dict>
 						</array>
 					</dict>
@@ -1107,8 +1105,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>-581</real>
-									<real>54</real>
+									<real>-661</real>
+									<real>58</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -1864,8 +1862,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>200</real>
-											<real>190</real>
+											<real>198</real>
+											<real>310</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -1969,6 +1967,8 @@
 										<string>Sample Text</string>
 									</dict>
 								</array>
+								<key>selected</key>
+								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>
@@ -1992,8 +1992,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>30</real>
-											<real>144.69999694824219</real>
+											<real>18</real>
+											<real>106.69999694824219</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -2290,8 +2290,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>30</real>
-											<real>108.80000305175781</real>
+											<real>18</real>
+											<real>55.799999237060547</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -2418,8 +2418,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>269</real>
-											<real>144.69999694824219</real>
+											<real>270</real>
+											<real>108.69999694824219</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -2546,8 +2546,8 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>269</real>
-											<real>105.69999694824219</real>
+											<real>270</real>
+											<real>56.700000762939453</real>
 											<integer>0</integer>
 										</array>
 									</dict>
@@ -3404,7 +3404,7 @@
 								<key>value</key>
 								<array>
 									<real>0.0</real>
-									<real>337</real>
+									<real>257</real>
 									<integer>0</integer>
 								</array>
 							</dict>

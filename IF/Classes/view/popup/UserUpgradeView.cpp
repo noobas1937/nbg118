@@ -271,33 +271,24 @@ bool UserUpgradeView::init()
     }
 
     //begin a by ljf
-    /* //spine  有问题，先去掉。
+     //spine  有问题，先去掉。
     const string spineJsonName = "Spine/Imperial/shengji.json";
     const string spineAtlasName = "Imperial/Imperial_30.atlas";
     if (CCFileUtils::sharedFileUtils()->isFileExist(spineJsonName) &&
         CCFileUtils::sharedFileUtils()->isFileExist(spineAtlasName))
     {
-        
         IFSkeletonAnimation * m_spineAni = new IFSkeletonAnimation(spineJsonName.c_str(), spineAtlasName.c_str());
-        
         if (m_spineAni && m_spineNode )
         {
             m_spineNode->addChild(m_spineAni);
-            int randnum = rand() % 2;
-            if(randnum == 0)
-                spTrackEntry* entry = m_spineAni->setAnimation(0, "loop", true);
-            if(randnum == 1)
-                spTrackEntry* entry = m_spineAni->setAnimation(0, "in", true);
-            m_spineAni->setTimeScale(1);
+            
+            spTrackEntry* entry = m_spineAni->setAnimation(0, "in", false);
+            m_spineAni->addAnimation(0, "loop", true);
+            //m_spineAni->setTimeScale(1);
             m_spineAni->setTag(88022);
-            
-            //m_spineAni->setScale(0.8);
-            
-            //m_spineAni->retain();
-            
         }
     }
-    */
+    
     //end a by ljf
     return true;
 }
