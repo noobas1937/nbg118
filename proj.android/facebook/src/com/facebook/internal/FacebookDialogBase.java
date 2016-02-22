@@ -21,7 +21,6 @@
 package com.facebook.internal;
 
 import android.app.Activity;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 
 import com.facebook.CallbackManager;
@@ -45,24 +44,24 @@ public abstract class FacebookDialogBase<CONTENT, RESULT>
     protected static final Object BASE_AUTOMATIC_MODE = new Object();
 
     private final Activity activity;
-    private final Fragment fragment;
+    private final FragmentWrapper fragmentWrapper;
     private List<ModeHandler> modeHandlers;
     private int requestCode;
 
     protected FacebookDialogBase(final Activity activity, int requestCode) {
         Validate.notNull(activity, "activity");
         this.activity = activity;
-        this.fragment = null;
+        this.fragmentWrapper = null;
         this.requestCode = requestCode;
     }
 
-    protected FacebookDialogBase(final Fragment fragment, int requestCode) {
-        Validate.notNull(fragment, "fragment");
-        this.fragment = fragment;
+    protected FacebookDialogBase(final FragmentWrapper fragmentWrapper, int requestCode) {
+        Validate.notNull(fragmentWrapper, "fragmentWrapper");
+        this.fragmentWrapper = fragmentWrapper;
         this.activity = null;
         this.requestCode = requestCode;
 
-        if (fragment.getActivity() == null) {
+        if (fragmentWrapper.getActivity() == null) {
             throw new IllegalArgumentException(
                     "Cannot use a fragment that is not attached to an activity");
         }
@@ -76,7 +75,7 @@ public abstract class FacebookDialogBase<CONTENT, RESULT>
             throw new FacebookException("Unexpected CallbackManager, " +
                     "please use the provided Factory.");
         }
-        registerCallbackImpl((CallbackManagerImpl)callbackManager, callback);
+        registerCallbackImpl((CallbackManagerImpl) callbackManager, callback);
     }
 
     @Override
@@ -146,8 +145,8 @@ public abstract class FacebookDialogBase<CONTENT, RESULT>
     protected void showImpl(final CONTENT content, final Object mode) {
         AppCall appCall = createAppCallForMode(content, mode);
         if (appCall != null) {
-            if (fragment != null) {
-                DialogPresenter.present(appCall, fragment);
+            if (fragmentWrapper != null) {
+                DialogPresenter.present(appCall, fragmentWrapper);
             } else {
                 DialogPresenter.present(appCall, activity);
             }
@@ -166,8 +165,8 @@ public abstract class FacebookDialogBase<CONTENT, RESULT>
             return activity;
         }
 
-        if (fragment != null) {
-            return fragment.getActivity();
+        if (fragmentWrapper != null) {
+            return fragmentWrapper.getActivity();
         }
 
         return null;

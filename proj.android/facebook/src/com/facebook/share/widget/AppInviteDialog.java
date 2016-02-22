@@ -98,24 +98,41 @@ public class AppInviteDialog
      * Helper to show the provided {@link com.facebook.share.model.AppInviteContent} using
      * the provided Fragment. No callback will be invoked.
      *
-     * @param fragment          Fragment to use to share the provided content
+     * @param fragment          android.support.v4.app.Fragment to use to share the provided content
      * @param appInviteContent Content of the app invite to send
      */
     public static void show(
             final Fragment fragment,
             final AppInviteContent appInviteContent) {
-        new AppInviteDialog(fragment)
+        show(new FragmentWrapper(fragment), appInviteContent);
+    }
+
+    /**
+     * Helper to show the provided {@link com.facebook.share.model.AppInviteContent} using
+     * the provided Fragment. No callback will be invoked.
+     *
+     * @param fragment          android.app.Fragment to use to share the provided content
+     * @param appInviteContent Content of the app invite to send
+     */
+    public static void show(
+            final android.app.Fragment fragment,
+            final AppInviteContent appInviteContent) {
+        show(new FragmentWrapper(fragment), appInviteContent);
+    }
+
+    private static void show(
+            final FragmentWrapper fragmentWrapper,
+            final AppInviteContent appInviteContent) {
+        new AppInviteDialog(fragmentWrapper)
                 .show(appInviteContent);
     }
 
     private static boolean canShowNativeDialog() {
-        return (Build.VERSION.SDK_INT >= ShareConstants.MIN_API_VERSION_FOR_WEB_FALLBACK_DIALOGS) &&
-                DialogPresenter.canPresentNativeDialogWithFeature(getFeature());
+        return DialogPresenter.canPresentNativeDialogWithFeature(getFeature());
     }
 
     private static boolean canShowWebFallback() {
-        return (Build.VERSION.SDK_INT >= ShareConstants.MIN_API_VERSION_FOR_WEB_FALLBACK_DIALOGS) &&
-                DialogPresenter.canPresentWebFallbackDialogWithFeature(getFeature());
+        return DialogPresenter.canPresentWebFallbackDialogWithFeature(getFeature());
     }
 
     /**
@@ -130,9 +147,22 @@ public class AppInviteDialog
     /**
      * Constructs a new AppInviteDialog.
      *
-     * @param fragment Fragment to use to share the provided content.
+     * @param fragment android.support.v4.app.Fragment to use to share the provided content.
      */
     public AppInviteDialog(final Fragment fragment) {
+        this(new FragmentWrapper(fragment));
+    }
+
+    /**
+     * Constructs a new AppInviteDialog.
+     *
+     * @param fragment android.app.Fragment to use to share the provided content.
+     */
+    public AppInviteDialog(final android.app.Fragment fragment) {
+        this(new FragmentWrapper(fragment));
+    }
+
+    private AppInviteDialog(final FragmentWrapper fragment) {
         super(fragment, DEFAULT_REQUEST_CODE);
     }
 
@@ -176,7 +206,7 @@ public class AppInviteDialog
 
     @Override
     protected List<ModeHandler> getOrderedModeHandlers() {
-        ArrayList<ModeHandler> handlers = new ArrayList<ModeHandler>();
+        ArrayList<ModeHandler> handlers = new ArrayList<FacebookDialogBase<AppInviteContent, Result>.ModeHandler>();
         handlers.add(new NativeHandler());
         handlers.add(new WebFallbackHandler());
 

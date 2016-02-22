@@ -31,6 +31,7 @@ import android.webkit.CookieSyncManager;
 
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenSource;
+import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsConstants;
 import com.facebook.internal.FacebookDialogFragment;
 import com.facebook.FacebookException;

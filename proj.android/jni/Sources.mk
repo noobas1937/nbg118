@@ -34,6 +34,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../IF/Classes/controller/PopupViewController.cpp \
 ../../IF/Classes/controller/QuestController.cpp \
 ../../IF/Classes/controller/QueueController.cpp \
+../../IF/Classes/controller/RecommendAllianceController.cpp \
 ../../IF/Classes/controller/RewardController.cpp \
 ../../IF/Classes/controller/SceneController.cpp \
 ../../IF/Classes/controller/ScienceController.cpp \
@@ -254,6 +255,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../IF/Classes/Net/command/alliance/LeaveAllianceCommand.cpp \
 ../../IF/Classes/Net/command/alliance/MemberInfo.cpp \
 ../../IF/Classes/Net/command/alliance/OpenAllianceGiftCommand.cpp \
+../../IF/Classes/Net/command/alliance/RecommendAllianceCommand.cpp \
 ../../IF/Classes/Net/command/alliance/RefuseAllianceApplyCommand.cpp \
 ../../IF/Classes/Net/command/alliance/RefuseInviteCommand.cpp \
 ../../IF/Classes/Net/command/alliance/SearchUserAllianceCommand.cpp \
@@ -615,6 +617,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../IF/Classes/view/popup/ActivityTipView.cpp \
 ../../IF/Classes/view/popup/ActivityView.cpp \
 ../../IF/Classes/view/popup/alliance/AlertAddAllianceView.cpp \
+../../IF/Classes/view/popup/alliance/AlertAddAllianceViewRecommend.cpp \
 ../../IF/Classes/view/popup/alliance/AllianceActBossView.cpp \
 ../../IF/Classes/view/popup/alliance/AllianceActivityRewardView.cpp \
 ../../IF/Classes/view/popup/alliance/AllianceActivityView.cpp \
@@ -653,6 +656,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../IF/Classes/view/popup/alliance/ChangeAllianceFlagView.cpp \
 ../../IF/Classes/view/popup/alliance/CheckAllianceInfoView.cpp \
 ../../IF/Classes/view/popup/alliance/CreateAllianceView.cpp \
+../../IF/Classes/view/popup/alliance/CreateAllianceViewRecommend.cpp \
 ../../IF/Classes/view/popup/alliance/IFAllianceShakeLayer.cpp \
 ../../IF/Classes/view/popup/alliance/JoinAllianceView.cpp \
 ../../IF/Classes/view/popup/alliance/JoinRecAllianceTipView.cpp \
@@ -894,4 +898,10 @@ LOCAL_SRC_FILES := main.cpp \
 ../../IF/Classes/view/Widget/IFSkeletonNode.cpp \
 ../../IF/Classes/Lua/ext/md5/NB_md5.c \
 ../../IF/libs/extensions/HelpShift/HelpshiftCocos2dx.cpp \
+../../IF/libs/extensions/TalkingDataGameAnalytics/android/TDCCAccount.cpp \
+../../IF/libs/extensions/TalkingDataGameAnalytics/android/TDCCItem.cpp \
+../../IF/libs/extensions/TalkingDataGameAnalytics/android/TDCCMIssion.cpp \
+../../IF/libs/extensions/TalkingDataGameAnalytics/android/TDCCTalkingDataGA.cpp \
+../../IF/libs/extensions/TalkingDataGameAnalytics/android/TDCCVirtualCurrency.cpp \
+../../IF/libs/extensions/TalkingDataGameAnalytics/android/TDGAJniHelper.cpp \
 

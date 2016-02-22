@@ -147,4 +147,8 @@ $(LOCAL_PATH)/../../IF/libs/extensions/libWeiboSDK \
 $(LOCAL_PATH)/../../IF/libs/extensions/libWeiboSDK/WeiboSDK.bundle \
 $(LOCAL_PATH)/../../IF/libs/extensions/libWeiboSDK/WeiboSDK.bundle/images \
 $(LOCAL_PATH)/../../IF/libs/extensions/libWeiboSDK/WeiboSDK.bundle/others \
+$(LOCAL_PATH)/../../IF/libs/extensions/TalkingDataGameAnalytics \
+$(LOCAL_PATH)/../../IF/libs/extensions/TalkingDataGameAnalytics/android \
+$(LOCAL_PATH)/../../IF/libs/extensions/TalkingDataGameAnalytics/include \
+$(LOCAL_PATH)/../../IF/libs/extensions/TalkingDataGameAnalytics/ios \
 
