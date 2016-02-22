@@ -31,6 +31,7 @@ import com.facebook.internal.AppCall;
 import com.facebook.internal.CallbackManagerImpl;
 import com.facebook.internal.DialogPresenter;
 import com.facebook.internal.FacebookDialogBase;
+import com.facebook.internal.FragmentWrapper;
 import com.facebook.share.internal.ResultProcessor;
 import com.facebook.share.internal.ShareConstants;
 import com.facebook.share.internal.ShareInternalUtility;
@@ -93,13 +94,32 @@ public class JoinAppGroupDialog extends FacebookDialogBase<String, JoinAppGroupD
      * Shows an {@link JoinAppGroupDialog} to join a group with the passed in Id, using
      * the passed in fragment. No callback will be invoked.
      *
-     * @param fragment Fragment hosting the dialog
+     * @param fragment android.support.v4.app.Fragment hosting the dialog
      * @param groupId Id of the group to join
      */
     public static void show(
             final Fragment fragment,
             final String groupId) {
-        new JoinAppGroupDialog(fragment).show(groupId);
+        show(new FragmentWrapper(fragment), groupId);
+    }
+
+    /**
+     * Shows an {@link JoinAppGroupDialog} to join a group with the passed in Id, using
+     * the passed in fragment. No callback will be invoked.
+     *
+     * @param fragment android.app.Fragment hosting the dialog
+     * @param groupId Id of the group to join
+     */
+    public static void show(
+            final android.app.Fragment fragment,
+            final String groupId) {
+        show(new FragmentWrapper(fragment), groupId);
+    }
+
+    private static void show(
+            final FragmentWrapper fragmentWrapper,
+            final String groupId) {
+        new JoinAppGroupDialog(fragmentWrapper).show(groupId);
     }
 
     /**
@@ -112,10 +132,22 @@ public class JoinAppGroupDialog extends FacebookDialogBase<String, JoinAppGroupD
 
     /**
      * Constructs a JoinAppGroupDialog.
-     * @param fragment Fragment hosting the dialog.
+     * @param fragment android.support.v4.app.Fragment hosting the dialog.
      */
     public JoinAppGroupDialog(final Fragment fragment) {
-        super(fragment, DEFAULT_REQUEST_CODE);
+        this(new FragmentWrapper(fragment));
+    }
+
+    /**
+     * Constructs a JoinAppGroupDialog.
+     * @param fragment android.app.Fragment hosting the dialog.
+     */
+    public JoinAppGroupDialog(final android.app.Fragment fragment) {
+        this(new FragmentWrapper(fragment));
+    }
+
+    private JoinAppGroupDialog(final FragmentWrapper fragmentWrapper) {
+        super(fragmentWrapper, DEFAULT_REQUEST_CODE);
     }
 
     @Override
@@ -152,7 +184,7 @@ public class JoinAppGroupDialog extends FacebookDialogBase<String, JoinAppGroupD
 
     @Override
     protected List<ModeHandler> getOrderedModeHandlers() {
-        ArrayList<ModeHandler> handlers = new ArrayList<ModeHandler>();
+        ArrayList<ModeHandler> handlers = new ArrayList<FacebookDialogBase<String, Result>.ModeHandler>();
         handlers.add(new WebHandler());
 
         return handlers;

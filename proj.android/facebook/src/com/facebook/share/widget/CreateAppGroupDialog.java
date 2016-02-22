@@ -30,6 +30,7 @@ import com.facebook.internal.AppCall;
 import com.facebook.internal.CallbackManagerImpl;
 import com.facebook.internal.DialogPresenter;
 import com.facebook.internal.FacebookDialogBase;
+import com.facebook.internal.FragmentWrapper;
 import com.facebook.share.internal.ResultProcessor;
 import com.facebook.share.internal.ShareInternalUtility;
 import com.facebook.share.internal.WebDialogParameters;
@@ -94,13 +95,32 @@ public class CreateAppGroupDialog
      * Shows an {@link CreateAppGroupDialog} to create a group with the passed in content, using
      * the passed in fragment. No callback will be invoked.
      *
-     * @param fragment Fragment hosting the dialog
+     * @param fragment android.support.v4.app.Fragment hosting the dialog
      * @param appGroupCreationContent Content describing the group to be created
      */
     public static void show(
             final Fragment fragment,
             AppGroupCreationContent appGroupCreationContent) {
-        new CreateAppGroupDialog(fragment).show(appGroupCreationContent);
+        show(new FragmentWrapper(fragment), appGroupCreationContent);
+    }
+
+    /**
+     * Shows an {@link CreateAppGroupDialog} to create a group with the passed in content, using
+     * the passed in fragment. No callback will be invoked.
+     *
+     * @param fragment android.app.Fragment hosting the dialog
+     * @param appGroupCreationContent Content describing the group to be created
+     */
+    public static void show(
+            final android.app.Fragment fragment,
+            AppGroupCreationContent appGroupCreationContent) {
+        show(new FragmentWrapper(fragment), appGroupCreationContent);
+    }
+
+    private static void show(
+            final FragmentWrapper fragmentWrapper,
+            AppGroupCreationContent appGroupCreationContent) {
+        new CreateAppGroupDialog(fragmentWrapper).show(appGroupCreationContent);
     }
 
     /**
@@ -113,10 +133,22 @@ public class CreateAppGroupDialog
 
     /**
      * Constructs a new CreateAppGroupDialog.
-     * @param fragment Fragment hosting the dialog.
+     * @param fragment android.support.v4.app.Fragment hosting the dialog.
      */
     public CreateAppGroupDialog(final Fragment fragment) {
-        super(fragment, DEFAULT_REQUEST_CODE);
+        this(new FragmentWrapper(fragment));
+    }
+
+    /**
+     * Constructs a new CreateAppGroupDialog.
+     * @param fragment android.app.Fragment hosting the dialog.
+     */
+    public CreateAppGroupDialog(final android.app.Fragment fragment) {
+        this(new FragmentWrapper(fragment));
+    }
+
+    private CreateAppGroupDialog(final FragmentWrapper fragmentWrapper) {
+        super(fragmentWrapper, DEFAULT_REQUEST_CODE);
     }
 
     @Override
@@ -153,7 +185,7 @@ public class CreateAppGroupDialog
 
     @Override
     protected List<ModeHandler> getOrderedModeHandlers() {
-        ArrayList<ModeHandler> handlers = new ArrayList<ModeHandler>();
+        ArrayList<ModeHandler> handlers = new ArrayList<FacebookDialogBase<AppGroupCreationContent, Result>.ModeHandler>();
         handlers.add(new WebHandler());
 
         return handlers;
