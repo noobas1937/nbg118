@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     android:installLocation="preferExternal"
     package="com.nbg.gp"
-    android:versionCode="1031"
-    android:versionName="0.1.14" >
+    android:versionCode="1032"
+    android:versionName="0.1.15" >
 
     <supports-screens android:smallScreens="true"
         android:normalScreens="true"
